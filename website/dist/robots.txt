@@ -1,0 +1,7 @@
+# Lauhata — search engines and AI crawlers may read the public pages.
+User-agent: *
+Allow: /
+Disallow: /obrigado/
+Disallow: /en/thank-you/
+
+Sitemap: https://lauhata.example/sitemap.xml

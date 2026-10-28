@@ -1,0 +1,11 @@
+{
+  "name": "lauhata-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website do Lauhata (restaurante e alojamento), Liquiçá, Timor-Leste — Elevate Web Studio",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node build.mjs && npx --yes http-server@14.1.1 dist -p 8080 -c-1"
+  }
+}

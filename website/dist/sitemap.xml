@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://lauhata.example/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/restaurante/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/restaurante/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/restaurant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/restaurante/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/restaurant/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/restaurante/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/restaurant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/restaurante/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/alojamento/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/stay/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/alojamento/quarto-jardim/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/quarto-jardim/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/garden-room/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/quarto-jardim/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/stay/garden-room/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/quarto-jardim/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/garden-room/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/quarto-jardim/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/alojamento/quarto-vista-mar/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/quarto-vista-mar/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/sea-view-room/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/quarto-vista-mar/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/stay/sea-view-room/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/quarto-vista-mar/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/sea-view-room/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/quarto-vista-mar/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/alojamento/suite-familia/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/suite-familia/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/family-suite/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/suite-familia/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/stay/family-suite/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/alojamento/suite-familia/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/stay/family-suite/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/alojamento/suite-familia/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/contactos/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/contactos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/contactos/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/contact/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/contactos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/contactos/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/privacidade/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/privacidade/"/>
+  </url>
+  <url>
+    <loc>https://lauhata.example/en/privacy/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://lauhata.example/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lauhata.example/en/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lauhata.example/privacidade/"/>
+  </url>
+</urlset>
