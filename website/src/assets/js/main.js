@@ -19,7 +19,10 @@
   /* ---------- Header: border once scrolled, hides on scroll down ---------- */
   const header = $("[data-header]");
   const mobileBar = $("[data-mobile-bar]");
-  let lastY = 0;
+  // Scroll position where the header last changed direction. Smooth scrolling moves a few
+  // pixels per frame, so the direction is judged on the distance travelled since then, not
+  // per event (per-event deltas made the header flicker in and out while scrolling down).
+  let anchorY = window.scrollY;
   // The sticky booking bar is pointless while a booking form is already on screen.
   let formInView = false;
   const bookingSection = $("#reservar");
@@ -33,10 +36,17 @@
     // On phones the hero also holds the booking card, so the header turns solid straight away.
     const heroEl = document.body.classList.contains("has-hero") && window.innerWidth > 860 ? $(".cine-hero") : null;
     header?.classList.toggle("is-solid", heroEl ? y > heroEl.offsetHeight - (header?.offsetHeight || 80) : y > 40);
-    header?.classList.toggle("is-hidden", y > threshold && y > lastY + 4 && !header.contains(document.activeElement));
-    if (y < lastY - 4 || y < threshold) header?.classList.remove("is-hidden");
+    const hidden = header?.classList.contains("is-hidden");
+    if (y < threshold || header?.contains(document.activeElement)) {
+      header?.classList.remove("is-hidden");
+      anchorY = y;
+    } else if (hidden ? y > anchorY : y < anchorY) {
+      anchorY = y; // still moving the same way: keep the turning point up to date
+    } else if (Math.abs(y - anchorY) > 12) {
+      header?.classList.toggle("is-hidden", y > anchorY);
+      anchorY = y;
+    }
     mobileBar?.classList.toggle("is-visible", y > window.innerHeight * 0.6 && !formInView);
-    lastY = y;
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -377,7 +387,6 @@
 
   /* =================== Cinematic motion =================== */
   const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const wide = () => window.innerWidth > 860;
 
   // Split headings into words wrapped in a mask, so each word can rise into view.
   function splitWords(root, cls = "w", innerCls = "wi") {
@@ -394,7 +403,7 @@
             outer.className = cls;
             const inner = document.createElement("span");
             inner.className = innerCls;
-            inner.style.setProperty("--wd", String(n++ * 70));
+            inner.style.setProperty("--wd", String(n++ * 45));
             inner.textContent = p;
             if (cls) { outer.appendChild(inner); frag.appendChild(outer); } else frag.appendChild(inner);
           });
@@ -407,15 +416,31 @@
   }
   $$("[data-split]").forEach((el) => splitWords(el));
 
-  // Hero entrance: wait for the intro curtain (first visit) before revealing the hero.
-  const introShown = $("[data-intro]") && !document.documentElement.classList.contains("no-intro");
+  // Hero entrance: the title rises word by word and the rest fades in, all within ~1 s.
+  // On the first visit the intro curtain covers the page while it loads, then lifts.
+  const intro = $("[data-intro]");
+  const introShown = intro && !document.documentElement.classList.contains("no-intro");
   const heroSection = $(".cine-hero");
   const revealHero = () => {
     heroSection?.classList.add("is-ready");
     $$("[data-split]", heroSection || document.createElement("div")).forEach((el) => el.classList.add("is-in"));
   };
   if (reduced) revealHero();
-  else setTimeout(revealHero, introShown ? 1900 : 150);
+  else if (!introShown) setTimeout(revealHero, 60);
+  else {
+    // performance.now() counts from navigation start, so these are times since the click.
+    let lifted = false;
+    const lift = () => {
+      if (lifted) return;
+      lifted = true;
+      intro.classList.add("is-out");
+      setTimeout(revealHero, 350);
+    };
+    const afterLoad = () => setTimeout(lift, Math.max(0, 1600 - performance.now()));
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
+    setTimeout(lift, Math.max(0, 4000 - performance.now()));
+  }
 
   // Everything else reveals when it enters the viewport.
   const onEnter = (els, opts = {}) => {
@@ -451,19 +476,8 @@
   }
 
   const parallaxImgs = $$("[data-parallax]");
-  const hs = $("[data-hscroll]");
-  const hsTrack = $("[data-hscroll-track]");
-  const hsBar = $("[data-hscroll-bar]");
   const day = $("[data-day]");
   const dayLine = $("[data-day-line]");
-
-  // Pinned horizontal scroll: the section is as tall as the track is wide.
-  function sizeHScroll() {
-    if (!hs || !hsTrack) return;
-    if (reduced || !wide()) { hs.style.height = ""; hsTrack.style.transform = ""; return; }
-    const distance = hsTrack.scrollWidth - window.innerWidth;
-    hs.style.height = `${window.innerHeight + Math.max(0, distance)}px`;
-  }
 
   function frame() {
     const vh = window.innerHeight;
@@ -483,14 +497,6 @@
       const lit = Math.round(p * scrubWords.length);
       scrubWords.forEach((w, i) => w.classList.toggle("on", i < lit));
     }
-    // Horizontal dishes.
-    if (hs && hsTrack && !reduced && wide()) {
-      const r = hs.getBoundingClientRect();
-      const distance = hsTrack.scrollWidth - window.innerWidth;
-      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
-      hsTrack.style.transform = `translate3d(${(-p * distance).toFixed(1)}px, 0, 0)`;
-      if (hsBar) hsBar.style.transform = `scaleX(${p.toFixed(3)})`;
-    }
     // Timeline line is drawn as the section scrolls past.
     if (day && dayLine) {
       const r = day.getBoundingClientRect();
@@ -501,9 +507,8 @@
   let ticking = false;
   const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };
   window.addEventListener("scroll", requestFrame, { passive: true });
-  window.addEventListener("resize", () => { sizeHScroll(); requestFrame(); });
-  window.addEventListener("load", () => { sizeHScroll(); requestFrame(); });
-  sizeHScroll();
+  window.addEventListener("resize", requestFrame);
+  window.addEventListener("load", requestFrame);
   frame();
 
   // Custom cursor with a label over links that carry data-cursor.

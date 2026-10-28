@@ -12,9 +12,12 @@ dourado `#C89640` e azul-petróleo `#2F6E73`, faixa de tais, selo rotativo e map
 
 Por cima disso há uma camada cinematográfica (`src/assets/css/cinema.css` e a secção «Cinematic motion»
 de `main.js`, sem bibliotecas):
-- intro com o logótipo na primeira visita e hero em ecrã inteiro com fotos em sequência;
+- cortina com o logótipo na primeira visita, que fica enquanto a página carrega (1,6 a 4 s), e hero em
+  ecrã inteiro com fotos em sequência;
 - texto que se acende com o scroll, faixa de texto em movimento e painéis que se expandem;
-- pratos em scroll horizontal fixo (no telemóvel, deslizar), quartos em linhas grandes com parallax;
+- na homepage, só os pratos e quartos mais escolhidos (`featured: true` em `menu.mjs` e `rooms.mjs`),
+  com link para a ementa e para todos os quartos; no telemóvel deslizam na horizontal. Na página
+  Alojamento, os quartos aparecem em linhas grandes com parallax;
 - linha do dia desenhada com o scroll, cursor personalizado e botões magnéticos.
 
 Tudo se desliga com «movimento reduzido» no sistema.
@@ -31,6 +34,20 @@ npm run preview    # build + servidor local em http://localhost:8080
 Para publicar, envia o conteúdo de `dist/` para qualquer alojamento estático (Netlify, Vercel,
 Cloudflare Pages, cPanel…). O site tem de ficar na raiz do domínio.
 
+## Fotografias
+
+Os originais (PNG, ~2,5 MB cada) ficam em `fotos-originais/`, fora do site publicado. O script
+`tools/otimizar-fotos.ps1` (Windows) gera em `src/assets/img/fotos/` três JPEG por foto
+(640, 1080 e 1600 px) e a imagem de partilha `og-image.jpg` (1200×630):
+
+```bash
+powershell -ExecutionPolicy Bypass -File tools/otimizar-fotos.ps1
+```
+
+Para uma foto nova: junta o original a `fotos-originais/`, acrescenta-a à lista `$map` do script,
+corre-o e regista-a em `src/data/images.mjs` com `src: "foto:<nome>"` e `width` (largura original).
+O site escolhe sozinho o tamanho certo para cada ecrã.
+
 ## Onde mudar o conteúdo
 
 | Ficheiro | O que contém |
@@ -38,7 +55,7 @@ Cloudflare Pages, cPanel…). O site tem de ficar na raiz do domínio.
 | `src/data/site.mjs` | Domínio, WhatsApp, telefone, email, horários, check-in/out, tempo de resposta, redes sociais, comodidades, Google Analytics |
 | `src/data/menu.mjs` | Categorias e pratos da ementa (PT/EN, preço opcional) |
 | `src/data/rooms.mjs` | Tipos de quarto: cada um gera a sua página nas duas línguas |
-| `src/data/images.mjs` | Fotografias. `placeholder: true` = imagem ilustrativa do Unsplash |
+| `src/data/images.mjs` | Fotografias: `foto:<nome>` (fotos próprias em `assets/img/fotos/`) ou `unsplash:<id>`. `placeholder: true` = imagem ilustrativa, não mostra o Lauhata |
 | `src/i18n/pt.mjs`, `en.mjs` | Todos os textos, títulos SEO e mensagens de WhatsApp |
 
 Os campos vazios ficam escondidos ou aparecem como «a confirmar» até serem preenchidos.
@@ -66,8 +83,11 @@ do projeto combinado ainda têm de ser acordados com o cliente.
 - [ ] Horário do restaurante e horas de check-in/check-out
 - [ ] Tempo de resposta habitual às reservas
 - [ ] Coordenadas exatas e indicações de acesso
-- [ ] Fotografias reais: espaço, pratos, quartos, equipa
-- [ ] Ementa real (pratos, descrições, preços) — «Da terra» e «Doces & café» ainda estão vazios
+- [ ] Fotografias reais: espaço, pratos, quartos, equipa. As fotos atuais são ilustrativas; ainda
+  vêm do Unsplash o Quarto Vista Mar, algumas varandas, a costa aérea e o pôr do sol final
+- [ ] Ementa real (pratos, descrições, preços) — «Da terra» e «Doces & café» têm pratos sugeridos
+  (Batar da’an, Tukir, Frango com ai-manas, Legumes da horta, Café de Timor, Bolo de banana,
+  Fruta tropical, Água de coco) que o restaurante tem de confirmar
 - [ ] História do espaço (o texto entre [ ] na secção «A nossa história»)
 - [ ] Avaliações reais: nota média, número de avaliações e 3 citações (secção «O que dizem os nossos hóspedes»)
 - [ ] Tempo de viagem a partir de Díli (`driveFromDili`)
@@ -80,6 +100,8 @@ Os textos abaixo estão no site porque estão no design, mas são afirmações s
 - Quartos: Quarto Jardim, Quarto Vista Mar e Suite Família, com as respetivas comodidades
   (ar condicionado, Wi-Fi, pequeno-almoço, sala, varanda…) e capacidades
 - Pratos: Ikan sabuko na brasa, Peixe em folha de bananeira, Lulas grelhadas, Caril de camarão
+- Quais são os pratos e quartos «mais escolhidos» (agora: Ikan sabuko, Peixe em folha de bananeira,
+  Caril de camarão; Quarto Jardim e Quarto Vista Mar)
 - «Receção 24 horas» e «normalmente em poucos minutos» (tempo de resposta)
 - «Um dia no Lauhata»: café de Ermera, snorkel, passeios em Liquiçá, jantar ao pôr do sol
 - Pequeno-almoço no restaurante com café de Timor

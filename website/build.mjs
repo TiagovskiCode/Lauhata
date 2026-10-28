@@ -23,10 +23,11 @@ let count = 0;
 // Turns root paths ("/assets/…", "/en/stay/") into paths relative to the page, so the site works
 // from any folder (e.g. a local server opened on the project root) and not only at a domain root.
 // Absolute URLs (canonical, Open Graph, JSON-LD) are left alone; `"/>` closing tags are skipped.
+// ", /" catches the later candidates of a srcset.
 function relativize(html, pagePath) {
   const depth = pagePath.split("/").length - 2;
   const up = depth > 0 ? "../".repeat(depth) : "./";
-  return html.replace(/(["'(])\/(?=["'#?a-z0-9])/gi, `$1${up}`);
+  return html.replace(/(["'(]|, )\/(?=["'#?a-z0-9])/gi, `$1${up}`);
 }
 
 async function emit(t, page) {

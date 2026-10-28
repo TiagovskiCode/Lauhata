@@ -1,15 +1,32 @@
-// Photo registry. `placeholder: true` marks an illustrative stock photo (Unsplash License) that
-// does not show Lauhata itself; replace `src` with the establishment's own photos and set
-// `placeholder: false`. `src` is either an Unsplash photo id or a path under /assets/img/.
+// Photo registry. `src` is one of:
+//   "foto:<slug>"     a photo in /assets/img/fotos/, pre-sized by tools/otimizar-fotos.ps1 (see
+//                     README); `width` is the original width, used for srcset;
+//   "unsplash:<id>"   an illustrative stock photo (Unsplash License).
+// `placeholder: true` marks an image that does not show Lauhata itself (stock photos and the
+// illustrative photos made for the mock-up); set it to `false` once a real photo replaces it.
 export default {
   heroSunset: {
-    src: "unsplash:1639244132045-94c307ff4bfc",
-    alt: { pt: "Mesa posta com lanterna e copos, junto ao mar ao pôr do sol", en: "Table set with a lantern and glasses by the sea at sunset" },
+    src: "foto:hero-por-do-sol",
+    width: 1310,
+    alt: { pt: "Mesa posta com peixe grelhado e água de coco num terraço sobre a baía, ao pôr do sol", en: "Table set with grilled fish and coconut water on a terrace above the bay at sunset" },
+    placeholder: true,
+  },
+  coastSunset: {
+    src: "foto:costa-por-do-sol",
+    width: 1734,
+    alt: { pt: "Baía com palmeiras e montanhas verdes ao pôr do sol", en: "Bay with palm trees and green hills at sunset" },
+    placeholder: true,
+  },
+  terrace: {
+    src: "foto:terraco-mar",
+    width: 1341,
+    alt: { pt: "Espreguiçadeiras e cocos frescos num terraço com vista para o mar", en: "Loungers and fresh coconuts on a terrace overlooking the sea" },
     placeholder: true,
   },
   foodSpread: {
-    src: "unsplash:1767429013111-494a1e03f70f",
-    alt: { pt: "Pratos servidos sobre folha de bananeira", en: "Dishes served on banana leaf" },
+    src: "foto:mesa-restaurante",
+    width: 1341,
+    alt: { pt: "Peixe grelhado em folha de bananeira, arroz, salada e sambal numa mesa sobre o mar", en: "Grilled fish on banana leaf, rice, salad and sambal on a table above the sea" },
     placeholder: true,
   },
   palmsSea: {
@@ -18,53 +35,93 @@ export default {
     placeholder: true,
   },
   dishIkan: {
-    src: "unsplash:1718942899999-b3da4177ee2a",
-    alt: { pt: "Peixe grelhado sobre folha de bananeira", en: "Grilled fish on banana leaf" },
+    src: "foto:peixe-grelhado",
+    width: 1448,
+    alt: { pt: "Peixe grelhado na brasa com lima, tomate e budu", en: "Charcoal-grilled fish with lime, tomato and budu" },
     placeholder: true,
   },
   dishLeaf: {
-    src: "unsplash:1617694455296-153ddbd66f0d",
-    alt: { pt: "Peixe embrulhado em folha de bananeira na grelha", en: "Fish wrapped in banana leaf on the grill" },
+    src: "foto:peixe-folha-bananeira",
+    width: 1448,
+    alt: { pt: "Peixe cozinhado em folha de bananeira", en: "Fish cooked in banana leaf" },
     placeholder: true,
   },
   dishSquid: {
-    src: "unsplash:1762305195844-94479ea6aca4",
+    src: "foto:lulas-grelhadas",
+    width: 1448,
     alt: { pt: "Lulas grelhadas num prato", en: "Grilled squid on a plate" },
     placeholder: true,
   },
   dishCurry: {
-    src: "unsplash:1679279727895-bd5c9fb9c1a0",
+    src: "foto:caril-camarao",
+    width: 1448,
     alt: { pt: "Caril de camarão num prato", en: "Prawn curry on a plate" },
     placeholder: true,
   },
-  dishTable: {
-    src: "unsplash:1585144570594-103ef55590b1",
-    alt: { pt: "Vários pratos numa mesa de madeira", en: "Several dishes on a wooden table" },
+  dishBatar: {
+    src: "foto:batar-daan",
+    width: 1448,
+    alt: { pt: "Batar da'an: milho, feijão e abóbora numa tigela de madeira", en: "Batar da'an: corn, beans and pumpkin in a wooden bowl" },
     placeholder: true,
   },
-  dishBreakfast: {
-    src: "unsplash:1567850174756-72eaca3676ba",
-    alt: { pt: "Pequeno-almoço servido numa mesa de madeira", en: "Breakfast served on a wooden table" },
+  dishTukir: {
+    src: "foto:tukir",
+    width: 1448,
+    alt: { pt: "Tukir: carne cozinhada dentro de bambu, com folha de bananeira e sambal", en: "Tukir: meat cooked inside bamboo, with banana leaf and sambal" },
+    placeholder: true,
+  },
+  dishChicken: {
+    src: "foto:frango-ai-manas",
+    width: 1448,
+    alt: { pt: "Frango grelhado com arroz, lima e ai-manas", en: "Grilled chicken with rice, lime and ai-manas" },
+    placeholder: true,
+  },
+  dishGreens: {
+    src: "foto:legumes-horta",
+    width: 1448,
+    alt: { pt: "Legumes salteados com arroz e sambal", en: "Stir-fried vegetables with rice and sambal" },
+    placeholder: true,
+  },
+  dishBananaCake: {
+    src: "foto:bolo-banana",
+    width: 1448,
+    alt: { pt: "Fatia de bolo de banana com coco ralado e uma chávena de café", en: "Slice of banana cake with grated coconut and a cup of coffee" },
+    placeholder: true,
+  },
+  dishCoffee: {
+    src: "foto:cafe-timor",
+    width: 1448,
+    alt: { pt: "Chávena de café de Timor ao lado de um cesto de grãos torrados", en: "Cup of Timor coffee beside a basket of roasted beans" },
+    placeholder: true,
+  },
+  dishFruit: {
+    src: "foto:fruta-tropical",
+    width: 1448,
+    alt: { pt: "Prato de papaia, manga e ananás com lima", en: "Plate of papaya, mango and pineapple with lime" },
+    placeholder: true,
+  },
+  dishCoconut: {
+    src: "foto:agua-coco",
+    width: 1448,
+    alt: { pt: "Coco fresco com palhinha de bambu, junto ao mar", en: "Fresh coconut with a bamboo straw by the sea" },
     placeholder: true,
   },
   roomGarden: {
-    src: "unsplash:1656570092191-b89cc3136833",
-    alt: { pt: "Quarto com cama de rede mosquiteira e luz natural", en: "Bedroom with a canopy bed and natural light" },
-    placeholder: true,
-  },
-  roomSea: {
-    src: "unsplash:1609602126247-4ab7188b4aa1",
-    alt: { pt: "Quarto aberto para o mar", en: "Bedroom opening onto the sea" },
+    src: "foto:quarto-jardim",
+    width: 1513,
+    alt: { pt: "Quarto com cama de madeira, tais na parede e portadas abertas para o jardim", en: "Bedroom with a wooden bed, tais on the wall and shutters open to the garden" },
     placeholder: true,
   },
   roomFamily: {
-    src: "unsplash:1718071215606-ea8d309dcec8",
-    alt: { pt: "Quarto espaçoso com cama de casal", en: "Spacious bedroom with a double bed" },
+    src: "foto:suite-familia",
+    width: 1536,
+    alt: { pt: "Suite com duas camas, cadeiras de vime e varanda com vista para o mar", en: "Suite with two beds, wicker chairs and a balcony with a sea view" },
     placeholder: true,
   },
   weaving: {
-    src: "unsplash:1707978932202-751b08324daf",
-    alt: { pt: "Mãos a tecer um pano tradicional num tear", en: "Hands weaving a traditional cloth on a loom" },
+    src: "foto:tais",
+    width: 1122,
+    alt: { pt: "Mãos a segurar um tais, o pano tradicional tecido em Timor", en: "Hands holding a tais, the traditional cloth woven in Timor" },
     placeholder: true,
   },
   palmSunset: {

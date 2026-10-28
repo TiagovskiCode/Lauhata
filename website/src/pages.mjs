@@ -22,11 +22,11 @@ function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = 
   <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw" })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
-    <div data-fade style="--d:100ms">${crumbs}</div>
-    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">${esc(eyebrow)}</p>
+    <div data-fade>${crumbs}</div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:100ms">${esc(eyebrow)}</p>
     <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` <em>${esc(accent)}</em>` : ""}</h1>
-    <p class="cine-lead" data-fade style="--d:800ms">${esc(lead)}</p>
-    <div data-fade style="--d:1000ms">${ctas}</div>
+    <p class="cine-lead" data-fade style="--d:300ms">${esc(lead)}</p>
+    <div data-fade style="--d:400ms">${ctas}</div>
   </div>
 </section>`;
 }
@@ -66,7 +66,7 @@ function cineCta(t) {
     <h2 id="cta-title" class="cine-cta-title" data-split>${esc(c.title)} <em>${esc(c.titleAccent)}</em></h2>
     <p${rv(200)}>${esc(c.body)}</p>
     <div class="btn-row center"${rv(300)}>
-      <a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" data-magnetic>${icon("chat")}${esc(c.wa)}</a>
+      <a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" data-magnetic>${icon("whatsapp")}${esc(c.wa)}</a>
       <a class="btn btn-ghost-light btn-lg" href="${href("stay", t.lang, "#reservar")}" data-magnetic>${esc(c.availability)}</a>
     </div>
   </div>
@@ -99,13 +99,13 @@ function bookingCard(t) {
       ${fld(q.date, `<input type="date" name="date">`)}
       ${fld(q.time, sel("time", timeOpts))}
       ${fld(q.people, sel("people", nOpts(10, 2)))}
-      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("chat")}${esc(q.submitTable)}</button>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitTable)}</button>
     </div>
     <div class="bc-row" id="bc-room" role="tabpanel" data-bc-panel="room" hidden>
       ${fld(q.checkIn, `<input type="date" name="checkIn">`)}
       ${fld(q.checkOut, `<input type="date" name="checkOut">`)}
       ${fld(q.guests, sel("guests", nOpts(6, 2)))}
-      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("chat")}${esc(q.submitRoom)}</button>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitRoom)}</button>
     </div>
     <p class="bc-error" role="alert" hidden data-bc-error></p>
     <p class="bc-note">${site.responseTime ? esc(site.responseTime[t.lang]) : esc(t.contact.responsePending)}${site.whatsapp ? "" : ` <strong class="pending">${esc(t.common.pendingWhatsapp)}.</strong>`}</p>
@@ -128,7 +128,7 @@ function field({ id, label, type = "text", name, attrs = "", hint = "", optional
 function formFooter(t, submitLabel) {
   return `<div class="form-errors" role="alert" hidden data-form-errors>${esc(t.form.errorsTitle)}</div>
     <div class="form-actions">
-      <button class="btn btn-terra btn-lg" type="submit">${icon("chat")}<span data-submit-label>${esc(submitLabel)}</span></button>
+      <button class="btn btn-terra btn-lg" type="submit">${icon("whatsapp")}<span data-submit-label>${esc(submitLabel)}</span></button>
       ${responseLine(t)}
     </div>
     <p class="form-note">${esc(t.form.note)}${site.whatsapp ? "" : ` <strong class="pending">${esc(t.common.pendingWhatsapp)}.</strong>`}</p>`;
@@ -171,21 +171,24 @@ function roomForm(t) {
 }
 
 // ---------- Shared blocks ----------
-function dishCards(t, { linkTo }) {
+function dishCard(t, d, attrs = "") {
   const L = t.lang;
-  return `<div class="dish-grid" data-dish-grid>${items
-    .map((d, i) => `<article class="dish" data-cat="${d.category}"${d.category !== categories[0].id ? " hidden" : ""}>
-      ${figure(t, d.image, { sizes: "(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw", ratio: "4/3" })}
+  return `<article class="dish"${attrs}>
+      ${figure(t, d.image, { sizes: "(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw", ratio: "4/3" })}
       <div class="dish-body">
         <p class="dish-tag">${esc(d.tag[L])}</p>
         <h3>${esc(d.name[L])}</h3>
         <p class="dish-desc">${esc(d.description[L])}</p>
         <div class="dish-foot">
           <span class="price">${d.price ? esc(d.price) : "$ —"}</span>
-          <a class="round-btn" href="${linkTo}" aria-label="${esc(t.common.bookTable)}: ${esc(d.name[L])}">${icon("arrow")}</a>
         </div>
       </div>
-    </article>`)
+    </article>`;
+}
+
+function dishCards(t) {
+  return `<div class="dish-grid" data-dish-grid>${items
+    .map((d) => dishCard(t, d, ` data-cat="${d.category}"${d.category !== categories[0].id ? " hidden" : ""}`))
     .join("")}</div>`;
 }
 
@@ -195,10 +198,10 @@ function dishTabs(t) {
     .join("")}</div>`;
 }
 
-function roomCards(t) {
+function roomCards(t, list, cls = "") {
   const L = t.lang;
   const h = t.home.rooms;
-  return `<div class="room-grid">${rooms
+  return `<div class="room-grid ${cls}">${list
     .map((r, i) => `<article class="room-card"${rv(i * 90)}>
       <a class="room-img" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">
         ${figure(t, r.images[0], { sizes: "(min-width: 1000px) 30vw, 92vw", ratio: "3/2" })}
@@ -267,7 +270,7 @@ function infoGrid(t) {
   return `<dl class="info-grid"${rv(160)}>
     <div>${icon("pin")}<dt>${esc(h.address)}</dt><dd>${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}</dd></div>
     <div>${icon("clock")}<dt>${esc(h.hours)}</dt><dd>${esc(h.restaurant)}: ${pend(hours, t.common.toConfirm)}<br>${esc(h.reception)}: ${pend(site.receptionHours && site.receptionHours[t.lang], t.common.toConfirm)}</dd></div>
-    <div>${icon("chat")}<dt>${esc(t.common.whatsapp)}</dt><dd>${site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`}</dd></div>
+    <div>${icon("whatsapp")}<dt>${esc(t.common.whatsapp)}</dt><dd>${site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`}</dd></div>
     <div>${icon("mail")}<dt>${esc(t.common.email)}</dt><dd>${site.email ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : `<span class="tbc">[email]</span>`}</dd></div>
   </dl>`;
 }
@@ -307,38 +310,35 @@ function galleryGrid(t, keys, cls = "") {
 
 // ================= HOME =================
 // Cinematic homepage: full-screen hero, scroll-driven statement, marquee, expanding panels,
-// pinned horizontal dishes, large room rows, sticky story, drawn timeline and a full-screen CTA.
+// the most chosen dishes and rooms (short rows that link to the full pages), sticky story,
+// drawn timeline and a full-screen CTA.
 export function home(t) {
   const L = t.lang;
   const H = t.home;
   const hero = H.hero;
-  const dishes = items.filter((d) => !d.placeholder);
+  const dishes = items.filter((d) => d.featured);
+  const topRooms = rooms.filter((r) => r.featured);
   const realReviews = H.reviews.items.filter((r) => !r.q.startsWith("["));
   const marquee = [...H.marquee, ...H.marquee].map((w) => `<span>${esc(w)}</span><i aria-hidden="true"></i>`).join("");
   const body = `
 <section class="cine-hero" aria-labelledby="hero-title">
   <div class="cine-slides" data-slides>
-    ${["heroSunset", "coastAerial", "palmsSea", "sunset"].map((k, i) => `<div class="slide${i === 0 ? " is-active" : ""}">${figure(t, k, { eager: i === 0, sizes: "100vw" })}</div>`).join("")}
+    ${["heroSunset", "coastSunset", "terrace", "coastAerial"].map((k, i) => `<div class="slide${i === 0 ? " is-active" : ""}">${figure(t, k, { eager: i === 0, sizes: "100vw" })}</div>`).join("")}
   </div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
-    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade style="--d:200ms">${hero.eyebrow.map((e) => `<span>${esc(e)}</span>`).join("")}</p>
+    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade>${hero.eyebrow.map((e) => `<span>${esc(e)}</span>`).join("")}</p>
     <h1 id="hero-title" class="cine-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
-    <p class="cine-lead" data-fade style="--d:900ms">${esc(hero.lead)}</p>
+    <p class="cine-lead" data-fade style="--d:300ms">${esc(hero.lead)}</p>
   </div>
-  <div class="wrap cine-bar" data-fade style="--d:1100ms">${bookingCard(t)}</div>
+  <div class="wrap cine-bar" data-fade style="--d:400ms">${bookingCard(t)}</div>
   <a class="scroll-cue" href="#manifesto" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a>
 </section>
 
 <section class="statement" id="manifesto" aria-label="${esc(H.two.eyebrow)}">
   <div class="wrap">
-    <p class="eyebrow" data-fade>${esc(H.two.eyebrow)}</p>
     <p class="statement-text" data-scrub>${esc(H.statement)}</p>
     <div class="statement-foot" data-fade>
-      <dl class="hero-stats">
-        <div><dt>${esc(hero.stat1[0])}</dt><dd>${esc(hero.stat1[1])}</dd></div>
-        <div><dt>${esc(hero.stat2[0])}</dt><dd>${esc(hero.stat2[1])}</dd></div>
-      </dl>
       ${badgeSvg(t)}
     </div>
   </div>
@@ -364,7 +364,7 @@ export function home(t) {
       </div>
     </a>
     <a class="world" href="${href("stay", L)}" data-cursor="${esc(t.common.learnMore)}">
-      ${figure(t, "palmsSea", { sizes: "(min-width: 900px) 60vw, 92vw", parallax: 0.08 })}
+      ${figure(t, "terrace", { sizes: "(min-width: 900px) 60vw, 92vw", parallax: 0.08 })}
       <div class="world-body">
         <span class="pill">${esc(H.two.stayLabel)}</span>
         <h3>${esc(H.two.stayTitle)}</h3>
@@ -375,40 +375,30 @@ export function home(t) {
   </div>
 </section>
 
-<section class="hscroll" data-hscroll aria-labelledby="dish-title">
-  <div class="hscroll-sticky">
-    <div class="hscroll-track" data-hscroll-track>
-      <div class="hs-intro">
-        <p class="eyebrow">${esc(H.dishes.eyebrow)}</p>
-        <h2 id="dish-title" class="title">${esc(H.dishes.title)}</h2>
+<section class="section featured-dishes" aria-labelledby="dish-title">
+  <div class="wrap">
+    <div class="split-head">
+      ${heading({ eyebrow: H.dishes.featured, title: H.dishes.title, id: "dish-title" })}
+      <div${rv(100)}>
         <p class="body-text">${esc(H.dishes.body)}</p>
-        <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}" data-magnetic>${esc(H.dishesCta)}${icon("arrow")}</a>
+        <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}">${esc(H.dishesCta)}${icon("arrow")}</a>
       </div>
-      ${dishes
-        .map((d, i) => `<a class="hs-card" href="${href("restaurant", L, "#ementa")}" data-cursor="${esc(t.common.viewMenu)}">
-        ${figure(t, d.image, { sizes: "(min-width: 900px) 30vw, 78vw", ratio: "4/5" })}
-        <span class="hs-num">0${i + 1}</span>
-        <span class="hs-tag">${esc(d.tag[L])}</span>
-        <h3>${esc(d.name[L])}</h3>
-        <p>${esc(d.description[L])}</p>
-      </a>`)
-        .join("")}
-      <a class="hs-end" href="${href("restaurant", L, "#reservar")}" data-cursor="${esc(H.hero.ctaTable)}">
-        <span class="hs-end-title">${esc(H.hero.ctaTable)}</span>${icon("arrow")}
-      </a>
     </div>
-    <div class="hs-progress" aria-hidden="true"><span data-hscroll-bar></span></div>
+    <div class="featured-row snap-row">${dishes.map((d) => dishCard(t, d)).join("")}</div>
   </div>
 </section>
 
-<section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
+<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
   ${HUT_DECO}
   <div class="wrap">
     <div class="split-head">
-      ${heading({ eyebrow: H.rooms.eyebrow, title: H.rooms.title, accent: H.rooms.titleAccent, id: "rooms-title" })}
-      <p class="body-text"${rv(100)}>${esc(H.rooms.body)}</p>
+      ${heading({ eyebrow: H.rooms.featured, title: H.rooms.title, accent: H.rooms.titleAccent, id: "rooms-title" })}
+      <div${rv(100)}>
+        <p class="body-text">${esc(H.rooms.body)}</p>
+        <a class="btn btn-cream" href="${href("stay", L, "#quartos")}">${esc(H.rooms.viewAll)}${icon("arrow")}</a>
+      </div>
     </div>
-    ${roomRows(t)}
+    ${roomCards(t, topRooms, "snap-row")}
   </div>
 </section>
 
@@ -466,7 +456,7 @@ ${cineCta(t)}`;
     description: t.meta.home.description,
     path: href("home", L),
     alt: href("home", other(L)),
-    preload: imgUrl("heroSunset", 1920),
+    preload: "heroSunset",
     hero: true,
     intro: true,
     body,
@@ -495,7 +485,7 @@ ${TAIS}
     ${heading({ eyebrow: t.home.dishes.eyebrow, title: t.restaurant.menuTitle, lead: t.home.dishes.body, id: "menu-title", center: true })}
     ${hasDemo ? `<p class="demo-notice"${rv()}>${esc(t.restaurant.demoNotice)}</p>` : ""}
     <div class="center-row"${rv(80)}>${dishTabs(t)}</div>
-    ${dishCards(t, { linkTo: "#reservar" })}
+    ${dishCards(t)}
   </div>
 </section>
 
@@ -517,7 +507,7 @@ ${cineCta(t)}`;
     description: t.meta.restaurant.description,
     path: href("restaurant", L),
     alt: href("restaurant", other(L)),
-    preload: imgUrl("foodSpread", 1920),
+    preload: "foodSpread",
     hero: true,
     ld: [bc.ld],
     body,
@@ -537,7 +527,7 @@ ${pageHero(t, {
   eyebrow: t.stay.eyebrow,
   title: t.home.two.stayTitle,
   lead: t.home.two.stayBody,
-  image: "roomSea",
+  image: "terrace",
   crumbs: bc.html,
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
 })}
@@ -568,7 +558,7 @@ ${pageHero(t, {
 <section class="section gallery-section" aria-labelledby="sg-title">
   <div class="wrap">
     ${heading({ eyebrow: t.gallery.eyebrow, title: t.gallery.title, id: "sg-title" })}
-    ${galleryGrid(t, ["verandaWicker", "roomGarden", "coastAerial", "verandaBamboo"], "gallery-4")}
+    ${galleryGrid(t, ["terrace", "roomGarden", "verandaBamboo", "roomFamily"], "gallery-4")}
   </div>
 </section>`;
   return {
@@ -577,7 +567,7 @@ ${pageHero(t, {
     description: t.meta.stay.description,
     path: href("stay", L),
     alt: href("stay", other(L)),
-    preload: imgUrl("roomSea", 1920),
+    preload: "terrace",
     hero: true,
     ld: [bc.ld],
     body,
@@ -605,7 +595,7 @@ ${pageHero(t, {
   lead: r.summary[L],
   image: r.images[0],
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(t.common.whatsapp)}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
 })}
 
 <section class="section">
@@ -624,7 +614,7 @@ ${pageHero(t, {
   ${HUT_DECO}
   <div class="wrap">
     ${heading({ eyebrow: H.eyebrow, title: t.stay.otherRooms, id: "other-title" })}
-    ${roomCards(t)}
+    ${roomCards(t, rooms.filter((x) => x.id !== r.id))}
   </div>
 </section>`;
   return {
@@ -633,7 +623,7 @@ ${pageHero(t, {
     description: fmt(t.meta.room.description, { room: name }),
     path: href("room:" + r.id, L),
     alt: href("room:" + r.id, other(L)),
-    preload: imgUrl(r.images[0], 1920),
+    preload: r.images[0],
     hero: true,
     ld: [bc.ld],
     body,
@@ -651,9 +641,9 @@ ${pageHero(t, {
   title: t.home.location.title,
   accent: t.home.location.titleAccent,
   lead: t.home.location.body,
-  image: "coastAerial",
+  image: "coastSunset",
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
 })}
 
 <section class="section location" aria-labelledby="loc2-title">
@@ -683,7 +673,7 @@ ${cineCta(t)}`;
     description: t.meta.contact.description,
     path: href("contact", L),
     alt: href("contact", other(L)),
-    preload: imgUrl("coastAerial", 1920),
+    preload: "coastSunset",
     hero: true,
     ld: [bc.ld, faqLd(t)],
     body,
@@ -701,7 +691,7 @@ export function thanks(t) {
     <h1 class="title">${esc(t.thanks.title)}</h1>
     <p class="lead" data-thanks-body data-table="${esc(t.thanks.tableBody)}" data-room="${esc(t.thanks.roomBody)}">${esc(t.thanks.genericBody)}</p>
     <div class="btn-row center">
-      <a class="btn btn-terra btn-lg" href="${waLink()}" target="_blank" rel="noopener" data-thanks-reopen>${icon("chat")}${esc(t.thanks.reopen)}</a>
+      <a class="btn btn-terra btn-lg" href="${waLink()}" target="_blank" rel="noopener" data-thanks-reopen>${icon("whatsapp")}${esc(t.thanks.reopen)}</a>
       <a class="btn btn-outline btn-lg" href="${href("home", L)}">${esc(t.thanks.back)}</a>
     </div>
     ${responseLine(t)}

@@ -1,5 +1,5 @@
 // Page shell shared by every page: <head> with SEO tags, header, footer, global UI and scripts.
-import { esc, href, absUrl, site, icon, waLink, hoursList, LANGS, usesPlaceholderImages } from "./lib.mjs";
+import { esc, href, absUrl, site, icon, waLink, hoursList, LANGS, usesPlaceholderImages, preloadImage } from "./lib.mjs";
 
 const stroke = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
 const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -7,7 +7,7 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" ${stroke}/></symbol>
     <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" ${stroke}/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" ${stroke}/></symbol>
-    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L3.5 20.5l1.4-4.6A8.4 8.4 0 1 1 20.5 11.6Z" ${stroke}/><path d="M9 9.2c.2 1.9 2.1 4.2 4.4 5 .6.2 1.3-.4 1.6-.9l-1.4-1-1 .6c-.9-.4-1.8-1.3-2.2-2.2l.6-1-1-1.4c-.5.3-1.1.6-1 1Z" fill="currentColor"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.59-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" ${stroke}/><path d="M12 7.5V12l3 2" ${stroke}/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" ${stroke}/><circle cx="12" cy="10" r="2.3" ${stroke}/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.4 4-2 1.4a11 11 0 0 0 6.5 6.5l1.4-2 4 1.4v2.6a2 2 0 0 1-2.2 2A16 16 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2Z" ${stroke}/></symbol>
@@ -95,7 +95,6 @@ function header(t, page, alt) {
   const nav = [
     link("restaurant", t.nav.restaurant),
     link("stay", t.nav.stay),
-    link("home", t.nav.experiences, "#experiencias"),
     link("home", t.nav.story, "#historia"),
     link("contact", t.nav.contact),
   ].join("");
@@ -136,7 +135,7 @@ function footer(t) {
   const L = t.lang;
   const year = new Date().getFullYear();
   const contacts = [
-    `<li><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}<span>${esc(t.common.whatsapp)}${site.whatsapp ? "" : ` — ${esc(t.common.toConfirm)}`}</span></a></li>`,
+    `<li><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}<span>${esc(t.common.whatsapp)}${site.whatsapp ? "" : ` — ${esc(t.common.toConfirm)}`}</span></a></li>`,
     site.phone ? `<li><a href="tel:${esc(site.phone.replace(/\s/g, ""))}">${icon("phone")}<span>${esc(site.phone)}</span></a></li>` : "",
     site.email ? `<li><a href="mailto:${esc(site.email)}">${icon("mail")}<span>${esc(site.email)}</span></a></li>` : "",
     `<li><a href="${href("contact", L)}">${icon("pin")}<span>${esc(site.address.locality)}, ${esc(site.address.region)}</span></a></li>`,
@@ -183,7 +182,7 @@ function footer(t) {
  * @param {object} t        strings for the page language
  * @param {object} o        page options
  *   page     route key (for aria-current), alt: same page in the other language
- *   title, description, path, robots, ld (extra JSON-LD objects), preload (hero image url), body (main HTML)
+ *   title, description, path, robots, ld (extra JSON-LD objects), preload (hero image key), body (main HTML)
  */
 export function layout(t, o) {
   const L = t.lang;
@@ -224,7 +223,7 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-${o.preload ? `<link rel="preload" as="image" href="${o.preload}" fetchpriority="high">` : ""}
+${o.preload ? preloadImage(o.preload) : ""}
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/cinema.css">
 ${jsonLd(businessLd(t))}
@@ -252,9 +251,9 @@ ${footer(t)}
 <div class="mobile-bar" data-mobile-bar>
   <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
   <a class="btn btn-terra" href="${href("stay", L, "#reservar")}">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
-  <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("chat")}</a>
+  <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 </div>
-<a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("chat")}</a>
+<a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 <dialog class="lightbox" data-lightbox aria-label="${esc(t.gallery.label)}">
   <button class="icon-btn lb-close" type="button" aria-label="${esc(t.common.close)}" data-lb-close>${icon("close")}</button>
   <button class="icon-btn lb-prev" type="button" aria-label="${esc(t.common.previous)}" data-lb-prev>${icon("left")}</button>

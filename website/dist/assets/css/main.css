@@ -128,11 +128,6 @@ em { font-style: italic; color: var(--terra); }
 .btn-row.center { justify-content: center; }
 .icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 0; background: transparent; cursor: pointer; color: inherit; }
 .icon-btn .icon { width: 22px; height: 22px; }
-.round-btn {
-  display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
-  background: var(--sand); color: var(--ink); transition: background-color 0.25s, color 0.25s, transform 0.3s var(--ease);
-}
-.round-btn:hover { background: var(--forest); color: var(--cream); transform: translateX(2px); }
 .pill {
   display: inline-flex; align-items: center; padding: 0.35rem 0.85rem; border-radius: 999px;
   background: var(--cream); color: var(--ink); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
@@ -174,7 +169,7 @@ em { font-style: italic; color: var(--terra); }
 .brand-light .brand-mark { color: var(--cream); }
 .brand-light .brand-line { color: rgba(246, 240, 228, 0.6); }
 .nav-main { display: flex; gap: 2rem; margin-left: auto; }
-.nav-main a { position: relative; font-size: 0.95rem; font-weight: 500; color: var(--ink); text-decoration: none; padding: 0.35rem 0; }
+.nav-main a { position: relative; font-size: 0.95rem; font-weight: 500; color: var(--ink); text-decoration: none; padding: 0.35rem 0; white-space: nowrap; }
 .nav-main a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--terra); transform: scaleX(0); transform-origin: left; transition: transform 0.35s var(--ease); }
 .nav-main a:hover::after, .nav-main a[aria-current="page"]::after { transform: scaleX(1); }
 .header-actions { display: flex; align-items: center; gap: 1rem; margin-left: 1rem; }
@@ -208,10 +203,6 @@ a.lang-opt:hover { color: var(--ink); }
 .hero { padding-top: clamp(2rem, 4vw, 3.5rem); padding-bottom: clamp(3rem, 6vw, 5rem); }
 .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 .hero-text .lead { margin-top: 1.7rem; max-width: 30em; }
-.hero-stats { display: flex; gap: 2rem; margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1px solid var(--line-strong); }
-.hero-stats div + div { padding-left: 2rem; border-left: 1px solid var(--line-strong); }
-.hero-stats dt { font-family: var(--serif); font-size: 1.45rem; color: var(--ink); line-height: 1.2; }
-.hero-stats dd { font-size: 0.85rem; color: var(--muted); }
 .hero-visual { position: relative; }
 .hero-img { aspect-ratio: 1.12; border-radius: 42% 28px 28px 28px / 32% 28px 28px 28px; box-shadow: var(--shadow); }
 .hero-img img { animation: heroZoom 2.2s var(--ease) both; }
@@ -311,7 +302,7 @@ a.lang-opt:hover { color: var(--ink); }
 .rooms-dark em { color: var(--gold-soft); }
 .rooms-dark .body-text { color: rgba(246, 240, 228, 0.78); }
 .hut-deco { position: absolute; right: -2%; top: 2rem; width: clamp(180px, 22vw, 300px); color: rgba(246, 240, 228, 0.05); pointer-events: none; }
-.room-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.5rem); }
+.room-grid { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1rem, 2vw, 1.5rem); }
 .room-card { display: flex; flex-direction: column; background: var(--forest-2); border-radius: var(--r); overflow: hidden; border: 1px solid var(--line-light); }
 .room-img { position: relative; display: block; }
 .room-img .media img { transition: transform 1.1s var(--ease); }
@@ -568,11 +559,15 @@ html.lenis, html.lenis body { height: auto; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 1020px) {
+/* Below this width the four links, language switch and booking button no longer fit on one line. */
+@media (max-width: 1100px) {
   :root { --header-h: 72px; }
   .nav-main, .book-menu, .header-actions > .lang { display: none; }
   .nav-toggle { display: inline-grid; }
   .header-actions { margin-left: auto; }
+}
+
+@media (max-width: 1020px) {
   .bc-row { grid-template-columns: 1fr 1fr; }
   .bc-row .bc-field:first-child { grid-column: 1 / -1; }
   .bc-submit { grid-column: 1 / -1; min-height: 54px; }
@@ -613,8 +608,6 @@ html.lenis, html.lenis body { height: auto; }
   .badge-spin { right: auto; bottom: auto; left: -10px; top: -26px; width: 86px; }
   .eyebrow { font-size: 0.66rem; letter-spacing: 0.16em; gap: 0.55rem; }
   .eyebrow-dots span + span::before { margin-right: 0.55rem; }
-  .hero-stats { gap: 1.2rem; }
-  .hero-stats div + div { padding-left: 1.2rem; }
   .hero-chip { left: 3%; bottom: 5%; }
   .bc-tabs button { flex: 1; justify-content: center; padding-inline: 0.6rem; font-size: 0.8rem; white-space: nowrap; }
   .bc-tabs button .icon { display: none; }

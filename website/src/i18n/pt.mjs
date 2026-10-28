@@ -96,8 +96,6 @@ export default {
       lead: "Uma mesa com vista para o mar, um quarto para descansar ao som das ondas e a hospitalidade de Timor-Leste. No Lauhata não se vem só comer ou dormir — vem-se ficar.",
       ctaTable: "Reservar mesa",
       ctaRoom: "Reservar quarto",
-      stat1: ["Restaurante", "Cozinha timorense & do mar"],
-      stat2: ["Alojamento", "Quartos junto ao mar"],
       badge: "Lauhata · comer · dormir · ficar · ",
       chipEyebrow: "Todas as tardes",
       chipTitle: "Jantar ao pôr do sol",
@@ -151,6 +149,7 @@ export default {
       title: "Pratos da casa",
       body: "Peixe que chega do mar de Liquiçá, legumes das hortas da região e receitas que passam de geração em geração.",
       fullMenu: "Ver menu completo",
+      featured: "Os mais escolhidos",
       tabsLabel: "Categorias da ementa",
     },
     rooms: {
@@ -161,6 +160,8 @@ export default {
       from: "Desde",
       night: "/ noite",
       book: "Reservar",
+      featured: "Os mais escolhidos",
+      viewAll: "Ver todos os quartos",
     },
     story: {
       eyebrow: "A nossa história",
@@ -216,7 +217,7 @@ export default {
       titleAccent: "está à espera.",
       body: "Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.",
       wa: "Falar no WhatsApp",
-      availability: "Ver disponibilidade",
+      availability: "Pedir um quarto",
     },
   },
 

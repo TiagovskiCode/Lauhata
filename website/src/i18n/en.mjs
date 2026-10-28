@@ -96,8 +96,6 @@ export default {
       lead: "A table looking out to sea, a room to rest to the sound of the waves and the hospitality of Timor-Leste. People don't just come to Lauhata to eat or sleep — they come to stay.",
       ctaTable: "Book a table",
       ctaRoom: "Book a room",
-      stat1: ["Restaurant", "Timorese & seafood cooking"],
-      stat2: ["Stay", "Rooms by the sea"],
       badge: "Lauhata · eat · sleep · stay · ",
       chipEyebrow: "Every evening",
       chipTitle: "Dinner at sunset",
@@ -151,6 +149,7 @@ export default {
       title: "House dishes",
       body: "Fish fresh from the Liquiçá sea, vegetables from local gardens and recipes passed down through generations.",
       fullMenu: "See the full menu",
+      featured: "Most chosen",
       tabsLabel: "Menu categories",
     },
     rooms: {
@@ -161,6 +160,8 @@ export default {
       from: "From",
       night: "/ night",
       book: "Book",
+      featured: "Most chosen",
+      viewAll: "See all rooms",
     },
     story: {
       eyebrow: "Our story",
@@ -216,7 +217,7 @@ export default {
       titleAccent: "is waiting.",
       body: "Book in seconds on WhatsApp. Groups, birthdays and events — get in touch.",
       wa: "Chat on WhatsApp",
-      availability: "Check availability",
+      availability: "Request a room",
     },
   },
 

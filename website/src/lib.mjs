@@ -36,16 +36,42 @@ export const outFile = (path) => (path.endsWith(".html") ? path.slice(1) : path.
 
 // ---------- Images ----------
 const WIDTHS = [480, 768, 1080, 1440, 1920];
+// Local photos ("foto:<slug>") are pre-sized by tools/otimizar-fotos.ps1 into these widths.
+const FOTO_WIDTHS = [640, 1080, 1600];
 
 function srcFor(src, w) {
   if (src.startsWith("unsplash:")) {
     return `https://images.unsplash.com/photo-${src.slice(9)}?auto=format&fit=crop&w=${w}&q=72`;
   }
+  if (src.startsWith("foto:")) {
+    const size = FOTO_WIDTHS.find((fw) => fw >= w) || FOTO_WIDTHS.at(-1);
+    return `/assets/img/fotos/${src.slice(5)}-${size}.jpg`;
+  }
   return src;
+}
+
+// srcset candidates; a local photo narrower than a size is described by its real width.
+function srcsetFor(im) {
+  if (im.src.startsWith("unsplash:")) return WIDTHS.map((w) => `${srcFor(im.src, w)} ${w}w`).join(", ");
+  if (im.src.startsWith("foto:")) {
+    const seen = new Set();
+    return FOTO_WIDTHS.map((w) => [w, Math.min(w, im.width)])
+      .filter(([, real]) => !seen.has(real) && seen.add(real))
+      .map(([w, real]) => `${srcFor(im.src, w)} ${real}w`)
+      .join(", ");
+  }
+  return "";
 }
 
 export function imgUrl(key, w = 1200) {
   return srcFor(images[key].src, w);
+}
+
+// <link rel="preload"> for a full-width hero, with the same candidates as its <img>.
+export function preloadImage(key) {
+  const im = images[key];
+  const srcset = srcsetFor(im);
+  return `<link rel="preload" as="image" href="${srcFor(im.src, 1440)}"${srcset ? ` imagesrcset="${srcset}" imagesizes="100vw"` : ""} fetchpriority="high">`;
 }
 
 // True while any illustrative stock photo is still in use: the footer then shows one notice
@@ -60,8 +86,7 @@ export const usesPlaceholderImages = () => site.showPlaceholderNotes && Object.v
 export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0 } = {}) {
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
-  const isRemote = im.src.startsWith("unsplash:");
-  const srcset = isRemote ? WIDTHS.map((w) => `${srcFor(im.src, w)} ${w}w`).join(", ") : "";
+  const srcset = srcsetFor(im);
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
   return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}"${style}${attrs ? " " + attrs : ""}>
   <img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${esc(im.alt[t.lang])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
