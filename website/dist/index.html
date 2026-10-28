@@ -27,15 +27,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1440&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1920&q=72" fetchpriority="high">
 <link rel="stylesheet" href="./assets/css/main.css">
+<link rel="stylesheet" href="./assets/css/cinema.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
 
 <script>window.LAUHATA={"lang":"pt","whatsapp":"","thanks":"./obrigado/","i18n":{"form":{"name":"Nome","contact":"Telefone ou email","contactHint":"Para o Lauhata o poder contactar.","date":"Data","time":"Hora","people":"Número de pessoas","checkIn":"Entrada (check-in)","checkOut":"Saída (check-out)","guests":"Número de hóspedes","roomType":"Tipo de quarto","roomAny":"Sem preferência","notes":"Observações","optional":"opcional","notesPlaceholder":"Ocasião especial, alergias, hora de chegada…","submitTable":"Enviar pedido por WhatsApp","submitRoom":"Enviar pedido por WhatsApp","note":"Ao enviar, abre-se o WhatsApp com a mensagem preenchida. Não é feito nenhum pagamento e nada fica confirmado até o Lauhata responder.","sending":"A abrir o WhatsApp…","errorsTitle":"Verifique os campos assinalados.","errors":{"required":"Preencha este campo.","name":"Indique o seu nome.","contact":"Indique um telefone ou email válido.","date":"Escolha uma data a partir de hoje.","time":"Escolha uma hora.","people":"Indique um número entre 1 e 50.","guests":"Indique um número entre 1 e 20.","checkIn":"Escolha uma data de entrada a partir de hoje.","checkOut":"A saída tem de ser depois da entrada."},"waTable":"Olá! Gostaria de pedir uma reserva de mesa no restaurante do Lauhata.\n\nNome: {name}\nData: {date}\nHora: {time}\nPessoas: {people}\nContacto: {contact}{notes}\n\nAguardo a vossa confirmação. Obrigado!","waRoom":"Olá! Gostaria de pedir uma reserva de alojamento no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\nQuarto: {room}\nNome: {name}\nContacto: {contact}{notes}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","waNotes":"\nObservações: {notes}","waQuickTable":"Olá! Gostaria de pedir uma mesa no restaurante do Lauhata.\n\nData: {date}\nHora: {time}\nPessoas: {people}\n\nAguardo a vossa confirmação. Obrigado!","waQuickRoom":"Olá! Gostaria de pedir um quarto no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","nightsOne":"1 noite","nightsMany":"{n} noites","waHello":"Olá! Gostaria de saber mais sobre o Lauhata."},"common":{"placeholderImage":"Imagem ilustrativa","toConfirm":"A confirmar","hoursTbc":"Horário a confirmar","whatsapp":"WhatsApp","phone":"Telefone","email":"Email","address":"Morada","learnMore":"Saber mais","viewMenu":"Ver ementa","viewStay":"Ver alojamento","viewRoom":"Ver quarto","bookTable":"Reservar mesa","requestRoom":"Pedir reserva de quarto","directions":"Como chegar","openMaps":"Abrir no Google Maps","seeReviews":"Ver avaliações","close":"Fechar","previous":"Anterior","next":"Seguinte","pendingWhatsapp":"Número de WhatsApp por configurar"}}};</script>
 <script src="./assets/js/main.js" defer></script>
 
 </head>
-<body>
+<body class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -71,6 +72,13 @@
     </symbol>
   </defs>
 </svg>
+<div class="intro" data-intro aria-hidden="true">
+  <svg class="intro-mark"><use href="#i-hut"></use></svg>
+  <p class="intro-name"><span style="--i:0">L</span><span style="--i:1">a</span><span style="--i:2">u</span><span style="--i:3">h</span><span style="--i:4">a</span><span style="--i:5">t</span><span style="--i:6">a</span></p>
+  <p class="intro-line">Restaurante &amp; Hotel · Liquiçá</p>
+</div>
+<script>try{if(sessionStorage.getItem("lauhata-intro")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("no-intro");sessionStorage.setItem("lauhata-intro","1")}catch(e){}</script>
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">Saltar para o conteúdo</a>
 <header class="site-header" data-header>
   <div class="wrap header-inner">
@@ -117,39 +125,25 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="hero" aria-labelledby="hero-title">
-  <div class="wrap hero-grid">
-    <div class="hero-text">
-      <p class="eyebrow eyebrow-dots hero-in"><span>Liquiçá</span><span>Timor-Leste</span><span>Mar &amp; montanha</span></p>
-      <h1 id="hero-title" class="title-hero hero-in" style="--d:120ms"><span class="line">Onde o mar</span> <span class="line"><em>abranda</em> o tempo.</span></h1>
-      <p class="lead hero-in" style="--d:240ms">Uma mesa com vista para o mar, um quarto para descansar ao som das ondas e a hospitalidade de Timor-Leste. No Lauhata não se vem só comer ou dormir — vem-se ficar.</p>
-      <div class="btn-row hero-in" style="--d:340ms">
-        <a class="btn btn-dark btn-lg" href="./restaurante/#reservar">Reservar mesa<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        <a class="btn btn-outline btn-lg" href="./alojamento/#reservar">Reservar quarto<svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg></a>
-      </div>
-      <dl class="hero-stats hero-in" style="--d:440ms">
-        <div><dt>Restaurante</dt><dd>Cozinha timorense &amp; do mar</dd></div>
-        <div><dt>Alojamento</dt><dd>Quartos junto ao mar</dd></div>
-      </dl>
-    </div>
-    <div class="hero-visual hero-in" style="--d:160ms">
-      <figure class="media hero-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Mesa posta com lanterna e copos, junto ao mar ao pôr do sol" fetchpriority="high" decoding="async">
-</figure>
-      <div class="badge-spin" aria-hidden="true">
-    <svg viewBox="0 0 120 120"><defs><path id="badge-c-pt" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>
-      <circle cx="60" cy="60" r="58" fill="#FEFDF8"/>
-      <text font-size="9" font-weight="600" fill="#0F2E28"><textPath href="#badge-c-pt" textLength="274" lengthAdjust="spacing">LAUHATA · COMER · DORMIR · FICAR · </textPath></text>
-    </svg>
-    <svg class="badge-hut"><use href="#i-hut"></use></svg>
+<section class="cine-hero" aria-labelledby="hero-title">
+  <div class="cine-slides" data-slides>
+    <div class="slide is-active"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1639244132045-94c307ff4bfc?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Mesa posta com lanterna e copos, junto ao mar ao pôr do sol" fetchpriority="high" decoding="async">
+</figure></div><div class="slide"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Vista aérea de mar turquesa e recife junto à costa" loading="lazy" decoding="async">
+</figure></div><div class="slide"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Palmeiras sobre mar turquesa" loading="lazy" decoding="async">
+</figure></div><div class="slide"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Pôr do sol sobre o mar" loading="lazy" decoding="async">
+</figure></div>
   </div>
-      <div class="hero-chip">
-        <span class="hero-chip-icon"><svg class="icon" aria-hidden="true"><use href="#i-sunset"></use></svg></span>
-        <span><small>Todas as tardes</small><strong>Jantar ao pôr do sol</strong></span>
-      </div>
-    </div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade style="--d:200ms"><span>Liquiçá</span><span>Timor-Leste</span><span>Mar &amp; montanha</span></p>
+    <h1 id="hero-title" class="cine-title" data-split><span class="line">Onde o mar</span> <span class="line"><em>abranda</em> o tempo.</span></h1>
+    <p class="cine-lead" data-fade style="--d:900ms">Uma mesa com vista para o mar, um quarto para descansar ao som das ondas e a hospitalidade de Timor-Leste. No Lauhata não se vem só comer ou dormir — vem-se ficar.</p>
   </div>
-  <div class="wrap booking-wrap hero-in" style="--d:520ms"><form class="booking-card" data-quick-wa novalidate aria-label="Pedido rápido de reserva">
+  <div class="wrap cine-bar" data-fade style="--d:1100ms"><form class="booking-card" data-quick-wa novalidate aria-label="Pedido rápido de reserva">
     <div class="bc-tabs" role="tablist">
       <button type="button" role="tab" aria-selected="true" aria-controls="bc-table" data-bc-tab="table"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Mesa no restaurante</button>
       <button type="button" role="tab" aria-selected="false" aria-controls="bc-room" data-bc-tab="room"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Quarto</button>
@@ -169,16 +163,32 @@
     <p class="bc-error" role="alert" hidden data-bc-error></p>
     <p class="bc-note">Confirmamos a sua reserva pelo WhatsApp — normalmente em poucos minutos. <strong class="pending">Número de WhatsApp por configurar.</strong></p>
   </form></div>
+  <a class="scroll-cue" href="#manifesto" aria-label="Descer"><span>Descer</span><i aria-hidden="true"></i></a>
 </section>
 
-<div class="tais" aria-hidden="true"></div>
-<section class="features" aria-label="Um lugar, duas formas de o viver">
-  <ul class="wrap features-grid">
-    <li data-reveal><span class="ring"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg></span><div><h3>Cozinha local</h3><p>Peixe fresco e produto da região.</p></div></li><li data-reveal style="--d:70ms"><span class="ring"><svg class="icon" aria-hidden="true"><use href="#i-waves"></use></svg></span><div><h3>Vista para o mar</h3><p>Almoço e jantar com a costa à frente.</p></div></li><li data-reveal style="--d:140ms"><span class="ring"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg></span><div><h3>Quartos tranquilos</h3><p>Descanso longe do ruído da cidade.</p></div></li><li data-reveal style="--d:210ms"><span class="ring"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg></span><div><h3>Hospitalidade timorense</h3><p>Recebemos como se recebe família.</p></div></li>
-  </ul>
+<section class="statement" id="manifesto" aria-label="Um lugar, duas formas de o viver">
+  <div class="wrap">
+    <p class="eyebrow" data-fade>Um lugar, duas formas de o viver</p>
+    <p class="statement-text" data-scrub>Um restaurante aberto ao público e um pequeno hotel à beira-mar, na costa de Liquiçá. Vem-se pelo jantar, pelo peixe na brasa e pelo pôr do sol — e fica-se pela manhã.</p>
+    <div class="statement-foot" data-fade>
+      <dl class="hero-stats">
+        <div><dt>Restaurante</dt><dd>Cozinha timorense &amp; do mar</dd></div>
+        <div><dt>Alojamento</dt><dd>Quartos junto ao mar</dd></div>
+      </dl>
+      <div class="badge-spin" aria-hidden="true">
+    <svg viewBox="0 0 120 120"><defs><path id="badge-c-pt" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>
+      <circle cx="60" cy="60" r="58" fill="#FEFDF8"/>
+      <text font-size="9" font-weight="600" fill="#0F2E28"><textPath href="#badge-c-pt" textLength="274" lengthAdjust="spacing">LAUHATA · COMER · DORMIR · FICAR · </textPath></text>
+    </svg>
+    <svg class="badge-hut"><use href="#i-hut"></use></svg>
+  </div>
+    </div>
+  </div>
 </section>
 
-<section class="section two-ways" aria-labelledby="two-title">
+<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Peixe na brasa</span><i aria-hidden="true"></i><span>Pôr do sol</span><i aria-hidden="true"></i><span>Café de Timor</span><i aria-hidden="true"></i><span>Quartos junto ao mar</span><i aria-hidden="true"></i><span>Liquiçá</span><i aria-hidden="true"></i><span>Mai, han, toba</span><i aria-hidden="true"></i><span>Peixe na brasa</span><i aria-hidden="true"></i><span>Pôr do sol</span><i aria-hidden="true"></i><span>Café de Timor</span><i aria-hidden="true"></i><span>Quartos junto ao mar</span><i aria-hidden="true"></i><span>Liquiçá</span><i aria-hidden="true"></i><span>Mai, han, toba</span><i aria-hidden="true"></i></div></div>
+
+<section class="section worlds-section" aria-labelledby="two-title">
   <div class="wrap">
     <div class="split-head">
       <header class="heading " data-reveal>
@@ -188,128 +198,84 @@
   </header>
       <p class="body-text" data-reveal style="--d:100ms">O Lauhata junta um restaurante aberto ao público e um pequeno hotel à beira-mar. Pode vir só para uma refeição — ou transformar a refeição numa estadia.</p>
     </div>
-    <div class="two-grid">
-      <a class="feature-card" href="./restaurante/#ementa" data-reveal>
-        <figure class="media  is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Pratos servidos sobre folha de bananeira" loading="lazy" decoding="async">
+  </div>
+  <div class="wrap worlds">
+    <a class="world" href="./restaurante/" data-cursor="Saber mais">
+      <figure class="media  has-parallax">
+  <img src="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 60vw, 92vw" alt="Pratos servidos sobre folha de bananeira" loading="lazy" decoding="async" data-parallax="0.08">
 </figure>
-        <div class="feature-card-body">
-          <span class="pill">Restaurante</span>
-          <h3>Sabores de Timor, servidos com vista para o mar</h3>
-          <p>Peixe do dia na brasa, receitas tradicionais e café das montanhas de Timor. Almoço, pôr do sol e jantar.</p>
-          <span class="gold-link">Ver o menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
-        </div>
-      </a>
-      <a class="feature-card" href="./alojamento/" data-reveal style="--d:100ms">
-        <figure class="media  is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Palmeiras sobre mar turquesa" loading="lazy" decoding="async">
+      <div class="world-body">
+        <span class="pill">Restaurante</span>
+        <h3>Sabores de Timor, servidos com vista para o mar</h3>
+        <p>Peixe do dia na brasa, receitas tradicionais e café das montanhas de Timor. Almoço, pôr do sol e jantar.</p>
+        <span class="gold-link">Ver o menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+      </div>
+    </a>
+    <a class="world" href="./alojamento/" data-cursor="Saber mais">
+      <figure class="media  has-parallax">
+  <img src="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 60vw, 92vw" alt="Palmeiras sobre mar turquesa" loading="lazy" decoding="async" data-parallax="0.08">
 </figure>
-        <div class="feature-card-body">
-          <span class="pill">Alojamento</span>
-          <h3>Quartos para acordar com o mar à janela</h3>
-          <p>Calma, conforto e o som das ondas. Um ponto de partida para descobrir Liquiçá e a costa norte de Timor-Leste.</p>
-          <span class="gold-link">Ver os quartos<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
-        </div>
-      </a>
-    </div>
+      <div class="world-body">
+        <span class="pill">Alojamento</span>
+        <h3>Quartos para acordar com o mar à janela</h3>
+        <p>Calma, conforto e o som das ondas. Um ponto de partida para descobrir Liquiçá e a costa norte de Timor-Leste.</p>
+        <span class="gold-link">Ver os quartos<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
+      </div>
+    </a>
   </div>
 </section>
 
-<section class="section dishes" aria-labelledby="dish-title">
-  <div class="wrap">
-    <header class="heading is-center " data-reveal>
-    <p class="eyebrow eyebrow-lines">Da nossa cozinha</p>
-    <h2 id="dish-title" class="title">Pratos da casa</h2>
-    <p class="lead">Peixe que chega do mar de Liquiçá, legumes das hortas da região e receitas que passam de geração em geração.</p>
-  </header>
-    <div class="center-row" data-reveal style="--d:80ms"><div class="seg" role="tablist" aria-label="Categorias da ementa" data-dish-tabs><button type="button" role="tab" aria-selected="true" data-dish-tab="sea">Do mar</button><button type="button" role="tab" aria-selected="false" data-dish-tab="land">Da terra</button><button type="button" role="tab" aria-selected="false" data-dish-tab="sweet">Doces &amp; café</button></div></div>
-    <div class="dish-grid" data-dish-grid><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Peixe grelhado sobre folha de bananeira" loading="lazy" decoding="async">
+<section class="hscroll" data-hscroll aria-labelledby="dish-title">
+  <div class="hscroll-sticky">
+    <div class="hscroll-track" data-hscroll-track>
+      <div class="hs-intro">
+        <p class="eyebrow">Da nossa cozinha</p>
+        <h2 id="dish-title" class="title">Pratos da casa</h2>
+        <p class="body-text">Peixe que chega do mar de Liquiçá, legumes das hortas da região e receitas que passam de geração em geração.</p>
+        <a class="btn btn-dark" href="./restaurante/#ementa" data-magnetic>Ver a ementa toda<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+      <a class="hs-card" href="./restaurante/#ementa" data-cursor="Ver ementa">
+        <figure class="media " style="--ratio:4/5">
+  <img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 78vw" alt="Peixe grelhado sobre folha de bananeira" loading="lazy" decoding="async">
 </figure>
-      <div class="dish-body">
-        <p class="dish-tag">Assinatura</p>
+        <span class="hs-num">01</span>
+        <span class="hs-tag">Assinatura</span>
         <h3>Ikan sabuko na brasa</h3>
-        <p class="dish-desc">Peixe do dia grelhado em carvão, com budu de tomate e lima.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-          <a class="round-btn" href="./restaurante/#reservar" aria-label="Reservar mesa: Ikan sabuko na brasa"><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        </div>
-      </div>
-    </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Peixe embrulhado em folha de bananeira na grelha" loading="lazy" decoding="async">
+        <p>Peixe do dia grelhado em carvão, com budu de tomate e lima.</p>
+      </a><a class="hs-card" href="./restaurante/#ementa" data-cursor="Ver ementa">
+        <figure class="media " style="--ratio:4/5">
+  <img src="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 78vw" alt="Peixe embrulhado em folha de bananeira na grelha" loading="lazy" decoding="async">
 </figure>
-      <div class="dish-body">
-        <p class="dish-tag">Do mar</p>
+        <span class="hs-num">02</span>
+        <span class="hs-tag">Do mar</span>
         <h3>Peixe em folha de bananeira</h3>
-        <p class="dish-desc">Cozinhado lentamente com gengibre, açafrão e coco.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-          <a class="round-btn" href="./restaurante/#reservar" aria-label="Reservar mesa: Peixe em folha de bananeira"><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        </div>
-      </div>
-    </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Lulas grelhadas num prato" loading="lazy" decoding="async">
+        <p>Cozinhado lentamente com gengibre, açafrão e coco.</p>
+      </a><a class="hs-card" href="./restaurante/#ementa" data-cursor="Ver ementa">
+        <figure class="media " style="--ratio:4/5">
+  <img src="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 78vw" alt="Lulas grelhadas num prato" loading="lazy" decoding="async">
 </figure>
-      <div class="dish-body">
-        <p class="dish-tag">Do mar</p>
+        <span class="hs-num">03</span>
+        <span class="hs-tag">Do mar</span>
         <h3>Lulas grelhadas</h3>
-        <p class="dish-desc">Com malagueta da casa, alho e arroz branco.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-          <a class="round-btn" href="./restaurante/#reservar" aria-label="Reservar mesa: Lulas grelhadas"><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        </div>
-      </div>
-    </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Caril de camarão num prato" loading="lazy" decoding="async">
+        <p>Com malagueta da casa, alho e arroz branco.</p>
+      </a><a class="hs-card" href="./restaurante/#ementa" data-cursor="Ver ementa">
+        <figure class="media " style="--ratio:4/5">
+  <img src="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 78vw" alt="Caril de camarão num prato" loading="lazy" decoding="async">
 </figure>
-      <div class="dish-body">
-        <p class="dish-tag">Para partilhar</p>
+        <span class="hs-num">04</span>
+        <span class="hs-tag">Para partilhar</span>
         <h3>Caril de camarão</h3>
-        <p class="dish-desc">Camarão em caril suave de coco, servido com pão.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-          <a class="round-btn" href="./restaurante/#reservar" aria-label="Reservar mesa: Caril de camarão"><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        </div>
-      </div>
-    </article><article class="dish" data-cat="land" hidden>
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Vários pratos numa mesa de madeira" loading="lazy" decoding="async">
-</figure>
-      <div class="dish-body">
-        <p class="dish-tag">Da terra</p>
-        <h3>Prato da terra (a confirmar)</h3>
-        <p class="dish-desc">Descrição a fornecer pelo restaurante.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-          <a class="round-btn" href="./restaurante/#reservar" aria-label="Reservar mesa: Prato da terra (a confirmar)"><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        </div>
-      </div>
-    </article><article class="dish" data-cat="sweet" hidden>
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Pequeno-almoço servido numa mesa de madeira" loading="lazy" decoding="async">
-</figure>
-      <div class="dish-body">
-        <p class="dish-tag">Café de Timor</p>
-        <h3>Doce ou café (a confirmar)</h3>
-        <p class="dish-desc">Descrição a fornecer pelo restaurante.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-          <a class="round-btn" href="./restaurante/#reservar" aria-label="Reservar mesa: Doce ou café (a confirmar)"><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-        </div>
-      </div>
-    </article></div>
-    <div class="btn-row center" data-reveal>
-      <a class="btn btn-dark" href="./restaurante/#ementa">Ver menu completo<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-      <a class="btn btn-outline" href="./restaurante/#reservar">Reservar mesa</a>
+        <p>Camarão em caril suave de coco, servido com pão.</p>
+      </a>
+      <a class="hs-end" href="./restaurante/#reservar" data-cursor="Reservar mesa">
+        <span class="hs-end-title">Reservar mesa</span><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
     </div>
+    <div class="hs-progress" aria-hidden="true"><span data-hscroll-bar></span></div>
   </div>
 </section>
 
-<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
+<section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
   <svg class="hut-deco" viewBox="0 0 200 160" aria-hidden="true"><path d="M100 4 18 74h164L100 4Z" fill="currentColor"/><path d="M44 74v62M78 74v62M122 74v62M156 74v62M30 100h140" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>
   <div class="wrap">
     <div class="split-head">
@@ -320,52 +286,55 @@
   </header>
       <p class="body-text" data-reveal style="--d:100ms">Quartos simples e confortáveis, pensados para quem quer desligar. Pequeno-almoço no restaurante, com café de Timor.</p>
     </div>
-    <div class="room-grid"><article class="room-card" data-reveal>
-      <a class="room-img" href="./alojamento/quarto-jardim/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Quarto com cama de rede mosquiteira e luz natural" loading="lazy" decoding="async">
+    <div class="room-rows"><article class="room-row">
+      <a class="room-row-img" href="./alojamento/quarto-jardim/" data-cursor="Ver quarto" tabindex="-1" aria-hidden="true">
+        <figure class="media  has-parallax" style="--ratio:5/4" data-clip>
+  <img src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Quarto com cama de rede mosquiteira e luz natural" loading="lazy" decoding="async" data-parallax="0.1">
 </figure>
         <span class="pill pill-dark">Jardim</span>
       </a>
-      <div class="room-body">
+      <div class="room-row-body" data-reveal style="--d:120ms">
+        <span class="room-num">01<small>/03</small></span>
         <h3><a href="./alojamento/quarto-jardim/">Quarto Jardim</a></h3>
         <p>Sossegado e fresco, com acesso direto ao jardim tropical.</p>
         <ul class="chips"><li>2 hóspedes</li><li>Ar condicionado</li><li>Wi-Fi</li></ul>
         <div class="room-foot">
           <p class="from"><span>Desde</span><strong>$ —</strong> <small>/ noite</small></p>
-          <a class="btn btn-cream btn-sm" href="./alojamento/#reservar" data-room-link="garden">Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <a class="btn btn-cream" href="./alojamento/#reservar" data-room-link="garden" data-magnetic>Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
-    </article><article class="room-card" data-reveal style="--d:90ms">
-      <a class="room-img" href="./alojamento/quarto-vista-mar/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Quarto aberto para o mar" loading="lazy" decoding="async">
+    </article><article class="room-row is-flip">
+      <a class="room-row-img" href="./alojamento/quarto-vista-mar/" data-cursor="Ver quarto" tabindex="-1" aria-hidden="true">
+        <figure class="media  has-parallax" style="--ratio:5/4" data-clip>
+  <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Quarto aberto para o mar" loading="lazy" decoding="async" data-parallax="0.1">
 </figure>
         <span class="pill pill-dark">Mais pedido</span>
       </a>
-      <div class="room-body">
+      <div class="room-row-body" data-reveal style="--d:120ms">
+        <span class="room-num">02<small>/03</small></span>
         <h3><a href="./alojamento/quarto-vista-mar/">Quarto Vista Mar</a></h3>
         <p>Acorde com o mar à janela e o nascer do sol sobre a costa.</p>
         <ul class="chips"><li>2 hóspedes</li><li>Vista mar</li><li>Pequeno-almoço</li></ul>
         <div class="room-foot">
           <p class="from"><span>Desde</span><strong>$ —</strong> <small>/ noite</small></p>
-          <a class="btn btn-cream btn-sm" href="./alojamento/#reservar" data-room-link="sea">Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <a class="btn btn-cream" href="./alojamento/#reservar" data-room-link="sea" data-magnetic>Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
-    </article><article class="room-card" data-reveal style="--d:180ms">
-      <a class="room-img" href="./alojamento/suite-familia/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Quarto espaçoso com cama de casal" loading="lazy" decoding="async">
+    </article><article class="room-row">
+      <a class="room-row-img" href="./alojamento/suite-familia/" data-cursor="Ver quarto" tabindex="-1" aria-hidden="true">
+        <figure class="media  has-parallax" style="--ratio:5/4" data-clip>
+  <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Quarto espaçoso com cama de casal" loading="lazy" decoding="async" data-parallax="0.1">
 </figure>
         <span class="pill pill-dark">Família</span>
       </a>
-      <div class="room-body">
+      <div class="room-row-body" data-reveal style="--d:120ms">
+        <span class="room-num">03<small>/03</small></span>
         <h3><a href="./alojamento/suite-familia/">Suite Família</a></h3>
         <p>Mais espaço para famílias e pequenos grupos de amigos.</p>
         <ul class="chips"><li>Até 4 hóspedes</li><li>Sala de estar</li><li>Varanda</li></ul>
         <div class="room-foot">
           <p class="from"><span>Desde</span><strong>$ —</strong> <small>/ noite</small></p>
-          <a class="btn btn-cream btn-sm" href="./alojamento/#reservar" data-room-link="family">Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <a class="btn btn-cream" href="./alojamento/#reservar" data-room-link="family" data-magnetic>Reservar<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
     </article></div>
@@ -374,19 +343,21 @@
 
 <section class="section story" id="historia" aria-labelledby="story-title">
   <div class="wrap story-grid">
-    <div class="story-visual" data-reveal>
-      <figure class="media arch is-placeholder" style="--ratio:4/5" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Mãos a tecer um pano tradicional num tear" loading="lazy" decoding="async">
+    <div class="story-visual">
+      <div class="story-sticky">
+        <figure class="media arch has-parallax" style="--ratio:4/5" data-clip>
+  <img src="https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1707978932202-751b08324daf?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Mãos a tecer um pano tradicional num tear" loading="lazy" decoding="async" data-parallax="0.06">
 </figure>
-      <blockquote class="quote-card"><p>“Mai, han, toba.”</p><footer>Venha, coma, descanse — em tétum.</footer></blockquote>
+      </div>
     </div>
     <div class="story-text">
       <header class="heading" data-reveal>
         <p class="eyebrow">A nossa história</p>
-        <h2 id="story-title" class="title">Entre a montanha<br>e o <em>mar</em>.</h2>
+        <h2 id="story-title" class="title" data-split>Entre a montanha e o <em>mar</em>.</h2>
       </header>
-      <p class="body-text" data-reveal style="--d:80ms">O Lauhata nasceu em Liquiçá, numa costa onde as montanhas descem até à água. Aqui recebemos cada pessoa como se recebe família em Timor-Leste: com tempo, com mesa posta e sem pressa.</p>
+      <p class="body-text story-lead" data-reveal style="--d:80ms">O Lauhata nasceu em Liquiçá, numa costa onde as montanhas descem até à água. Aqui recebemos cada pessoa como se recebe família em Timor-Leste: com tempo, com mesa posta e sem pressa.</p>
       <p class="body-text tbc-block" data-reveal style="--d:120ms">[Inserir a história real do Lauhata: quem o fundou, quando abriu e o que significa o nome.]</p>
+      <p class="pull-quote" data-reveal style="--d:140ms">“Mai, han, toba.”<span>Venha, coma, descanse — em tétum.</span></p>
       <div class="sand-cards" data-reveal style="--d:160ms">
         <div><h3>Produto local</h3><p>Pescadores e agricultores da região.</p></div>
         <div><h3>Equipa da terra</h3><p>Hospitalidade timorense, de verdade.</p></div>
@@ -395,37 +366,23 @@
   </div>
 </section>
 
-<section class="section day" id="experiencias" aria-labelledby="day-title">
+<section class="section day" id="experiencias" aria-labelledby="day-title" data-day>
   <div class="wrap">
     <header class="heading is-center " data-reveal>
     <p class="eyebrow eyebrow-lines">Experiências</p>
     <h2 id="day-title" class="title">Um dia no Lauhata</h2>
     <p class="lead">Do primeiro café ao último prato — assim se passa um dia por aqui.</p>
   </header>
-    <ol class="timeline">
-      <li class="step step-1" data-reveal><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg></span><time>07:00</time><h3>Café de Ermera</h3><p>Pequeno-almoço sem pressa, com o mar ainda calmo.</p></li><li class="step step-2" data-reveal style="--d:80ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-waves"></use></svg></span><time>10:00</time><h3>Mar e snorkel</h3><p>Águas claras e recifes junto à costa de Liquiçá.</p></li><li class="step step-3" data-reveal style="--d:160ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg></span><time>13:00</time><h3>Almoço à sombra</h3><p>Peixe do dia na brasa e água de coco.</p></li><li class="step step-4" data-reveal style="--d:240ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg></span><time>15:30</time><h3>Descobrir Liquiçá</h3><p>A vila, a história e as aldeias das montanhas.</p></li><li class="step step-5" data-reveal style="--d:320ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-sunset"></use></svg></span><time>18:00</time><h3>Pôr do sol &amp; jantar</h3><p>A melhor mesa da casa, quando o céu fica dourado.</p></li>
-    </ol>
+    <div class="day-track">
+      <div class="day-line" aria-hidden="true"><span data-day-line></span></div>
+      <ol class="timeline">
+        <li class="step step-1" data-reveal><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg></span><time>07:00</time><h3>Café de Ermera</h3><p>Pequeno-almoço sem pressa, com o mar ainda calmo.</p></li><li class="step step-2" data-reveal style="--d:90ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-waves"></use></svg></span><time>10:00</time><h3>Mar e snorkel</h3><p>Águas claras e recifes junto à costa de Liquiçá.</p></li><li class="step step-3" data-reveal style="--d:180ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg></span><time>13:00</time><h3>Almoço à sombra</h3><p>Peixe do dia na brasa e água de coco.</p></li><li class="step step-4" data-reveal style="--d:270ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg></span><time>15:30</time><h3>Descobrir Liquiçá</h3><p>A vila, a história e as aldeias das montanhas.</p></li><li class="step step-5" data-reveal style="--d:360ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-sunset"></use></svg></span><time>18:00</time><h3>Pôr do sol &amp; jantar</h3><p>A melhor mesa da casa, quando o céu fica dourado.</p></li>
+      </ol>
+    </div>
   </div>
 </section>
 
-<section class="section reviews" aria-labelledby="rev-title">
-  <div class="wrap">
-    <div class="split-head reviews-head">
-      <header class="heading heading-md" data-reveal>
-    <p class="eyebrow">Quem já veio</p>
-    <h2 id="rev-title" class="title">O que dizem os nossos hóspedes</h2>
-    
-  </header>
-      <a class="rating" data-reveal style="--d:100ms" href="https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">
-        <strong>[4,X]</strong>
-        <span><span class="stars"><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg></span><small>Média no Google · [N] avaliações</small></span>
-      </a>
-    </div>
-    <div class="review-grid">
-      <figure class="review" data-reveal><span class="review-mark"><svg class="icon" aria-hidden="true"><use href="#i-quote"></use></svg></span><blockquote>[Citação real de um hóspede — copiar do Google Maps ou TripAdvisor.]</blockquote><figcaption><span class="avatar av-1">A</span><span><strong>[Nome]</strong><small>[País] · Restaurante</small></span></figcaption></figure><figure class="review" data-reveal style="--d:90ms"><span class="review-mark"><svg class="icon" aria-hidden="true"><use href="#i-quote"></use></svg></span><blockquote>[Citação real de um hóspede sobre a estadia e o quarto.]</blockquote><figcaption><span class="avatar av-2">B</span><span><strong>[Nome]</strong><small>[País] · Alojamento</small></span></figcaption></figure><figure class="review" data-reveal style="--d:180ms"><span class="review-mark"><svg class="icon" aria-hidden="true"><use href="#i-quote"></use></svg></span><blockquote>[Citação real sobre o ambiente, a vista ou a equipa.]</blockquote><figcaption><span class="avatar av-3">C</span><span><strong>[Nome]</strong><small>[País] · Restaurante &amp; hotel</small></span></figcaption></figure>
-    </div>
-  </div>
-</section>
+
 
 <section class="section location" id="contacto" aria-labelledby="loc-title">
   <div class="wrap location-grid">
@@ -471,20 +428,18 @@
   </figure>
   </div>
 </section>
-<section class="section cta-section" aria-labelledby="cta-title">
-  <div class="wrap">
-    <div class="cta-card">
-      <figure class="media cta-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 1200px, 100vw" alt="Silhuetas de palmeiras ao pôr do sol" loading="lazy" decoding="async">
-</figure>
-      <div class="cta-content">
-        <h2 id="cta-title" class="title" data-reveal>A sua mesa com vista para o mar <em>está à espera.</em></h2>
-        <p data-reveal style="--d:80ms">Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.</p>
-        <div class="btn-row" data-reveal style="--d:160ms">
-          <a class="btn btn-white" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a>
-          <a class="btn btn-ghost-light" href="./alojamento/#reservar">Ver disponibilidade</a>
-        </div>
-      </div>
+<section class="cine-cta" aria-labelledby="cta-title">
+  <div class="cine-cta-bg"><figure class="media  has-parallax">
+  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Silhuetas de palmeiras ao pôr do sol" loading="lazy" decoding="async" data-parallax="0.15">
+</figure></div>
+  <div class="cine-cta-shade" aria-hidden="true"></div>
+  <div class="wrap cine-cta-content">
+    <svg class="cta-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <h2 id="cta-title" class="cine-cta-title" data-split>A sua mesa com vista para o mar <em>está à espera.</em></h2>
+    <p data-reveal style="--d:200ms">Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.</p>
+    <div class="btn-row center" data-reveal style="--d:300ms">
+      <a class="btn btn-white btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a>
+      <a class="btn btn-ghost-light btn-lg" href="./alojamento/#reservar" data-magnetic>Ver disponibilidade</a>
     </div>
   </div>
 </section>
@@ -520,6 +475,8 @@
       <p class="muted ">Horário a confirmar</p>
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  <p class="wrap footer-note">Imagens ilustrativas — a substituir por fotografias do Lauhata.</p>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata. Todos os direitos reservados.</p>
     <p><a href="./privacidade/">Política de privacidade</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website por Elevate Web Studio</a></p>

@@ -101,7 +101,13 @@ export default {
       badge: "Lauhata · comer · dormir · ficar · ",
       chipEyebrow: "Todas as tardes",
       chipTitle: "Jantar ao pôr do sol",
+      scroll: "Descer",
     },
+    statement: "Um restaurante aberto ao público e um pequeno hotel à beira-mar, na costa de Liquiçá. Vem-se pelo jantar, pelo peixe na brasa e pelo pôr do sol — e fica-se pela manhã.",
+    marquee: ["Peixe na brasa", "Pôr do sol", "Café de Timor", "Quartos junto ao mar", "Liquiçá", "Mai, han, toba"],
+    placeholderNote: "Imagens ilustrativas — a substituir por fotografias do Lauhata.",
+    dishesCta: "Ver a ementa toda",
+    roomsCount: "{n} tipos de quarto",
     quick: {
       label: "Pedido rápido de reserva",
       tabTable: "Mesa no restaurante",

@@ -101,7 +101,13 @@ export default {
       badge: "Lauhata · eat · sleep · stay · ",
       chipEyebrow: "Every evening",
       chipTitle: "Dinner at sunset",
+      scroll: "Scroll",
     },
+    statement: "A restaurant open to everyone and a small hotel by the sea, on the Liquiçá coast. People come for dinner, the fish off the coals and the sunset — and stay for the morning.",
+    marquee: ["Fish off the coals", "Sunsets", "Timor coffee", "Rooms by the sea", "Liquiçá", "Mai, han, toba"],
+    placeholderNote: "Illustrative images — to be replaced with Lauhata's own photos.",
+    dishesCta: "See the full menu",
+    roomsCount: "{n} room types",
     quick: {
       label: "Quick booking request",
       tabTable: "Restaurant table",

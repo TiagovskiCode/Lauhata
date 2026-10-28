@@ -27,15 +27,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72" fetchpriority="high">
 <link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/cinema.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://lauhata.example/"},{"@type":"ListItem","position":2,"name":"Alojamento","item":"https://lauhata.example/alojamento/"},{"@type":"ListItem","position":3,"name":"Suite Família","item":"https://lauhata.example/alojamento/suite-familia/"}]}</script>
 <script>window.LAUHATA={"lang":"pt","whatsapp":"","thanks":"../../obrigado/","i18n":{"form":{"name":"Nome","contact":"Telefone ou email","contactHint":"Para o Lauhata o poder contactar.","date":"Data","time":"Hora","people":"Número de pessoas","checkIn":"Entrada (check-in)","checkOut":"Saída (check-out)","guests":"Número de hóspedes","roomType":"Tipo de quarto","roomAny":"Sem preferência","notes":"Observações","optional":"opcional","notesPlaceholder":"Ocasião especial, alergias, hora de chegada…","submitTable":"Enviar pedido por WhatsApp","submitRoom":"Enviar pedido por WhatsApp","note":"Ao enviar, abre-se o WhatsApp com a mensagem preenchida. Não é feito nenhum pagamento e nada fica confirmado até o Lauhata responder.","sending":"A abrir o WhatsApp…","errorsTitle":"Verifique os campos assinalados.","errors":{"required":"Preencha este campo.","name":"Indique o seu nome.","contact":"Indique um telefone ou email válido.","date":"Escolha uma data a partir de hoje.","time":"Escolha uma hora.","people":"Indique um número entre 1 e 50.","guests":"Indique um número entre 1 e 20.","checkIn":"Escolha uma data de entrada a partir de hoje.","checkOut":"A saída tem de ser depois da entrada."},"waTable":"Olá! Gostaria de pedir uma reserva de mesa no restaurante do Lauhata.\n\nNome: {name}\nData: {date}\nHora: {time}\nPessoas: {people}\nContacto: {contact}{notes}\n\nAguardo a vossa confirmação. Obrigado!","waRoom":"Olá! Gostaria de pedir uma reserva de alojamento no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\nQuarto: {room}\nNome: {name}\nContacto: {contact}{notes}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","waNotes":"\nObservações: {notes}","waQuickTable":"Olá! Gostaria de pedir uma mesa no restaurante do Lauhata.\n\nData: {date}\nHora: {time}\nPessoas: {people}\n\nAguardo a vossa confirmação. Obrigado!","waQuickRoom":"Olá! Gostaria de pedir um quarto no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","nightsOne":"1 noite","nightsMany":"{n} noites","waHello":"Olá! Gostaria de saber mais sobre o Lauhata."},"common":{"placeholderImage":"Imagem ilustrativa","toConfirm":"A confirmar","hoursTbc":"Horário a confirmar","whatsapp":"WhatsApp","phone":"Telefone","email":"Email","address":"Morada","learnMore":"Saber mais","viewMenu":"Ver ementa","viewStay":"Ver alojamento","viewRoom":"Ver quarto","bookTable":"Reservar mesa","requestRoom":"Pedir reserva de quarto","directions":"Como chegar","openMaps":"Abrir no Google Maps","seeReviews":"Ver avaliações","close":"Fechar","previous":"Anterior","next":"Seguinte","pendingWhatsapp":"Número de WhatsApp por configurar"}}};</script>
 <script src="../../assets/js/main.js" defer></script>
 
 </head>
-<body>
+<body class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -71,6 +72,8 @@
     </symbol>
   </defs>
 </svg>
+
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">Saltar para o conteúdo</a>
 <header class="site-header" data-header>
   <div class="wrap header-inner">
@@ -117,18 +120,17 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="page-hero">
-  <div class="wrap page-hero-grid">
-    <div class="page-hero-text">
-      <nav class="crumbs" aria-label="Caminho"><ol><li><a href="../../">Início</a></li><li><a href="../../alojamento/">Alojamento</a></li><li><span aria-current="page">Suite Família</span></li></ol></nav>
-      <p class="eyebrow">Família</p>
-      <h1 class="title-xl">Suite Família</h1>
-      <p class="lead">Mais espaço para famílias e pequenos grupos de amigos.</p>
-      <div class="btn-row"><a class="btn btn-dark btn-lg" href="../../alojamento/#reservar" data-room-link="family">Pedir este quarto<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-outline btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>WhatsApp</a></div>
-    </div>
-    <figure class="media page-hero-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Quarto espaçoso com cama de casal" fetchpriority="high" decoding="async">
-</figure>
+<section class="cine-hero is-page">
+  <div class="cine-slides"><div class="slide is-active"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Quarto espaçoso com cama de casal" fetchpriority="high" decoding="async">
+</figure></div></div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <div data-fade style="--d:100ms"><nav class="crumbs" aria-label="Caminho"><ol><li><a href="../../">Início</a></li><li><a href="../../alojamento/">Alojamento</a></li><li><span aria-current="page">Suite Família</span></li></ol></nav></div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">Família</p>
+    <h1 class="cine-title is-page" data-split>Suite Família</h1>
+    <p class="cine-lead" data-fade style="--d:800ms">Mais espaço para famílias e pequenos grupos de amigos.</p>
+    <div data-fade style="--d:1000ms"><div class="btn-row"><a class="btn btn-white btn-lg" href="../../alojamento/#reservar" data-room-link="family">Pedir este quarto<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-ghost-light btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>WhatsApp</a></div></div>
   </div>
 </section>
 
@@ -140,9 +142,9 @@
       <div data-reveal style="--d:120ms"><h2 class="h-small">No quarto</h2><ul class="chips chips-light"><li>Até 4 hóspedes</li><li>Sala de estar</li><li>Varanda</li></ul></div>
       <p class="response"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><span>Confirmamos a sua reserva pelo WhatsApp — normalmente em poucos minutos.</span></p>
     </div>
-    <div class="gallery gallery-room" data-gallery><button type="button" class="gallery-item g1" data-lb-src="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1920&q=72" aria-label="Ampliar imagem" data-reveal><figure class="media  is-placeholder" data-ph="Imagem ilustrativa">
+    <div class="gallery gallery-room" data-gallery><button type="button" class="gallery-item g1" data-lb-src="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1920&q=72" aria-label="Ampliar imagem" data-reveal><figure class="media ">
   <img src="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 40vw, 90vw" alt="Varanda com grades de bambu e plantas" loading="lazy" decoding="async">
-</figure></button><button type="button" class="gallery-item g2" data-lb-src="https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=1920&q=72" aria-label="Ampliar imagem" data-reveal style="--d:70ms"><figure class="media  is-placeholder" data-ph="Imagem ilustrativa">
+</figure></button><button type="button" class="gallery-item g2" data-lb-src="https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=1920&q=72" aria-label="Ampliar imagem" data-reveal style="--d:70ms"><figure class="media ">
   <img src="https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1584132905271-512c958d674a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 40vw, 90vw" alt="Cama de casal num quarto luminoso" loading="lazy" decoding="async">
 </figure></button></div>
   </div>
@@ -158,7 +160,7 @@
   </header>
     <div class="room-grid"><article class="room-card" data-reveal>
       <a class="room-img" href="../../alojamento/quarto-jardim/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Imagem ilustrativa">
+        <figure class="media " style="--ratio:3/2">
   <img src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Quarto com cama de rede mosquiteira e luz natural" loading="lazy" decoding="async">
 </figure>
         <span class="pill pill-dark">Jardim</span>
@@ -174,7 +176,7 @@
       </div>
     </article><article class="room-card" data-reveal style="--d:90ms">
       <a class="room-img" href="../../alojamento/quarto-vista-mar/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Imagem ilustrativa">
+        <figure class="media " style="--ratio:3/2">
   <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Quarto aberto para o mar" loading="lazy" decoding="async">
 </figure>
         <span class="pill pill-dark">Mais pedido</span>
@@ -190,7 +192,7 @@
       </div>
     </article><article class="room-card" data-reveal style="--d:180ms">
       <a class="room-img" href="../../alojamento/suite-familia/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Imagem ilustrativa">
+        <figure class="media " style="--ratio:3/2">
   <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Quarto espaçoso com cama de casal" loading="lazy" decoding="async">
 </figure>
         <span class="pill pill-dark">Família</span>
@@ -239,6 +241,8 @@
       <p class="muted ">Horário a confirmar</p>
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  <p class="wrap footer-note">Imagens ilustrativas — a substituir por fotografias do Lauhata.</p>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata. Todos os direitos reservados.</p>
     <p><a href="../../privacidade/">Política de privacidade</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website por Elevate Web Studio</a></p>

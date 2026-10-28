@@ -27,15 +27,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72" fetchpriority="high">
 <link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/cinema.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/en/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lauhata.example/en/"},{"@type":"ListItem","position":2,"name":"Restaurant","item":"https://lauhata.example/en/restaurant/"}]}</script>
 <script>window.LAUHATA={"lang":"en","whatsapp":"","thanks":"../../en/thank-you/","i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"So Lauhata can get back to you.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}\nContact: {contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello! I would like to request a stay at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\nRoom: {room}\nName: {name}\nContact: {contact}{notes}\n\nCould you confirm availability and the price? Thank you!","waNotes":"\nNotes: {notes}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}\n\nLooking forward to your confirmation. Thank you!","waQuickRoom":"Hello! I would like to request a room at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\n\nCould you confirm availability and the price? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"placeholderImage":"Illustrative image","toConfirm":"To be confirmed","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Book a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"}}};</script>
 <script src="../../assets/js/main.js" defer></script>
 
 </head>
-<body>
+<body class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -71,6 +72,8 @@
     </symbol>
   </defs>
 </svg>
+
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" data-header>
   <div class="wrap header-inner">
@@ -117,19 +120,18 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="page-hero">
-  <div class="wrap page-hero-grid">
-    <div class="page-hero-text">
-      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../en/">Home</a></li><li><span aria-current="page">Restaurant</span></li></ol></nav>
-      <p class="eyebrow">Restaurant</p>
-      <h1 class="title-xl">Flavours of Timor, served with a sea view</h1>
-      <p class="lead">Catch of the day over the coals, traditional recipes and coffee from Timor's mountains. Lunch, sunset and dinner.</p>
-      <div class="btn-row"><a class="btn btn-dark btn-lg" href="#reservar">Book a table<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-outline btn-lg" href="#ementa">See the menu</a></div>
-  <div class="hours-inline"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><div><strong>Opening hours</strong><p class="muted ">Opening hours to be confirmed</p></div></div>
-    </div>
-    <figure class="media page-hero-img is-placeholder" data-ph="Illustrative image">
-  <img src="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Dishes served on banana leaf" fetchpriority="high" decoding="async">
-</figure>
+<section class="cine-hero is-page">
+  <div class="cine-slides"><div class="slide is-active"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Dishes served on banana leaf" fetchpriority="high" decoding="async">
+</figure></div></div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <div data-fade style="--d:100ms"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../en/">Home</a></li><li><span aria-current="page">Restaurant</span></li></ol></nav></div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">Restaurant</p>
+    <h1 class="cine-title is-page" data-split>Flavours of Timor, served with a sea view</h1>
+    <p class="cine-lead" data-fade style="--d:800ms">Catch of the day over the coals, traditional recipes and coffee from Timor's mountains. Lunch, sunset and dinner.</p>
+    <div data-fade style="--d:1000ms"><div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">Book a table<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-ghost-light btn-lg" href="#ementa">See the menu</a></div>
+  <div class="hours-inline"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><div><strong>Opening hours</strong><p class="muted ">Opening hours to be confirmed</p></div></div></div>
   </div>
 </section>
 
@@ -144,7 +146,7 @@
     <p class="demo-notice" data-reveal>Sample menu: the real dishes and prices will be provided by the restaurant.</p>
     <div class="center-row" data-reveal style="--d:80ms"><div class="seg" role="tablist" aria-label="Menu categories" data-dish-tabs><button type="button" role="tab" aria-selected="true" data-dish-tab="sea">From the sea</button><button type="button" role="tab" aria-selected="false" data-dish-tab="land">From the land</button><button type="button" role="tab" aria-selected="false" data-dish-tab="sweet">Sweets &amp; coffee</button></div></div>
     <div class="dish-grid" data-dish-grid><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Grilled fish on banana leaf" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -157,7 +159,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Fish wrapped in banana leaf on the grill" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -170,7 +172,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Grilled squid on a plate" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -183,7 +185,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Prawn curry on a plate" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -196,7 +198,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="land" hidden>
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Several dishes on a wooden table" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -209,7 +211,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sweet" hidden>
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Breakfast served on a wooden table" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -234,7 +236,7 @@
     
   </header>
       <p class="body-text" data-reveal style="--d:80ms">Fill in your details and send the message that opens in WhatsApp. The table is only booked once Lauhata confirms.</p>
-      <figure class="media booking-img is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media booking-img" style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 80vw" alt="Grilled fish on banana leaf" loading="lazy" decoding="async">
 </figure>
     </div>
@@ -287,20 +289,18 @@
   </div>
 </section>
 
-<section class="section cta-section" aria-labelledby="cta-title">
-  <div class="wrap">
-    <div class="cta-card">
-      <figure class="media cta-img is-placeholder" data-ph="Illustrative image">
-  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 1200px, 100vw" alt="Palm silhouettes at sunset" loading="lazy" decoding="async">
-</figure>
-      <div class="cta-content">
-        <h2 id="cta-title" class="title" data-reveal>Your table with a sea view <em>is waiting.</em></h2>
-        <p data-reveal style="--d:80ms">Book in seconds on WhatsApp. Groups, birthdays and events — get in touch.</p>
-        <div class="btn-row" data-reveal style="--d:160ms">
-          <a class="btn btn-white" href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Chat on WhatsApp</a>
-          <a class="btn btn-ghost-light" href="../../en/stay/#reservar">Check availability</a>
-        </div>
-      </div>
+<section class="cine-cta" aria-labelledby="cta-title">
+  <div class="cine-cta-bg"><figure class="media  has-parallax">
+  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Palm silhouettes at sunset" loading="lazy" decoding="async" data-parallax="0.15">
+</figure></div>
+  <div class="cine-cta-shade" aria-hidden="true"></div>
+  <div class="wrap cine-cta-content">
+    <svg class="cta-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <h2 id="cta-title" class="cine-cta-title" data-split>Your table with a sea view <em>is waiting.</em></h2>
+    <p data-reveal style="--d:200ms">Book in seconds on WhatsApp. Groups, birthdays and events — get in touch.</p>
+    <div class="btn-row center" data-reveal style="--d:300ms">
+      <a class="btn btn-white btn-lg" href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20Lauhata." target="_blank" rel="noopener" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Chat on WhatsApp</a>
+      <a class="btn btn-ghost-light btn-lg" href="../../en/stay/#reservar" data-magnetic>Check availability</a>
     </div>
   </div>
 </section>
@@ -336,6 +336,8 @@
       <p class="muted ">Opening hours to be confirmed</p>
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  <p class="wrap footer-note">Illustrative images — to be replaced with Lauhata's own photos.</p>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata. All rights reserved.</p>
     <p><a href="../../en/privacy/">Privacy policy</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website by Elevate Web Studio</a></p>

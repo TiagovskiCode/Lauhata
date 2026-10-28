@@ -48,19 +48,23 @@ export function imgUrl(key, w = 1200) {
   return srcFor(images[key].src, w);
 }
 
+// True while any illustrative stock photo is still in use: the footer then shows one notice
+// for the whole site instead of a tag on every photo.
+export const usesPlaceholderImages = () => site.showPlaceholderNotes && Object.values(images).some((im) => im.placeholder);
+
 /**
- * Responsive <img> wrapped in a figure. Illustrative stock photos get a small tag
- * (while site.showPlaceholderNotes is on) so nobody mistakes them for the real place.
+ * Responsive <img> wrapped in a figure.
+ * attrs: extra attributes for the figure (e.g. 'data-clip' for a reveal, 'data-cursor="Ver"').
+ * parallax: speed for the inner image drift (e.g. 0.12); the image is over-scaled to cover it.
  */
-export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "" } = {}) {
+export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0 } = {}) {
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
   const isRemote = im.src.startsWith("unsplash:");
   const srcset = isRemote ? WIDTHS.map((w) => `${srcFor(im.src, w)} ${w}w`).join(", ") : "";
-  const ph = im.placeholder && site.showPlaceholderNotes;
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
-  return `<figure class="media ${cls}${ph ? " is-placeholder" : ""}"${style}${ph ? ` data-ph="${esc(t.common.placeholderImage)}"` : ""}>
-  <img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${esc(im.alt[t.lang])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
+  return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}"${style}${attrs ? " " + attrs : ""}>
+  <img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${esc(im.alt[t.lang])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
 </figure>`;
 }
 

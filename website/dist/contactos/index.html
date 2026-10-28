@@ -27,8 +27,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72" fetchpriority="high">
 <link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/cinema.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://lauhata.example/"},{"@type":"ListItem","position":2,"name":"Contacto","item":"https://lauhata.example/contactos/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como faço uma reserva?","acceptedAnswer":{"@type":"Answer","text":"Preencha o formulário da mesa ou do quarto e envie a mensagem que se abre no WhatsApp. A equipa do Lauhata responde por essa conversa."}},{"@type":"Question","name":"A reserva fica confirmada logo depois de enviar?","acceptedAnswer":{"@type":"Answer","text":"Não. O formulário prepara um pedido. A mesa ou o quarto só ficam reservados depois de o Lauhata confirmar a disponibilidade consigo."}},{"@type":"Question","name":"Como sei o preço do quarto?","acceptedAnswer":{"@type":"Answer","text":"O preço final depende das datas e do tipo de quarto, e é indicado pelo Lauhata na resposta ao seu pedido."}},{"@type":"Question","name":"Tenho de pagar alguma coisa no website?","acceptedAnswer":{"@type":"Answer","text":"Não. O website não faz pagamentos. Qualquer condição de pagamento é combinada diretamente com o Lauhata."}},{"@type":"Question","name":"Onde fica o Lauhata?","acceptedAnswer":{"@type":"Answer","text":"Em Lauhata, no município de Liquiçá, a oeste de Díli. Na página de contactos encontra o mapa e as indicações de acesso."}}]}</script>
@@ -36,7 +37,7 @@
 <script src="../assets/js/main.js" defer></script>
 
 </head>
-<body>
+<body class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -72,6 +73,8 @@
     </symbol>
   </defs>
 </svg>
+
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">Saltar para o conteúdo</a>
 <header class="site-header" data-header>
   <div class="wrap header-inner">
@@ -118,18 +121,17 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="page-hero">
-  <div class="wrap page-hero-grid">
-    <div class="page-hero-text">
-      <nav class="crumbs" aria-label="Caminho"><ol><li><a href="../">Início</a></li><li><span aria-current="page">Contacto</span></li></ol></nav>
-      <p class="eyebrow">Contactos</p>
-      <h1 class="title-xl">Pela estrada da costa, <em>a oeste de Díli.</em></h1>
-      <p class="lead">Uma viagem curta e bonita ao longo do mar. Se precisar de transporte a partir de Díli, fale connosco.</p>
-      <div class="btn-row"><a class="btn btn-dark btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a><a class="btn btn-outline btn-lg" href="https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">Abrir no Google Maps<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a></div>
-    </div>
-    <figure class="media page-hero-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Vista aérea de mar turquesa e recife junto à costa" fetchpriority="high" decoding="async">
-</figure>
+<section class="cine-hero is-page">
+  <div class="cine-slides"><div class="slide is-active"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Vista aérea de mar turquesa e recife junto à costa" fetchpriority="high" decoding="async">
+</figure></div></div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <div data-fade style="--d:100ms"><nav class="crumbs" aria-label="Caminho"><ol><li><a href="../">Início</a></li><li><span aria-current="page">Contacto</span></li></ol></nav></div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">Contactos</p>
+    <h1 class="cine-title is-page" data-split>Pela estrada da costa, <em>a oeste de Díli.</em></h1>
+    <p class="cine-lead" data-fade style="--d:800ms">Uma viagem curta e bonita ao longo do mar. Se precisar de transporte a partir de Díli, fale connosco.</p>
+    <div data-fade style="--d:1000ms"><div class="btn-row"><a class="btn btn-white btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a><a class="btn btn-ghost-light btn-lg" href="https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">Abrir no Google Maps<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a></div></div>
   </div>
 </section>
 
@@ -166,20 +168,18 @@
   </div>
 </section>
 
-<section class="section cta-section" aria-labelledby="cta-title">
-  <div class="wrap">
-    <div class="cta-card">
-      <figure class="media cta-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 1200px, 100vw" alt="Silhuetas de palmeiras ao pôr do sol" loading="lazy" decoding="async">
-</figure>
-      <div class="cta-content">
-        <h2 id="cta-title" class="title" data-reveal>A sua mesa com vista para o mar <em>está à espera.</em></h2>
-        <p data-reveal style="--d:80ms">Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.</p>
-        <div class="btn-row" data-reveal style="--d:160ms">
-          <a class="btn btn-white" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a>
-          <a class="btn btn-ghost-light" href="../alojamento/#reservar">Ver disponibilidade</a>
-        </div>
-      </div>
+<section class="cine-cta" aria-labelledby="cta-title">
+  <div class="cine-cta-bg"><figure class="media  has-parallax">
+  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Silhuetas de palmeiras ao pôr do sol" loading="lazy" decoding="async" data-parallax="0.15">
+</figure></div>
+  <div class="cine-cta-shade" aria-hidden="true"></div>
+  <div class="wrap cine-cta-content">
+    <svg class="cta-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <h2 id="cta-title" class="cine-cta-title" data-split>A sua mesa com vista para o mar <em>está à espera.</em></h2>
+    <p data-reveal style="--d:200ms">Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.</p>
+    <div class="btn-row center" data-reveal style="--d:300ms">
+      <a class="btn btn-white btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a>
+      <a class="btn btn-ghost-light btn-lg" href="../alojamento/#reservar" data-magnetic>Ver disponibilidade</a>
     </div>
   </div>
 </section>
@@ -215,6 +215,8 @@
       <p class="muted ">Horário a confirmar</p>
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  <p class="wrap footer-note">Imagens ilustrativas — a substituir por fotografias do Lauhata.</p>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata. Todos os direitos reservados.</p>
     <p><a href="../privacidade/">Política de privacidade</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website por Elevate Web Studio</a></p>

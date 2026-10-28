@@ -27,15 +27,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72" fetchpriority="high">
 <link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../assets/css/cinema.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://lauhata.example/"},{"@type":"ListItem","position":2,"name":"Restaurante","item":"https://lauhata.example/restaurante/"}]}</script>
 <script>window.LAUHATA={"lang":"pt","whatsapp":"","thanks":"../obrigado/","i18n":{"form":{"name":"Nome","contact":"Telefone ou email","contactHint":"Para o Lauhata o poder contactar.","date":"Data","time":"Hora","people":"Número de pessoas","checkIn":"Entrada (check-in)","checkOut":"Saída (check-out)","guests":"Número de hóspedes","roomType":"Tipo de quarto","roomAny":"Sem preferência","notes":"Observações","optional":"opcional","notesPlaceholder":"Ocasião especial, alergias, hora de chegada…","submitTable":"Enviar pedido por WhatsApp","submitRoom":"Enviar pedido por WhatsApp","note":"Ao enviar, abre-se o WhatsApp com a mensagem preenchida. Não é feito nenhum pagamento e nada fica confirmado até o Lauhata responder.","sending":"A abrir o WhatsApp…","errorsTitle":"Verifique os campos assinalados.","errors":{"required":"Preencha este campo.","name":"Indique o seu nome.","contact":"Indique um telefone ou email válido.","date":"Escolha uma data a partir de hoje.","time":"Escolha uma hora.","people":"Indique um número entre 1 e 50.","guests":"Indique um número entre 1 e 20.","checkIn":"Escolha uma data de entrada a partir de hoje.","checkOut":"A saída tem de ser depois da entrada."},"waTable":"Olá! Gostaria de pedir uma reserva de mesa no restaurante do Lauhata.\n\nNome: {name}\nData: {date}\nHora: {time}\nPessoas: {people}\nContacto: {contact}{notes}\n\nAguardo a vossa confirmação. Obrigado!","waRoom":"Olá! Gostaria de pedir uma reserva de alojamento no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\nQuarto: {room}\nNome: {name}\nContacto: {contact}{notes}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","waNotes":"\nObservações: {notes}","waQuickTable":"Olá! Gostaria de pedir uma mesa no restaurante do Lauhata.\n\nData: {date}\nHora: {time}\nPessoas: {people}\n\nAguardo a vossa confirmação. Obrigado!","waQuickRoom":"Olá! Gostaria de pedir um quarto no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","nightsOne":"1 noite","nightsMany":"{n} noites","waHello":"Olá! Gostaria de saber mais sobre o Lauhata."},"common":{"placeholderImage":"Imagem ilustrativa","toConfirm":"A confirmar","hoursTbc":"Horário a confirmar","whatsapp":"WhatsApp","phone":"Telefone","email":"Email","address":"Morada","learnMore":"Saber mais","viewMenu":"Ver ementa","viewStay":"Ver alojamento","viewRoom":"Ver quarto","bookTable":"Reservar mesa","requestRoom":"Pedir reserva de quarto","directions":"Como chegar","openMaps":"Abrir no Google Maps","seeReviews":"Ver avaliações","close":"Fechar","previous":"Anterior","next":"Seguinte","pendingWhatsapp":"Número de WhatsApp por configurar"}}};</script>
 <script src="../assets/js/main.js" defer></script>
 
 </head>
-<body>
+<body class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -71,6 +72,8 @@
     </symbol>
   </defs>
 </svg>
+
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">Saltar para o conteúdo</a>
 <header class="site-header" data-header>
   <div class="wrap header-inner">
@@ -117,19 +120,18 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="page-hero">
-  <div class="wrap page-hero-grid">
-    <div class="page-hero-text">
-      <nav class="crumbs" aria-label="Caminho"><ol><li><a href="../">Início</a></li><li><span aria-current="page">Restaurante</span></li></ol></nav>
-      <p class="eyebrow">Restaurante</p>
-      <h1 class="title-xl">Sabores de Timor, servidos com vista para o mar</h1>
-      <p class="lead">Peixe do dia na brasa, receitas tradicionais e café das montanhas de Timor. Almoço, pôr do sol e jantar.</p>
-      <div class="btn-row"><a class="btn btn-dark btn-lg" href="#reservar">Reservar mesa<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-outline btn-lg" href="#ementa">Ver ementa</a></div>
-  <div class="hours-inline"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><div><strong>Horário</strong><p class="muted ">Horário a confirmar</p></div></div>
-    </div>
-    <figure class="media page-hero-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Pratos servidos sobre folha de bananeira" fetchpriority="high" decoding="async">
-</figure>
+<section class="cine-hero is-page">
+  <div class="cine-slides"><div class="slide is-active"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1767429013111-494a1e03f70f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Pratos servidos sobre folha de bananeira" fetchpriority="high" decoding="async">
+</figure></div></div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <div data-fade style="--d:100ms"><nav class="crumbs" aria-label="Caminho"><ol><li><a href="../">Início</a></li><li><span aria-current="page">Restaurante</span></li></ol></nav></div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">Restaurante</p>
+    <h1 class="cine-title is-page" data-split>Sabores de Timor, servidos com vista para o mar</h1>
+    <p class="cine-lead" data-fade style="--d:800ms">Peixe do dia na brasa, receitas tradicionais e café das montanhas de Timor. Almoço, pôr do sol e jantar.</p>
+    <div data-fade style="--d:1000ms"><div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">Reservar mesa<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-ghost-light btn-lg" href="#ementa">Ver ementa</a></div>
+  <div class="hours-inline"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><div><strong>Horário</strong><p class="muted ">Horário a confirmar</p></div></div></div>
   </div>
 </section>
 
@@ -144,7 +146,7 @@
     <p class="demo-notice" data-reveal>Ementa de demonstração: os pratos e preços reais serão fornecidos pelo restaurante.</p>
     <div class="center-row" data-reveal style="--d:80ms"><div class="seg" role="tablist" aria-label="Categorias da ementa" data-dish-tabs><button type="button" role="tab" aria-selected="true" data-dish-tab="sea">Do mar</button><button type="button" role="tab" aria-selected="false" data-dish-tab="land">Da terra</button><button type="button" role="tab" aria-selected="false" data-dish-tab="sweet">Doces &amp; café</button></div></div>
     <div class="dish-grid" data-dish-grid><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Peixe grelhado sobre folha de bananeira" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -157,7 +159,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1617694455296-153ddbd66f0d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Peixe embrulhado em folha de bananeira na grelha" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -170,7 +172,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1762305195844-94479ea6aca4?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Lulas grelhadas num prato" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -183,7 +185,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sea">
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1679279727895-bd5c9fb9c1a0?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Caril de camarão num prato" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -196,7 +198,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="land" hidden>
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1585144570594-103ef55590b1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Vários pratos numa mesa de madeira" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -209,7 +211,7 @@
         </div>
       </div>
     </article><article class="dish" data-cat="sweet" hidden>
-      <figure class="media  is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media " style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1567850174756-72eaca3676ba?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 22vw, (min-width: 600px) 45vw, 90vw" alt="Pequeno-almoço servido numa mesa de madeira" loading="lazy" decoding="async">
 </figure>
       <div class="dish-body">
@@ -234,7 +236,7 @@
     
   </header>
       <p class="body-text" data-reveal style="--d:80ms">Preencha os dados e envie a mensagem que se abre no WhatsApp. A mesa só fica reservada depois da confirmação do Lauhata.</p>
-      <figure class="media booking-img is-placeholder" style="--ratio:4/3" data-ph="Imagem ilustrativa">
+      <figure class="media booking-img" style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718942899999-b3da4177ee2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 80vw" alt="Peixe grelhado sobre folha de bananeira" loading="lazy" decoding="async">
 </figure>
     </div>
@@ -287,20 +289,18 @@
   </div>
 </section>
 
-<section class="section cta-section" aria-labelledby="cta-title">
-  <div class="wrap">
-    <div class="cta-card">
-      <figure class="media cta-img is-placeholder" data-ph="Imagem ilustrativa">
-  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 1200px, 100vw" alt="Silhuetas de palmeiras ao pôr do sol" loading="lazy" decoding="async">
-</figure>
-      <div class="cta-content">
-        <h2 id="cta-title" class="title" data-reveal>A sua mesa com vista para o mar <em>está à espera.</em></h2>
-        <p data-reveal style="--d:80ms">Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.</p>
-        <div class="btn-row" data-reveal style="--d:160ms">
-          <a class="btn btn-white" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a>
-          <a class="btn btn-ghost-light" href="../alojamento/#reservar">Ver disponibilidade</a>
-        </div>
-      </div>
+<section class="cine-cta" aria-labelledby="cta-title">
+  <div class="cine-cta-bg"><figure class="media  has-parallax">
+  <img src="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1460627390041-532a28402358?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Silhuetas de palmeiras ao pôr do sol" loading="lazy" decoding="async" data-parallax="0.15">
+</figure></div>
+  <div class="cine-cta-shade" aria-hidden="true"></div>
+  <div class="wrap cine-cta-content">
+    <svg class="cta-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <h2 id="cta-title" class="cine-cta-title" data-split>A sua mesa com vista para o mar <em>está à espera.</em></h2>
+    <p data-reveal style="--d:200ms">Reserve em segundos pelo WhatsApp. Grupos, aniversários e eventos — fale connosco.</p>
+    <div class="btn-row center" data-reveal style="--d:300ms">
+      <a class="btn btn-white btn-lg" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener" data-magnetic><svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg>Falar no WhatsApp</a>
+      <a class="btn btn-ghost-light btn-lg" href="../alojamento/#reservar" data-magnetic>Ver disponibilidade</a>
     </div>
   </div>
 </section>
@@ -336,6 +336,8 @@
       <p class="muted ">Horário a confirmar</p>
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  <p class="wrap footer-note">Imagens ilustrativas — a substituir por fotografias do Lauhata.</p>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata. Todos os direitos reservados.</p>
     <p><a href="../privacidade/">Política de privacidade</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website por Elevate Web Studio</a></p>

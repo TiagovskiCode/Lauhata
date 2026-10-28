@@ -1,5 +1,5 @@
 // Page shell shared by every page: <head> with SEO tags, header, footer, global UI and scripts.
-import { esc, href, absUrl, site, icon, waLink, hoursList, LANGS } from "./lib.mjs";
+import { esc, href, absUrl, site, icon, waLink, hoursList, LANGS, usesPlaceholderImages } from "./lib.mjs";
 
 const stroke = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
 const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -170,6 +170,8 @@ function footer(t) {
       ${hoursList(t)}
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  ${usesPlaceholderImages() ? `<p class="wrap footer-note">${esc(t.home.placeholderNote)}</p>` : ""}
   <div class="wrap footer-base">
     <p>© ${year} ${esc(site.name)}. ${esc(t.footer.rights)}</p>
     <p><a href="${href("privacy", L)}">${esc(t.footer.privacy)}</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(t.footer.credit)}</a></p>
@@ -224,6 +226,7 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
 ${o.preload ? `<link rel="preload" as="image" href="${o.preload}" fetchpriority="high">` : ""}
 <link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="/assets/css/cinema.css">
 ${jsonLd(businessLd(t))}
 ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
@@ -231,8 +234,15 @@ ${(o.ld || []).map(jsonLd).join("\n")}
 ${site.gaId ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${esc(site.gaId)}",{anonymize_ip:true});</script>` : ""}
 </head>
-<body>
+<body class="${o.hero ? "has-hero" : ""}">
 ${SPRITE}
+${o.intro ? `<div class="intro" data-intro aria-hidden="true">
+  <svg class="intro-mark"><use href="#i-hut"></use></svg>
+  <p class="intro-name">${"Lauhata".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p>
+  <p class="intro-line">${esc(t.brandLine)}</p>
+</div>
+<script>try{if(sessionStorage.getItem("lauhata-intro")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("no-intro");sessionStorage.setItem("lauhata-intro","1")}catch(e){}</script>` : ""}
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">${esc(t.nav.skip)}</a>
 ${header(t, o.page, o.alt)}
 <main id="main" tabindex="-1">

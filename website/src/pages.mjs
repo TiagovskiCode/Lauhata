@@ -16,18 +16,59 @@ function heading({ eyebrow, title, accent = "", lead = "", id = "", center = fal
   </header>`;
 }
 
-// Split hero used by inner pages: text on the left, rounded photo on the right.
+// Full-screen photo hero used by inner pages (same language as the homepage hero).
 function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = "" }) {
-  return `<section class="page-hero">
-  <div class="wrap page-hero-grid">
-    <div class="page-hero-text">
-      ${crumbs}
-      <p class="eyebrow">${esc(eyebrow)}</p>
-      <h1 class="title-xl">${esc(title)}${accent ? ` <em>${esc(accent)}</em>` : ""}</h1>
-      <p class="lead">${esc(lead)}</p>
-      ${ctas}
+  return `<section class="cine-hero is-page">
+  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw" })}</div></div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <div data-fade style="--d:100ms">${crumbs}</div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">${esc(eyebrow)}</p>
+    <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` <em>${esc(accent)}</em>` : ""}</h1>
+    <p class="cine-lead" data-fade style="--d:800ms">${esc(lead)}</p>
+    <div data-fade style="--d:1000ms">${ctas}</div>
+  </div>
+</section>`;
+}
+
+// Large alternating rows, one per room type (homepage and stay page).
+function roomRows(t) {
+  const L = t.lang;
+  const H = t.home.rooms;
+  return `<div class="room-rows">${rooms
+    .map((r, i) => `<article class="room-row${i % 2 ? " is-flip" : ""}">
+      <a class="room-row-img" href="${href("room:" + r.id, L)}" data-cursor="${esc(t.common.viewRoom)}" tabindex="-1" aria-hidden="true">
+        ${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw", ratio: "5/4", attrs: "data-clip", parallax: 0.1 })}
+        ${r.badge ? `<span class="pill pill-dark">${esc(r.badge[L])}</span>` : ""}
+      </a>
+      <div class="room-row-body"${rv(120)}>
+        <span class="room-num">0${i + 1}<small>/0${rooms.length}</small></span>
+        <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
+        <p>${esc(r.summary[L])}</p>
+        ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
+        <div class="room-foot">
+          <p class="from"><span>${esc(H.from)}</span><strong>${r.price ? esc(r.price) : "$ —"}</strong> <small>${esc(H.night)}</small></p>
+          <a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}" data-magnetic>${esc(H.book)}${icon("arrow")}</a>
+        </div>
+      </div>
+    </article>`)
+    .join("")}</div>`;
+}
+
+// Full-screen closing call to action over a sunset photo.
+function cineCta(t) {
+  const c = t.home.cta;
+  return `<section class="cine-cta" aria-labelledby="cta-title">
+  <div class="cine-cta-bg">${figure(t, "palmSunset", { sizes: "100vw", parallax: 0.15 })}</div>
+  <div class="cine-cta-shade" aria-hidden="true"></div>
+  <div class="wrap cine-cta-content">
+    <svg class="cta-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <h2 id="cta-title" class="cine-cta-title" data-split>${esc(c.title)} <em>${esc(c.titleAccent)}</em></h2>
+    <p${rv(200)}>${esc(c.body)}</p>
+    <div class="btn-row center"${rv(300)}>
+      <a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" data-magnetic>${icon("chat")}${esc(c.wa)}</a>
+      <a class="btn btn-ghost-light btn-lg" href="${href("stay", t.lang, "#reservar")}" data-magnetic>${esc(c.availability)}</a>
     </div>
-    ${figure(t, image, { cls: "page-hero-img", eager: true, sizes: "(min-width: 900px) 46vw, 92vw" })}
   </div>
 </section>`;
 }
@@ -246,25 +287,6 @@ function locationBlock(t, id = "loc-title") {
 </section>`;
 }
 
-function ctaBand(t) {
-  const c = t.home.cta;
-  return `<section class="section cta-section" aria-labelledby="cta-title">
-  <div class="wrap">
-    <div class="cta-card">
-      ${figure(t, "palmSunset", { cls: "cta-img", sizes: "(min-width: 1000px) 1200px, 100vw" })}
-      <div class="cta-content">
-        <h2 id="cta-title" class="title"${rv()}>${esc(c.title)} <em>${esc(c.titleAccent)}</em></h2>
-        <p${rv(80)}>${esc(c.body)}</p>
-        <div class="btn-row"${rv(160)}>
-          <a class="btn btn-white" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(c.wa)}</a>
-          <a class="btn btn-ghost-light" href="${href("stay", t.lang, "#reservar")}">${esc(c.availability)}</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>`;
-}
-
 function faqBlock(t) {
   return `<div class="faq">${t.faq.items
     .map((it, i) => `<details${i === 0 ? " open" : ""}${rv(i * 60)}><summary><span>${esc(it.q)}</span>${icon("plus")}</summary><div class="faq-a"><p>${esc(it.a)}</p></div></details>`)
@@ -284,110 +306,127 @@ function galleryGrid(t, keys, cls = "") {
 }
 
 // ================= HOME =================
+// Cinematic homepage: full-screen hero, scroll-driven statement, marquee, expanding panels,
+// pinned horizontal dishes, large room rows, sticky story, drawn timeline and a full-screen CTA.
 export function home(t) {
   const L = t.lang;
   const H = t.home;
   const hero = H.hero;
+  const dishes = items.filter((d) => !d.placeholder);
+  const realReviews = H.reviews.items.filter((r) => !r.q.startsWith("["));
+  const marquee = [...H.marquee, ...H.marquee].map((w) => `<span>${esc(w)}</span><i aria-hidden="true"></i>`).join("");
   const body = `
-<section class="hero" aria-labelledby="hero-title">
-  <div class="wrap hero-grid">
-    <div class="hero-text">
-      <p class="eyebrow eyebrow-dots hero-in">${hero.eyebrow.map((e) => `<span>${esc(e)}</span>`).join("")}</p>
-      <h1 id="hero-title" class="title-hero hero-in" style="--d:120ms"><span class="line">${esc(hero.title1)}</span> <span class="line"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
-      <p class="lead hero-in" style="--d:240ms">${esc(hero.lead)}</p>
-      <div class="btn-row hero-in" style="--d:340ms">
-        <a class="btn btn-dark btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(hero.ctaTable)}${icon("arrow")}</a>
-        <a class="btn btn-outline btn-lg" href="${href("stay", L, "#reservar")}">${esc(hero.ctaRoom)}${icon("bed")}</a>
-      </div>
-      <dl class="hero-stats hero-in" style="--d:440ms">
+<section class="cine-hero" aria-labelledby="hero-title">
+  <div class="cine-slides" data-slides>
+    ${["heroSunset", "coastAerial", "palmsSea", "sunset"].map((k, i) => `<div class="slide${i === 0 ? " is-active" : ""}">${figure(t, k, { eager: i === 0, sizes: "100vw" })}</div>`).join("")}
+  </div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade style="--d:200ms">${hero.eyebrow.map((e) => `<span>${esc(e)}</span>`).join("")}</p>
+    <h1 id="hero-title" class="cine-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
+    <p class="cine-lead" data-fade style="--d:900ms">${esc(hero.lead)}</p>
+  </div>
+  <div class="wrap cine-bar" data-fade style="--d:1100ms">${bookingCard(t)}</div>
+  <a class="scroll-cue" href="#manifesto" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a>
+</section>
+
+<section class="statement" id="manifesto" aria-label="${esc(H.two.eyebrow)}">
+  <div class="wrap">
+    <p class="eyebrow" data-fade>${esc(H.two.eyebrow)}</p>
+    <p class="statement-text" data-scrub>${esc(H.statement)}</p>
+    <div class="statement-foot" data-fade>
+      <dl class="hero-stats">
         <div><dt>${esc(hero.stat1[0])}</dt><dd>${esc(hero.stat1[1])}</dd></div>
         <div><dt>${esc(hero.stat2[0])}</dt><dd>${esc(hero.stat2[1])}</dd></div>
       </dl>
-    </div>
-    <div class="hero-visual hero-in" style="--d:160ms">
-      ${figure(t, "heroSunset", { cls: "hero-img", eager: true, sizes: "(min-width: 900px) 46vw, 92vw" })}
       ${badgeSvg(t)}
-      <div class="hero-chip">
-        <span class="hero-chip-icon">${icon("sunset")}</span>
-        <span><small>${esc(hero.chipEyebrow)}</small><strong>${esc(hero.chipTitle)}</strong></span>
-      </div>
     </div>
   </div>
-  <div class="wrap booking-wrap hero-in" style="--d:520ms">${bookingCard(t)}</div>
 </section>
 
-${TAIS}
-<section class="features" aria-label="${esc(H.two.eyebrow)}">
-  <ul class="wrap features-grid">
-    ${H.features.map((f, i) => `<li${rv(i * 70)}><span class="ring">${icon(f.icon)}</span><div><h3>${esc(f.t)}</h3><p>${esc(f.d)}</p></div></li>`).join("")}
-  </ul>
-</section>
+<div class="marquee" aria-hidden="true"><div class="marquee-track">${marquee}</div></div>
 
-<section class="section two-ways" aria-labelledby="two-title">
+<section class="section worlds-section" aria-labelledby="two-title">
   <div class="wrap">
     <div class="split-head">
       ${heading({ eyebrow: H.two.eyebrow, title: H.two.title, accent: H.two.titleAccent, id: "two-title" })}
       <p class="body-text"${rv(100)}>${esc(H.two.body)}</p>
     </div>
-    <div class="two-grid">
-      <a class="feature-card" href="${href("restaurant", L, "#ementa")}"${rv()}>
-        ${figure(t, "foodSpread", { sizes: "(min-width: 900px) 46vw, 92vw" })}
-        <div class="feature-card-body">
-          <span class="pill">${esc(H.two.restLabel)}</span>
-          <h3>${esc(H.two.restTitle)}</h3>
-          <p>${esc(H.two.restBody)}</p>
-          <span class="gold-link">${esc(H.two.restLink)}${icon("arrow")}</span>
-        </div>
-      </a>
-      <a class="feature-card" href="${href("stay", L)}"${rv(100)}>
-        ${figure(t, "palmsSea", { sizes: "(min-width: 900px) 46vw, 92vw" })}
-        <div class="feature-card-body">
-          <span class="pill">${esc(H.two.stayLabel)}</span>
-          <h3>${esc(H.two.stayTitle)}</h3>
-          <p>${esc(H.two.stayBody)}</p>
-          <span class="gold-link">${esc(H.two.stayLink)}${icon("arrow")}</span>
-        </div>
-      </a>
-    </div>
+  </div>
+  <div class="wrap worlds">
+    <a class="world" href="${href("restaurant", L)}" data-cursor="${esc(t.common.learnMore)}">
+      ${figure(t, "foodSpread", { sizes: "(min-width: 900px) 60vw, 92vw", parallax: 0.08 })}
+      <div class="world-body">
+        <span class="pill">${esc(H.two.restLabel)}</span>
+        <h3>${esc(H.two.restTitle)}</h3>
+        <p>${esc(H.two.restBody)}</p>
+        <span class="gold-link">${esc(H.two.restLink)}${icon("arrow")}</span>
+      </div>
+    </a>
+    <a class="world" href="${href("stay", L)}" data-cursor="${esc(t.common.learnMore)}">
+      ${figure(t, "palmsSea", { sizes: "(min-width: 900px) 60vw, 92vw", parallax: 0.08 })}
+      <div class="world-body">
+        <span class="pill">${esc(H.two.stayLabel)}</span>
+        <h3>${esc(H.two.stayTitle)}</h3>
+        <p>${esc(H.two.stayBody)}</p>
+        <span class="gold-link">${esc(H.two.stayLink)}${icon("arrow")}</span>
+      </div>
+    </a>
   </div>
 </section>
 
-<section class="section dishes" aria-labelledby="dish-title">
-  <div class="wrap">
-    ${heading({ eyebrow: H.dishes.eyebrow, title: H.dishes.title, lead: H.dishes.body, id: "dish-title", center: true })}
-    <div class="center-row"${rv(80)}>${dishTabs(t)}</div>
-    ${dishCards(t, { linkTo: href("restaurant", L, "#reservar") })}
-    <div class="btn-row center"${rv()}>
-      <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}">${esc(H.dishes.fullMenu)}${icon("arrow")}</a>
-      <a class="btn btn-outline" href="${href("restaurant", L, "#reservar")}">${esc(H.hero.ctaTable)}</a>
+<section class="hscroll" data-hscroll aria-labelledby="dish-title">
+  <div class="hscroll-sticky">
+    <div class="hscroll-track" data-hscroll-track>
+      <div class="hs-intro">
+        <p class="eyebrow">${esc(H.dishes.eyebrow)}</p>
+        <h2 id="dish-title" class="title">${esc(H.dishes.title)}</h2>
+        <p class="body-text">${esc(H.dishes.body)}</p>
+        <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}" data-magnetic>${esc(H.dishesCta)}${icon("arrow")}</a>
+      </div>
+      ${dishes
+        .map((d, i) => `<a class="hs-card" href="${href("restaurant", L, "#ementa")}" data-cursor="${esc(t.common.viewMenu)}">
+        ${figure(t, d.image, { sizes: "(min-width: 900px) 30vw, 78vw", ratio: "4/5" })}
+        <span class="hs-num">0${i + 1}</span>
+        <span class="hs-tag">${esc(d.tag[L])}</span>
+        <h3>${esc(d.name[L])}</h3>
+        <p>${esc(d.description[L])}</p>
+      </a>`)
+        .join("")}
+      <a class="hs-end" href="${href("restaurant", L, "#reservar")}" data-cursor="${esc(H.hero.ctaTable)}">
+        <span class="hs-end-title">${esc(H.hero.ctaTable)}</span>${icon("arrow")}
+      </a>
     </div>
+    <div class="hs-progress" aria-hidden="true"><span data-hscroll-bar></span></div>
   </div>
 </section>
 
-<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
+<section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
   ${HUT_DECO}
   <div class="wrap">
     <div class="split-head">
       ${heading({ eyebrow: H.rooms.eyebrow, title: H.rooms.title, accent: H.rooms.titleAccent, id: "rooms-title" })}
       <p class="body-text"${rv(100)}>${esc(H.rooms.body)}</p>
     </div>
-    ${roomCards(t)}
+    ${roomRows(t)}
   </div>
 </section>
 
 <section class="section story" id="historia" aria-labelledby="story-title">
   <div class="wrap story-grid">
-    <div class="story-visual"${rv()}>
-      ${figure(t, "weaving", { cls: "arch", sizes: "(min-width: 900px) 34vw, 80vw", ratio: "4/5" })}
-      <blockquote class="quote-card"><p>${esc(H.story.quote)}</p><footer>${esc(H.story.quoteNote)}</footer></blockquote>
+    <div class="story-visual">
+      <div class="story-sticky">
+        ${figure(t, "weaving", { cls: "arch", sizes: "(min-width: 900px) 34vw, 80vw", ratio: "4/5", attrs: "data-clip", parallax: 0.06 })}
+      </div>
     </div>
     <div class="story-text">
       <header class="heading"${rv()}>
         <p class="eyebrow">${esc(H.story.eyebrow)}</p>
-        <h2 id="story-title" class="title">${esc(H.story.title1)}<br>${esc(H.story.title2)} <em>${esc(H.story.titleAccent)}</em>.</h2>
+        <h2 id="story-title" class="title" data-split>${esc(H.story.title1)} ${esc(H.story.title2)} <em>${esc(H.story.titleAccent)}</em>.</h2>
       </header>
-      <p class="body-text"${rv(80)}>${esc(H.story.body)}</p>
-      <p class="body-text tbc-block"${rv(120)}>${esc(H.story.pending)}</p>
+      <p class="body-text story-lead"${rv(80)}>${esc(H.story.body)}</p>
+      ${site.showPlaceholderNotes ? `<p class="body-text tbc-block"${rv(120)}>${esc(H.story.pending)}</p>` : ""}
+      <p class="pull-quote"${rv(140)}>${esc(H.story.quote)}<span>${esc(H.story.quoteNote)}</span></p>
       <div class="sand-cards"${rv(160)}>
         <div><h3>${esc(H.story.card1[0])}</h3><p>${esc(H.story.card1[1])}</p></div>
         <div><h3>${esc(H.story.card2[0])}</h3><p>${esc(H.story.card2[1])}</p></div>
@@ -396,39 +435,40 @@ ${TAIS}
   </div>
 </section>
 
-<section class="section day" id="experiencias" aria-labelledby="day-title">
+<section class="section day" id="experiencias" aria-labelledby="day-title" data-day>
   <div class="wrap">
     ${heading({ eyebrow: H.day.eyebrow, title: H.day.title, lead: H.day.body, id: "day-title", center: true })}
-    <ol class="timeline">
-      ${H.day.steps.map((s, i) => `<li class="step step-${i + 1}"${rv(i * 80)}><span class="step-dot">${icon(s.icon)}</span><time>${esc(s.time)}</time><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p></li>`).join("")}
-    </ol>
+    <div class="day-track">
+      <div class="day-line" aria-hidden="true"><span data-day-line></span></div>
+      <ol class="timeline">
+        ${H.day.steps.map((s, i) => `<li class="step step-${i + 1}"${rv(i * 90)}><span class="step-dot">${icon(s.icon)}</span><time>${esc(s.time)}</time><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p></li>`).join("")}
+      </ol>
+    </div>
   </div>
 </section>
 
-<section class="section reviews" aria-labelledby="rev-title">
+${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
   <div class="wrap">
     <div class="split-head reviews-head">
       ${heading({ eyebrow: H.reviews.eyebrow, title: H.reviews.title, id: "rev-title", cls: "heading-md" })}
-      <a class="rating"${rv(100)} href="${site.reviewsUrl ? esc(site.reviewsUrl) : mapsLink()}" target="_blank" rel="noopener">
-        <strong>${esc(H.reviews.rating)}</strong>
-        <span><span class="stars">${icon("star").repeat(5)}</span><small>${esc(H.reviews.ratingNote)}</small></span>
-      </a>
     </div>
     <div class="review-grid">
-      ${H.reviews.items.map((r, i) => `<figure class="review"${rv(i * 90)}><span class="review-mark">${icon("quote")}</span><blockquote>${esc(r.q)}</blockquote><figcaption><span class="avatar av-${i + 1}">${esc(r.i)}</span><span><strong>${esc(r.n)}</strong><small>${esc(r.m)}</small></span></figcaption></figure>`).join("")}
+      ${realReviews.map((r, i) => `<figure class="review"${rv(i * 90)}><span class="review-mark">${icon("quote")}</span><blockquote>${esc(r.q)}</blockquote><figcaption><span class="avatar av-${i + 1}">${esc(r.i)}</span><span><strong>${esc(r.n)}</strong><small>${esc(r.m)}</small></span></figcaption></figure>`).join("")}
     </div>
   </div>
-</section>
+</section>` : ""}
 
 ${locationBlock(t)}
-${ctaBand(t)}`;
+${cineCta(t)}`;
   return {
     page: "home",
     title: t.meta.home.title,
     description: t.meta.home.description,
     path: href("home", L),
     alt: href("home", other(L)),
-    preload: imgUrl("heroSunset", 1440),
+    preload: imgUrl("heroSunset", 1920),
+    hero: true,
+    intro: true,
     body,
   };
 }
@@ -445,7 +485,7 @@ ${pageHero(t, {
   lead: t.home.two.restBody,
   image: "foodSpread",
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-dark btn-lg" href="#reservar">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a><a class="btn btn-outline btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
+  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
   <div class="hours-inline">${icon("clock")}<div><strong>${esc(t.home.location.hours)}</strong>${hoursList(t)}</div></div>`,
 })}
 
@@ -470,14 +510,15 @@ ${TAIS}
   </div>
 </section>
 
-${ctaBand(t)}`;
+${cineCta(t)}`;
   return {
     page: "restaurant",
     title: t.meta.restaurant.title,
     description: t.meta.restaurant.description,
     path: href("restaurant", L),
     alt: href("restaurant", other(L)),
-    preload: imgUrl("foodSpread", 1080),
+    preload: imgUrl("foodSpread", 1920),
+    hero: true,
     ld: [bc.ld],
     body,
   };
@@ -498,17 +539,17 @@ ${pageHero(t, {
   lead: t.home.two.stayBody,
   image: "roomSea",
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-dark btn-lg" href="#reservar">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-outline btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
 })}
 
-<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
+<section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
   ${HUT_DECO}
   <div class="wrap">
     <div class="split-head">
       ${heading({ eyebrow: H.eyebrow, title: H.title, accent: H.titleAccent, id: "rooms-title" })}
       <p class="body-text"${rv(100)}>${esc(H.body)}</p>
     </div>
-    ${roomCards(t)}
+    ${roomRows(t)}
     ${amenities}
   </div>
 </section>
@@ -536,7 +577,8 @@ ${pageHero(t, {
     description: t.meta.stay.description,
     path: href("stay", L),
     alt: href("stay", other(L)),
-    preload: imgUrl("roomSea", 1080),
+    preload: imgUrl("roomSea", 1920),
+    hero: true,
     ld: [bc.ld],
     body,
   };
@@ -563,7 +605,7 @@ ${pageHero(t, {
   lead: r.summary[L],
   image: r.images[0],
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-dark btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-outline btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(t.common.whatsapp)}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(t.common.whatsapp)}</a></div>`,
 })}
 
 <section class="section">
@@ -591,7 +633,8 @@ ${pageHero(t, {
     description: fmt(t.meta.room.description, { room: name }),
     path: href("room:" + r.id, L),
     alt: href("room:" + r.id, other(L)),
-    preload: imgUrl(r.images[0], 1080),
+    preload: imgUrl(r.images[0], 1920),
+    hero: true,
     ld: [bc.ld],
     body,
   };
@@ -610,7 +653,7 @@ ${pageHero(t, {
   lead: t.home.location.body,
   image: "coastAerial",
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-dark btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(t.home.cta.wa)}</a><a class="btn btn-outline btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("chat")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
 })}
 
 <section class="section location" aria-labelledby="loc2-title">
@@ -633,14 +676,15 @@ ${pageHero(t, {
   </div>
 </section>
 
-${ctaBand(t)}`;
+${cineCta(t)}`;
   return {
     page: "contact",
     title: t.meta.contact.title,
     description: t.meta.contact.description,
     path: href("contact", L),
     alt: href("contact", other(L)),
-    preload: imgUrl("coastAerial", 1080),
+    preload: imgUrl("coastAerial", 1920),
+    hero: true,
     ld: [bc.ld, faqLd(t)],
     body,
   };

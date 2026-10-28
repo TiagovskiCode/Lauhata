@@ -27,15 +27,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72" fetchpriority="high">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72" fetchpriority="high">
 <link rel="stylesheet" href="../../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/cinema.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/en/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://lauhata.example/en/"},{"@type":"ListItem","position":2,"name":"Stay","item":"https://lauhata.example/en/stay/"}]}</script>
 <script>window.LAUHATA={"lang":"en","whatsapp":"","thanks":"../../en/thank-you/","i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"So Lauhata can get back to you.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}\nContact: {contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello! I would like to request a stay at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\nRoom: {room}\nName: {name}\nContact: {contact}{notes}\n\nCould you confirm availability and the price? Thank you!","waNotes":"\nNotes: {notes}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}\n\nLooking forward to your confirmation. Thank you!","waQuickRoom":"Hello! I would like to request a room at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\n\nCould you confirm availability and the price? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"placeholderImage":"Illustrative image","toConfirm":"To be confirmed","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Book a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"}}};</script>
 <script src="../../assets/js/main.js" defer></script>
 
 </head>
-<body>
+<body class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -71,6 +72,8 @@
     </symbol>
   </defs>
 </svg>
+
+<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" data-header>
   <div class="wrap header-inner">
@@ -117,22 +120,21 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="page-hero">
-  <div class="wrap page-hero-grid">
-    <div class="page-hero-text">
-      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../en/">Home</a></li><li><span aria-current="page">Stay</span></li></ol></nav>
-      <p class="eyebrow">Stay</p>
-      <h1 class="title-xl">Rooms to wake up with the sea at your window</h1>
-      <p class="lead">Calm, comfort and the sound of the waves. A base for discovering Liquiçá and the north coast of Timor-Leste.</p>
-      <div class="btn-row"><a class="btn btn-dark btn-lg" href="#reservar">Book a room<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-outline btn-lg" href="#quartos">See the rooms</a></div>
-    </div>
-    <figure class="media page-hero-img is-placeholder" data-ph="Illustrative image">
-  <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 46vw, 92vw" alt="Bedroom opening onto the sea" fetchpriority="high" decoding="async">
-</figure>
+<section class="cine-hero is-page">
+  <div class="cine-slides"><div class="slide is-active"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Bedroom opening onto the sea" fetchpriority="high" decoding="async">
+</figure></div></div>
+  <div class="cine-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content">
+    <div data-fade style="--d:100ms"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../en/">Home</a></li><li><span aria-current="page">Stay</span></li></ol></nav></div>
+    <p class="eyebrow eyebrow-light" data-fade style="--d:200ms">Stay</p>
+    <h1 class="cine-title is-page" data-split>Rooms to wake up with the sea at your window</h1>
+    <p class="cine-lead" data-fade style="--d:800ms">Calm, comfort and the sound of the waves. A base for discovering Liquiçá and the north coast of Timor-Leste.</p>
+    <div data-fade style="--d:1000ms"><div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">Book a room<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-ghost-light btn-lg" href="#quartos">See the rooms</a></div></div>
   </div>
 </section>
 
-<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
+<section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
   <svg class="hut-deco" viewBox="0 0 200 160" aria-hidden="true"><path d="M100 4 18 74h164L100 4Z" fill="currentColor"/><path d="M44 74v62M78 74v62M122 74v62M156 74v62M30 100h140" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>
   <div class="wrap">
     <div class="split-head">
@@ -143,52 +145,55 @@
   </header>
       <p class="body-text" data-reveal style="--d:100ms">Simple, comfortable rooms for anyone who wants to switch off. Breakfast in the restaurant, with Timor coffee.</p>
     </div>
-    <div class="room-grid"><article class="room-card" data-reveal>
-      <a class="room-img" href="../../en/stay/garden-room/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Illustrative image">
-  <img src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Bedroom with a canopy bed and natural light" loading="lazy" decoding="async">
+    <div class="room-rows"><article class="room-row">
+      <a class="room-row-img" href="../../en/stay/garden-room/" data-cursor="See room" tabindex="-1" aria-hidden="true">
+        <figure class="media  has-parallax" style="--ratio:5/4" data-clip>
+  <img src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Bedroom with a canopy bed and natural light" loading="lazy" decoding="async" data-parallax="0.1">
 </figure>
         <span class="pill pill-dark">Garden</span>
       </a>
-      <div class="room-body">
+      <div class="room-row-body" data-reveal style="--d:120ms">
+        <span class="room-num">01<small>/03</small></span>
         <h3><a href="../../en/stay/garden-room/">Garden Room</a></h3>
         <p>Quiet and cool, with direct access to the tropical garden.</p>
         <ul class="chips"><li>2 guests</li><li>Air conditioning</li><li>Wi-Fi</li></ul>
         <div class="room-foot">
           <p class="from"><span>From</span><strong>$ —</strong> <small>/ night</small></p>
-          <a class="btn btn-cream btn-sm" href="../../en/stay/#reservar" data-room-link="garden">Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <a class="btn btn-cream" href="../../en/stay/#reservar" data-room-link="garden" data-magnetic>Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
-    </article><article class="room-card" data-reveal style="--d:90ms">
-      <a class="room-img" href="../../en/stay/sea-view-room/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Illustrative image">
-  <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Bedroom opening onto the sea" loading="lazy" decoding="async">
+    </article><article class="room-row is-flip">
+      <a class="room-row-img" href="../../en/stay/sea-view-room/" data-cursor="See room" tabindex="-1" aria-hidden="true">
+        <figure class="media  has-parallax" style="--ratio:5/4" data-clip>
+  <img src="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1609602126247-4ab7188b4aa1?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Bedroom opening onto the sea" loading="lazy" decoding="async" data-parallax="0.1">
 </figure>
         <span class="pill pill-dark">Most requested</span>
       </a>
-      <div class="room-body">
+      <div class="room-row-body" data-reveal style="--d:120ms">
+        <span class="room-num">02<small>/03</small></span>
         <h3><a href="../../en/stay/sea-view-room/">Sea View Room</a></h3>
         <p>Wake up with the sea at your window and sunrise over the coast.</p>
         <ul class="chips"><li>2 guests</li><li>Sea view</li><li>Breakfast</li></ul>
         <div class="room-foot">
           <p class="from"><span>From</span><strong>$ —</strong> <small>/ night</small></p>
-          <a class="btn btn-cream btn-sm" href="../../en/stay/#reservar" data-room-link="sea">Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <a class="btn btn-cream" href="../../en/stay/#reservar" data-room-link="sea" data-magnetic>Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
-    </article><article class="room-card" data-reveal style="--d:180ms">
-      <a class="room-img" href="../../en/stay/family-suite/" tabindex="-1" aria-hidden="true">
-        <figure class="media  is-placeholder" style="--ratio:3/2" data-ph="Illustrative image">
-  <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Spacious bedroom with a double bed" loading="lazy" decoding="async">
+    </article><article class="room-row">
+      <a class="room-row-img" href="../../en/stay/family-suite/" data-cursor="See room" tabindex="-1" aria-hidden="true">
+        <figure class="media  has-parallax" style="--ratio:5/4" data-clip>
+  <img src="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1718071215606-ea8d309dcec8?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Spacious bedroom with a double bed" loading="lazy" decoding="async" data-parallax="0.1">
 </figure>
         <span class="pill pill-dark">Family</span>
       </a>
-      <div class="room-body">
+      <div class="room-row-body" data-reveal style="--d:120ms">
+        <span class="room-num">03<small>/03</small></span>
         <h3><a href="../../en/stay/family-suite/">Family Suite</a></h3>
         <p>More room for families and small groups of friends.</p>
         <ul class="chips"><li>Up to 4 guests</li><li>Living area</li><li>Balcony</li></ul>
         <div class="room-foot">
           <p class="from"><span>From</span><strong>$ —</strong> <small>/ night</small></p>
-          <a class="btn btn-cream btn-sm" href="../../en/stay/#reservar" data-room-link="family">Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          <a class="btn btn-cream" href="../../en/stay/#reservar" data-room-link="family" data-magnetic>Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
     </article></div>
@@ -205,7 +210,7 @@
     
   </header>
       <p class="body-text" data-reveal style="--d:80ms">Tell us your dates and number of guests. The request goes to Lauhata's WhatsApp, and they confirm availability and the final price.</p>
-      <figure class="media booking-img is-placeholder" style="--ratio:4/3" data-ph="Illustrative image">
+      <figure class="media booking-img" style="--ratio:4/3">
   <img src="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1705672354908-a068661bc81d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 30vw, 80vw" alt="Palm trees over a turquoise sea" loading="lazy" decoding="async">
 </figure>
     </div>
@@ -270,13 +275,13 @@
     <h2 id="sg-title" class="title">The place and its surroundings</h2>
     
   </header>
-    <div class="gallery gallery-4" data-gallery><button type="button" class="gallery-item g1" data-lb-src="https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal><figure class="media  is-placeholder" data-ph="Illustrative image">
+    <div class="gallery gallery-4" data-gallery><button type="button" class="gallery-item g1" data-lb-src="https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal><figure class="media ">
   <img src="https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1785245647510-5547d4388d2a?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 40vw, 90vw" alt="Veranda with wicker chairs" loading="lazy" decoding="async">
-</figure></button><button type="button" class="gallery-item g2" data-lb-src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal style="--d:70ms"><figure class="media  is-placeholder" data-ph="Illustrative image">
+</figure></button><button type="button" class="gallery-item g2" data-lb-src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal style="--d:70ms"><figure class="media ">
   <img src="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1656570092191-b89cc3136833?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 40vw, 90vw" alt="Bedroom with a canopy bed and natural light" loading="lazy" decoding="async">
-</figure></button><button type="button" class="gallery-item g3" data-lb-src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal style="--d:140ms"><figure class="media  is-placeholder" data-ph="Illustrative image">
+</figure></button><button type="button" class="gallery-item g3" data-lb-src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal style="--d:140ms"><figure class="media ">
   <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 40vw, 90vw" alt="Aerial view of turquoise sea and reef along the coast" loading="lazy" decoding="async">
-</figure></button><button type="button" class="gallery-item g4" data-lb-src="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal style="--d:210ms"><figure class="media  is-placeholder" data-ph="Illustrative image">
+</figure></button><button type="button" class="gallery-item g4" data-lb-src="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1920&q=72" aria-label="Enlarge image" data-reveal style="--d:210ms"><figure class="media ">
   <img src="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 40vw, 90vw" alt="Veranda with bamboo railings and plants" loading="lazy" decoding="async">
 </figure></button></div>
   </div>
@@ -313,6 +318,8 @@
       <p class="muted ">Opening hours to be confirmed</p>
     </div>
   </div>
+  <p class="footer-mega" aria-hidden="true">Lauhata</p>
+  <p class="wrap footer-note">Illustrative images — to be replaced with Lauhata's own photos.</p>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata. All rights reserved.</p>
     <p><a href="../../en/privacy/">Privacy policy</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website by Elevate Web Studio</a></p>

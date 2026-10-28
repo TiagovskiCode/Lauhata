@@ -10,6 +10,15 @@ O design segue a mockup aprovada «Lauhata — Restaurante & Hotel» (PDF): tít
 Display, texto em Manrope, cores creme `#F6F0E4`, verde `#0F2E28`, terracota `#A8432A`,
 dourado `#C89640` e azul-petróleo `#2F6E73`, faixa de tais, selo rotativo e mapa ilustrado da costa.
 
+Por cima disso há uma camada cinematográfica (`src/assets/css/cinema.css` e a secção «Cinematic motion»
+de `main.js`, sem bibliotecas):
+- intro com o logótipo na primeira visita e hero em ecrã inteiro com fotos em sequência;
+- texto que se acende com o scroll, faixa de texto em movimento e painéis que se expandem;
+- pratos em scroll horizontal fixo (no telemóvel, deslizar), quartos em linhas grandes com parallax;
+- linha do dia desenhada com o scroll, cursor personalizado e botões magnéticos.
+
+Tudo se desliga com «movimento reduzido» no sistema.
+
 ## Comandos
 
 Corre-os dentro da pasta `website/`:

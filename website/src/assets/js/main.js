@@ -29,7 +29,10 @@
   function onScroll() {
     const y = window.scrollY;
     const threshold = window.innerHeight * 0.35;
-    header?.classList.toggle("is-solid", y > 40);
+    // Over a full-screen photo the header stays transparent until the photo has scrolled away.
+    // On phones the hero also holds the booking card, so the header turns solid straight away.
+    const heroEl = document.body.classList.contains("has-hero") && window.innerWidth > 860 ? $(".cine-hero") : null;
+    header?.classList.toggle("is-solid", heroEl ? y > heroEl.offsetHeight - (header?.offsetHeight || 80) : y > 40);
     header?.classList.toggle("is-hidden", y > threshold && y > lastY + 4 && !header.contains(document.activeElement));
     if (y < lastY - 4 || y < threshold) header?.classList.remove("is-hidden");
     mobileBar?.classList.toggle("is-visible", y > window.innerHeight * 0.6 && !formInView);
@@ -370,6 +373,170 @@
     if (kind && thanksBody.dataset[kind]) thanksBody.textContent = thanksBody.dataset[kind];
     const reopen = $("[data-thanks-reopen]");
     if (url && reopen) reopen.href = url;
+  }
+
+  /* =================== Cinematic motion =================== */
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const wide = () => window.innerWidth > 860;
+
+  // Split headings into words wrapped in a mask, so each word can rise into view.
+  function splitWords(root, cls = "w", innerCls = "wi") {
+    let n = 0;
+    const walk = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === 3) {
+          const parts = child.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          parts.forEach((p) => {
+            if (!p) return;
+            if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+            const outer = document.createElement("span");
+            outer.className = cls;
+            const inner = document.createElement("span");
+            inner.className = innerCls;
+            inner.style.setProperty("--wd", String(n++ * 70));
+            inner.textContent = p;
+            if (cls) { outer.appendChild(inner); frag.appendChild(outer); } else frag.appendChild(inner);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1) walk(child);
+      });
+    };
+    walk(root);
+    return n;
+  }
+  $$("[data-split]").forEach((el) => splitWords(el));
+
+  // Hero entrance: wait for the intro curtain (first visit) before revealing the hero.
+  const introShown = $("[data-intro]") && !document.documentElement.classList.contains("no-intro");
+  const heroSection = $(".cine-hero");
+  const revealHero = () => {
+    heroSection?.classList.add("is-ready");
+    $$("[data-split]", heroSection || document.createElement("div")).forEach((el) => el.classList.add("is-in"));
+  };
+  if (reduced) revealHero();
+  else setTimeout(revealHero, introShown ? 1900 : 150);
+
+  // Everything else reveals when it enters the viewport.
+  const onEnter = (els, opts = {}) => {
+    if (reduced || !("IntersectionObserver" in window)) return els.forEach((el) => el.classList.add("is-in"));
+    const io2 = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io2.unobserve(e.target); } }),
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.15, ...opts }
+    );
+    els.forEach((el) => io2.observe(el));
+  };
+  onEnter($$("[data-split]").filter((el) => !el.closest(".cine-hero")));
+  onEnter($$("[data-fade]").filter((el) => !el.closest(".cine-hero")));
+  onEnter($$("[data-clip]"), { threshold: 0.2 });
+
+  // Hero slideshow: slow crossfade between photos.
+  const slides = $$("[data-slides] .slide");
+  if (slides.length > 1 && !reduced) {
+    let s = 0;
+    setInterval(() => {
+      slides[s].classList.remove("is-active");
+      s = (s + 1) % slides.length;
+      slides[s].classList.add("is-active");
+    }, 6500);
+  }
+
+  // Statement: words light up as the paragraph scrolls through the screen.
+  const scrub = $("[data-scrub]");
+  let scrubWords = [];
+  if (scrub) {
+    splitWords(scrub, "", "sw");
+    scrubWords = $$(".sw", scrub);
+    if (reduced) scrubWords.forEach((w) => w.classList.add("on"));
+  }
+
+  const parallaxImgs = $$("[data-parallax]");
+  const hs = $("[data-hscroll]");
+  const hsTrack = $("[data-hscroll-track]");
+  const hsBar = $("[data-hscroll-bar]");
+  const day = $("[data-day]");
+  const dayLine = $("[data-day-line]");
+
+  // Pinned horizontal scroll: the section is as tall as the track is wide.
+  function sizeHScroll() {
+    if (!hs || !hsTrack) return;
+    if (reduced || !wide()) { hs.style.height = ""; hsTrack.style.transform = ""; return; }
+    const distance = hsTrack.scrollWidth - window.innerWidth;
+    hs.style.height = `${window.innerHeight + Math.max(0, distance)}px`;
+  }
+
+  function frame() {
+    const vh = window.innerHeight;
+    // Parallax: images drift against the scroll inside their frame.
+    if (!reduced) {
+      parallaxImgs.forEach((img) => {
+        const r = img.parentElement.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        const offset = (r.top + r.height / 2 - vh / 2) * Number(img.dataset.parallax);
+        img.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0) scale(1.18)`;
+      });
+    }
+    // Statement words.
+    if (scrub && !reduced) {
+      const r = scrub.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      const lit = Math.round(p * scrubWords.length);
+      scrubWords.forEach((w, i) => w.classList.toggle("on", i < lit));
+    }
+    // Horizontal dishes.
+    if (hs && hsTrack && !reduced && wide()) {
+      const r = hs.getBoundingClientRect();
+      const distance = hsTrack.scrollWidth - window.innerWidth;
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      hsTrack.style.transform = `translate3d(${(-p * distance).toFixed(1)}px, 0, 0)`;
+      if (hsBar) hsBar.style.transform = `scaleX(${p.toFixed(3)})`;
+    }
+    // Timeline line is drawn as the section scrolls past.
+    if (day && dayLine) {
+      const r = day.getBoundingClientRect();
+      const p = reduced ? 1 : Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (r.height * 0.6)));
+      dayLine.style.setProperty("--p", p.toFixed(3));
+    }
+  }
+  let ticking = false;
+  const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };
+  window.addEventListener("scroll", requestFrame, { passive: true });
+  window.addEventListener("resize", () => { sizeHScroll(); requestFrame(); });
+  window.addEventListener("load", () => { sizeHScroll(); requestFrame(); });
+  sizeHScroll();
+  frame();
+
+  // Custom cursor with a label over links that carry data-cursor.
+  const dot = $("[data-cursor-dot]");
+  if (dot && fine && !reduced) {
+    const label = $("[data-cursor-label]", dot);
+    let x = -100, y = -100, cx = -100, cy = -100;
+    window.addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; dot.classList.add("is-on"); }, { passive: true });
+    document.addEventListener("pointerleave", () => dot.classList.remove("is-on"));
+    const loop = () => {
+      cx += (x - cx) * 0.2;
+      cy += (y - cy) * 0.2;
+      dot.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+      requestAnimationFrame(loop);
+    };
+    loop();
+    $$("[data-cursor]").forEach((el) => {
+      el.addEventListener("pointerenter", () => { label.textContent = el.dataset.cursor; dot.classList.add("is-big"); });
+      el.addEventListener("pointerleave", () => dot.classList.remove("is-big"));
+    });
+  }
+
+  // Magnetic buttons: they lean towards the pointer.
+  if (fine && !reduced) {
+    $$("[data-magnetic]").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.3}px)`;
+      });
+      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
+    });
   }
 
   /* ---------- Smooth scroll (Lenis) — desktop pointer only, never with reduced motion ---------- */
