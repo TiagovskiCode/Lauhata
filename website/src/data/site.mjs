@@ -23,19 +23,24 @@ export default {
   // Exact coordinates, e.g. { lat: -8.6, lng: 125.4 }. PENDING.
   geo: null,
 
-  // Opening hours. PENDING: while empty, pages show "to be confirmed".
-  // Example: [{ days: { pt: "Segunda a domingo", en: "Monday to Sunday" }, hours: "11:00–22:00" }]
-  restaurantHours: [],
+  // Opening hours of food and beverage, from the printed menu. The menu does not say which days, so
+  // each line is labelled by meal (the field is called `days` but holds any label).
+  restaurantHours: [
+    { days: { pt: "Pequeno-almoço", en: "Breakfast" }, hours: "08:00–10:00" },
+    { days: { pt: "Almoço e jantar", en: "Lunch & dinner" }, hours: "11:00–21:00" },
+  ],
   // Hotel check-in / check-out. PENDING. Example: { checkIn: "14:00", checkOut: "11:00" }
   stayTimes: null,
 
-  // Hotel reception hours. Text from the design mock-up — to be confirmed.
-  receptionHours: { pt: "24 horas", en: "24 hours" },
+  // Hotel reception hours. PENDING: the mock-up said "24 hours" but Lauhata has not confirmed it, so
+  // the site shows "to be confirmed" until it does. Example: { pt: "24 horas", en: "24 hours" }
+  receptionHours: null,
 
-  // Typical reply time shown next to the booking forms. Text from the design mock-up — to be confirmed.
+  // Line shown next to the booking forms. Neutral on purpose: it promises no reply time. Once Lauhata
+  // confirms how fast it usually answers, it can say so (e.g. "normalmente em poucos minutos").
   responseTime: {
-    pt: "Confirmamos a sua reserva pelo WhatsApp — normalmente em poucos minutos.",
-    en: "We confirm your booking on WhatsApp — usually within minutes.",
+    pt: "O Lauhata responde pelo WhatsApp para confirmar a disponibilidade.",
+    en: "Lauhata replies on WhatsApp to confirm availability.",
   },
 
   // Drive time from Dili shown on the map, e.g. "25 min". PENDING.
@@ -43,6 +48,30 @@ export default {
 
   // Social profiles, e.g. { facebook: "https://…", instagram: "https://…" }. PENDING.
   social: {},
+
+  // Restaurant orders: the menu's cart sends the order to WhatsApp (nothing is paid or stored on the site).
+  //   currency  symbol written before every price (the menu is priced in US dollars)
+  //   types     which kinds of order the restaurant accepts. PENDING: Lauhata has not confirmed any, so the
+  //             checkout asks only for a name until this is filled. One entry per kind, e.g.
+  //               { id: "dine-in", label: { pt: "Comer no restaurante", en: "Dine in" }, askTable: true },
+  //               { id: "takeaway", label: { pt: "Para levar", en: "Takeaway" } },
+  //             `askTable: true` asks for the table number (required) when that type is chosen.
+  order: {
+    currency: "$",
+    types: [],
+  },
+
+  // Hero video (optional). Leave empty and the hero shows its photo only. When Lauhata supplies real footage,
+  // optimise it (short loop, no sound, ideally under 3 MB), put it in src/assets/video/ and set e.g.
+  // "/assets/video/hero.mp4": the photo stays on screen and the video fades in over it once it can play.
+  heroVideo: "",
+
+  // Optional fields for search engines (Google). Each one is only written to the page once it is filled.
+  // priceRange: e.g. "$$"; servesCuisine: e.g. ["Timorese", "Seafood"];
+  // openingHoursSpec: [{ days: ["Monday", "Tuesday"], opens: "11:00", closes: "22:00" }] (English day names).
+  priceRange: "",
+  servesCuisine: [],
+  openingHoursSpec: [],
 
   // Public review page (Google Maps / TripAdvisor). Only real reviews: none are written on the site.
   reviewsUrl: "",

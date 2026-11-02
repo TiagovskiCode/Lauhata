@@ -46,7 +46,12 @@
       header?.classList.toggle("is-hidden", y > anchorY);
       anchorY = y;
     }
-    mobileBar?.classList.toggle("is-visible", y > window.innerHeight * 0.6 && !formInView);
+    const barOn = y > window.innerHeight * 0.6 && !formInView;
+    mobileBar?.classList.toggle("is-visible", barOn);
+    // Read by CSS: the sticky menu bar moves up when the header hides; the cart button clears the mobile bar.
+    const root = document.documentElement;
+    root.style.setProperty("--header-shown", header?.classList.contains("is-hidden") ? "0" : "1");
+    root.classList.toggle("has-bar", barOn);
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -108,14 +113,6 @@
       select(btns[(i + (e.key === "ArrowRight" ? 1 : -1) + btns.length) % btns.length], true);
     });
   }
-
-  /* ---------- Interactive menu: dish category tabs ---------- */
-  $$("[data-dish-tabs]").forEach((list) => {
-    const grid = list.closest("section").querySelector("[data-dish-grid]");
-    tabs(list, "data-dish-tab", (cat) => {
-      $$("[data-cat]", grid).forEach((d) => { d.hidden = d.dataset.cat !== cat; });
-    });
-  });
 
   /* ---------- Gallery lightbox ---------- */
   const lb = $("[data-lightbox]");
@@ -203,7 +200,8 @@
     const errors = {};
     const val = (n) => (el[n] ? el[n].value.trim() : "");
     if (!val("name")) errors.name = F.errors.name;
-    if (!contactOk(val("contact"))) errors.contact = F.errors.contact;
+    // Optional: WhatsApp already shows Lauhata the sender's number. If filled, it must look valid.
+    if (val("contact") && !contactOk(val("contact"))) errors.contact = F.errors.contact;
     if (form.dataset.booking === "table") {
       if (!val("date") || val("date") < today) errors.date = F.errors.date;
       if (!val("time")) errors.time = F.errors.time;
@@ -241,8 +239,9 @@
     const el = form.elements;
     const v = (n) => (el[n] ? el[n].value.trim() : "");
     const notes = v("notes") ? fmt(F.waNotes, { notes: v("notes") }) : "";
+    const contact = v("contact") ? fmt(F.waContact, { contact: v("contact") }) : "";
     if (form.dataset.booking === "table") {
-      return fmt(F.waTable, { name: v("name"), date: fmtDate(v("date")), time: v("time"), people: v("people"), contact: v("contact"), notes });
+      return fmt(F.waTable, { name: v("name"), date: fmtDate(v("date")), time: v("time"), people: v("people"), contact, notes });
     }
     const roomSel = el.room;
     return fmt(F.waRoom, {
@@ -252,7 +251,7 @@
       guests: v("guests"),
       room: roomSel ? roomSel.options[roomSel.selectedIndex].text : "",
       name: v("name"),
-      contact: v("contact"),
+      contact,
       notes,
     });
   }
@@ -280,6 +279,9 @@
       location.href = win ? CFG.thanks : url;
     }, 400);
   }
+
+  // Shared with order.js: the restaurant order uses the same hand-off to WhatsApp and the thank-you page.
+  window.LauhataWA = { url: waUrl, send: sendToWhatsApp };
 
   $$("[data-booking]").forEach((form) => {
     prefill(form);
@@ -355,10 +357,11 @@
       errBox.hidden = true;
       $$(".bc-field", card).forEach((f) => f.classList.remove("has-error"));
       const opt = (s) => s.options[s.selectedIndex].text;
+      const unitText = (i) => { const n = Number(i.value) || 1; return `${n} ${n === 1 ? i.dataset.unitOne : i.dataset.unitMany}`; };
       let text;
       if (kind === "table") {
         if (!el.date.value || el.date.value < today) return fail(el.date, F.errors.date);
-        text = fmt(F.waQuickTable, { date: fmtDate(el.date.value), time: opt(el.time), people: opt(el.people) });
+        text = fmt(F.waQuickTable, { date: fmtDate(el.date.value), time: opt(el.time), people: unitText(el.people) });
       } else {
         if (!el.checkIn.value || el.checkIn.value < today) return fail(el.checkIn, F.errors.checkIn);
         if (!el.checkOut.value || el.checkOut.value <= el.checkIn.value) return fail(el.checkOut, F.errors.checkOut);
@@ -366,7 +369,7 @@
           checkIn: fmtDate(el.checkIn.value),
           checkOut: fmtDate(el.checkOut.value),
           nights: nightsLabel(el.checkIn.value, el.checkOut.value),
-          guests: opt(el.guests),
+          guests: unitText(el.guests),
         });
       }
       card.classList.add("is-sending");
@@ -442,6 +445,34 @@
     setTimeout(lift, Math.max(0, 4000 - performance.now()));
   }
 
+  // Hero video (only if site.heroVideo is set): the photo is already on screen; once the page has loaded
+  // the video is fetched and fades in over it. Skipped for reduced motion, data saver and slow
+  // connections, paused while the hero is off screen, and removed if it fails (the photo stays).
+  const heroVideo = $("[data-hero-video]");
+  if (heroVideo) {
+    const conn = navigator.connection || {};
+    if (reduced || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
+      heroVideo.remove();
+    } else {
+      const start = () => {
+        heroVideo.addEventListener("error", () => heroVideo.remove(), { once: true });
+        heroVideo.addEventListener("canplay", () => {
+          heroVideo.play().then(() => heroVideo.classList.add("is-on")).catch(() => heroVideo.remove());
+        }, { once: true });
+        heroVideo.src = heroVideo.dataset.src;
+        heroVideo.load();
+      };
+      if (document.readyState === "complete") setTimeout(start, 800);
+      else window.addEventListener("load", () => setTimeout(start, 800), { once: true });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(([e]) => {
+          if (!heroVideo.classList.contains("is-on")) return;
+          if (e.isIntersecting) heroVideo.play().catch(() => {}); else heroVideo.pause();
+        }, { threshold: 0.1 }).observe(heroVideo);
+      }
+    }
+  }
+
   // Everything else reveals when it enters the viewport.
   const onEnter = (els, opts = {}) => {
     if (reduced || !("IntersectionObserver" in window)) return els.forEach((el) => el.classList.add("is-in"));
@@ -454,6 +485,36 @@
   onEnter($$("[data-split]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-fade]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-clip]"), { threshold: 0.2 });
+
+  // Rooms: the panel under the pointer (or with focus, or tapped) opens; the first is open to begin with.
+  $$("[data-suites]").forEach((row) => {
+    const panels = $$("[data-su]", row);
+    const open = (p) => panels.forEach((x) => x.classList.toggle("is-on", x === p));
+    panels.forEach((p) => {
+      p.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") open(p); });
+      p.addEventListener("focusin", () => open(p));
+      p.addEventListener("click", (e) => { if (!e.target.closest("a, button")) open(p); });
+    });
+  });
+
+  // A day at Lauhata: the step in the middle of the screen sets the photo, the dots and the colour of the section.
+  const dayx = $("[data-dayx]");
+  if (dayx && "IntersectionObserver" in window) {
+    const dxSteps = $$("[data-dx-step]", dayx);
+    const dxImgs = $$(".dx-img", dayx);
+    const dxDots = $$(".dx-dots li", dayx);
+    const setStep = (i) => {
+      dayx.dataset.step = String(i);
+      dxSteps.forEach((s, k) => s.classList.toggle("is-on", k === i));
+      dxImgs.forEach((s, k) => s.classList.toggle("is-on", k === i));
+      dxDots.forEach((s, k) => s.classList.toggle("is-on", k === i));
+    };
+    const dxObserver = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setStep(Number(e.target.dataset.dxStep)); }),
+      { rootMargin: "-48% 0px -48% 0px" }
+    );
+    dxSteps.forEach((s) => dxObserver.observe(s));
+  }
 
   // Hero slideshow: slow crossfade between photos.
   const slides = $$("[data-slides] .slide");
@@ -478,6 +539,8 @@
   const parallaxImgs = $$("[data-parallax]");
   const day = $("[data-day]");
   const dayLine = $("[data-day-line]");
+  const dusk = $("[data-dusk]"); // the panorama: 0 = dinner light, 1 = night
+  const hx = $(".hx"); // the hero: its words drift up and fade as the page scrolls
 
   function frame() {
     const vh = window.innerHeight;
@@ -496,6 +559,13 @@
       const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
       const lit = Math.round(p * scrubWords.length);
       scrubWords.forEach((w, i) => w.classList.toggle("on", i < lit));
+    }
+    if (hx && !reduced) hx.style.setProperty("--hp", Math.min(1, Math.max(0, window.scrollY / (hx.offsetHeight * 0.7))).toFixed(3));
+    // Panorama: night falls as the section scrolls up through the screen (CSS reads --p).
+    if (dusk && !reduced) {
+      const r = dusk.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh * 0.4)));
+      dusk.style.setProperty("--p", p.toFixed(3));
     }
     // Timeline line is drawn as the section scrolls past.
     if (day && dayLine) {

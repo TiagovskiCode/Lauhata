@@ -68,10 +68,10 @@ export function imgUrl(key, w = 1200) {
 }
 
 // <link rel="preload"> for a full-width hero, with the same candidates as its <img>.
-export function preloadImage(key) {
+export function preloadImage(key, sizes = "100vw", media = "") {
   const im = images[key];
   const srcset = srcsetFor(im);
-  return `<link rel="preload" as="image" href="${srcFor(im.src, 1440)}"${srcset ? ` imagesrcset="${srcset}" imagesizes="100vw"` : ""} fetchpriority="high">`;
+  return `<link rel="preload" as="image" href="${srcFor(im.src, 1440)}"${srcset ? ` imagesrcset="${srcset}" imagesizes="${sizes}"` : ""}${media ? ` media="${media}"` : ""} fetchpriority="high">`;
 }
 
 // True while any illustrative stock photo is still in use: the footer then shows one notice
@@ -83,14 +83,47 @@ export const usesPlaceholderImages = () => site.showPlaceholderNotes && Object.v
  * attrs: extra attributes for the figure (e.g. 'data-clip' for a reveal, 'data-cursor="Ver"').
  * parallax: speed for the inner image drift (e.g. 0.12); the image is over-scaled to cover it.
  */
-export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0 } = {}) {
+// art: [{ key, media }] swaps in another photo when the media query matches (e.g. a more portrait-friendly
+// crop on phones): the browser then downloads only the photo it shows.
+export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [] } = {}) {
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
   const srcset = srcsetFor(im);
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
+  const img = `<img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${esc(im.alt[t.lang])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>`;
+  const sources = art.map((a) => `<source media="${a.media}" srcset="${srcsetFor(images[a.key])}" sizes="${sizes}">`).join("");
   return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}"${style}${attrs ? " " + attrs : ""}>
-  <img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${esc(im.alt[t.lang])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
+  ${sources ? `<picture>${sources}${img}</picture>` : img}${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
 </figure>`;
+}
+
+// ---------- Reservation times ----------
+// Every 30 minutes through the printed opening hours, the last one 30 minutes before closing. Falls back to a
+// sensible default while the hours are not filled in.
+export function reservationSlots() {
+  const out = [];
+  for (const h of site.restaurantHours) {
+    const m = String(h.hours).match(/(\d{1,2}):(\d{2})\D+(\d{1,2}):(\d{2})/);
+    if (!m) continue;
+    const end = Number(m[3]) * 60 + Number(m[4]);
+    for (let a = Number(m[1]) * 60 + Number(m[2]); a <= end - 30; a += 30) {
+      out.push(`${String(Math.floor(a / 60)).padStart(2, "0")}:${String(a % 60).padStart(2, "0")}`);
+    }
+  }
+  return out.length ? [...new Set(out)] : ["12:00", "12:30", "13:00", "13:30", "14:00", "18:30", "19:00", "19:30", "20:00", "20:30"];
+}
+export const slotPeriod = (v) => (v < "12:00" ? "morning" : v < "18:00" ? "afternoon" : "evening");
+
+// ---------- Menu and orders ----------
+// "$18" or "$6.50": the currency symbol comes from site.order.currency.
+export const money = (n) => site.order.currency + (Number.isInteger(n) ? n : n.toFixed(2));
+
+// The dishes a page can add to the order, for the cart script (window.LAUHATA_MENU, by dish id).
+export function menuJson(list) {
+  const data = Object.fromEntries(
+    list.map((d) => [d.id, { id: d.id, name: d.name, price: d.price, desc: d.description ?? null, options: d.options }])
+  );
+  return `<script>window.LAUHATA_MENU=${JSON.stringify(data).replace(/</g, "\\u003c")};</script>`;
 }
 
 // ---------- Small pieces ----------

@@ -27,13 +27,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="../assets/img/fotos/hero-por-do-sol-1600.jpg" imagesrcset="../assets/img/fotos/hero-por-do-sol-640.jpg 640w, ../assets/img/fotos/hero-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/hero-por-do-sol-1600.jpg 1310w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="../assets/img/fotos/costa-por-do-sol-1600.jpg" imagesrcset="../assets/img/fotos/costa-por-do-sol-640.jpg 640w, ../assets/img/fotos/costa-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/costa-por-do-sol-1600.jpg 1600w" imagesizes="100vw" media="(min-width: 861px)" fetchpriority="high">
+<link rel="preload" as="image" href="../assets/img/fotos/hero-por-do-sol-1600.jpg" imagesrcset="../assets/img/fotos/hero-por-do-sol-640.jpg 640w, ../assets/img/fotos/hero-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/hero-por-do-sol-1600.jpg 1310w" imagesizes="100vw" media="(max-width: 860px)" fetchpriority="high">
 <link rel="stylesheet" href="../assets/css/main.css">
 <link rel="stylesheet" href="../assets/css/cinema.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/en/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
+<link rel="stylesheet" href="../assets/css/order.css">
+<link rel="stylesheet" href="../assets/css/home.css">
+<link rel="stylesheet" href="../assets/css/landing.css">
+<link rel="stylesheet" href="../assets/css/picker.css">
+<link rel="stylesheet" href="../assets/css/wide.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/en/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste","hasMenu":"https://lauhata.example/en/restaurant/#ementa"}</script>
 
-<script>window.LAUHATA={"lang":"en","whatsapp":"","thanks":"../en/thank-you/","i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"So Lauhata can get back to you.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}\nContact: {contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello! I would like to request a stay at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\nRoom: {room}\nName: {name}\nContact: {contact}{notes}\n\nCould you confirm availability and the price? Thank you!","waNotes":"\nNotes: {notes}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}\n\nLooking forward to your confirmation. Thank you!","waQuickRoom":"Hello! I would like to request a room at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\n\nCould you confirm availability and the price? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"placeholderImage":"Illustrative image","toConfirm":"To be confirmed","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Book a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"}}};</script>
+<script>window.LAUHATA={"lang":"en","whatsapp":"","thanks":"../en/thank-you/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"Only if you prefer to be contacted on another number or by email.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","guestOne":"guest","guestMany":"guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}{contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello! I would like to request a stay at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\nRoom: {room}\nName: {name}{contact}{notes}\n\nCould you confirm availability and the price? Thank you!","waNotes":"\nNotes: {notes}","waContact":"\nContact: {contact}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}\n\nLooking forward to your confirmation. Thank you!","waQuickRoom":"Hello! I would like to request a room at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\n\nCould you confirm availability and the price? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"placeholderImage":"Illustrative image","toConfirm":"To be confirmed","priceTbc":"Price to be confirmed","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Book a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"},"order":{"cartTitle":"Your order","open":"Open your order","close":"Close","viewOrder":"View order","itemOne":"1 item","itemMany":"{n} items","emptyTitle":"Your order is empty","emptyBody":"Pick dishes from the menu and they will appear here.","viewMenu":"See the menu","add":"Add","added":"Added","choose":"Choose","unavailable":"Price to be confirmed","remove":"Remove {name}","increase":"One more: {name}","decrease":"One less: {name}","qty":"Quantity","each":"each","total":"Total","continue":"Keep browsing","checkout":"Place order","back":"Back to your order","detailsTitle":"Your details","name":"Name","type":"Order type","table":"Table number","notes":"Order notes","optional":"optional","notesPlaceholder":"Allergies, preferences…","send":"Send order on WhatsApp","sending":"Opening WhatsApp…","note":"When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website.","errorsTitle":"Please check the highlighted fields.","errors":{"name":"Please enter your name.","type":"Please choose the order type.","table":"Please enter the table number.","choose":"Please choose an option.","tooBig":"The order is too big for a single message. Remove some items or send it in two parts."},"customize":"Customise","addToOrder":"Add to order","cancel":"Cancel","searchLabel":"Search the menu","searchPlaceholder":"Search for a dish…","clearSearch":"Clear search","noResults":"No dishes found for “{q}”.","resultOne":"1 dish found","results":"{n} dishes found","categories":"Menu categories","inOrder":"{name} added to your order","menuHours":"Hours","msg":{"hello":"Hello, Lauhata!","intro":"I would like to place the following order:","title":"Restaurant order","total":"Total","name":"Name","type":"Order type","table":"Table","notes":"Notes","bye":"Looking forward to your confirmation. Thank you!"}},"pick":{"chooseDate":"Choose a date","chooseTime":"Choose a time","dateDialog":"Choose a date","rangeDialog":"Choose your dates","timeDialog":"Choose a time","numberDialog":"Quantity","selectDialog":"Choose","close":"Close","prev":"Previous month","next":"Next month","today":"Today","clear":"Clear","done":"Done","stepIn":"Choose check-in","stepOut":"Choose check-out","nightOne":"1 night","nightMany":"{n} nights","less":"Fewer","more":"More","max":"Maximum: {n}","morning":"Morning","afternoon":"Afternoon","evening":"Evening"}}};</script>
+<script>window.LAUHATA_MENU={"grilled-fish":{"id":"grilled-fish","name":"Grilled Fish","price":18,"desc":{"en":"Slice of fish fillet served with lemon & butter sauce, roasted rosemary potatoes & green salad","pt":"Posta de filete de peixe com molho de limão e manteiga, batatas assadas com alecrim e salada verde"},"options":[]},"lauhata-special-fried-rice":{"id":"lauhata-special-fried-rice","name":"Lauhata Special Fried Rice","price":10,"desc":{"en":"Chicken, sausage, prawns and egg","pt":"Frango, salsicha, gambas e ovo"},"options":[]},"pizza-lauhata-seafood":{"id":"pizza-lauhata-seafood","name":"Lauhata Seafood","price":21,"desc":{"en":"Tuna, prawns, feta & mozzarella","pt":"Atum, gambas, feta e mozzarella"},"options":[]},"choice-of-eggs":{"id":"choice-of-eggs","name":"Choice of Eggs","price":6,"desc":{"en":"Scrambled, fried eggs, sunny-side up, served with toast bread & butter","pt":"Ovos mexidos, fritos ou estrelados, servidos com torradas e manteiga"},"options":[{"id":"style","label":{"en":"Style","pt":"Preparação"},"choices":[{"id":"scrambled","label":{"en":"Scrambled","pt":"Mexidos"}},{"id":"fried","label":{"en":"Fried","pt":"Fritos"}},{"id":"sunny","label":{"en":"Sunny-side up","pt":"Estrelados"}}]}]},"egg-chicken-sausage-toast":{"id":"egg-chicken-sausage-toast","name":"Egg and Chicken Sausage on Toast","price":8,"desc":{"en":"Fried or scrambled. Served with tomato, olive & feta","pt":"Ovos fritos ou mexidos. Servido com tomate, azeitona e feta"},"options":[{"id":"style","label":{"en":"Style","pt":"Preparação"},"choices":[{"id":"fried","label":{"en":"Fried","pt":"Fritos"}},{"id":"scrambled","label":{"en":"Scrambled","pt":"Mexidos"}}]}]},"omelette":{"id":"omelette","name":"Omelette","price":6,"desc":{"en":"Plain, ham & cheese or Spanish","pt":"Simples, de fiambre e queijo ou espanhola"},"options":[{"id":"type","label":{"en":"Type","pt":"Tipo"},"choices":[{"id":"plain","label":{"en":"Plain","pt":"Simples"}},{"id":"ham-cheese","label":{"en":"Ham & cheese","pt":"Fiambre e queijo"}},{"id":"spanish","label":{"en":"Spanish","pt":"Espanhola"}}]}]},"baked-beans-toast":{"id":"baked-beans-toast","name":"Baked Beans on Toast","price":6,"desc":{"en":"Baked beans served on toasted bread","pt":"Baked beans servidos sobre pão torrado"},"options":[]},"french-toast":{"id":"french-toast","name":"French Toast","price":6,"desc":{"en":"Served with honey and cinnamon","pt":"Servido com mel e canela"},"options":[]},"pancakes":{"id":"pancakes","name":"Pancakes","price":6,"desc":{"en":"Plain or banana and maple syrup","pt":"Simples ou com banana e xarope de ácer"},"options":[{"id":"version","label":{"en":"Version","pt":"Versão"},"choices":[{"id":"plain","label":{"en":"Plain","pt":"Simples"}},{"id":"banana-maple","label":{"en":"Banana and maple syrup","pt":"Banana e xarope de ácer"}}]}]},"cereal-choices":{"id":"cereal-choices","name":"Cereal Choices","price":4,"desc":{"en":"Choco or corn flakes served with hot or cold milk","pt":"Cereais de chocolate ou flocos de milho, servidos com leite quente ou frio"},"options":[{"id":"cereal","label":{"en":"Cereal","pt":"Cereal"},"choices":[{"id":"choco","label":{"en":"Choco","pt":"Chocolate"}},{"id":"corn-flakes","label":{"en":"Corn flakes","pt":"Flocos de milho"}}]},{"id":"milk","label":{"en":"Milk","pt":"Leite"},"choices":[{"id":"hot","label":{"en":"Hot","pt":"Quente"}},{"id":"cold","label":{"en":"Cold","pt":"Frio"}}]}]},"seasonal-fruit-salad":{"id":"seasonal-fruit-salad","name":"Seasonal Fruit Salad","price":5,"desc":{"en":"Selection of fruits in season","pt":"Seleção de frutas da época"},"options":[]}};</script>
+<script src="../assets/js/picker.js" defer></script>
 <script src="../assets/js/main.js" defer></script>
+<script src="../assets/js/order.js" defer></script>
 
 </head>
 <body class="has-hero">
@@ -56,6 +65,8 @@
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-cutlery" viewBox="0 0 24 24"><path d="M7 3.5v7a2 2 0 0 0 4 0v-7M9 10.5v10M17 20.5v-17c-2 1-3 3.5-3 7h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3.5 18.5v-11M3.5 14h17v4.5M20.5 14v-2.5a3 3 0 0 0-3-3h-6V14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="11" r="1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-waves" viewBox="0 0 24 24"><path d="M3 9c2-1.6 3.5-1.6 5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4 0M3 14c2-1.6 3.5-1.6 5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4 0M7 6.5c1.5-1 3-1 4.5 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.4-7.5-10A4 4 0 0 1 12 7a4 4 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -64,6 +75,11 @@
     <symbol id="i-quote" viewBox="0 0 24 24"><path d="M10 7c-3 1-5 3.5-5 7v3h5v-5H7.5c0-2 1-3.5 3-4.2L10 7Zm9 0c-3 1-5 3.5-5 7v3h5v-5h-2.5c0-2 1-3.5 3-4.2L19 7Z" fill="currentColor"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8L12 3.5Z" fill="currentColor"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 8h14l-1 11.5a1 1 0 0 1-1 .9H7a1 1 0 0 1-1-.9L5 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-hut" viewBox="0 0 48 48">
       <path d="M24 3 6 21h36L24 3Z" fill="currentColor"/>
       <path d="M24 3 15 12h18L24 3Z" fill="#C89640"/>
@@ -92,6 +108,7 @@
     <span class="lang-opt is-on" aria-current="true">EN</span>
     <a class="lang-opt" href="../" hreflang="pt" lang="pt-PT" title="Ler em português">PT</a>
   </div>
+      <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog" aria-label="Open your order"><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-count" data-cart-count hidden>0</span></button>
       <div class="book-menu" data-book-menu>
         <button class="btn btn-dark btn-sm" type="button" aria-expanded="false" aria-controls="book-pop-en" data-book-toggle>Book<svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg></button>
         <div class="book-pop" id="book-pop-en" hidden>
@@ -125,23 +142,18 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="cine-hero" aria-labelledby="hero-title">
-  <div class="cine-slides" data-slides>
-    <div class="slide is-active"><figure class="media ">
-  <img src="../assets/img/fotos/hero-por-do-sol-1600.jpg" srcset="../assets/img/fotos/hero-por-do-sol-640.jpg 640w, ../assets/img/fotos/hero-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/hero-por-do-sol-1600.jpg 1310w" sizes="100vw" alt="Table set with grilled fish and coconut water on a terrace above the bay at sunset" fetchpriority="high" decoding="async">
-</figure></div><div class="slide"><figure class="media ">
-  <img src="../assets/img/fotos/costa-por-do-sol-1600.jpg" srcset="../assets/img/fotos/costa-por-do-sol-640.jpg 640w, ../assets/img/fotos/costa-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/costa-por-do-sol-1600.jpg 1600w" sizes="100vw" alt="Bay with palm trees and green hills at sunset" loading="lazy" decoding="async">
-</figure></div><div class="slide"><figure class="media ">
-  <img src="../assets/img/fotos/terraco-mar-1600.jpg" srcset="../assets/img/fotos/terraco-mar-640.jpg 640w, ../assets/img/fotos/terraco-mar-1080.jpg 1080w, ../assets/img/fotos/terraco-mar-1600.jpg 1341w" sizes="100vw" alt="Loungers and fresh coconuts on a terrace overlooking the sea" loading="lazy" decoding="async">
-</figure></div><div class="slide"><figure class="media ">
-  <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="100vw" alt="Aerial view of turquoise sea and reef along the coast" loading="lazy" decoding="async">
-</figure></div>
+<section class="cine-hero hx" aria-labelledby="hero-title">
+  <div class="hx-bg">
+    <figure class="media ">
+  <picture><source media="(max-width: 860px)" srcset="../assets/img/fotos/hero-por-do-sol-640.jpg 640w, ../assets/img/fotos/hero-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/hero-por-do-sol-1600.jpg 1310w" sizes="100vw"><img src="../assets/img/fotos/costa-por-do-sol-1600.jpg" srcset="../assets/img/fotos/costa-por-do-sol-640.jpg 640w, ../assets/img/fotos/costa-por-do-sol-1080.jpg 1080w, ../assets/img/fotos/costa-por-do-sol-1600.jpg 1600w" sizes="100vw" alt="Bay with palm trees and green hills at sunset" fetchpriority="high" decoding="async"></picture>
+</figure>
+    
   </div>
-  <div class="cine-shade" aria-hidden="true"></div>
-  <div class="wrap cine-content">
-    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade><span>Liquiçá</span><span>Timor-Leste</span><span>Sea &amp; mountains</span></p>
-    <h1 id="hero-title" class="cine-title" data-split><span class="line">Where the sea</span> <span class="line"><em>slows</em> time down.</span></h1>
-    <p class="cine-lead" data-fade style="--d:300ms">A table looking out to sea, a room to rest to the sound of the waves and the hospitality of Timor-Leste. People don't just come to Lauhata to eat or sleep — they come to stay.</p>
+  <div class="hx-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content hx-content">
+    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade><span>Liquiçá</span><span>Timor-Leste</span><span>Restaurant &amp; stay</span></p>
+    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">Where the sea</span> <span class="line l2"><em>slows</em> time down.</span></h1>
+    <p class="cine-lead" data-fade style="--d:300ms">Restaurant and stay on the Liquiçá coast, west of Dili. Request a table, choose your dishes or book a room, all on WhatsApp.</p>
   </div>
   <div class="wrap cine-bar" data-fade style="--d:400ms"><form class="booking-card" data-quick-wa novalidate aria-label="Quick booking request">
     <div class="bc-tabs" role="tablist">
@@ -149,265 +161,342 @@
       <button type="button" role="tab" aria-selected="false" aria-controls="bc-room" data-bc-tab="room"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Room</button>
     </div>
     <div class="bc-row" id="bc-table" role="tabpanel" data-bc-panel="table">
-      <label class="bc-field"><span>Date</span><input type="date" name="date"></label>
-      <label class="bc-field"><span>Time</span><span class="bc-select"><select name="time"><option value="12:00">Lunch · 12:00</option><option value="12:30">Lunch · 12:30</option><option value="13:00">Lunch · 13:00</option><option value="13:30">Lunch · 13:30</option><option value="14:00">Lunch · 14:00</option><option value="18:30">Dinner · 18:30</option><option value="19:00">Dinner · 19:00</option><option value="19:30" selected>Dinner · 19:30</option><option value="20:00">Dinner · 20:00</option><option value="20:30">Dinner · 20:30</option><option value="21:00">Dinner · 21:00</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"></use></svg></span></label>
-      <label class="bc-field"><span>People</span><span class="bc-select"><select name="people"><option value="1">1 person</option><option value="2" selected>2 people</option><option value="3">3 people</option><option value="4">4 people</option><option value="5">5 people</option><option value="6">6 people</option><option value="7">7 people</option><option value="8">8 people</option><option value="9">9 people</option><option value="10">10 people</option><option value="10+">More than 10</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"></use></svg></span></label>
+      <label class="bc-field"><span>Date</span><input type="date" name="date" data-pick="date"></label>
+      <label class="bc-field"><span>Time</span><select name="time" data-pick="time"><option value="08:00" data-group="Morning" data-label="08:00">Morning · 08:00</option><option value="08:30" data-group="Morning" data-label="08:30">Morning · 08:30</option><option value="09:00" data-group="Morning" data-label="09:00">Morning · 09:00</option><option value="09:30" data-group="Morning" data-label="09:30">Morning · 09:30</option><option value="11:00" data-group="Morning" data-label="11:00">Morning · 11:00</option><option value="11:30" data-group="Morning" data-label="11:30">Morning · 11:30</option><option value="12:00" data-group="Afternoon" data-label="12:00">Afternoon · 12:00</option><option value="12:30" data-group="Afternoon" data-label="12:30">Afternoon · 12:30</option><option value="13:00" data-group="Afternoon" data-label="13:00">Afternoon · 13:00</option><option value="13:30" data-group="Afternoon" data-label="13:30">Afternoon · 13:30</option><option value="14:00" data-group="Afternoon" data-label="14:00">Afternoon · 14:00</option><option value="14:30" data-group="Afternoon" data-label="14:30">Afternoon · 14:30</option><option value="15:00" data-group="Afternoon" data-label="15:00">Afternoon · 15:00</option><option value="15:30" data-group="Afternoon" data-label="15:30">Afternoon · 15:30</option><option value="16:00" data-group="Afternoon" data-label="16:00">Afternoon · 16:00</option><option value="16:30" data-group="Afternoon" data-label="16:30">Afternoon · 16:30</option><option value="17:00" data-group="Afternoon" data-label="17:00">Afternoon · 17:00</option><option value="17:30" data-group="Afternoon" data-label="17:30">Afternoon · 17:30</option><option value="18:00" data-group="Evening" data-label="18:00">Evening · 18:00</option><option value="18:30" data-group="Evening" data-label="18:30">Evening · 18:30</option><option value="19:00" data-group="Evening" data-label="19:00">Evening · 19:00</option><option value="19:30" data-group="Evening" data-label="19:30" selected>Evening · 19:30</option><option value="20:00" data-group="Evening" data-label="20:00">Evening · 20:00</option><option value="20:30" data-group="Evening" data-label="20:30">Evening · 20:30</option></select></label>
+      <label class="bc-field"><span>People</span><input type="number" name="people" min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="person" data-unit-many="people"></label>
       <button class="btn btn-terra btn-lg bc-submit" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Request a table on WhatsApp</button>
     </div>
     <div class="bc-row" id="bc-room" role="tabpanel" data-bc-panel="room" hidden>
-      <label class="bc-field"><span>Check-in</span><input type="date" name="checkIn"></label>
-      <label class="bc-field"><span>Check-out</span><input type="date" name="checkOut"></label>
-      <label class="bc-field"><span>Guests</span><span class="bc-select"><select name="guests"><option value="1">1 person</option><option value="2" selected>2 people</option><option value="3">3 people</option><option value="4">4 people</option><option value="5">5 people</option><option value="6">6 people</option><option value="10+">More than 10</option></select><svg class="icon" aria-hidden="true"><use href="#i-down"></use></svg></span></label>
+      <label class="bc-field"><span>Check-in</span><input type="date" name="checkIn" data-pick="in"></label>
+      <label class="bc-field"><span>Check-out</span><input type="date" name="checkOut" data-pick="out"></label>
+      <label class="bc-field"><span>Guests</span><input type="number" name="guests" min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="person" data-unit-many="people"></label>
       <button class="btn btn-terra btn-lg bc-submit" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Request a room on WhatsApp</button>
     </div>
     <p class="bc-error" role="alert" hidden data-bc-error></p>
-    <p class="bc-note">We confirm your booking on WhatsApp — usually within minutes. <strong class="pending">WhatsApp number not configured yet.</strong></p>
+    <p class="bc-note">Lauhata replies on WhatsApp to confirm availability. <strong class="pending">WhatsApp number not configured yet.</strong></p>
   </form></div>
-  <a class="scroll-cue" href="#manifesto" aria-label="Scroll"><span>Scroll</span><i aria-hidden="true"></i></a>
+  <a class="scroll-cue" href="#escolher" aria-label="Scroll"><span>Scroll</span><i aria-hidden="true"></i></a>
 </section>
+<div class="tais" aria-hidden="true"></div>
 
-<section class="statement" id="manifesto" aria-label="One place, two ways to enjoy it">
+<section class="choose" id="escolher" aria-label="Eat and sleep">
   <div class="wrap">
-    <p class="statement-text" data-scrub>A restaurant open to everyone and a small hotel by the sea, on the Liquiçá coast. People come for dinner, the fish off the coals and the sunset — and stay for the morning.</p>
-    <div class="statement-foot" data-fade>
-      <div class="badge-spin" aria-hidden="true">
-    <svg viewBox="0 0 120 120"><defs><path id="badge-c-en" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>
-      <circle cx="60" cy="60" r="58" fill="#FEFDF8"/>
-      <text font-size="9" font-weight="600" fill="#0F2E28"><textPath href="#badge-c-en" textLength="274" lengthAdjust="spacing">LAUHATA · EAT · SLEEP · STAY · </textPath></text>
-    </svg>
-    <svg class="badge-hut"><use href="#i-hut"></use></svg>
-  </div>
+    <p class="statement-text choose-line" data-scrub>A table, a room, the sea in front.</p>
+    <div class="choose-grid">
+      <a class="ch-panel ch-eat" href="#comer" data-reveal>
+      <span class="ch-img"><figure class="media ">
+  <img src="../assets/img/fotos/mesa-restaurante-1600.jpg" srcset="../assets/img/fotos/mesa-restaurante-640.jpg 640w, ../assets/img/fotos/mesa-restaurante-1080.jpg 1080w, ../assets/img/fotos/mesa-restaurante-1600.jpg 1341w" sizes="(min-width: 900px) 56vw, 92vw" alt="Grilled fish on banana leaf, rice, salad and sambal on a table above the sea" loading="lazy" decoding="async">
+</figure></span>
+      <span class="ch-n" aria-hidden="true">01</span>
+      <span class="ch-body">
+        <span class="ch-title">Eat</span>
+        <span class="ch-sub">From breakfast to dinner</span>
+        <span class="ch-cta">See the menu<i><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></i></span>
+      </span>
+    </a>
+      <a class="ch-panel ch-sleep" href="#quartos" data-reveal>
+      <span class="ch-img"><figure class="media ">
+  <img src="../assets/img/fotos/suite-familia-1600.jpg" srcset="../assets/img/fotos/suite-familia-640.jpg 640w, ../assets/img/fotos/suite-familia-1080.jpg 1080w, ../assets/img/fotos/suite-familia-1600.jpg 1536w" sizes="(min-width: 900px) 40vw, 92vw" alt="Suite with two beds, wicker chairs and a balcony with a sea view" loading="lazy" decoding="async">
+</figure></span>
+      <span class="ch-n" aria-hidden="true">02</span>
+      <span class="ch-body">
+        <span class="ch-title">Sleep</span>
+        <span class="ch-sub">3 room types</span>
+        <span class="ch-cta">See the rooms<i><svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></i></span>
+      </span>
+    </a>
     </div>
   </div>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Fish off the coals</span><i aria-hidden="true"></i><span>Sunsets</span><i aria-hidden="true"></i><span>Timor coffee</span><i aria-hidden="true"></i><span>Rooms by the sea</span><i aria-hidden="true"></i><span>Liquiçá</span><i aria-hidden="true"></i><span>Mai, han, toba</span><i aria-hidden="true"></i><span>Fish off the coals</span><i aria-hidden="true"></i><span>Sunsets</span><i aria-hidden="true"></i><span>Timor coffee</span><i aria-hidden="true"></i><span>Rooms by the sea</span><i aria-hidden="true"></i><span>Liquiçá</span><i aria-hidden="true"></i><span>Mai, han, toba</span><i aria-hidden="true"></i></div></div>
-
-<section class="section worlds-section" aria-labelledby="two-title">
-  <div class="wrap">
-    <div class="split-head">
+<section class="section eat" id="comer" aria-labelledby="eat-title">
+  <div class="wrap eat-grid">
+    <div class="eat-visual">
+      <figure class="media  has-parallax" style="--ratio:4/5" data-clip>
+  <img src="https://images.unsplash.com/photo-1600699899970-b1c9fadd8f9e?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1600699899970-b1c9fadd8f9e?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1600699899970-b1c9fadd8f9e?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1600699899970-b1c9fadd8f9e?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1600699899970-b1c9fadd8f9e?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1600699899970-b1c9fadd8f9e?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 44vw, 92vw" alt="Grilled fish served with salad" loading="lazy" decoding="async" data-parallax="0.06">
+</figure>
+    </div>
+    <div class="eat-body">
       <header class="heading " data-reveal>
-    <p class="eyebrow">One place, two ways to enjoy it</p>
-    <h2 id="two-title" class="title">Come for dinner.<br><em>Stay for the morning.</em></h2>
+    <p class="eyebrow">01 · Eat</p>
+    <h2 id="eat-title" class="title">The menu,<br><em>at your table.</em></h2>
+    <p class="lead">Salads, soups, pasta, pizzas, grills, vegetarian dishes and desserts. Choose here, add to your order and send it on WhatsApp.</p>
+  </header>
+      <div class="eat-hours" data-reveal style="--d:80ms"><h3>Hours</h3><dl><div><dt>Breakfast</dt><dd>08:00–10:00</dd></div><div><dt>Lunch &amp; dinner</dt><dd>11:00–21:00</dd></div></dl></div>
+      <p class="eat-featured" data-reveal style="--d:100ms">Most chosen</p>
+      <ul class="dish-lines" data-reveal style="--d:120ms"><li class="dish-line">
+      <div class="dl-text"><h3>Grilled Fish</h3><p>Slice of fish fillet served with lemon &amp; butter sauce, roasted rosemary potatoes &amp; green salad</p></div>
+      <span class="dl-price"><b>$18</b></span>
+      <button class="dl-add" type="button" data-add="grilled-fish" aria-label="Add: Grilled Fish"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Lauhata Special Fried Rice</h3><p>Chicken, sausage, prawns and egg</p></div>
+      <span class="dl-price"><b>$10</b></span>
+      <button class="dl-add" type="button" data-add="lauhata-special-fried-rice" aria-label="Add: Lauhata Special Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Lauhata Seafood</h3><p>Tuna, prawns, feta &amp; mozzarella</p></div>
+      <span class="dl-price"><b>$21</b></span>
+      <button class="dl-add" type="button" data-add="pizza-lauhata-seafood" aria-label="Add: Lauhata Seafood"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li></ul>
+      <p class="eat-note" data-reveal style="--d:140ms">All items are served within 20 to 30 minutes.</p>
+      <div class="btn-row" data-reveal style="--d:160ms">
+        <a class="btn btn-dark btn-lg" href="../en/restaurant/#ementa" data-magnetic>See the full menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+        <a class="btn btn-outline btn-lg" href="../en/restaurant/#reservar">Book a table</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bkf" id="pequeno-almoco" aria-labelledby="bkf-title">
+  <div class="bkf-grid">
+    <div class="bkf-visual" data-reveal>
+      <figure class="media  has-parallax" style="--ratio:5/4">
+  <img src="../assets/img/fotos/terraco-mar-1600.jpg" srcset="../assets/img/fotos/terraco-mar-640.jpg 640w, ../assets/img/fotos/terraco-mar-1080.jpg 1080w, ../assets/img/fotos/terraco-mar-1600.jpg 1341w" sizes="(min-width: 900px) 58vw, 100vw" alt="Loungers and fresh coconuts on a terrace overlooking the sea" loading="lazy" decoding="async" data-parallax="0.07">
+</figure>
+      <div class="bkf-inset"><figure class="media " style="--ratio:3/4">
+  <img src="https://images.unsplash.com/photo-1530177150700-84cd9a3b059b?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1530177150700-84cd9a3b059b?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1530177150700-84cd9a3b059b?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1530177150700-84cd9a3b059b?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1530177150700-84cd9a3b059b?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1530177150700-84cd9a3b059b?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 18vw, 40vw" alt="Palm-leaf shadow on a pale wall" loading="lazy" decoding="async">
+</figure></div>
+    </div>
+    <div class="bkf-body">
+      <header class="heading " data-reveal>
+    <p class="eyebrow">Breakfast</p>
+    <h2 id="bkf-title" class="title">Wake up<br><em>without hurry.</em></h2>
     
   </header>
-      <p class="body-text" data-reveal style="--d:100ms">Lauhata brings together a restaurant open to everyone and a small hotel by the sea. Come just for a meal — or turn the meal into a stay.</p>
+      <p class="bkf-lead" data-reveal style="--d:60ms">Served with chilled juice, from 08:00 to 10:00. A calm start to the day, by the sea.</p>
+      <p class="bkf-hours" data-reveal style="--d:100ms"><span>Served from</span><b>08:00</b><i aria-hidden="true"></i><b>10:00</b></p>
+      <h3 class="bkf-list-h" data-reveal style="--d:120ms">On the morning menu</h3>
+      <ul class="dish-lines bkf-list" data-reveal style="--d:140ms"><li class="dish-line">
+      <div class="dl-text"><h3>Choice of Eggs</h3><p>Scrambled, fried eggs, sunny-side up, served with toast bread &amp; butter</p></div>
+      <span class="dl-price"><b>$6</b></span>
+      <button class="dl-add" type="button" data-add="choice-of-eggs" aria-label="Choose: Choice of Eggs"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Egg and Chicken Sausage on Toast</h3><p>Fried or scrambled. Served with tomato, olive &amp; feta</p></div>
+      <span class="dl-price"><b>$8</b></span>
+      <button class="dl-add" type="button" data-add="egg-chicken-sausage-toast" aria-label="Choose: Egg and Chicken Sausage on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Omelette</h3><p>Plain, ham &amp; cheese or Spanish</p></div>
+      <span class="dl-price"><b>$6</b></span>
+      <button class="dl-add" type="button" data-add="omelette" aria-label="Choose: Omelette"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Baked Beans on Toast</h3><p>Baked beans served on toasted bread</p></div>
+      <span class="dl-price"><b>$6</b></span>
+      <button class="dl-add" type="button" data-add="baked-beans-toast" aria-label="Add: Baked Beans on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>French Toast</h3><p>Served with honey and cinnamon</p></div>
+      <span class="dl-price"><b>$6</b></span>
+      <button class="dl-add" type="button" data-add="french-toast" aria-label="Add: French Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Pancakes</h3><p>Plain or banana and maple syrup</p></div>
+      <span class="dl-price"><b>$6</b></span>
+      <button class="dl-add" type="button" data-add="pancakes" aria-label="Choose: Pancakes"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Cereal Choices</h3><p>Choco or corn flakes served with hot or cold milk</p></div>
+      <span class="dl-price"><b>$4</b></span>
+      <button class="dl-add" type="button" data-add="cereal-choices" aria-label="Choose: Cereal Choices"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li><li class="dish-line">
+      <div class="dl-text"><h3>Seasonal Fruit Salad</h3><p>Selection of fruits in season</p></div>
+      <span class="dl-price"><b>$5</b></span>
+      <button class="dl-add" type="button" data-add="seasonal-fruit-salad" aria-label="Add: Seasonal Fruit Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></span></button>
+    </li></ul>
+      <div class="btn-row" data-reveal style="--d:160ms"><a class="btn btn-dark" href="../en/restaurant/#cat-breakfast">See breakfast on the menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a></div>
     </div>
-  </div>
-  <div class="wrap worlds">
-    <a class="world" href="../en/restaurant/" data-cursor="Learn more">
-      <figure class="media  has-parallax">
-  <img src="../assets/img/fotos/mesa-restaurante-1600.jpg" srcset="../assets/img/fotos/mesa-restaurante-640.jpg 640w, ../assets/img/fotos/mesa-restaurante-1080.jpg 1080w, ../assets/img/fotos/mesa-restaurante-1600.jpg 1341w" sizes="(min-width: 900px) 60vw, 92vw" alt="Grilled fish on banana leaf, rice, salad and sambal on a table above the sea" loading="lazy" decoding="async" data-parallax="0.08">
-</figure>
-      <div class="world-body">
-        <span class="pill">Restaurant</span>
-        <h3>Flavours of Timor, served with a sea view</h3>
-        <p>Catch of the day over the coals, traditional recipes and coffee from Timor's mountains. Lunch, sunset and dinner.</p>
-        <span class="gold-link">See the menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
-      </div>
-    </a>
-    <a class="world" href="../en/stay/" data-cursor="Learn more">
-      <figure class="media  has-parallax">
-  <img src="../assets/img/fotos/terraco-mar-1600.jpg" srcset="../assets/img/fotos/terraco-mar-640.jpg 640w, ../assets/img/fotos/terraco-mar-1080.jpg 1080w, ../assets/img/fotos/terraco-mar-1600.jpg 1341w" sizes="(min-width: 900px) 60vw, 92vw" alt="Loungers and fresh coconuts on a terrace overlooking the sea" loading="lazy" decoding="async" data-parallax="0.08">
-</figure>
-      <div class="world-body">
-        <span class="pill">Stay</span>
-        <h3>Rooms to wake up with the sea at your window</h3>
-        <p>Calm, comfort and the sound of the waves. A base for discovering Liquiçá and the north coast of Timor-Leste.</p>
-        <span class="gold-link">See the rooms<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></span>
-      </div>
-    </a>
   </div>
 </section>
 
-<section class="section featured-dishes" aria-labelledby="dish-title">
+<section class="suites" id="quartos" aria-labelledby="rooms-title">
   <div class="wrap">
-    <div class="split-head">
+    <div class="su-head">
       <header class="heading " data-reveal>
-    <p class="eyebrow">Most chosen</p>
-    <h2 id="dish-title" class="title">House dishes</h2>
+    <p class="eyebrow">02 · Sleep</p>
+    <h2 id="rooms-title" class="title">A room<br><em>to stay in.</em></h2>
     
   </header>
       <div data-reveal style="--d:100ms">
-        <p class="body-text">Fish fresh from the Liquiçá sea, vegetables from local gardens and recipes passed down through generations.</p>
-        <a class="btn btn-dark" href="../en/restaurant/#ementa">See the full menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-      </div>
-    </div>
-    <div class="featured-row snap-row"><article class="dish">
-      <figure class="media " style="--ratio:4/3">
-  <img src="../assets/img/fotos/peixe-grelhado-1600.jpg" srcset="../assets/img/fotos/peixe-grelhado-640.jpg 640w, ../assets/img/fotos/peixe-grelhado-1080.jpg 1080w, ../assets/img/fotos/peixe-grelhado-1600.jpg 1448w" sizes="(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw" alt="Charcoal-grilled fish with lime, tomato and budu" loading="lazy" decoding="async">
-</figure>
-      <div class="dish-body">
-        <p class="dish-tag">Signature</p>
-        <h3>Charcoal-grilled ikan sabuko</h3>
-        <p class="dish-desc">Catch of the day grilled over charcoal, with tomato and lime budu.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-        </div>
-      </div>
-    </article><article class="dish">
-      <figure class="media " style="--ratio:4/3">
-  <img src="../assets/img/fotos/peixe-folha-bananeira-1600.jpg" srcset="../assets/img/fotos/peixe-folha-bananeira-640.jpg 640w, ../assets/img/fotos/peixe-folha-bananeira-1080.jpg 1080w, ../assets/img/fotos/peixe-folha-bananeira-1600.jpg 1448w" sizes="(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw" alt="Fish cooked in banana leaf" loading="lazy" decoding="async">
-</figure>
-      <div class="dish-body">
-        <p class="dish-tag">From the sea</p>
-        <h3>Fish in banana leaf</h3>
-        <p class="dish-desc">Slow-cooked with ginger, turmeric and coconut.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-        </div>
-      </div>
-    </article><article class="dish">
-      <figure class="media " style="--ratio:4/3">
-  <img src="../assets/img/fotos/caril-camarao-1600.jpg" srcset="../assets/img/fotos/caril-camarao-640.jpg 640w, ../assets/img/fotos/caril-camarao-1080.jpg 1080w, ../assets/img/fotos/caril-camarao-1600.jpg 1448w" sizes="(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw" alt="Prawn curry on a plate" loading="lazy" decoding="async">
-</figure>
-      <div class="dish-body">
-        <p class="dish-tag">To share</p>
-        <h3>Prawn curry</h3>
-        <p class="dish-desc">Prawns in a mild coconut curry, served with bread.</p>
-        <div class="dish-foot">
-          <span class="price">$ —</span>
-        </div>
-      </div>
-    </article></div>
-  </div>
-</section>
-
-<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
-  <svg class="hut-deco" viewBox="0 0 200 160" aria-hidden="true"><path d="M100 4 18 74h164L100 4Z" fill="currentColor"/><path d="M44 74v62M78 74v62M122 74v62M156 74v62M30 100h140" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>
-  <div class="wrap">
-    <div class="split-head">
-      <header class="heading " data-reveal>
-    <p class="eyebrow">Most chosen</p>
-    <h2 id="rooms-title" class="title">Rest,<br><em>to the rhythm of the tides.</em></h2>
-    
-  </header>
-      <div data-reveal style="--d:100ms">
-        <p class="body-text">Simple, comfortable rooms for anyone who wants to switch off. Breakfast in the restaurant, with Timor coffee.</p>
+        <p class="su-lead">Choose a room type and ask on WhatsApp: Lauhata confirms availability and price.</p>
         <a class="btn btn-cream" href="../en/stay/#quartos">See all rooms<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
       </div>
     </div>
-    <div class="room-grid snap-row"><article class="room-card" data-reveal>
-      <a class="room-img" href="../en/stay/garden-room/" tabindex="-1" aria-hidden="true">
-        <figure class="media " style="--ratio:3/2">
-  <img src="../assets/img/fotos/quarto-jardim-1600.jpg" srcset="../assets/img/fotos/quarto-jardim-640.jpg 640w, ../assets/img/fotos/quarto-jardim-1080.jpg 1080w, ../assets/img/fotos/quarto-jardim-1600.jpg 1513w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Bedroom with a wooden bed, tais on the wall and shutters open to the garden" loading="lazy" decoding="async">
-</figure>
-        <span class="pill pill-dark">Garden</span>
-      </a>
-      <div class="room-body">
+    <div class="su-row" data-suites><article class="su is-on" data-su>
+      <a class="su-img" href="../en/stay/garden-room/" tabindex="-1" aria-hidden="true"><figure class="media ">
+  <img src="../assets/img/fotos/quarto-jardim-1600.jpg" srcset="../assets/img/fotos/quarto-jardim-640.jpg 640w, ../assets/img/fotos/quarto-jardim-1080.jpg 1080w, ../assets/img/fotos/quarto-jardim-1600.jpg 1513w" sizes="(min-width: 900px) 56vw, 92vw" alt="Bedroom with a wooden bed, tais on the wall and shutters open to the garden" loading="lazy" decoding="async">
+</figure></a>
+      <div class="su-rail" aria-hidden="true"><span>01</span><b>Garden Room</b></div>
+      <div class="su-body">
+        <p class="su-top"><span>01<small>/03</small></span><em>Garden</em></p>
         <h3><a href="../en/stay/garden-room/">Garden Room</a></h3>
-        <p>Quiet and cool, with direct access to the tropical garden.</p>
+        <p class="su-sum">Quiet and cool, with direct access to the tropical garden.</p>
         <ul class="chips"><li>2 guests</li><li>Air conditioning</li><li>Wi-Fi</li></ul>
-        <div class="room-foot">
-          <p class="from"><span>From</span><strong>$ —</strong> <small>/ night</small></p>
-          <a class="btn btn-cream btn-sm" href="../en/stay/#reservar" data-room-link="garden">Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+        <div class="su-foot">
+          <p class="from is-tbc"><strong>Price to be confirmed</strong></p>
+          <div class="su-btns">
+            <a class="btn btn-ghost-light btn-sm" href="../en/stay/garden-room/">See room</a>
+            <a class="btn btn-cream btn-sm" href="../en/stay/#reservar" data-room-link="garden">Request a booking<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          </div>
         </div>
       </div>
-    </article><article class="room-card" data-reveal style="--d:90ms">
-      <a class="room-img" href="../en/stay/sea-view-room/" tabindex="-1" aria-hidden="true">
-        <figure class="media " style="--ratio:3/2">
-  <img src="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 1000px) 30vw, 92vw" alt="Bed with white linen and warm-toned curtains" loading="lazy" decoding="async">
-</figure>
-        <span class="pill pill-dark">Most requested</span>
-      </a>
-      <div class="room-body">
+    </article><article class="su" data-su>
+      <a class="su-img" href="../en/stay/sea-view-room/" tabindex="-1" aria-hidden="true"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1584132915807-fd1f5fbc078f?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 56vw, 92vw" alt="Bed with white linen and warm-toned curtains" loading="lazy" decoding="async">
+</figure></a>
+      <div class="su-rail" aria-hidden="true"><span>02</span><b>Sea View Room</b></div>
+      <div class="su-body">
+        <p class="su-top"><span>02<small>/03</small></span><em>Sea</em></p>
         <h3><a href="../en/stay/sea-view-room/">Sea View Room</a></h3>
-        <p>Wake up with the sea at your window and sunrise over the coast.</p>
+        <p class="su-sum">Wake up with the sea at your window and sunrise over the coast.</p>
         <ul class="chips"><li>2 guests</li><li>Sea view</li><li>Breakfast</li></ul>
-        <div class="room-foot">
-          <p class="from"><span>From</span><strong>$ —</strong> <small>/ night</small></p>
-          <a class="btn btn-cream btn-sm" href="../en/stay/#reservar" data-room-link="sea">Book<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+        <div class="su-foot">
+          <p class="from is-tbc"><strong>Price to be confirmed</strong></p>
+          <div class="su-btns">
+            <a class="btn btn-ghost-light btn-sm" href="../en/stay/sea-view-room/">See room</a>
+            <a class="btn btn-cream btn-sm" href="../en/stay/#reservar" data-room-link="sea">Request a booking<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          </div>
+        </div>
+      </div>
+    </article><article class="su" data-su>
+      <a class="su-img" href="../en/stay/family-suite/" tabindex="-1" aria-hidden="true"><figure class="media ">
+  <img src="../assets/img/fotos/suite-familia-1600.jpg" srcset="../assets/img/fotos/suite-familia-640.jpg 640w, ../assets/img/fotos/suite-familia-1080.jpg 1080w, ../assets/img/fotos/suite-familia-1600.jpg 1536w" sizes="(min-width: 900px) 56vw, 92vw" alt="Suite with two beds, wicker chairs and a balcony with a sea view" loading="lazy" decoding="async">
+</figure></a>
+      <div class="su-rail" aria-hidden="true"><span>03</span><b>Family Suite</b></div>
+      <div class="su-body">
+        <p class="su-top"><span>03<small>/03</small></span><em>Family</em></p>
+        <h3><a href="../en/stay/family-suite/">Family Suite</a></h3>
+        <p class="su-sum">More room for families and small groups of friends.</p>
+        <ul class="chips"><li>Up to 4 guests</li><li>Living area</li><li>Balcony</li></ul>
+        <div class="su-foot">
+          <p class="from is-tbc"><strong>Price to be confirmed</strong></p>
+          <div class="su-btns">
+            <a class="btn btn-ghost-light btn-sm" href="../en/stay/family-suite/">See room</a>
+            <a class="btn btn-cream btn-sm" href="../en/stay/#reservar" data-room-link="family">Request a booking<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+          </div>
         </div>
       </div>
     </article></div>
   </div>
 </section>
 
-<section class="section story" id="historia" aria-labelledby="story-title">
-  <div class="wrap story-grid">
-    <div class="story-visual">
-      <div class="story-sticky">
-        <figure class="media arch has-parallax" style="--ratio:4/5" data-clip>
-  <img src="../assets/img/fotos/tais-1600.jpg" srcset="../assets/img/fotos/tais-640.jpg 640w, ../assets/img/fotos/tais-1080.jpg 1080w, ../assets/img/fotos/tais-1600.jpg 1122w" sizes="(min-width: 900px) 34vw, 80vw" alt="Hands holding a tais, the traditional cloth woven in Timor" loading="lazy" decoding="async" data-parallax="0.06">
-</figure>
-      </div>
+<section class="dayx" id="experiencias" aria-labelledby="day-title" data-dayx data-step="0">
+  <div class="wrap dx-wrap">
+    <div class="dx-stage" aria-hidden="true">
+      <div class="dx-arch"><div class="dx-img is-on"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Red and green coffee cherries on the branch" loading="lazy" decoding="async">
+</figure></div><div class="dx-img"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Aerial view of turquoise sea and reef along the coast" loading="lazy" decoding="async">
+</figure></div><div class="dx-img"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Fish grilling over embers" loading="lazy" decoding="async">
+</figure></div><div class="dx-img"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Green hills and a bay in Timor-Leste" loading="lazy" decoding="async">
+</figure></div><div class="dx-img"><figure class="media ">
+  <img src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1920&q=72 1920w" sizes="(min-width: 900px) 34vw, 80vw" alt="Sunset over the sea" loading="lazy" decoding="async">
+</figure></div></div>
+      <ol class="dx-dots"><li class="is-on"><i></i><span>07:00</span></li><li><i></i><span>10:00</span></li><li><i></i><span>13:00</span></li><li><i></i><span>15:30</span></li><li><i></i><span>18:00</span></li></ol>
     </div>
-    <div class="story-text">
-      <header class="heading" data-reveal>
-        <p class="eyebrow">Our story</p>
-        <h2 id="story-title" class="title" data-split>Between the mountains and the <em>sea</em>.</h2>
-      </header>
-      <p class="body-text story-lead" data-reveal style="--d:80ms">Lauhata was born in Liquiçá, on a coast where the mountains run down to the water. Here we welcome everyone the way family is welcomed in Timor-Leste: with time, a laid table and no rush.</p>
-      <p class="body-text tbc-block" data-reveal style="--d:120ms">[Add Lauhata's real story: who founded it, when it opened and what the name means.]</p>
-      <p class="pull-quote" data-reveal style="--d:140ms">“Mai, han, toba.”<span>Come, eat, rest — in Tetum.</span></p>
-      <div class="sand-cards" data-reveal style="--d:160ms">
-        <div><h3>Local produce</h3><p>Fishermen and farmers from the region.</p></div>
-        <div><h3>A local team</h3><p>Genuine Timorese hospitality.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section day" id="experiencias" aria-labelledby="day-title" data-day>
-  <div class="wrap">
-    <header class="heading is-center " data-reveal>
-    <p class="eyebrow eyebrow-lines">Experiences</p>
-    <h2 id="day-title" class="title">A day at Lauhata</h2>
-    <p class="lead">From the first coffee to the last plate — this is how a day goes here.</p>
-  </header>
-    <div class="day-track">
-      <div class="day-line" aria-hidden="true"><span data-day-line></span></div>
-      <ol class="timeline">
-        <li class="step step-1" data-reveal><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg></span><time>07:00</time><h3>Ermera coffee</h3><p>An unhurried breakfast while the sea is still calm.</p></li><li class="step step-2" data-reveal style="--d:90ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-waves"></use></svg></span><time>10:00</time><h3>Sea and snorkelling</h3><p>Clear water and reefs along the Liquiçá coast.</p></li><li class="step step-3" data-reveal style="--d:180ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg></span><time>13:00</time><h3>Lunch in the shade</h3><p>Catch of the day over the coals and coconut water.</p></li><li class="step step-4" data-reveal style="--d:270ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg></span><time>15:30</time><h3>Discover Liquiçá</h3><p>The town, its history and the mountain villages.</p></li><li class="step step-5" data-reveal style="--d:360ms"><span class="step-dot"><svg class="icon" aria-hidden="true"><use href="#i-sunset"></use></svg></span><time>18:00</time><h3>Sunset &amp; dinner</h3><p>The best table in the house, as the sky turns gold.</p></li>
-      </ol>
-    </div>
-  </div>
-</section>
-
-
-
-<section class="section location" id="contacto" aria-labelledby="loc-title">
-  <div class="wrap location-grid">
-    <div>
+    <div class="dx-copy">
       <header class="heading " data-reveal>
-    <p class="eyebrow">Getting here</p>
-    <h2 id="loc-title" class="title">Along the coast road,<br><em>west of Dili.</em></h2>
-    
+    <p class="eyebrow">03 · The coast</p>
+    <h2 id="day-title" class="title">A day at Lauhata</h2>
+    <p class="lead">From the first coffee to the last dish, this is how a day can go here.</p>
   </header>
-      <p class="body-text" data-reveal style="--d:80ms">A short, beautiful drive along the sea. If you need transport from Dili, get in touch.</p>
-      <dl class="info-grid" data-reveal style="--d:160ms">
-    <div><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg><dt>Address</dt><dd>Lauhata, Liquiçá<br>Timor-Leste</dd></div>
-    <div><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><dt>Opening hours</dt><dd>Restaurant: <span class="tbc">To be confirmed</span><br>Reception: 24 hours</dd></div>
-    <div><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><dt>WhatsApp</dt><dd><span class="tbc">+670 [XXXX XXXX]</span></dd></div>
-    <div><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg><dt>Email</dt><dd><span class="tbc">[email]</span></dd></div>
-  </dl>
-      <a class="btn btn-dark" data-reveal style="--d:200ms" href="https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">Open in Google Maps<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      <ol class="dx-steps"><li class="dx-step is-on" data-dx-step="0">
+        <div class="dx-pic"><figure class="media " style="--ratio:4/3">
+  <img src="https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1515694590185-73647ba02c10?auto=format&fit=crop&w=1920&q=72 1920w" sizes="92vw" alt="Red and green coffee cherries on the branch" loading="lazy" decoding="async">
+</figure></div>
+        <p class="dx-meta"><time>07:00</time><span>Morning</span></p>
+        <h3>Ermera coffee</h3>
+        <p>An unhurried breakfast while the sea is still calm.</p>
+      </li><li class="dx-step" data-dx-step="1">
+        <div class="dx-pic"><figure class="media " style="--ratio:4/3">
+  <img src="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1553242018-6496a076bd3d?auto=format&fit=crop&w=1920&q=72 1920w" sizes="92vw" alt="Aerial view of turquoise sea and reef along the coast" loading="lazy" decoding="async">
+</figure></div>
+        <p class="dx-meta"><time>10:00</time><span>Morning</span></p>
+        <h3>Sea and snorkelling</h3>
+        <p>Clear water and reefs along the Liquiçá coast.</p>
+      </li><li class="dx-step" data-dx-step="2">
+        <div class="dx-pic"><figure class="media " style="--ratio:4/3">
+  <img src="https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1920&q=72 1920w" sizes="92vw" alt="Fish grilling over embers" loading="lazy" decoding="async">
+</figure></div>
+        <p class="dx-meta"><time>13:00</time><span>Midday</span></p>
+        <h3>Lunch in the shade</h3>
+        <p>Fish of the day on the grill and coconut water.</p>
+      </li><li class="dx-step" data-dx-step="3">
+        <div class="dx-pic"><figure class="media " style="--ratio:4/3">
+  <img src="https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1591325408953-ef9298125f96?auto=format&fit=crop&w=1920&q=72 1920w" sizes="92vw" alt="Green hills and a bay in Timor-Leste" loading="lazy" decoding="async">
+</figure></div>
+        <p class="dx-meta"><time>15:30</time><span>Afternoon</span></p>
+        <h3>Discover Liquiçá</h3>
+        <p>The town, its history and the mountain villages.</p>
+      </li><li class="dx-step" data-dx-step="4">
+        <div class="dx-pic"><figure class="media " style="--ratio:4/3">
+  <img src="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1440&q=72" srcset="https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=480&q=72 480w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=768&q=72 768w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1080&q=72 1080w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1440&q=72 1440w, https://images.unsplash.com/photo-1559494007-9f5847c49d94?auto=format&fit=crop&w=1920&q=72 1920w" sizes="92vw" alt="Sunset over the sea" loading="lazy" decoding="async">
+</figure></div>
+        <p class="dx-meta"><time>18:00</time><span>Sunset</span></p>
+        <h3>Sunset and dinner</h3>
+        <p>The best table in the house, when the sky turns gold.</p>
+      </li></ol>
+      <p class="dx-note">Moments and times of a typical day, still to be confirmed with Lauhata.</p>
     </div>
-    <figure class="coast-map" data-reveal style="--d:120ms">
-    <svg viewBox="0 0 480 370" role="img" aria-label="Map showing Lauhata's location">
-      <rect width="480" height="370" fill="#2F6E73"/>
-      <g fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="1.4">
-        <path d="M-10 70c60-14 110 14 170 0s120-14 180 0 110 14 160 0"/>
-        <path d="M-10 110c60-14 110 14 170 0s120-14 180 0 110 14 160 0"/>
-        <path d="M-10 150c60-14 110 14 170 0s120-14 180 0 110 14 160 0"/>
-      </g>
-      <ellipse cx="400" cy="62" rx="44" ry="17" fill="#EBE4D4"/>
-      <text x="400" y="104" text-anchor="middle" class="map-label">ATAURO</text>
-      <text x="240" y="30" text-anchor="middle" class="map-label">WETAR STRAIT</text>
-      <path d="M0 196c60-18 120-6 170 6s110 10 160-6 100-26 150-18V370H0Z" fill="#E6DAC2"/>
-      <path d="M0 236c70-14 140 4 210 8s140-8 200-22 70-6 70-6V370H0Z" fill="#D8C8A8"/>
-      <path d="M0 290c90-10 170 10 250 6s150-22 230-16V370H0Z" fill="#C9B48F"/>
-      <path d="M110 196C190 214 290 214 400 186" fill="none" stroke="#A8432A" stroke-width="2.6" stroke-dasharray="1 7" stroke-linecap="round"/>
-      <circle cx="404" cy="186" r="7" fill="#0F2E28"/>
-      <text x="404" y="214" text-anchor="middle" class="map-city">Díli</text>
-      <text x="300" y="166" text-anchor="middle" class="map-drive">[~XX min] by car</text>
-      <path d="M100 196c-14-16-22-27-22-38a22 22 0 1 1 44 0c0 11-8 22-22 38Z" fill="#A8432A"/>
-      <circle cx="100" cy="158" r="8" fill="#FEFDF8"/>
-      <rect x="40" y="214" width="122" height="46" rx="8" fill="#0F2E28"/>
-      <text x="101" y="236" text-anchor="middle" class="map-name">Lauhata</text>
-      <text x="101" y="251" text-anchor="middle" class="map-sub">Liquiçá</text>
-    </svg>
-  </figure>
+  </div>
+</section>
+
+<section class="cult" id="historia" aria-labelledby="story-title">
+  <div class="wrap">
+    <header class="cu-head" data-reveal>
+      <p class="eyebrow">04 · Culture</p>
+      <h2 id="story-title" class="cu-title" data-split>Between the mountain and the <em>sea</em>.</h2>
+    </header>
+    <div class="cu-grid">
+      <div class="cu-visual">
+        <div class="cu-frame"><figure class="media  has-parallax" style="--ratio:4/5" data-clip>
+  <img src="../assets/img/fotos/tais-1600.jpg" srcset="../assets/img/fotos/tais-640.jpg 640w, ../assets/img/fotos/tais-1080.jpg 1080w, ../assets/img/fotos/tais-1600.jpg 1122w" sizes="(min-width: 900px) 36vw, 82vw" alt="Hands holding a tais, the traditional cloth woven in Timor" loading="lazy" decoding="async" data-parallax="0.05">
+</figure></div>
+        <p class="cu-cap">The tais, the traditional cloth woven in Timor-Leste.</p>
+      </div>
+      <div class="cu-text">
+        <p class="cu-body" data-reveal style="--d:60ms">Lauhata began in Liquiçá, on a coast where the mountains come down to the water. Here we welcome everyone the way family is welcomed in Timor-Leste: with time, a laid table and no hurry.</p>
+        <div class="cu-slot" data-reveal style="--d:100ms"><h3>The story of Lauhata</h3><p>Space kept for the real story: who founded Lauhata, when it opened and what the name means. Text to be supplied by the owner.</p></div>
+        <div class="cu-cards" data-reveal style="--d:140ms">
+          <div><h3>Local produce</h3><p>Fishers and farmers from the region.</p></div>
+          <div><h3>A local team</h3><p>Timorese hospitality, the real thing.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="cu-quote" data-reveal>
+      <p class="cu-label">In Tetum</p>
+      <p class="cu-big">Mai, han, toba.</p>
+      <p class="cu-gloss">Come, eat, sleep. <small>Translation to be confirmed with Lauhata.</small></p>
+    </div>
+  </div>
+  <div class="tais" aria-hidden="true"></div>
+</section>
+
+
+
+<section class="reach" id="contacto" aria-labelledby="loc-title">
+  <div class="wrap rc-grid">
+    <div class="rc-info">
+      <header class="heading " data-reveal>
+    <p class="eyebrow">05 · Book and arrive</p>
+    <h2 id="loc-title" class="title">Getting to Lauhata<br><em>along the coast.</em></h2>
+    <p class="lead">It is in Lauhata, in the municipality of Liquiçá, west of Dili. If you need transport from Dili, talk to us.</p>
+  </header>
+      <dl class="rc-list" data-reveal style="--d:80ms">
+        <div class="rc-row"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg><dt>Address</dt><dd>Lauhata, Liquiçá<br>Timor-Leste</dd></div>
+        <div class="rc-row"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><dt>Opening hours</dt><dd><span class="rc-hours"><span>Breakfast <b>08:00–10:00</b></span><span>Lunch &amp; dinner <b>11:00–21:00</b></span></span></dd></div>
+        <div class="rc-row"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><dt>WhatsApp</dt><dd><span class="tbc">+670 [XXXX XXXX]</span></dd></div>
+        <div class="rc-row"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg><dt>Email</dt><dd><span class="tbc">[email]</span></dd></div>
+        <div class="rc-row"><svg class="icon" aria-hidden="true"><use href="#i-car"></use></svg><dt>From Dili</dt><dd><span class="tbc">To be confirmed</span></dd></div>
+      </dl>
+      <div class="btn-row" data-reveal style="--d:140ms">
+        <a class="btn btn-dark" href="https://www.google.com/maps/dir/?api=1&destination=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>Get directions</a>
+        <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">Open in Google Maps<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        <a class="btn btn-terra" href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Chat on WhatsApp</a>
+      </div>
+    </div>
+    <div class="rc-map" data-reveal style="--d:120ms">
+      <div class="map-frame">
+        <iframe title="Map showing Lauhata's location" src="https://www.google.com/maps?q=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste&z=12&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p class="rc-note">Google map searched by place name. The official coordinates are still to be confirmed by Lauhata.</p>
+    </div>
   </div>
 </section>
 <section class="cine-cta" aria-labelledby="cta-title">
@@ -427,43 +516,102 @@
 </section>
 </main>
 <footer class="site-footer">
-  <div class="tais" aria-hidden="true"></div>
-  <div class="wrap footer-grid">
-    <div class="footer-brand">
+  <div class="wrap ft">
+    <div class="ft-brand">
       <a class="brand brand-light" href="../en/" aria-label="Lauhata — Home">
   <svg class="brand-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
   <span class="brand-text"><span class="brand-name">Lauhata</span><span class="brand-line">Restaurant &amp; Hotel · Liquiçá</span></span>
 </a>
       <p>Restaurant and stay in Lauhata, Liquiçá, Timor-Leste.</p>
     </div>
-    <div>
+    <nav class="ft-col" aria-label="Explore">
       <h2 class="footer-h">Explore</h2>
-      <ul class="footer-list">
+      <ul class="footer-list ft-links">
         <li><a href="../en/restaurant/">Restaurant</a></li>
-        <li><a href="../en/restaurant/#ementa">Menu</a></li>
         <li><a href="../en/stay/">Stay</a></li>
-        <li><a href="../en/#experiencias">Experiences</a></li>
+        <li><a href="../en/restaurant/#ementa">Menu</a></li>
         <li><a href="../en/#historia">Our story</a></li>
         <li><a href="../en/contact/">Contact</a></li>
       </ul>
-    </div>
-    <div>
+    </nav>
+    <div class="ft-col">
       <h2 class="footer-h">Contact</h2>
       <ul class="footer-list with-icons"><li><a href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><span>WhatsApp — To be confirmed</span></a></li><li><a href="../en/contact/"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg><span>Lauhata, Liquiçá</span></a></li></ul>
       
     </div>
-    <div>
+    <div class="ft-col">
       <h2 class="footer-h">Restaurant</h2>
-      <p class="muted ">Opening hours to be confirmed</p>
+      <dl class="hours "><div><dt>Breakfast</dt><dd>08:00–10:00</dd></div><div><dt>Lunch &amp; dinner</dt><dd>11:00–21:00</dd></div></dl>
     </div>
   </div>
-  <p class="footer-mega" aria-hidden="true">Lauhata</p>
-  <p class="wrap footer-note">Illustrative images — to be replaced with Lauhata's own photos.</p>
   <div class="wrap footer-base">
-    <p>© 2026 Lauhata. All rights reserved.</p>
+    <p>© 2026 Lauhata. All rights reserved. <span class="footer-note">Illustrative images — to be replaced with Lauhata's own photos.</span></p>
     <p><a href="../en/privacy/">Privacy policy</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website by Elevate Web Studio</a></p>
   </div>
 </footer>
+<button class="cart-fab" type="button" data-cart-open data-cart-fab hidden><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-fab-label">View order</span><span class="cart-fab-n" data-fab-count></span><strong data-fab-total></strong></button>
+<p class="sr-only" role="status" aria-live="polite" data-cart-live></p>
+<dialog class="cart" data-cart aria-labelledby="cart-title">
+  <div class="cart-panel">
+    <header class="cart-head">
+      <h2 id="cart-title" data-cart-title>Your order</h2>
+      <button class="icon-btn" type="button" data-cart-close aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </header>
+    <div class="cart-step" data-step="list">
+      <div class="cart-scroll" data-lenis-prevent>
+        <ul class="cart-lines" data-cart-lines></ul>
+        <div class="cart-empty" data-cart-empty hidden>
+          <svg class="cart-empty-mark" aria-hidden="true"><use href="#i-cart"></use></svg>
+          <h3>Your order is empty</h3>
+          <p>Pick dishes from the menu and they will appear here.</p>
+          <a class="btn btn-dark" href="../en/restaurant/#ementa" data-cart-close>See the menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+        </div>
+      </div>
+      <footer class="cart-foot" data-cart-foot>
+        <p class="cart-total"><span>Total</span><strong data-cart-sum></strong></p>
+        <button class="btn btn-terra btn-lg" type="button" data-cart-checkout>Place order<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
+        <button class="btn btn-outline" type="button" data-cart-close>Keep browsing</button>
+      </footer>
+    </div>
+    <form class="cart-step" data-step="checkout" data-order-form novalidate hidden>
+      <div class="cart-scroll" data-lenis-prevent>
+        <p class="cart-mini" data-cart-mini></p>
+        <div class="field"><label for="ord-name">Name</label><input id="ord-name" name="name" autocomplete="name" maxlength="80"><p class="error" data-err="name" aria-live="polite"></p></div>
+        
+        
+        <div class="field"><label for="ord-notes">Order notes <span class="opt">(optional)</span></label><textarea id="ord-notes" name="notes" rows="3" maxlength="400" placeholder="Allergies, preferences…"></textarea></div>
+        <p class="form-note">When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website. <strong class="pending">WhatsApp number not configured yet.</strong></p>
+      </div>
+      <footer class="cart-foot">
+        <div class="form-errors" role="alert" hidden data-order-errors>Please check the highlighted fields.</div>
+        <button class="btn btn-terra btn-lg" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><span data-order-send>Send order on WhatsApp</span></button>
+        <button class="btn btn-outline" type="button" data-cart-back>Back to your order</button>
+      </footer>
+    </form>
+  </div>
+</dialog>
+<dialog class="pick" data-opt aria-labelledby="opt-title">
+  <form class="pick-panel" data-opt-form novalidate>
+    <header class="pick-head">
+      <div><h2 id="opt-title" data-opt-title></h2><p data-opt-desc></p></div>
+      <button class="icon-btn" type="button" data-opt-close aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </header>
+    <div class="pick-groups" data-opt-groups></div>
+    <div class="pick-qty">
+      <span id="opt-qty-label">Quantity</span>
+      <div class="stepper" role="group" aria-labelledby="opt-qty-label">
+        <button type="button" data-opt-dec aria-label="One less: "><svg class="icon" aria-hidden="true"><use href="#i-minus"></use></svg></button>
+        <output data-opt-qty>1</output>
+        <button type="button" data-opt-inc aria-label="One more: "><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></button>
+      </div>
+    </div>
+    <p class="error" data-opt-error aria-live="polite"></p>
+    <footer class="pick-foot">
+      <button class="btn btn-outline" type="button" data-opt-close>Cancel</button>
+      <button class="btn btn-terra" type="submit" data-opt-submit>Add to order</button>
+    </footer>
+  </form>
+</dialog>
 <div class="mobile-bar" data-mobile-bar>
   <a class="btn btn-dark" href="../en/restaurant/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Restaurant</a>
   <a class="btn btn-terra" href="../en/stay/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Room</a>

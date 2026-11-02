@@ -1,0 +1,108 @@
+/* Lauhata — landing page composition. Loaded last; builds on the tokens in main.css.
+   One idea runs through it: the page follows a day at the coast. A bright arch-shaped window opens it
+   (hero), the panorama darkens from dinner to night as you scroll, and the rooms continue in the same
+   deep green. The arch (hero, rooms, tais) is the signature shape; the tais band only appears at seams. */
+
+/* ---------- Hero: one big background, and a title large enough to be the page ---------- */
+.hx { background: var(--forest); }
+.hx-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+/* A slow push-in on the photo; when a video is added it fades in over this same photo. */
+.hx-bg .media { position: absolute; inset: 0; animation: hxZoom 26s ease-out both; }
+.hx-bg picture { display: block; width: 100%; height: 100%; }
+.hx-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 58%; }
+.hx-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.8s ease; }
+.hx-video.is-on { opacity: 1; }
+@keyframes hxZoom { from { transform: scale(1.1); } to { transform: scale(1); } }
+.hx-shade {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 24, 20, 0.62) 0%, rgba(8, 24, 20, 0) 26%),
+    linear-gradient(90deg, rgba(8, 24, 20, 0.74) 0%, rgba(8, 24, 20, 0.34) 46%, rgba(8, 24, 20, 0) 78%),
+    linear-gradient(0deg, rgba(8, 24, 20, 0.9) 0%, rgba(8, 24, 20, 0) 48%);
+}
+/* On scroll the words drift up and fade while the photo stays (--hp is set from main.js). */
+.hx-content { z-index: 3; bottom: clamp(12.5rem, 25vh, 15.5rem); transform: translateY(calc(var(--hp, 0) * -48px)); opacity: calc(1 - var(--hp, 0) * 1.3); }
+.hx-title { font-size: clamp(3.6rem, 9.4vw, 9.8rem); line-height: 0.9; letter-spacing: -0.05em; max-width: none; text-shadow: 0 6px 60px rgba(8, 24, 20, 0.45); }
+.hx-title .l2 { padding-left: clamp(0rem, 6vw, 6.5rem); }
+.hx .cine-lead { max-width: 27rem; padding-left: 1.1rem; border-left: 2px solid var(--gold-soft); }
+.hx .cine-bar { z-index: 4; }
+
+/* ---------- Booking bar: one glass surface, fields divided by hairlines, values set in the serif ---------- */
+.cine-bar .booking-card {
+  gap: 0.5rem; padding: 0.55rem; border-radius: 32px; background: rgba(9, 28, 23, 0.5); border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 34px 80px -30px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+.cine-bar .bc-tabs { gap: 4px; padding: 4px; border-radius: 26px; background: rgba(255, 255, 255, 0.09); }
+.cine-bar .bc-tabs button { padding: 0.8rem 1.2rem; border-radius: 22px; font-weight: 600; transition: background-color 0.3s var(--ease), color 0.3s; }
+.cine-bar .bc-row { grid-template-columns: 1fr 1fr 1fr auto; gap: 0; }
+.cine-bar .bc-field { padding: 0.85rem 1.4rem 0.8rem; gap: 0.3rem; border: 0; border-radius: 24px; background: transparent; transition: background-color 0.25s var(--ease); }
+.cine-bar .bc-field + .bc-field::before { content: ""; position: absolute; left: 0; top: 24%; bottom: 24%; width: 1px; background: rgba(255, 255, 255, 0.2); transition: opacity 0.2s; }
+.cine-bar .bc-field:hover, .cine-bar .bc-field:has(.pk-btn:focus-visible), .cine-bar .bc-field:has([aria-expanded="true"]) { background: rgba(255, 255, 255, 0.12); border-color: transparent; }
+.cine-bar .bc-field:hover::before, .cine-bar .bc-field:hover + .bc-field::before, .cine-bar .bc-field:has(.pk-btn:focus-visible)::before, .cine-bar .bc-field:has(.pk-btn:focus-visible) + .bc-field::before { opacity: 0; }
+.cine-bar .bc-field > span { font-size: 0.7rem; color: var(--gold-soft); }
+.cine-bar .bc-field .pk-btn { min-height: 36px; font-family: var(--serif); font-size: 1.3rem; font-weight: 400; letter-spacing: -0.01em; color: #fff; }
+.cine-bar .bc-field .pk-ico .icon { color: var(--gold-soft); }
+.cine-bar .bc-field .pk-caret .icon { opacity: 0.6; }
+.cine-bar .bc-field .pk-btn:focus-visible { outline: none; }
+.cine-bar .bc-field.has-error { box-shadow: inset 0 0 0 1.5px #ffb4a2; background: rgba(255, 180, 162, 0.08); }
+.cine-bar .bc-submit { min-width: 15rem; margin-left: 0.5rem; padding-inline: 1.8rem; border-radius: 24px; font-size: 1rem; }
+
+/* ---------- Eat ---------- */
+.eat { background: var(--cream); padding-top: clamp(2rem, 4vw, 3rem); }
+.eat-grid { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: clamp(2.5rem, 7vw, 7rem); align-items: start; }
+.eat-visual { position: sticky; top: 12vh; }
+.eat-visual .media { border-radius: var(--r-lg); }
+.eat-body .heading { margin-bottom: 1.6rem; }
+.eat-hours { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 2rem; margin: 0 0 2.2rem; padding: 1rem 0; border-block: 1px solid var(--line-strong); }
+.eat-hours h3 { margin: 0; font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #55625c; }
+.eat-hours dl { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; margin: 0; }
+.eat-hours dt { font-size: 0.85rem; color: #55625c; }
+.eat-hours dd { margin: 0; font-family: var(--serif); font-size: 1.35rem; }
+.eat-featured { margin: 0 0 0.3rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); }
+
+/* Dishes as lines of a printed menu */
+.dish-lines { margin: 0; padding: 0; list-style: none; }
+.dish-line { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.6rem 1.2rem; padding: 1.35rem 0; border-bottom: 1px solid var(--line); }
+.dl-text h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.1; }
+.dl-text p { max-width: 34em; margin: 0.4rem 0 0; font-size: 0.9rem; line-height: 1.5; color: #55625c; }
+.dl-price b { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; }
+.dl-add {
+  display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1.5px solid var(--forest); border-radius: 50%;
+  background: transparent; color: var(--forest); cursor: pointer; transition: background-color 0.25s var(--ease), color 0.25s, border-color 0.25s, transform 0.25s var(--ease);
+}
+.dl-add:hover { background: var(--forest); color: var(--cream); transform: scale(1.06); }
+.dl-add.is-added { background: var(--wa); border-color: var(--wa); color: #fff; }
+.dl-add [data-add-label] { display: grid; place-items: center; }
+.dl-add [data-add-label] span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } /* "Added" is read aloud, only the tick is drawn */
+.eat-note { margin: 1.2rem 0 0; font-size: 0.9rem; color: #55625c; }
+.eat-body .btn-row { margin-top: 1.8rem; }
+
+/* ---------- Tablet and phone: the composition is rebuilt, not shrunk ---------- */
+@media (max-width: 860px) {
+  .hx-content { bottom: auto; } /* here the block sits in the flow, not pinned above the booking card */
+  .cine-bar .booking-card { border-radius: 28px; }
+  .cine-bar .bc-tabs { border-radius: 22px; }
+  .cine-bar .bc-tabs button { border-radius: 18px; }
+  .cine-bar .booking-card { min-width: 0; }
+  .cine-bar .bc-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; min-width: 0; }
+  .cine-bar .bc-field { min-width: 0; padding: 0.75rem 1rem 0.7rem; border-radius: 18px; background: rgba(255, 255, 255, 0.09); }
+  .cine-bar .bc-field .pk-btn { font-size: 1.15rem; }
+  .cine-bar .bc-field .pk-caret { display: none; }
+  .cine-bar .bc-field + .bc-field::before { display: none; }
+  .cine-bar .bc-submit { min-width: 0; margin-left: 0; border-radius: 18px; }
+  .hx-title { font-size: clamp(3.4rem, 16vw, 5.8rem); }
+  .hx-title .l2 { padding-left: 0; }
+  .hx-shade { background:
+    linear-gradient(180deg, rgba(8, 24, 20, 0.6) 0%, rgba(8, 24, 20, 0) 28%),
+    linear-gradient(0deg, rgba(8, 24, 20, 0.92) 0%, rgba(8, 24, 20, 0.55) 45%, rgba(8, 24, 20, 0) 80%); }
+  .eat-grid { grid-template-columns: 1fr; }
+  .eat-visual { position: relative; top: auto; max-width: 480px; }
+  .dish-line { grid-template-columns: 1fr auto; }
+  .dl-price { grid-column: 1; grid-row: 2; }
+  .dl-add { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-bg .media { animation: none; }
+  .hx-content { transform: none; opacity: 1; }
+}

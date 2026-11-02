@@ -29,10 +29,18 @@
 
 <link rel="stylesheet" href="../../assets/css/main.css">
 <link rel="stylesheet" href="../../assets/css/cinema.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/en/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste"}</script>
+<link rel="stylesheet" href="../../assets/css/order.css">
+<link rel="stylesheet" href="../../assets/css/home.css">
+<link rel="stylesheet" href="../../assets/css/landing.css">
+<link rel="stylesheet" href="../../assets/css/picker.css">
+<link rel="stylesheet" href="../../assets/css/wide.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://lauhata.example/#business","name":"Lauhata","url":"https://lauhata.example/en/","image":"https://lauhata.example/assets/img/og-image.jpg","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste","hasMenu":"https://lauhata.example/en/restaurant/#ementa"}</script>
 
-<script>window.LAUHATA={"lang":"en","whatsapp":"","thanks":"../../en/thank-you/","i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"So Lauhata can get back to you.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}\nContact: {contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello! I would like to request a stay at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\nRoom: {room}\nName: {name}\nContact: {contact}{notes}\n\nCould you confirm availability and the price? Thank you!","waNotes":"\nNotes: {notes}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}\n\nLooking forward to your confirmation. Thank you!","waQuickRoom":"Hello! I would like to request a room at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\n\nCould you confirm availability and the price? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"placeholderImage":"Illustrative image","toConfirm":"To be confirmed","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Book a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"}}};</script>
+<script>window.LAUHATA={"lang":"en","whatsapp":"","thanks":"../../en/thank-you/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"Only if you prefer to be contacted on another number or by email.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","guestOne":"guest","guestMany":"guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}{contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello! I would like to request a stay at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\nRoom: {room}\nName: {name}{contact}{notes}\n\nCould you confirm availability and the price? Thank you!","waNotes":"\nNotes: {notes}","waContact":"\nContact: {contact}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}\n\nLooking forward to your confirmation. Thank you!","waQuickRoom":"Hello! I would like to request a room at Lauhata.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nGuests: {guests}\n\nCould you confirm availability and the price? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"placeholderImage":"Illustrative image","toConfirm":"To be confirmed","priceTbc":"Price to be confirmed","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Book a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"},"order":{"cartTitle":"Your order","open":"Open your order","close":"Close","viewOrder":"View order","itemOne":"1 item","itemMany":"{n} items","emptyTitle":"Your order is empty","emptyBody":"Pick dishes from the menu and they will appear here.","viewMenu":"See the menu","add":"Add","added":"Added","choose":"Choose","unavailable":"Price to be confirmed","remove":"Remove {name}","increase":"One more: {name}","decrease":"One less: {name}","qty":"Quantity","each":"each","total":"Total","continue":"Keep browsing","checkout":"Place order","back":"Back to your order","detailsTitle":"Your details","name":"Name","type":"Order type","table":"Table number","notes":"Order notes","optional":"optional","notesPlaceholder":"Allergies, preferences…","send":"Send order on WhatsApp","sending":"Opening WhatsApp…","note":"When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website.","errorsTitle":"Please check the highlighted fields.","errors":{"name":"Please enter your name.","type":"Please choose the order type.","table":"Please enter the table number.","choose":"Please choose an option.","tooBig":"The order is too big for a single message. Remove some items or send it in two parts."},"customize":"Customise","addToOrder":"Add to order","cancel":"Cancel","searchLabel":"Search the menu","searchPlaceholder":"Search for a dish…","clearSearch":"Clear search","noResults":"No dishes found for “{q}”.","resultOne":"1 dish found","results":"{n} dishes found","categories":"Menu categories","inOrder":"{name} added to your order","menuHours":"Hours","msg":{"hello":"Hello, Lauhata!","intro":"I would like to place the following order:","title":"Restaurant order","total":"Total","name":"Name","type":"Order type","table":"Table","notes":"Notes","bye":"Looking forward to your confirmation. Thank you!"}},"pick":{"chooseDate":"Choose a date","chooseTime":"Choose a time","dateDialog":"Choose a date","rangeDialog":"Choose your dates","timeDialog":"Choose a time","numberDialog":"Quantity","selectDialog":"Choose","close":"Close","prev":"Previous month","next":"Next month","today":"Today","clear":"Clear","done":"Done","stepIn":"Choose check-in","stepOut":"Choose check-out","nightOne":"1 night","nightMany":"{n} nights","less":"Fewer","more":"More","max":"Maximum: {n}","morning":"Morning","afternoon":"Afternoon","evening":"Evening"}}};</script>
+
+<script src="../../assets/js/picker.js" defer></script>
 <script src="../../assets/js/main.js" defer></script>
+<script src="../../assets/js/order.js" defer></script>
 
 </head>
 <body class="">
@@ -55,6 +63,8 @@
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-cutlery" viewBox="0 0 24 24"><path d="M7 3.5v7a2 2 0 0 0 4 0v-7M9 10.5v10M17 20.5v-17c-2 1-3 3.5-3 7h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3.5 18.5v-11M3.5 14h17v4.5M20.5 14v-2.5a3 3 0 0 0-3-3h-6V14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="11" r="1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-waves" viewBox="0 0 24 24"><path d="M3 9c2-1.6 3.5-1.6 5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4 0M3 14c2-1.6 3.5-1.6 5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4 0M7 6.5c1.5-1 3-1 4.5 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.4-7.5-10A4 4 0 0 1 12 7a4 4 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -63,6 +73,11 @@
     <symbol id="i-quote" viewBox="0 0 24 24"><path d="M10 7c-3 1-5 3.5-5 7v3h5v-5H7.5c0-2 1-3.5 3-4.2L10 7Zm9 0c-3 1-5 3.5-5 7v3h5v-5h-2.5c0-2 1-3.5 3-4.2L19 7Z" fill="currentColor"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8L12 3.5Z" fill="currentColor"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 8h14l-1 11.5a1 1 0 0 1-1 .9H7a1 1 0 0 1-1-.9L5 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-hut" viewBox="0 0 48 48">
       <path d="M24 3 6 21h36L24 3Z" fill="currentColor"/>
       <path d="M24 3 15 12h18L24 3Z" fill="#C89640"/>
@@ -86,6 +101,7 @@
     <span class="lang-opt is-on" aria-current="true">EN</span>
     <a class="lang-opt" href="../../obrigado/" hreflang="pt" lang="pt-PT" title="Ler em português">PT</a>
   </div>
+      <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog" aria-label="Open your order"><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-count" data-cart-count hidden>0</span></button>
       <div class="book-menu" data-book-menu>
         <button class="btn btn-dark btn-sm" type="button" aria-expanded="false" aria-controls="book-pop-en" data-book-toggle>Book<svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg></button>
         <div class="book-pop" id="book-pop-en" hidden>
@@ -124,53 +140,114 @@
     <svg class="simple-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
     <p class="eyebrow eyebrow-lines">Request ready</p>
     <h1 class="title">Just send the message</h1>
-    <p class="lead" data-thanks-body data-table="We opened WhatsApp with your table request. Send the message so Lauhata receives it and confirms your booking with you." data-room="We opened WhatsApp with your stay request. Send the message so Lauhata can confirm availability and the price.">Send the message in WhatsApp so Lauhata receives it.</p>
+    <p class="lead" data-thanks-body data-table="We opened WhatsApp with your table request. Send the message so Lauhata receives it and confirms your booking with you." data-room="We opened WhatsApp with your stay request. Send the message so Lauhata can confirm availability and the price." data-order="We opened WhatsApp with your order. Send the message so Lauhata receives it. The order is only confirmed once Lauhata replies.">Send the message in WhatsApp so Lauhata receives it.</p>
     <div class="btn-row center">
       <a class="btn btn-terra btn-lg" href="https://wa.me/" target="_blank" rel="noopener" data-thanks-reopen><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Open WhatsApp again</a>
       <a class="btn btn-outline btn-lg" href="../../en/">Back to home</a>
+      <a class="btn btn-outline btn-lg" href="../../en/restaurant/#ementa" data-thanks-menu hidden>Back to the menu</a>
+      <button class="btn btn-outline btn-lg" type="button" data-thanks-clear hidden>Clear the order</button>
     </div>
-    <p class="response"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><span>We confirm your booking on WhatsApp — usually within minutes.</span></p>
+    <p class="response"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><span>Lauhata replies on WhatsApp to confirm availability.</span></p>
   </div>
 </section>
 </main>
 <footer class="site-footer">
-  <div class="tais" aria-hidden="true"></div>
-  <div class="wrap footer-grid">
-    <div class="footer-brand">
+  <div class="wrap ft">
+    <div class="ft-brand">
       <a class="brand brand-light" href="../../en/" aria-label="Lauhata — Home">
   <svg class="brand-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
   <span class="brand-text"><span class="brand-name">Lauhata</span><span class="brand-line">Restaurant &amp; Hotel · Liquiçá</span></span>
 </a>
       <p>Restaurant and stay in Lauhata, Liquiçá, Timor-Leste.</p>
     </div>
-    <div>
+    <nav class="ft-col" aria-label="Explore">
       <h2 class="footer-h">Explore</h2>
-      <ul class="footer-list">
+      <ul class="footer-list ft-links">
         <li><a href="../../en/restaurant/">Restaurant</a></li>
-        <li><a href="../../en/restaurant/#ementa">Menu</a></li>
         <li><a href="../../en/stay/">Stay</a></li>
-        <li><a href="../../en/#experiencias">Experiences</a></li>
+        <li><a href="../../en/restaurant/#ementa">Menu</a></li>
         <li><a href="../../en/#historia">Our story</a></li>
         <li><a href="../../en/contact/">Contact</a></li>
       </ul>
-    </div>
-    <div>
+    </nav>
+    <div class="ft-col">
       <h2 class="footer-h">Contact</h2>
       <ul class="footer-list with-icons"><li><a href="https://wa.me/?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20Lauhata." target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><span>WhatsApp — To be confirmed</span></a></li><li><a href="../../en/contact/"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg><span>Lauhata, Liquiçá</span></a></li></ul>
       
     </div>
-    <div>
+    <div class="ft-col">
       <h2 class="footer-h">Restaurant</h2>
-      <p class="muted ">Opening hours to be confirmed</p>
+      <dl class="hours "><div><dt>Breakfast</dt><dd>08:00–10:00</dd></div><div><dt>Lunch &amp; dinner</dt><dd>11:00–21:00</dd></div></dl>
     </div>
   </div>
-  <p class="footer-mega" aria-hidden="true">Lauhata</p>
-  <p class="wrap footer-note">Illustrative images — to be replaced with Lauhata's own photos.</p>
   <div class="wrap footer-base">
-    <p>© 2026 Lauhata. All rights reserved.</p>
+    <p>© 2026 Lauhata. All rights reserved. <span class="footer-note">Illustrative images — to be replaced with Lauhata's own photos.</span></p>
     <p><a href="../../en/privacy/">Privacy policy</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Website by Elevate Web Studio</a></p>
   </div>
 </footer>
+<button class="cart-fab" type="button" data-cart-open data-cart-fab hidden><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-fab-label">View order</span><span class="cart-fab-n" data-fab-count></span><strong data-fab-total></strong></button>
+<p class="sr-only" role="status" aria-live="polite" data-cart-live></p>
+<dialog class="cart" data-cart aria-labelledby="cart-title">
+  <div class="cart-panel">
+    <header class="cart-head">
+      <h2 id="cart-title" data-cart-title>Your order</h2>
+      <button class="icon-btn" type="button" data-cart-close aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </header>
+    <div class="cart-step" data-step="list">
+      <div class="cart-scroll" data-lenis-prevent>
+        <ul class="cart-lines" data-cart-lines></ul>
+        <div class="cart-empty" data-cart-empty hidden>
+          <svg class="cart-empty-mark" aria-hidden="true"><use href="#i-cart"></use></svg>
+          <h3>Your order is empty</h3>
+          <p>Pick dishes from the menu and they will appear here.</p>
+          <a class="btn btn-dark" href="../../en/restaurant/#ementa" data-cart-close>See the menu<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+        </div>
+      </div>
+      <footer class="cart-foot" data-cart-foot>
+        <p class="cart-total"><span>Total</span><strong data-cart-sum></strong></p>
+        <button class="btn btn-terra btn-lg" type="button" data-cart-checkout>Place order<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
+        <button class="btn btn-outline" type="button" data-cart-close>Keep browsing</button>
+      </footer>
+    </div>
+    <form class="cart-step" data-step="checkout" data-order-form novalidate hidden>
+      <div class="cart-scroll" data-lenis-prevent>
+        <p class="cart-mini" data-cart-mini></p>
+        <div class="field"><label for="ord-name">Name</label><input id="ord-name" name="name" autocomplete="name" maxlength="80"><p class="error" data-err="name" aria-live="polite"></p></div>
+        
+        
+        <div class="field"><label for="ord-notes">Order notes <span class="opt">(optional)</span></label><textarea id="ord-notes" name="notes" rows="3" maxlength="400" placeholder="Allergies, preferences…"></textarea></div>
+        <p class="form-note">When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website. <strong class="pending">WhatsApp number not configured yet.</strong></p>
+      </div>
+      <footer class="cart-foot">
+        <div class="form-errors" role="alert" hidden data-order-errors>Please check the highlighted fields.</div>
+        <button class="btn btn-terra btn-lg" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><span data-order-send>Send order on WhatsApp</span></button>
+        <button class="btn btn-outline" type="button" data-cart-back>Back to your order</button>
+      </footer>
+    </form>
+  </div>
+</dialog>
+<dialog class="pick" data-opt aria-labelledby="opt-title">
+  <form class="pick-panel" data-opt-form novalidate>
+    <header class="pick-head">
+      <div><h2 id="opt-title" data-opt-title></h2><p data-opt-desc></p></div>
+      <button class="icon-btn" type="button" data-opt-close aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </header>
+    <div class="pick-groups" data-opt-groups></div>
+    <div class="pick-qty">
+      <span id="opt-qty-label">Quantity</span>
+      <div class="stepper" role="group" aria-labelledby="opt-qty-label">
+        <button type="button" data-opt-dec aria-label="One less: "><svg class="icon" aria-hidden="true"><use href="#i-minus"></use></svg></button>
+        <output data-opt-qty>1</output>
+        <button type="button" data-opt-inc aria-label="One more: "><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></button>
+      </div>
+    </div>
+    <p class="error" data-opt-error aria-live="polite"></p>
+    <footer class="pick-foot">
+      <button class="btn btn-outline" type="button" data-opt-close>Cancel</button>
+      <button class="btn btn-terra" type="submit" data-opt-submit>Add to order</button>
+    </footer>
+  </form>
+</dialog>
 <div class="mobile-bar" data-mobile-bar>
   <a class="btn btn-dark" href="../../en/restaurant/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Restaurant</a>
   <a class="btn btn-terra" href="../../en/stay/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Room</a>

@@ -1,0 +1,151 @@
+/* Lauhata — pickers (calendar, date range, time, quantity, list). Loaded last; the markup and behaviour are in
+   picker.js. The native <input>/<select> stays in the form, visually hidden, as the source of truth. */
+
+.bc-field, .field { position: relative; }
+.pk-native {
+  position: absolute !important; width: 1px !important; height: 1px !important; margin: 0 !important; padding: 0 !important;
+  border: 0 !important; opacity: 0 !important; overflow: hidden !important; pointer-events: none !important; clip-path: inset(50%);
+}
+
+/* ---------- The trigger that stands in for the native control ---------- */
+.pk-btn {
+  display: flex; align-items: center; gap: 0.65rem; width: 100%; min-height: 30px; margin: 0; padding: 0; border: 0;
+  background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.pk-ico { display: grid; place-items: center; flex: none; }
+.pk-ico .icon { width: 20px; height: 20px; color: var(--terra); }
+.pk-val { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pk-btn.is-empty .pk-val { opacity: 0.62; }
+.pk-caret { display: grid; place-items: center; flex: none; }
+.pk-caret .icon { width: 16px; height: 16px; opacity: 0.55; transition: transform 0.3s var(--ease); }
+.pk-btn[aria-expanded="true"] .pk-caret .icon { transform: rotate(180deg); }
+.bc-field .pk-btn { font-size: 0.98rem; font-weight: 500; }
+
+/* In the full forms it looks like the other inputs */
+.field .pk-btn {
+  min-height: 52px; padding: 0.75rem 0.95rem; border: 1px solid transparent; border-radius: var(--r-sm); background: var(--cream);
+  color: var(--ink); font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+.field .pk-btn:hover { border-color: var(--line-strong); }
+.field .pk-btn:focus-visible, .field .pk-btn[aria-expanded="true"] { outline: none; border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(168, 67, 42, 0.15); }
+.field.has-error .pk-btn { border-color: var(--error); }
+
+/* ---------- The popover ---------- */
+.pk-back { position: fixed; inset: 0; z-index: 490; background: rgba(8, 24, 20, 0.5); }
+.pk-back[hidden] { display: none; }
+@media (min-width: 641px) { .pk-back { display: none; } }
+.pk-pop {
+  position: fixed; left: 0; top: 0; z-index: 500; width: max-content; max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: auto;
+  padding: 1.3rem 1.4rem 1rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 26px;
+  box-shadow: 0 40px 90px -24px rgba(8, 24, 20, 0.55), 0 8px 24px -12px rgba(8, 24, 20, 0.25); animation: pkIn 0.3s var(--ease) both;
+}
+.pk-pop[hidden] { display: none; }
+.pk-pop[data-side="up"] { animation-name: pkInUp; }
+@keyframes pkIn { from { opacity: 0; transform: translateY(8px) scale(0.985); } }
+@keyframes pkInUp { from { opacity: 0; transform: translateY(-8px) scale(0.985); } }
+@keyframes pkSheet { from { transform: translateY(100%); } }
+
+.pk-head { display: none; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem; }
+.pk-head strong { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; letter-spacing: -0.01em; }
+.pk-x { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
+.pk-x .icon { width: 18px; height: 18px; }
+
+/* Calendar */
+.pk-cal { position: relative; }
+.pk-months { display: grid; grid-auto-flow: column; gap: 2.4rem; }
+.pk-mt { margin: 0 0 0.8rem; font-family: var(--serif); font-weight: 400; font-size: 1.4rem; line-height: 40px; letter-spacing: -0.01em; text-align: center; }
+.pk-nav {
+  position: absolute; top: 0; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: 50%;
+  background: transparent; color: var(--ink); cursor: pointer; transition: background-color 0.25s var(--ease), color 0.25s, border-color 0.25s;
+}
+.pk-nav .icon { width: 18px; height: 18px; }
+.pk-prev { left: 0; }
+.pk-next { right: 0; }
+.pk-nav:hover:not(:disabled) { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+.pk-nav:disabled { opacity: 0.3; cursor: default; }
+.pk-wd, .pk-days { display: grid; grid-template-columns: repeat(7, 40px); }
+.pk-wd span { display: grid; place-items: center; height: 30px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #55625c; }
+.pk-days i { height: 40px; }
+.pk-cell { display: grid; place-items: center; height: 40px; }
+.pk-day {
+  position: relative; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: transparent; font: inherit; font-size: 0.95rem;
+  color: var(--ink); cursor: pointer; transition: background-color 0.18s, color 0.18s;
+}
+.pk-day:hover:not(:disabled) { background: var(--sand); }
+.pk-day:disabled { color: #b9bdb6; cursor: default; }
+.pk-day:focus-visible, .pk-chip:focus-visible, .pk-opt:focus-visible, .pk-step:focus-visible, .pk-link:focus-visible, .pk-nav:focus-visible, .pk-x:focus-visible { outline: 2px solid var(--terra); outline-offset: 2px; }
+.pk-day.is-today::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--terra); }
+.pk-day.is-sel { background: var(--forest); color: var(--cream); font-weight: 600; }
+.pk-day.is-sel.is-today::after { background: var(--gold-soft); }
+.pk-day.is-sel:hover:not(:disabled) { background: var(--forest-2, var(--forest)); }
+.pk-cell.in-range, .pk-cell.in-hover { background: var(--sand); }
+.pk-cell.is-start.has-end { background: linear-gradient(90deg, transparent 50%, var(--sand) 50%); }
+.pk-cell.is-end { background: linear-gradient(90deg, var(--sand) 50%, transparent 50%); }
+.pk-cell.in-hover:hover .pk-day:not(.is-sel) { background: var(--forest); color: var(--cream); }
+
+.pk-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--line); }
+.pk-hint { font-size: 0.86rem; font-weight: 600; color: #55625c; }
+.pk-acts { display: flex; gap: 0.2rem; margin-left: auto; }
+.pk-link { padding: 0.5rem 0.85rem; border: 0; border-radius: 999px; background: transparent; font: inherit; font-size: 0.86rem; font-weight: 700; color: var(--terra); cursor: pointer; transition: background-color 0.2s; }
+.pk-link:hover { background: rgba(168, 67, 42, 0.1); }
+
+/* Time */
+.pk-pop.is-time { width: min(372px, calc(100vw - 24px)); }
+.pk-times { display: grid; gap: 1.15rem; }
+.pk-group h4 { margin: 0 0 0.6rem; font-family: var(--sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #55625c; }
+.pk-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.45rem; }
+.pk-chip {
+  min-height: 44px; padding: 0; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; font: inherit; font-size: 0.95rem; font-weight: 600;
+  color: var(--ink); cursor: pointer; transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.pk-chip:hover { border-color: var(--forest); background: var(--sand); }
+.pk-chip[aria-pressed="true"] { border-color: var(--forest); background: var(--forest); color: var(--cream); }
+
+/* Quantity */
+.pk-pop.is-num { width: min(320px, calc(100vw - 24px)); }
+.pk-num { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 0.2rem; }
+.pk-step {
+  display: grid; place-items: center; flex: none; width: 56px; height: 56px; padding: 0; border: 1.5px solid var(--forest); border-radius: 50%; background: transparent;
+  color: var(--forest); cursor: pointer; transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+.pk-step .icon { width: 20px; height: 20px; }
+.pk-step:hover:not(.is-off) { background: var(--forest); color: var(--cream); }
+.pk-step:active:not(.is-off) { transform: scale(0.94); }
+.pk-step.is-off { opacity: 0.3; cursor: default; }
+.pk-big { display: grid; justify-items: center; min-width: 96px; line-height: 1; }
+.pk-big b { font-family: var(--serif); font-weight: 400; font-size: 3.6rem; letter-spacing: -0.03em; }
+.pk-big span { margin-top: 0.4rem; font-size: 0.88rem; color: #55625c; }
+
+/* List */
+.pk-pop.is-list { width: min(340px, calc(100vw - 24px)); }
+.pk-list { display: grid; gap: 0.15rem; margin: 0; padding: 0; list-style: none; }
+.pk-opt {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; padding: 0.9rem 1rem; border: 0; border-radius: 14px; background: transparent;
+  font: inherit; font-size: 1rem; color: var(--ink); text-align: left; cursor: pointer; transition: background-color 0.2s;
+}
+.pk-opt .icon { flex: none; width: 18px; height: 18px; color: var(--terra); opacity: 0; }
+.pk-opt:hover { background: var(--cream); }
+.pk-opt[aria-selected="true"] { background: var(--sand); font-weight: 600; }
+.pk-opt[aria-selected="true"] .icon { opacity: 1; }
+
+/* ---------- Phone: the popover becomes a sheet from the bottom ---------- */
+@media (max-width: 640px) {
+  .pk-pop {
+    left: 0 !important; right: 0; top: auto !important; bottom: 0; width: auto !important; max-width: none; max-height: 90dvh;
+    padding: 1.1rem 1.1rem calc(1.2rem + env(safe-area-inset-bottom)); border-width: 1px 0 0; border-radius: 28px 28px 0 0; animation: pkSheet 0.36s var(--ease) both;
+  }
+  .pk-head { display: flex; }
+  .pk-wd, .pk-days { grid-template-columns: repeat(7, 1fr); }
+  .pk-cell, .pk-days i { height: 46px; }
+  .pk-day { width: 44px; height: 44px; font-size: 1rem; }
+  .pk-mt { text-align: left; }
+  .pk-nav { top: 0; right: auto; }
+  .pk-prev { left: auto; right: 48px; }
+  .pk-next { right: 0; }
+  .pk-months { gap: 0; }
+  .pk-chips { grid-template-columns: repeat(3, 1fr); }
+  .pk-num { justify-content: space-around; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pk-pop, .pk-caret .icon { animation: none; transition: none; }
+}

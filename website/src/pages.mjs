@@ -1,8 +1,8 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
-import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, site, rooms } from "./lib.mjs";
+import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms } from "./lib.mjs";
 import { TAIS } from "./layout.mjs";
-import { categories, items } from "./data/menu.mjs";
+import { categories, items, menuNote } from "./data/menu.mjs";
 
 const other = (L) => (L === "pt" ? "en" : "pt");
 const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}`;
@@ -31,27 +31,38 @@ function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = 
 </section>`;
 }
 
+// "From US$ X / night", or a clear "price to be confirmed" until Lauhata supplies the price.
+function fromPrice(t, r) {
+  const H = t.home.rooms;
+  return r.price
+    ? `<p class="from"><span>${esc(H.from)}</span><strong>${esc(r.price)}</strong> <small>${esc(H.night)}</small></p>`
+    : `<p class="from is-tbc"><strong>${esc(t.common.priceTbc)}</strong></p>`;
+}
+
 // Large alternating rows, one per room type (homepage and stay page).
-function roomRows(t) {
+function roomRows(t, list = rooms, { arch = false } = {}) {
   const L = t.lang;
   const H = t.home.rooms;
-  return `<div class="room-rows">${rooms
-    .map((r, i) => `<article class="room-row${i % 2 ? " is-flip" : ""}">
-      <a class="room-row-img" href="${href("room:" + r.id, L)}" data-cursor="${esc(t.common.viewRoom)}" tabindex="-1" aria-hidden="true">
-        ${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw", ratio: "5/4", attrs: "data-clip", parallax: 0.1 })}
+  return `<div class="room-rows">${list
+    .map((r, i) => {
+      const n = rooms.findIndex((x) => x.id === r.id); // its number among all room types
+      return `<article class="room-row${i % 2 ? " is-flip" : ""}">
+      <a class="room-row-img${arch ? " is-arch" : ""}" href="${href("room:" + r.id, L)}" data-cursor="${esc(t.common.viewRoom)}" tabindex="-1" aria-hidden="true">
+        ${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw", ratio: arch ? "1/1" : "5/4", attrs: "data-clip", parallax: 0.1 })}
         ${r.badge ? `<span class="pill pill-dark">${esc(r.badge[L])}</span>` : ""}
       </a>
       <div class="room-row-body"${rv(120)}>
-        <span class="room-num">0${i + 1}<small>/0${rooms.length}</small></span>
+        <span class="room-num">0${n + 1}<small>/0${rooms.length}</small></span>
         <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
         <p>${esc(r.summary[L])}</p>
         ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
         <div class="room-foot">
-          <p class="from"><span>${esc(H.from)}</span><strong>${r.price ? esc(r.price) : "$ —"}</strong> <small>${esc(H.night)}</small></p>
+          ${fromPrice(t, r)}
           <a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}" data-magnetic>${esc(H.book)}${icon("arrow")}</a>
         </div>
       </div>
-    </article>`)
+    </article>`;
+    })
     .join("")}</div>`;
 }
 
@@ -79,32 +90,25 @@ const pend = (v, fallback) => (v ? esc(v) : `<span class="tbc">${esc(fallback)}<
 // ---------- Booking card (hero): request straight to WhatsApp ----------
 function bookingCard(t) {
   const q = t.home.quick;
-  const times = [
-    ...["12:00", "12:30", "13:00", "13:30", "14:00"].map((h) => [h, q.lunch]),
-    ...["18:30", "19:00", "19:30", "20:00", "20:30", "21:00"].map((h) => [h, q.dinner]),
-  ];
-  const timeOpts = times.map(([h, m]) => `<option value="${h}"${h === "19:30" ? " selected" : ""}>${esc(m)} · ${h}</option>`).join("");
-  const nOpts = (max, def) =>
-    Array.from({ length: max }, (_, i) => i + 1)
-      .map((n) => `<option value="${n}"${n === def ? " selected" : ""}>${n} ${esc(n === 1 ? q.person : q.persons)}</option>`)
-      .join("") + `<option value="10+">${esc(q.more)}</option>`;
+  const timeOpts = timeOptions(t, { selected: "19:30" });
   const fld = (label, control) => `<label class="bc-field"><span>${esc(label)}</span>${control}</label>`;
-  const sel = (name, opts) => `<span class="bc-select"><select name="${name}">${opts}</select>${icon("down")}</span>`;
+  // Quantities are number fields: the picker draws a stepper over them, and without JavaScript they still work.
+  const qty = (name, max) => `<input type="number" name="${name}" min="1" max="${max}" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(q.person)}" data-unit-many="${esc(q.persons)}">`;
   return `<form class="booking-card" data-quick-wa novalidate aria-label="${esc(q.label)}">
     <div class="bc-tabs" role="tablist">
       <button type="button" role="tab" aria-selected="true" aria-controls="bc-table" data-bc-tab="table">${icon("cutlery")}${esc(q.tabTable)}</button>
       <button type="button" role="tab" aria-selected="false" aria-controls="bc-room" data-bc-tab="room">${icon("bed")}${esc(q.tabRoom)}</button>
     </div>
     <div class="bc-row" id="bc-table" role="tabpanel" data-bc-panel="table">
-      ${fld(q.date, `<input type="date" name="date">`)}
-      ${fld(q.time, sel("time", timeOpts))}
-      ${fld(q.people, sel("people", nOpts(10, 2)))}
+      ${fld(q.date, `<input type="date" name="date" data-pick="date">`)}
+      ${fld(q.time, `<select name="time" data-pick="time">${timeOpts}</select>`)}
+      ${fld(q.people, qty("people", 20))}
       <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitTable)}</button>
     </div>
     <div class="bc-row" id="bc-room" role="tabpanel" data-bc-panel="room" hidden>
-      ${fld(q.checkIn, `<input type="date" name="checkIn">`)}
-      ${fld(q.checkOut, `<input type="date" name="checkOut">`)}
-      ${fld(q.guests, sel("guests", nOpts(6, 2)))}
+      ${fld(q.checkIn, `<input type="date" name="checkIn" data-pick="in">`)}
+      ${fld(q.checkOut, `<input type="date" name="checkOut" data-pick="out">`)}
+      ${fld(q.guests, qty("guests", 20))}
       <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitRoom)}</button>
     </div>
     <p class="bc-error" role="alert" hidden data-bc-error></p>
@@ -113,11 +117,24 @@ function bookingCard(t) {
 }
 
 // ---------- Full forms (restaurant and stay pages) ----------
-function field({ id, label, type = "text", name, attrs = "", hint = "", optional = "", full = false }) {
+// Reservation times as <option>s, grouped by part of the day (the time picker reads data-group and data-label).
+function timeOptions(t, { selected = "", placeholder = "" } = {}) {
+  const part = { morning: t.pick.morning, afternoon: t.pick.afternoon, evening: t.pick.evening };
+  return (
+    (placeholder ? `<option value="">${esc(placeholder)}</option>` : "") +
+    reservationSlots()
+      .map((h) => `<option value="${h}" data-group="${esc(part[slotPeriod(h)])}" data-label="${h}"${h === selected ? " selected" : ""}>${esc(part[slotPeriod(h)])} · ${h}</option>`)
+      .join("")
+  );
+}
+
+function field({ id, label, type = "text", name, attrs = "", hint = "", optional = "", full = false, control = "" }) {
   const describedBy = [hint ? `${id}-hint` : "", `${id}-err`].filter(Boolean).join(" ");
   return `<div class="field${full ? " is-full" : ""}">
     <label for="${id}">${esc(label)}${optional ? ` <span class="opt">(${esc(optional)})</span>` : ""}</label>
-    ${type === "textarea"
+    ${control
+      ? control.replace("<select ", `<select id="${id}" name="${name}" aria-describedby="${describedBy}" `)
+      : type === "textarea"
       ? `<textarea id="${id}" name="${name}" rows="3" ${attrs} aria-describedby="${describedBy}"></textarea>`
       : `<input id="${id}" name="${name}" type="${type}" ${attrs} aria-describedby="${describedBy}">`}
     ${hint ? `<p class="hint" id="${id}-hint">${esc(hint)}</p>` : ""}
@@ -139,10 +156,10 @@ function tableForm(t) {
   return `<form class="booking-form" data-booking="table" novalidate>
     <div class="form-grid">
       ${field({ id: "tb-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"' })}
-      ${field({ id: "tb-contact", name: "contact", label: f.contact, hint: f.contactHint, attrs: 'autocomplete="tel" required maxlength="80" inputmode="tel"' })}
-      ${field({ id: "tb-date", name: "date", type: "date", label: f.date, attrs: "required" })}
-      ${field({ id: "tb-time", name: "time", type: "time", label: f.time, attrs: 'required step="900"' })}
-      ${field({ id: "tb-people", name: "people", type: "number", label: f.people, attrs: 'required min="1" max="50" value="2" inputmode="numeric"' })}
+      ${field({ id: "tb-contact", name: "contact", label: f.contact, hint: f.contactHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="80" inputmode="tel"' })}
+      ${field({ id: "tb-date", name: "date", type: "date", label: f.date, attrs: 'required data-pick="date"' })}
+      ${field({ id: "tb-time", name: "time", label: f.time, control: `<select data-pick="time" required>${timeOptions(t, { placeholder: t.pick.chooseTime })}</select>` })}
+      ${field({ id: "tb-people", name: "people", type: "number", label: f.people, attrs: `required min="1" max="50" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` })}
       ${field({ id: "tb-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: `maxlength="400" placeholder="${esc(f.notesPlaceholder)}"`, full: true })}
     </div>
     ${formFooter(t, f.submitTable)}
@@ -154,16 +171,12 @@ function roomForm(t) {
   const options = [`<option value="">${esc(f.roomAny)}</option>`, ...rooms.map((r) => `<option value="${r.id}">${esc(r.name[t.lang])}</option>`)].join("");
   return `<form class="booking-form" data-booking="room" novalidate>
     <div class="form-grid">
-      ${field({ id: "rm-in", name: "checkIn", type: "date", label: f.checkIn, attrs: "required" })}
-      ${field({ id: "rm-out", name: "checkOut", type: "date", label: f.checkOut, attrs: "required" })}
-      ${field({ id: "rm-guests", name: "guests", type: "number", label: f.guests, attrs: 'required min="1" max="20" value="2" inputmode="numeric"' })}
-      <div class="field">
-        <label for="rm-room">${esc(f.roomType)}</label>
-        <div class="select"><select id="rm-room" name="room">${options}</select>${icon("down")}</div>
-        <p class="error" id="rm-room-err" aria-live="polite"></p>
-      </div>
+      ${field({ id: "rm-in", name: "checkIn", type: "date", label: f.checkIn, attrs: 'required data-pick="in"' })}
+      ${field({ id: "rm-out", name: "checkOut", type: "date", label: f.checkOut, attrs: 'required data-pick="out"' })}
+      ${field({ id: "rm-guests", name: "guests", type: "number", label: f.guests, attrs: `required min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.guestOne)}" data-unit-many="${esc(f.guestMany)}"` })}
+      ${field({ id: "rm-room", name: "room", label: f.roomType, control: `<select data-pick="select">${options}</select>` })}
       ${field({ id: "rm-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"' })}
-      ${field({ id: "rm-contact", name: "contact", label: f.contact, hint: f.contactHint, attrs: 'autocomplete="tel" required maxlength="80" inputmode="tel"' })}
+      ${field({ id: "rm-contact", name: "contact", label: f.contact, hint: f.contactHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="80" inputmode="tel"' })}
       ${field({ id: "rm-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: `maxlength="400" placeholder="${esc(f.notesPlaceholder)}"`, full: true })}
     </div>
     ${formFooter(t, f.submitRoom)}
@@ -171,31 +184,85 @@ function roomForm(t) {
 }
 
 // ---------- Shared blocks ----------
-function dishCard(t, d, attrs = "") {
+// ---------- Menu: dish cards, category bar, search ----------
+const normalize = (v) => v.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+// A dish can be ordered when it has a price: its own, or one per size (chips).
+const sizePriced = (d) => d.options.find((g) => g.choices.some((c) => c.price != null));
+const canOrder = (d) => d.price != null || Boolean(sizePriced(d));
+
+// Price on a card: the dish price, or each size with its price, or "price to be confirmed".
+function dishPrice(t, d) {
+  const sized = sizePriced(d);
+  if (sized) return sized.choices.map((c) => `${esc(c.label[t.lang])} <b>${money(c.price)}</b>`).join(" · ");
+  return d.price != null ? `<b>${money(d.price)}</b>` : esc(t.common.priceTbc);
+}
+
+// One dish. With \`link\` the name links to the menu (homepage row). \`image\` stays empty until the
+// restaurant has a real photo of that dish: a card without a picture beats a picture of another dish.
+function dishCard(t, d, { link = "" } = {}) {
   const L = t.lang;
-  return `<article class="dish"${attrs}>
-      ${figure(t, d.image, { sizes: "(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw", ratio: "4/3" })}
+  const O = t.order;
+  const cat = categories.find((c) => c.id === d.category);
+  const search = normalize([d.name, d.description?.en, d.description?.pt, cat.name.en, cat.name.pt].filter(Boolean).join(" "));
+  const verb = d.options.length ? O.choose : O.add;
+  return `<article class="dish${d.image ? " has-photo" : ""}" data-dish data-search="${esc(search)}">
+      ${d.image ? figure(t, d.image, { sizes: "(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw", ratio: "4/3" }) : ""}
       <div class="dish-body">
-        <p class="dish-tag">${esc(d.tag[L])}</p>
-        <h3>${esc(d.name[L])}</h3>
-        <p class="dish-desc">${esc(d.description[L])}</p>
+        <p class="dish-tag">${esc(cat.name[L])}</p>
+        <h3>${link ? `<a class="dish-link" href="${link}">${esc(d.name)}</a>` : esc(d.name)}</h3>
+        ${d.description ? `<p class="dish-desc">${esc(d.description[L])}</p>` : ""}
         <div class="dish-foot">
-          <span class="price">${d.price ? esc(d.price) : "$ —"}</span>
+          <span class="price${canOrder(d) ? "" : " is-tbc"}">${dishPrice(t, d)}</span>
+          ${canOrder(d) ? `<button class="btn btn-dark btn-sm dish-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(verb)}</span></span></button>` : ""}
         </div>
       </div>
     </article>`;
 }
 
-function dishCards(t) {
-  return `<div class="dish-grid" data-dish-grid>${items
-    .map((d) => dishCard(t, d, ` data-cat="${d.category}"${d.category !== categories[0].id ? " hidden" : ""}`))
-    .join("")}</div>`;
+// A dish as one line of a printed menu: name and description, price, and a round add button.
+function dishLine(t, d) {
+  const L = t.lang;
+  const O = t.order;
+  const verb = d.options.length ? O.choose : O.add;
+  return `<li class="dish-line">
+      <div class="dl-text"><h3>${esc(d.name)}</h3>${d.description ? `<p>${esc(d.description[L])}</p>` : ""}</div>
+      <span class="dl-price">${dishPrice(t, d)}</span>
+      ${canOrder(d) ? `<button class="dl-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}</span></button>` : ""}
+    </li>`;
 }
 
-function dishTabs(t) {
-  return `<div class="seg" role="tablist" aria-label="${esc(t.home.dishes.tabsLabel)}" data-dish-tabs>${categories
-    .map((c, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-dish-tab="${c.id}">${esc(c.name[t.lang])}</button>`)
-    .join("")}</div>`;
+// The full interactive menu: search, a category bar that sticks while scrolling, and every category
+// in the order of the printed menu. Behaviour lives in assets/js/order.js.
+function menuSection(t) {
+  const L = t.lang;
+  const O = t.order;
+  const nav = categories.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}">${esc(c.name[L])}</a></li>`).join("");
+  const sections = categories
+    .map((c) => `<section class="menu-cat" id="cat-${c.id}" data-cat="${c.id}" aria-labelledby="cat-${c.id}-title">
+      <header class="menu-cat-head"><h3 id="cat-${c.id}-title">${esc(c.name[L])}</h3>${c.note ? `<p>${esc(c.note[L])}</p>` : ""}</header>
+      <div class="menu-grid">${items.filter((d) => d.category === c.id).map((d) => dishCard(t, d)).join("")}</div>
+    </section>`)
+    .join("");
+  return `<section class="section menu" id="ementa" aria-labelledby="menu-title" data-menu>
+  <div class="wrap">
+    ${heading({ eyebrow: t.home.dishes.eyebrow, title: t.restaurant.menuTitle, lead: t.restaurant.menuLead, id: "menu-title", center: true })}
+    <p class="menu-note"${rv(60)}>${esc(menuNote[L])}</p>
+    <div class="menu-search"${rv(100)}>
+      <label for="menu-search"><span class="sr-only">${esc(O.searchLabel)}</span>${icon("search")}</label>
+      <input id="menu-search" type="search" placeholder="${esc(O.searchPlaceholder)}" autocomplete="off" enterkeyhint="search" data-menu-search>
+      <button class="icon-btn" type="button" hidden data-menu-clear aria-label="${esc(O.clearSearch)}">${icon("close")}</button>
+    </div>
+  </div>
+  <nav class="menu-nav" aria-label="${esc(O.categories)}" data-menu-nav>
+    <div class="wrap"><ul>${nav}</ul></div>
+  </nav>
+  <div class="wrap">
+    <p class="sr-only" role="status" aria-live="polite" data-menu-status></p>
+    ${sections}
+    <p class="menu-empty" hidden data-menu-empty></p>
+  </div>
+</section>`;
 }
 
 function roomCards(t, list, cls = "") {
@@ -212,7 +279,7 @@ function roomCards(t, list, cls = "") {
         <p>${esc(r.summary[L])}</p>
         ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
         <div class="room-foot">
-          <p class="from"><span>${esc(h.from)}</span><strong>${r.price ? esc(r.price) : "$ —"}</strong> <small>${esc(h.night)}</small></p>
+          ${fromPrice(t, r)}
           <a class="btn btn-cream btn-sm" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(h.book)}${icon("arrow")}</a>
         </div>
       </div>
@@ -222,72 +289,16 @@ function roomCards(t, list, cls = "") {
 
 const HUT_DECO = `<svg class="hut-deco" viewBox="0 0 200 160" aria-hidden="true"><path d="M100 4 18 74h164L100 4Z" fill="currentColor"/><path d="M44 74v62M78 74v62M122 74v62M156 74v62M30 100h140" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`;
 
-function badgeSvg(t) {
-  const text = esc(t.home.hero.badge.toUpperCase());
-  return `<div class="badge-spin" aria-hidden="true">
-    <svg viewBox="0 0 120 120"><defs><path id="badge-c-${t.lang}" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs>
-      <circle cx="60" cy="60" r="58" fill="#FEFDF8"/>
-      <text font-size="9" font-weight="600" fill="#0F2E28"><textPath href="#badge-c-${t.lang}" textLength="274" lengthAdjust="spacing">${text}</textPath></text>
-    </svg>
-    <svg class="badge-hut"><use href="#i-hut"></use></svg>
-  </div>`;
-}
-
-// Illustrated coast: Lauhata to the west of Dili along the north coast, Atauro to the north.
-function coastMap(t) {
-  const h = t.home.location;
-  const drive = site.driveFromDili ? fmt(h.drive, { t: site.driveFromDili }) : h.driveTbc;
-  return `<figure class="coast-map"${rv(120)}>
-    <svg viewBox="0 0 480 370" role="img" aria-label="${esc(t.location.mapTitle)}">
-      <rect width="480" height="370" fill="#2F6E73"/>
-      <g fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="1.4">
-        <path d="M-10 70c60-14 110 14 170 0s120-14 180 0 110 14 160 0"/>
-        <path d="M-10 110c60-14 110 14 170 0s120-14 180 0 110 14 160 0"/>
-        <path d="M-10 150c60-14 110 14 170 0s120-14 180 0 110 14 160 0"/>
-      </g>
-      <ellipse cx="400" cy="62" rx="44" ry="17" fill="#EBE4D4"/>
-      <text x="400" y="104" text-anchor="middle" class="map-label">${esc(h.mapIsland.toUpperCase())}</text>
-      <text x="240" y="30" text-anchor="middle" class="map-label">${esc(h.mapSea.toUpperCase())}</text>
-      <path d="M0 196c60-18 120-6 170 6s110 10 160-6 100-26 150-18V370H0Z" fill="#E6DAC2"/>
-      <path d="M0 236c70-14 140 4 210 8s140-8 200-22 70-6 70-6V370H0Z" fill="#D8C8A8"/>
-      <path d="M0 290c90-10 170 10 250 6s150-22 230-16V370H0Z" fill="#C9B48F"/>
-      <path d="M110 196C190 214 290 214 400 186" fill="none" stroke="#A8432A" stroke-width="2.6" stroke-dasharray="1 7" stroke-linecap="round"/>
-      <circle cx="404" cy="186" r="7" fill="#0F2E28"/>
-      <text x="404" y="214" text-anchor="middle" class="map-city">Díli</text>
-      <text x="300" y="166" text-anchor="middle" class="map-drive">${esc(drive)}</text>
-      <path d="M100 196c-14-16-22-27-22-38a22 22 0 1 1 44 0c0 11-8 22-22 38Z" fill="#A8432A"/>
-      <circle cx="100" cy="158" r="8" fill="#FEFDF8"/>
-      <rect x="40" y="214" width="122" height="46" rx="8" fill="#0F2E28"/>
-      <text x="101" y="236" text-anchor="middle" class="map-name">Lauhata</text>
-      <text x="101" y="251" text-anchor="middle" class="map-sub">Liquiçá</text>
-    </svg>
-  </figure>`;
-}
-
 function infoGrid(t) {
+  const L = t.lang;
   const h = t.home.location;
-  const hours = site.restaurantHours.length ? site.restaurantHours.map((x) => esc(x.hours)).join(", ") : null;
+  const hours = site.restaurantHours.length ? site.restaurantHours.map((x) => `${x.days[L]} ${x.hours}`).join(" · ") : null;
   return `<dl class="info-grid"${rv(160)}>
     <div>${icon("pin")}<dt>${esc(h.address)}</dt><dd>${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}</dd></div>
     <div>${icon("clock")}<dt>${esc(h.hours)}</dt><dd>${esc(h.restaurant)}: ${pend(hours, t.common.toConfirm)}<br>${esc(h.reception)}: ${pend(site.receptionHours && site.receptionHours[t.lang], t.common.toConfirm)}</dd></div>
     <div>${icon("whatsapp")}<dt>${esc(t.common.whatsapp)}</dt><dd>${site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`}</dd></div>
     <div>${icon("mail")}<dt>${esc(t.common.email)}</dt><dd>${site.email ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : `<span class="tbc">[email]</span>`}</dd></div>
   </dl>`;
-}
-
-function locationBlock(t, id = "loc-title") {
-  const h = t.home.location;
-  return `<section class="section location" id="contacto" aria-labelledby="${id}">
-  <div class="wrap location-grid">
-    <div>
-      ${heading({ eyebrow: h.eyebrow, title: h.title, accent: h.titleAccent, id })}
-      <p class="body-text"${rv(80)}>${esc(h.body)}</p>
-      ${infoGrid(t)}
-      <a class="btn btn-dark"${rv(200)} href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
-    </div>
-    ${coastMap(t)}
-  </div>
-</section>`;
 }
 
 function faqBlock(t) {
@@ -309,133 +320,254 @@ function galleryGrid(t, keys, cls = "") {
 }
 
 // ================= HOME =================
-// Cinematic homepage: full-screen hero, scroll-driven statement, marquee, expanding panels,
-// the most chosen dishes and rooms (short rows that link to the full pages), sticky story,
-// drawn timeline and a full-screen CTA.
+// The homepage is one day at the coast, told in sections that each have their own composition:
+// the hero, a diptych that sends people to eat or to sleep, the menu, a slow breakfast, rooms that open
+// like an accordion, a day that changes colour as you scroll, culture on terracotta, and a real map.
+
+// Breakfast times from the printed menu hours, or null while they are not filled in.
+function breakfastHours() {
+  const h = site.restaurantHours.find((x) => /pequeno|breakfast/i.test(`${x.days.pt} ${x.days.en}`));
+  const m = h && String(h.hours).match(/(\d{1,2}:\d{2})\D+(\d{1,2}:\d{2})/);
+  return m ? { from: m[1], to: m[2] } : null;
+}
+
+const mapQuery = () => (site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery);
+const directionsLink = () => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery())}`;
+
+// Comer / Dormir: two large panels, one a rounded frame and one an arch, side by side.
+function chooseSection(t) {
+  const L = t.lang;
+  const C = t.land.choose;
+  const panel = (cls, n, key, copy, target, sizes, extra = "") => `<a class="ch-panel ${cls}" href="${target}" data-reveal>
+      <span class="ch-img">${figure(t, key, { sizes })}</span>
+      <span class="ch-n" aria-hidden="true">${n}</span>
+      <span class="ch-body">
+        <span class="ch-title">${esc(copy.title)}</span>
+        <span class="ch-sub">${esc(extra || copy.sub)}</span>
+        <span class="ch-cta">${esc(copy.cta)}<i>${icon("arrow")}</i></span>
+      </span>
+    </a>`;
+  return `<section class="choose" id="escolher" aria-label="${esc(C.aria)}">
+  <div class="wrap">
+    <p class="statement-text choose-line" data-scrub>${esc(C.statement)}</p>
+    <div class="choose-grid">
+      ${panel("ch-eat", "01", "foodSpread", C.eat, "#comer", "(min-width: 900px) 56vw, 92vw")}
+      ${panel("ch-sleep", "02", "roomFamily", C.sleep, "#quartos", "(min-width: 900px) 40vw, 92vw", fmt(C.sleep.sub, { n: rooms.length }))}
+    </div>
+  </div>
+</section>`;
+}
+
+// Breakfast: a wide morning photo, the hours set large, and the real breakfast lines from the printed menu.
+function breakfastSection(t, list) {
+  const B = t.land.bkf;
+  const hrs = breakfastHours();
+  return `<section class="bkf" id="pequeno-almoco" aria-labelledby="bkf-title">
+  <div class="bkf-grid">
+    <div class="bkf-visual" data-reveal>
+      ${figure(t, "terrace", { sizes: "(min-width: 900px) 58vw, 100vw", ratio: "5/4", parallax: 0.07 })}
+      <div class="bkf-inset">${figure(t, "palmShadow", { sizes: "(min-width: 900px) 18vw, 40vw", ratio: "3/4" })}</div>
+    </div>
+    <div class="bkf-body">
+      ${heading({ eyebrow: B.eyebrow, title: B.title1, accent: B.titleAccent, id: "bkf-title" })}
+      <p class="bkf-lead"${rv(60)}>${esc(hrs ? fmt(B.lead, hrs) : B.leadNoHours)}</p>
+      ${hrs ? `<p class="bkf-hours"${rv(100)}><span>${esc(B.served)}</span><b>${hrs.from}</b><i aria-hidden="true"></i><b>${hrs.to}</b></p>` : ""}
+      <h3 class="bkf-list-h"${rv(120)}>${esc(B.list)}</h3>
+      <ul class="dish-lines bkf-list"${rv(140)}>${list.map((d) => dishLine(t, d)).join("")}</ul>
+      <div class="btn-row"${rv(160)}><a class="btn btn-dark" href="${href("restaurant", t.lang, "#cat-breakfast")}">${esc(B.cta)}${icon("arrow")}</a></div>
+    </div>
+  </div>
+</section>`;
+}
+
+// Rooms: panels that open on hover or focus (the first is open); on a phone they stack as cards.
+function suitesSection(t) {
+  const L = t.lang;
+  const S = t.land.suites;
+  return `<section class="suites" id="quartos" aria-labelledby="rooms-title">
+  <div class="wrap">
+    <div class="su-head">
+      ${heading({ eyebrow: S.eyebrow, title: S.title, accent: S.titleAccent, id: "rooms-title" })}
+      <div${rv(100)}>
+        <p class="su-lead">${esc(S.body)}</p>
+        <a class="btn btn-cream" href="${href("stay", L, "#quartos")}">${esc(S.all)}${icon("arrow")}</a>
+      </div>
+    </div>
+    <div class="su-row" data-suites>${rooms
+      .map((r, i) => `<article class="su${i === 0 ? " is-on" : ""}" data-su>
+      <a class="su-img" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw" })}</a>
+      <div class="su-rail" aria-hidden="true"><span>0${i + 1}</span><b>${esc(r.name[L])}</b></div>
+      <div class="su-body">
+        <p class="su-top"><span>0${i + 1}<small>/0${rooms.length}</small></span>${r.badge ? `<em>${esc(r.badge[L])}</em>` : ""}</p>
+        <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
+        <p class="su-sum">${esc(r.summary[L])}</p>
+        ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
+        <div class="su-foot">
+          ${fromPrice(t, r)}
+          <div class="su-btns">
+            <a class="btn btn-ghost-light btn-sm" href="${href("room:" + r.id, L)}">${esc(S.view)}</a>
+            <a class="btn btn-cream btn-sm" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.book)}${icon("arrow")}</a>
+          </div>
+        </div>
+      </div>
+    </article>`)
+      .join("")}</div>
+  </div>
+</section>`;
+}
+
+// A day at Lauhata: a sticky arch window changes photo while the page colour moves from morning to dusk.
+function daySection(t) {
+  const D = t.land.day;
+  const steps = D.steps;
+  return `<section class="dayx" id="experiencias" aria-labelledby="day-title" data-dayx data-step="0">
+  <div class="wrap dx-wrap">
+    <div class="dx-stage" aria-hidden="true">
+      <div class="dx-arch">${steps.map((s, i) => `<div class="dx-img${i === 0 ? " is-on" : ""}">${figure(t, s.img, { sizes: "(min-width: 900px) 34vw, 80vw" })}</div>`).join("")}</div>
+      <ol class="dx-dots">${steps.map((s, i) => `<li${i === 0 ? ' class="is-on"' : ""}><i></i><span>${esc(s.time)}</span></li>`).join("")}</ol>
+    </div>
+    <div class="dx-copy">
+      ${heading({ eyebrow: D.eyebrow, title: D.title, lead: D.lead, id: "day-title" })}
+      <ol class="dx-steps">${steps
+        .map((s, i) => `<li class="dx-step${i === 0 ? " is-on" : ""}" data-dx-step="${i}">
+        <div class="dx-pic">${figure(t, s.img, { sizes: "92vw", ratio: "4/3" })}</div>
+        <p class="dx-meta"><time>${esc(s.time)}</time><span>${esc(s.period)}</span></p>
+        <h3>${esc(s.t)}</h3>
+        <p>${esc(s.d)}</p>
+      </li>`)
+        .join("")}</ol>
+      ${site.showPlaceholderNotes ? `<p class="dx-note">${esc(D.note)}</p>` : ""}
+    </div>
+  </div>
+</section>`;
+}
+
+// Culture on terracotta: the tais in an arch, a place kept for the real story, and the Tetum phrase set large.
+function cultureSection(t) {
+  const C = t.land.culture;
+  return `<section class="cult" id="historia" aria-labelledby="story-title">
+  <div class="wrap">
+    <header class="cu-head"${rv()}>
+      <p class="eyebrow">${esc(C.eyebrow)}</p>
+      <h2 id="story-title" class="cu-title" data-split>${esc(C.title1)} ${esc(C.title2)} <em>${esc(C.titleAccent)}</em>.</h2>
+    </header>
+    <div class="cu-grid">
+      <div class="cu-visual">
+        <div class="cu-frame">${figure(t, "weaving", { sizes: "(min-width: 900px) 36vw, 82vw", ratio: "4/5", attrs: "data-clip", parallax: 0.05 })}</div>
+        <p class="cu-cap">${esc(C.tais)}</p>
+      </div>
+      <div class="cu-text">
+        <p class="cu-body"${rv(60)}>${esc(C.body)}</p>
+        ${site.showPlaceholderNotes ? `<div class="cu-slot"${rv(100)}><h3>${esc(C.slot)}</h3><p>${esc(C.slotPending)}</p></div>` : ""}
+        <div class="cu-cards"${rv(140)}>
+          <div><h3>${esc(C.card1[0])}</h3><p>${esc(C.card1[1])}</p></div>
+          <div><h3>${esc(C.card2[0])}</h3><p>${esc(C.card2[1])}</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="cu-quote"${rv()}>
+      <p class="cu-label">${esc(C.quoteLabel)}</p>
+      <p class="cu-big">${esc(C.quote)}</p>
+      <p class="cu-gloss">${esc(C.gloss)}${site.showPlaceholderNotes ? ` <small>${esc(C.glossNote)}</small>` : ""}</p>
+    </div>
+  </div>
+  ${TAIS}
+</section>`;
+}
+
+// Book and arrive: facts on the left, a real Google map on the right, three clear actions.
+function reachSection(t) {
+  const L = t.lang;
+  const R = t.land.reach;
+  const q = mapQuery();
+  const hours = site.restaurantHours.length
+    ? site.restaurantHours.map((x) => `<span>${esc(x.days[L])} <b>${esc(x.hours)}</b></span>`).join("")
+    : `<span class="tbc">${esc(t.common.toConfirm)}</span>`;
+  const row = (ico, label, value) => `<div class="rc-row">${icon(ico)}<dt>${esc(label)}</dt><dd>${value}</dd></div>`;
+  const drive = site.driveFromDili ? fmt(t.home.location.drive, { t: site.driveFromDili }) : "";
+  return `<section class="reach" id="contacto" aria-labelledby="loc-title">
+  <div class="wrap rc-grid">
+    <div class="rc-info">
+      ${heading({ eyebrow: R.eyebrow, title: R.title, accent: R.titleAccent, lead: R.body, id: "loc-title" })}
+      <dl class="rc-list"${rv(80)}>
+        ${row("pin", R.address, `${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}`)}
+        ${row("clock", R.hours, `<span class="rc-hours">${hours}</span>`)}
+        ${row("whatsapp", t.common.whatsapp, site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`)}
+        ${row("mail", t.common.email, site.email ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : `<span class="tbc">[email]</span>`)}
+        ${row("car", R.fromDili, drive ? esc(drive) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`)}
+      </dl>
+      <div class="btn-row"${rv(140)}>
+        <a class="btn btn-dark" href="${directionsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(R.directions)}</a>
+        <a class="btn btn-outline" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
+        <a class="btn btn-terra" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a>
+      </div>
+    </div>
+    <div class="rc-map"${rv(120)}>
+      <div class="map-frame">
+        <iframe title="${esc(t.location.mapTitle)}" src="https://www.google.com/maps?q=${encodeURIComponent(q)}&z=${site.geo ? 15 : 12}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      ${site.geo ? "" : `<p class="rc-note">${esc(R.mapNote)}</p>`}
+    </div>
+  </div>
+</section>`;
+}
+
 export function home(t) {
   const L = t.lang;
   const H = t.home;
+  const LD = t.land;
   const hero = H.hero;
   const dishes = items.filter((d) => d.featured);
-  const topRooms = rooms.filter((r) => r.featured);
+  const bkfDishes = items.filter((d) => d.category === "breakfast");
   const realReviews = H.reviews.items.filter((r) => !r.q.startsWith("["));
-  const marquee = [...H.marquee, ...H.marquee].map((w) => `<span>${esc(w)}</span><i aria-hidden="true"></i>`).join("");
+  const hours = site.restaurantHours.length
+    ? site.restaurantHours.map((h) => `<div><dt>${esc(h.days[L])}</dt><dd>${esc(h.hours)}</dd></div>`).join("")
+    : `<div><dd class="tbc">${esc(t.common.hoursTbc)}</dd></div>`;
   const body = `
-<section class="cine-hero" aria-labelledby="hero-title">
-  <div class="cine-slides" data-slides>
-    ${["heroSunset", "coastSunset", "terrace", "coastAerial"].map((k, i) => `<div class="slide${i === 0 ? " is-active" : ""}">${figure(t, k, { eager: i === 0, sizes: "100vw" })}</div>`).join("")}
+<section class="cine-hero hx" aria-labelledby="hero-title">
+  <div class="hx-bg">
+    ${figure(t, "coastSunset", { eager: true, sizes: "100vw", art: [{ key: "heroSunset", media: "(max-width: 860px)" }] })}
+    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}
   </div>
-  <div class="cine-shade" aria-hidden="true"></div>
-  <div class="wrap cine-content">
+  <div class="hx-shade" aria-hidden="true"></div>
+  <div class="wrap cine-content hx-content">
     <p class="eyebrow eyebrow-light eyebrow-dots" data-fade>${hero.eyebrow.map((e) => `<span>${esc(e)}</span>`).join("")}</p>
-    <h1 id="hero-title" class="cine-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
+    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line l2"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(hero.lead)}</p>
   </div>
   <div class="wrap cine-bar" data-fade style="--d:400ms">${bookingCard(t)}</div>
-  <a class="scroll-cue" href="#manifesto" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a>
+  <a class="scroll-cue" href="#escolher" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a>
 </section>
+${TAIS}
 
-<section class="statement" id="manifesto" aria-label="${esc(H.two.eyebrow)}">
-  <div class="wrap">
-    <p class="statement-text" data-scrub>${esc(H.statement)}</p>
-    <div class="statement-foot" data-fade>
-      ${badgeSvg(t)}
+${chooseSection(t)}
+
+<section class="section eat" id="comer" aria-labelledby="eat-title">
+  <div class="wrap eat-grid">
+    <div class="eat-visual">
+      ${figure(t, "grilledFish", { sizes: "(min-width: 900px) 44vw, 92vw", ratio: "4/5", attrs: "data-clip", parallax: 0.06 })}
     </div>
-  </div>
-</section>
-
-<div class="marquee" aria-hidden="true"><div class="marquee-track">${marquee}</div></div>
-
-<section class="section worlds-section" aria-labelledby="two-title">
-  <div class="wrap">
-    <div class="split-head">
-      ${heading({ eyebrow: H.two.eyebrow, title: H.two.title, accent: H.two.titleAccent, id: "two-title" })}
-      <p class="body-text"${rv(100)}>${esc(H.two.body)}</p>
-    </div>
-  </div>
-  <div class="wrap worlds">
-    <a class="world" href="${href("restaurant", L)}" data-cursor="${esc(t.common.learnMore)}">
-      ${figure(t, "foodSpread", { sizes: "(min-width: 900px) 60vw, 92vw", parallax: 0.08 })}
-      <div class="world-body">
-        <span class="pill">${esc(H.two.restLabel)}</span>
-        <h3>${esc(H.two.restTitle)}</h3>
-        <p>${esc(H.two.restBody)}</p>
-        <span class="gold-link">${esc(H.two.restLink)}${icon("arrow")}</span>
-      </div>
-    </a>
-    <a class="world" href="${href("stay", L)}" data-cursor="${esc(t.common.learnMore)}">
-      ${figure(t, "terrace", { sizes: "(min-width: 900px) 60vw, 92vw", parallax: 0.08 })}
-      <div class="world-body">
-        <span class="pill">${esc(H.two.stayLabel)}</span>
-        <h3>${esc(H.two.stayTitle)}</h3>
-        <p>${esc(H.two.stayBody)}</p>
-        <span class="gold-link">${esc(H.two.stayLink)}${icon("arrow")}</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<section class="section featured-dishes" aria-labelledby="dish-title">
-  <div class="wrap">
-    <div class="split-head">
-      ${heading({ eyebrow: H.dishes.featured, title: H.dishes.title, id: "dish-title" })}
-      <div${rv(100)}>
-        <p class="body-text">${esc(H.dishes.body)}</p>
-        <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}">${esc(H.dishesCta)}${icon("arrow")}</a>
-      </div>
-    </div>
-    <div class="featured-row snap-row">${dishes.map((d) => dishCard(t, d)).join("")}</div>
-  </div>
-</section>
-
-<section class="section rooms-dark" id="quartos" aria-labelledby="rooms-title">
-  ${HUT_DECO}
-  <div class="wrap">
-    <div class="split-head">
-      ${heading({ eyebrow: H.rooms.featured, title: H.rooms.title, accent: H.rooms.titleAccent, id: "rooms-title" })}
-      <div${rv(100)}>
-        <p class="body-text">${esc(H.rooms.body)}</p>
-        <a class="btn btn-cream" href="${href("stay", L, "#quartos")}">${esc(H.rooms.viewAll)}${icon("arrow")}</a>
-      </div>
-    </div>
-    ${roomCards(t, topRooms, "snap-row")}
-  </div>
-</section>
-
-<section class="section story" id="historia" aria-labelledby="story-title">
-  <div class="wrap story-grid">
-    <div class="story-visual">
-      <div class="story-sticky">
-        ${figure(t, "weaving", { cls: "arch", sizes: "(min-width: 900px) 34vw, 80vw", ratio: "4/5", attrs: "data-clip", parallax: 0.06 })}
-      </div>
-    </div>
-    <div class="story-text">
-      <header class="heading"${rv()}>
-        <p class="eyebrow">${esc(H.story.eyebrow)}</p>
-        <h2 id="story-title" class="title" data-split>${esc(H.story.title1)} ${esc(H.story.title2)} <em>${esc(H.story.titleAccent)}</em>.</h2>
-      </header>
-      <p class="body-text story-lead"${rv(80)}>${esc(H.story.body)}</p>
-      ${site.showPlaceholderNotes ? `<p class="body-text tbc-block"${rv(120)}>${esc(H.story.pending)}</p>` : ""}
-      <p class="pull-quote"${rv(140)}>${esc(H.story.quote)}<span>${esc(H.story.quoteNote)}</span></p>
-      <div class="sand-cards"${rv(160)}>
-        <div><h3>${esc(H.story.card1[0])}</h3><p>${esc(H.story.card1[1])}</p></div>
-        <div><h3>${esc(H.story.card2[0])}</h3><p>${esc(H.story.card2[1])}</p></div>
+    <div class="eat-body">
+      ${heading({ eyebrow: LD.eat.eyebrow, title: LD.eat.title1, accent: LD.eat.titleAccent, lead: LD.eat.lead, id: "eat-title" })}
+      <div class="eat-hours"${rv(80)}><h3>${esc(H.eat.hours)}</h3><dl>${hours}</dl></div>
+      <p class="eat-featured"${rv(100)}>${esc(H.eat.featured)}</p>
+      <ul class="dish-lines"${rv(120)}>${dishes.map((d) => dishLine(t, d)).join("")}</ul>
+      <p class="eat-note"${rv(140)}>${esc(menuNote[L])}</p>
+      <div class="btn-row"${rv(160)}>
+        <a class="btn btn-dark btn-lg" href="${href("restaurant", L, "#ementa")}" data-magnetic>${esc(H.dishesCta)}${icon("arrow")}</a>
+        <a class="btn btn-outline btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(hero.ctaTable)}</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section day" id="experiencias" aria-labelledby="day-title" data-day>
-  <div class="wrap">
-    ${heading({ eyebrow: H.day.eyebrow, title: H.day.title, lead: H.day.body, id: "day-title", center: true })}
-    <div class="day-track">
-      <div class="day-line" aria-hidden="true"><span data-day-line></span></div>
-      <ol class="timeline">
-        ${H.day.steps.map((s, i) => `<li class="step step-${i + 1}"${rv(i * 90)}><span class="step-dot">${icon(s.icon)}</span><time>${esc(s.time)}</time><h3>${esc(s.t)}</h3><p>${esc(s.d)}</p></li>`).join("")}
-      </ol>
-    </div>
-  </div>
-</section>
+${breakfastSection(t, bkfDishes)}
+
+${suitesSection(t)}
+
+${daySection(t)}
+
+${cultureSection(t)}
 
 ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
   <div class="wrap">
@@ -448,7 +580,7 @@ ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-ti
   </div>
 </section>` : ""}
 
-${locationBlock(t)}
+${reachSection(t)}
 ${cineCta(t)}`;
   return {
     page: "home",
@@ -456,9 +588,13 @@ ${cineCta(t)}`;
     description: t.meta.home.description,
     path: href("home", L),
     alt: href("home", other(L)),
-    preload: "heroSunset",
+    preload: [
+      { key: "coastSunset", sizes: "100vw", media: "(min-width: 861px)" },
+      { key: "heroSunset", sizes: "100vw", media: "(max-width: 860px)" },
+    ],
     hero: true,
     intro: true,
+    menu: [...dishes, ...bkfDishes],
     body,
   };
 }
@@ -467,7 +603,6 @@ ${cineCta(t)}`;
 export function restaurant(t) {
   const L = t.lang;
   const bc = breadcrumbs(t, [{ name: t.nav.restaurant, path: href("restaurant", L) }]);
-  const hasDemo = items.some((i) => i.placeholder) && site.showPlaceholderNotes;
   const body = `
 ${pageHero(t, {
   eyebrow: t.restaurant.eyebrow,
@@ -480,21 +615,14 @@ ${pageHero(t, {
 })}
 
 ${TAIS}
-<section class="section dishes" id="ementa" aria-labelledby="menu-title">
-  <div class="wrap">
-    ${heading({ eyebrow: t.home.dishes.eyebrow, title: t.restaurant.menuTitle, lead: t.home.dishes.body, id: "menu-title", center: true })}
-    ${hasDemo ? `<p class="demo-notice"${rv()}>${esc(t.restaurant.demoNotice)}</p>` : ""}
-    <div class="center-row"${rv(80)}>${dishTabs(t)}</div>
-    ${dishCards(t)}
-  </div>
-</section>
+${menuSection(t)}
 
 <section class="section booking" id="reservar" aria-labelledby="book-title">
   <div class="wrap booking-grid">
     <div>
       ${heading({ eyebrow: t.restaurant.bookEyebrow, title: t.restaurant.bookTitle, id: "book-title" })}
       <p class="body-text"${rv(80)}>${esc(t.restaurant.bookLead)}</p>
-      ${figure(t, "dishIkan", { cls: "booking-img", sizes: "(min-width: 900px) 30vw, 80vw", ratio: "4/3" })}
+      ${figure(t, "coastSunset", { cls: "booking-img", sizes: "(min-width: 900px) 30vw, 80vw", ratio: "4/3" })}
     </div>
     <div class="form-card"${rv(100)}>${tableForm(t)}</div>
   </div>
@@ -509,6 +637,7 @@ ${cineCta(t)}`;
     alt: href("restaurant", other(L)),
     preload: "foodSpread",
     hero: true,
+    menu: items,
     ld: [bc.ld],
     body,
   };
@@ -586,7 +715,7 @@ export function room(t, r) {
   const facts = [
     r.capacity ? `<div><dt>${esc(t.stay.roomCapacity)}</dt><dd>${esc(r.capacity[L])}</dd></div>` : "",
     r.beds ? `<div><dt>${esc(t.stay.roomBeds)}</dt><dd>${esc(r.beds[L])}</dd></div>` : "",
-    `<div><dt>${esc(H.from)}</dt><dd>${r.price ? esc(r.price) : "$ —"} <small>${esc(H.night)}</small></dd></div>`,
+    `<div><dt>${esc(H.from)}</dt><dd>${r.price ? `${esc(r.price)} <small>${esc(H.night)}</small>` : `<span class="tbc">${esc(t.common.toConfirm)}</span>`}</dd></div>`,
   ].join("");
   const body = `
 ${pageHero(t, {
@@ -689,10 +818,12 @@ export function thanks(t) {
     <svg class="simple-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
     <p class="eyebrow eyebrow-lines">${esc(t.thanks.eyebrow)}</p>
     <h1 class="title">${esc(t.thanks.title)}</h1>
-    <p class="lead" data-thanks-body data-table="${esc(t.thanks.tableBody)}" data-room="${esc(t.thanks.roomBody)}">${esc(t.thanks.genericBody)}</p>
+    <p class="lead" data-thanks-body data-table="${esc(t.thanks.tableBody)}" data-room="${esc(t.thanks.roomBody)}" data-order="${esc(t.thanks.orderBody)}">${esc(t.thanks.genericBody)}</p>
     <div class="btn-row center">
       <a class="btn btn-terra btn-lg" href="${waLink()}" target="_blank" rel="noopener" data-thanks-reopen>${icon("whatsapp")}${esc(t.thanks.reopen)}</a>
       <a class="btn btn-outline btn-lg" href="${href("home", L)}">${esc(t.thanks.back)}</a>
+      <a class="btn btn-outline btn-lg" href="${href("restaurant", L, "#ementa")}" data-thanks-menu hidden>${esc(t.thanks.backMenu)}</a>
+      <button class="btn btn-outline btn-lg" type="button" data-thanks-clear hidden>${esc(t.thanks.clearOrder)}</button>
     </div>
     ${responseLine(t)}
   </div>

@@ -8,6 +8,7 @@ import en from "./src/i18n/en.mjs";
 import { layout } from "./src/layout.mjs";
 import * as P from "./src/pages.mjs";
 import { rooms, absUrl, outFile, LANGS } from "./src/lib.mjs";
+import { prelaunch, printPrelaunch } from "./src/prelaunch.mjs";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const dist = join(root, "dist");
@@ -52,13 +53,11 @@ for (const L of LANGS) {
   await emit(t, P.notFound(t));
 }
 
-const today = new Date().toISOString().slice(0, 10);
 const urls = sitemap
   .flatMap(({ pt: p, en: e }) =>
     [p, e].map(
       (loc) => `  <url>
     <loc>${absUrl(loc)}</loc>
-    <lastmod>${today}</lastmod>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="${absUrl(p)}"/>
     <xhtml:link rel="alternate" hreflang="en" href="${absUrl(e)}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${absUrl(p)}"/>
@@ -88,3 +87,7 @@ Sitemap: ${absUrl("/sitemap.xml")}
 );
 
 console.log(`Built ${count} pages into dist/`);
+
+const report = await prelaunch(dist);
+printPrelaunch(report);
+if (process.argv.includes("--strict") && report.blockers.length) process.exit(1);

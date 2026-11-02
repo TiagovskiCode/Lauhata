@@ -1,0 +1,229 @@
+/* Lauhata — restaurant order: the interactive menu, the cart drawer, the options dialog and the
+   floating order button. Loaded after cinema.css; same tokens as main.css. */
+
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+html.has-modal { overflow: hidden; }
+
+/* ---------- Cart button in the header ---------- */
+.cart-btn {
+  position: relative; display: inline-grid; place-items: center; width: 44px; height: 44px; flex: none;
+  border-radius: 50%; border: 1px solid var(--line); background: var(--paper); color: var(--ink); cursor: pointer;
+  transition: background-color 0.25s var(--ease), border-color 0.25s, transform 0.3s var(--ease);
+}
+.cart-btn .icon { width: 21px; height: 21px; }
+.cart-btn:hover { background: #fff; border-color: var(--line-strong); }
+.cart-count {
+  position: absolute; top: -6px; right: -6px; min-width: 21px; height: 21px; padding: 0 5px; display: grid; place-items: center;
+  border-radius: 999px; background: var(--terra); color: #fff; font-size: 0.75rem; font-weight: 700; line-height: 1;
+  box-shadow: 0 0 0 2px var(--cream);
+}
+.cart-count[hidden] { display: none; }
+.has-hero .site-header:not(.is-solid) .cart-btn { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.28); color: #fff; }
+.has-hero .site-header:not(.is-solid) .cart-count { box-shadow: 0 0 0 2px rgba(15, 46, 40, 0.6); }
+.is-bump { animation: cartBump 0.5s var(--ease); }
+@keyframes cartBump { 0% { transform: scale(1); } 35% { transform: scale(1.16); } 100% { transform: scale(1); } }
+
+/* ---------- Floating order summary (when the order has dishes) ---------- */
+.cart-fab {
+  position: fixed; right: 1.4rem; bottom: 6.4rem; z-index: 41; display: inline-flex; align-items: center; gap: 0.65rem;
+  min-height: 54px; padding: 0.5rem 1.2rem 0.5rem 1.05rem; border: 0; border-radius: 999px;
+  background: var(--forest); color: var(--cream); font: inherit; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  box-shadow: 0 16px 34px -14px rgba(0, 0, 0, 0.55); animation: fabIn 0.45s var(--ease);
+  transition: background-color 0.25s, transform 0.3s var(--ease), bottom 0.45s var(--ease);
+}
+.cart-fab[hidden] { display: none; }
+.cart-fab:hover { background: var(--forest-2); }
+.cart-fab .icon { width: 21px; height: 21px; }
+.cart-fab-n { font-weight: 500; color: var(--gold-soft); }
+.cart-fab strong { font-family: var(--serif); font-weight: 400; font-size: 1.15rem; margin-left: 0.15rem; }
+.hero-bar .cart-fab { opacity: 0; pointer-events: none; transform: translateY(12px); }
+@keyframes fabIn { from { opacity: 0; transform: translateY(14px) scale(0.96); } }
+
+/* ---------- Menu ---------- */
+.menu-note { max-width: 40rem; margin: -0.6rem auto 1.6rem; text-align: center; color: var(--muted); font-size: 0.95rem; }
+.menu-search {
+  display: flex; align-items: center; gap: 0.3rem; max-width: 520px; margin: 0 auto 1.4rem; padding: 0.15rem 0.4rem 0.15rem 1.15rem;
+  background: var(--paper); border: 1px solid var(--line-strong); border-radius: 999px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.menu-search:focus-within { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(168, 67, 42, 0.15); }
+.menu-search label { display: grid; place-items: center; color: var(--muted); }
+.menu-search input { flex: 1; min-width: 0; padding: 0.85rem 0.3rem; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 1rem; outline: none; }
+.menu-search input::-webkit-search-cancel-button { display: none; }
+.menu-search .icon-btn[hidden] { display: none; }
+
+/* Category bar: sticks under the header, slides up with it, scrolls sideways on phones. */
+.menu-nav {
+  position: sticky; top: calc(var(--header-h) * var(--header-shown, 1)); z-index: 30;
+  background: rgba(246, 240, 228, 0.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-block: 1px solid var(--line); transition: top 0.35s var(--ease);
+}
+.menu-nav ul { position: relative; display: flex; gap: 0.35rem; margin: 0; padding: 0.5rem 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.menu-nav ul::-webkit-scrollbar { display: none; }
+.menu-nav a {
+  display: inline-flex; align-items: center; min-height: 42px; padding: 0.4rem 1.05rem; border-radius: 999px; white-space: nowrap;
+  color: var(--ink); font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background-color 0.25s var(--ease), color 0.25s;
+}
+.menu-nav a:hover { background: var(--sand); }
+.menu-nav a[aria-current="true"] { background: var(--forest); color: var(--cream); }
+
+.menu-cat { padding-top: clamp(2rem, 4vw, 3.2rem); scroll-margin-top: calc(var(--header-h) + 64px); }
+.menu-cat[hidden] { display: none; }
+.menu-cat-head h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.5rem); line-height: 1.1; }
+.menu-cat-head p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.93rem; }
+.menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.8rem, 1.6vw, 1.2rem); margin-top: 1.2rem; }
+.menu-empty { padding: 3rem 0 1rem; text-align: center; color: var(--muted); }
+.menu-empty[hidden] { display: none; }
+
+/* Dish cards (menu and homepage row). No picture until the restaurant has a photo of the dish. */
+.menu .dish-tag { display: none; }
+.menu.is-searching .dish-tag { display: block; }
+.menu .dish { position: relative; border: 1px solid var(--line); box-shadow: none; }
+.menu .dish-body { padding: 1.2rem 1.3rem 1.1rem; }
+.menu .dish h3 { margin-top: 0; font-size: 1.45rem; font-weight: 400; }
+.menu .dish-desc { font-size: 0.9rem; line-height: 1.5; }
+.dish-foot { gap: 0.8rem; flex-wrap: wrap; }
+.dish-foot .price { font-size: 0.92rem; color: var(--muted); }
+.dish-foot .price b { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; color: var(--ink); }
+.dish-add { position: relative; z-index: 2; margin-left: auto; }
+.dish-add [data-add-label] { display: inline-flex; align-items: center; gap: 0.45rem; }
+.dish-add .icon { width: 1.05em; height: 1.05em; }
+.dish-add.is-added { --bg: var(--wa); }
+
+/* ---------- Options dialog ---------- */
+dialog.pick {
+  width: min(480px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; overflow: hidden;
+  border-radius: var(--r-lg); background: var(--cream); color: var(--ink); box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.5);
+}
+dialog.pick[open] { display: block; animation: popIn 0.32s var(--ease); }
+dialog.pick.is-closing { animation: popOut 0.2s ease-in forwards; }
+dialog.pick::backdrop, dialog.cart::backdrop { background: rgba(11, 30, 26, 0.55); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.pick-panel { display: flex; flex-direction: column; max-height: calc(100dvh - 2rem); }
+.pick-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding: 1.3rem 1.1rem 0.8rem 1.5rem; }
+.pick-head h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 1.75rem; line-height: 1.15; }
+.pick-head p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.9rem; line-height: 1.45; }
+.pick-groups { flex: 1; min-height: 0; overflow-y: auto; padding: 0 1.5rem; overscroll-behavior: contain; }
+.pick-group, .order-types { min-width: 0; margin: 0.9rem 0 0; padding: 0; border: 0; }
+.pick-group legend, .order-types legend { margin-bottom: 0.5rem; padding: 0; font-size: 0.85rem; font-weight: 700; }
+.pick-choices { display: grid; gap: 0.5rem; }
+.order-types { display: grid; gap: 0.5rem; }
+.pick-qty { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem 0; font-size: 0.9rem; font-weight: 700; }
+.pick-panel > .error { padding: 0.6rem 1.5rem 0; }
+.pick-foot { display: grid; grid-template-columns: auto 1fr; gap: 0.6rem; padding: 1.1rem 1.5rem 1.4rem; }
+
+.choice {
+  display: flex; align-items: center; gap: 0.75rem; min-height: 52px; padding: 0.7rem 1rem; cursor: pointer;
+  border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: var(--paper);
+  font-size: 0.95rem; font-weight: 600; transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+.choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--terra); }
+.choice:hover { border-color: var(--ink); }
+.choice:has(input:checked) { border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(168, 67, 42, 0.12); }
+.choice:has(input:focus-visible) { outline: 2px solid var(--terra); outline-offset: 2px; }
+.oc-price { margin-left: auto; font-family: var(--serif); font-weight: 400; font-size: 1.1rem; }
+.has-error .choice { border-color: var(--error); }
+
+/* Quantity stepper (cart lines and options dialog) */
+.stepper { display: inline-flex; align-items: center; gap: 0.15rem; padding: 0.2rem; border-radius: 999px; background: var(--sand); }
+.stepper button {
+  display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--paper); color: var(--ink); transition: background-color 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+.stepper button:hover:not(:disabled) { background: var(--forest); color: var(--cream); }
+.stepper button:active:not(:disabled) { transform: scale(0.92); }
+.stepper button:disabled { opacity: 0.4; cursor: default; }
+.stepper output { min-width: 2.4ch; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+@media (pointer: coarse) { .stepper button { width: 44px; height: 44px; } }
+
+/* ---------- Cart drawer ---------- */
+dialog.cart {
+  width: min(460px, 100%); max-width: none; height: 100%; max-height: none; margin: 0 0 0 auto; padding: 0; border: 0; overflow: hidden;
+  background: var(--cream); color: var(--ink); box-shadow: -24px 0 60px -24px rgba(0, 0, 0, 0.45);
+}
+dialog.cart[open] { display: block; animation: drawerIn 0.4s var(--ease); }
+dialog.cart.is-closing { animation: drawerOut 0.22s ease-in forwards; }
+.cart-panel { display: flex; flex-direction: column; height: 100%; }
+.cart-head { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1rem 1rem 1.5rem; border-bottom: 1px solid var(--line); }
+.cart-head h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 1.8rem; }
+.cart-step { display: flex; flex: 1 1 auto; flex-direction: column; min-height: 0; }
+.cart-step[hidden] { display: none; }
+.cart-scroll { flex: 1; min-height: 0; padding: 0.4rem 1.5rem 1rem; overflow-y: auto; overscroll-behavior: contain; }
+.cart-foot {
+  display: grid; gap: 0.6rem; padding: 1rem 1.5rem calc(1.1rem + env(safe-area-inset-bottom)); background: var(--paper); border-top: 1px solid var(--line);
+}
+.cart-foot[hidden] { display: none; }
+.cart-foot .btn { width: 100%; }
+.cart-total { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 0.3rem; }
+.cart-total span { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.cart-total strong { font-family: var(--serif); font-weight: 400; font-size: 2.1rem; line-height: 1; }
+
+.cart-lines { margin: 0; padding: 0; list-style: none; }
+.cart-line {
+  display: grid; grid-template-columns: 1fr auto; grid-template-areas: "main sub" "step rm"; align-items: center; gap: 0.7rem 0.9rem;
+  padding: 1.1rem 0; border-bottom: 1px solid var(--line); animation: lineIn 0.35s var(--ease);
+}
+.cl-main { grid-area: main; min-width: 0; }
+.cl-name { margin: 0; font-weight: 700; line-height: 1.3; }
+.cl-opts { margin: 0.15rem 0 0; font-size: 0.86rem; color: var(--terra-dark); }
+.cl-unit { margin: 0.2rem 0 0; font-size: 0.84rem; color: var(--muted); }
+.cl-sub { grid-area: sub; margin: 0; text-align: right; font-family: var(--serif); font-size: 1.3rem; }
+.cart-line .stepper { grid-area: step; justify-self: start; }
+.cl-remove {
+  grid-area: rm; justify-self: end; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+  background: transparent; color: var(--muted); cursor: pointer; transition: background-color 0.2s, color 0.2s;
+}
+.cl-remove:hover { background: rgba(179, 38, 30, 0.1); color: var(--error); }
+.cl-remove .icon { width: 20px; height: 20px; }
+
+.cart-empty { display: grid; justify-items: center; gap: 0.7rem; padding: 3.5rem 1rem 2rem; text-align: center; }
+.cart-empty[hidden] { display: none; }
+.cart-empty-mark { width: 52px; height: 52px; color: var(--gold); }
+.cart-empty h3 { margin: 0.3rem 0 0; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; }
+.cart-empty p { margin: 0 0 0.8rem; color: var(--muted); }
+
+/* Checkout step */
+.cart-mini { margin: 0.4rem 0 1rem; padding: 0.75rem 1rem; border-radius: var(--r-sm); background: var(--sand); font-size: 0.92rem; font-weight: 600; }
+form[data-order-form] .field { margin-top: 1rem; }
+/* The site's fields are cream on a white card; the drawer is cream, so the fields get a light fill and an outline here. */
+form[data-order-form] .field input, form[data-order-form] .field textarea { background: var(--paper); border-color: var(--line-strong); }
+form[data-order-form] .field.has-error input, form[data-order-form] .field.has-error textarea { border-color: var(--error); }
+form[data-order-form] .field[hidden] { display: none; }
+form[data-order-form] .form-note { margin: 1rem 0 0; }
+form[data-order-form].is-sending [type="submit"] { opacity: 0.7; pointer-events: none; }
+.cart-foot .form-errors { margin: 0; }
+.cart-foot .form-errors[hidden] { display: none; }
+
+@keyframes drawerIn { from { transform: translateX(100%); } }
+@keyframes drawerOut { to { transform: translateX(100%); } }
+@keyframes sheetIn { from { transform: translateY(100%); } }
+@keyframes sheetOut { to { transform: translateY(100%); } }
+@keyframes popIn { from { opacity: 0; transform: translateY(14px) scale(0.98); } }
+@keyframes popOut { to { opacity: 0; transform: translateY(8px) scale(0.98); } }
+@keyframes lineIn { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- Phones: sheets from the bottom, one-column menu, button above the mobile bar ---------- */
+@media (max-width: 860px) {
+  .cart-fab { left: 0.6rem; right: 0.6rem; bottom: 0.6rem; justify-content: center; min-height: 56px; }
+  .has-bar .cart-fab { bottom: 5.3rem; }
+}
+@media (max-width: 760px) {
+  .menu-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  dialog.cart { width: 100%; height: auto; max-height: 92dvh; margin: auto 0 0; border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, 0.5); }
+  dialog.cart[open] { animation-name: sheetIn; }
+  dialog.cart.is-closing { animation-name: sheetOut; }
+  .cart-panel { height: auto; max-height: 92dvh; }
+  .cart-scroll { padding-inline: 1.25rem; }
+  .cart-foot, .cart-head { padding-inline: 1.25rem; }
+  dialog.pick { width: 100%; max-width: none; margin: auto 0 0; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 92dvh; }
+  dialog.pick[open] { animation-name: sheetIn; }
+  dialog.pick.is-closing { animation-name: sheetOut; }
+  .pick-panel { max-height: 92dvh; }
+  .pick-foot { padding-bottom: calc(1.4rem + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.cart[open], dialog.pick[open], .cart-fab, .is-bump, .cart-line { animation: none; }
+  .menu-nav { transition: none; }
+}

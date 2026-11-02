@@ -9,6 +9,8 @@ $srcDir = Join-Path $root "fotos-originais"
 $outDir = Join-Path $root "src/assets/img/fotos"
 New-Item -ItemType Directory -Force $outDir | Out-Null
 
+# Dish photos (grilled fish, squid, curry, batar da'an, tukir, banana cake, coffee, coconut water…) are not here on
+# purpose: they showed dishes that are not on Lauhata's real menu. The originals stay in fotos-originais/.
 # Original file name (start) -> slug, plus an optional crop from the top (px) to drop the
 # cream arch background of "A nossa história".
 $map = @(
@@ -16,21 +18,9 @@ $map = @(
   @{ match = "Imagem de partilha*";     slug = "costa-por-do-sol" },
   @{ match = "Cart*Restaurante*";       slug = "mesa-restaurante" },
   @{ match = "Cart*Alojamento*";        slug = "terraco-mar" },
-  @{ match = "Pratos da casa*";         slug = "peixe-grelhado" },
-  @{ match = "Peixe em folha*";         slug = "peixe-folha-bananeira" },
-  @{ match = "Lulas*";                  slug = "lulas-grelhadas" },
-  @{ match = "Caril*";                  slug = "caril-camarao" },
   @{ match = "Quartos*";                slug = "quarto-jardim" },
   @{ match = "Suite*";                  slug = "suite-familia" },
   @{ match = "A nossa*";                slug = "tais"; cropTop = 320 },
-  @{ match = "Batar*";                  slug = "batar-daan" },
-  @{ match = "Tukir*";                  slug = "tukir" },
-  @{ match = "Frango*";                 slug = "frango-ai-manas" },
-  @{ match = "Legumes*";                slug = "legumes-horta" },
-  @{ match = "Bolo*";                   slug = "bolo-banana" },
-  @{ match = "Caf*";                    slug = "cafe-timor" },
-  @{ match = "Fruta*";                  slug = "fruta-tropical" },
-  @{ match = "*gua de coco*";           slug = "agua-coco" }
 )
 $widths = 640, 1080, 1600
 

@@ -1,7 +1,7 @@
 // Room types. The Hotel & Lodging package includes one page per room type; each entry here
 // generates its own page in both languages. Names, descriptions and features come from the
 // approved design mock-up and still need to be confirmed by Lauhata. `price` is shown only when
-// set (e.g. "US$ 60"); until then the card shows "$ —" as in the design. `featured: true` puts a room in the
+// set (e.g. "US$ 60"); until then the card shows "Preço a confirmar". `featured: true` puts a room in the
 // homepage's "most chosen" pair; which rooms are most booked is for Lauhata to confirm.
 export default [
   {
@@ -33,7 +33,7 @@ export default [
     id: "sea",
     slug: { pt: "quarto-vista-mar", en: "sea-view-room" },
     name: { pt: "Quarto Vista Mar", en: "Sea View Room" },
-    badge: { pt: "Mais pedido", en: "Most requested" },
+    badge: { pt: "Mar", en: "Sea" },
     summary: {
       pt: "Acorde com o mar à janela e o nascer do sol sobre a costa.",
       en: "Wake up with the sea at your window and sunrise over the coast.",
