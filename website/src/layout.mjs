@@ -235,42 +235,44 @@ function header(t, page, alt) {
 function footer(t) {
   const L = t.lang;
   const year = new Date().getFullYear();
-  const contacts = [
-    `<li><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}<span>${esc(t.common.whatsapp)}${site.whatsapp ? "" : ` — ${esc(t.common.toConfirm)}`}</span></a></li>`,
-    site.phone ? `<li><a href="tel:${esc(site.phone.replace(/\s/g, ""))}">${icon("phone")}<span>${esc(site.phone)}</span></a></li>` : "",
-    site.email ? `<li><a href="mailto:${esc(site.email)}">${icon("mail")}<span>${esc(site.email)}</span></a></li>` : "",
-    `<li><a href="${href("contact", L)}">${icon("pin")}<span>${esc(site.address.locality)}, ${esc(site.address.region)}</span></a></li>`,
-  ].join("");
+  const F = t.footer;
+  const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery)}`;
+  const link = (h, label, ext = false) => `<li><a href="${h}"${ext ? ' target="_blank" rel="noopener"' : ""}>${esc(label)}</a></li>`;
   const social = Object.entries(site.social).filter(([, u]) => u);
   return `<footer class="site-footer">
   <div class="wrap ft">
     <div class="ft-brand">
       ${logo(t, "brand-light")}
-      <p>${esc(t.footer.tagline)}</p>
     </div>
-    <nav class="ft-col" aria-label="${esc(t.footer.explore)}">
-      <h2 class="footer-h">${esc(t.footer.explore)}</h2>
-      <ul class="footer-list ft-links">
-        <li><a href="${href("restaurant", L)}">${esc(t.nav.restaurant)}</a></li>
-        <li><a href="${href("stay", L)}">${esc(t.nav.stay)}</a></li>
-        <li><a href="${href("restaurant", L, "#ementa")}">${esc(t.nav.menu)}</a></li>
-        <li><a href="${href("home", L, "#historia")}">${esc(t.nav.story)}</a></li>
-        <li><a href="${href("contact", L)}">${esc(t.nav.contact)}</a></li>
+    <nav class="ft-col" aria-label="${esc(F.explore)}">
+      <h2 class="footer-h">${esc(F.explore)}</h2>
+      <ul class="footer-list">
+        ${link(href("restaurant", L), t.nav.restaurant)}
+        ${link(href("stay", L), t.nav.stay)}
+        ${link(href("home", L, "#historia"), t.nav.story)}
       </ul>
     </nav>
     <div class="ft-col">
-      <h2 class="footer-h">${esc(t.footer.contact)}</h2>
-      <ul class="footer-list with-icons">${contacts}</ul>
+      <h2 class="footer-h">${esc(F.contact)}</h2>
+      <ul class="footer-list">
+        ${link(waLink(t.form.waHello), t.common.whatsapp + (site.whatsapp ? "" : ` — ${t.common.toConfirm}`), true)}
+        ${link(maps, F.maps, true)}
+        ${link(href("contact", L), `${site.address.region}`)}
+        ${site.email ? link(`mailto:${esc(site.email)}`, site.email) : ""}
+      </ul>
       ${social.length ? `<ul class="social">${social.map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
     </div>
-    <div class="ft-col">
-      <h2 class="footer-h">${esc(t.footer.hours)}</h2>
-      ${hoursList(t)}
-    </div>
+    <nav class="ft-col" aria-label="${esc(F.book)}">
+      <h2 class="footer-h">${esc(F.book)}</h2>
+      <ul class="footer-list">
+        ${link(href("restaurant", L, "#reservar"), F.bookTable)}
+        ${link(href("stay", L, "#quartos"), F.bookRoom)}
+      </ul>
+    </nav>
   </div>
   <div class="wrap footer-base">
-    <p>© ${year} ${esc(site.name)}. ${esc(t.footer.rights)}${usesPlaceholderImages() ? ` <span class="footer-note">${esc(t.home.placeholderNote)}</span>` : ""}</p>
-    <p><a href="${href("privacy", L)}">${esc(t.footer.privacy)}</a> · <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(t.footer.credit)}</a></p>
+    <p>© ${year} ${esc(site.name)}.${usesPlaceholderImages() ? ` <span class="footer-note">${esc(t.home.placeholderNote)}</span>` : ""}</p>
+    <p><a href="${href("privacy", L)}">${esc(F.privacy)}</a> · ${esc(F.signature)} <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(F.credit)}</a></p>
   </div>
 </footer>`;
 }

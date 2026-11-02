@@ -96,10 +96,11 @@ function bookingCard(t) {
   const qty = (name, max) => `<input type="number" name="${name}" min="1" max="${max}" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(q.person)}" data-unit-many="${esc(q.persons)}">`;
   return `<form class="booking-card" data-quick-wa novalidate aria-label="${esc(q.label)}">
     <div class="bc-tabs" role="tablist">
-      <button type="button" role="tab" aria-selected="true" aria-controls="bc-table" data-bc-tab="table">${icon("cutlery")}${esc(q.tabTable)}</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="bc-table" data-bc-tab="table">${icon("cutlery")}${esc(q.tabTable)}</button>
       <button type="button" role="tab" aria-selected="false" aria-controls="bc-room" data-bc-tab="room">${icon("bed")}${esc(q.tabRoom)}</button>
     </div>
-    <div class="bc-row" id="bc-table" role="tabpanel" data-bc-panel="table">
+    <p class="bc-hint" data-bc-hint>${esc(q.hint)}</p>
+    <div class="bc-row" id="bc-table" role="tabpanel" data-bc-panel="table" hidden>
       ${fld(q.date, `<input type="date" name="date" data-pick="date">`)}
       ${fld(q.time, `<select name="time" data-pick="time">${timeOpts}</select>`)}
       ${fld(q.people, qty("people", 20))}
@@ -370,8 +371,9 @@ function breakfastSection(t, list) {
     </div>
     <div class="bkf-body">
       ${heading({ eyebrow: B.eyebrow, title: B.title1, accent: B.titleAccent, id: "bkf-title" })}
-      <p class="bkf-lead"${rv(60)}>${esc(hrs ? fmt(B.lead, hrs) : B.leadNoHours)}</p>
+      <p class="bkf-lead"${rv(60)}>${esc(B.lead)}</p>
       ${hrs ? `<p class="bkf-hours"${rv(100)}><span>${esc(B.served)}</span><b>${hrs.from}</b><i aria-hidden="true"></i><b>${hrs.to}</b></p>` : ""}
+      <p class="bkf-note"${rv(110)}>${esc(B.note)}</p>
       <h3 class="bkf-list-h"${rv(120)}>${esc(B.list)}</h3>
       <ul class="dish-lines bkf-list"${rv(140)}>${list.map((d) => dishLine(t, d)).join("")}</ul>
       <div class="btn-row"${rv(160)}><a class="btn btn-dark" href="${href("restaurant", t.lang, "#cat-breakfast")}">${esc(B.cta)}${icon("arrow")}</a></div>
@@ -380,10 +382,12 @@ function breakfastSection(t, list) {
 </section>`;
 }
 
-// Rooms: panels that open on hover or focus (the first is open); on a phone they stack as cards.
+// Rooms: panels that open on hover or focus (the first is open); on a phone they stack as cards. Capacity and
+// amenities only show once the owner has confirmed them (site.roomDetailsConfirmed).
 function suitesSection(t) {
   const L = t.lang;
   const S = t.land.suites;
+  const sure = site.roomDetailsConfirmed;
   return `<section class="suites" id="quartos" aria-labelledby="rooms-title">
   <div class="wrap">
     <div class="su-head">
@@ -398,15 +402,16 @@ function suitesSection(t) {
       <a class="su-img" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw" })}</a>
       <div class="su-rail" aria-hidden="true"><span>0${i + 1}</span><b>${esc(r.name[L])}</b></div>
       <div class="su-body">
-        <p class="su-top"><span>0${i + 1}<small>/0${rooms.length}</small></span>${r.badge ? `<em>${esc(r.badge[L])}</em>` : ""}</p>
+        <p class="su-top"><span>0${i + 1}<small>/0${rooms.length}</small></span></p>
         <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
-        <p class="su-sum">${esc(r.summary[L])}</p>
-        ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
+        <p class="su-sum">${esc(r.tagline[L])}</p>
+        ${sure && r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
+        ${sure || r.price ? "" : `<p class="su-tbc">${esc(S.tbc)}</p>`}
         <div class="su-foot">
-          ${fromPrice(t, r)}
+          ${r.price ? fromPrice(t, r) : ""}
           <div class="su-btns">
             <a class="btn btn-ghost-light btn-sm" href="${href("room:" + r.id, L)}">${esc(S.view)}</a>
-            <a class="btn btn-cream btn-sm" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.book)}${icon("arrow")}</a>
+            <a class="btn btn-cream btn-sm" href="${waLink(fmt(S.wa, { room: r.name[L] }))}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(S.enquire)}</a>
           </div>
         </div>
       </div>
@@ -417,6 +422,7 @@ function suitesSection(t) {
 }
 
 // A day at Lauhata: a sticky arch window changes photo while the page colour moves from morning to dusk.
+// The moments are suggestions, not opening hours, and the page says so.
 function daySection(t) {
   const D = t.land.day;
   const steps = D.steps;
@@ -431,18 +437,39 @@ function daySection(t) {
       <ol class="dx-steps">${steps
         .map((s, i) => `<li class="dx-step${i === 0 ? " is-on" : ""}" data-dx-step="${i}">
         <div class="dx-pic">${figure(t, s.img, { sizes: "92vw", ratio: "4/3" })}</div>
-        <p class="dx-meta"><time>${esc(s.time)}</time><span>${esc(s.period)}</span></p>
+        <p class="dx-meta"><span class="dx-n" aria-hidden="true">0${i + 1}</span><time>${esc(s.time)}</time><span>${esc(s.period)}</span></p>
         <h3>${esc(s.t)}</h3>
         <p>${esc(s.d)}</p>
       </li>`)
         .join("")}</ol>
-      ${site.showPlaceholderNotes ? `<p class="dx-note">${esc(D.note)}</p>` : ""}
+      <p class="dx-note">${esc(D.note)}</p>
     </div>
   </div>
 </section>`;
 }
 
-// Culture on terracotta: the tais in an arch, a place kept for the real story, and the Tetum phrase set large.
+// The end of the day: a coastal photograph beside two clear actions.
+function duskSection(t) {
+  const L = t.lang;
+  const D = t.land.dusk;
+  return `<section class="dusk" id="entardecer" aria-labelledby="dusk-title">
+  <div class="dk-grid">
+    <div class="dk-photo">${figure(t, "heroSunset", { sizes: "(min-width: 900px) 55vw, 100vw", ratio: "4/3", parallax: 0.06 })}</div>
+    <div class="dk-body">
+      <p class="eyebrow"${rv()}>${esc(D.eyebrow)}</p>
+      <h2 id="dusk-title" class="dk-title" data-split>${esc(D.title)} <em>${esc(D.titleAccent)}</em></h2>
+      <p class="dk-text"${rv(80)}>${esc(D.body)}</p>
+      <div class="btn-row"${rv(140)}>
+        <a class="btn btn-cream btn-lg" href="${href("restaurant", L)}">${esc(D.eat)}${icon("arrow")}</a>
+        <a class="btn btn-ghost-light btn-lg" href="${href("stay", L, "#reservar")}">${esc(D.stay)}</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
+// Culture on terracotta: the tais in an arch, general facts kept apart from the history of the place (still to
+// be supplied by the owner), and the Tetum phrase set large.
 function cultureSection(t) {
   const C = t.land.culture;
   return `<section class="cult" id="historia" aria-labelledby="story-title">
@@ -458,11 +485,9 @@ function cultureSection(t) {
       </div>
       <div class="cu-text">
         <p class="cu-body"${rv(60)}>${esc(C.body)}</p>
-        ${site.showPlaceholderNotes ? `<div class="cu-slot"${rv(100)}><h3>${esc(C.slot)}</h3><p>${esc(C.slotPending)}</p></div>` : ""}
-        <div class="cu-cards"${rv(140)}>
-          <div><h3>${esc(C.card1[0])}</h3><p>${esc(C.card1[1])}</p></div>
-          <div><h3>${esc(C.card2[0])}</h3><p>${esc(C.card2[1])}</p></div>
-        </div>
+        <h3 class="cu-group"${rv(90)}>${esc(C.themesLabel)}</h3>
+        <ul class="cu-cards"${rv(120)}>${C.themes.map(([h, p]) => `<li><h4>${esc(h)}</h4><p>${esc(p)}</p></li>`).join("")}</ul>
+        ${site.showPlaceholderNotes ? `<div class="cu-slot"${rv(160)}><h3>${esc(C.slot)}</h3><p>${esc(C.slotPending)}</p></div>` : ""}
       </div>
     </div>
     <div class="cu-quote"${rv()}>
@@ -475,7 +500,7 @@ function cultureSection(t) {
 </section>`;
 }
 
-// Book and arrive: facts on the left, a real Google map on the right, three clear actions.
+// Visit and book: location, hours and bookings in three groups, and a real Google map.
 function reachSection(t) {
   const L = t.lang;
   const R = t.land.reach;
@@ -485,21 +510,43 @@ function reachSection(t) {
     : `<span class="tbc">${esc(t.common.toConfirm)}</span>`;
   const row = (ico, label, value) => `<div class="rc-row">${icon(ico)}<dt>${esc(label)}</dt><dd>${value}</dd></div>`;
   const drive = site.driveFromDili ? fmt(t.home.location.drive, { t: site.driveFromDili }) : "";
+  const reception = site.receptionHours ? esc(site.receptionHours[L]) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`;
   return `<section class="reach" id="contacto" aria-labelledby="loc-title">
   <div class="wrap rc-grid">
     <div class="rc-info">
       ${heading({ eyebrow: R.eyebrow, title: R.title, accent: R.titleAccent, lead: R.body, id: "loc-title" })}
-      <dl class="rc-list"${rv(80)}>
-        ${row("pin", R.address, `${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}`)}
-        ${row("clock", R.hours, `<span class="rc-hours">${hours}</span>`)}
-        ${row("whatsapp", t.common.whatsapp, site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`)}
-        ${row("mail", t.common.email, site.email ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : `<span class="tbc">[email]</span>`)}
-        ${row("car", R.fromDili, drive ? esc(drive) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`)}
-      </dl>
-      <div class="btn-row"${rv(140)}>
-        <a class="btn btn-dark" href="${directionsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(R.directions)}</a>
-        <a class="btn btn-outline" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
-        <a class="btn btn-terra" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a>
+      <div class="rc-groups">
+        <section class="rc-group" aria-labelledby="rc-loc"${rv(60)}>
+          <h3 id="rc-loc">${esc(R.location)}</h3>
+          <dl>
+            ${row("pin", R.address, `${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}`)}
+            ${row("car", R.fromDili, drive ? esc(drive) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`)}
+          </dl>
+          <div class="rc-actions">
+            <a class="btn btn-dark" href="${directionsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(R.directions)}</a>
+            <a class="btn btn-outline" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
+          </div>
+        </section>
+        <section class="rc-group" aria-labelledby="rc-hours"${rv(100)}>
+          <h3 id="rc-hours">${esc(R.hours)}</h3>
+          <dl>
+            ${row("cutlery", t.home.location.restaurant, `<span class="rc-hours">${hours}</span>`)}
+            ${row("bed", R.reception, reception)}
+          </dl>
+        </section>
+        <section class="rc-group" aria-labelledby="rc-book"${rv(140)}>
+          <h3 id="rc-book">${esc(R.bookings)}</h3>
+          <p class="rc-text">${esc(R.bookingsText)}</p>
+          <dl>
+            ${row("whatsapp", t.common.whatsapp, site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`)}
+            ${row("mail", t.common.email, site.email ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : `<span class="tbc">[email]</span>`)}
+          </dl>
+          <div class="rc-actions">
+            <a class="btn btn-terra" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a>
+            <a class="btn btn-outline" href="${href("restaurant", L, "#reservar")}">${esc(R.bookTable)}</a>
+            <a class="btn btn-outline" href="${href("stay", L, "#reservar")}">${esc(R.bookRoom)}</a>
+          </div>
+        </section>
       </div>
     </div>
     <div class="rc-map"${rv(120)}>
@@ -567,6 +614,8 @@ ${suitesSection(t)}
 
 ${daySection(t)}
 
+${duskSection(t)}
+
 ${cultureSection(t)}
 
 ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
@@ -580,8 +629,7 @@ ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-ti
   </div>
 </section>` : ""}
 
-${reachSection(t)}
-${cineCta(t)}`;
+${reachSection(t)}`;
   return {
     page: "home",
     title: t.meta.home.title,

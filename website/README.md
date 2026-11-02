@@ -23,13 +23,23 @@ usa o **arco** como forma de assinatura (hero, quartos e tais). Sequência:
    vídeo entra em fusão por cima depois de a página carregar. Não carrega com «movimento reduzido», poupança
    de dados ou ligação lenta, pausa fora do ecrã e, se falhar, a fotografia fica. O vídeo comercial em
    `documentos/cliente/` é uma apresentação do site, não serve para isto.
-2. **Comer / Dormir:** uma frase curta e dois painéis grandes lado a lado (um retângulo, um arco) que levam à ementa e aos quartos.
-3. **01 · Comer:** fotografia, horário (do PDF da ementa) e os pratos mais escolhidos como linhas de ementa, com botão de adicionar ao pedido.
-4. **O pequeno-almoço:** foto larga com o horário em grande (de `restaurantHours`) e as linhas reais do pequeno-almoço da ementa, também com botão de adicionar.
-5. **02 · Dormir:** os três quartos em painéis que se abrem ao passar o rato ou ao focar (no telemóvel, cartões empilhados), com preço (ou «Preço a confirmar»), ver quarto e pedir reserva.
-6. **03 · Um dia no Lauhata:** janela em arco fixa que muda de foto enquanto a cor da página vai da manhã ao entardecer. Os horários e atividades são os do design e estão por confirmar (há um aviso enquanto `showPlaceholderNotes` for true).
-7. **04 · Cultura:** em terracota, com o tais num arco duplo, espaço reservado para a história real e «Mai, han, toba.» em grande. A tradução («Venha, coma, durma») está por confirmar.
-8. **05 · Reservar e chegar:** morada, horários, WhatsApp, email e «Desde Díli» (por confirmar) ao lado de um mapa real do Google, com «Obter direções» e «Abrir no Google Maps». Sem coordenadas, o mapa pesquisa pelo nome (`mapQuery`) e diz-o por baixo; ao preencher `geo` em `site.mjs`, passa a usar as coordenadas.
+   O cartão de reserva começa só com **Restaurante** e **Alojamento**; os campos (data, hora, pessoas, ou entrada,
+   saída, hóspedes) aparecem depois de escolher, e o pedido segue sempre por WhatsApp.
+2. **Comer / Dormir:** uma frase curta e dois painéis grandes (um retângulo, um arco) que levam à ementa e aos quartos.
+3. **01 · Comer:** fotografia, horário (do PDF da ementa) e os pratos mais escolhidos, com botão de adicionar ao pedido.
+4. **O pequeno-almoço:** foto larga, o horário em grande (de `restaurantHours`) e as linhas reais da ementa da manhã. O texto
+   «café, sabores locais» é o do briefing e **não vem da ementa impressa**: confirmar com o Lauhata.
+5. **02 · Dormir:** os três quartos em painéis que se abrem ao passar o rato ou ao focar (no telemóvel, cartões empilhados), com
+   uma frase curta (`tagline` em `rooms.mjs`) e «Consultar disponibilidade» por WhatsApp com o nome do quarto. A capacidade e as
+   comodidades só aparecem quando `roomDetailsConfirmed` for `true` em `site.mjs`; preços só com `price` preenchido.
+6. **03 · Um dia no Lauhata:** janela em arco fixa que muda de foto enquanto a cor da página vai da manhã ao entardecer. São
+   sugestões, não horários de funcionamento: a página di-lo sempre.
+7. **O dia termina melhor aqui:** foto de entardecer e duas ações («Descobrir o restaurante», «Reservar alojamento»).
+8. **04 · Cultura:** em terracota, o tais num arco duplo, informação geral sobre Timor-Leste separada do espaço reservado para a
+   história real do Lauhata, e «Mai, han, toba.» em grande (tradução por confirmar).
+9. **05 · Visite o Lauhata:** localização, horários e reservas em três grupos, ao lado de um mapa real do Google com «Obter direções»
+   e «Abrir no Google Maps». Sem coordenadas o mapa pesquisa pelo nome (`mapQuery`) e diz-o; ao preencher `geo` em `site.mjs` passa
+   a usar as coordenadas.
 
 A faixa de tais só aparece nas costuras (fim do hero e antes da cultura). Por cima há uma camada de
 movimento (`cinema.css` e a secção «Cinematic motion» de `main.js`, sem bibliotecas): cortina com o

@@ -29,6 +29,11 @@ export default {
     { days: { pt: "Pequeno-almoço", en: "Breakfast" }, hours: "08:00–10:00" },
     { days: { pt: "Almoço e jantar", en: "Lunch & dinner" }, hours: "11:00–21:00" },
   ],
+  // Room capacity, features and prices (rooms.mjs) come from the design mock-up, not from Lauhata. While this is
+  // false the homepage panels show only the room name and a short line; set it to true once the owner has
+  // confirmed the capacity and amenities of each room (prices still only appear when `price` is set).
+  roomDetailsConfirmed: false,
+
   // Hotel check-in / check-out. PENDING. Example: { checkIn: "14:00", checkOut: "11:00" }
   stayTimes: null,
 

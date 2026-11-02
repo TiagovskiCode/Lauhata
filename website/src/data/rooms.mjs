@@ -2,13 +2,14 @@
 // generates its own page in both languages. Names, descriptions and features come from the
 // approved design mock-up and still need to be confirmed by Lauhata. `price` is shown only when
 // set (e.g. "US$ 60"); until then the card shows "Preço a confirmar". `featured: true` puts a room in the
-// homepage's "most chosen" pair; which rooms are most booked is for Lauhata to confirm.
+// homepage's "most chosen" pair (no longer used on the homepage, which shows all three); which rooms are most booked is for Lauhata to confirm.
 export default [
   {
     id: "garden",
     slug: { pt: "quarto-jardim", en: "garden-room" },
     name: { pt: "Quarto Jardim", en: "Garden Room" },
     badge: { pt: "Jardim", en: "Garden" },
+    tagline: { pt: "Sossego e natureza.", en: "Peace and nature." },
     summary: {
       pt: "Sossegado e fresco, com acesso direto ao jardim tropical.",
       en: "Quiet and cool, with direct access to the tropical garden.",
@@ -34,6 +35,7 @@ export default [
     slug: { pt: "quarto-vista-mar", en: "sea-view-room" },
     name: { pt: "Quarto Vista Mar", en: "Sea View Room" },
     badge: { pt: "Mar", en: "Sea" },
+    tagline: { pt: "A costa à sua janela.", en: "The coast at your window." },
     summary: {
       pt: "Acorde com o mar à janela e o nascer do sol sobre a costa.",
       en: "Wake up with the sea at your window and sunrise over the coast.",
@@ -59,6 +61,7 @@ export default [
     slug: { pt: "suite-familia", en: "family-suite" },
     name: { pt: "Suite Família", en: "Family Suite" },
     badge: { pt: "Família", en: "Family" },
+    tagline: { pt: "Mais espaço para ficar.", en: "More room to stay." },
     summary: {
       pt: "Mais espaço para famílias e pequenos grupos de amigos.",
       en: "More room for families and small groups of friends.",

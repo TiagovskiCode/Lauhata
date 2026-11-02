@@ -103,7 +103,8 @@
       if (focus) b.focus();
       onSelect(b.getAttribute(attr));
     };
-    btns.forEach((b) => { b.tabIndex = b.getAttribute("aria-selected") === "true" ? 0 : -1; });
+    const anySelected = btns.some((b) => b.getAttribute("aria-selected") === "true");
+    btns.forEach((b) => { b.tabIndex = !anySelected || b.getAttribute("aria-selected") === "true" ? 0 : -1; });
     list.addEventListener("click", (e) => { const b = e.target.closest(`[${attr}]`); if (b) select(b); });
     list.addEventListener("keydown", (e) => {
       if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
@@ -327,10 +328,11 @@
   const card = $("[data-quick-wa]");
   if (card) {
     const errBox = $("[data-bc-error]", card);
-    let kind = "table";
+    let kind = null; // nothing is chosen until the visitor picks Restaurant or Stay
     const panel = (k) => $(`[data-bc-panel="${k}"]`, card);
     tabs($(".bc-tabs", card), "data-bc-tab", (k) => {
       kind = k;
+      card.classList.add("is-open");
       panel("table").hidden = k !== "table";
       panel("room").hidden = k !== "room";
       errBox.hidden = true;
@@ -354,6 +356,7 @@
     card.addEventListener("input", (e) => e.target.closest(".bc-field")?.classList.remove("has-error"));
     card.addEventListener("submit", (e) => {
       e.preventDefault();
+      if (!kind) return;
       errBox.hidden = true;
       $$(".bc-field", card).forEach((f) => f.classList.remove("has-error"));
       const opt = (s) => s.options[s.selectedIndex].text;
