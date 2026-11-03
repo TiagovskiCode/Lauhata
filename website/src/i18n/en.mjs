@@ -23,6 +23,14 @@ export default {
       title: "{room} — Stay at Lauhata",
       description: "{room} at Lauhata in Liquiçá: photos, amenities and booking requests on WhatsApp. Lauhata confirms availability.",
     },
+    about: {
+      title: "About us — Lauhata Beach Escape, Liquiçá",
+      description: "Lauhata today: a restaurant and a place to stay on the Liquiçá coast in Timor-Leste, between the sea and the mountains.",
+    },
+    story: {
+      title: "Our story — Lauhata Beach Escape, Liquiçá",
+      description: "The story of Lauhata, on the Liquiçá coast in Timor-Leste.",
+    },
     contact: {
       title: "Location and contact — Lauhata Beach Escape, Liquiçá",
       description: "How to get to Lauhata in Liquiçá, west of Dili: address, map, contact details and answers to common questions before you book.",
@@ -50,6 +58,7 @@ export default {
     gallery: "Gallery",
     experiences: "Experiences",
     story: "Our story",
+    about: "About us",
     contact: "Contact",
     book: "Book",
     bookTable: "Restaurant table",
@@ -89,11 +98,11 @@ export default {
   // Homepage copy, translated from the approved design mock-up. Text in [ ] is still to be supplied.
   home: {
     hero: {
-      eyebrow: ["Liquiçá", "Timor-Leste", "Restaurant & stay"],
+      eyebrow: ["Liquiçá", "Timor-Leste"],
       title1: "Where the sea",
       titleAccent: "slows",
       title2: "time down.",
-      lead: "On the Liquiçá coast, between the sea and the mountains, find a table to share, a room to rest in and the time to simply be.",
+      lead: "A restaurant and a place to stay by the sea.",
       ctaTable: "Book a table",
       ctaRoom: "Book a room",
       badge: "Lauhata · eat · sleep · stay · ",
@@ -167,7 +176,7 @@ export default {
       eyebrow: "Stay",
       title: "Rest,",
       titleAccent: "to the rhythm of the tides.",
-      body: "Three room types. Pick one and ask on WhatsApp: Lauhata confirms availability and the price.",
+      body: "Two room types. Pick one and ask on WhatsApp: Lauhata confirms availability and the price.",
       from: "From",
       night: "/ night",
       book: "Book",
@@ -354,6 +363,7 @@ export default {
   },
 
   order: {
+    photoSoon: "Photo coming soon",
     cartTitle: "Your order",
     open: "Open your order",
     close: "Close",
@@ -424,6 +434,33 @@ export default {
     scenes: {
       garden: { line: "Between the garden and the beach.", note: "Aerial view of Lauhata" },
       coast: { line: "Liquiçá, Timor-Leste.", note: "From the garden to the beach" },
+    },
+    duo: {
+      aria: "Eat and stay",
+      eat: { title: "Eat", line: "Flavours of the coast, served without hurry.", link: "Explore the menu" },
+      stay: { title: "Stay", line: "Stay a little longer. The sea is waiting.", link: "Discover the rooms" },
+    },
+    intro: { note: "Lauhata" },
+    preview: { note: "About us", about: "Get to know Lauhata", story: "Read our story" },
+    aboutPage: {
+      eyebrow: "About us",
+      title: "A table and a room by the sea.",
+      valuesTitle: "What guides us",
+      photosTitle: "The place, from above.",
+      nextTitle: "Now, eat or stay?",
+      contact: "Talk to us",
+    },
+    storyPage: {
+      eyebrow: "Our story",
+      title: "How Lauhata began.",
+      lead: "The story of Lauhata, told by the people who started it. We are preparing it with the owner.",
+      chapters: [
+        { title: "The place", body: "Lauhata sits on the Liquiçá coast in Timor-Leste, between the sea and the mountains." },
+        { title: "How it began", body: null },
+        { title: "The name", body: null },
+      ],
+      pending: "Chapter to be written with the owner: we only publish the true story.",
+      next: "Get to know Lauhata today",
     },
     gallery: {
       eyebrow: "Photographs",

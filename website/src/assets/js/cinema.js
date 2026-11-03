@@ -1,4 +1,4 @@
-﻿/* Lauhata â€” the cinema layer, built on GSAP + ScrollTrigger (self-hosted in ./vendor, GSAP 3.13, free licence).
+/* Lauhata — the cinema layer, built on GSAP + ScrollTrigger (self-hosted in ./vendor, GSAP 3.13, free licence).
    It adds: the pinned "a day at Lauhata" scene, the shutter and drift of the full-screen scenes, parallax, and the slow
    push-in of the home hero. It runs after main.js, which has already decided the motion level:
      - tier A (always): the pinned day scene with its cross-fades, colour grade and progress rail (fades only);

@@ -9,6 +9,8 @@ import { layout } from "./src/layout.mjs";
 import * as P from "./src/pages.mjs";
 import { rooms, absUrl, outFile, LANGS } from "./src/lib.mjs";
 import { prelaunch, printPrelaunch } from "./src/prelaunch.mjs";
+import { items, categories } from "./src/data/menu.mjs";
+import { existsSync } from "node:fs";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const dist = join(root, "dist");
@@ -49,6 +51,8 @@ for (const L of LANGS) {
   await emit(t, P.restaurant(t));
   await emit(t, P.stay(t));
   for (const r of rooms) await emit(t, P.room(t, r));
+  await emit(t, P.about(t));
+  await emit(t, P.story(t));
   await emit(t, P.contact(t));
   await emit(t, P.privacy(t));
   await emit(t, P.thanks(t));
@@ -87,6 +91,20 @@ Disallow: /en/thank-you/
 Sitemap: ${absUrl("/sitemap.xml")}
 `
 );
+
+// One photo slot per dish: the list the restaurant works from (which file each dish needs, and which are still missing).
+{
+  const rows = items.map((d) => {
+    const cat = categories.find((c) => c.id === d.category);
+    const real = d.image || existsSync(P.dishPhotoFile(d));
+    return `| ${cat.name.pt} | ${d.name} | ${d.price == null ? "—" : "$" + d.price} | \`src/assets/img/pratos/${d.id}-640.jpg\` | ${real ? "fotografia real" : "**em falta**"} |`;
+  });
+  const missing = rows.filter((r) => r.includes("em falta")).length;
+  await writeFile(
+    join(root, "FOTOS-PRATOS.md"),
+    `# Fotografias dos pratos\n\nGerado por \`node build.mjs\`. Cada prato da ementa tem o seu espaço de fotografia. Basta guardar a foto real com o nome indicado (4:3, 640 px de largura; opcionalmente também \`-1080.jpg\`) e voltar a gerar o site.\n\n${items.length} pratos · ${items.length - missing} com fotografia real · ${missing} em falta.\n\n| Categoria | Prato | Preço | Ficheiro | Estado |\n|---|---|---|---|---|\n${rows.join("\n")}\n`
+  );
+}
 
 console.log(`Built ${count} pages into dist/`);
 

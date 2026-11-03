@@ -411,3 +411,147 @@ html:not(.cine-motion) .room-next img { transition: none; }
   .brand-mark { width: 44px; height: 44px; }
 }
 .room-intro > .room-back { grid-column: 1 / -1; justify-self: start; margin-top: 0; }
+
+/* ==========================================================================================================
+   Phase 3 — "less, but better". A short cinematic home (hero, one statement, Comer & Ficar, who we are, the
+   invitation), compact interior openings and a menu where every dish has its own photo slot.
+   ========================================================================================================== */
+
+/* ---------- Hero: only the picture, the place, one line and one supporting sentence ---------- */
+.hx-content { bottom: clamp(5.5rem, 15vh, 10rem); }
+.hx .cine-lead { max-width: 30rem; font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.25rem); }
+.scroll-cue { bottom: clamp(3rem, 9vh, 6rem); }
+
+/* Quiet text links with an arrow, used where a full button would shout. */
+.text-link { display: inline-flex; align-items: center; gap: 0.6rem; padding-block: 0.5rem; font-weight: 600; color: var(--forest); text-decoration: none; border-bottom: 1px solid var(--line-strong); transition: border-color 0.3s var(--ease), gap 0.3s var(--ease); }
+.text-link .icon { width: 18px; height: 18px; transition: transform 0.3s var(--ease); }
+.text-link:hover { border-color: var(--forest); }
+.text-link:hover .icon { transform: translateX(4px); }
+
+/* ---------- One statement ---------- */
+.intro-ed { background: var(--cream); padding-block: clamp(5rem, 11vw, 9.5rem); }
+.intro-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr); gap: clamp(2.5rem, 7vw, 7rem); align-items: end; }
+.intro-statement { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 4.4vw, 4.4rem); line-height: 1.1; letter-spacing: -0.012em; color: var(--ink); text-wrap: balance; max-width: 18ch; }
+.intro-photo .media { border-radius: var(--r-sm); overflow: hidden; }
+@media (max-width: 860px) { .intro-grid { grid-template-columns: 1fr; } .intro-photo { max-width: 26rem; } }
+
+/* ---------- Comer & Ficar ----------
+   Two photographs of different weight (eat wide and tall, stay narrower and set lower), the name of each experience
+   set large over its picture, and a Golden Hour ampersand bridging the gutter. Each whole panel is one link. */
+.duo { background: var(--cream); padding-bottom: clamp(5rem, 10vw, 9rem); }
+.duo-grid { position: relative; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(1rem, 2.4vw, 2.2rem); align-items: start; }
+.duo-panel { position: relative; display: block; overflow: hidden; border-radius: var(--r-sm); color: var(--paper); text-decoration: none; isolation: isolate; background: var(--forest); }
+.duo-eat { aspect-ratio: 4 / 5; }
+.duo-stay { aspect-ratio: 3 / 4; margin-top: clamp(4rem, 12vw, 10rem); }
+.duo-media, .duo-media .media { position: absolute; inset: 0; height: 100%; margin: 0; }
+.duo-media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); transition: transform 1.6s var(--ease); }
+.duo-panel::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(0deg, rgba(8, 24, 20, 0.78) 0%, rgba(8, 24, 20, 0.22) 45%, rgba(8, 24, 20, 0) 70%); transition: opacity 0.8s var(--ease); }
+.duo-copy { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: clamp(1.4rem, 3.2vw, 3rem); }
+.duo-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(3.6rem, 9vw, 8.6rem); line-height: 0.88; letter-spacing: -0.02em; color: var(--paper); }
+.duo-stay .duo-title { font-size: clamp(3.2rem, 7vw, 6.6rem); }
+.duo-line { margin: 0.9rem 0 1.2rem; max-width: 28ch; font-size: clamp(1rem, 0.4vw + 0.9rem, 1.12rem); color: rgba(250, 247, 239, 0.9); }
+.duo-link { display: inline-flex; align-items: center; gap: 0.8rem; font-weight: 600; color: var(--paper); }
+.duo-arrow { position: relative; display: block; width: 2.4rem; height: 1px; background: var(--gold-soft); transition: width 0.5s var(--ease); }
+.duo-arrow::after { content: ""; position: absolute; right: 0; top: -4px; width: 9px; height: 9px; border-top: 1px solid var(--gold-soft); border-right: 1px solid var(--gold-soft); transform: rotate(45deg); }
+.duo-panel:hover img, .duo-panel:focus-visible img { transform: scale(1.07); }
+.duo-panel:hover .duo-arrow, .duo-panel:focus-visible .duo-arrow { width: 3.6rem; }
+.duo-panel:focus-visible { outline: 2px solid var(--terra-dark); outline-offset: 4px; }
+.duo-amp { position: absolute; z-index: 3; left: 58.3%; top: 50%; translate: -50% -50%; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(5rem, 11vw, 10.5rem); line-height: 1; color: var(--gold); pointer-events: none; text-shadow: 0 2px 30px rgba(8, 24, 20, 0.25); }
+.duo-media .media.is-placeholder::after { display: block; left: auto; right: 0.8rem; top: 0.8rem; bottom: auto; padding: 0.22rem 0.65rem; background: rgba(18, 59, 58, 0.72); color: var(--paper); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; z-index: 3; }
+html:not(.cine-motion) .duo-media img, html:not(.cine-motion) .duo-arrow { transition: none; }
+@media (max-width: 760px) {
+  .duo-grid { grid-template-columns: 1fr; gap: 0; }
+  .duo-eat, .duo-stay { aspect-ratio: 4 / 5; max-height: 78svh; margin-top: 0; }
+  .duo-amp { position: relative; left: auto; top: auto; translate: none; justify-self: center; margin: -0.3em 0 -0.42em; font-size: 5.4rem; }
+}
+
+/* ---------- Who we are (preview) ---------- */
+.preview { background: var(--paper); }
+.pv-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 6.5rem); align-items: center; }
+.pv-photo .media { border-radius: var(--r-sm); overflow: hidden; }
+.pv-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 3.8vw, 3.7rem); line-height: 1.08; color: var(--ink); text-wrap: balance; }
+.pv-title em { color: var(--terra); }
+.pv-body { margin: 1.4rem 0 1.8rem; max-width: 44ch; color: var(--body); }
+.pv-links { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; }
+@media (max-width: 860px) { .pv-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Interior openings: shorter, so the content is close ---------- */
+.cine-hero.is-page { min-height: max(66svh, 520px); }
+@media (max-width: 860px) { .cine-hero.is-page { min-height: 64svh; } }
+
+/* ---------- About us ---------- */
+.ab-intro { background: var(--cream); }
+.ab-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 7vw, 6.5rem); align-items: start; }
+.ab-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 4vw, 3.9rem); line-height: 1.08; color: var(--ink); text-wrap: balance; }
+.ab-title em { color: var(--terra); }
+.ab-body { margin: 0; font-size: clamp(1.08rem, 0.5vw + 0.98rem, 1.25rem); color: var(--text); max-width: 44ch; }
+.ab-values-h { margin: 2.6rem 0 0.4rem; }
+.ab-values { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line-strong); }
+.ab-values li { display: grid; grid-template-columns: minmax(9rem, 0.8fr) minmax(0, 1.2fr); gap: 1rem; padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+.ab-values h4 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 1.35rem; color: var(--ink); }
+.ab-values p { margin: 0; color: var(--body); }
+.ab-quote { background: var(--sage); text-align: center; }
+.ab-quote .cu-label { color: var(--forest-2); }
+.ab-quote .cu-big { margin: 0.4rem 0; font-family: var(--serif); font-style: italic; font-size: clamp(3.4rem, 9vw, 8rem); line-height: 1; color: var(--ink); }
+.ab-quote .cu-gloss { color: var(--forest-2); }
+.ab-quote .cu-gloss small { display: block; margin-top: 0.4rem; }
+@media (max-width: 860px) { .ab-grid { grid-template-columns: 1fr; } .ab-values li { grid-template-columns: 1fr; gap: 0.2rem; } }
+
+/* ---------- Our story ---------- */
+.st-chapters { background: var(--cream); }
+.st-list { margin: 0; padding: 0; list-style: none; }
+.st-ch { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 1.2rem; padding: clamp(1.8rem, 3.5vw, 2.6rem) 0; border-top: 1px solid var(--line-strong); }
+.st-n { font-family: var(--serif); font-style: italic; font-size: 2rem; line-height: 1; color: var(--terra); }
+.st-ch h2 { margin: 0 0 0.6rem; font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 3vw, 2.6rem); color: var(--ink); }
+.st-ch p { margin: 0; font-size: 1.1rem; color: var(--text); max-width: 46ch; }
+.st-ch.is-pending p { color: var(--muted); font-size: 0.98rem; padding-left: 1rem; border-left: 2px solid var(--gold); }
+.st-next { margin-top: 2.4rem; }
+
+/* ---------- Next steps (About us, Our story) ---------- */
+.next-steps { background: var(--forest); color: var(--paper); padding-block: clamp(4rem, 8vw, 6.5rem); --focus: var(--gold-soft); }
+.ns-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem 3rem; }
+.ns-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.6vw, 3.2rem); color: var(--paper); }
+.ns-links { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+/* ---------- Menu: every dish with its own photo ----------
+   Three columns on a computer (photo above, then name and price on one line, description, add), a compact row on
+   a phone (small square photo beside the text) so a long menu stays quick to read. */
+.menu .menu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(1.4rem, 2.6vw, 2.4rem); row-gap: clamp(2rem, 3.4vw, 2.8rem); margin-top: clamp(1.4rem, 2.4vw, 2rem); }
+.menu .dish { border-bottom: 0; }
+.menu .dish-body { padding: 0.95rem 0 0; }
+.dish-photo { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--r-sm); overflow: hidden; background: var(--sand); }
+.dish-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.menu .dish:hover .dish-photo img { transform: scale(1.04); }
+.dish-photo.is-pending { display: grid; place-items: center; align-content: center; gap: 0.3rem; background: linear-gradient(160deg, var(--paper), var(--sand)); border: 1px solid var(--line); }
+.dp-mark { font-family: var(--serif); font-style: italic; font-size: clamp(2.6rem, 4vw, 3.4rem); line-height: 1; color: var(--sage); filter: brightness(0.82); }
+.dp-note { font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+.menu .dish .media.is-placeholder::after { display: block; left: auto; right: 0.6rem; top: auto; bottom: 0.6rem; padding: 0.18rem 0.55rem; background: rgba(18, 59, 58, 0.72); color: var(--paper); font-size: 0.72rem; font-weight: 600; text-transform: none; letter-spacing: 0; }
+@media (max-width: 1023px) and (min-width: 761px) { .menu .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .menu .menu-grid { grid-template-columns: 1fr; row-gap: 0; }
+  .menu .dish { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: 0.95rem; align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+  .dish-photo { aspect-ratio: 1; }
+  .dish-photo.is-pending .dp-note { display: none; }
+  .dp-mark { font-size: 2.2rem; }
+  .menu .dish-body { padding: 0; }
+}
+html:not(.cine-motion) .dish-photo img { transition: none; }
+.intro-statement { font-size: clamp(2rem, 3.7vw, 3.7rem); max-width: 21ch; }
+/* Restaurant opening: the hours as one quiet line, so the menu starts sooner. */
+.hero-hours { display: flex; align-items: center; gap: 0.6rem; margin: 1.6rem 0 0; font-size: 0.95rem; color: rgba(255, 255, 255, 0.82); }
+.hero-hours .icon { flex: none; width: 18px; height: 18px; color: var(--gold-soft); }
+.hero-hours b { font-weight: 600; color: #fff; }
+.hero-hours i { font-style: normal; opacity: 0.6; }
+/* Menu density: smaller photo slots, four across on wide screens. */
+.dish-photo { aspect-ratio: 3 / 2; }
+@media (min-width: 1200px) { .menu .menu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .menu .dish h3 { font-size: 1.3rem; } .menu .dish-foot .price b { font-size: 1.3rem; } }
+/* On a phone the add button goes under the description, so the text keeps its full width. */
+@media (max-width: 760px) {
+  .menu .dish-body { grid-template-columns: minmax(0, 1fr) auto; }
+  .menu .dish-desc { grid-column: 1 / -1; }
+  .menu .dish-add { grid-column: 1 / -1; grid-row: auto; justify-self: start; margin-top: 0.5rem; }
+}
+.menu .dish-desc { grid-column: 1 / -1; }
+.menu .dish-add { grid-column: 1 / -1; grid-row: auto; justify-self: start; margin-top: 0.6rem; }
+@media (max-width: 760px) { .dish-photo { aspect-ratio: 1; } }
+@media (min-width: 861px) { .ab-title { position: sticky; top: calc(var(--header-h) + 2.5rem); } }

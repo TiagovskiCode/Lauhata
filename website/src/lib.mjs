@@ -16,6 +16,8 @@ const ROUTES = {
   home: { pt: "/", en: "/en/" },
   restaurant: { pt: "/restaurante/", en: "/en/restaurant/" },
   stay: { pt: "/alojamento/", en: "/en/stay/" },
+  about: { pt: "/sobre-nos/", en: "/en/about/" },
+  story: { pt: "/a-nossa-historia/", en: "/en/our-story/" },
   contact: { pt: "/contactos/", en: "/en/contact/" },
   thanks: { pt: "/obrigado/", en: "/en/thank-you/" },
   privacy: { pt: "/privacidade/", en: "/en/privacy/" },

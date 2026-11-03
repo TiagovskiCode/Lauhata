@@ -187,10 +187,13 @@ function header(t, page, alt) {
   const L = t.lang;
   const link = (p, label, hash = "") =>
     `<a href="${href(p, L, hash)}"${page === p && !hash ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
+  // Six destinations, one line each: home, menu, accommodation, about us, our story, contact.
   const nav = [
-    link("restaurant", t.nav.restaurant),
+    link("home", t.nav.home),
+    link("restaurant", t.nav.menu),
     link("stay", t.nav.stay),
-    link("home", t.nav.story, "#historia"),
+    link("about", t.nav.about),
+    link("story", t.nav.story),
     link("contact", t.nav.contact),
   ].join("");
   return `<header class="site-header" data-header>
@@ -217,7 +220,7 @@ function header(t, page, alt) {
     <button class="icon-btn" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close>${icon("close")}</button>
   </div>
   <nav class="mobile-nav-links">
-    ${link("home", t.nav.home)}${nav}
+    ${nav}
   </nav>
   <div class="mobile-nav-cta">
     <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
@@ -242,9 +245,10 @@ function footer(t) {
     <nav class="ft-col" aria-label="${esc(F.explore)}">
       <h2 class="footer-h">${esc(F.explore)}</h2>
       <ul class="footer-list">
-        ${link(href("restaurant", L), t.nav.restaurant)}
+        ${link(href("restaurant", L), t.nav.menu)}
         ${link(href("stay", L), t.nav.stay)}
-        ${link(href("home", L, "#historia"), t.nav.story)}
+        ${link(href("about", L), t.nav.about)}
+        ${link(href("story", L), t.nav.story)}
       </ul>
     </nav>
     <div class="ft-col">

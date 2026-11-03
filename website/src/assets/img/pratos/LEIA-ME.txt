@@ -1,0 +1,3 @@
+﻿Fotografias dos pratos do Lauhata, uma por prato.
+Nome: <id do prato>-640.jpg (4:3, 640 px de largura) e, se possivel, <id do prato>-1080.jpg.
+A lista completa dos ids e do estado de cada foto esta em website/FOTOS-PRATOS.md (gerado pelo build).

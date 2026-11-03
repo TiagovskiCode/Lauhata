@@ -47,6 +47,16 @@ usa o **arco** como forma de assinatura (hero, quartos e tais). Sequência:
 11. **Convite final:** a vista aérea real da costa, «A sua escapada junto ao mar começa aqui.» e duas ações separadas
     («Consultar quartos» e «Reservar mesa»), antes do rodapé.
 
+**Fase 3 (novembro 2026) — «menos, mas melhor».** A home ficou com: herói (vídeo real, «Liquiçá · Timor-Leste», título e uma
+frase), uma frase sobre o Lauhata com foto aérea real, **Comer & Ficar** (dois painéis fotográficos de pesos diferentes com um
+«&» dourado; as fotos estão em `DUO_PHOTOS` em `pages.mjs` e continuam ilustrativas até haver fotos reais), uma antevisão do
+«Sobre nós» e o convite final. As secções antigas (dia no Lauhata, pequeno-almoço, entardecer, cultura, FAQ, mapa, galeria)
+saíram da home: a galeria e a cultura estão em **Sobre nós** (`/sobre-nos/`), a FAQ e o mapa em **Contactos**. Nova página
+**A nossa história** (`/a-nossa-historia/`) com os capítulos ainda não contados marcados como tal. Navegação: Início, Ementa,
+Alojamento, Sobre nós, A nossa história, Contactos. **Dois tipos de quarto** (Quarto Vista Mar e Suite Família); o Quarto Jardim
+saiu. **Ementa:** cada prato tem o seu espaço de fotografia (`src/assets/img/pratos/<id>-640.jpg`); a lista completa e o estado
+de cada foto estão em `FOTOS-PRATOS.md`, gerado pelo build.
+
 Páginas interiores:
 - **Alojamento:** capacidade e comodidades dos quartos só aparecem com `roomDetailsConfirmed: true`; até lá, uma linha diz
   «Detalhes do quarto a confirmar». A galeria de imagens ilustrativas desta página foi retirada (repetia as fotos acima).

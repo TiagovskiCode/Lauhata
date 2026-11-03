@@ -1,35 +1,10 @@
-// Room types. The Hotel & Lodging package includes one page per room type; each entry here
+// The two room types of Lauhata (confirmed by the owner, Nov 2026: Sea View Room and Family Suite; the Garden Room was removed).
+// The Hotel & Lodging package includes one page per room type; each entry here
 // generates its own page in both languages. Names, descriptions and features come from the
 // approved design mock-up and still need to be confirmed by Lauhata. `price` is shown only when
 // set (e.g. "US$ 60"); until then the card shows "Preço a confirmar". `featured: true` puts a room in the
-// homepage's "most chosen" pair (no longer used on the homepage, which shows all three); which rooms are most booked is for Lauhata to confirm.
+// homepage's "most chosen" pair; which rooms are most booked is for Lauhata to confirm.
 export default [
-  {
-    id: "garden",
-    slug: { pt: "quarto-jardim", en: "garden-room" },
-    name: { pt: "Quarto Jardim", en: "Garden Room" },
-    badge: { pt: "Jardim", en: "Garden" },
-    tagline: { pt: "Sossego e natureza.", en: "Peace and nature." },
-    summary: {
-      pt: "Sossegado e fresco, com acesso direto ao jardim tropical.",
-      en: "Quiet and cool, with direct access to the tropical garden.",
-    },
-    description: {
-      pt: "Um quarto sossegado e fresco, com acesso direto ao jardim tropical. Descrição completa a confirmar pelo Lauhata.",
-      en: "A quiet, cool room with direct access to the tropical garden. Full description to be confirmed by Lauhata.",
-    },
-    capacity: { pt: "2 hóspedes", en: "2 guests" },
-    beds: null,
-    features: [
-      { pt: "2 hóspedes", en: "2 guests" },
-      { pt: "Ar condicionado", en: "Air conditioning" },
-      { pt: "Wi-Fi", en: "Wi-Fi" },
-    ],
-    price: null,
-    images: ["roomGarden"],
-    featured: true,
-    placeholder: true,
-  },
   {
     id: "sea",
     slug: { pt: "quarto-vista-mar", en: "sea-view-room" },

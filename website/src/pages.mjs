@@ -1,6 +1,7 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
 import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
+import { existsSync } from "node:fs";
 import { TAIS } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
 
@@ -188,6 +189,21 @@ function dishPrice(t, d) {
   return d.price != null ? `<b>${money(d.price)}</b>` : esc(t.common.priceTbc);
 }
 
+// Every dish has its own photo slot: src/assets/img/pratos/<dish id>-640.jpg (4:3, 640 px wide; add <id>-1080.jpg for
+// sharper screens). When the restaurant's photo of that dish is there, it is shown; until then the slot shows a quiet
+// "photo coming soon" tile with the dish's initial, never a stock or AI picture standing in for the real dish.
+// The build lists every slot and its status in FOTOS-PRATOS.md.
+export const dishPhotoFile = (d, w = 640) => new URL(`./assets/img/pratos/${d.id}-${w}.jpg`, import.meta.url);
+function dishPhoto(t, d) {
+  if (d.image) return figure(t, d.image, { sizes: "(min-width: 1000px) 28vw, (min-width: 600px) 45vw, 30vw", ratio: "4/3" });
+  if (existsSync(dishPhotoFile(d))) {
+    const big = existsSync(dishPhotoFile(d, 1080));
+    const src = `/assets/img/pratos/${d.id}-640.jpg`;
+    return `<figure class="media dish-photo"><img src="${src}"${big ? ` srcset="${src} 640w, /assets/img/pratos/${d.id}-1080.jpg 1080w" sizes="(min-width: 1000px) 28vw, (min-width: 600px) 45vw, 30vw"` : ""} alt="${esc(d.name)}" width="640" height="480" loading="lazy" decoding="async"></figure>`;
+  }
+  return `<div class="dish-photo is-pending" aria-hidden="true"><span class="dp-mark">${esc(d.name.trim()[0])}</span><span class="dp-note">${esc(t.order.photoSoon)}</span></div>`;
+}
+
 // One dish. With \`link\` the name links to the menu (homepage row). \`image\` stays empty until the
 // restaurant has a real photo of that dish: a card without a picture beats a picture of another dish.
 function dishCard(t, d, { link = "" } = {}) {
@@ -196,8 +212,8 @@ function dishCard(t, d, { link = "" } = {}) {
   const cat = categories.find((c) => c.id === d.category);
   const search = normalize([d.name, d.description?.en, d.description?.pt, cat.name.en, cat.name.pt].filter(Boolean).join(" "));
   const verb = d.options.length ? O.choose : O.add;
-  return `<article class="dish${d.image ? " has-photo" : ""}" data-dish data-search="${esc(search)}">
-      ${d.image ? figure(t, d.image, { sizes: "(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 82vw", ratio: "4/3" }) : ""}
+  return `<article class="dish has-photo" data-dish data-search="${esc(search)}">
+      ${dishPhoto(t, d)}
       <div class="dish-body">
         <p class="dish-tag">${esc(cat.name[L])}</p>
         <h3>${link ? `<a class="dish-link" href="${link}">${esc(d.name)}</a>` : esc(d.name)}</h3>
@@ -612,7 +628,7 @@ function finalSection(t, key = "aerialCoast") {
   const F = t.land.final;
   const L = t.lang;
   return `<section class="scene final-cta" aria-labelledby="final-title">
-  <div class="scene-media">${figure(t, "aerialCoast", { sizes: "100vw", decorative: true })}</div>
+  <div class="scene-media">${figure(t, key, { sizes: "100vw", decorative: true })}</div>
   <div class="wrap scene-text">
     <p class="scene-note" data-fade>${esc(F.note)}</p>
     <h2 id="final-title" class="scene-line final-line" data-split>${esc(F.line)}</h2>
@@ -620,6 +636,141 @@ function finalSection(t, key = "aerialCoast") {
     <div class="btn-row" data-fade>
       <a class="btn btn-cream btn-lg" href="${href("stay", L, "#reservar")}">${esc(F.stay)}${icon("arrow")}</a>
       <a class="btn btn-ghost-light btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(F.eat)}</a>
+    </div>
+  </div>
+</section>`;
+}
+
+// ================= HOME: hero, a short introduction, Comer & Ficar, a look at who we are, the invitation =================
+
+// One statement about what Lauhata is, beside a real aerial photograph.
+function introSection(t) {
+  return `<section class="section intro-ed" id="lauhata" aria-labelledby="intro-title">
+  <div class="wrap intro-grid">
+    <div class="intro-text">
+      <p class="eyebrow">${esc(t.land.intro.note)}</p>
+      <h2 id="intro-title" class="intro-statement" data-split>${esc(t.home.statement)}</h2>
+    </div>
+    <div class="intro-photo">${figure(t, "aerialGarden", { sizes: "(min-width: 900px) 34vw, 92vw", ratio: "4/5" })}</div>
+  </div>
+</section>`;
+}
+
+// Comer & Ficar: the two things Lauhata offers, as two photographic panels of different weight with an ampersand
+// between them. Each whole panel is one link. The photos are keys here so the restaurant's and the rooms' own
+// photographs can replace the illustrative ones in one place (they keep their "Illustrative image" tag until then).
+const DUO_PHOTOS = { eat: "foodSpread", stay: "roomFamily" };
+function duoSection(t) {
+  const D = t.land.duo;
+  const L = t.lang;
+  const panel = (key, page, copy) => `<a class="duo-panel duo-${key}" href="${href(page, L)}">
+      <div class="duo-media">${figure(t, DUO_PHOTOS[key], { sizes: key === "eat" ? "(min-width: 900px) 56vw, 100vw" : "(min-width: 900px) 40vw, 100vw" })}</div>
+      <div class="duo-copy">
+        <h2 class="duo-title">${esc(copy.title)}</h2>
+        <p class="duo-line">${esc(copy.line)}</p>
+        <span class="duo-link">${esc(copy.link)}<i class="duo-arrow" aria-hidden="true"></i></span>
+      </div>
+    </a>`;
+  return `<section class="duo" aria-label="${esc(D.aria)}">
+  <div class="wrap duo-grid">
+    ${panel("eat", "restaurant", D.eat)}
+    <span class="duo-amp" aria-hidden="true">&amp;</span>
+    ${panel("stay", "stay", D.stay)}
+  </div>
+</section>`;
+}
+
+// A short look at who Lauhata is, leading to About us and Our story.
+function previewSection(t) {
+  const C = t.land.culture;
+  const P = t.land.preview;
+  const L = t.lang;
+  return `<section class="section preview" aria-labelledby="pv-title">
+  <div class="wrap pv-grid">
+    <div class="pv-photo">${figure(t, "aerialCoast", { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "5/4" })}</div>
+    <div class="pv-text">
+      <p class="eyebrow">${esc(P.note)}</p>
+      <h2 id="pv-title" class="pv-title" data-split>${esc(C.title1)} ${esc(C.title2)} <em>${esc(C.titleAccent)}</em>.</h2>
+      <p class="pv-body"${rv(80)}>${esc(C.body)}</p>
+      <div class="pv-links"${rv(120)}>
+        <a class="text-link" href="${href("about", L)}">${esc(P.about)}${icon("arrow")}</a>
+        <a class="text-link" href="${href("story", L)}">${esc(P.story)}${icon("arrow")}</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+}
+
+// ================= ABOUT US: what Lauhata is today =================
+export function about(t) {
+  const L = t.lang;
+  const A = t.land.aboutPage;
+  const C = t.land.culture;
+  const bc = breadcrumbs(t, [{ name: t.nav.about, path: href("about", L) }]);
+  const body = `
+${pageHero(t, { eyebrow: A.eyebrow, title: A.title, lead: t.home.statement, image: "aerialDay2", crumbs: bc.html })}
+
+<section class="section ab-intro" aria-labelledby="ab-title">
+  <div class="wrap ab-grid">
+    <h2 id="ab-title" class="ab-title" data-split>${esc(C.title1)} ${esc(C.title2)} <em>${esc(C.titleAccent)}</em>.</h2>
+    <div>
+      <p class="ab-body"${rv(60)}>${esc(C.body)}</p>
+      <h3 class="h-small ab-values-h"${rv(80)}>${esc(A.valuesTitle)}</h3>
+      <ul class="ab-values"${rv(100)}>${C.themes.map(([h, p]) => `<li><h4>${esc(h)}</h4><p>${esc(p)}</p></li>`).join("")}</ul>
+    </div>
+  </div>
+</section>
+
+${gallerySection(t)}
+
+<section class="section ab-quote" aria-labelledby="ab-quote-label">
+  <div class="wrap">
+    <p class="cu-label" id="ab-quote-label">${esc(C.quoteLabel)}</p>
+    <p class="cu-big" lang="tet">${esc(C.quote)}</p>
+    <p class="cu-gloss">${esc(C.gloss)}${site.showPlaceholderNotes ? ` <small>${esc(C.glossNote)}</small>` : ""}</p>
+  </div>
+</section>
+
+${nextSteps(t, A.nextTitle)}`;
+  return { page: "about", title: t.meta.about.title, description: t.meta.about.description, path: href("about", L), alt: href("about", other(L)), preload: "aerialDay2", hero: true, ld: [bc.ld], body };
+}
+
+// ================= OUR STORY: how Lauhata came to be =================
+// Only what is known is written; the chapters the owner has not told yet are shown as such, never invented.
+export function story(t) {
+  const L = t.lang;
+  const S = t.land.storyPage;
+  const bc = breadcrumbs(t, [{ name: t.nav.story, path: href("story", L) }]);
+  const body = `
+${pageHero(t, { eyebrow: S.eyebrow, title: S.title, lead: S.lead, image: "aerialCoast", crumbs: bc.html })}
+
+<section class="section st-chapters" aria-label="${esc(S.eyebrow)}">
+  <div class="wrap narrow">
+    <ol class="st-list">${S.chapters
+      .map((c, i) => `<li class="st-ch${c.body ? "" : " is-pending"}"${rv(i * 60)}>
+        <span class="st-n" aria-hidden="true">${["I", "II", "III", "IV"][i]}</span>
+        <div><h2>${esc(c.title)}</h2><p>${esc(c.body || S.pending)}</p></div>
+      </li>`)
+      .join("")}</ol>
+    <a class="text-link st-next" href="${href("about", L)}">${esc(S.next)}${icon("arrow")}</a>
+  </div>
+</section>
+
+${nextSteps(t, t.land.aboutPage.nextTitle)}`;
+  return { page: "story", title: t.meta.story.title, description: t.meta.story.description, path: href("story", L), alt: href("story", other(L)), preload: "aerialCoast", hero: true, ld: [bc.ld], body };
+}
+
+// The quiet end of About us and Our story: one line and the three places to go next.
+function nextSteps(t, title) {
+  const L = t.lang;
+  const D = t.land.duo;
+  return `<section class="next-steps" aria-labelledby="ns-title">
+  <div class="wrap ns-inner">
+    <h2 id="ns-title" class="ns-title">${esc(title)}</h2>
+    <div class="ns-links">
+      <a class="btn btn-cream btn-lg" href="${href("restaurant", L)}">${esc(D.eat.link)}${icon("arrow")}</a>
+      <a class="btn btn-ghost-light btn-lg" href="${href("stay", L)}">${esc(D.stay.link)}</a>
+      <a class="btn btn-ghost-light btn-lg" href="${href("contact", L)}">${esc(t.land.aboutPage.contact)}</a>
     </div>
   </div>
 </section>`;
@@ -648,68 +799,15 @@ export function home(t) {
     <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line l2"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(hero.lead)}</p>
   </div>
-  <div class="wrap cine-bar" data-fade style="--d:400ms">${bookingCard(t)}</div>
-  <a class="scroll-cue" href="#escolher" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a></section>
-${TAIS}
+  <a class="scroll-cue" href="#lauhata" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a></section>
 
-${glanceSection(t)}
+${introSection(t)}
 
-${chooseSection(t)}
+${duoSection(t)}
 
-${sceneSection(t, "aerialGarden", LD.scenes.garden)}
+${previewSection(t)}
 
-<section class="section eat" id="comer" aria-labelledby="eat-title">
-  <div class="wrap eat-grid">
-    <div class="eat-visual">
-      ${figure(t, "grilledFish", { sizes: "(min-width: 900px) 44vw, 92vw", ratio: "4/5", attrs: "data-clip", parallax: 0.06 })}
-    </div>
-    <div class="eat-body">
-      ${heading({ eyebrow: LD.eat.eyebrow, title: LD.eat.title1, accent: LD.eat.titleAccent, lead: LD.eat.lead, id: "eat-title" })}
-      <div class="eat-hours"${rv(80)}><h3>${esc(H.eat.hours)}</h3><dl>${hours}</dl></div>
-      <p class="eat-featured"${rv(100)}>${esc(H.eat.featured)}</p>
-      <ul class="dish-lines"${rv(120)}>${dishes.map((d) => dishLine(t, d)).join("")}</ul>
-      <p class="eat-note"${rv(140)}>${esc(menuNote[L])}</p>
-      <div class="btn-row"${rv(160)}>
-        <a class="btn btn-dark btn-lg" href="${href("restaurant", L, "#ementa")}">${esc(H.dishesCta)}${icon("arrow")}</a>
-        <a class="btn btn-outline btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(hero.ctaTable)}</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-${breakfastSection(t, bkfDishes)}
-
-${suitesSection(t)}
-
-${daySection(t)}
-
-${duskSection(t)}
-
-${cultureSection(t)}
-
-${gallerySection(t)}
-
-${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
-  <div class="wrap">
-    <div class="split-head reviews-head">
-      ${heading({ eyebrow: H.reviews.eyebrow, title: H.reviews.title, id: "rev-title", cls: "heading-md" })}
-    </div>
-    <div class="review-grid">
-      ${realReviews.map((r, i) => `<figure class="review"${rv(i * 90)}><span class="review-mark">${icon("quote")}</span><blockquote>${esc(r.q)}</blockquote><figcaption><span class="avatar av-${i + 1}">${esc(r.i)}</span><span><strong>${esc(r.n)}</strong><small>${esc(r.m)}</small></span></figcaption></figure>`).join("")}
-    </div>
-  </div>
-</section>` : ""}
-
-<section class="section faq-section" id="perguntas" aria-labelledby="faq-title">
-  <div class="wrap faq-grid">
-    ${heading({ eyebrow: t.faq.eyebrow, title: t.faq.title, id: "faq-title" })}
-    ${faqBlock(t)}
-  </div>
-</section>
-
-${reachSection(t)}
-
-${finalSection(t)}`;
+${finalSection(t, "aerialDay4")}`;
   return {
     page: "home",
     title: t.meta.home.title,
@@ -738,7 +836,7 @@ ${pageHero(t, {
   image: "foodSpread",
   crumbs: bc.html,
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
-  <div class="hours-inline">${icon("clock")}<div><strong>${esc(t.home.location.hours)}</strong>${hoursList(t)}</div></div>`,
+  <p class="hero-hours">${icon("clock")}<span>${site.restaurantHours.length ? site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true"> · </i>') : esc(t.common.hoursTbc)}</span></p>`,
 })}
 
 ${TAIS}
