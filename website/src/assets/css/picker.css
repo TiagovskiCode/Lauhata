@@ -27,7 +27,7 @@
   color: var(--ink); font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 .field .pk-btn:hover { border-color: var(--line-strong); }
-.field .pk-btn:focus-visible, .field .pk-btn[aria-expanded="true"] { outline: none; border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(168, 67, 42, 0.15); }
+.field .pk-btn:focus-visible, .field .pk-btn[aria-expanded="true"] { outline: none; border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(199, 101, 69, 0.15); }
 .field.has-error .pk-btn { border-color: var(--error); }
 
 /* ---------- The popover ---------- */
@@ -64,7 +64,7 @@
 .pk-nav:hover:not(:disabled) { background: var(--forest); border-color: var(--forest); color: var(--cream); }
 .pk-nav:disabled { opacity: 0.3; cursor: default; }
 .pk-wd, .pk-days { display: grid; grid-template-columns: repeat(7, 40px); }
-.pk-wd span { display: grid; place-items: center; height: 30px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #3e5a5d; }
+.pk-wd span { display: grid; place-items: center; height: 30px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--body); }
 .pk-days i { height: 40px; }
 .pk-cell { display: grid; place-items: center; height: 40px; }
 .pk-day {
@@ -72,7 +72,7 @@
   color: var(--ink); cursor: pointer; transition: background-color 0.18s, color 0.18s;
 }
 .pk-day:hover:not(:disabled) { background: var(--sand); }
-.pk-day:disabled { color: #b9bdb6; cursor: default; }
+.pk-day:disabled { color: #b7b8ad; cursor: default; }
 .pk-day:focus-visible, .pk-chip:focus-visible, .pk-opt:focus-visible, .pk-step:focus-visible, .pk-link:focus-visible, .pk-nav:focus-visible, .pk-x:focus-visible { outline: 2px solid var(--terra); outline-offset: 2px; }
 .pk-day.is-today::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--terra); }
 .pk-day.is-sel { background: var(--forest); color: var(--cream); font-weight: 600; }
@@ -84,15 +84,15 @@
 .pk-cell.in-hover:hover .pk-day:not(.is-sel) { background: var(--forest); color: var(--cream); }
 
 .pk-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid var(--line); }
-.pk-hint { font-size: 0.86rem; font-weight: 600; color: #3e5a5d; }
+.pk-hint { font-size: 0.86rem; font-weight: 600; color: var(--body); }
 .pk-acts { display: flex; gap: 0.2rem; margin-left: auto; }
 .pk-link { padding: 0.5rem 0.85rem; border: 0; border-radius: 999px; background: transparent; font: inherit; font-size: 0.86rem; font-weight: 700; color: var(--terra); cursor: pointer; transition: background-color 0.2s; }
-.pk-link:hover { background: rgba(168, 67, 42, 0.1); }
+.pk-link:hover { background: rgba(199, 101, 69, 0.1); }
 
 /* Time */
 .pk-pop.is-time { width: min(372px, calc(100vw - 24px)); }
 .pk-times { display: grid; gap: 1.15rem; }
-.pk-group h4 { margin: 0 0 0.6rem; font-family: var(--sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #3e5a5d; }
+.pk-group h4 { margin: 0 0 0.6rem; font-family: var(--sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--body); }
 .pk-chips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.45rem; }
 .pk-chip {
   min-height: 44px; padding: 0; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; font: inherit; font-size: 0.95rem; font-weight: 600;
@@ -114,7 +114,7 @@
 .pk-step.is-off { opacity: 0.3; cursor: default; }
 .pk-big { display: grid; justify-items: center; min-width: 96px; line-height: 1; }
 .pk-big b { font-family: var(--serif); font-weight: 400; font-size: 3.6rem; letter-spacing: -0.03em; }
-.pk-big span { margin-top: 0.4rem; font-size: 0.88rem; color: #3e5a5d; }
+.pk-big span { margin-top: 0.4rem; font-size: 0.88rem; color: var(--body); }
 
 /* List */
 .pk-pop.is-list { width: min(340px, calc(100vw - 24px)); }
@@ -147,5 +147,5 @@
   .pk-num { justify-content: space-around; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pk-pop, .pk-caret .icon { animation: none; transition: none; }
+  html:not(.cine-motion) .pk-pop, html:not(.cine-motion) .pk-caret .icon { animation: none; transition: none; }
 }

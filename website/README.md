@@ -15,25 +15,26 @@ dourado `#C89640` e azul-petróleo `#2F6E73`, faixa de tais e mapa ilustrado da 
 A homepage (`home()` em `src/pages.mjs`, estilos em `src/assets/css/home.css`) conta um dia na costa e
 usa o **arco** como forma de assinatura (hero, quartos e tais). Sequência:
 
-1. **Hero:** um grande fundo de ecrã inteiro (a panorâmica da costa em desktop; a foto da baía e da mesa em
-   telemóvel, escolhida por `art` em `figure()`), com aproximação lenta, título em grande escala e o cartão
-   de reserva por WhatsApp. Ao fazer scroll, o texto sobe e esvanece-se. **Vídeo:** quando houver
-   filmagens reais, otimize-as (loop curto, sem som, de preferência abaixo de 3 MB), ponha o ficheiro em
-   `src/assets/video/` e preencha `heroVideo` em `src/data/site.mjs`: a fotografia aparece primeiro e o
-   vídeo entra em fusão por cima depois de a página carregar. Não carrega com «movimento reduzido», poupança
-   de dados ou ligação lenta, pausa fora do ecrã e, se falhar, a fotografia fica. O vídeo comercial em
-   `documentos/cliente/` é uma apresentação do site, não serve para isto.
-   O cartão de reserva começa só com **Restaurante** e **Alojamento**; os campos (data, hora, pessoas, ou entrada,
-   saída, hóspedes) aparecem depois de escolher, e o pedido segue sempre por WhatsApp.
-2. **Comer / Dormir:** uma frase curta e dois painéis grandes (um retângulo, um arco) que levam à ementa e aos quartos.
+1. **Hero:** ecrã inteiro. Primeiro aparece a **capa do vídeo** (`heroCover` em `images.mjs`, ficheiros `hero-capa-*.jpg`: o primeiro
+   frame da filmagem de drone do Lauhata). A capa fica sozinha ~1,3 s; o vídeo (`heroVideo` em `site.mjs`, `src/assets/video/hero.mp4`) carrega
+   por trás, parado nesse mesmo frame, e depois toca e entra em fusão (1,6 s) por cima da capa: como é o mesmo frame e o mesmo
+   enquadramento, a capa parece começar a mexer-se. O vídeo toca sempre e em loop (também com «movimento reduzido», por decisão do dono),
+   sem botão de pausa: se algo o parar, recomeça. Só espera fora do ecrã; não é descarregado com poupança de dados nem ligação 2G
+   (fica só a capa) e, se falhar, a capa fica. **Para trocar de vídeo:** reduzir (1280×720, ~1,6 Mbps, sem áudio), cortar frames
+   iniciais que não sejam a filmagem real (o original tinha 3 frames de um «cartaz» diferente) e gerar a capa com o primeiro frame do
+   vídeo reduzido, para a fusão ser invisível. O original fica em `videos-originais/` (não é publicado). Sobre a pesquisa do cartão de
+   reserva: começa só com **Restaurante** e **Alojamento**; os campos (data, hora, pessoas, ou entrada, saída, hóspedes) aparecem
+   depois de escolher, e o pedido segue sempre por WhatsApp.2. **Comer / Dormir:** uma frase curta e dois painéis grandes (um retângulo, um arco) que levam à ementa e aos quartos.
 3. **01 · Comer:** fotografia, horário (do PDF da ementa) e os pratos mais escolhidos, com botão de adicionar ao pedido.
 4. **O pequeno-almoço:** foto larga, o horário em grande (de `restaurantHours`) e as linhas reais da ementa da manhã. O texto
    «café, sabores locais» é o do briefing e **não vem da ementa impressa**: confirmar com o Lauhata.
 5. **02 · Dormir:** os três quartos em painéis que se abrem ao passar o rato ou ao focar (no telemóvel, cartões empilhados), com
    uma frase curta (`tagline` em `rooms.mjs`) e «Consultar disponibilidade» por WhatsApp com o nome do quarto. A capacidade e as
    comodidades só aparecem quando `roomDetailsConfirmed` for `true` em `site.mjs`; preços só com `price` preenchido.
-6. **03 · Um dia no Lauhata:** janela em arco fixa que muda de foto enquanto a cor da página vai da manhã ao entardecer. São
-   sugestões, não horários de funcionamento: a página di-lo sempre.
+6. **Um dia no Lauhata:** palco de ecrã inteiro que fica fixo (`position: sticky`) enquanto se faz scroll. Cinco fotografias aéreas
+   reais fundem-se uma na outra, a cor (grade) vai da manhã azul ao entardecer laranja, a hora aparece em grande e uma régua
+   dourada em baixo conta as horas. Animado com GSAP (`cinema.js`). Sem JavaScript, sem GSAP ou se algo falhar, vira uma lista simples
+   de cinco fotos com texto. São sugestões, não horários de funcionamento: a página di-lo sempre.
 7. **O dia termina melhor aqui:** foto de entardecer e duas ações («Descobrir o restaurante», «Reservar alojamento»).
 8. **04 · Cultura:** em terracota, o tais num arco duplo, informação geral sobre Timor-Leste separada do espaço reservado para a
    história real do Lauhata, e «Mai, han, toba.» em grande (tradução por confirmar).
@@ -190,3 +191,25 @@ Motor de reservas com disponibilidade em tempo real, calendário sincronizado, p
 depósitos online, contas de cliente, painel de administração e integrações externas. O site não
 simula nenhuma destas funções: o fluxo é sempre um **pedido** enviado por WhatsApp e confirmado
 pelo Lauhata.
+
+### Camada cinematográfica
+
+Está no fim de `src/assets/css/design.css` («Cinema layer») e nas funções `sceneSection` (`pages.mjs`) e do cabeçalho.
+
+- **Abertura:** no hero da home, duas barras pretas (letterbox) fecham a imagem e deslizam para fora ao carregar.
+- **Look de filme:** grão e vinheta nas fotografias de ecrã inteiro (hero, cenas).
+- **Cenas:** faixas de ecrã inteiro com uma fotografia aérea **real** (frames do vídeo de drone, `aerialGarden` e `aerialCoast` em
+  `images.mjs`) e uma frase. A foto abre como um obturador ao entrar no ecrã e anda devagar contra o scroll. A página de Contactos também
+  usa a fotografia aérea.
+- **GSAP:** `src/assets/js/vendor/gsap.min.js` e `ScrollTrigger.min.js` (GSAP 3.13, licença gratuita, alojados no próprio site, sem CDN).
+  `src/assets/js/cinema.js` corre depois de `main.js` e trata: o palco «Um dia no Lauhata» (fusões, cor, régua; todos os níveis),
+  o obturador e a deriva das cenas, o parallax, e o hero (a imagem aproxima-se e o texto sobe e desaparece, com as duas linhas do título
+  a afastar-se) na home e nas páginas interiores (nível B). Se o GSAP não carregar ou der erro, `cleanup()` devolve a página ao
+  layout simples. O palco usa `sticky` e não `pin` do GSAP: o `pin` deslocava o ecrã inteiro (CLS 1.0) no momento em que fixava.
+- **Entre páginas:** uma transição curta por preto (`@view-transition`; só opacidade).
+- **Cabeçalho (≥1200 px):** logótipo à esquerda, menu exatamente ao centro, idioma, carrinho e «Reservar» à direita.
+- **Movimento reduzido:** grão, vinheta, cenas e a transição por preto ficam sempre (são imagens paradas ou fusões). As partes que
+  se movem (barras, obturador, deriva, entradas) só correm sem «movimento reduzido» (`html.cine-motion`, posta por `main.js`). Para ver o
+  efeito completo num computador com «movimento reduzido», abrir uma vez qualquer página com `?movimento=completo` (fica guardado);
+  `?movimento=reduzido` desfaz. Os blocos `prefers-reduced-motion` dos CSS foram restringidos a `html:not(.cine-motion)` por
+  `tools/scope-reduced-motion.mjs` para esta opção funcionar. O vídeo do hero toca sempre, por decisão do dono.

@@ -34,7 +34,7 @@
   .bkf-hours b { font-size: clamp(2.6rem, 3.4vw, 3.6rem); }
   .su-row { height: clamp(540px, 68vh, 640px); }
   .su-body h3 { font-size: clamp(2.1rem, 3vw, 3rem); }
-  .dx-meta time { font-size: clamp(4.4rem, 6.6vw, 7.4rem); }
+
   .cu-title { font-size: clamp(2.8rem, 5.2vw, 6rem); }
   .cu-big { font-size: clamp(3.2rem, 9vw, 10rem); }
   .cine-cta-title { font-size: clamp(2.8rem, 5.6vw, 6.2rem); }

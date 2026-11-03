@@ -36,12 +36,6 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" ${stroke}/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" ${stroke}/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" ${stroke}/></symbol>
-    <symbol id="i-hut" viewBox="0 0 48 48">
-      <path d="M24 3 6 21h36L24 3Z" fill="currentColor"/>
-      <path d="M24 3 15 12h18L24 3Z" fill="#C89640"/>
-      <path d="M11 21v11M19 21v11M29 21v11M37 21v11M8 26.5h32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M4 38c3-2.2 5.5-2.2 8.5 0s5.5 2.2 8.5 0 5.5-2.2 8.5 0 5.5 2.2 8.5 0 5-2.2 6 0M8 43.5c2.6-1.8 5-1.8 7.5 0s5 1.8 7.5 0 5-1.8 7.5 0 5 1.8 7.5 0" fill="none" stroke="#A8432A" stroke-width="2.4" stroke-linecap="round"/>
-    </symbol>
   </defs>
 </svg>`;
 
@@ -61,6 +55,7 @@ function businessLd(t) {
     name: site.name,
     url: absUrl(href("home", t.lang)),
     image: absUrl("/assets/img/og-image.jpg"),
+    logo: absUrl("/assets/img/brand/logo-lauhata-beach-escape-160.png"),
     address: {
       "@type": "PostalAddress",
       addressLocality: site.address.locality,
@@ -93,7 +88,7 @@ function businessLd(t) {
 }
 
 export const logo = (t, cls = "") => `<a class="brand ${cls}" href="${href("home", t.lang)}" aria-label="${esc(site.name)} — ${esc(t.nav.home)}">
-  <svg class="brand-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+  <span class="brand-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
   <span class="brand-text"><span class="brand-name">Lauhata</span><span class="brand-line">${esc(t.brandLine)}</span></span>
 </a>`;
 
@@ -132,7 +127,7 @@ function cartUi(t) {
       <button class="icon-btn" type="button" data-cart-close aria-label="${esc(O.close)}">${icon("close")}</button>
     </header>
     <div class="cart-step" data-step="list">
-      <div class="cart-scroll" data-lenis-prevent>
+      <div class="cart-scroll">
         <ul class="cart-lines" data-cart-lines></ul>
         <div class="cart-empty" data-cart-empty hidden>
           <svg class="cart-empty-mark" aria-hidden="true"><use href="#i-cart"></use></svg>
@@ -148,7 +143,7 @@ function cartUi(t) {
       </footer>
     </div>
     <form class="cart-step" data-step="checkout" data-order-form novalidate hidden>
-      <div class="cart-scroll" data-lenis-prevent>
+      <div class="cart-scroll">
         <p class="cart-mini" data-cart-mini></p>
         <div class="field"><label for="ord-name">${esc(O.name)}</label><input id="ord-name" name="name" autocomplete="name" maxlength="80"><p class="error" data-err="name" aria-live="polite"></p></div>
         ${typeField}
@@ -317,7 +312,7 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${esc(t.footer.tagline)}">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -336,20 +331,16 @@ ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
 ${o.menu ? menuJson(o.menu) : ""}
 <script src="/assets/js/picker.js" defer></script>
+<script src="/assets/js/vendor/gsap.min.js" defer></script>
+<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/cinema.js" defer></script>
 <script src="/assets/js/order.js" defer></script>
 ${site.gaId ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${esc(site.gaId)}",{anonymize_ip:true});</script>` : ""}
 </head>
 <body class="${o.hero ? "has-hero" : ""}">
 ${SPRITE}
-${o.intro ? `<div class="intro" data-intro aria-hidden="true">
-  <svg class="intro-mark"><use href="#i-hut"></use></svg>
-  <p class="intro-name">${"Lauhata".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p>
-  <p class="intro-line">${esc(t.brandLine)}</p>
-</div>
-<script>try{if(sessionStorage.getItem("lauhata-intro")||matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("no-intro");sessionStorage.setItem("lauhata-intro","1")}catch(e){}</script>` : ""}
-<div class="cursor" data-cursor-dot aria-hidden="true"><span data-cursor-label></span></div>
 <a class="skip-link" href="#main">${esc(t.nav.skip)}</a>
 ${header(t, o.page, o.alt)}
 <main id="main" tabindex="-1">
@@ -369,7 +360,6 @@ ${cartUi(t)}
   <figure class="lb-figure"><img alt="" data-lb-img><figcaption data-lb-cap></figcaption></figure>
   <button class="icon-btn lb-next" type="button" aria-label="${esc(t.common.next)}" data-lb-next>${icon("right")}</button>
 </dialog>
-<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
 </body>
 </html>
 `;

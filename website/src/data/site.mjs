@@ -1,7 +1,7 @@
 // Business data for Lauhata. Every empty value is a pending item: the site hides or flags it
 // until the real data is filled in. Run `npm run build` after any change.
 export default {
-  name: "Lauhata",
+  name: "Lauhata Beach Escape",
 
   // Final domain, without a trailing slash. Placeholder until the domain is registered.
   siteUrl: "https://lauhata.example",
@@ -19,7 +19,7 @@ export default {
     countryCode: "TL",
   },
   // Map search used by the embedded map until exact coordinates are confirmed.
-  mapQuery: "Lauhata, Liquiçá, Timor-Leste",
+  mapQuery: "Lauhata Beach Escape, Liquiçá, Timor-Leste", // the place name as on Google Maps: the pin lands on Lauhata Beach Escape, not on the village
   // Exact coordinates, e.g. { lat: -8.6, lng: 125.4 }. PENDING.
   geo: null,
 
@@ -69,7 +69,7 @@ export default {
   // Hero video (optional). Leave empty and the hero shows its photo only. When Lauhata supplies real footage,
   // optimise it (short loop, no sound, ideally under 3 MB), put it in src/assets/video/ and set e.g.
   // "/assets/video/hero.mp4": the photo stays on screen and the video fades in over it once it can play.
-  heroVideo: "",
+  heroVideo: "/assets/video/hero.mp4",
 
   // Optional fields for search engines (Google). Each one is only written to the page once it is filled.
   // priceRange: e.g. "$$"; servesCuisine: e.g. ["Timorese", "Seafood"];

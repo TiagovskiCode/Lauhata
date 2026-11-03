@@ -47,7 +47,7 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
     .map((r, i) => {
       const n = rooms.findIndex((x) => x.id === r.id); // its number among all room types
       return `<article class="room-row${i % 2 ? " is-flip" : ""}">
-      <a class="room-row-img${arch ? " is-arch" : ""}" href="${href("room:" + r.id, L)}" data-cursor="${esc(t.common.viewRoom)}" tabindex="-1" aria-hidden="true">
+      <a class="room-row-img${arch ? " is-arch" : ""}" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">
         ${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw", ratio: arch ? "1/1" : "5/4", attrs: "data-clip", parallax: 0.1 })}
         ${r.badge ? `<span class="pill pill-dark">${esc(r.badge[L])}</span>` : ""}
       </a>
@@ -58,7 +58,7 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
         ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
         <div class="room-foot">
           ${fromPrice(t, r)}
-          <a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}" data-magnetic>${esc(H.book)}${icon("arrow")}</a>
+          <a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(H.book)}${icon("arrow")}</a>
         </div>
       </div>
     </article>`;
@@ -73,12 +73,12 @@ function cineCta(t) {
   <div class="cine-cta-bg">${figure(t, "palmSunset", { sizes: "100vw", parallax: 0.15 })}</div>
   <div class="cine-cta-shade" aria-hidden="true"></div>
   <div class="wrap cine-cta-content">
-    <svg class="cta-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <span class="cta-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
     <h2 id="cta-title" class="cine-cta-title" data-split>${esc(c.title)} <em>${esc(c.titleAccent)}</em></h2>
     <p${rv(200)}>${esc(c.body)}</p>
     <div class="btn-row center"${rv(300)}>
-      <a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" data-magnetic>${icon("whatsapp")}${esc(c.wa)}</a>
-      <a class="btn btn-ghost-light btn-lg" href="${href("stay", t.lang, "#reservar")}" data-magnetic>${esc(c.availability)}</a>
+      <a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(c.wa)}</a>
+      <a class="btn btn-ghost-light btn-lg" href="${href("stay", t.lang, "#reservar")}">${esc(c.availability)}</a>
     </div>
   </div>
 </section>`;
@@ -288,7 +288,7 @@ function roomCards(t, list, cls = "") {
     .join("")}</div>`;
 }
 
-const HUT_DECO = `<svg class="hut-deco" viewBox="0 0 200 160" aria-hidden="true"><path d="M100 4 18 74h164L100 4Z" fill="currentColor"/><path d="M44 74v62M78 74v62M122 74v62M156 74v62M30 100h140" stroke="currentColor" stroke-width="10" stroke-linecap="round"/></svg>`;
+const HUT_DECO = ""; // (the faint watermark was removed with the symbol redesign: the logo is the supplied one)
 
 function infoGrid(t) {
   const L = t.lang;
@@ -350,7 +350,7 @@ function chooseSection(t) {
     </a>`;
   return `<section class="choose" id="escolher" aria-label="${esc(C.aria)}">
   <div class="wrap">
-    <p class="statement-text choose-line" data-scrub>${esc(C.statement)}</p>
+    <p class="statement-text choose-line" data-fade>${esc(C.statement)}</p>
     <div class="choose-grid">
       ${panel("ch-eat", "01", "foodSpread", C.eat, "#comer", "(min-width: 900px) 56vw, 92vw")}
       ${panel("ch-sleep", "02", "roomFamily", C.sleep, "#quartos", "(min-width: 900px) 40vw, 92vw", fmt(C.sleep.sub, { n: rooms.length }))}
@@ -421,33 +421,43 @@ function suitesSection(t) {
 </section>`;
 }
 
-// A day at Lauhata: a sticky arch window changes photo while the page colour moves from morning to dusk.
-// The moments are suggestions, not opening hours, and the page says so.
+// A day at Lauhata, as a cinema scene: one pinned full-screen stage; as the page scrolls the picture changes from morning to
+// dusk (the five real aerial frames, the camera rising as the day goes on) while the colour grade warms and darkens.
+// Without JavaScript, with a failed script or without GSAP it is a plain list of five pictures with their text.
+// The five moments are suggestions, not opening hours or guaranteed activities, and the section says so.
+const DAY_FRAMES = [
+  { key: "heroCover", grade: "rgba(70, 120, 150, 0.30)", dim: 0.1 },
+  { key: "aerialDay2", grade: "rgba(120, 175, 165, 0.12)", dim: 0 },
+  { key: "aerialGarden", grade: "rgba(255, 246, 226, 0.10)", dim: 0 },
+  { key: "aerialDay4", grade: "rgba(217, 168, 95, 0.28)", dim: 0.12 },
+  { key: "aerialCoast", grade: "rgba(199, 101, 69, 0.36)", dim: 0.42 },
+];
 function daySection(t) {
   const D = t.land.day;
   const steps = D.steps;
-  return `<section class="dayx" id="experiencias" aria-labelledby="day-title" data-dayx data-step="0">
-  <div class="wrap dx-wrap">
-    <div class="dx-stage" aria-hidden="true">
-      <div class="dx-arch">${steps.map((s, i) => `<div class="dx-img${i === 0 ? " is-on" : ""}">${figure(t, s.img, { sizes: "(min-width: 900px) 34vw, 80vw" })}</div>`).join("")}</div>
-      <ol class="dx-dots">${steps.map((s, i) => `<li${i === 0 ? ' class="is-on"' : ""}><i></i><span>${esc(s.time)}</span></li>`).join("")}</ol>
-    </div>
-    <div class="dx-copy">
-      ${heading({ eyebrow: D.eyebrow, title: D.title, lead: D.lead, id: "day-title" })}
-      <ol class="dx-steps">${steps
-        .map((s, i) => `<li class="dx-step${i === 0 ? " is-on" : ""}" data-dx-step="${i}">
-        <div class="dx-pic">${figure(t, s.img, { sizes: "92vw", ratio: "4/3" })}</div>
-        <p class="dx-meta"><span class="dx-n" aria-hidden="true">0${i + 1}</span><time>${esc(s.time)}</time><span>${esc(s.period)}</span></p>
+  return `<section class="day" id="experiencias" aria-labelledby="day-title" data-day>
+  <div class="day-track"><div class="day-stage" data-day-stage>
+    <header class="day-head">
+      <h2 id="day-title" class="day-title">${esc(D.title)}</h2>
+      <p class="day-lead">${esc(D.lead)}</p>
+    </header>
+    <ol class="day-steps">${steps
+      .map((s, i) => `<li class="day-step" data-day-step data-grade="${DAY_FRAMES[i].grade}" data-dim="${DAY_FRAMES[i].dim}">
+      ${figure(t, DAY_FRAMES[i].key, { sizes: "100vw", cls: "day-frame", decorative: true })}
+      <div class="day-copy">
+        <p class="day-meta"><time class="day-time">${esc(s.time)}</time><span class="day-period">${esc(s.period)}</span></p>
         <h3>${esc(s.t)}</h3>
-        <p>${esc(s.d)}</p>
-      </li>`)
-        .join("")}</ol>
-      <p class="dx-note">${esc(D.note)}</p>
-    </div>
-  </div>
+        <p class="day-text">${esc(s.d)}</p>
+      </div>
+    </li>`)
+      .join("")}</ol>
+    <div class="day-grade" aria-hidden="true"></div>
+    <div class="day-dim" aria-hidden="true"></div>
+    <ol class="day-rail" aria-hidden="true">${steps.map((s) => `<li>${esc(s.time)}</li>`).join("")}<i class="day-rail-fill"></i></ol>
+  </div></div>
+  <p class="day-note">${esc(D.note)}</p>
 </section>`;
 }
-
 // The end of the day: a coastal photograph beside two clear actions.
 function duskSection(t) {
   const L = t.lang;
@@ -559,6 +569,33 @@ function reachSection(t) {
 </section>`;
 }
 
+// The facts a visitor looks for first, right under the hero: when the restaurant is open, where it is and how to book.
+// Everything shown here is confirmed data (hours from the printed menu); nothing is guessed.
+function glanceSection(t) {
+  const L = t.lang;
+  const G = t.land.glance;
+  const hours = site.restaurantHours.map((h) => `<span>${esc(h.days[L])} <b>${esc(h.hours)}</b></span>`).join("");
+  return `<section class="glance" aria-label="${esc(G.aria)}">
+  <div class="wrap glance-grid">
+    <div class="gl-cell"><p class="gl-label">${icon("cutlery")}${esc(G.eat)}</p><p class="gl-value gl-hours">${hours || esc(t.common.hoursTbc)}</p></div>
+    <div class="gl-cell"><p class="gl-label">${icon("pin")}${esc(G.place)}</p><p class="gl-value">${esc(G.placeValue)}</p><a class="gl-link" href="${directionsLink()}" target="_blank" rel="noopener">${esc(G.route)}</a></div>
+    <div class="gl-cell"><p class="gl-label">${icon("whatsapp")}${esc(G.book)}</p><p class="gl-value">${esc(G.bookValue)}</p><a class="gl-link" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${esc(G.bookLink)}</a></div>
+  </div>
+</section>`;
+}
+
+// A full-screen "scene": one real aerial still in a wide cinema frame, a single line over it. The photo opens like a
+// shutter as it enters, drifts slowly against the scroll and is darkened at the edges (see design.css).
+function sceneSection(t, key, copy) {
+  return `<section class="scene" aria-label="${esc(copy.line)}">
+  <div class="scene-media">${figure(t, key, { sizes: "100vw" })}</div>
+  <div class="wrap scene-text">
+    <p class="scene-note" data-fade>${esc(copy.note)}</p>
+    <h2 class="scene-line" data-split>${esc(copy.line)}</h2>
+  </div>
+</section>`;
+}
+
 export function home(t) {
   const L = t.lang;
   const H = t.home;
@@ -571,9 +608,9 @@ export function home(t) {
     ? site.restaurantHours.map((h) => `<div><dt>${esc(h.days[L])}</dt><dd>${esc(h.hours)}</dd></div>`).join("")
     : `<div><dd class="tbc">${esc(t.common.hoursTbc)}</dd></div>`;
   const body = `
-<section class="cine-hero hx" aria-labelledby="hero-title">
+<section class="cine-hero hx${site.heroVideo ? " has-video" : ""}" aria-labelledby="hero-title">
   <div class="hx-bg">
-    ${figure(t, "coastSunset", { eager: true, sizes: "100vw", art: [{ key: "heroSunset", media: "(max-width: 860px)" }] })}
+    ${figure(t, "heroCover", { eager: true, sizes: "100vw" })}
     ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}
   </div>
   <div class="hx-shade" aria-hidden="true"></div>
@@ -583,11 +620,14 @@ export function home(t) {
     <p class="cine-lead" data-fade style="--d:300ms">${esc(hero.lead)}</p>
   </div>
   <div class="wrap cine-bar" data-fade style="--d:400ms">${bookingCard(t)}</div>
-  <a class="scroll-cue" href="#escolher" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a>
-</section>
+  <a class="scroll-cue" href="#escolher" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a></section>
 ${TAIS}
 
+${glanceSection(t)}
+
 ${chooseSection(t)}
+
+${sceneSection(t, "aerialGarden", LD.scenes.garden)}
 
 <section class="section eat" id="comer" aria-labelledby="eat-title">
   <div class="wrap eat-grid">
@@ -601,7 +641,7 @@ ${chooseSection(t)}
       <ul class="dish-lines"${rv(120)}>${dishes.map((d) => dishLine(t, d)).join("")}</ul>
       <p class="eat-note"${rv(140)}>${esc(menuNote[L])}</p>
       <div class="btn-row"${rv(160)}>
-        <a class="btn btn-dark btn-lg" href="${href("restaurant", L, "#ementa")}" data-magnetic>${esc(H.dishesCta)}${icon("arrow")}</a>
+        <a class="btn btn-dark btn-lg" href="${href("restaurant", L, "#ementa")}">${esc(H.dishesCta)}${icon("arrow")}</a>
         <a class="btn btn-outline btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(hero.ctaTable)}</a>
       </div>
     </div>
@@ -617,13 +657,6 @@ ${daySection(t)}
 ${duskSection(t)}
 
 ${cultureSection(t)}
-
-<section class="section gallery-section" id="galeria" aria-labelledby="gal-title">
-  <div class="wrap">
-    ${heading({ eyebrow: t.gallery.eyebrow, title: t.gallery.title, id: "gal-title" })}
-    ${galleryGrid(t, ["coastSunset", "foodSpread", "roomFamily", "heroSunset", "terrace", "weaving"], "gallery-6")}
-  </div>
-</section>
 
 ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
   <div class="wrap">
@@ -643,6 +676,8 @@ ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-ti
   </div>
 </section>
 
+${sceneSection(t, "aerialCoast", LD.scenes.coast)}
+
 ${reachSection(t)}`;
   return {
     page: "home",
@@ -651,11 +686,9 @@ ${reachSection(t)}`;
     path: href("home", L),
     alt: href("home", other(L)),
     preload: [
-      { key: "coastSunset", sizes: "100vw", media: "(min-width: 861px)" },
-      { key: "heroSunset", sizes: "100vw", media: "(max-width: 860px)" },
+      { key: "heroCover", sizes: "100vw" },
     ],
     hero: true,
-    intro: true,
     ld: [faqLd(t)],
     menu: [...dishes, ...bkfDishes],
     body,
@@ -750,7 +783,7 @@ ${pageHero(t, {
 <section class="section gallery-section" aria-labelledby="sg-title">
   <div class="wrap">
     ${heading({ eyebrow: t.gallery.eyebrow, title: t.gallery.title, id: "sg-title" })}
-    ${galleryGrid(t, ["terrace", "roomGarden", "verandaBamboo", "roomFamily"], "gallery-4")}
+    ${galleryGrid(t, ["terrace", "roomGarden", "coastSunset", "roomFamily"], "gallery-4")}
   </div>
 </section>`;
   return {
@@ -776,8 +809,8 @@ export function room(t, r) {
   ]);
   const H = t.home.rooms;
   const facts = [
-    r.capacity ? `<div><dt>${esc(t.stay.roomCapacity)}</dt><dd>${esc(r.capacity[L])}</dd></div>` : "",
-    r.beds ? `<div><dt>${esc(t.stay.roomBeds)}</dt><dd>${esc(r.beds[L])}</dd></div>` : "",
+    site.roomDetailsConfirmed && r.capacity ? `<div><dt>${esc(t.stay.roomCapacity)}</dt><dd>${esc(r.capacity[L])}</dd></div>` : "",
+    site.roomDetailsConfirmed && r.beds ? `<div><dt>${esc(t.stay.roomBeds)}</dt><dd>${esc(r.beds[L])}</dd></div>` : "",
     `<div><dt>${esc(H.from)}</dt><dd>${r.price ? `${esc(r.price)} <small>${esc(H.night)}</small>` : `<span class="tbc">${esc(t.common.toConfirm)}</span>`}</dd></div>`,
   ].join("");
   const body = `
@@ -791,11 +824,11 @@ ${pageHero(t, {
 })}
 
 <section class="section">
-  <div class="wrap room-detail">
+  <div class="wrap room-detail${r.images.length > 1 ? "" : " is-solo"}">
     <div>
       <p class="body-text${r.placeholder ? " tbc-block" : ""}"${rv()}>${esc(r.description[L])}</p>
       <dl class="room-facts"${rv(80)}>${facts}</dl>
-      ${r.features.length ? `<div${rv(120)}><h2 class="h-small">${esc(t.stay.roomFeatures)}</h2><ul class="chips chips-light">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul></div>` : ""}
+      ${site.roomDetailsConfirmed && r.features.length ? `<div${rv(120)}><h2 class="h-small">${esc(t.stay.roomFeatures)}</h2><ul class="chips chips-light">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul></div>` : ""}
       ${responseLine(t)}
     </div>
     ${galleryGrid(t, r.images.slice(1), "gallery-room")}
@@ -833,7 +866,7 @@ ${pageHero(t, {
   title: t.home.location.title,
   accent: t.home.location.titleAccent,
   lead: t.home.location.body,
-  image: "coastSunset",
+  image: "aerialCoast",
   crumbs: bc.html,
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
 })}
@@ -865,7 +898,7 @@ ${cineCta(t)}`;
     description: t.meta.contact.description,
     path: href("contact", L),
     alt: href("contact", other(L)),
-    preload: "coastSunset",
+    preload: "aerialCoast",
     hero: true,
     ld: [bc.ld, faqLd(t)],
     body,
@@ -878,7 +911,7 @@ export function thanks(t) {
   const body = `
 <section class="section simple-page">
   <div class="wrap narrow center">
-    <svg class="simple-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <span class="simple-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
     <p class="eyebrow eyebrow-lines">${esc(t.thanks.eyebrow)}</p>
     <h1 class="title">${esc(t.thanks.title)}</h1>
     <p class="lead" data-thanks-body data-table="${esc(t.thanks.tableBody)}" data-room="${esc(t.thanks.roomBody)}" data-order="${esc(t.thanks.orderBody)}">${esc(t.thanks.genericBody)}</p>
@@ -932,7 +965,7 @@ export function notFound(t) {
   const body = `
 <section class="section simple-page">
   <div class="wrap narrow center">
-    <svg class="simple-mark" aria-hidden="true"><use href="#i-hut"></use></svg>
+    <span class="simple-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
     <p class="eyebrow eyebrow-lines">${esc(t.notFound.eyebrow)}</p>
     <h1 class="title">${esc(t.notFound.title)}</h1>
     <p class="lead">${esc(t.notFound.body)}</p>

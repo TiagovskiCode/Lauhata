@@ -1,4 +1,4 @@
-/* Lauhata — site behaviour. Vanilla JS, no dependencies (Lenis is optional and loaded separately). */
+/* Lauhata — site behaviour. Vanilla JS, no dependencies. */
 (() => {
   "use strict";
 
@@ -6,7 +6,17 @@
   const F = CFG.i18n.form;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Reduced motion is respected. To see the full effect on a computer that asks for reduced motion, open any page with
+  // ?movimento=completo (it is remembered); ?movimento=reduzido undoes it.
+  let forcedMotion = false;
+  try {
+    const q = new URLSearchParams(location.search).get("movimento");
+    if (q === "completo") localStorage.setItem("lauhata-motion", "full");
+    else if (q === "reduzido") localStorage.removeItem("lauhata-motion");
+    forcedMotion = localStorage.getItem("lauhata-motion") === "full";
+  } catch (e) { /* storage blocked: the system setting decides */ }
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches && !forcedMotion;
+  document.documentElement.classList.toggle("cine-motion", !reduced);
   const fmt = (s, vars) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
   const todayISO = () => {
     const d = new Date();
@@ -15,6 +25,9 @@
   };
 
   document.documentElement.classList.add("js");
+  // Fail-safe: ".js" hides elements until their reveal runs. If this script throws before it reaches the end
+  // (the last line clears the timer), take ".js" off again so every section stays readable.
+  const failsafe = setTimeout(() => document.documentElement.classList.remove("js"), 3500);
 
   /* ---------- Header: border once scrolled, hides on scroll down ---------- */
   const header = $("[data-header]");
@@ -43,7 +56,8 @@
     } else if (hidden ? y > anchorY : y < anchorY) {
       anchorY = y; // still moving the same way: keep the turning point up to date
     } else if (Math.abs(y - anchorY) > 12) {
-      header?.classList.toggle("is-hidden", y > anchorY);
+      // Only phones hide the header (they have the bottom bar). On a computer it stays, so "Reservar" is always in reach.
+      header?.classList.toggle("is-hidden", y > anchorY && window.innerWidth <= 860);
       anchorY = y;
     }
     const barOn = y > window.innerHeight * 0.6 && !formInView;
@@ -137,14 +151,12 @@
           list = items;
           show(i);
           lb.showModal();
-          window.lenis?.stop();
         })
       );
     });
     $("[data-lb-close]", lb).addEventListener("click", () => lb.close());
     $("[data-lb-prev]", lb).addEventListener("click", () => show(idx - 1));
     $("[data-lb-next]", lb).addEventListener("click", () => show(idx + 1));
-    lb.addEventListener("close", () => window.lenis?.start());
     lb.addEventListener("click", (e) => { if (e.target === lb) lb.close(); });
     lb.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") show(idx - 1);
@@ -422,55 +434,61 @@
   }
   $$("[data-split]").forEach((el) => splitWords(el));
 
-  // Hero entrance: the title rises word by word and the rest fades in, all within ~1 s.
-  // On the first visit the intro curtain covers the page while it loads, then lifts.
-  const intro = $("[data-intro]");
-  const introShown = intro && !document.documentElement.classList.contains("no-intro");
+  // Hero entrance: the title rises word by word and the rest fades in, all within ~1 s of the page being ready.
   const heroSection = $(".cine-hero");
   const revealHero = () => {
     heroSection?.classList.add("is-ready");
     $$("[data-split]", heroSection || document.createElement("div")).forEach((el) => el.classList.add("is-in"));
   };
   if (reduced) revealHero();
-  else if (!introShown) setTimeout(revealHero, 60);
-  else {
-    // performance.now() counts from navigation start, so these are times since the click.
-    let lifted = false;
-    const lift = () => {
-      if (lifted) return;
-      lifted = true;
-      intro.classList.add("is-out");
-      setTimeout(revealHero, 350);
-    };
-    const afterLoad = () => setTimeout(lift, Math.max(0, 1600 - performance.now()));
-    if (document.readyState === "complete") afterLoad();
-    else window.addEventListener("load", afterLoad, { once: true });
-    setTimeout(lift, Math.max(0, 4000 - performance.now()));
-  }
+  else setTimeout(revealHero, 60);
 
   // Hero video (only if site.heroVideo is set): the photo is already on screen; once the page has loaded
-  // the video is fetched and fades in over it. Skipped for reduced motion, data saver and slow
-  // connections, paused while the hero is off screen, and removed if it fails (the photo stays).
+  // the video is fetched and fades in over it, then plays and loops for as long as the page is open. It always plays,
+  // also with "reduced motion" (a decision of the owner), and there is no pause button; if something pauses it
+  // (a media key, the browser) it starts again. It is only held back while the hero is off screen (it resumes when
+  // the hero comes back) and it is not fetched with data saver or a 2G connection. If it fails, the photo stays.
   const heroVideo = $("[data-hero-video]");
   if (heroVideo) {
     const conn = navigator.connection || {};
-    if (reduced || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
+    if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
       heroVideo.remove();
     } else {
+      let onScreen = true;
+      const keepPlaying = () => {
+        if (onScreen && !document.hidden && heroVideo.classList.contains("is-on") && heroVideo.paused) heroVideo.play().catch(() => {});
+      };
       const start = () => {
         heroVideo.addEventListener("error", () => heroVideo.remove(), { once: true });
+        // The cover (the video's own first frame) is already on screen. The video loads behind it and, as soon as it is
+        // really playing, fades in over it: same frame, same framing, so the cover seems to start moving.
+        heroVideo.addEventListener("playing", () => heroVideo.classList.add("is-on"), { once: true });
         heroVideo.addEventListener("canplay", () => {
-          heroVideo.play().then(() => heroVideo.classList.add("is-on")).catch(() => heroVideo.remove());
+          // The cover stays on its own for at least COVER_MS after the page started (a fast connection would otherwise
+          // swap it for the video straight away). The video waits on its first frame until then, so the fade starts
+          // from exactly the picture that is on screen.
+          const COVER_MS = 1300;
+          setTimeout(() => {
+            // If the browser refuses to autoplay, it starts with the visitor's first touch, key press or scroll.
+            heroVideo.play().catch(() => {
+              heroVideo.classList.add("is-on"); // paused on its first frame, which is the cover: nothing visibly changes
+              ["pointerdown", "touchstart", "keydown", "wheel", "scroll"].forEach((ev) => window.addEventListener(ev, keepPlaying, { once: true, passive: true }));
+            });
+          }, Math.max(0, COVER_MS - performance.now()));
         }, { once: true });
+        heroVideo.preload = "auto";
         heroVideo.src = heroVideo.dataset.src;
         heroVideo.load();
       };
-      if (document.readyState === "complete") setTimeout(start, 800);
-      else window.addEventListener("load", () => setTimeout(start, 800), { once: true });
+      if (document.readyState === "complete") setTimeout(start, 150);
+      else window.addEventListener("load", () => setTimeout(start, 150), { once: true });
+      heroVideo.addEventListener("pause", () => setTimeout(keepPlaying, 0));
+      document.addEventListener("visibilitychange", keepPlaying);
       if ("IntersectionObserver" in window) {
         new IntersectionObserver(([e]) => {
+          onScreen = e.isIntersecting;
           if (!heroVideo.classList.contains("is-on")) return;
-          if (e.isIntersecting) heroVideo.play().catch(() => {}); else heroVideo.pause();
+          if (onScreen) keepPlaying(); else heroVideo.pause();
         }, { threshold: 0.1 }).observe(heroVideo);
       }
     }
@@ -500,49 +518,8 @@
     });
   });
 
-  // A day at Lauhata: the step in the middle of the screen sets the photo, the dots and the colour of the section.
-  const dayx = $("[data-dayx]");
-  if (dayx && "IntersectionObserver" in window) {
-    const dxSteps = $$("[data-dx-step]", dayx);
-    const dxImgs = $$(".dx-img", dayx);
-    const dxDots = $$(".dx-dots li", dayx);
-    const setStep = (i) => {
-      dayx.dataset.step = String(i);
-      dxSteps.forEach((s, k) => s.classList.toggle("is-on", k === i));
-      dxImgs.forEach((s, k) => s.classList.toggle("is-on", k === i));
-      dxDots.forEach((s, k) => s.classList.toggle("is-on", k === i));
-    };
-    const dxObserver = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) setStep(Number(e.target.dataset.dxStep)); }),
-      { rootMargin: "-48% 0px -48% 0px" }
-    );
-    dxSteps.forEach((s) => dxObserver.observe(s));
-  }
-
-  // Hero slideshow: slow crossfade between photos.
-  const slides = $$("[data-slides] .slide");
-  if (slides.length > 1 && !reduced) {
-    let s = 0;
-    setInterval(() => {
-      slides[s].classList.remove("is-active");
-      s = (s + 1) % slides.length;
-      slides[s].classList.add("is-active");
-    }, 6500);
-  }
-
-  // Statement: words light up as the paragraph scrolls through the screen.
-  const scrub = $("[data-scrub]");
-  let scrubWords = [];
-  if (scrub) {
-    splitWords(scrub, "", "sw");
-    scrubWords = $$(".sw", scrub);
-    if (reduced) scrubWords.forEach((w) => w.classList.add("on"));
-  }
-
-  const parallaxImgs = $$("[data-parallax]");
-  const day = $("[data-day]");
-  const dayLine = $("[data-day-line]");
-  const dusk = $("[data-dusk]"); // the panorama: 0 = dinner light, 1 = night
+  // Parallax is for a mouse and a wide screen only: on a phone the image just sits in its frame. When GSAP is on the page, cinema.js does it.
+  const parallaxImgs = !window.gsap && fine && window.matchMedia("(min-width: 861px)").matches ? $$("[data-parallax]") : []; // with GSAP (cinema.js) it does the parallax
   const hx = $(".hx"); // the hero: its words drift up and fade as the page scrolls
 
   function frame() {
@@ -556,26 +533,7 @@
         img.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0) scale(1.18)`;
       });
     }
-    // Statement words.
-    if (scrub && !reduced) {
-      const r = scrub.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
-      const lit = Math.round(p * scrubWords.length);
-      scrubWords.forEach((w, i) => w.classList.toggle("on", i < lit));
-    }
     if (hx && !reduced) hx.style.setProperty("--hp", Math.min(1, Math.max(0, window.scrollY / (hx.offsetHeight * 0.7))).toFixed(3));
-    // Panorama: night falls as the section scrolls up through the screen (CSS reads --p).
-    if (dusk && !reduced) {
-      const r = dusk.getBoundingClientRect();
-      const p = Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh * 0.4)));
-      dusk.style.setProperty("--p", p.toFixed(3));
-    }
-    // Timeline line is drawn as the section scrolls past.
-    if (day && dayLine) {
-      const r = day.getBoundingClientRect();
-      const p = reduced ? 1 : Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (r.height * 0.6)));
-      dayLine.style.setProperty("--p", p.toFixed(3));
-    }
   }
   let ticking = false;
   const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };
@@ -584,59 +542,6 @@
   window.addEventListener("load", requestFrame);
   frame();
 
-  // Custom cursor with a label over links that carry data-cursor.
-  const dot = $("[data-cursor-dot]");
-  if (dot && fine && !reduced) {
-    const label = $("[data-cursor-label]", dot);
-    let x = -100, y = -100, cx = -100, cy = -100;
-    window.addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; dot.classList.add("is-on"); }, { passive: true });
-    document.addEventListener("pointerleave", () => dot.classList.remove("is-on"));
-    const loop = () => {
-      cx += (x - cx) * 0.2;
-      cy += (y - cy) * 0.2;
-      dot.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      requestAnimationFrame(loop);
-    };
-    loop();
-    $$("[data-cursor]").forEach((el) => {
-      el.addEventListener("pointerenter", () => { label.textContent = el.dataset.cursor; dot.classList.add("is-big"); });
-      el.addEventListener("pointerleave", () => dot.classList.remove("is-big"));
-    });
-  }
-
-  // Magnetic buttons: they lean towards the pointer.
-  if (fine && !reduced) {
-    $$("[data-magnetic]").forEach((el) => {
-      el.addEventListener("pointermove", (e) => {
-        const r = el.getBoundingClientRect();
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        el.style.transform = `translate(${dx * 0.22}px, ${dy * 0.3}px)`;
-      });
-      el.addEventListener("pointerleave", () => { el.style.transform = ""; });
-    });
-  }
-
-  /* ---------- Smooth scroll (Lenis) — desktop pointer only, never with reduced motion ---------- */
-  window.addEventListener("load", () => {
-    if (reduced || !window.Lenis || !window.matchMedia("(pointer: fine)").matches) return;
-    const lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true });
-    window.lenis = lenis;
-    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
-    requestAnimationFrame(raf);
-    // In-page anchors go through Lenis so the offset for the fixed header is kept.
-    $$('a[href*="#"]').forEach((a) => {
-      const url = new URL(a.href);
-      if (url.pathname !== location.pathname || !url.hash) return;
-      a.addEventListener("click", (e) => {
-        const target = document.getElementById(url.hash.slice(1));
-        if (!target) return;
-        e.preventDefault();
-        lenis.scrollTo(target, { offset: -(header?.offsetHeight || 0) - 16 });
-        history.pushState(null, "", url.hash);
-      });
-    });
-    nav?.addEventListener("close", () => lenis.start());
-    navOpen?.addEventListener("click", () => lenis.stop());
-  });
+  // Reached the end without an error: the reveal states set by ".js" can all be resolved, so keep them.
+  clearTimeout(failsafe);
 })();

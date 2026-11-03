@@ -109,7 +109,6 @@
 
   function lock(on) {
     root.classList.toggle("has-modal", on);
-    if (window.lenis) on ? window.lenis.stop() : window.lenis.start();
   }
   function openDialog(d) {
     if (!d || d.open) return;
@@ -456,8 +455,7 @@
       const top = section.getBoundingClientRect().top + window.scrollY;
       const down = top > window.scrollY;
       const y = Math.max(0, top - nav.offsetHeight - 12 - (down ? 0 : header ? header.offsetHeight : 0));
-      if (window.lenis) window.lenis.scrollTo(y, { duration: 0.9 });
-      else window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
+      window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
     }
     links.forEach((a) => a.addEventListener("click", (e) => {
       e.preventDefault();

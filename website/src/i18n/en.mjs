@@ -12,11 +12,11 @@ export default {
       description: "Restaurant and stay in Lauhata, Liquiçá, Timor-Leste. See the menu and the rooms, and ask for a table or a room on WhatsApp.",
     },
     restaurant: {
-      title: "Restaurant and menu — Lauhata, Liquiçá",
+      title: "Restaurant and menu — Lauhata Beach Escape, Liquiçá",
       description: "Menu of Lauhata's restaurant in Liquiçá, with category filters, house dishes and table booking requests on WhatsApp.",
     },
     stay: {
-      title: "Stay and rooms — Lauhata, Liquiçá",
+      title: "Stay and rooms — Lauhata Beach Escape, Liquiçá",
       description: "Room types, photos and a booking request with dates and guests, sent straight to Lauhata's WhatsApp.",
     },
     room: {
@@ -24,7 +24,7 @@ export default {
       description: "{room} at Lauhata in Liquiçá: photos, amenities and booking requests on WhatsApp. Lauhata confirms availability.",
     },
     contact: {
-      title: "Location and contact — Lauhata, Liquiçá",
+      title: "Location and contact — Lauhata Beach Escape, Liquiçá",
       description: "How to get to Lauhata in Liquiçá, west of Dili: address, map, contact details and answers to common questions before you book.",
     },
     thanks: {
@@ -62,8 +62,7 @@ export default {
   },
 
   common: {
-    placeholderImage: "Illustrative image",
-    toConfirm: "To be confirmed",
+    placeholderImage: "Illustrative image",    toConfirm: "To be confirmed",
     priceTbc: "Price to be confirmed",
     hoursTbc: "Opening hours to be confirmed",
     whatsapp: "WhatsApp",
@@ -85,7 +84,7 @@ export default {
     pendingWhatsapp: "WhatsApp number not configured yet",
   },
 
-  brandLine: "Restaurant & Hotel · Liquiçá",
+  brandLine: "Beach Escape",
 
   // Homepage copy, translated from the approved design mock-up. Text in [ ] is still to be supplied.
   home: {
@@ -102,7 +101,7 @@ export default {
       chipTitle: "Dinner at sunset",
       scroll: "Scroll",
     },
-    marks: { eat: "01 · Eat", sleep: "02 · Stay", coast: "03 · The coast", culture: "04 · Culture", reach: "05 · Book & find us" },
+    marks: { eat: "Eat", sleep: "Stay", coast: "The coast", culture: "Culture", reach: "Book & find us" },
     doors: { eat: ["Eat", "The menu and your order"], sleep: ["Stay", "The rooms and booking"] },
     eat: {
       title1: "From breakfast",
@@ -245,7 +244,7 @@ export default {
     title: "Getting to Lauhata",
     body: "Lauhata is in Lauhata, in the municipality of Liquiçá, west of Dili.",
     directionsPending: "Detailed directions to be confirmed by Lauhata.",
-    mapTitle: "Map showing Lauhata's location",
+    mapTitle: "Map showing the location of Lauhata Beach Escape",
   },
 
   footer: {
@@ -413,6 +412,20 @@ export default {
 
   // Landing page sections (the redesigned homepage). Day moments, the Tetum gloss and room details are not confirmed by Lauhata.
   land: {
+    scenes: {
+      garden: { line: "Between the garden and the beach.", note: "Aerial view of Lauhata" },
+      coast: { line: "Liquiçá, Timor-Leste.", note: "From the garden to the beach" },
+    },
+    glance: {
+      aria: "Practical information",
+      eat: "Restaurant",
+      place: "Where we are",
+      placeValue: "Liquiçá, Timor-Leste",
+      route: "Get directions",
+      book: "Bookings and orders",
+      bookValue: "On WhatsApp",
+      bookLink: "Talk to Lauhata",
+    },
     choose: {
       aria: "Eat and sleep",
       statement: "A table, a room, the sea in front.",
@@ -420,7 +433,7 @@ export default {
       sleep: { title: "Sleep", sub: "Stay a little longer. The sea will wait.", cta: "See the rooms" },
     },
     eat: {
-      eyebrow: "01 · Eat",
+      eyebrow: "Eat",
       title1: "The menu,",
       titleAccent: "at your table.",
       lead: "Salads, soups, pasta, pizzas, grills, vegetarian dishes and desserts. Choose here, add to your order and send it on WhatsApp.",
@@ -437,7 +450,7 @@ export default {
       cta: "See breakfast on the menu",
     },
     suites: {
-      eyebrow: "02 · Sleep",
+      eyebrow: "Sleep",
       title: "A room",
       titleAccent: "to stay in.",
       body: "Choose a room and ask about availability directly with us on WhatsApp.",
@@ -448,7 +461,7 @@ export default {
       tbc: "Room details to be confirmed with Lauhata.",
     },
     day: {
-      eyebrow: "03 · The coast",
+      eyebrow: "The coast",
       title: "A day at Lauhata",
       lead: "From the first coffee to the last dish, this is how a day here can be imagined.",
       note: "A suggested day at Lauhata: these are not opening hours or guaranteed activities.",
@@ -469,7 +482,7 @@ export default {
       stay: "Book your stay",
     },
     culture: {
-      eyebrow: "04 · Culture",
+      eyebrow: "Culture",
       title1: "Between the mountain and the sea,",
       title2: "there is a way of",
       titleAccent: "welcoming",
@@ -489,7 +502,7 @@ export default {
       ],
     },
     reach: {
-      eyebrow: "05 · Book and arrive",
+      eyebrow: "Book and arrive",
       title: "Visit",
       titleAccent: "Lauhata.",
       body: "Liquiçá, Timor-Leste.",
@@ -503,7 +516,7 @@ export default {
       directions: "Get directions",
       bookTable: "Book a table",
       bookRoom: "See rooms",
-      mapNote: "Google map searched by place name. The exact location is still to be confirmed by Lauhata.",
+      mapNote: "Google map searched for the place name Lauhata Beach Escape. The exact coordinates are still to be confirmed by Lauhata.",
     },
   },
 

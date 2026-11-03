@@ -5,6 +5,42 @@
 // `placeholder: true` marks an image that does not show Lauhata itself (stock photos and the
 // illustrative photos made for the mock-up); set it to `false` once a real photo replaces it.
 export default {
+  // The cover of the hero video: its first frame, from the real Lauhata drone footage (videos-originais/). It is the
+  // picture the hero shows first; the video then fades in over it from the very same frame, so the change is seamless.
+  heroCover: {
+    src: "foto:hero-capa",
+    width: 1920,
+    alt: { pt: "Vista aérea do Lauhata: o edifício com cobertura azul, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the building with its blue roof, the garden, the palm trees and the beach" },
+    placeholder: false,
+  },
+  // Two more real stills from the same drone footage (videos-originais/): the property among its garden and palms, and the
+  // wider view down to the beach and the sea. They carry the full-screen "scenes" and the contact page.
+  aerialGarden: {
+    src: "foto:aerea-lugar",
+    width: 1920,
+    alt: { pt: "Vista aérea do Lauhata: o edifício entre o jardim, as árvores e as palmeiras", en: "Aerial view of Lauhata: the building among its garden, trees and palm trees" },
+    placeholder: false,
+  },
+  aerialCoast: {
+    src: "foto:aerea-costa",
+    width: 1920,
+    alt: { pt: "Vista aérea do Lauhata do jardim até à praia e ao mar, em Liquiçá", en: "Aerial view of Lauhata from the garden down to the beach and the sea, in Liquiçá" },
+    placeholder: false,
+  },
+  // Two more frames of the drone's slow ascent, for the "a day at Lauhata" sequence (with heroCover, aerialGarden and
+  // aerialCoast they make the five moments; the camera rises as the day goes on).
+  aerialDay2: {
+    src: "foto:aerea-dia-2",
+    width: 1920,
+    alt: { pt: "Vista aérea do Lauhata, com o edifício, o jardim e a praia ao fundo", en: "Aerial view of Lauhata, with the building, the garden and the beach beyond" },
+    placeholder: false,
+  },
+  aerialDay4: {
+    src: "foto:aerea-dia-4",
+    width: 1920,
+    alt: { pt: "Vista aérea ampla do Lauhata e da praia de Liquiçá", en: "Wide aerial view of Lauhata and the Liquiçá beach" },
+    placeholder: false,
+  },
   heroSunset: {
     src: "foto:hero-por-do-sol",
     width: 1310,

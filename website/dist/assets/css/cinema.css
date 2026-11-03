@@ -2,25 +2,6 @@
    large room rows, custom cursor. Loaded after main.css. Every effect has a static fallback and
    is switched off with prefers-reduced-motion. */
 
-/* ---------- Intro (first visit only) ----------
-   Stays up while the page loads: main.js adds .is-out once the page has loaded (at least 1.6 s,
-   at most 4 s). The delayed introOut is the fallback if the script never runs. */
-.intro {
-  position: fixed; inset: 0; z-index: 300; display: grid; place-content: center; justify-items: center; gap: 0.6rem;
-  background: var(--forest); color: var(--cream);
-  animation: introOut 0.9s cubic-bezier(0.76, 0, 0.24, 1) 4.5s forwards;
-}
-.intro.is-out { animation: introLeave 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
-.no-intro .intro { display: none; }
-.intro-mark { width: 64px; height: 64px; color: var(--cream); animation: introFade 0.8s var(--ease) both; }
-.intro-name { margin: 0; display: flex; font-family: var(--serif); font-size: clamp(3.4rem, 9vw, 7rem); line-height: 1; letter-spacing: -0.02em; overflow: hidden; }
-.intro-name span { display: inline-block; animation: introLetter 0.9s var(--ease) both; animation-delay: calc(0.25s + var(--i) * 0.05s); }
-.intro-line { margin: 0.4rem 0 0; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.32em; text-transform: uppercase; color: var(--gold-soft); animation: introFade 0.8s var(--ease) 0.75s both; }
-@keyframes introLetter { from { transform: translateY(105%); } }
-@keyframes introFade { from { opacity: 0; transform: translateY(10px); } }
-@keyframes introOut { to { transform: translateY(-100%); visibility: hidden; } }
-@keyframes introLeave { to { transform: translateY(-100%); visibility: hidden; } }
-
 /* ---------- Header over a full-screen photo ---------- */
 .has-hero .site-header { position: fixed; left: 0; right: 0; }
 .has-hero .site-header:not(.is-solid) { background: transparent; border-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
@@ -33,10 +14,10 @@
 .has-hero .site-header:not(.is-solid) .lang-opt { color: rgba(255, 255, 255, 0.75); }
 .has-hero .site-header:not(.is-solid) .lang-opt.is-on { background: #fff; color: var(--forest); }
 .has-hero .site-header:not(.is-solid) .btn-dark { --bg: #fff; --fg: var(--forest); }
-.site-header.is-solid { background: rgba(244, 238, 223, 0.92); }
+.site-header.is-solid { background: rgba(243, 233, 215, 0.92); }
 
 /* ---------- Full-screen hero ---------- */
-.cine-hero { position: relative; height: 100svh; min-height: 680px; overflow: hidden; color: #fff; background: #0b211c; isolation: isolate; }
+.cine-hero { position: relative; height: 100svh; min-height: 680px; overflow: hidden; color: #fff; background: #0c2827; isolation: isolate; }
 .cine-hero.is-page { height: 88svh; min-height: 560px; }
 .cine-slides, .cine-slides .slide { position: absolute; inset: 0; }
 .cine-slides .slide { opacity: 0; transition: opacity 1.8s ease; }
@@ -102,8 +83,6 @@
 /* ---------- Statement (words light up while scrolling) ---------- */
 .statement { padding: clamp(6rem, 14vw, 11rem) 0 clamp(4rem, 8vw, 6rem); }
 .statement-text { margin: 0; font-family: var(--serif); font-size: clamp(2rem, 4.2vw, 4.4rem); line-height: 1.12; letter-spacing: -0.025em; color: var(--ink); max-width: 22ch; max-width: 1100px; }
-.js .statement-text .sw { opacity: 0.14; transition: opacity 0.25s linear; }
-.js .statement-text .sw.on { opacity: 1; }
 
 /* ---------- Media helpers: parallax + clip reveal ---------- */
 .media.has-parallax img { transform: scale(1.18); will-change: transform; }
@@ -113,11 +92,11 @@
 /* ---------- Most chosen dishes and rooms (homepage) ---------- */
 
 /* ---------- Rooms (large rows) ---------- */
-.rooms-cine { position: relative; background: var(--forest); color: rgba(244, 238, 223, 0.82); overflow: hidden; }
+.rooms-cine { position: relative; background: var(--forest); color: rgba(243, 233, 215, 0.82); overflow: hidden; }
 .rooms-cine .title, .rooms-cine h3 { color: var(--cream); }
 .rooms-cine .eyebrow { color: var(--gold); }
 .rooms-cine em { color: var(--gold-soft); }
-.rooms-cine .body-text { color: rgba(244, 238, 223, 0.78); }
+.rooms-cine .body-text { color: rgba(243, 233, 215, 0.78); }
 .room-rows { display: grid; gap: clamp(4rem, 9vw, 8rem); margin-top: clamp(1rem, 3vw, 2rem); }
 .room-row { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
 .room-row.is-flip { grid-template-columns: 0.75fr 1.25fr; }
@@ -125,11 +104,11 @@
 .room-row-img { position: relative; display: block; border-radius: var(--r-lg); overflow: hidden; }
 .room-row-img .pill { position: absolute; left: 1.2rem; top: 1.2rem; z-index: 2; }
 .room-num { display: block; font-family: var(--serif); font-size: clamp(3.4rem, 6vw, 5.6rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(220, 180, 105, 0.7); }
-.room-num small { font-size: 0.32em; -webkit-text-stroke: 0; color: rgba(244, 238, 223, 0.5); margin-left: 0.4rem; vertical-align: top; }
+.room-num small { font-size: 0.32em; -webkit-text-stroke: 0; color: rgba(243, 233, 215, 0.5); margin-left: 0.4rem; vertical-align: top; }
 .room-row-body h3 { font-family: var(--serif); font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: 1.05; margin-top: 1rem; }
 .room-row-body h3 a { text-decoration: none; }
 .room-row-body h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
-.room-row-body > p { margin-top: 1rem; color: rgba(244, 238, 223, 0.75); max-width: 30em; }
+.room-row-body > p { margin-top: 1rem; color: rgba(243, 233, 215, 0.75); max-width: 30em; }
 .room-row-body .chips { margin: 1.4rem 0 1.8rem; }
 .room-row-body .room-foot { border-top: 1px solid var(--line-light); padding-top: 1.4rem; }
 
@@ -143,12 +122,12 @@
 
 /* ---------- Day timeline with a drawn line ---------- */
 .day-track { position: relative; }
-.day-line { position: absolute; left: 26px; right: 26px; top: 26px; height: 2px; background: rgba(200, 150, 64, 0.22); }
+.day-line { position: absolute; left: 26px; right: 26px; top: 26px; height: 2px; background: rgba(217, 168, 95, 0.22); }
 .day-line span { display: block; height: 100%; background: var(--gold); transform-origin: left; transform: scaleX(var(--p, 0)); }
 .day .step:not(:last-child)::before { display: none; }
 
 /* ---------- Full-screen CTA ---------- */
-.cine-cta { position: relative; min-height: 92svh; display: grid; place-items: center; overflow: hidden; color: #fff; text-align: center; isolation: isolate; background: #0b211c; }
+.cine-cta { position: relative; min-height: 92svh; display: grid; place-items: center; overflow: hidden; color: #fff; text-align: center; isolation: isolate; background: #0c2827; }
 .cine-cta-bg, .cine-cta-bg .media { position: absolute; inset: 0; z-index: -2; }
 .cine-cta-shade { position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at center, rgba(8, 24, 20, 0.35), rgba(8, 24, 20, 0.82)); }
 .cine-cta-content { display: grid; justify-items: center; padding-block: 6rem; }
@@ -158,16 +137,9 @@
 .cine-cta-content > p { margin: 1.6rem 0 0; max-width: 32em; color: rgba(255, 255, 255, 0.85); font-size: 1.08rem; }
 
 /* ---------- Footer wordmark + note ---------- */
-.footer-mega { margin: 2rem 0 0; text-align: center; font-family: var(--serif); font-size: 23vw; line-height: 0.8; letter-spacing: -0.04em; color: rgba(244, 238, 223, 0.07); white-space: nowrap; overflow: hidden; user-select: none; }
-.footer-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(244, 238, 223, 0.5); }
+.footer-mega { margin: 2rem 0 0; text-align: center; font-family: var(--serif); font-size: 23vw; line-height: 0.8; letter-spacing: -0.04em; color: rgba(243, 233, 215, 0.07); white-space: nowrap; overflow: hidden; user-select: none; }
+.footer-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(243, 233, 215, 0.5); }
 
-/* ---------- Custom cursor (fine pointers only) ---------- */
-.cursor { position: fixed; left: 0; top: 0; z-index: 400; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--terra); pointer-events: none; opacity: 0; transition: width 0.35s var(--ease), height 0.35s var(--ease), margin 0.35s var(--ease), opacity 0.3s, background-color 0.3s; display: grid; place-items: center; }
-.cursor span { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; color: #fff; opacity: 0; transition: opacity 0.2s; white-space: nowrap; }
-.cursor.is-on { opacity: 1; }
-.cursor.is-big { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: rgba(168, 67, 42, 0.92); }
-.cursor.is-big span { opacity: 1; }
-@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 1020px) {
@@ -198,11 +170,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .intro { display: none; }
-  .wi { transform: none !important; }
-  .js [data-fade] { opacity: 1; transform: none; }
-  .js [data-clip] { clip-path: none; }
-  .js .statement-text .sw { opacity: 1; }
-  .cine-slides .slide.is-active img, .media.has-parallax img { animation: none; transform: none; }
-  .day-line span { transform: none; }
+  html:not(.cine-motion) .wi { transform: none !important; }
+  html.js:not(.cine-motion) [data-fade] { opacity: 1; transform: none; }
+  html.js:not(.cine-motion) [data-clip] { clip-path: none; }
+  html:not(.cine-motion) .cine-slides .slide.is-active img, html:not(.cine-motion) .media.has-parallax img { animation: none; transform: none; }
+  html:not(.cine-motion) .day-line span { transform: none; }
 }

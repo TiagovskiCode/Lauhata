@@ -1,4 +1,5 @@
 // Shared helpers for the static build: escaping, routes, images and small markup pieces.
+import { readFileSync } from "node:fs";
 import site from "./data/site.mjs";
 import images from "./data/images.mjs";
 import rooms from "./data/rooms.mjs";
@@ -63,6 +64,27 @@ function srcsetFor(im) {
   return "";
 }
 
+// Pixel size of a local photo, read from its JPEG header, so the browser can reserve the space before it loads
+// (no layout shift). Stock photos are fetched cropped by a remote service, so they have no fixed size here.
+const dimCache = new Map();
+function dimsFor(im) {
+  if (!im.src.startsWith("foto:")) return null;
+  const slug = im.src.slice(5);
+  if (dimCache.has(slug)) return dimCache.get(slug);
+  let out = null;
+  try {
+    const b = readFileSync(new URL(`./assets/img/fotos/${slug}-${FOTO_WIDTHS.at(-1)}.jpg`, import.meta.url));
+    for (let i = 2; i < b.length - 9; ) {
+      if (b[i] !== 0xff) { i++; continue; }
+      const m = b[i + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) { out = { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) }; break; }
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  } catch { /* no file: no size */ }
+  dimCache.set(slug, out);
+  return out;
+}
+
 export function imgUrl(key, w = 1200) {
   return srcFor(images[key].src, w);
 }
@@ -80,19 +102,23 @@ export const usesPlaceholderImages = () => site.showPlaceholderNotes && Object.v
 
 /**
  * Responsive <img> wrapped in a figure.
- * attrs: extra attributes for the figure (e.g. 'data-clip' for a reveal, 'data-cursor="Ver"').
+ * attrs: extra attributes for the figure (e.g. 'data-clip' for a reveal).
  * parallax: speed for the inner image drift (e.g. 0.12); the image is over-scaled to cover it.
  */
 // art: [{ key, media }] swaps in another photo when the media query matches (e.g. a more portrait-friendly
 // crop on phones): the browser then downloads only the photo it shows.
-export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [] } = {}) {
+export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [], decorative = false } = {}) {
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
   const srcset = srcsetFor(im);
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
-  const img = `<img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${esc(im.alt[t.lang])}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>`;
+  const d = dimsFor(im);
+  const img = `<img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${decorative ? "" : esc(im.alt[t.lang])}"${d ? ` width="${d.w}" height="${d.h}"` : ""} ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>`;
   const sources = art.map((a) => `<source media="${a.media}" srcset="${srcsetFor(images[a.key])}" sizes="${sizes}">`).join("");
-  return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}"${style}${attrs ? " " + attrs : ""}>
+  // A stock or illustrative photo is marked in the HTML; the "Illustrative image" label only shows where the picture
+  // stands for the place itself (rooms, galleries, page heroes: see design.css). It goes once the photo is marked real.
+  const illus = im.placeholder && site.showPlaceholderNotes;
+  return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}${illus ? " is-placeholder" : ""}"${illus ? ` data-ph="${esc(t.common.placeholderImage)}"` : ""}${style}${attrs ? " " + attrs : ""}>
   ${sources ? `<picture>${sources}${img}</picture>` : img}${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
 </figure>`;
 }

@@ -41,7 +41,6 @@
   pop.className = "pk-pop";
   pop.hidden = true;
   pop.setAttribute("role", "dialog");
-  pop.setAttribute("data-lenis-prevent", "");
   document.body.append(back, pop);
 
   let cur = null; // { trigger }

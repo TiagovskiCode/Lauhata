@@ -19,7 +19,7 @@ html.has-modal { overflow: hidden; }
 }
 .cart-count[hidden] { display: none; }
 .has-hero .site-header:not(.is-solid) .cart-btn { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.28); color: #fff; }
-.has-hero .site-header:not(.is-solid) .cart-count { box-shadow: 0 0 0 2px rgba(13, 59, 64, 0.6); }
+.has-hero .site-header:not(.is-solid) .cart-count { box-shadow: 0 0 0 2px rgba(18, 59, 58, 0.6); }
 .is-bump { animation: cartBump 0.5s var(--ease); }
 @keyframes cartBump { 0% { transform: scale(1); } 35% { transform: scale(1.16); } 100% { transform: scale(1); } }
 
@@ -46,7 +46,7 @@ html.has-modal { overflow: hidden; }
   background: var(--paper); border: 1px solid var(--line-strong); border-radius: 999px;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
-.menu-search:focus-within { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(168, 67, 42, 0.15); }
+.menu-search:focus-within { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(199, 101, 69, 0.15); }
 .menu-search label { display: grid; place-items: center; color: var(--muted); }
 .menu-search input { flex: 1; min-width: 0; padding: 0.85rem 0.3rem; border: 0; background: transparent; color: var(--ink); font: inherit; font-size: 1rem; outline: none; }
 .menu-search input::-webkit-search-cancel-button { display: none; }
@@ -55,7 +55,7 @@ html.has-modal { overflow: hidden; }
 /* Category bar: sticks under the header, slides up with it, scrolls sideways on phones. */
 .menu-nav {
   position: sticky; top: calc(var(--header-h) * var(--header-shown, 1)); z-index: 30;
-  background: rgba(244, 238, 223, 0.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  background: rgba(243, 233, 215, 0.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-block: 1px solid var(--line); transition: top 0.35s var(--ease);
 }
 .menu-nav ul { position: relative; display: flex; gap: 0.35rem; margin: 0; padding: 0.5rem 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
@@ -118,7 +118,7 @@ dialog.pick::backdrop, dialog.cart::backdrop { background: rgba(11, 30, 26, 0.55
 }
 .choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--terra); }
 .choice:hover { border-color: var(--ink); }
-.choice:has(input:checked) { border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(168, 67, 42, 0.12); }
+.choice:has(input:checked) { border-color: var(--terra); background: #fff; box-shadow: 0 0 0 3px rgba(199, 101, 69, 0.12); }
 .choice:has(input:focus-visible) { outline: 2px solid var(--terra); outline-offset: 2px; }
 .oc-price { margin-left: auto; font-family: var(--serif); font-weight: 400; font-size: 1.1rem; }
 .has-error .choice { border-color: var(--error); }
@@ -224,6 +224,6 @@ form[data-order-form].is-sending [type="submit"] { opacity: 0.7; pointer-events:
 }
 
 @media (prefers-reduced-motion: reduce) {
-  dialog.cart[open], dialog.pick[open], .cart-fab, .is-bump, .cart-line { animation: none; }
-  .menu-nav { transition: none; }
+  html:not(.cine-motion) dialog.cart[open], html:not(.cine-motion) dialog.pick[open], html:not(.cine-motion) .cart-fab, html:not(.cine-motion) .is-bump, html:not(.cine-motion) .cart-line { animation: none; }
+  html:not(.cine-motion) .menu-nav { transition: none; }
 }

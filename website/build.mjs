@@ -16,7 +16,9 @@ const T = { pt, en };
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
-await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true });
+// Raw footage is never published: only the web version in src/assets/video/ (see README); the originals live in videos-originais/.
+const isRawVideo = (p) => /[\\/]assets[\\/]img[\\/]video([\\/]|$)/.test(p);
+await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) });
 
 const sitemap = [];
 let count = 0;
