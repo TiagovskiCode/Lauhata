@@ -1,5 +1,6 @@
 // Page shell shared by every page: <head> with SEO tags, header, footer, global UI and scripts.
-import { esc, href, absUrl, site, icon, waLink, hoursList, LANGS, usesPlaceholderImages, preloadImage, menuJson } from "./lib.mjs";
+import { esc, fmt, href, absUrl, site, icon, waLink, hoursList, LANGS, usesPlaceholderImages, preloadImage, menuJson } from "./lib.mjs";
+import { bookingCard } from "./pages.mjs"; // used only at render time, so the two modules may import each other
 
 const stroke = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
 const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -136,6 +137,7 @@ function cartUi(t) {
           <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}" data-cart-close>${esc(O.viewMenu)}${icon("arrow")}</a>
         </div>
       </div>
+      <p class="dine-in is-cart">${icon("cutlery")}<span>${esc(O.dineIn)}</span></p>
       <footer class="cart-foot" data-cart-foot>
         <p class="cart-total"><span>${esc(O.total)}</span><strong data-cart-sum></strong></p>
         <button class="btn btn-terra btn-lg" type="button" data-cart-checkout>${esc(O.checkout)}${icon("arrow")}</button>
@@ -149,7 +151,8 @@ function cartUi(t) {
         ${typeField}
         ${tableField}
         <div class="field"><label for="ord-notes">${esc(O.notes)} <span class="opt">(${esc(O.optional)})</span></label><textarea id="ord-notes" name="notes" rows="3" maxlength="400" placeholder="${esc(O.notesPlaceholder)}"></textarea></div>
-        <p class="form-note">${esc(O.note)}${site.whatsapp ? "" : ` <strong class="pending">${esc(t.common.pendingWhatsapp)}.</strong>`}</p>
+        <p class="dine-in is-cart">${icon("cutlery")}<span>${esc(O.dineIn)}</span></p>
+        <p class="form-note">${esc(O.note)}</p>
       </div>
       <footer class="cart-foot">
         <div class="form-errors" role="alert" hidden data-order-errors>${esc(O.errorsTitle)}</div>
@@ -187,13 +190,14 @@ function header(t, page, alt) {
   const L = t.lang;
   const link = (p, label, hash = "") =>
     `<a href="${href(p, L, hash)}"${page === p && !hash ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
-  // Six destinations, one line each: home, menu, accommodation, about us, our story, contact.
+  // Seven destinations: home, menu, accommodation, about us (which also holds the story), events, gallery, contact.
   const nav = [
     link("home", t.nav.home),
     link("restaurant", t.nav.menu),
     link("stay", t.nav.stay),
     link("about", t.nav.about),
-    link("story", t.nav.story),
+    link("events", t.nav.events),
+    link("gallery", t.nav.gallery),
     link("contact", t.nav.contact),
   ].join("");
   return `<header class="site-header" data-header>
@@ -203,13 +207,7 @@ function header(t, page, alt) {
     <div class="header-actions">
       ${langSwitch(t, alt)}
       ${cartButton(t)}
-      <div class="book-menu" data-book-menu>
-        <button class="btn btn-dark btn-sm" type="button" aria-expanded="false" aria-controls="book-pop-${L}" data-book-toggle>${esc(t.nav.book)}${icon("calendar")}</button>
-        <div class="book-pop" id="book-pop-${L}" hidden>
-          <a href="${href("restaurant", L, "#reservar")}">${icon("cutlery")}<span>${esc(t.nav.bookTable)}</span></a>
-          <a href="${href("stay", L, "#reservar")}">${icon("bed")}<span>${esc(t.nav.bookRoom)}</span></a>
-        </div>
-      </div>
+      <a class="btn btn-dark btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog">${esc(t.nav.book)}${icon("calendar")}</a>
       <button class="icon-btn nav-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open>${icon("menu")}</button>
     </div>
   </div>
@@ -230,6 +228,21 @@ function header(t, page, alt) {
 </dialog>`;
 }
 
+// The Tripadvisor summary used by the footer and the home page: a link to the real listing, with the rating and the number
+// of reviews only when they are filled in site.reviews (never invented, never scraped).
+export function tripadvisorBadge(t, cls = "") {
+  const ta = site.reviews && site.reviews.tripadvisor;
+  if (!ta || !ta.url) return "";
+  const R = t.reviews;
+  const facts = [ta.rating ? `<span class="ta-rating">${esc(fmt(R.rating, { rating: String(ta.rating).replace(".", t.lang === "pt" ? "," : ".") }))}</span>` : "", ta.count ? `<span class="ta-count">${esc(fmt(R.count, { count: ta.count }))}</span>` : ""].filter(Boolean).join("");
+  return `<a class="ta-badge ${cls}" href="${esc(ta.url)}" target="_blank" rel="noopener">
+    <span class="ta-source">${esc(R.source)}</span>${facts ? `<span class="ta-facts">${facts}</span>` : ""}
+    <span class="ta-link">${esc(R.link)}${icon("arrow-up-right")}</span>
+  </a>`;
+}
+
+// The footer: an invitation with the two booking actions, then where to go, how to find Lauhata, how to reach it and
+// what guests say. Only confirmed details are listed; a missing phone, email or social profile is simply left out.
 function footer(t) {
   const L = t.lang;
   const year = new Date().getFullYear();
@@ -237,40 +250,55 @@ function footer(t) {
   const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery)}`;
   const link = (h, label, ext = false) => `<li><a href="${h}"${ext ? ' target="_blank" rel="noopener"' : ""}>${esc(label)}</a></li>`;
   const social = Object.entries(site.social).filter(([, u]) => u);
+  const hours = site.restaurantHours.map((h) => `<li><span>${esc(h.days[L])}</span><b>${esc(h.hours)}</b></li>`).join("");
   return `<footer class="site-footer">
-  <div class="wrap ft">
+  <div class="wrap ft-top">
     <div class="ft-brand">
       ${logo(t, "brand-light")}
+      <p class="ft-statement">${esc(F.statement)}</p>
     </div>
+    <div class="ft-cta">
+      <p>${esc(F.cta)}</p>
+      <div class="ft-cta-btns">
+        <a class="btn btn-cream" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${esc(F.bookTable)}</a>
+        <a class="btn btn-ghost-light" href="${href("stay", L, "#reservar")}" data-book-open="room">${esc(F.bookRoom)}</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap ft">
     <nav class="ft-col" aria-label="${esc(F.explore)}">
       <h2 class="footer-h">${esc(F.explore)}</h2>
       <ul class="footer-list">
         ${link(href("restaurant", L), t.nav.menu)}
         ${link(href("stay", L), t.nav.stay)}
         ${link(href("about", L), t.nav.about)}
-        ${link(href("story", L), t.nav.story)}
+        ${link(href("events", L), t.nav.events)}
+        ${link(href("gallery", L), t.nav.gallery)}
+        ${link(href("contact", L), t.nav.contact)}
       </ul>
     </nav>
     <div class="ft-col">
+      <h2 class="footer-h">${esc(F.visit)}</h2>
+      <p class="ft-place">${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}</p>
+      ${hours ? `<p class="ft-sub">${esc(F.hours)}</p><ul class="ft-hours">${hours}</ul>` : ""}
+      <ul class="footer-list">${link(maps, F.directions, true)}</ul>
+    </div>
+    <div class="ft-col">
       <h2 class="footer-h">${esc(F.contact)}</h2>
       <ul class="footer-list">
-        ${link(waLink(t.form.waHello), t.common.whatsapp + (site.whatsapp ? "" : ` — ${t.common.toConfirm}`), true)}
-        ${link(maps, F.maps, true)}
-        ${link(href("contact", L), `${site.address.region}`)}
+        ${link(waLink(t.form.waHello), site.whatsapp ? `WhatsApp +${site.whatsapp}` : t.common.whatsapp, true)}
+        ${site.phone ? link(`tel:+${esc(site.phone)}`, `+${site.phone}`) : ""}
         ${site.email ? link(`mailto:${esc(site.email)}`, site.email) : ""}
+        ${social.map(([k, u]) => link(esc(u), k[0].toUpperCase() + k.slice(1), true)).join("")}
       </ul>
-      ${social.length ? `<ul class="social">${social.map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
     </div>
-    <nav class="ft-col" aria-label="${esc(F.book)}">
-      <h2 class="footer-h">${esc(F.book)}</h2>
-      <ul class="footer-list">
-        ${link(href("restaurant", L, "#reservar"), F.bookTable)}
-        ${link(href("stay", L, "#quartos"), F.bookRoom)}
-      </ul>
-    </nav>
+    <div class="ft-col">
+      <h2 class="footer-h">${esc(F.reviews)}</h2>
+      ${tripadvisorBadge(t, "is-footer")}
+    </div>
   </div>
   <div class="wrap footer-base">
-    <p>© ${year} ${esc(site.name)}.${usesPlaceholderImages() ? ` <span class="footer-note">${esc(t.home.placeholderNote)}</span>` : ""}</p>
+    <p>© ${year} ${esc(site.name)}. ${esc(F.rights)}${usesPlaceholderImages() ? ` <span class="footer-note">${esc(t.home.placeholderNote)}</span>` : ""}</p>
     <p><a href="${href("privacy", L)}">${esc(F.privacy)}</a> · ${esc(F.signature)} <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(F.credit)}</a></p>
   </div>
 </footer>`;
@@ -299,6 +327,9 @@ export function layout(t, o) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
+   mid-way (a phone's address bar moving) and rejects its promises; that is harmless, so it is not reported as an error. */
+["pageswap", "pagereveal"].forEach(function (n) { addEventListener(n, function (e) { var v = e.viewTransition; if (v) ["ready", "finished", "updateCallbackDone"].forEach(function (k) { if (v[k]) v[k].catch(function () {}); }); }); });</script>
 <title>${esc(o.title)}</title>
 <meta name="description" content="${esc(o.description)}">
 ${o.robots ? `<meta name="robots" content="${o.robots}">` : `<link rel="canonical" href="${canonical}">`}
@@ -353,11 +384,16 @@ ${o.body}
 ${footer(t)}
 ${cartUi(t)}
 <div class="mobile-bar" data-mobile-bar>
-  <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
-  <a class="btn btn-terra" href="${href("stay", L, "#reservar")}">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
+  <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
+  <a class="btn btn-terra" href="${href("stay", L, "#reservar")}" data-book-open="room">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
   <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 </div>
 <a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
+<dialog class="book-dialog" data-book-dialog aria-labelledby="bd-title-${t.lang}">
+  <header class="bd-head"><h2 id="bd-title-${t.lang}">${esc(t.home.quick.title)}</h2><button class="icon-btn" type="button" aria-label="${esc(t.home.quick.close)}" data-book-close>${icon("close")}</button></header>
+  <p class="bd-intro">${esc(t.home.quick.intro)}</p>
+  ${bookingCard(t)}
+</dialog>
 <dialog class="lightbox" data-lightbox aria-label="${esc(t.gallery.label)}">
   <button class="icon-btn lb-close" type="button" aria-label="${esc(t.common.close)}" data-lb-close>${icon("close")}</button>
   <button class="icon-btn lb-prev" type="button" aria-label="${esc(t.common.previous)}" data-lb-prev>${icon("left")}</button>

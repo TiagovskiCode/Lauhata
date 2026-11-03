@@ -1,5 +1,5 @@
 // Shared helpers for the static build: escaping, routes, images and small markup pieces.
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import site from "./data/site.mjs";
 import images from "./data/images.mjs";
 import rooms from "./data/rooms.mjs";
@@ -17,7 +17,8 @@ const ROUTES = {
   restaurant: { pt: "/restaurante/", en: "/en/restaurant/" },
   stay: { pt: "/alojamento/", en: "/en/stay/" },
   about: { pt: "/sobre-nos/", en: "/en/about/" },
-  story: { pt: "/a-nossa-historia/", en: "/en/our-story/" },
+  events: { pt: "/eventos/", en: "/en/events/" },
+  gallery: { pt: "/galeria/", en: "/en/gallery/" },
   contact: { pt: "/contactos/", en: "/en/contact/" },
   thanks: { pt: "/obrigado/", en: "/en/thank-you/" },
   privacy: { pt: "/privacidade/", en: "/en/privacy/" },
@@ -100,7 +101,7 @@ export function preloadImage(key, sizes = "100vw", media = "") {
 
 // True while any illustrative stock photo is still in use: the footer then shows one notice
 // for the whole site instead of a tag on every photo.
-export const usesPlaceholderImages = () => site.showPlaceholderNotes && Object.values(images).some((im) => im.placeholder);
+export const usesPlaceholderImages = () => Object.values(images).some((im) => im.placeholder);
 
 /**
  * Responsive <img> wrapped in a figure.
@@ -119,7 +120,7 @@ export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio
   const sources = art.map((a) => `<source media="${a.media}" srcset="${srcsetFor(images[a.key])}" sizes="${sizes}">`).join("");
   // A stock or illustrative photo is marked in the HTML; the "Illustrative image" label only shows where the picture
   // stands for the place itself (rooms, galleries, page heroes: see design.css). It goes once the photo is marked real.
-  const illus = im.placeholder && site.showPlaceholderNotes;
+  const illus = im.placeholder; // always labelled: an illustrative photo is never shown as Lauhata
   return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}${illus ? " is-placeholder" : ""}"${illus ? ` data-ph="${esc(t.common.placeholderImage)}"` : ""}${style}${attrs ? " " + attrs : ""}>
   ${sources ? `<picture>${sources}${img}</picture>` : img}${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
 </figure>`;
@@ -149,7 +150,7 @@ export const money = (n) => site.order.currency + (Number.isInteger(n) ? n : n.t
 // The dishes a page can add to the order, for the cart script (window.LAUHATA_MENU, by dish id).
 export function menuJson(list) {
   const data = Object.fromEntries(
-    list.map((d) => [d.id, { id: d.id, name: d.name, price: d.price, desc: d.description ?? null, options: d.options }])
+    list.map((d) => [d.id, { id: d.id, name: d.name, price: d.price, desc: d.description ?? null, options: d.options, photo: existsSync(new URL(`./assets/img/pratos/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos/${d.id}-640.jpg` : null }])
   );
   return `<script>window.LAUHATA_MENU=${JSON.stringify(data).replace(/</g, "\\u003c")};</script>`;
 }

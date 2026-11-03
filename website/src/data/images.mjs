@@ -20,12 +20,14 @@ export default {
     width: 1920,
     alt: { pt: "Vista aérea do Lauhata: o edifício entre o jardim, as árvores e as palmeiras", en: "Aerial view of Lauhata: the building among its garden, trees and palm trees" },
     placeholder: false,
+    group: "lauhata",
   },
   aerialCoast: {
     src: "foto:aerea-costa",
     width: 1920,
     alt: { pt: "Vista aérea do Lauhata do jardim até à praia e ao mar, em Liquiçá", en: "Aerial view of Lauhata from the garden down to the beach and the sea, in Liquiçá" },
     placeholder: false,
+    group: "lauhata",
   },
   // Two more frames of the drone's slow ascent, for the "a day at Lauhata" sequence (with heroCover, aerialGarden and
   // aerialCoast they make the five moments; the camera rises as the day goes on).
@@ -40,6 +42,72 @@ export default {
     width: 1920,
     alt: { pt: "Vista aérea ampla do Lauhata e da praia de Liquiçá", en: "Wide aerial view of Lauhata and the Liquiçá beach" },
     placeholder: false,
+  },
+  // Drone photographs supplied in November 2026 (originals in fotos-originais/drone-2026-11/). `group` places a photo in
+  // the gallery page: "lauhata" (the property and its beach), "coast" (the sea and the light), "around" (the surroundings).
+  // The ruins are described only by what they show: their name and history are not in the project's sources.
+  beachFront: {
+    src: "foto:lauhata-praia-do-mar",
+    width: 2000,
+    alt: { pt: "O Lauhata visto do mar: a praia de areia escura, mesas à sombra, as palmeiras e as montanhas atrás", en: "Lauhata seen from the sea: the dark-sand beach, tables in the shade, the palm trees and the mountains behind" },
+    placeholder: false,
+    group: "lauhata",
+  },
+  sunsetGarden: {
+    src: "foto:por-do-sol-jardim",
+    width: 2000,
+    alt: { pt: "O sol a pôr-se sobre o mar, visto entre as palmeiras e as árvores do jardim", en: "The sun setting over the sea, seen between the palm trees and the garden trees" },
+    placeholder: false,
+    group: "lauhata",
+  },
+  sunsetPalmsHigh: {
+    src: "foto:por-do-sol-palmeiras-alto",
+    width: 2000,
+    alt: { pt: "Pôr do sol sobre o mar, com as palmeiras em silhueta", en: "Sunset over the sea, with the palm trees in silhouette" },
+    placeholder: false,
+    group: "coast",
+  },
+  sunsetPalms: {
+    src: "foto:por-do-sol-palmeiras",
+    width: 2000,
+    alt: { pt: "Palmeiras em silhueta contra o céu do fim da tarde e o mar", en: "Palm trees in silhouette against the late-afternoon sky and the sea" },
+    placeholder: false,
+    group: "coast",
+  },
+  sunsetSea: {
+    src: "foto:por-do-sol-mar",
+    width: 2000,
+    alt: { pt: "O caminho de luz do sol poente sobre o mar, com a costa ao fundo", en: "The path of the setting sun's light across the sea, with the coast beyond" },
+    placeholder: false,
+    group: "coast",
+  },
+  seaCanoe: {
+    src: "foto:mar-canoa",
+    width: 2000,
+    alt: { pt: "Uma canoa com três pessoas no mar azul, junto à rebentação", en: "A canoe with three people on the blue sea, by the breaking waves" },
+    placeholder: false,
+    group: "coast",
+  },
+  coastVillage: {
+    src: "foto:costa-aldeia-cima",
+    width: 2000,
+    alt: { pt: "Vista aérea da costa: o mar, a praia e as casas entre as árvores", en: "Aerial view of the coast: the sea, the beach and the houses among the trees" },
+    placeholder: false,
+    group: "around",
+  },
+  ruinsAerial: {
+    src: "foto:arredores-ruinas",
+    width: 2000,
+    alt: { pt: "Ruínas de um edifício antigo de pedra junto à costa, vistas de cima", en: "Ruins of an old stone building by the coast, seen from above" },
+    placeholder: false,
+    group: "around",
+  },
+  ruinsTop: {
+    src: "foto:arredores-ruinas-cima",
+    width: 2000,
+    alt: { pt: "O recinto das ruínas entre a estrada e a praia, visto de cima", en: "The ruins' grounds between the road and the beach, seen from above" },
+    placeholder: false,
+    group: "around",
   },
   heroSunset: {
     src: "foto:hero-por-do-sol",

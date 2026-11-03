@@ -355,7 +355,7 @@
     if (native.id) { btn.id = native.id; native.removeAttribute("id"); }
     ["aria-describedby", "aria-invalid"].forEach((a) => { if (native.hasAttribute(a)) btn.setAttribute(a, native.getAttribute(a)); });
     if (native.required) btn.setAttribute("aria-required", "true");
-    btn.innerHTML = `<span class="pk-ico">${svg(ICON[kind] || "calendar")}</span><span class="pk-val"></span><span class="pk-caret">${svg("down")}</span>`;
+    btn.innerHTML = `<span class="pk-ico">${svg((native.dataset.icon || ICON[kind]) || "calendar")}</span><span class="pk-val"></span><span class="pk-caret">${svg("down")}</span>`;
     const val = btn.querySelector(".pk-val");
 
     native.classList.add("pk-native");

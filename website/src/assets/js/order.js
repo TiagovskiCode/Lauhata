@@ -151,7 +151,11 @@
 
   function lineHtml(l) {
     const opts = l.opts.map((o) => o[LANG]).join(" · ");
+    // A small photo of the dish when the restaurant has one (menu.mjs / FOTOS-PRATOS.md), otherwise its initial.
+    const photo = MENU[l.id] && MENU[l.id].photo;
+    const thumb = photo ? `<img class="cl-thumb" src="${esc(photo)}" alt="" width="64" height="64" loading="lazy">` : `<span class="cl-thumb is-initial" aria-hidden="true">${esc(l.name.trim()[0] || "")}</span>`;
     return `<li class="cart-line" data-key="${esc(l.key)}">
+      ${thumb}
       <div class="cl-main">
         <p class="cl-name">${esc(l.name)}</p>
         ${opts ? `<p class="cl-opts">${esc(opts)}</p>` : ""}

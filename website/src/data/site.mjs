@@ -56,6 +56,18 @@ export default {
   // Social profiles, e.g. { facebook: "https://…", instagram: "https://…" }. PENDING.
   social: {},
 
+  // Guest reviews: the official Tripadvisor listing. `rating` (e.g. 4.5) and `count` (e.g. 120) are shown only when filled
+  // in; copy them by hand from the listing and set `checked` to that date ("2026-11-03"). No review text is copied onto
+  // the site: reproducing guest reviews needs permission, so the site links to them instead.
+  reviews: {
+    tripadvisor: {
+      url: "https://www.tripadvisor.com/Hotel_Review-g4578170-d10355320-Reviews-Lauhata_Beach_Escape-Liquica_Liquica_District.html",
+      rating: null,
+      count: null,
+      checked: null,
+    },
+  },
+
   // Restaurant orders: the menu's cart sends the order to WhatsApp (nothing is paid or stored on the site).
   //   currency  symbol written before every price (the menu is priced in US dollars)
   //   types     which kinds of order the restaurant accepts. PENDING: Lauhata has not confirmed any, so the
@@ -92,5 +104,5 @@ export default {
 
   // Shows a small "illustrative image" tag on stock photos and the demo-menu notice.
   // Set to false only once every placeholder has been replaced with real content.
-  showPlaceholderNotes: true,
+  showPlaceholderNotes: false,
 };

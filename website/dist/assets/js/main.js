@@ -70,20 +70,28 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ---------- Booking chooser in the header ---------- */
-  $$("[data-book-menu]").forEach((menu) => {
-    const btn = $("[data-book-toggle]", menu);
-    const pop = $(".book-pop", menu);
-    const set = (open) => {
-      btn.setAttribute("aria-expanded", String(open));
-      pop.hidden = !open;
-    };
-    btn.addEventListener("click", () => set(pop.hidden));
-    document.addEventListener("click", (e) => { if (!menu.contains(e.target)) set(false); });
-    menu.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") { set(false); btn.focus(); }
-    });
-  });
+  /* ---------- Booking dialog ----------
+     "Reservar" in the header and the two hero buttons open one modal dialog with the table and room requests. Each
+     opener is a real link to the full form, so without JavaScript (or without <dialog>) it still leads somewhere useful.
+     data-book-open="table" or "room" opens the matching tab straight away; Escape and the close button shut it, and focus
+     returns to the button that opened it (native <dialog> behaviour plus the close listener below). */
+  const bookDialog = $("[data-book-dialog]");
+  if (bookDialog && typeof bookDialog.showModal === "function") {
+    let opener = null;
+    $$("[data-book-open]").forEach((a) =>
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        opener = a;
+        bookDialog.showModal();
+        const tab = a.dataset.bookOpen && $(`[data-bc-tab="${a.dataset.bookOpen}"]`, bookDialog);
+        if (tab) tab.click();
+        (tab ? $(`[data-bc-panel="${a.dataset.bookOpen}"] input, [data-bc-panel="${a.dataset.bookOpen}"] button`, bookDialog) : $("[data-bc-tab]", bookDialog))?.focus();
+      })
+    );
+    $("[data-book-close]", bookDialog).addEventListener("click", () => bookDialog.close());
+    bookDialog.addEventListener("click", (e) => { if (e.target === bookDialog) bookDialog.close(); });
+    bookDialog.addEventListener("close", () => opener?.focus());
+  }
 
   /* ---------- Mobile navigation ---------- */
   const nav = $("[data-mobile-nav]");
@@ -224,6 +232,10 @@
       if (!val("time")) errors.time = F.errors.time;
       const p = Number(val("people"));
       if (!Number.isInteger(p) || p < 1 || p > 50) errors.people = F.errors.people;
+    } else if (form.dataset.booking === "event") {
+      if (!val("date") || val("date") < today) errors.date = F.errors.date;
+      const p = Number(val("people"));
+      if (!Number.isInteger(p) || p < 1 || p > 300) errors.people = F.errors.people;
     } else {
       if (!val("checkIn") || val("checkIn") < today) errors.checkIn = F.errors.checkIn;
       if (!val("checkOut") || (val("checkIn") && val("checkOut") <= val("checkIn"))) errors.checkOut = F.errors.checkOut;
@@ -259,6 +271,9 @@
     const contact = v("contact") ? fmt(F.waContact, { contact: v("contact") }) : "";
     if (form.dataset.booking === "table") {
       return fmt(F.waTable, { name: v("name"), date: fmtDate(v("date")), time: v("time"), people: v("people"), contact, notes });
+    }
+    if (form.dataset.booking === "event") {
+      return fmt(F.waEvent, { kind: v("kind"), name: v("name"), date: fmtDate(v("date")), people: v("people"), contact, notes });
     }
     const roomSel = el.room;
     return fmt(F.waRoom, {
@@ -389,6 +404,7 @@
           checkOut: fmtDate(el.checkOut.value),
           nights: nightsLabel(el.checkIn.value, el.checkOut.value),
           guests: unitText(el.guests),
+          room: el.room && el.room.value ? fmt(F.waQuickRoomType, { room: opt(el.room) }) : "",
         });
       }
       card.classList.add("is-sending");

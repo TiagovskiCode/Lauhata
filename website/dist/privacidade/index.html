@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
+   mid-way (a phone's address bar moving) and rejects its promises; that is harmless, so it is not reported as an error. */
+["pageswap", "pagereveal"].forEach(function (n) { addEventListener(n, function (e) { var v = e.viewTransition; if (v) ["ready", "finished", "updateCallbackDone"].forEach(function (k) { if (v[k]) v[k].catch(function () {}); }); }); });</script>
 <title>Política de privacidade — Lauhata</title>
 <meta name="description" content="Como o website do Lauhata trata os dados dos pedidos de reserva e de contacto.">
 <link rel="canonical" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/">
@@ -37,7 +40,7 @@
 <link rel="stylesheet" href="../assets/css/design.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://tiagovskicode.github.io/Lauhata/website/dist/#business","name":"Lauhata Beach Escape","url":"https://tiagovskicode.github.io/Lauhata/website/dist/","image":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/og-image.jpg","logo":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/brand/logo-lauhata-beach-escape-160.png","address":{"@type":"PostalAddress","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%20Beach%20Escape%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste","hasMenu":"https://tiagovskicode.github.io/Lauhata/website/dist/restaurante/#ementa"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Início","item":"https://tiagovskicode.github.io/Lauhata/website/dist/"},{"@type":"ListItem","position":2,"name":"Política de privacidade","item":"https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/"}]}</script>
-<script>window.LAUHATA={"lang":"pt","whatsapp":"","thanks":"../obrigado/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Nome","contact":"Telefone ou email","contactHint":"Só se preferir ser contactado por outro número ou por email.","date":"Data","time":"Hora","people":"Número de pessoas","checkIn":"Entrada (check-in)","checkOut":"Saída (check-out)","guests":"Número de hóspedes","guestOne":"hóspede","guestMany":"hóspedes","roomType":"Tipo de quarto","roomAny":"Sem preferência","notes":"Observações","optional":"opcional","notesPlaceholder":"Ocasião especial, alergias, hora de chegada…","submitTable":"Enviar pedido por WhatsApp","submitRoom":"Enviar pedido por WhatsApp","note":"Ao enviar, abre-se o WhatsApp com a mensagem preenchida. Não é feito nenhum pagamento e nada fica confirmado até o Lauhata responder.","sending":"A abrir o WhatsApp…","errorsTitle":"Verifique os campos assinalados.","errors":{"required":"Preencha este campo.","name":"Indique o seu nome.","contact":"Indique um telefone ou email válido.","date":"Escolha uma data a partir de hoje.","time":"Escolha uma hora.","people":"Indique um número entre 1 e 50.","guests":"Indique um número entre 1 e 20.","checkIn":"Escolha uma data de entrada a partir de hoje.","checkOut":"A saída tem de ser depois da entrada."},"waTable":"Olá! Gostaria de pedir uma reserva de mesa no restaurante do Lauhata.\n\nNome: {name}\nData: {date}\nHora: {time}\nPessoas: {people}{contact}{notes}\n\nAguardo a vossa confirmação. Obrigado!","waRoom":"Olá! Gostaria de pedir uma reserva de alojamento no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\nQuarto: {room}\nNome: {name}{contact}{notes}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","waNotes":"\nObservações: {notes}","waContact":"\nContacto: {contact}","waQuickTable":"Olá! Gostaria de pedir uma mesa no restaurante do Lauhata.\n\nData: {date}\nHora: {time}\nPessoas: {people}\n\nAguardo a vossa confirmação. Obrigado!","waQuickRoom":"Olá! Gostaria de pedir um quarto no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","nightsOne":"1 noite","nightsMany":"{n} noites","waHello":"Olá! Gostaria de saber mais sobre o Lauhata."},"common":{"placeholderImage":"Imagem ilustrativa","toConfirm":"A confirmar","priceTbc":"Preço a confirmar","hoursTbc":"Horário a confirmar","whatsapp":"WhatsApp","phone":"Telefone","email":"Email","address":"Morada","learnMore":"Saber mais","viewMenu":"Ver ementa","viewStay":"Ver alojamento","viewRoom":"Ver quarto","bookTable":"Reservar mesa","requestRoom":"Pedir reserva de quarto","directions":"Como chegar","openMaps":"Abrir no Google Maps","seeReviews":"Ver avaliações","close":"Fechar","previous":"Anterior","next":"Seguinte","pendingWhatsapp":"Número de WhatsApp por configurar"},"order":{"photoSoon":"Fotografia em breve","cartTitle":"O seu pedido","open":"Abrir o pedido","close":"Fechar","viewOrder":"Ver pedido","itemOne":"1 produto","itemMany":"{n} produtos","emptyTitle":"O seu pedido está vazio","emptyBody":"Escolha pratos na ementa e junte-os aqui.","viewMenu":"Ver a ementa","add":"Adicionar","added":"Adicionado","choose":"Escolher","unavailable":"Preço a confirmar","remove":"Remover {name}","increase":"Mais um: {name}","decrease":"Menos um: {name}","qty":"Quantidade","each":"cada","total":"Total","continue":"Continuar a explorar","checkout":"Finalizar pedido","back":"Voltar ao pedido","detailsTitle":"Os seus dados","name":"Nome","type":"Tipo de pedido","table":"Número da mesa","notes":"Observações do pedido","optional":"opcional","notesPlaceholder":"Alergias, preferências…","send":"Enviar pedido por WhatsApp","sending":"A abrir o WhatsApp…","note":"Ao enviar, abre-se o WhatsApp com o pedido preenchido. Nada fica confirmado até o Lauhata responder. Não é feito nenhum pagamento no site.","errorsTitle":"Verifique os campos assinalados.","errors":{"name":"Indique o seu nome.","type":"Escolha o tipo de pedido.","table":"Indique o número da mesa.","choose":"Escolha uma opção.","tooBig":"O pedido é demasiado grande para uma só mensagem. Retire alguns produtos ou envie em duas partes."},"customize":"Personalizar","addToOrder":"Adicionar ao pedido","cancel":"Cancelar","searchLabel":"Pesquisar na ementa","searchPlaceholder":"Pesquisar prato…","clearSearch":"Limpar a pesquisa","noResults":"Nenhum prato encontrado para «{q}».","resultOne":"1 prato encontrado","results":"{n} pratos encontrados","categories":"Categorias da ementa","inOrder":"{name} adicionado ao pedido","menuHours":"Horário","msg":{"hello":"Olá, Lauhata!","intro":"Gostaria de efetuar o seguinte pedido:","title":"Pedido de restaurante","total":"Total","name":"Nome","type":"Tipo de pedido","table":"Mesa","notes":"Observações","bye":"Aguardo confirmação do pedido. Obrigado!"}},"pick":{"chooseDate":"Escolher data","chooseTime":"Escolher hora","dateDialog":"Escolher uma data","rangeDialog":"Escolher as datas","timeDialog":"Escolher a hora","numberDialog":"Quantidade","selectDialog":"Escolher","close":"Fechar","prev":"Mês anterior","next":"Mês seguinte","today":"Hoje","clear":"Limpar","done":"Concluído","stepIn":"Escolha a entrada","stepOut":"Escolha a saída","nightOne":"1 noite","nightMany":"{n} noites","less":"Menos","more":"Mais","max":"Máximo: {n}","morning":"Manhã","afternoon":"Tarde","evening":"Noite"}}};</script>
+<script>window.LAUHATA={"lang":"pt","whatsapp":"","thanks":"../obrigado/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Nome","contact":"Telefone ou email","contactHint":"Só se preferir ser contactado por outro número ou por email.","date":"Data","time":"Hora","people":"Número de pessoas","checkIn":"Entrada (check-in)","checkOut":"Saída (check-out)","guests":"Número de hóspedes","guestOne":"hóspede","guestMany":"hóspedes","roomType":"Tipo de quarto","roomAny":"Sem preferência","notes":"Observações","optional":"opcional","notesPlaceholder":"Ocasião especial, alergias, hora de chegada…","submitTable":"Enviar pedido por WhatsApp","submitRoom":"Enviar pedido por WhatsApp","note":"Ao enviar, abre-se o WhatsApp com a mensagem preenchida. Não é feito nenhum pagamento e nada fica confirmado até o Lauhata responder.","sending":"A abrir o WhatsApp…","errorsTitle":"Verifique os campos assinalados.","errors":{"required":"Preencha este campo.","name":"Indique o seu nome.","contact":"Indique um telefone ou email válido.","date":"Escolha uma data a partir de hoje.","time":"Escolha uma hora.","people":"Indique um número entre 1 e 50.","guests":"Indique um número entre 1 e 20.","checkIn":"Escolha uma data de entrada a partir de hoje.","checkOut":"A saída tem de ser depois da entrada."},"waTable":"Olá! Gostaria de pedir uma reserva de mesa no restaurante do Lauhata.\n\nNome: {name}\nData: {date}\nHora: {time}\nPessoas: {people}{contact}{notes}\n\nAguardo a vossa confirmação. Obrigado!","waRoom":"Olá! Gostaria de pedir uma reserva de alojamento no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}\nQuarto: {room}\nNome: {name}{contact}{notes}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","waNotes":"\nObservações: {notes}","waContact":"\nContacto: {contact}","waQuickTable":"Olá! Gostaria de pedir uma mesa no restaurante do Lauhata.\n\nData: {date}\nHora: {time}\nPessoas: {people}\n\nAguardo a vossa confirmação. Obrigado!","waQuickRoom":"Olá! Gostaria de pedir um quarto no Lauhata.\n\nEntrada: {checkIn}\nSaída: {checkOut} ({nights})\nHóspedes: {guests}{room}\n\nPodem confirmar a disponibilidade e o preço? Obrigado!","waQuickRoomType":"\nQuarto: {room}","waEvent":"Olá! Gostaria de saber se é possível organizar um evento no Lauhata.\n\nOcasião: {kind}\nData: {date}\nPessoas: {people}\nNome: {name}{contact}{notes}\n\nPodem dizer-me o que é possível? Obrigado!","nightsOne":"1 noite","nightsMany":"{n} noites","waHello":"Olá! Gostaria de saber mais sobre o Lauhata."},"common":{"placeholderImage":"Imagem ilustrativa","toConfirm":"A confirmar","priceTbc":"Preço sob consulta","hoursTbc":"Horário a confirmar","whatsapp":"WhatsApp","phone":"Telefone","email":"Email","address":"Morada","learnMore":"Saber mais","viewMenu":"Ver ementa","viewStay":"Ver alojamento","viewRoom":"Ver quarto","bookTable":"Reservar mesa","requestRoom":"Pedir reserva de quarto","directions":"Como chegar","openMaps":"Abrir no Google Maps","seeReviews":"Ver avaliações","close":"Fechar","previous":"Anterior","next":"Seguinte","pendingWhatsapp":"Número de WhatsApp por configurar"},"order":{"photoSoon":"Fotografia em breve","cartTitle":"O seu pedido","open":"Abrir o pedido","close":"Fechar","viewOrder":"Ver pedido","itemOne":"1 produto","itemMany":"{n} produtos","emptyTitle":"O seu pedido está vazio","emptyBody":"Escolha pratos na ementa e junte-os aqui.","viewMenu":"Ver a ementa","add":"Adicionar","added":"Adicionado","choose":"Escolher","unavailable":"Preço sob consulta","remove":"Remover {name}","increase":"Mais um: {name}","decrease":"Menos um: {name}","qty":"Quantidade","each":"cada","total":"Total","continue":"Continuar a explorar","checkout":"Finalizar pedido","back":"Voltar ao pedido","detailsTitle":"Os seus dados","name":"Nome","type":"Tipo de pedido","table":"Número da mesa","notes":"Observações do pedido","optional":"opcional","notesPlaceholder":"Alergias, preferências…","send":"Enviar pedido ao restaurante","dineIn":"Pedidos para consumo no restaurante. Não disponibilizamos delivery nem take-away.","sending":"A abrir o WhatsApp…","note":"Ao enviar, abre-se o WhatsApp com o pedido preenchido. Nada fica confirmado até o Lauhata responder. Não é feito nenhum pagamento no site.","errorsTitle":"Verifique os campos assinalados.","errors":{"name":"Indique o seu nome.","type":"Escolha o tipo de pedido.","table":"Indique o número da mesa.","choose":"Escolha uma opção.","tooBig":"O pedido é demasiado grande para uma só mensagem. Retire alguns produtos ou envie em duas partes."},"customize":"Personalizar","addToOrder":"Adicionar ao pedido","cancel":"Cancelar","searchLabel":"Pesquisar na ementa","searchPlaceholder":"Pesquisar prato…","clearSearch":"Limpar a pesquisa","noResults":"Nenhum prato encontrado para «{q}».","resultOne":"1 prato encontrado","results":"{n} pratos encontrados","categories":"Categorias da ementa","inOrder":"{name} adicionado ao pedido","menuHours":"Horário","msg":{"hello":"Olá, Lauhata!","intro":"Gostaria de fazer o seguinte pedido, para consumo no restaurante:","title":"Pedido de restaurante","total":"Total","name":"Nome","type":"Tipo de pedido","table":"Mesa","notes":"Observações","bye":"Aguardo confirmação do pedido. Obrigado!"}},"pick":{"chooseDate":"Escolher data","chooseTime":"Escolher hora","dateDialog":"Escolher uma data","rangeDialog":"Escolher as datas","timeDialog":"Escolher a hora","numberDialog":"Quantidade","selectDialog":"Escolher","close":"Fechar","prev":"Mês anterior","next":"Mês seguinte","today":"Hoje","clear":"Limpar","done":"Concluído","stepIn":"Escolha a entrada","stepOut":"Escolha a saída","nightOne":"1 noite","nightMany":"{n} noites","less":"Menos","more":"Mais","max":"Máximo: {n}","morning":"Manhã","afternoon":"Tarde","evening":"Noite"}}};</script>
 
 <script src="../assets/js/picker.js" defer></script>
 <script src="../assets/js/vendor/gsap.min.js" defer></script>
@@ -91,20 +94,14 @@
   <span class="brand-mark" aria-hidden="true"><img src="../assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
   <span class="brand-text"><span class="brand-name">Lauhata</span><span class="brand-line">Beach Escape</span></span>
 </a>
-    <nav class="nav-main" aria-label="Principal"><a href="../">Início</a><a href="../restaurante/">Ementa</a><a href="../alojamento/">Alojamento</a><a href="../sobre-nos/">Sobre nós</a><a href="../a-nossa-historia/">A nossa história</a><a href="../contactos/">Contacto</a></nav>
+    <nav class="nav-main" aria-label="Principal"><a href="../">Início</a><a href="../restaurante/">Ementa</a><a href="../alojamento/">Alojamento</a><a href="../sobre-nos/">Sobre nós</a><a href="../eventos/">Eventos</a><a href="../galeria/">Galeria</a><a href="../contactos/">Contacto</a></nav>
     <div class="header-actions">
       <div class="lang " role="group" aria-label="Read in English">
     <span class="lang-opt is-on" aria-current="true">PT</span>
     <a class="lang-opt" href="../en/privacy/" hreflang="en" lang="en" title="Read in English">EN</a>
   </div>
       <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog" aria-label="Abrir o pedido"><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-count" data-cart-count hidden>0</span></button>
-      <div class="book-menu" data-book-menu>
-        <button class="btn btn-dark btn-sm" type="button" aria-expanded="false" aria-controls="book-pop-pt" data-book-toggle>Reservar<svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg></button>
-        <div class="book-pop" id="book-pop-pt" hidden>
-          <a href="../restaurante/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span>Mesa no restaurante</span></a>
-          <a href="../alojamento/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg><span>Quarto</span></a>
-        </div>
-      </div>
+      <a class="btn btn-dark btn-sm book-btn" href="../contactos/" data-book-open aria-haspopup="dialog">Reservar<svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg></a>
       <button class="icon-btn nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg></button>
     </div>
   </div>
@@ -118,7 +115,7 @@
     <button class="icon-btn" type="button" aria-label="Fechar menu" data-nav-close><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
   </div>
   <nav class="mobile-nav-links">
-    <a href="../">Início</a><a href="../restaurante/">Ementa</a><a href="../alojamento/">Alojamento</a><a href="../sobre-nos/">Sobre nós</a><a href="../a-nossa-historia/">A nossa história</a><a href="../contactos/">Contacto</a>
+    <a href="../">Início</a><a href="../restaurante/">Ementa</a><a href="../alojamento/">Alojamento</a><a href="../sobre-nos/">Sobre nós</a><a href="../eventos/">Eventos</a><a href="../galeria/">Galeria</a><a href="../contactos/">Contacto</a>
   </nav>
   <div class="mobile-nav-cta">
     <a class="btn btn-dark" href="../restaurante/#reservar">Reservar mesa<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
@@ -141,42 +138,59 @@
 </section>
 </main>
 <footer class="site-footer">
-  <div class="wrap ft">
+  <div class="wrap ft-top">
     <div class="ft-brand">
       <a class="brand brand-light" href="../" aria-label="Lauhata Beach Escape — Início">
   <span class="brand-mark" aria-hidden="true"><img src="../assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
   <span class="brand-text"><span class="brand-name">Lauhata</span><span class="brand-line">Beach Escape</span></span>
 </a>
+      <p class="ft-statement">Uma mesa e um quarto junto ao mar, na costa de Liquiçá.</p>
     </div>
+    <div class="ft-cta">
+      <p>Reserve mesa ou peça um quarto: respondemos pelo WhatsApp.</p>
+      <div class="ft-cta-btns">
+        <a class="btn btn-cream" href="../restaurante/#reservar" data-book-open="table">Reservar mesa</a>
+        <a class="btn btn-ghost-light" href="../alojamento/#reservar" data-book-open="room">Consultar quartos</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap ft">
     <nav class="ft-col" aria-label="Explorar">
       <h2 class="footer-h">Explorar</h2>
       <ul class="footer-list">
         <li><a href="../restaurante/">Ementa</a></li>
         <li><a href="../alojamento/">Alojamento</a></li>
         <li><a href="../sobre-nos/">Sobre nós</a></li>
-        <li><a href="../a-nossa-historia/">A nossa história</a></li>
+        <li><a href="../eventos/">Eventos</a></li>
+        <li><a href="../galeria/">Galeria</a></li>
+        <li><a href="../contactos/">Contacto</a></li>
       </ul>
     </nav>
     <div class="ft-col">
+      <h2 class="footer-h">Visite-nos</h2>
+      <p class="ft-place">Lauhata, Liquiçá<br>Timor-Leste</p>
+      <p class="ft-sub">Restaurante</p><ul class="ft-hours"><li><span>Pequeno-almoço</span><b>08:00–10:00</b></li><li><span>Almoço e jantar</span><b>11:00–21:00</b></li></ul>
+      <ul class="footer-list"><li><a href="https://www.google.com/maps/search/?api=1&query=Lauhata%20Beach%20Escape%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">Obter direções</a></li></ul>
+    </div>
+    <div class="ft-col">
       <h2 class="footer-h">Contacto</h2>
       <ul class="footer-list">
-        <li><a href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener">WhatsApp — A confirmar</a></li>
-        <li><a href="https://www.google.com/maps/search/?api=1&query=Lauhata%20Beach%20Escape%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste" target="_blank" rel="noopener">Google Maps</a></li>
-        <li><a href="../contactos/">Liquiçá</a></li>
+        <li><a href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener">WhatsApp</a></li>
+        
+        
         
       </ul>
-      
     </div>
-    <nav class="ft-col" aria-label="Reservas">
-      <h2 class="footer-h">Reservas</h2>
-      <ul class="footer-list">
-        <li><a href="../restaurante/#reservar">Reservar mesa</a></li>
-        <li><a href="../alojamento/#quartos">Consultar quartos</a></li>
-      </ul>
-    </nav>
+    <div class="ft-col">
+      <h2 class="footer-h">Avaliações</h2>
+      <a class="ta-badge is-footer" href="https://www.tripadvisor.com/Hotel_Review-g4578170-d10355320-Reviews-Lauhata_Beach_Escape-Liquica_Liquica_District.html" target="_blank" rel="noopener">
+    <span class="ta-source">Tripadvisor</span>
+    <span class="ta-link">Ler as avaliações no Tripadvisor<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span>
+  </a>
+    </div>
   </div>
   <div class="wrap footer-base">
-    <p>© 2026 Lauhata Beach Escape. <span class="footer-note">Imagens ilustrativas — a substituir por fotografias do Lauhata.</span></p>
+    <p>© 2026 Lauhata Beach Escape. Todos os direitos reservados. <span class="footer-note">Algumas fotografias são ilustrativas e estão assinaladas como tal.</span></p>
     <p><a href="../privacidade/">Política de privacidade</a> · Website by <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Elevate Web Studios</a></p>
   </div>
 </footer>
@@ -198,6 +212,7 @@
           <a class="btn btn-dark" href="../restaurante/#ementa" data-cart-close>Ver a ementa<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
         </div>
       </div>
+      <p class="dine-in is-cart"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span>Pedidos para consumo no restaurante. Não disponibilizamos delivery nem take-away.</span></p>
       <footer class="cart-foot" data-cart-foot>
         <p class="cart-total"><span>Total</span><strong data-cart-sum></strong></p>
         <button class="btn btn-terra btn-lg" type="button" data-cart-checkout>Finalizar pedido<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></button>
@@ -211,11 +226,12 @@
         
         
         <div class="field"><label for="ord-notes">Observações do pedido <span class="opt">(opcional)</span></label><textarea id="ord-notes" name="notes" rows="3" maxlength="400" placeholder="Alergias, preferências…"></textarea></div>
-        <p class="form-note">Ao enviar, abre-se o WhatsApp com o pedido preenchido. Nada fica confirmado até o Lauhata responder. Não é feito nenhum pagamento no site. <strong class="pending">Número de WhatsApp por configurar.</strong></p>
+        <p class="dine-in is-cart"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span>Pedidos para consumo no restaurante. Não disponibilizamos delivery nem take-away.</span></p>
+        <p class="form-note">Ao enviar, abre-se o WhatsApp com o pedido preenchido. Nada fica confirmado até o Lauhata responder. Não é feito nenhum pagamento no site.</p>
       </div>
       <footer class="cart-foot">
         <div class="form-errors" role="alert" hidden data-order-errors>Verifique os campos assinalados.</div>
-        <button class="btn btn-terra btn-lg" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><span data-order-send>Enviar pedido por WhatsApp</span></button>
+        <button class="btn btn-terra btn-lg" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg><span data-order-send>Enviar pedido ao restaurante</span></button>
         <button class="btn btn-outline" type="button" data-cart-back>Voltar ao pedido</button>
       </footer>
     </form>
@@ -244,11 +260,37 @@
   </form>
 </dialog>
 <div class="mobile-bar" data-mobile-bar>
-  <a class="btn btn-dark" href="../restaurante/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Restaurante</a>
-  <a class="btn btn-terra" href="../alojamento/#reservar"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Alojamento</a>
+  <a class="btn btn-dark" href="../restaurante/#reservar" data-book-open="table"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Restaurante</a>
+  <a class="btn btn-terra" href="../alojamento/#reservar" data-book-open="room"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Alojamento</a>
   <a class="icon-btn wa" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg></a>
 </div>
 <a class="wa-float" href="https://wa.me/?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Lauhata." target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg></a>
+<dialog class="book-dialog" data-book-dialog aria-labelledby="bd-title-pt">
+  <header class="bd-head"><h2 id="bd-title-pt">Reservar no Lauhata</h2><button class="icon-btn" type="button" aria-label="Fechar" data-book-close><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></header>
+  <p class="bd-intro">Escolha mesa ou quarto. O pedido segue para o WhatsApp do Lauhata, que confirma a disponibilidade consigo.</p>
+  <form class="booking-card" data-quick-wa novalidate aria-label="Pedido rápido de reserva">
+    <div class="bc-tabs" role="tablist">
+      <button type="button" role="tab" aria-selected="false" aria-controls="bc-table" data-bc-tab="table"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Restaurante</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="bc-room" data-bc-tab="room"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Alojamento</button>
+    </div>
+    <p class="bc-hint" data-bc-hint>Escolha uma opção para pedir a sua reserva por WhatsApp.</p>
+    <div class="bc-row" id="bc-table" role="tabpanel" data-bc-panel="table" hidden>
+      <label class="bc-field"><span>Data</span><input type="date" name="date" data-pick="date"></label>
+      <label class="bc-field"><span>Hora</span><select name="time" data-pick="time"><option value="08:00" data-group="Manhã" data-label="08:00">Manhã · 08:00</option><option value="08:30" data-group="Manhã" data-label="08:30">Manhã · 08:30</option><option value="09:00" data-group="Manhã" data-label="09:00">Manhã · 09:00</option><option value="09:30" data-group="Manhã" data-label="09:30">Manhã · 09:30</option><option value="11:00" data-group="Manhã" data-label="11:00">Manhã · 11:00</option><option value="11:30" data-group="Manhã" data-label="11:30">Manhã · 11:30</option><option value="12:00" data-group="Tarde" data-label="12:00">Tarde · 12:00</option><option value="12:30" data-group="Tarde" data-label="12:30">Tarde · 12:30</option><option value="13:00" data-group="Tarde" data-label="13:00">Tarde · 13:00</option><option value="13:30" data-group="Tarde" data-label="13:30">Tarde · 13:30</option><option value="14:00" data-group="Tarde" data-label="14:00">Tarde · 14:00</option><option value="14:30" data-group="Tarde" data-label="14:30">Tarde · 14:30</option><option value="15:00" data-group="Tarde" data-label="15:00">Tarde · 15:00</option><option value="15:30" data-group="Tarde" data-label="15:30">Tarde · 15:30</option><option value="16:00" data-group="Tarde" data-label="16:00">Tarde · 16:00</option><option value="16:30" data-group="Tarde" data-label="16:30">Tarde · 16:30</option><option value="17:00" data-group="Tarde" data-label="17:00">Tarde · 17:00</option><option value="17:30" data-group="Tarde" data-label="17:30">Tarde · 17:30</option><option value="18:00" data-group="Noite" data-label="18:00">Noite · 18:00</option><option value="18:30" data-group="Noite" data-label="18:30">Noite · 18:30</option><option value="19:00" data-group="Noite" data-label="19:00">Noite · 19:00</option><option value="19:30" data-group="Noite" data-label="19:30" selected>Noite · 19:30</option><option value="20:00" data-group="Noite" data-label="20:00">Noite · 20:00</option><option value="20:30" data-group="Noite" data-label="20:30">Noite · 20:30</option></select></label>
+      <label class="bc-field"><span>Pessoas</span><input type="number" name="people" min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="pessoa" data-unit-many="pessoas"></label>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Pedir mesa no WhatsApp</button>
+    </div>
+    <div class="bc-row" id="bc-room" role="tabpanel" data-bc-panel="room" hidden>
+      <label class="bc-field"><span>Entrada</span><input type="date" name="checkIn" data-pick="in"></label>
+      <label class="bc-field"><span>Saída</span><input type="date" name="checkOut" data-pick="out"></label>
+      <label class="bc-field"><span>Hóspedes</span><input type="number" name="guests" min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="pessoa" data-unit-many="pessoas"></label>
+      <label class="bc-field"><span>Quarto</span><select name="room" data-pick="select"><option value="">Sem preferência</option><option value="sea">Quarto Vista Mar</option><option value="family">Suite Família</option></select></label>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Pedir quarto no WhatsApp</button>
+    </div>
+    <p class="bc-error" role="alert" hidden data-bc-error></p>
+    <p class="bc-note">O Lauhata responde pelo WhatsApp para confirmar a disponibilidade.</p>
+  </form>
+</dialog>
 <dialog class="lightbox" data-lightbox aria-label="Galeria de imagens">
   <button class="icon-btn lb-close" type="button" aria-label="Fechar" data-lb-close><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
   <button class="icon-btn lb-prev" type="button" aria-label="Anterior" data-lb-prev><svg class="icon" aria-hidden="true"><use href="#i-left"></use></svg></button>

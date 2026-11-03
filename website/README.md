@@ -57,6 +57,37 @@ Alojamento, Sobre nós, A nossa história, Contactos. **Dois tipos de quarto** (
 saiu. **Ementa:** cada prato tem o seu espaço de fotografia (`src/assets/img/pratos/<id>-640.jpg`); a lista completa e o estado
 de cada foto estão em `FOTOS-PRATOS.md`, gerado pelo build.
 
+**Fase 4 (novembro 2026).**
+- **Páginas:** Início, Ementa, Alojamento, Sobre nós, Eventos (`/eventos/`), Galeria (`/galeria/`), Contactos. «A nossa
+  história» saiu enquanto não houver história verificada (fica dentro de «Sobre nós» quando existir).
+- **Reservas:** o botão «Reservar» do cabeçalho, os botões do herói («Reservar mesa», «Ver quartos») e a barra do telemóvel
+  abrem um diálogo com o pedido de mesa (data, hora, pessoas) ou de quarto (entrada, saída, hóspedes, quarto). Sem
+  JavaScript são links para os formulários completos.
+- **Ementa:** aviso «Pedidos para consumo no restaurante. Não disponibilizamos delivery nem take-away.» na ementa e no
+  carrinho; a mensagem de WhatsApp diz «para consumo no restaurante»; o carrinho mostra a miniatura de cada prato.
+- **Avaliações:** a secção «Experiências que ficam na memória» e o rodapé ligam à página oficial do Tripadvisor. A nota e o
+  número de avaliações só aparecem quando preenchidos em `site.reviews.tripadvisor` (`rating`, `count`, `checked`), copiados à
+  mão da página. Não se copiam textos de avaliações (exige autorização).
+- **Notas internas** («a confirmar», «por configurar») já não aparecem ao público: campos sem dados ficam escondidos e o
+  preço diz «sob consulta». As etiquetas «Imagem ilustrativa» continuam sempre visíveis.
+
+Inventário das fotografias reais de drone (originais em `fotos-originais/drone-2026-11/`):
+
+| Chave (`images.mjs`) | Mostra | Onde é usada |
+|---|---|---|
+| `beachFront` | O Lauhata visto do mar: praia, mesas, palmeiras, montanhas | Comer & Ficar (Comer), Eventos, Restaurante (formulário), Galeria |
+| `aerialCoast` | Vista aérea do jardim à praia | Comer & Ficar (Ficar), Galeria |
+| `sunsetPalmsHigh` | Pôr do sol com palmeiras | Ementa (herói), Alojamento (formulário), Galeria |
+| `sunsetGarden` | Pôr do sol entre as árvores do jardim | Home (introdução), Galeria |
+| `sunsetSea` | Caminho de luz no mar | Alojamento (herói), Galeria |
+| `sunsetPalms` | Palmeiras em silhueta | Eventos (herói), Galeria |
+| `seaCanoe` | Canoa com três pessoas no mar | Home (Sobre nós), Galeria |
+| `coastVillage` | A costa e as casas vistas de cima | Contactos (herói), Galeria |
+| `ruinsAerial`, `ruinsTop` | Ruínas de pedra junto à costa (nome e local por confirmar) | Galeria, «Nos arredores» |
+
+As restantes 7 fotos de pôr do sol eram quase iguais às escolhidas e não foram usadas. Fotos dos quartos e dos pratos continuam
+em falta (ver `FOTOS-PRATOS.md`).
+
 Páginas interiores:
 - **Alojamento:** capacidade e comodidades dos quartos só aparecem com `roomDetailsConfirmed: true`; até lá, uma linha diz
   «Detalhes do quarto a confirmar». A galeria de imagens ilustrativas desta página foi retirada (repetia as fotos acima).

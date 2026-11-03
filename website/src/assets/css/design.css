@@ -555,3 +555,135 @@ html:not(.cine-motion) .dish-photo img { transition: none; }
 .menu .dish-add { grid-column: 1 / -1; grid-row: auto; justify-self: start; margin-top: 0.6rem; }
 @media (max-width: 760px) { .dish-photo { aspect-ratio: 1; } }
 @media (min-width: 861px) { .ab-title { position: sticky; top: calc(var(--header-h) + 2.5rem); } }
+
+/* ==========================================================================================================
+   Phase 4 — booking dialog, a smaller Comer & Ficar, reviews, the footer, events and gallery.
+   ========================================================================================================== */
+
+/* ---------- Hero actions: two clear journeys ---------- */
+.hx-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: clamp(1.4rem, 3vh, 2.2rem); }
+.hx-actions .btn .icon { width: 18px; height: 18px; }
+@media (max-width: 600px) { .hx-actions .btn { flex: 1 1 100%; justify-content: center; } }
+
+/* ---------- Header "Reservar": one clear primary action ---------- */
+.book-btn { gap: 0.55rem; padding-inline: 1.15rem; min-height: 44px; }
+.book-btn .icon { width: 16px; height: 16px; }
+
+/* ---------- Booking dialog ---------- */
+.book-dialog { width: min(36rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: clamp(1.4rem, 3vw, 2rem); border: 0; border-radius: var(--r-card); background: var(--paper); color: var(--text); box-shadow: 0 30px 80px -30px rgba(8, 24, 20, 0.55); overflow: auto; --focus: var(--terra-dark); }
+.book-dialog::backdrop { background: rgba(8, 24, 20, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+.book-dialog[open] { animation: bdIn 0.35s var(--ease) both; }
+@keyframes bdIn { from { opacity: 0; transform: translateY(14px); } }
+html:not(.cine-motion) .book-dialog[open] { animation: none; }
+.bd-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.bd-head h2 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(1.8rem, 3vw, 2.3rem); color: var(--ink); }
+.bd-intro { margin: 0.4rem 0 1.2rem; color: var(--body); font-size: 0.95rem; }
+.book-dialog .booking-card { position: static; width: auto; margin: 0; padding: 0; border: 0; background: none; box-shadow: none; color: var(--text); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.book-dialog .bc-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.book-dialog .bc-tabs button { min-height: 52px; border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: transparent; color: var(--ink); font-weight: 600; justify-content: center; }
+.book-dialog .bc-tabs button[aria-selected="true"] { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+.book-dialog .bc-hint { color: var(--muted); }
+.book-dialog .bc-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+.book-dialog .bc-field { display: grid; gap: 0.35rem; color: var(--ink); }
+.book-dialog .bc-field > span { color: var(--muted); }
+.book-dialog .bc-submit { grid-column: 1 / -1; width: 100%; justify-content: center; margin-top: 0.4rem; }
+.book-dialog .bc-note { margin: 1rem 0 0; font-size: 0.86rem; color: var(--muted); }
+.book-dialog .bc-error { color: var(--error); font-weight: 600; }
+@media (max-width: 520px) { .book-dialog .bc-row { grid-template-columns: 1fr; } }
+
+/* ---------- Comer & Ficar, smaller ----------
+   Same idea, a smaller footprint: the eat photograph is landscape, the stay one square and set lower, the type is
+   smaller and the ampersand sits on the seam. On a phone each panel is a landscape frame with the name below it. */
+.duo { padding-bottom: clamp(4rem, 8vw, 7rem); }
+.duo-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+.duo-eat { aspect-ratio: 4 / 3; }
+.duo-stay { aspect-ratio: 1 / 1; margin-top: clamp(3rem, 8vw, 6.5rem); }
+.duo-title { font-size: clamp(3rem, 6.2vw, 6rem); }
+.duo-stay .duo-title { font-size: clamp(2.8rem, 5.2vw, 5rem); }
+.duo-line { margin: 0.6rem 0 1rem; }
+.duo-amp { left: 55.6%; font-size: clamp(4rem, 8vw, 8rem); }
+@media (max-width: 760px) {
+  .duo-eat, .duo-stay { aspect-ratio: 4 / 3; max-height: none; }
+  .duo-title, .duo-stay .duo-title { font-size: clamp(2.8rem, 13vw, 3.8rem); }
+  .duo-copy { padding: 1.2rem; }
+  .duo-line { display: none; }
+  .duo-amp { font-size: 4.4rem; margin: -0.28em 0 -0.4em; }
+}
+
+/* ---------- Dine-in only ---------- */
+.dine-in { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin: 0.8rem auto 0; padding: 0.7rem 1.1rem; max-width: max-content; border: 1px solid var(--line-strong); border-radius: var(--r-sm); font-size: 0.92rem; font-weight: 600; color: var(--forest); background: var(--paper); text-align: left; }
+.dine-in .icon { flex: none; width: 18px; height: 18px; color: var(--terra-dark); }
+.dine-in.is-cart { max-width: none; margin: 0 1.2rem 0.8rem; justify-content: flex-start; font-size: 0.85rem; }
+
+/* ---------- Cart thumbnails ---------- */
+.cart-line { grid-template-columns: 3.5rem minmax(0, 1fr) auto; }
+.cl-thumb { grid-row: span 2; width: 3.5rem; height: 3.5rem; border-radius: var(--r-sm); object-fit: cover; background: var(--sand); }
+.cl-thumb.is-initial { display: grid; place-items: center; font-family: var(--serif); font-style: italic; font-size: 1.6rem; color: var(--forest-2); background: linear-gradient(160deg, var(--paper), var(--sand)); border: 1px solid var(--line); }
+
+/* ---------- Reviews (home) and the Tripadvisor link ---------- */
+.reviews-ed { background: var(--paper); }
+.rv-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+.rv-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 4vw, 3.8rem); line-height: 1.08; color: var(--ink); text-wrap: balance; }
+.rv-lead { margin: 1rem 0 0; max-width: 40ch; color: var(--body); }
+.ta-badge { display: grid; gap: 0.5rem; padding: 1.4rem 1.5rem; border: 1px solid var(--line-strong); border-radius: var(--r-card); color: var(--ink); text-decoration: none; transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease); }
+.ta-badge:hover { border-color: var(--forest); background: rgba(18, 59, 58, 0.03); }
+.ta-source { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; }
+.ta-facts { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-weight: 600; color: var(--forest); }
+.ta-link { display: inline-flex; align-items: center; gap: 0.45rem; font-weight: 600; color: var(--terra-dark); }
+.ta-link .icon { width: 16px; height: 16px; }
+.ta-badge.is-footer { padding: 1rem 1.1rem; border-color: rgba(243, 233, 215, 0.25); color: var(--cream); }
+.ta-badge.is-footer:hover { border-color: var(--gold-soft); background: rgba(243, 233, 215, 0.05); }
+.ta-badge.is-footer .ta-source { font-size: 1.3rem; }
+.ta-badge.is-footer .ta-link, .ta-badge.is-footer .ta-facts { color: var(--gold-soft); }
+@media (max-width: 860px) { .rv-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Footer ---------- */
+.ft-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem 4rem; align-items: end; padding-bottom: clamp(2.2rem, 4vw, 3.2rem); margin-bottom: clamp(2.2rem, 4vw, 3.2rem); border-bottom: 1px solid var(--line-light); }
+.ft-statement { margin: 1.2rem 0 0; max-width: 22ch; font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.4rem); line-height: 1.15; color: var(--cream); }
+.ft-cta { justify-self: end; max-width: 26rem; }
+.ft-cta p { margin: 0 0 1rem; color: rgba(243, 233, 215, 0.8); }
+.ft-cta-btns { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+.site-footer .ft { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ft-place { margin: 0 0 0.8rem; color: var(--cream); line-height: 1.5; }
+.ft-sub { margin: 0.6rem 0 0.3rem; font-size: 0.85rem; color: rgba(243, 233, 215, 0.7); }
+.ft-hours { margin: 0 0 0.6rem; padding: 0; list-style: none; color: var(--cream); font-size: 0.92rem; }
+.ft-hours li { display: flex; flex-wrap: wrap; gap: 0 0.6rem; }
+.ft-hours b { font-weight: 600; }
+@media (max-width: 860px) {
+  .ft-top { grid-template-columns: 1fr; }
+  .ft-cta { justify-self: start; }
+  .site-footer .ft { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+}
+@media (max-width: 480px) { .site-footer .ft { grid-template-columns: 1fr; } }
+
+/* ---------- Events ---------- */
+.ev-how { background: var(--cream); }
+.ev-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 4vw, 3.5rem); margin: 1.2rem 0 0; padding: 0; list-style: none; }
+.ev-steps li { padding-top: 1.2rem; border-top: 1px solid var(--line-strong); }
+.ev-n { font-family: var(--serif); font-style: italic; font-size: 2.2rem; line-height: 1; color: var(--terra); }
+.ev-steps h3 { margin: 0.7rem 0 0.4rem; font-family: var(--serif); font-weight: 500; font-size: 1.6rem; color: var(--ink); }
+.ev-steps p { margin: 0; color: var(--body); }
+@media (max-width: 760px) { .ev-steps { grid-template-columns: 1fr; } }
+
+/* ---------- Gallery page ---------- */
+.gx-group + .gx-group { margin-top: clamp(3.5rem, 7vw, 6rem); }
+.gx-title { margin: 0 0 1.2rem; font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.6rem); color: var(--ink); }
+.gx-grid .gr-item.is-wide .gr-link .media { aspect-ratio: 16 / 7; }
+.gx-grid .gr-link .media { aspect-ratio: 16 / 10; }
+@media (max-width: 760px) { .gx-grid .gr-item.is-wide .gr-link .media { aspect-ratio: 16 / 10; } }
+@media (max-width: 760px) {
+  .duo-grid { grid-template-columns: 1fr; gap: 0; }
+  .duo-stay { margin-top: 0; }
+  .duo-amp { position: relative; left: auto; top: auto; translate: none; justify-self: center; }
+}
+.site-footer .ft-statement { margin: 1.2rem 0 0; max-width: 22ch; font-family: var(--serif); font-size: clamp(1.6rem, 2.4vw, 2.2rem); font-weight: 400; line-height: 1.2; color: var(--cream); }
+
+.contact-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.8rem; }
+.contact-actions .icon { width: 17px; height: 17px; }
+.menu .dine-in { margin-bottom: 1.2rem; }
+
+/* On phones and tablets the bottom bar carries the booking actions, so the header keeps only the cart and the menu. */
+@media (max-width: 1199px) { .header-actions > .book-btn { display: none; } }
+
+/* The real photos used by interior heroes are evening shots and already dark: a lighter shade keeps them visible. */
+.cine-hero.is-page .cine-shade { background: linear-gradient(180deg, rgba(8, 24, 20, 0.5) 0%, rgba(8, 24, 20, 0.12) 38%, rgba(8, 24, 20, 0.72) 100%), linear-gradient(90deg, rgba(8, 24, 20, 0.5) 0%, rgba(8, 24, 20, 0) 62%); }

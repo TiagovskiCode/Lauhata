@@ -73,16 +73,28 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/sobre-nos/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/a-nossa-historia/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/a-nossa-historia/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/our-story/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/a-nossa-historia/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/eventos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/events/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/our-story/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/a-nossa-historia/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/our-story/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/a-nossa-historia/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/events/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/events/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
+  </url>
+  <url>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/galeria/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
+  </url>
+  <url>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/gallery/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
   </url>
   <url>
     <loc>https://tiagovskicode.github.io/Lauhata/website/dist/contactos/</loc>

@@ -16,8 +16,8 @@ export default [
       en: "Wake up with the sea at your window and sunrise over the coast.",
     },
     description: {
-      pt: "Acorde com o mar à janela e o nascer do sol sobre a costa. Descrição completa a confirmar pelo Lauhata.",
-      en: "Wake up with the sea at your window and sunrise over the coast. Full description to be confirmed by Lauhata.",
+      pt: "Acorde com o mar à janela e o nascer do sol sobre a costa.",
+      en: "Wake up with the sea at your window and sunrise over the coast.",
     },
     capacity: { pt: "2 hóspedes", en: "2 guests" },
     beds: null,
@@ -42,8 +42,8 @@ export default [
       en: "More room for families and small groups of friends.",
     },
     description: {
-      pt: "Mais espaço para famílias e pequenos grupos de amigos. Descrição completa a confirmar pelo Lauhata.",
-      en: "More room for families and small groups of friends. Full description to be confirmed by Lauhata.",
+      pt: "Mais espaço para famílias e pequenos grupos de amigos.",
+      en: "More room for families and small groups of friends.",
     },
     capacity: { pt: "Até 4 hóspedes", en: "Up to 4 guests" },
     beds: null,
