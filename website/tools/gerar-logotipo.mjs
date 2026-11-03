@@ -58,13 +58,13 @@ const symbol = (c, opts) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 
 
 // ---- Fonts embedded so the SVG draws the same everywhere (use as a file, <img> or in a document) ----
 const b64 = (file) => fs.readFileSync(path.join(fontsDir, file)).toString("base64");
-const fontCss = () => `@font-face{font-family:"Cormorant Garamond";font-weight:300 700;src:url(data:font/woff2;base64,${b64("cormorant-garamond-latin.woff2")}) format("woff2")}@font-face{font-family:"DM Sans";font-weight:400 700;src:url(data:font/woff2;base64,${b64("dm-sans-latin.woff2")}) format("woff2")}`;
+const fontCss = () => `@font-face{font-family:"Cormorant Garamond";font-weight:300 700;src:url(data:font/woff2;base64,${b64("cormorant-garamond-latin.woff2")}) format("woff2")}@font-face{font-family:"Manrope";font-weight:400 700;src:url(data:font/woff2;base64,${b64("manrope-latin.woff2")}) format("woff2")}`;
 
 function textSvg(w, h, body, c) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="Lauhata Beach Escape"><defs><style>${fontCss()}</style></defs>${body}</svg>`;
 }
 const serif = (c, size, y, x, text, extra = "") => `<text x="${x}" y="${y}" text-anchor="middle" font-family="'Cormorant Garamond',Georgia,serif" font-weight="600" font-size="${size}" letter-spacing="${(size * 0.26).toFixed(1)}" fill="${c.ink}"${extra}>${text}</text>`;
-const sans = (color, size, y, x, text, track, weight = 500) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="'DM Sans',system-ui,sans-serif" font-weight="${weight}" font-size="${size}" letter-spacing="${track}" fill="${color}">${text}</text>`;
+const sans = (color, size, y, x, text, track, weight = 500) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="'Manrope',system-ui,sans-serif" font-weight="${weight}" font-size="${size}" letter-spacing="${track}" fill="${color}">${text}</text>`;
 
 function primary(c) {
   const W = 520, H = 380, cx = W / 2;

@@ -3,8 +3,10 @@
 export default {
   name: "Lauhata Beach Escape",
 
-  // Final domain, without a trailing slash. Placeholder until the domain is registered.
-  siteUrl: "https://lauhata.example",
+  // Public address, without a trailing slash: canonical links, sitemap, robots.txt and Open Graph are built from it.
+  // For now the GitHub Pages address (the repository root serves website/dist). Replace it with the final domain
+  // once it is registered.
+  siteUrl: "https://tiagovskicode.github.io/Lauhata/website/dist",
 
   // WhatsApp number in international format, digits only (e.g. "67077000000").
   // PENDING: while empty, forms open WhatsApp without a recipient so the flow can be tested.

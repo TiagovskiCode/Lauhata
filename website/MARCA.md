@@ -45,7 +45,7 @@ fica para detalhes e texto grande. Não há fundos inteiros em terracota nem ver
 ## Tipografia
 
 - **Títulos:** Cormorant Garamond 500 (itálico para a palavra de destaque), números alinhados (`lining-nums`).
-- **Texto e interface:** DM Sans 400–700. Rótulos e botões em maiúsculas com espaçamento 0,14–0,34 em.
+- **Texto e interface:** Manrope (400 texto, 500 menu e rótulos, 600 botões, 700 só para ênfase), alojada no site. Rótulos e botões em frase normal, sem maiúsculas nem espaçamento largo; as maiúsculas espaçadas ficam só no logótipo e na linha de lugar do hero.
 - Fontes alojadas em `src/assets/fonts/` (sem Google Fonts).
 
 ## Forma e movimento

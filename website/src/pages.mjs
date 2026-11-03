@@ -1,6 +1,6 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
-import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms } from "./lib.mjs";
+import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
 import { TAIS } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
 
@@ -39,6 +39,13 @@ function fromPrice(t, r) {
     : `<p class="from is-tbc"><strong>${esc(t.common.priceTbc)}</strong></p>`;
 }
 
+// Capacity and amenities of a room, only once the owner has confirmed them (site.roomDetailsConfirmed); until then one
+// quiet line says so, instead of chips that look like facts.
+function roomFeatures(t, r) {
+  if (site.roomDetailsConfirmed && r.features.length) return `<ul class="chips">${r.features.map((f) => `<li>${esc(f[t.lang])}</li>`).join("")}</ul>`;
+  return `<p class="room-tbc">${esc(t.land.suites.tbc)}</p>`;
+}
+
 // Large alternating rows, one per room type (homepage and stay page).
 function roomRows(t, list = rooms, { arch = false } = {}) {
   const L = t.lang;
@@ -55,7 +62,7 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
         <span class="room-num">0${n + 1}<small>/0${rooms.length}</small></span>
         <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
         <p>${esc(r.summary[L])}</p>
-        ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
+        ${roomFeatures(t, r)}
         <div class="room-foot">
           ${fromPrice(t, r)}
           <a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(H.book)}${icon("arrow")}</a>
@@ -64,24 +71,6 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
     </article>`;
     })
     .join("")}</div>`;
-}
-
-// Full-screen closing call to action over a sunset photo.
-function cineCta(t) {
-  const c = t.home.cta;
-  return `<section class="cine-cta" aria-labelledby="cta-title">
-  <div class="cine-cta-bg">${figure(t, "palmSunset", { sizes: "100vw", parallax: 0.15 })}</div>
-  <div class="cine-cta-shade" aria-hidden="true"></div>
-  <div class="wrap cine-cta-content">
-    <span class="cta-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
-    <h2 id="cta-title" class="cine-cta-title" data-split>${esc(c.title)} <em>${esc(c.titleAccent)}</em></h2>
-    <p${rv(200)}>${esc(c.body)}</p>
-    <div class="btn-row center"${rv(300)}>
-      <a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(c.wa)}</a>
-      <a class="btn btn-ghost-light btn-lg" href="${href("stay", t.lang, "#reservar")}">${esc(c.availability)}</a>
-    </div>
-  </div>
-</section>`;
 }
 
 const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery)}`;
@@ -278,7 +267,7 @@ function roomCards(t, list, cls = "") {
       <div class="room-body">
         <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
         <p>${esc(r.summary[L])}</p>
-        ${r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
+        ${roomFeatures(t, r)}
         <div class="room-foot">
           ${fromPrice(t, r)}
           <a class="btn btn-cream btn-sm" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(h.book)}${icon("arrow")}</a>
@@ -596,6 +585,46 @@ function sceneSection(t, key, copy) {
 </section>`;
 }
 
+// Photographs: only the pictures marked real in images.mjs (placeholder: false), so no stock or illustrative image is
+// ever shown here as Lauhata. The grid grows on its own as real photos are added. Each one opens in a lightbox
+// (the shared <dialog> in layout.mjs: Escape closes it, the arrow keys move between photos, focus returns to the thumbnail).
+// Without JavaScript each thumbnail is a plain link to the large photo.
+function gallerySection(t) {
+  const G = t.land.gallery;
+  const real = Object.keys(images).filter((k) => !images[k].placeholder && k !== "heroCover");
+  if (real.length < 3) return "";
+  return `<section class="section gallery-real" id="fotografias" aria-labelledby="gal-title">
+  <div class="wrap">
+    <div class="gr-head">
+      ${heading({ eyebrow: G.eyebrow, title: G.title, id: "gal-title" })}
+      <p class="gr-lead"${rv(80)}>${esc(G.lead)}</p>
+    </div>
+    <ul class="gr-grid" data-gallery>${real
+      .map((k, i) => `<li class="gr-item${i === 0 ? " is-wide" : ""}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(G.open, { alt: images[k].alt[t.lang] }))}">${figure(t, k, { sizes: i === 0 ? "(min-width: 900px) 62vw, 100vw" : "(min-width: 900px) 31vw, 50vw" })}</a></li>`)
+      .join("")}</ul>
+  </div>
+</section>`;
+}
+
+// The last invitation before the footer: the real aerial view of the coast, one line and the two separate actions
+// (a room request and a table request), so it is clear which one each button starts.
+function finalSection(t, key = "aerialCoast") {
+  const F = t.land.final;
+  const L = t.lang;
+  return `<section class="scene final-cta" aria-labelledby="final-title">
+  <div class="scene-media">${figure(t, "aerialCoast", { sizes: "100vw", decorative: true })}</div>
+  <div class="wrap scene-text">
+    <p class="scene-note" data-fade>${esc(F.note)}</p>
+    <h2 id="final-title" class="scene-line final-line" data-split>${esc(F.line)}</h2>
+    <p class="final-lead" data-fade>${esc(F.lead)}</p>
+    <div class="btn-row" data-fade>
+      <a class="btn btn-cream btn-lg" href="${href("stay", L, "#reservar")}">${esc(F.stay)}${icon("arrow")}</a>
+      <a class="btn btn-ghost-light btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(F.eat)}</a>
+    </div>
+  </div>
+</section>`;
+}
+
 export function home(t) {
   const L = t.lang;
   const H = t.home;
@@ -658,6 +687,8 @@ ${duskSection(t)}
 
 ${cultureSection(t)}
 
+${gallerySection(t)}
+
 ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
   <div class="wrap">
     <div class="split-head reviews-head">
@@ -676,9 +707,9 @@ ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-ti
   </div>
 </section>
 
-${sceneSection(t, "aerialCoast", LD.scenes.coast)}
+${reachSection(t)}
 
-${reachSection(t)}`;
+${finalSection(t)}`;
   return {
     page: "home",
     title: t.meta.home.title,
@@ -724,7 +755,7 @@ ${menuSection(t)}
   </div>
 </section>
 
-${cineCta(t)}`;
+${finalSection(t, "aerialGarden")}`;
   return {
     page: "restaurant",
     title: t.meta.restaurant.title,
@@ -778,13 +809,6 @@ ${pageHero(t, {
     </div>
     <div class="form-card"${rv(100)}>${roomForm(t)}</div>
   </div>
-</section>
-
-<section class="section gallery-section" aria-labelledby="sg-title">
-  <div class="wrap">
-    ${heading({ eyebrow: t.gallery.eyebrow, title: t.gallery.title, id: "sg-title" })}
-    ${galleryGrid(t, ["terrace", "roomGarden", "coastSunset", "roomFamily"], "gallery-4")}
-  </div>
 </section>`;
   return {
     page: "stay",
@@ -808,11 +832,23 @@ export function room(t, r) {
     { name, path: href("room:" + r.id, L) },
   ]);
   const H = t.home.rooms;
+  const S = t.stay;
+  // The room sheet lists every detail a guest needs, and says plainly which ones Lauhata has not confirmed yet.
+  const sure = site.roomDetailsConfirmed;
+  const tbc = `<span class="tbc">${esc(t.common.toConfirm)}</span>`;
+  const row = (label, value) => `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`;
+  const times = site.stayTimes ? `${esc(S.checkIn)} ${esc(site.stayTimes.checkIn)} · ${esc(S.checkOut)} ${esc(site.stayTimes.checkOut)}` : tbc;
   const facts = [
-    site.roomDetailsConfirmed && r.capacity ? `<div><dt>${esc(t.stay.roomCapacity)}</dt><dd>${esc(r.capacity[L])}</dd></div>` : "",
-    site.roomDetailsConfirmed && r.beds ? `<div><dt>${esc(t.stay.roomBeds)}</dt><dd>${esc(r.beds[L])}</dd></div>` : "",
-    `<div><dt>${esc(H.from)}</dt><dd>${r.price ? `${esc(r.price)} <small>${esc(H.night)}</small>` : `<span class="tbc">${esc(t.common.toConfirm)}</span>`}</dd></div>`,
+    r.badge ? row(S.roomType, esc(r.badge[L])) : "",
+    row(S.roomCapacity, sure && r.capacity ? esc(r.capacity[L]) : tbc),
+    row(S.roomBeds, sure && r.beds ? esc(r.beds[L]) : tbc),
+    row(S.roomFeatures, sure && r.features.length ? r.features.map((f) => esc(f[L])).join(", ") : tbc),
+    row(S.roomCheck, times),
+    row(S.roomPrice, r.price ? `${esc(r.price)} <small>${esc(H.night)}</small>` : tbc),
   ].join("");
+  const anyTbc = !sure || !r.price || !site.stayTimes;
+  const i = rooms.findIndex((x) => x.id === r.id);
+  const others = [rooms[(i + 1) % rooms.length], rooms[(i + 2) % rooms.length]].filter((x) => x.id !== r.id);
   const body = `
 ${pageHero(t, {
   eyebrow: r.badge ? r.badge[L] : t.stay.eyebrow,
@@ -823,23 +859,36 @@ ${pageHero(t, {
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
 })}
 
-<section class="section">
-  <div class="wrap room-detail${r.images.length > 1 ? "" : " is-solo"}">
+<section class="section" aria-labelledby="sheet-title">
+  <div class="wrap room-intro">
     <div>
-      <p class="body-text${r.placeholder ? " tbc-block" : ""}"${rv()}>${esc(r.description[L])}</p>
-      <dl class="room-facts"${rv(80)}>${facts}</dl>
-      ${site.roomDetailsConfirmed && r.features.length ? `<div${rv(120)}><h2 class="h-small">${esc(t.stay.roomFeatures)}</h2><ul class="chips chips-light">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul></div>` : ""}
-      ${responseLine(t)}
+      <p class="lead-serif"${rv()}>${esc(r.tagline[L])}</p>
+      <p class="body-text${r.placeholder ? " tbc-block" : ""}"${rv(60)}>${esc(r.description[L])}</p>
+      <h2 id="sheet-title" class="h-small"${rv(80)}>${esc(S.sheetTitle)}</h2>
+      <dl class="room-sheet"${rv(100)}>${facts}</dl>
+      ${anyTbc ? `<p class="room-sheet-note">${esc(S.sheetNote)}</p>` : ""}
     </div>
-    ${galleryGrid(t, r.images.slice(1), "gallery-room")}
+    <aside class="room-ask" aria-labelledby="ask-title"${rv(120)}>
+      <h2 id="ask-title">${esc(S.askTitle)}</h2>
+      <p>${esc(S.askBody)}</p>
+      <a class="btn btn-dark btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.roomBook)}${icon("arrow")}</a>
+      <a class="btn btn-outline btn-lg" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
+      ${responseLine(t)}
+    </aside>
+    <a class="room-back" href="${href("stay", L, "#quartos")}">${icon("arrow")}${esc(S.allRooms)}</a>
   </div>
 </section>
+${r.images.length > 1 ? `
+<section class="section room-photos" aria-label="${esc(t.gallery.eyebrow)}">
+  <div class="wrap">${galleryGrid(t, r.images.slice(1), "gallery-room")}</div>
+</section>` : ""}
 
 <section class="section rooms-dark" aria-labelledby="other-title">
-  ${HUT_DECO}
   <div class="wrap">
-    ${heading({ eyebrow: H.eyebrow, title: t.stay.otherRooms, id: "other-title" })}
-    ${roomCards(t, rooms.filter((x) => x.id !== r.id))}
+    ${heading({ eyebrow: S.nextRoom, title: S.otherRooms, id: "other-title" })}
+    <div class="room-pager">${others
+      .map((o) => `<a class="room-next" href="${href("room:" + o.id, L)}">${figure(t, o.images[0], { sizes: "(min-width: 900px) 45vw, 92vw" })}<div><span>${esc(o.badge ? o.badge[L] : S.eyebrow)}</span><strong>${esc(o.name[L])}</strong></div></a>`)
+      .join("")}</div>
   </div>
 </section>`;
   return {
@@ -891,7 +940,7 @@ ${pageHero(t, {
   </div>
 </section>
 
-${cineCta(t)}`;
+${finalSection(t, "aerialDay4")}`;
   return {
     page: "contact",
     title: t.meta.contact.title,

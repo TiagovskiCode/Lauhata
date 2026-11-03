@@ -147,13 +147,17 @@
     $$("[data-gallery]").forEach((g) => {
       const items = $$("[data-lb-src]", g);
       items.forEach((item, i) =>
-        item.addEventListener("click", () => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault(); // a thumbnail may be a link to the large photo (works without JavaScript)
+          opener = item;
           list = items;
           show(i);
           lb.showModal();
         })
       );
     });
+    let opener = null;
+    lb.addEventListener("close", () => { if (opener) opener.focus(); });
     $("[data-lb-close]", lb).addEventListener("click", () => lb.close());
     $("[data-lb-prev]", lb).addEventListener("click", () => show(idx - 1));
     $("[data-lb-next]", lb).addEventListener("click", () => show(idx + 1));
@@ -533,7 +537,7 @@
         img.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0) scale(1.18)`;
       });
     }
-    if (hx && !reduced) hx.style.setProperty("--hp", Math.min(1, Math.max(0, window.scrollY / (hx.offsetHeight * 0.7))).toFixed(3));
+    if (hx && !reduced && !window.gsap) hx.style.setProperty("--hp", Math.min(1, Math.max(0, window.scrollY / (hx.offsetHeight * 0.7))).toFixed(3));
   }
   let ticking = false;
   const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };

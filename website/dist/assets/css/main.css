@@ -1,11 +1,11 @@
 /* Lauhata — design system from the "Beach · Stay · Eat" design (Lauhata — Site.html).
-   Native CSS, no framework. Serif: Cormorant Garamond. Sans: DM Sans. Both self-hosted (latin subset). */
+   Native CSS, no framework. Serif: Cormorant Garamond. Sans: Manrope. Both self-hosted (latin subset). */
 
 /* ---------- Fonts ---------- */
 /* Cormorant has a small x-height, so size-adjust brings it to the visual size the rem scale was set for. */
 @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 300 700; font-display: swap; src: url("../fonts/cormorant-garamond-latin.woff2") format("woff2"); size-adjust: 114%; }
 @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 300 700; font-display: swap; src: url("../fonts/cormorant-garamond-italic-latin.woff2") format("woff2"); size-adjust: 114%; }
-@font-face { font-family: "DM Sans"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("../fonts/dm-sans-latin.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("../fonts/manrope-latin.woff2") format("woff2"); }
 
 /* ---------- Tokens ---------- */
 :root {
@@ -36,7 +36,7 @@
   --error: #b3261e;
 
   --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
-  --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   /* Shape: buttons are pills; cards 22px, images 18px; the arch stays for a few key frames. */
   --corner: 999px;
   --r-card: 22px;

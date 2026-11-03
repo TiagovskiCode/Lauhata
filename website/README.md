@@ -38,9 +38,28 @@ usa o **arco** como forma de assinatura (hero, quartos e tais). Sequência:
 7. **O dia termina melhor aqui:** foto de entardecer e duas ações («Descobrir o restaurante», «Reservar alojamento»).
 8. **04 · Cultura:** em terracota, o tais num arco duplo, informação geral sobre Timor-Leste separada do espaço reservado para a
    história real do Lauhata, e «Mai, han, toba.» em grande (tradução por confirmar).
-9. **05 · Visite o Lauhata:** localização, horários e reservas em três grupos, ao lado de um mapa real do Google com «Obter direções»
+9. **Fotografias:** grelha só com as fotos marcadas como reais em `images.mjs` (`placeholder: false`); cresce sozinha quando
+   se acrescentam fotos reais. Cada foto abre no lightbox do site (teclado: Enter, setas, Escape). Sem JavaScript é um link para a
+   foto grande. Hoje são 4 frames do vídeo de drone.
+10. **Visite o Lauhata:** localização, horários e reservas em três grupos, ao lado de um mapa real do Google com «Obter direções»
    e «Abrir no Google Maps». Sem coordenadas o mapa pesquisa pelo nome (`mapQuery`) e diz-o; ao preencher `geo` em `site.mjs` passa
    a usar as coordenadas.
+11. **Convite final:** a vista aérea real da costa, «A sua escapada junto ao mar começa aqui.» e duas ações separadas
+    («Consultar quartos» e «Reservar mesa»), antes do rodapé.
+
+Páginas interiores:
+- **Alojamento:** capacidade e comodidades dos quartos só aparecem com `roomDetailsConfirmed: true`; até lá, uma linha diz
+  «Detalhes do quarto a confirmar». A galeria de imagens ilustrativas desta página foi retirada (repetia as fotos acima).
+- **Página de cada quarto:** frase do quarto, descrição, ficha do quarto (tipo, capacidade, camas, no quarto, entrada e saída,
+  preço) com «A confirmar» em tudo o que o Lauhata ainda não confirmou, cartão «Pedir este quarto» (abre o formulário com o
+  quarto escolhido, ou WhatsApp), «Ver todos os quartos» e os outros dois quartos com foto.
+- **Ementa:** lista de carta impressa (nome e preço na mesma linha, descrição por baixo, botão «Adicionar/Escolher»), sem cartões.
+- **Fecho do Restaurante e dos Contactos:** o mesmo convite final da home, com fotografias aéreas reais (a foto de stock de
+  outro resort e a frase sobre eventos saíram).
+
+Tipografia: Cormorant Garamond nos títulos, Manrope no texto e na interface (ambas em `src/assets/fonts`).
+`siteUrl` em `site.mjs` aponta para o endereço do GitHub Pages (`https://tiagovskicode.github.io/Lauhata/website/dist`):
+trocar pelo domínio final quando existir.
 
 A faixa de tais só aparece nas costuras (fim do hero e antes da cultura). Por cima há uma camada de
 movimento (`cinema.css` e a secção «Cinematic motion» de `main.js`, sem bibliotecas): cortina com o

@@ -298,6 +298,15 @@ export default {
     roomFeatures: "In the room",
     roomBook: "Request this room",
     otherRooms: "Other rooms",
+    sheetTitle: "The room",
+    roomType: "Type",
+    roomPrice: "Price per night",
+    roomCheck: "Check-in and check-out",
+    sheetNote: "Lauhata has not yet confirmed the details marked “to be confirmed”. When you request the room, they confirm them with you.",
+    askTitle: "Request this room",
+    askBody: "Choose your dates and number of guests. The request goes to Lauhata's WhatsApp, and they confirm availability and the price. Nothing is paid on the website.",
+    allRooms: "See all rooms",
+    nextRoom: "Also see",
   },
 
   form: {
@@ -415,6 +424,19 @@ export default {
     scenes: {
       garden: { line: "Between the garden and the beach.", note: "Aerial view of Lauhata" },
       coast: { line: "Liquiçá, Timor-Leste.", note: "From the garden to the beach" },
+    },
+    gallery: {
+      eyebrow: "Photographs",
+      title: "Lauhata from above.",
+      lead: "Real images, taken from Lauhata's drone footage. Photographs of the rooms and the restaurant will be added here as soon as they are available.",
+      open: "Enlarge photograph: {alt}",
+    },
+    final: {
+      note: "Liquiçá, Timor-Leste",
+      line: "Your escape by the ocean begins here.",
+      lead: "Tell us your dates or the table you are looking for. Lauhata replies on WhatsApp and confirms with you.",
+      stay: "Check room availability",
+      eat: "Book a table",
     },
     glance: {
       aria: "Practical information",

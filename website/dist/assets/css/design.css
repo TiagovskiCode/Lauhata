@@ -163,6 +163,24 @@ em { font-weight: 400; color: var(--terra-dark); }
 /* Section labels read as plain sentences; only the place line in the hero keeps tracked capitals. */
 .eyebrow { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.03em; text-transform: none; }
 .eyebrow-dots, .hx .eyebrow { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; }
+
+/* ---------- Type system (Cormorant Garamond + Manrope) ----------
+   Manrope carries the interface at 400 (text), 500 (navigation, labels), 600 (buttons) and 700 only for emphasis.
+   Capitals with wide tracking are kept for the wordmark and the one place line in the hero; every other label and
+   button reads as a plain sentence, so the photography and the serif headings carry the voice. */
+body { font-weight: 400; line-height: 1.65; }
+.nav-main a { font-weight: 500; }
+.btn { text-transform: none; letter-spacing: 0.01em; font-size: 0.95rem; font-weight: 600; }
+.btn-sm { font-size: 0.88rem; letter-spacing: 0.01em; }
+.mobile-bar .btn { font-size: 0.9rem; letter-spacing: 0; }
+.h-small, .footer-h, .bc-field > span, .dish-tag, .room-facts dt, .hero-chip small, .cart-total span,
+.bkf-hours span, .bkf-list-h, .cu-slot h3, .cu-group, .cu-label, .rc-group h3, .rc-row dt, .eat-hours h3, .eat-featured,
+.pk-group h4, .su-top em {
+  text-transform: none; letter-spacing: 0.01em; font-size: 0.9rem; font-weight: 600;
+}
+.footer-h { font-size: 0.95rem; }
+.scroll-cue { letter-spacing: 0.12em; font-weight: 600; }
+.media.is-placeholder::after { text-transform: none; letter-spacing: 0; font-weight: 600; }
 /* ==========================================================================================================
    Cinema layer. What the site borrows from film: the picture opens like a screen (letterbox bars slide away on the
    home hero), photos carry film grain and a darkened edge, wide "scenes" interrupt the page with one real aerial
@@ -265,3 +283,131 @@ em { font-weight: 400; color: var(--terra-dark); }
   .day-cine .day-time { font-size: clamp(4.4rem, 22vw, 7rem); }
   .day-cine .day-rail { font-size: 0.78rem; bottom: 5.6rem; }
 }
+/* ==========================================================================================================
+   Photographs: an editorial grid of real photos only (one wide frame, then a calm two-column rhythm), each opening
+   in a full-screen lightbox. No stock picture ever appears here.
+   ========================================================================================================== */
+.gallery-real { background: var(--cream); }
+.gr-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 26rem); gap: clamp(1.5rem, 4vw, 4rem); align-items: end; margin-bottom: clamp(2rem, 4vw, 3.2rem); }
+.gr-lead { margin: 0; color: var(--body); max-width: 40ch; }
+.gr-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.6rem, 1.4vw, 1.1rem); margin: 0; padding: 0; list-style: none; }
+.gr-item.is-wide { grid-column: 1 / -1; }
+.gr-link { display: block; border-radius: var(--r-img); overflow: hidden; outline-offset: 4px; }
+.gr-link .media { aspect-ratio: 4 / 3; margin: 0; background: var(--sand); }
+.gr-item.is-wide .gr-link .media { aspect-ratio: 21 / 9; }
+.gr-link img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter 0.6s var(--ease); }
+.gr-link:hover img, .gr-link:focus-visible img { transform: scale(1.035); filter: saturate(1.08); }
+@media (min-width: 761px) and (max-width: 1023px) { .gr-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .gr-head { grid-template-columns: 1fr; align-items: start; gap: 0.4rem; }
+  .gr-head .heading { margin-bottom: 0; }
+  .gr-grid { grid-template-columns: 1fr; }
+  .gr-item.is-wide .gr-link .media { aspect-ratio: 4 / 3; }
+}
+html:not(.cine-motion) .gr-link img { transition: none; }
+
+/* ---------- The last invitation: the real coast from above, one line, two separate actions ---------- */
+.final-cta { min-height: min(92svh, 64vw); padding-bottom: var(--round); }
+.final-line { max-width: 16ch; font-size: clamp(2.6rem, 6.4vw, 6.4rem); }
+.final-lead { max-width: 44ch; margin: 1.2rem 0 1.8rem; font-size: clamp(1rem, 0.6vw + 0.85rem, 1.15rem); color: rgba(250, 247, 239, 0.88); }
+.final-cta .btn-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+/* The "Illustrative image" tag reads as a plain label, like every other label on the site. */
+.su-img .media.is-placeholder::after, .room-row-img .media.is-placeholder::after, .room-img .media.is-placeholder::after,
+.gallery-item .media.is-placeholder::after, .cine-hero.is-page .media.is-placeholder::after { text-transform: none; letter-spacing: 0.01em; font-size: 0.78rem; font-weight: 600; }
+
+/* In the phone menu the language switch is a full-size touch target (44 px). */
+#mobile-nav .lang-opt { height: 44px; min-width: 52px; font-size: 0.9rem; }
+
+/* ==========================================================================================================
+   Phase 2 — interior pages
+   ========================================================================================================== */
+
+/* Hero place line on phones: two deliberate lines (place, then what Lauhata is) instead of a wrap after any word. */
+@media (max-width: 600px) {
+  .hx .eyebrow-dots { display: flex; flex-wrap: wrap; column-gap: 0.55rem; row-gap: 0.55rem; letter-spacing: 0.24em; }
+  .hx .eyebrow-dots span:nth-child(3) { flex-basis: 100%; }
+  .hx .eyebrow-dots span:nth-child(3)::before { content: none; }
+}
+
+/* Room labels read as plain words, like every other label. */
+.pill { text-transform: none; letter-spacing: 0.01em; font-size: 0.82rem; font-weight: 600; }
+
+/* ---------- Menu: a printed menu, not a grid of shop cards ----------
+   Each dish is one line: the name and its price share a baseline, the description sits under the name and the add
+   button under the price. No boxes or shadows; hairlines separate the dishes. Two columns on a computer, one on a phone. */
+.menu .menu-cat { padding-top: clamp(2.6rem, 5vw, 4.2rem); }
+.menu .menu-cat-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1.4rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line-strong); }
+.menu .menu-cat-head h3 { font-size: clamp(2.1rem, 3.6vw, 3rem); font-weight: 500; color: var(--ink); }
+.menu .menu-cat-head p { margin: 0; max-width: 52ch; }
+.menu .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2.5rem, 6vw, 5.5rem); row-gap: 0; margin-top: 0; }
+.menu .dish { background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; overflow: visible; animation: none; }
+.menu .dish:hover { transform: none; box-shadow: none; }
+.menu .dish-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1.4rem; row-gap: 0.35rem; align-items: baseline; padding: 1.35rem 0 1.25rem; }
+.menu .dish-foot { display: contents; }
+.menu .dish-tag { grid-column: 1 / -1; margin: 0; }
+.menu .dish h3 { grid-column: 1; margin: 0; font-size: clamp(1.35rem, 1.6vw, 1.55rem); font-weight: 500; line-height: 1.2; color: var(--ink); }
+.menu .dish-foot .price { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; white-space: nowrap; }
+.menu.is-searching .dish-foot .price { grid-row: 2; }
+.menu .dish-foot .price b { font-size: 1.45rem; font-weight: 500; color: var(--ink); }
+.menu .dish-desc { grid-column: 1; margin: 0; max-width: 46ch; font-size: 0.93rem; line-height: 1.55; color: var(--body); }
+.menu .dish-add { grid-column: 2; align-self: start; justify-self: end; margin: 0; min-height: 40px; padding-inline: 0.95rem; --bg: transparent; --fg: var(--forest); --bd: var(--line-strong); font-size: 0.85rem; }
+.menu .dish-add:hover { --bg: var(--forest); --fg: var(--cream); --bd: var(--forest); }
+.menu .dish-add.is-added { --bg: var(--wa); --fg: #fff; --bd: var(--wa); }
+@media (max-width: 760px) {
+  .menu .menu-grid { grid-template-columns: 1fr; }
+  .menu .dish-body { column-gap: 1rem; padding: 1.15rem 0 1.1rem; }
+  .menu .dish h3 { font-size: 1.3rem; }
+}
+
+/* ---------- Room page: a calm introduction, a room sheet and one clear request ---------- */
+.room-intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(2.5rem, 7vw, 6.5rem); align-items: start; }
+.room-intro .lead-serif { margin: 0 0 1.4rem; font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.4rem); font-weight: 400; line-height: 1.25; color: var(--ink); text-wrap: pretty; }
+.room-intro .body-text { max-width: 56ch; }
+.room-sheet { margin: 0; border-top: 1px solid var(--line-strong); }
+.room-sheet > div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.room-sheet dt { font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+.room-sheet dd { margin: 0; color: var(--ink); }
+.room-sheet .tbc { color: var(--muted); font-style: normal; }
+.room-sheet-note { margin: 1rem 0 0; font-size: 0.88rem; color: var(--muted); }
+.room-ask { position: sticky; top: calc(var(--header-h) + 1.5rem); padding: clamp(1.6rem, 3vw, 2.2rem); border-radius: var(--r-card); background: var(--paper); border: 1px solid var(--line); }
+.room-ask h2 { margin: 0 0 0.6rem; font-family: var(--serif); font-size: clamp(1.6rem, 2.2vw, 2rem); font-weight: 500; color: var(--ink); }
+.room-ask p { margin: 0 0 1.3rem; color: var(--body); }
+.room-ask .btn { width: 100%; justify-content: center; }
+.room-ask .btn + .btn { margin-top: 0.7rem; }
+.room-ask .response { margin-top: 1.1rem; font-size: 0.88rem; }
+.room-back { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2rem; font-weight: 600; color: var(--forest); text-underline-offset: 0.25em; }
+.room-back .icon { width: 18px; height: 18px; rotate: 180deg; }
+.room-pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.4vw, 2rem); }
+.room-next { display: grid; gap: 1rem; color: var(--cream); text-decoration: none; }
+.room-next .media { aspect-ratio: 3 / 2; border-radius: var(--r-img); overflow: hidden; }
+.room-next img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
+.room-next:hover img, .room-next:focus-visible img { transform: scale(1.03); }
+.room-next span { font-size: 0.9rem; font-weight: 600; color: var(--gold-soft); }
+.room-next strong { display: block; margin-top: 0.2rem; font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.3rem); font-weight: 500; line-height: 1.15; }
+html:not(.cine-motion) .room-next img { transition: none; }
+@media (max-width: 900px) {
+  .room-intro { grid-template-columns: 1fr; }
+  .room-ask { position: static; }
+  .room-pager { grid-template-columns: 1fr; }
+  .room-sheet > div { grid-template-columns: 8rem minmax(0, 1fr); }
+}
+
+/* Room rows (stay page): what is still to be confirmed is said once, quietly, instead of guessed chips. */
+.room-tbc { margin: 0.4rem 0 0; font-size: 0.9rem; color: rgba(243, 233, 215, 0.72); }
+/* The room pager shows room photos too, so it keeps the "Illustrative image" tag. */
+.room-next .media { position: relative; }
+.room-next .media.is-placeholder::after { display: block; left: auto; right: 0.8rem; top: auto; bottom: 0.8rem; padding: 0.22rem 0.65rem; background: rgba(18, 59, 58, 0.72); color: var(--paper); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em; text-transform: none; }
+
+/* Interior page heroes: the text sits at the bottom of the photo, but the hero grows with it, so a long title, the
+   buttons and the opening hours never run under the header on a short screen. */
+.cine-hero.is-page { height: auto; min-height: max(88svh, 640px); display: flex; flex-direction: column; justify-content: flex-end; }
+.cine-hero.is-page .cine-content { position: relative; bottom: auto; padding-top: calc(var(--header-h) + 2.5rem); padding-bottom: clamp(3rem, 9vh, 5.5rem); }
+@media (max-width: 860px) { .cine-hero.is-page { min-height: 82svh; } .cine-hero.is-page .cine-content { padding-bottom: 1.8rem; } }
+/* Narrow phones (under 400 px): a slightly smaller wordmark so the cart and menu buttons stay fully on screen. */
+@media (max-width: 399px) {
+  .brand { gap: 0.6rem; }
+  .brand-name { font-size: 1.18rem; letter-spacing: 0.2em; margin-right: -0.2em; }
+  .brand-mark { width: 44px; height: 44px; }
+}
+.room-intro > .room-back { grid-column: 1 / -1; justify-self: start; margin-top: 0; }

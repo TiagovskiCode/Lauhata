@@ -4,4 +4,4 @@ Allow: /
 Disallow: /obrigado/
 Disallow: /en/thank-you/
 
-Sitemap: https://lauhata.example/sitemap.xml
+Sitemap: https://tiagovskicode.github.io/Lauhata/website/dist/sitemap.xml

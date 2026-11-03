@@ -298,6 +298,15 @@ export default {
     roomFeatures: "No quarto",
     roomBook: "Pedir este quarto",
     otherRooms: "Outros quartos",
+    sheetTitle: "O quarto",
+    roomType: "Tipo",
+    roomPrice: "Preço por noite",
+    roomCheck: "Entrada e saída",
+    sheetNote: "O Lauhata ainda não confirmou os detalhes marcados «a confirmar». Ao pedir o quarto, confirma-os consigo.",
+    askTitle: "Pedir este quarto",
+    askBody: "Escolha as datas e o número de hóspedes. O pedido segue para o WhatsApp do Lauhata, que confirma a disponibilidade e o preço. Nada é pago no site.",
+    allRooms: "Ver todos os quartos",
+    nextRoom: "Conhecer também",
   },
 
   form: {
@@ -415,6 +424,19 @@ export default {
     scenes: {
       garden: { line: "Entre o jardim e a praia.", note: "Vista aérea do Lauhata" },
       coast: { line: "Liquiçá, Timor-Leste.", note: "Do jardim à praia" },
+    },
+    gallery: {
+      eyebrow: "Fotografias",
+      title: "O Lauhata visto de cima.",
+      lead: "Imagens reais, tiradas do vídeo de drone do Lauhata. Mais fotografias dos quartos e do restaurante entram aqui assim que estiverem disponíveis.",
+      open: "Ampliar fotografia: {alt}",
+    },
+    final: {
+      note: "Liquiçá, Timor-Leste",
+      line: "A sua escapada junto ao mar começa aqui.",
+      lead: "Diga-nos as datas ou a mesa que procura. O Lauhata responde pelo WhatsApp e confirma consigo.",
+      stay: "Consultar quartos",
+      eat: "Reservar mesa",
     },
     glance: {
       aria: "Informação prática",
