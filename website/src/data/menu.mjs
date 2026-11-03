@@ -38,6 +38,25 @@ export const categories = [
     note: { en: "Based on availability.", pt: "Sujeito a disponibilidade." },
   },
   { id: "pizza", name: { en: "Pizza", pt: "Pizzas" } },
+  // Drinks. The printed menu has no drinks list, so this category stays hidden until real drinks (names and prices from
+  // the restaurant) are added to `items` with category: "drinks". Suggested `group` values, shown as sub-headings in this
+  // order: water, coconut, soft, juice, coffee, mocktail, beer, wine, cocktail, spirits. Do not add a drink that is not sold.
+  {
+    id: "drinks",
+    name: { en: "Drinks", pt: "Bebidas" },
+    groups: {
+      water: { en: "Water", pt: "Água" },
+      coconut: { en: "Coconut water", pt: "Água de coco" },
+      soft: { en: "Soft drinks", pt: "Refrigerantes" },
+      juice: { en: "Fresh juices", pt: "Sumos naturais" },
+      coffee: { en: "Coffee and tea", pt: "Café e chá" },
+      mocktail: { en: "Alcohol-free", pt: "Sem álcool" },
+      beer: { en: "Beer", pt: "Cerveja" },
+      wine: { en: "Wine", pt: "Vinho" },
+      cocktail: { en: "Cocktails", pt: "Cocktails" },
+      spirits: { en: "Spirits", pt: "Bebidas espirituosas" },
+    },
+  },
 ];
 
 // Printed on the last page of the menu: applies to every dish.

@@ -150,7 +150,7 @@
       const src = $("img", item);
       lbImg.src = item.dataset.lbSrc;
       lbImg.alt = src.alt;
-      lbCap.textContent = src.alt;
+      lbCap.textContent = list.length > 1 ? `${src.alt} · ${idx + 1} / ${list.length}` : src.alt;
     };
     $$("[data-gallery]").forEach((g) => {
       const items = $$("[data-lb-src]", g);
@@ -232,6 +232,15 @@
       if (!val("time")) errors.time = F.errors.time;
       const p = Number(val("people"));
       if (!Number.isInteger(p) || p < 1 || p > 50) errors.people = F.errors.people;
+    } else if (form.dataset.booking === "review") {
+      // Feedback: the error texts travel on the form (data-err-*), the shared name check is replaced by its own.
+      const d = form.dataset;
+      delete errors.name;
+      if (!val("name")) errors.name = d.errName;
+      const r = Number((form.querySelector('input[name="rating"]:checked') || {}).value);
+      if (!(r >= 1 && r <= 5)) errors.rating = d.errRating;
+      if (val("text").length < 20) errors.text = d.errText;
+      if (!el.consent.checked) errors.consent = d.errConsent;
     } else if (form.dataset.booking === "event") {
       if (!val("date") || val("date") < today) errors.date = F.errors.date;
       const p = Number(val("people"));
@@ -271,6 +280,10 @@
     const contact = v("contact") ? fmt(F.waContact, { contact: v("contact") }) : "";
     if (form.dataset.booking === "table") {
       return fmt(F.waTable, { name: v("name"), date: fmtDate(v("date")), time: v("time"), people: v("people"), contact, notes });
+    }
+    if (form.dataset.booking === "review") {
+      const opt = el.experience;
+      return fmt(form.dataset.wa, { name: v("name"), experience: opt ? opt.options[opt.selectedIndex].text : "", rating: (form.querySelector('input[name="rating"]:checked') || {}).value || "", text: v("text") });
     }
     if (form.dataset.booking === "event") {
       return fmt(F.waEvent, { kind: v("kind"), name: v("name"), date: fmtDate(v("date")), people: v("people"), contact, notes });
@@ -343,6 +356,7 @@
     });
     form.addEventListener("submit", (e) => {
       e.preventDefault();
+      if (form.elements.website && form.elements.website.value) return; // a filled hidden field means a bot: send nothing
       if (!showErrors(form, validate(form))) return;
       const label = $("[data-submit-label]", form);
       const original = label.textContent;

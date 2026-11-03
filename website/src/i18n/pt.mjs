@@ -23,6 +23,10 @@ export default {
       title: "{room} — Alojamento Lauhata",
       description: "{room} no Lauhata, em Liquiçá: fotografias, comodidades e pedido de reserva por WhatsApp. O Lauhata confirma a disponibilidade.",
     },
+    discover: {
+      title: "Descobrir Liquiçá — a costa à volta do Lauhata, Timor-Leste",
+      description: "O que ver perto do Lauhata, em Liquiçá: o forte de Maubara, as ruínas da prisão de Aipelo, a tecelagem de Maubara, o mar e a costa a oeste de Díli.",
+    },
     events: {
       title: "Eventos — Lauhata Beach Escape, Liquiçá",
       description: "Peça para organizar uma celebração ou um encontro de grupo no Lauhata, em Liquiçá. O Lauhata responde pelo WhatsApp.",
@@ -67,6 +71,7 @@ export default {
     experiences: "Experiências",
     story: "A nossa história",
     about: "Sobre nós",
+    discover: "Descobrir Liquiçá",
     events: "Eventos",
     contact: "Contacto",
     book: "Reservar",
@@ -491,15 +496,67 @@ export default {
       lead: "Um almoço de família, um aniversário, um encontro de amigos: diga-nos o que tem em mente.",
       howTitle: "Como funciona",
       steps: [
-        ["Conte-nos a ideia", "A data, o número de pessoas e a ocasião."],
-        ["O Lauhata responde", "Pelo WhatsApp, com o que é possível nesse dia."],
-        ["Combinam os detalhes", "A mesa, a ementa e o preço, diretamente com a equipa."],
+        ["Conte-nos a ocasião", "A data que prefere e quantas pessoas espera."],
+        ["O Lauhata vê o que é possível", "A equipa responde pelo WhatsApp."],
+        ["Combinam os detalhes", "A ementa, a organização, o horário e o preço."],
+        ["O evento fica confirmado", "Só quando o Lauhata o confirma consigo."],
       ],
       formTitle: "Pedir um evento",
       formLead: "O pedido segue para o WhatsApp do Lauhata. Nada fica reservado até a equipa confirmar consigo.",
       kind: "Ocasião",
-      kinds: ["Celebração privada", "Almoço ou jantar de grupo", "Outra ocasião"],
+      kinds: ["Aniversário", "Encontro de família", "Almoço ou jantar privado", "Aniversário de casamento", "Encontro de amigos", "Refeição de empresa ou reunião informal", "Outra ocasião"],
+      typesTitle: "Ocasiões que pode propor",
+      typesLead: "São ideias para o seu pedido, não serviços garantidos: o Lauhata diz-lhe o que é possível para a sua data e o seu grupo.",
+      expect: "Preço, ementa e lotação dependem da data e do grupo e são combinados diretamente com o Lauhata. Nenhum evento fica reservado até a equipa confirmar.",
       submit: "Enviar pedido no WhatsApp",
+    },
+    discoverPage: {
+      eyebrow: "Descobrir Liquiçá",
+      title: "A costa a oeste de Díli.",
+      lead: "Promontórios de rocha, enseadas e praias ao longo da estrada da costa. O Lauhata é um bom ponto de partida para conhecer Liquiçá.",
+      introTitle: "Liquiçá, à volta do Lauhata",
+      intro: "O município de Liquiçá começa logo a oeste de Díli: uma costa de promontórios rochosos, enseadas e praias, com a estrada a acompanhar o mar e a ilha de Alor no horizonte.",
+      placesTitle: "O que ver",
+      places: [
+        { name: "Forte de Maubara", kind: "História", text: "Um forte holandês do século XVII junto à costa, com a entrada à sombra de grandes figueiras-de-bengala.", map: "Maubara Fort, Timor-Leste" },
+        { name: "Ruínas da prisão de Aipelo", kind: "História", text: "Um local da época colonial portuguesa, junto ao mar. Visite-o com o respeito que se deve a um lugar de memória.", map: "Aipelo Prison, Liquiçá, Timor-Leste" },
+        { name: "O centro de Liquiçá", kind: "Vila", text: "O centro da vila, com a sua arquitetura da época colonial.", map: "Liquiçá, Timor-Leste" },
+        { name: "Tecelagem de Maubara", kind: "Artesanato", text: "A cooperativa de tecelagem de Maubara e os cestos tecidos à mão pelas mulheres da região.", map: "Maubara, Timor-Leste" },
+        { name: "Praias de Maubara e de Ai Pelo", kind: "Praias", text: "Praias ao longo da costa do município. Antes de entrar no mar, pergunte localmente pelas condições do dia.", map: "Maubara Beach, Timor-Leste" },
+        { name: "O mar", kind: "Natureza", text: "A região tem recifes de coral para mergulho e, em certas épocas, passagem de baleias e golfinhos. Os avistamentos nunca são garantidos.", map: "" },
+        { name: "O lago salgado", kind: "Natureza", text: "Conhecido pela presença de pelicanos.", map: "" }
+      ],
+      mapLink: "Ver no mapa",
+      adviceTitle: "Antes de ir",
+      advice: [
+        "Confirme localmente horários, acessos e condições: as distâncias e os tempos de viagem variam com a estrada e o tempo.",
+        "Nem todas as praias são seguras para nadar. Pergunte pelas correntes e pelas condições do mar antes de entrar na água.",
+        "Respeite as comunidades, os locais de memória e os lugares sagrados, e a natureza da costa.",
+        "O Lauhata não organiza estas visitas. Se precisar de ajuda para se orientar, pergunte-nos pelo WhatsApp."
+      ],
+      source: "Fonte: Timor-Leste, site oficial de turismo (timorleste.tl), página do município de Liquiçá.",
+      cta: "Ficar no Lauhata"
+    },
+    feedback: {
+      title: "Deixe a sua opinião",
+      lead: "Esteve no Lauhata? Conte-nos como foi. A opinião segue pelo WhatsApp para o Lauhata, que a lê antes de a publicar aqui.",
+      name: "Nome a publicar",
+      experience: "Experiência",
+      experiences: ["Restaurante", "Alojamento", "Restaurante e alojamento", "Evento"],
+      rating: "Avaliação",
+      stars: "{n} de 5",
+      text: "A sua opinião",
+      consent: "Autorizo o Lauhata a publicar esta opinião no site, com o nome indicado.",
+      submit: "Enviar opinião",
+      note: "Nada é publicado automaticamente: só aparece depois de o Lauhata a aprovar.",
+      siteLabel: "Opiniões deixadas no site",
+      errors: { name: "Indique o nome a publicar.", rating: "Escolha uma avaliação de 1 a 5.", text: "Escreva a sua opinião (pelo menos 20 caracteres).", consent: "Para publicar, precisamos da sua autorização." },
+      wa: "Olá! Deixo a minha opinião para o site do Lauhata.\n\nNome a publicar: {name}\nExperiência: {experience}\nAvaliação: {rating}/5\n\n{text}\n\nAutorizo a publicação no site."
+    },
+    reach: {
+      title: "Como chegar",
+      lead: "O Lauhata fica no município de Liquiçá, na costa a oeste de Díli. A partir de Díli, siga a estrada da costa para oeste.",
+      help: "Precisa de ajuda para encontrar o Lauhata ou para combinar transporte? Pergunte-nos pelo WhatsApp: dizemos-lhe o que é possível."
     },
     galleryPage: {
       eyebrow: "Galeria",
@@ -617,7 +674,7 @@ export default {
         ["Hospitalidade", "Receber bem faz parte do lugar."],
       ],
     },
-    reach: {
+    getThere: {
       eyebrow: "Reservar e chegar",
       title: "Visite o",
       titleAccent: "Lauhata.",
@@ -702,6 +759,8 @@ export default {
     eyebrow: "Pedido preparado",
     title: "Falta só enviar a mensagem",
     tableBody: "Abrimos o WhatsApp com o seu pedido de mesa. Envie a mensagem para que o Lauhata a receba e confirme a reserva consigo.",
+    eventBody: "Abrimos o WhatsApp com o seu pedido de evento. Envie a mensagem: o Lauhata responde com o que é possível e nada fica reservado até confirmar consigo.",
+    reviewBody: "Abrimos o WhatsApp com a sua opinião. Envie a mensagem: o Lauhata lê-a e, se a aprovar, publica-a no site. Obrigado!",
     roomBody: "Abrimos o WhatsApp com o seu pedido de alojamento. Envie a mensagem para que o Lauhata confirme a disponibilidade e o preço.",
     genericBody: "Envie a mensagem no WhatsApp para que o Lauhata a receba.",
     reopen: "Abrir o WhatsApp novamente",

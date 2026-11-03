@@ -17,6 +17,7 @@ const ROUTES = {
   restaurant: { pt: "/restaurante/", en: "/en/restaurant/" },
   stay: { pt: "/alojamento/", en: "/en/stay/" },
   about: { pt: "/sobre-nos/", en: "/en/about/" },
+  discover: { pt: "/descobrir-liquica/", en: "/en/discover-liquica/" },
   events: { pt: "/eventos/", en: "/en/events/" },
   gallery: { pt: "/galeria/", en: "/en/gallery/" },
   contact: { pt: "/contactos/", en: "/en/contact/" },

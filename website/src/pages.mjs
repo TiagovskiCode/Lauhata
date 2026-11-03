@@ -4,6 +4,7 @@ import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcru
 import { existsSync } from "node:fs";
 import { TAIS, tripadvisorBadge } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
+import siteReviews from "./data/reviews.mjs";
 
 const other = (L) => (L === "pt" ? "en" : "pt");
 const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}`;
@@ -244,11 +245,20 @@ function dishLine(t, d) {
 function menuSection(t) {
   const L = t.lang;
   const O = t.order;
-  const nav = categories.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}">${esc(c.name[L])}</a></li>`).join("");
-  const sections = categories
+  // A category with no dishes yet (the drinks, until the restaurant supplies them) is left out of the page and the bar.
+  const shown = categories.filter((c) => items.some((d) => d.category === c.id));
+  const nav = shown.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}">${esc(c.name[L])}</a></li>`).join("");
+  const sections = shown
     .map((c) => `<section class="menu-cat" id="cat-${c.id}" data-cat="${c.id}" aria-labelledby="cat-${c.id}-title">
       <header class="menu-cat-head"><h3 id="cat-${c.id}-title">${esc(c.name[L])}</h3>${c.note ? `<p>${esc(c.note[L])}</p>` : ""}</header>
-      <div class="menu-grid">${items.filter((d) => d.category === c.id).map((d) => dishCard(t, d)).join("")}</div>
+      ${c.groups
+        ? Object.entries(c.groups)
+            .map(([g, label]) => {
+              const list = items.filter((d) => d.category === c.id && d.group === g);
+              return list.length ? `<h4 class="menu-group">${esc(label[L])}</h4><div class="menu-grid">${list.map((d) => dishCard(t, d)).join("")}</div>` : "";
+            })
+            .join("")
+        : `<div class="menu-grid">${items.filter((d) => d.category === c.id).map((d) => dishCard(t, d)).join("")}</div>`}
     </section>`)
     .join("");
   return `<section class="section menu" id="ementa" aria-labelledby="menu-title" data-menu>
@@ -684,17 +694,65 @@ function duoSection(t) {
 
 // Guest reviews: no review text is copied (that needs the reviewers' and the platform's permission). The section invites
 // visitors to read them on the real Tripadvisor listing; rating and count appear only once set in site.reviews.
+// The last section of the home page, by the owner's choice. Two sources, kept apart: the Tripadvisor listing (a link, with
+// rating and count only when filled in site.reviews) and feedback left on this site and approved by Lauhata
+// (src/data/reviews.mjs). The feedback form sends the text to Lauhata on WhatsApp; nothing is published automatically.
 function reviewsSection(t) {
-  const badge = tripadvisorBadge(t, "is-large");
-  if (!badge) return "";
   const R = t.reviews;
-  return `<section class="section reviews-ed" aria-labelledby="rv-title">
+  const FB = t.land.feedback;
+  const L = t.lang;
+  const approved = siteReviews.filter((r) => r && r.name && r.text);
+  const stars = (n) => `<span class="rv-stars" role="img" aria-label="${esc(fmt(FB.stars, { n }))}">${"★".repeat(n)}${"☆".repeat(5 - n)}</span>`;
+  const list = approved.length
+    ? `<div class="rv-site"><h3 class="h-small">${esc(FB.siteLabel)}</h3><ul class="rv-list">${approved
+        .map((r) => `<li><figure><blockquote lang="${esc(r.lang || L)}"><p>${esc(r.text)}</p></blockquote><figcaption>${stars(Math.max(1, Math.min(5, Number(r.rating) || 5)))}<span>${esc(r.name)}${r.experience ? ` · ${esc(r.experience[L] || "")}` : ""}${r.date ? ` · ${esc(r.date)}` : ""}</span></figcaption></figure></li>`)
+        .join("")}</ul></div>`
+    : "";
+  const exp = FB.experiences.map((x) => `<option>${esc(x)}</option>`).join("");
+  const rating = [5, 4, 3, 2, 1].map((n) => `<label class="rv-star"><input type="radio" name="rating" value="${n}"><span>${esc(fmt(FB.stars, { n }))}</span></label>`).join("");
+  return `<section class="section reviews-ed" id="opinioes" aria-labelledby="rv-title">
   <div class="wrap rv-grid">
     <div>
       <h2 id="rv-title" class="rv-title" data-split>${esc(R.title)}</h2>
       <p class="rv-lead"${rv(80)}>${esc(R.lead)}</p>
+      <div class="rv-badge"${rv(120)}>${tripadvisorBadge(t, "is-large")}</div>
     </div>
-    <div${rv(120)}>${badge}</div>
+    <div>
+      ${list}
+      <details class="rv-form"${rv(140)}>
+        <summary>${esc(FB.title)}${icon("plus")}</summary>
+        <p class="rv-form-lead">${esc(FB.lead)}</p>
+        <form class="booking-form" data-booking="review" novalidate data-wa="${esc(FB.wa)}" data-err-name="${esc(FB.errors.name)}" data-err-rating="${esc(FB.errors.rating)}" data-err-text="${esc(FB.errors.text)}" data-err-consent="${esc(FB.errors.consent)}">
+          <div class="form-grid">
+            ${field({ id: "fb-name", name: "name", label: FB.name, attrs: 'autocomplete="given-name" required maxlength="40"' })}
+            ${field({ id: "fb-exp", name: "experience", label: FB.experience, control: `<select data-pick="select" data-icon="heart">${exp}</select>` })}
+            <fieldset class="field is-full rv-rating"><legend>${esc(FB.rating)}</legend><div class="rv-stars-in">${rating}</div><p class="error" id="fb-rating-err" aria-live="polite"></p></fieldset>
+            ${field({ id: "fb-text", name: "text", type: "textarea", label: FB.text, attrs: 'required minlength="20" maxlength="700"', full: true })}
+            <div class="field is-full rv-consent"><label><input type="checkbox" name="consent"> <span>${esc(FB.consent)}</span></label><p class="error" aria-live="polite"></p></div>
+            <div class="rv-hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          </div>
+          <div class="form-errors" role="alert" hidden data-form-errors>${esc(t.form.errorsTitle)}</div>
+          <div class="form-actions"><button class="btn btn-dark btn-lg" type="submit">${icon("whatsapp")}<span data-submit-label>${esc(FB.submit)}</span></button></div>
+          <p class="form-note">${esc(FB.note)}</p>
+        </form>
+      </details>
+    </div>
+  </div>
+</section>`;
+}
+
+// Discover Liquiçá, on the home page: one photograph, one line and the way to the guide.
+function discoverPreview(t) {
+  const D = t.land.discoverPage;
+  return `<section class="section dsc-preview" aria-labelledby="dp-title">
+  <div class="wrap pv-grid">
+    <div class="pv-photo">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "5/4" })}</div>
+    <div class="pv-text">
+      <p class="eyebrow">${esc(D.eyebrow)}</p>
+      <h2 id="dp-title" class="pv-title" data-split>${esc(D.title)}</h2>
+      <p class="pv-body"${rv(80)}>${esc(D.lead)}</p>
+      <div class="pv-links"${rv(120)}><a class="text-link" href="${href("discover", t.lang)}">${esc(t.nav.discover)}${icon("arrow")}</a><a class="text-link" href="${href("about", t.lang)}">${esc(t.land.preview.about)}${icon("arrow")}</a></div>
+    </div>
   </div>
 </section>`;
 }
@@ -765,6 +823,11 @@ ${pageHero(t, { eyebrow: E.eyebrow, title: E.title, lead: E.lead, image: "sunset
 
 <section class="section ev-how" aria-labelledby="ev-how-title">
   <div class="wrap">
+    <div class="ev-types">
+      <h2 class="gx-title">${esc(E.typesTitle)}</h2>
+      <p class="ev-types-lead">${esc(E.typesLead)}</p>
+      <ul class="ev-type-list">${E.kinds.slice(0, -1).map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
+    </div>
     <h2 id="ev-how-title" class="h-small">${esc(E.howTitle)}</h2>
     <ol class="ev-steps">${E.steps.map(([h, p], i) => `<li${rv(i * 80)}><span class="ev-n" aria-hidden="true">${i + 1}</span><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ol>
   </div>
@@ -775,6 +838,7 @@ ${pageHero(t, { eyebrow: E.eyebrow, title: E.title, lead: E.lead, image: "sunset
     <div>
       ${heading({ eyebrow: E.eyebrow, title: E.formTitle, id: "ev-form-title" })}
       <p class="body-text"${rv(80)}>${esc(E.formLead)}</p>
+      <p class="ev-expect"${rv(90)}>${esc(E.expect)}</p>
       ${figure(t, "beachFront", { cls: "booking-img", sizes: "(min-width: 900px) 30vw, 80vw", ratio: "4/3" })}
     </div>
     <div class="form-card"${rv(100)}>
@@ -823,6 +887,52 @@ ${pageHero(t, { eyebrow: G.eyebrow, title: G.title, lead: G.lead, image: "aerial
   return { page: "gallery", title: t.meta.gallery.title, description: t.meta.gallery.description, path: href("gallery", L), alt: href("gallery", other(L)), preload: "aerialGarden", hero: true, ld: [bc.ld], body };
 }
 
+// ================= DISCOVER LIQUIÇÁ: a short, sourced guide to the coast around Lauhata =================
+// Every place and fact comes from the official tourism site (timorleste.tl, Liquiçá municipality page), which is credited
+// on the page. No distances, travel times, prices or tours are given: none are confirmed. Lauhata does not run these visits.
+export function discover(t) {
+  const L = t.lang;
+  const D = t.land.discoverPage;
+  const bc = breadcrumbs(t, [{ name: t.nav.discover, path: href("discover", L) }]);
+  const maps = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  const body = `
+${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastVillage", crumbs: bc.html })}
+
+<section class="section dsc-intro" aria-labelledby="dsc-intro-title">
+  <div class="wrap ab-grid">
+    <h2 id="dsc-intro-title" class="ab-title">${esc(D.introTitle)}</h2>
+    <p class="ab-body"${rv(60)}>${esc(D.intro)}</p>
+  </div>
+</section>
+
+<section class="section dsc-places" aria-labelledby="dsc-places-title">
+  <div class="wrap">
+    <h2 id="dsc-places-title" class="gx-title">${esc(D.placesTitle)}</h2>
+    <ol class="dsc-list">${D.places
+      .map((p, i) => `<li class="dsc-item"${rv((i % 3) * 60)}>
+        <span class="dsc-n" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
+        <div><p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${p.map ? `<a class="text-link" href="${maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}${icon("arrow-up-right")}</a>` : ""}</div>
+      </li>`)
+      .join("")}</ol>
+  </div>
+</section>
+
+<section class="section dsc-advice" aria-labelledby="dsc-adv-title">
+  <div class="wrap ab-grid">
+    <div>
+      <h2 id="dsc-adv-title" class="ab-title">${esc(D.adviceTitle)}</h2>
+      ${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 40vw, 92vw", ratio: "4/3", cls: "dsc-photo" })}
+    </div>
+    <div>
+      <ul class="dsc-advice-list">${D.advice.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
+      <p class="dsc-source"><a href="https://timorleste.tl/destinations/municipalities/liquica" target="_blank" rel="noopener">${esc(D.source)}</a></p>
+      <a class="btn btn-dark btn-lg" href="${href("stay", L)}">${esc(D.cta)}${icon("arrow")}</a>
+    </div>
+  </div>
+</section>`;
+  return { page: "discover", title: t.meta.discover.title, description: t.meta.discover.description, path: href("discover", L), alt: href("discover", other(L)), preload: "coastVillage", hero: true, ld: [bc.ld], body };
+}
+
 // The quiet end of About us and Our story: one line and the three places to go next.
 function nextSteps(t, title) {
   const L = t.lang;
@@ -866,17 +976,17 @@ export function home(t) {
       <a class="btn btn-ghost-light btn-lg" href="${href("stay", L, "#quartos")}" data-book-open="room">${icon("bed")}${esc(t.home.quick.heroRoom)}</a>
     </div>
   </div>
-  <a class="scroll-cue" href="#lauhata" aria-label="${esc(hero.scroll)}"><span>${esc(hero.scroll)}</span><i aria-hidden="true"></i></a></section>
+</section>
 
 ${introSection(t)}
 
 ${duoSection(t)}
 
-${reviewsSection(t)}
+${discoverPreview(t)}
 
-${previewSection(t)}
+${finalSection(t, "aerialDay4")}
 
-${finalSection(t, "aerialDay4")}`;
+${reviewsSection(t)}`;
   return {
     page: "home",
     title: t.meta.home.title,
@@ -1091,6 +1201,7 @@ ${pageHero(t, {
     <div>
       ${heading({ eyebrow: t.location.eyebrow, title: t.location.title, id: "loc2-title" })}
       ${infoGrid(t)}
+      <div class="get-there"${rv(180)}><h3>${esc(t.land.getThere.title)}</h3><p>${esc(t.land.getThere.lead)}</p><p>${esc(t.land.getThere.help)}</p></div>
       <div class="contact-actions"${rv(200)}>
         <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.heroTable)}</a>
         <a class="btn btn-outline" href="${href("stay", L, "#reservar")}" data-book-open="room">${icon("bed")}${esc(t.footer.bookRoom)}</a>
@@ -1134,7 +1245,7 @@ export function thanks(t) {
     <span class="simple-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
     <p class="eyebrow eyebrow-lines">${esc(t.thanks.eyebrow)}</p>
     <h1 class="title">${esc(t.thanks.title)}</h1>
-    <p class="lead" data-thanks-body data-table="${esc(t.thanks.tableBody)}" data-room="${esc(t.thanks.roomBody)}" data-order="${esc(t.thanks.orderBody)}">${esc(t.thanks.genericBody)}</p>
+    <p class="lead" data-thanks-body data-table="${esc(t.thanks.tableBody)}" data-room="${esc(t.thanks.roomBody)}" data-event="${esc(t.thanks.eventBody)}" data-review="${esc(t.thanks.reviewBody)}" data-order="${esc(t.thanks.orderBody)}">${esc(t.thanks.genericBody)}</p>
     <div class="btn-row center">
       <a class="btn btn-terra btn-lg" href="${waLink()}" target="_blank" rel="noopener" data-thanks-reopen>${icon("whatsapp")}${esc(t.thanks.reopen)}</a>
       <a class="btn btn-outline btn-lg" href="${href("home", L)}">${esc(t.thanks.back)}</a>

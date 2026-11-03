@@ -97,6 +97,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
   </url>
   <url>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/discover-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
+  </url>
+  <url>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/discover-liquica/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/discover-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
+  </url>
+  <url>
     <loc>https://tiagovskicode.github.io/Lauhata/website/dist/contactos/</loc>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/contactos/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/contact/"/>

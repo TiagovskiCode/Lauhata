@@ -54,6 +54,7 @@ for (const L of LANGS) {
   await emit(t, P.about(t));
   await emit(t, P.events(t));
   await emit(t, P.gallery(t));
+  await emit(t, P.discover(t));
   await emit(t, P.contact(t));
   await emit(t, P.privacy(t));
   await emit(t, P.thanks(t));

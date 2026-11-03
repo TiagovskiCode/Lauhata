@@ -68,6 +68,11 @@
 
   function show(trigger, label, build) {
     close();
+    // A modal <dialog> (the booking dialog, the cart) lives in the browser's top layer, above every other element
+    // whatever its z-index. A popover left in <body> would open behind it, so it moves into the open dialog that holds
+    // the field, and back to <body> otherwise.
+    const host = trigger.closest("dialog[open]") || document.body;
+    if (pop.parentNode !== host) host.append(back, pop);
     cur = { trigger };
     pop.setAttribute("aria-label", label);
     pop.hidden = false;

@@ -192,12 +192,12 @@ function header(t, page, alt) {
     `<a href="${href(p, L, hash)}"${page === p && !hash ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
   // Seven destinations: home, menu, accommodation, about us (which also holds the story), events, gallery, contact.
   const nav = [
-    link("home", t.nav.home),
     link("restaurant", t.nav.menu),
     link("stay", t.nav.stay),
     link("about", t.nav.about),
     link("events", t.nav.events),
     link("gallery", t.nav.gallery),
+    link("discover", t.nav.discover),
     link("contact", t.nav.contact),
   ].join("");
   return `<header class="site-header" data-header>
@@ -218,7 +218,7 @@ function header(t, page, alt) {
     <button class="icon-btn" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close>${icon("close")}</button>
   </div>
   <nav class="mobile-nav-links">
-    ${nav}
+    ${link("home", t.nav.home)}${nav}
   </nav>
   <div class="mobile-nav-cta">
     <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
@@ -274,6 +274,7 @@ function footer(t) {
         ${link(href("about", L), t.nav.about)}
         ${link(href("events", L), t.nav.events)}
         ${link(href("gallery", L), t.nav.gallery)}
+        ${link(href("discover", L), t.nav.discover)}
         ${link(href("contact", L), t.nav.contact)}
       </ul>
     </nav>

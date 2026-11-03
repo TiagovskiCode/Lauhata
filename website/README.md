@@ -71,6 +71,24 @@ de cada foto estão em `FOTOS-PRATOS.md`, gerado pelo build.
 - **Notas internas** («a confirmar», «por configurar») já não aparecem ao público: campos sem dados ficam escondidos e o
   preço diz «sob consulta». As etiquetas «Imagem ilustrativa» continuam sempre visíveis.
 
+**Fase 5 (novembro 2026).**
+- **Seletores no diálogo de reserva:** o calendário, a hora e as listas abriam por trás do diálogo. Causa: o diálogo modal
+  fica na «top layer» do navegador, acima de qualquer z-index, e o seletor era anexado ao `<body>`. Agora o seletor abre
+  dentro do diálogo que contém o campo (`picker.js`, função `show`). O diálogo também mostrava os dois formulários ao mesmo
+  tempo (uma regra `display: grid` anulava `[hidden]`); corrigido.
+- **«Descer»** foi retirado da home.
+- **Descobrir Liquiçá** (`/descobrir-liquica/`): lugares e factos da página oficial de turismo (timorleste.tl, município de
+  Liquiçá), creditada na página. Sem distâncias, tempos de viagem, preços nem passeios: nada disso está confirmado.
+- **Opiniões** (última secção da home): ligação ao Tripadvisor e opiniões deixadas no site. O formulário envia a opinião ao
+  Lauhata pelo WhatsApp (com o consentimento para publicar); só aparece no site depois de copiada para
+  `src/data/reviews.mjs` (instruções no próprio ficheiro). O GitHub Pages é estático: não há servidor nem base de dados, por
+  isso a moderação é feita pelo dono neste ficheiro. Se um dia houver um serviço (por exemplo um formulário com base de
+  dados), o formulário pode passar a enviar para lá.
+- **Bebidas:** categoria preparada em `menu.mjs` (grupos água, sumos, café, cerveja, vinho, …). Fica escondida até haver bebidas
+  reais com preço: a ementa impressa não tem carta de bebidas.
+- **Navegação:** Ementa, Alojamento, Sobre nós, Eventos, Galeria, Descobrir Liquiçá, Contactos (o logótipo leva ao início). O
+  menu completo aparece a partir de 1360 px; abaixo, o botão de menu.
+
 Inventário das fotografias reais de drone (originais em `fotos-originais/drone-2026-11/`):
 
 | Chave (`images.mjs`) | Mostra | Onde é usada |
