@@ -1,0 +1,64 @@
+/* Lauhata — "Beach · Stay · Eat" design layer. Loaded last; the colours, fonts and the signature corner
+   (--corner) are tokens in main.css. This file holds what the design does on top of them: the type
+   treatment (Cormorant is set at weight 500 with light tracking), square-ish uppercase buttons, wide-tracked
+   eyebrows, and sections that slide over the one before them with large rounded top corners. */
+
+:root { --round: clamp(28px, 4.6vw, 64px); }
+
+/* ---------- Type ---------- */
+/* Cormorant's default figures are old-style (the 7 and 9 drop below the line); times and prices read better lining. */
+body { font-variant-numeric: lining-nums; }
+h1, h2, h3, h4 { font-weight: 500; }
+.title-hero, .title-xl, .title, .title-md, .heading .title, .heading-md .title,
+.cine-title, .choose-line, .dk-title, .cu-title, .cu-big, .statement-text {
+  font-weight: 500; letter-spacing: -0.012em;
+}
+.title-hero, .cine-title { line-height: 0.98; }
+.bkf-hours b, .footer-mega, .dx-meta time { letter-spacing: -0.01em; }
+em { font-weight: 400; }
+.eyebrow { font-size: 0.7rem; letter-spacing: 0.34em; }
+.footer-h, .h-small { letter-spacing: 0.24em; }
+
+/* ---------- Buttons: two sharp corners, two soft ---------- */
+.btn { border-radius: var(--corner); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.76rem; font-weight: 700; }
+.btn-sm { font-size: 0.7rem; letter-spacing: 0.12em; }
+.btn-lg { min-height: 56px; padding-inline: 1.9rem; }
+.mobile-bar .btn { font-size: 0.7rem; letter-spacing: 0.1em; padding-inline: 0.6rem; }
+
+/* ---------- Brand ---------- */
+.brand-name { font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; font-size: 1.55rem; }
+.brand-line { letter-spacing: 0.26em; }
+
+/* ---------- Gallery mosaic: arches and soft corners, as in the design ---------- */
+.gallery-section { background: var(--cream); }
+.gallery-6 { grid-template-columns: repeat(12, 1fr); grid-auto-rows: clamp(110px, 11vw, 170px); }
+.gallery-6 .gallery-item { border-radius: 24px; }
+.gallery-6 .g1 { grid-column: span 7; grid-row: span 3; border-radius: 200px 24px 24px 24px; }
+.gallery-6 .g2 { grid-column: span 5; grid-row: span 2; }
+.gallery-6 .g3 { grid-column: span 5; grid-row: span 1; border-radius: 24px 24px 24px 90px; }
+.gallery-6 .g4 { grid-column: span 4; grid-row: span 2; }
+.gallery-6 .g5 { grid-column: span 4; grid-row: span 2; border-radius: 24px 24px 120px 24px; }
+.gallery-6 .g6 { grid-column: span 4; grid-row: span 2; border-radius: 24px 160px 24px 24px; }
+/* Up to 860px main.css already makes the grid two columns (with !important); only the shapes and the last tile change here. */
+@media (max-width: 860px) {
+  .gallery-6 .g1 { border-radius: 120px 24px 24px 24px; }
+  .gallery-6 .g6 { grid-column: span 2 !important; }
+  .gallery-6 .g3 { border-radius: 24px 24px 24px 60px; }
+  .gallery-6 .g5 { border-radius: 24px 24px 60px 24px; }
+  .gallery-6 .g6 { border-radius: 24px 80px 24px 24px; }
+}
+
+/* ---------- FAQ ---------- */
+.faq-section { background: var(--paper); }
+.faq summary { font-size: 1.65rem; font-weight: 500; min-height: 64px; }
+.faq summary .icon { width: 36px; height: 36px; padding: 9px; border: 1px solid var(--ink); border-radius: 50%; color: var(--ink); }
+.faq details[open] summary .icon { background: var(--ink); color: var(--paper); }
+
+/* ---------- Sections that slide over the previous one ---------- */
+.suites, .cult, .reach, .site-footer {
+  position: relative; border-radius: var(--round) var(--round) 0 0; margin-top: calc(var(--round) * -1);
+}
+.suites { padding-top: calc(var(--section) + var(--round) * 0.4); }
+.reach { padding-top: calc(var(--section) + var(--round) * 0.4); }
+.site-footer { padding-top: calc(clamp(2rem, 3.4vw, 2.6rem) + var(--round) * 0.5); }
+.site-footer .tais { display: none; }

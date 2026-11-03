@@ -33,7 +33,7 @@
 .has-hero .site-header:not(.is-solid) .lang-opt { color: rgba(255, 255, 255, 0.75); }
 .has-hero .site-header:not(.is-solid) .lang-opt.is-on { background: #fff; color: var(--forest); }
 .has-hero .site-header:not(.is-solid) .btn-dark { --bg: #fff; --fg: var(--forest); }
-.site-header.is-solid { background: rgba(246, 240, 228, 0.92); }
+.site-header.is-solid { background: rgba(244, 238, 223, 0.92); }
 
 /* ---------- Full-screen hero ---------- */
 .cine-hero { position: relative; height: 100svh; min-height: 680px; overflow: hidden; color: #fff; background: #0b211c; isolation: isolate; }
@@ -113,11 +113,11 @@
 /* ---------- Most chosen dishes and rooms (homepage) ---------- */
 
 /* ---------- Rooms (large rows) ---------- */
-.rooms-cine { position: relative; background: var(--forest); color: rgba(246, 240, 228, 0.82); overflow: hidden; }
+.rooms-cine { position: relative; background: var(--forest); color: rgba(244, 238, 223, 0.82); overflow: hidden; }
 .rooms-cine .title, .rooms-cine h3 { color: var(--cream); }
 .rooms-cine .eyebrow { color: var(--gold); }
 .rooms-cine em { color: var(--gold-soft); }
-.rooms-cine .body-text { color: rgba(246, 240, 228, 0.78); }
+.rooms-cine .body-text { color: rgba(244, 238, 223, 0.78); }
 .room-rows { display: grid; gap: clamp(4rem, 9vw, 8rem); margin-top: clamp(1rem, 3vw, 2rem); }
 .room-row { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
 .room-row.is-flip { grid-template-columns: 0.75fr 1.25fr; }
@@ -125,11 +125,11 @@
 .room-row-img { position: relative; display: block; border-radius: var(--r-lg); overflow: hidden; }
 .room-row-img .pill { position: absolute; left: 1.2rem; top: 1.2rem; z-index: 2; }
 .room-num { display: block; font-family: var(--serif); font-size: clamp(3.4rem, 6vw, 5.6rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(220, 180, 105, 0.7); }
-.room-num small { font-size: 0.32em; -webkit-text-stroke: 0; color: rgba(246, 240, 228, 0.5); margin-left: 0.4rem; vertical-align: top; }
+.room-num small { font-size: 0.32em; -webkit-text-stroke: 0; color: rgba(244, 238, 223, 0.5); margin-left: 0.4rem; vertical-align: top; }
 .room-row-body h3 { font-family: var(--serif); font-size: clamp(2.2rem, 3.4vw, 3.4rem); line-height: 1.05; margin-top: 1rem; }
 .room-row-body h3 a { text-decoration: none; }
 .room-row-body h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
-.room-row-body > p { margin-top: 1rem; color: rgba(246, 240, 228, 0.75); max-width: 30em; }
+.room-row-body > p { margin-top: 1rem; color: rgba(244, 238, 223, 0.75); max-width: 30em; }
 .room-row-body .chips { margin: 1.4rem 0 1.8rem; }
 .room-row-body .room-foot { border-top: 1px solid var(--line-light); padding-top: 1.4rem; }
 
@@ -158,8 +158,8 @@
 .cine-cta-content > p { margin: 1.6rem 0 0; max-width: 32em; color: rgba(255, 255, 255, 0.85); font-size: 1.08rem; }
 
 /* ---------- Footer wordmark + note ---------- */
-.footer-mega { margin: 2rem 0 0; text-align: center; font-family: var(--serif); font-size: 23vw; line-height: 0.8; letter-spacing: -0.04em; color: rgba(246, 240, 228, 0.07); white-space: nowrap; overflow: hidden; user-select: none; }
-.footer-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(246, 240, 228, 0.5); }
+.footer-mega { margin: 2rem 0 0; text-align: center; font-family: var(--serif); font-size: 23vw; line-height: 0.8; letter-spacing: -0.04em; color: rgba(244, 238, 223, 0.07); white-space: nowrap; overflow: hidden; user-select: none; }
+.footer-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(244, 238, 223, 0.5); }
 
 /* ---------- Custom cursor (fine pointers only) ---------- */
 .cursor { position: fixed; left: 0; top: 0; z-index: 400; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--terra); pointer-events: none; opacity: 0; transition: width 0.35s var(--ease), height 0.35s var(--ease), margin 0.35s var(--ease), opacity 0.3s, background-color 0.3s; display: grid; place-items: center; }

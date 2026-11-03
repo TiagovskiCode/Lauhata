@@ -60,9 +60,9 @@
 .eat-visual .media { border-radius: var(--r-lg); }
 .eat-body .heading { margin-bottom: 1.6rem; }
 .eat-hours { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 2rem; margin: 0 0 2.2rem; padding: 1rem 0; border-block: 1px solid var(--line-strong); }
-.eat-hours h3 { margin: 0; font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #55625c; }
+.eat-hours h3 { margin: 0; font-family: var(--sans); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #3e5a5d; }
 .eat-hours dl { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; margin: 0; }
-.eat-hours dt { font-size: 0.85rem; color: #55625c; }
+.eat-hours dt { font-size: 0.85rem; color: #3e5a5d; }
 .eat-hours dd { margin: 0; font-family: var(--serif); font-size: 1.35rem; }
 .eat-featured { margin: 0 0 0.3rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); }
 
@@ -70,7 +70,7 @@
 .dish-lines { margin: 0; padding: 0; list-style: none; }
 .dish-line { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.6rem 1.2rem; padding: 1.35rem 0; border-bottom: 1px solid var(--line); }
 .dl-text h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.1; }
-.dl-text p { max-width: 34em; margin: 0.4rem 0 0; font-size: 0.9rem; line-height: 1.5; color: #55625c; }
+.dl-text p { max-width: 34em; margin: 0.4rem 0 0; font-size: 0.9rem; line-height: 1.5; color: #3e5a5d; }
 .dl-price b { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; }
 .dl-add {
   display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1.5px solid var(--forest); border-radius: 50%;
@@ -80,7 +80,7 @@
 .dl-add.is-added { background: var(--wa); border-color: var(--wa); color: #fff; }
 .dl-add [data-add-label] { display: grid; place-items: center; }
 .dl-add [data-add-label] span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } /* "Added" is read aloud, only the tick is drawn */
-.eat-note { margin: 1.2rem 0 0; font-size: 0.9rem; color: #55625c; }
+.eat-note { margin: 1.2rem 0 0; font-size: 0.9rem; color: #3e5a5d; }
 .eat-body .btn-row { margin-top: 1.8rem; }
 
 /* ---------- Tablet and phone: the composition is rebuilt, not shrunk ---------- */

@@ -19,7 +19,7 @@ html.has-modal { overflow: hidden; }
 }
 .cart-count[hidden] { display: none; }
 .has-hero .site-header:not(.is-solid) .cart-btn { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.28); color: #fff; }
-.has-hero .site-header:not(.is-solid) .cart-count { box-shadow: 0 0 0 2px rgba(15, 46, 40, 0.6); }
+.has-hero .site-header:not(.is-solid) .cart-count { box-shadow: 0 0 0 2px rgba(13, 59, 64, 0.6); }
 .is-bump { animation: cartBump 0.5s var(--ease); }
 @keyframes cartBump { 0% { transform: scale(1); } 35% { transform: scale(1.16); } 100% { transform: scale(1); } }
 
@@ -55,7 +55,7 @@ html.has-modal { overflow: hidden; }
 /* Category bar: sticks under the header, slides up with it, scrolls sideways on phones. */
 .menu-nav {
   position: sticky; top: calc(var(--header-h) * var(--header-shown, 1)); z-index: 30;
-  background: rgba(246, 240, 228, 0.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  background: rgba(244, 238, 223, 0.94); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-block: 1px solid var(--line); transition: top 0.35s var(--ease);
 }
 .menu-nav ul { position: relative; display: flex; gap: 0.35rem; margin: 0; padding: 0.5rem 0; list-style: none; overflow-x: auto; scrollbar-width: none; }

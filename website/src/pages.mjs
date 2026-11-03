@@ -618,6 +618,13 @@ ${duskSection(t)}
 
 ${cultureSection(t)}
 
+<section class="section gallery-section" id="galeria" aria-labelledby="gal-title">
+  <div class="wrap">
+    ${heading({ eyebrow: t.gallery.eyebrow, title: t.gallery.title, id: "gal-title" })}
+    ${galleryGrid(t, ["coastSunset", "foodSpread", "roomFamily", "heroSunset", "terrace", "weaving"], "gallery-6")}
+  </div>
+</section>
+
 ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-title">
   <div class="wrap">
     <div class="split-head reviews-head">
@@ -628,6 +635,13 @@ ${realReviews.length ? `<section class="section reviews" aria-labelledby="rev-ti
     </div>
   </div>
 </section>` : ""}
+
+<section class="section faq-section" id="perguntas" aria-labelledby="faq-title">
+  <div class="wrap faq-grid">
+    ${heading({ eyebrow: t.faq.eyebrow, title: t.faq.title, id: "faq-title" })}
+    ${faqBlock(t)}
+  </div>
+</section>
 
 ${reachSection(t)}`;
   return {
@@ -642,6 +656,7 @@ ${reachSection(t)}`;
     ],
     hero: true,
     intro: true,
+    ld: [faqLd(t)],
     menu: [...dishes, ...bkfDishes],
     body,
   };

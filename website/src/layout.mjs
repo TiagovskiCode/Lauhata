@@ -319,10 +319,9 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p, o.preloadSizes) : preloadImage(p.key, p.sizes, p.media))).join("\n")}
 <link rel="stylesheet" href="/assets/css/main.css">
 <link rel="stylesheet" href="/assets/css/cinema.css">
@@ -331,6 +330,7 @@ ${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p,
 <link rel="stylesheet" href="/assets/css/landing.css">
 <link rel="stylesheet" href="/assets/css/picker.css">
 <link rel="stylesheet" href="/assets/css/wide.css">
+<link rel="stylesheet" href="/assets/css/design.css">
 ${jsonLd(businessLd(t))}
 ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
