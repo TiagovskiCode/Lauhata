@@ -85,7 +85,10 @@ export default {
   },
 
   common: {
-    placeholderImage: "Illustrative image",    toConfirm: "To be confirmed",
+    placeholderImage: "Illustrative image",
+    realPhoto: "Real photograph",
+    coords: "8°34′54″ S · 125°20′59″ E",
+    coordsLabel: "Lauhata's coordinates",    toConfirm: "To be confirmed",
     priceTbc: "Price on request",
     hoursTbc: "Opening hours to be confirmed",
     whatsapp: "WhatsApp",
@@ -518,7 +521,7 @@ export default {
       eat: { title: "Eat", line: "Flavours of the coast, served without hurry.", link: "Explore the menu" },
       stay: { title: "Stay", line: "Stay a little longer. The sea is waiting.", link: "Discover the rooms" },
     },
-    intro: { note: "Lauhata" },
+    intro: { note: "Lauhata", body: "A beachfront restaurant and bar, open for breakfast, lunch and dinner. Two kinds of room a few steps from the sand. Requests go through WhatsApp, and you pay in person." },
     beach: { note: "The beach in front", line: "Dark sand, palm trees and the mountains behind." },
     eventsTeaser: { note: "Events", title: "Celebrating by the sea.", body: "Birthdays, family gatherings, group lunches and dinners: tell us the occasion and the team will tell you what is possible.", link: "Plan an event" },
     preview: { note: "About us", about: "Get to know Lauhata", story: "Read our story" },

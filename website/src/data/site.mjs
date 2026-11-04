@@ -89,7 +89,10 @@ export default {
   // Hero video (optional). Leave empty and the hero shows its photo only. When Lauhata supplies real footage,
   // optimise it (short loop, no sound, ideally under 3 MB), put it in src/assets/video/ and set e.g.
   // "/assets/video/hero.mp4": the photo stays on screen and the video fades in over it once it can play.
-  heroVideo: "/assets/video/hero.mp4",
+  // 5 Nov 2026: the HD drone film chosen by Tiago ("Hero video em HD.mp4", 31 MB) re-encoded for the web: 1920 px
+  // (10.8 MB) and a 1280 px version (heroVideoSmall) for screens narrower than 900 px. Its first frame is heroCover.
+  heroVideo: "/assets/video/hero-hd.mp4",
+  heroVideoSmall: "/assets/video/hero-hd-1280.mp4",
 
   // Optional fields for search engines (Google). Each one is only written to the page once it is filled.
   // priceRange: e.g. "$$"; servesCuisine: e.g. ["Timorese", "Seafood"];

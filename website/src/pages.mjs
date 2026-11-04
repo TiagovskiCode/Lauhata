@@ -10,11 +10,11 @@ import { sampleDrinks } from "./data/sample-drinks.mjs";
 const other = (L) => (L === "pt" ? "en" : "pt");
 const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}`;
 
-// Section heading: eyebrow, title with an optional italic accent line, optional lead.
+// Section heading: the title (with an optional second line) and an optional lead. Phase 7 ("Diário da costa"): no
+// label above every title; the `eyebrow` argument is kept for callers but no longer printed.
 function heading({ eyebrow, title, accent = "", lead = "", id = "", center = false, tag = "h2", cls = "" }) {
   return `<header class="heading${center ? " is-center" : ""} ${cls}"${rv()}>
-    <p class="eyebrow${center ? " eyebrow-lines" : ""}">${esc(eyebrow)}</p>
-    <${tag}${id ? ` id="${id}"` : ""} class="title">${esc(title)}${accent ? `<br><em>${esc(accent)}</em>` : ""}</${tag}>
+    <${tag}${id ? ` id="${id}"` : ""} class="title">${esc(title)}${accent ? `<br><span class="title-2">${esc(accent)}</span>` : ""}</${tag}>
     ${lead ? `<p class="lead">${esc(lead)}</p>` : ""}
   </header>`;
 }
@@ -22,12 +22,11 @@ function heading({ eyebrow, title, accent = "", lead = "", id = "", center = fal
 // Full-screen photo hero used by inner pages (same language as the homepage hero).
 function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = "" }) {
   return `<section class="cine-hero is-page">
-  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw" })}</div></div>
+  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw", credit: true })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
     <div data-fade>${crumbs}</div>
-    <p class="eyebrow eyebrow-light" data-fade style="--d:100ms">${esc(eyebrow)}</p>
-    <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` <em>${esc(accent)}</em>` : ""}</h1>
+    <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` ${esc(accent)}` : ""}</h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(lead)}</p>
     <div data-fade style="--d:400ms">${ctas}</div>
   </div>
@@ -71,7 +70,7 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
   return `<div class="room-rows">${list
     .map((r, i) => {
       const n = rooms.findIndex((x) => x.id === r.id); // its number among all room types
-      return `<article class="room-row${i % 2 ? " is-flip" : ""}">
+      return `<article class="room-row room-is-${r.id}${i % 2 ? " is-flip" : ""}">
       <div class="room-row-img">${roomCarousel(t, r)}</div>
       <div class="room-row-body"${rv(120)}>
         <p class="room-kind">${esc(r.badge ? r.badge[L] : "")}</p>
@@ -80,7 +79,7 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
         ${roomFeatures(t, r)}
         <div class="room-foot">
           ${fromPrice(t, r)}
-          <div class="room-foot-btns"><a class="btn btn-ghost-light" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}</a><a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(H.book)}${icon("arrow")}</a></div>
+          <div class="room-foot-btns"><a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(H.book)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}</a></div>
         </div>
       </div>
     </article>`;
@@ -703,15 +702,33 @@ function finalSection(t, key = "aerialCoast") {
 
 // ================= HOME: hero, a short introduction, Comer & Ficar, a look at who we are, the invitation =================
 
-// One statement about what Lauhata is, beside a real aerial photograph.
+// One statement about what Lauhata is, set large across the page, with a tall real photograph hanging from the right edge
+// and overlapping the statement's last lines (the photo carries its own caption).
 function introSection(t) {
   return `<section class="section intro-ed" id="lauhata" aria-labelledby="intro-title">
   <div class="wrap intro-grid">
     <div class="intro-text">
-      <p class="eyebrow">${esc(t.land.intro.note)}</p>
       <h2 id="intro-title" class="intro-statement" data-split>${esc(t.home.statement)}</h2>
+      <p class="intro-body"${rv(80)}>${esc(t.land.intro.body)}</p>
     </div>
-    <div class="intro-photo">${figure(t, "sunsetGarden", { sizes: "(min-width: 900px) 34vw, 92vw", ratio: "4/5" })}</div>
+    <div class="intro-photo">${figure(t, "sunsetPalmsHigh", { sizes: "(min-width: 900px) 30vw, 70vw", ratio: "4/5", credit: true, cls: "is-dusk" })}</div>
+  </div>
+</section>`;
+}
+
+// The coast at night-fall: a dark chapter with the beach line and three real photographs of different proportions
+// (a wide sea, a square canoe, a tall garden sunset), each with its caption. Replaces the single full-screen scene.
+function coastChapter(t) {
+  const B = t.land.beach;
+  return `<section class="section coast-ch" aria-labelledby="coast-title">
+  <div class="wrap coast-grid">
+    <div class="coast-text">
+      <h2 id="coast-title" class="coast-line" data-split>${esc(B.line)}</h2>
+      <p class="coast-note"${rv(80)}>${esc(B.note)}</p>
+    </div>
+    <div class="coast-a">${figure(t, "beachFront", { sizes: "(min-width: 900px) 64vw, 100vw", ratio: "16/9", credit: true })}</div>
+    <div class="coast-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 30vw, 60vw", ratio: "1/1", credit: true })}</div>
+    <div class="coast-c">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 36vw, 80vw", ratio: "3/2", credit: true, cls: "is-dusk" })}</div>
   </div>
 </section>`;
 }
@@ -719,7 +736,7 @@ function introSection(t) {
 // Comer & Ficar: the two things Lauhata offers, as two photographic panels of different weight with an ampersand
 // between them. Each whole panel is one link. The photos are keys here so the restaurant's and the rooms' own
 // photographs can replace the illustrative ones in one place (they keep their "Illustrative image" tag until then).
-const DUO_PHOTOS = { eat: "beachFront", stay: "aerialCoast" };
+const DUO_PHOTOS = { eat: "sunsetGarden", stay: "aerialCoast" };
 function duoSection(t) {
   const D = t.land.duo;
   const L = t.lang;
@@ -732,7 +749,7 @@ function duoSection(t) {
       </div>
     </a>`;
   return `<section class="duo" aria-label="${esc(D.aria)}">
-  <div class="wrap duo-grid">
+  <div class="duo-grid">
     ${panel("eat", "restaurant", D.eat)}
     <span class="duo-amp" aria-hidden="true">&amp;</span>
     ${panel("stay", "stay", D.stay)}
@@ -794,15 +811,11 @@ function eventsTeaser(t) {
   const E = t.land.eventsTeaser;
   return `<section class="section ev-teaser" aria-labelledby="et-title">
   <div class="wrap et-grid">
+    <div class="et-photos">${figure(t, "aerialDay2", { sizes: "(min-width: 900px) 58vw, 100vw", ratio: "3/2", credit: true })}</div>
     <div class="et-text">
-      <p class="eyebrow">${esc(E.note)}</p>
       <h2 id="et-title" class="pv-title" data-split>${esc(E.title)}</h2>
       <p class="pv-body"${rv(80)}>${esc(E.body)}</p>
-      <a class="btn btn-dark btn-lg" href="${href("events", t.lang)}">${esc(E.link)}${icon("arrow")}</a>
-    </div>
-    <div class="et-photos">
-      <div class="et-a">${figure(t, "sunsetPalms", { sizes: "(min-width: 900px) 34vw, 92vw", ratio: "4/5" })}</div>
-      <div class="et-b">${figure(t, "sunsetGarden", { sizes: "(min-width: 900px) 22vw, 60vw", ratio: "1/1" })}</div>
+      <a class="text-link" href="${href("events", t.lang)}">${esc(E.link)}</a>
     </div>
   </div>
 </section>`;
@@ -812,14 +825,14 @@ function eventsTeaser(t) {
 function discoverPreview(t) {
   const D = t.land.discoverPage;
   return `<section class="section dsc-preview" aria-labelledby="dp-title">
-  <div class="wrap pv-grid">
-    <div class="pv-photo">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "5/4" })}</div>
-    <div class="pv-text">
-      <p class="eyebrow">${esc(D.eyebrow)}</p>
+  <div class="wrap dp-grid">
+    <div class="dp-text">
       <h2 id="dp-title" class="pv-title" data-split>${esc(D.title)}</h2>
       <p class="pv-body"${rv(80)}>${esc(D.lead)}</p>
-      <div class="pv-links"${rv(120)}><a class="text-link" href="${href("discover", t.lang)}">${esc(t.nav.discover)}${icon("arrow")}</a><a class="text-link" href="${href("about", t.lang)}">${esc(t.land.preview.about)}${icon("arrow")}</a></div>
+      <div class="pv-links"${rv(120)}><a class="text-link" href="${href("discover", t.lang)}">${esc(t.nav.discover)}</a><a class="text-link" href="${href("about", t.lang)}">${esc(t.land.preview.about)}</a></div>
     </div>
+    <div class="dp-a">${figure(t, "coastVillage", { sizes: "(min-width: 900px) 40vw, 100vw", ratio: "4/5", credit: true })}</div>
+    <div class="dp-b">${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 26vw, 60vw", ratio: "3/4", credit: true })}</div>
   </div>
 </section>`;
 }
@@ -1104,12 +1117,12 @@ export function home(t) {
 <section class="cine-hero hx${site.heroVideo ? " has-video" : ""}" aria-labelledby="hero-title">
   <div class="hx-bg">
     ${figure(t, "heroCover", { eager: true, sizes: "100vw" })}
-    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}
+    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"${site.heroVideoSmall ? ` data-src-small="${esc(site.heroVideoSmall)}"` : ""}></video>` : ""}
   </div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content">
-    <p class="eyebrow eyebrow-light eyebrow-dots" data-fade>${hero.eyebrow.map((e) => `<span>${esc(e)}</span>`).join("")}</p>
-    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line l2"><em>${esc(hero.titleAccent)}</em> ${esc(hero.title2)}</span></h1>
+    <p class="hx-place" data-fade>${esc(hero.eyebrow.join(", "))}</p>
+    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line l2">${esc(hero.titleAccent)} ${esc(hero.title2)}</span></h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(hero.lead)}</p>
     <div class="hx-actions" data-fade style="--d:450ms">
       <a class="btn btn-cream btn-lg" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.heroTable)}</a>
@@ -1121,6 +1134,7 @@ export function home(t) {
     <div><dt>${esc(hero.context.eat)}</dt><dd>${site.restaurantHours.map((h) => `${esc(h.days[L])} ${esc(h.hours)}`).join(" · ")}</dd></div>
     <div><dt>${esc(hero.context.where)}</dt><dd>${esc(hero.context.whereValue)}</dd></div>
     <div><dt>${esc(hero.context.book)}</dt><dd>${esc(hero.context.bookValue)}</dd></div>
+    <div class="hx-coords"><dt>${esc(t.common.coordsLabel)}</dt><dd>${esc(t.common.coords)}</dd></div>
   </dl>
 </section>
 
@@ -1128,7 +1142,7 @@ ${introSection(t)}
 
 ${duoSection(t)}
 
-${sceneSection(t, "beachFront", LD.beach)}
+${coastChapter(t)}
 
 ${eventsTeaser(t)}
 
@@ -1350,7 +1364,7 @@ ${pageHero(t, {
     <div>
       ${heading({ eyebrow: t.location.eyebrow, title: t.location.title, id: "loc2-title" })}
       ${infoGrid(t)}
-      <div class="get-there"${rv(180)}><h3>${esc(t.land.getThere.title)}</h3><p>${esc(t.land.getThere.lead)}</p><p>${esc(t.land.getThere.help)}</p></div>
+      <div class="get-there"${rv(180)}><h3>${esc(t.land.getThere.title)} ${esc(t.land.getThere.titleAccent)}</h3><p>${esc(t.land.getThere.body)}</p></div>
       <div class="contact-actions"${rv(200)}>
         <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.heroTable)}</a>
         <a class="btn btn-outline" href="${href("stay", L, "#reservar")}" data-book-open="room">${icon("bed")}${esc(t.footer.bookRoom)}</a>

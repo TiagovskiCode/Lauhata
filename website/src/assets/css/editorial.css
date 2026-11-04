@@ -1,0 +1,368 @@
+/* =====================================================================================================================
+   Phase 7 — «Diário da costa» (Coast journal). Loaded after every other stylesheet.
+   The site reads like the travel journal of one beach: Soft Cream paper and Deep Ocean night chapters, square-cut
+   photographs with a caption under each one (what it shows, and whether it is a real photograph or an illustrative
+   image), real coordinates, and a thin tais warp as the only ornament. See DIRECAO-CRIATIVA.md.
+   ===================================================================================================================== */
+
+/* ---------- Tokens: same brand palette, a stricter hierarchy ---------- */
+:root {
+  --cream: #faf7ef;          /* Soft Cream: the paper of every light chapter */
+  --paper: #f3e9d7;          /* Warm Sand: only small surfaces (forms, the menu sheet, dialogs) */
+  --sand: #f3e9d7;
+  --sand-2: #e8dcc4;
+  --night: #123b3a;          /* Deep Ocean: the night chapters */
+  --night-2: #0f3231;
+  --ink: #123b3a;
+  --text: #252c29;           /* Charcoal */
+  --body: #2f3a36;
+  --muted: #5a6560;
+  --line: rgba(37, 44, 41, 0.14);
+  --line-strong: rgba(37, 44, 41, 0.3);
+  --on-night: #faf7ef;
+  --on-night-2: rgba(250, 247, 239, 0.72);
+  --line-night: rgba(169, 199, 184, 0.28);   /* Sea Glass hairlines on the night */
+
+  /* Shape: photographs are cut square; controls keep a hint of a corner so they still read as controls. */
+  --corner: 2px;
+  --r-card: 2px;
+  --r-img: 0px;
+  --r-lg: 0px;
+  --r: 2px;
+  --r-sm: 2px;
+  --round: 0px;
+  --shadow: none;
+  --shadow-soft: none;
+
+  --section: clamp(5rem, 10vw, 9rem);
+  --wrap: 1280px;
+}
+
+body { background: var(--cream); color: var(--body); font-size: 1.0625rem; line-height: 1.7; }
+::selection { background: var(--night); color: var(--cream); }
+:focus-visible { border-radius: 0; }
+
+/* ---------- Type: one large voice per page, everything else measured ---------- */
+.title, .heading .title, .pv-title, .coast-line, .intro-statement {
+  font-family: var(--serif); font-weight: 400; color: var(--ink); letter-spacing: -0.012em; text-wrap: balance;
+}
+.title, .heading .title { font-size: clamp(2rem, 1.4vw + 1.35rem, 2.85rem); line-height: 1.08; }
+.title .title-2 { color: var(--muted); }
+.heading { margin-bottom: clamp(2rem, 4vw, 3rem); }
+em { color: inherit; }
+.eyebrow { display: none; }           /* the label above every title is gone (see DIRECAO-CRIATIVA.md §3) */
+.lead, .body-text { max-width: 34em; }
+.h-small { letter-spacing: 0.04em; text-transform: none; font-size: 0.86rem; font-weight: 700; color: var(--ink); }
+
+/* ---------- Buttons and links: square, quiet, one filled action per screen ---------- */
+.btn {
+  border-radius: 2px; min-height: 48px; padding: 0.75rem 1.4rem; font-weight: 600; letter-spacing: 0.005em;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.btn:hover { transform: none; }
+.btn-lg { min-height: 54px; padding-inline: 1.7rem; }
+.btn-dark { --bg: var(--night); --fg: var(--cream); }
+.btn-dark:hover { --bg: #1d4a48; }
+.btn-outline { --bd: var(--ink); }
+.btn-outline:hover { --bg: var(--ink); --fg: var(--cream); }
+.btn-cream { --bg: var(--cream); --fg: var(--ink); }
+.btn-ghost-light { --bd: rgba(250, 247, 239, 0.7); }
+.btn-ghost-light:hover { --bg: var(--cream); --fg: var(--ink); --bd: var(--cream); }
+.text-link {
+  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0; border: 0;
+  font-weight: 600; color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: 0.45em; text-decoration-color: var(--terra);
+}
+.text-link:hover { text-decoration-thickness: 2px; }
+.text-link .icon { display: none; }
+
+/* ---------- Photographs: square cut, a caption beneath ---------- */
+.media { border-radius: 0; }
+/* A captioned photo sizes itself by its image (the ratio moves to the <img>), so the caption sits beneath, never clipped. */
+.media.has-credit { display: flex; flex-direction: column; aspect-ratio: auto !important; overflow: visible; background: none; height: auto; }
+.media.has-credit figcaption {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1.25rem;
+  padding-top: 0.7rem; font-family: var(--sans); font-size: 0.8rem; line-height: 1.45; color: var(--muted);
+}
+.media.has-credit .cap-what { max-width: 42em; }
+.media.has-credit .cap-src { flex: none; font-weight: 700; color: var(--ink); }
+.media.has-credit.is-placeholder .cap-src { color: var(--terra-dark); }
+.media.has-credit.is-placeholder::after { display: none !important; }  /* the caption carries the label */
+.media.has-credit[style*="--ratio"] > img, .media.has-credit[style*="--ratio"] > picture { aspect-ratio: var(--ratio); }
+.media.has-credit > img, .media.has-credit > picture > img { width: 100%; height: auto; object-fit: cover; }
+.media.has-credit[style*="--ratio"] > img, .media.has-credit[style*="--ratio"] > picture > img { aspect-ratio: var(--ratio); height: auto; }
+/* The sunset frames were shot against the light: a gentle lift so the shadows read. */
+.is-dusk img { filter: brightness(1.14) contrast(1.04) saturate(1.06); }
+/* Every other illustrative label: a plain square tag, not a pill. */
+.media.is-placeholder::after { border-radius: 0 !important; }
+
+/* ---------- The tais warp: the only ornament, at the passage from paper to night ---------- */
+.tais, .site-footer::before {
+  display: block; height: 7px; border: 0;
+  background: repeating-linear-gradient(90deg,
+    var(--night) 0 18px, var(--terra) 18px 21px, var(--night) 21px 30px, var(--gold) 30px 32px,
+    var(--night) 32px 46px, var(--sage) 46px 48px, var(--night) 48px 56px, var(--terra) 56px 57px);
+}
+.site-footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; }
+
+/* ---------- Header: wordmark, the pages, the language, the order, one action ---------- */
+.site-header { border-bottom: 1px solid transparent; }
+.site-header.is-solid { background: rgba(250, 247, 239, 0.94); border-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.brand { gap: 0.7rem; }
+.brand-mark { width: 42px; height: 42px; padding: 0; border-radius: 50%; box-shadow: none; background: transparent; }
+.brand-name { font-family: var(--serif); font-weight: 500; font-size: 1.75rem; letter-spacing: 0.01em; text-transform: none; margin-right: 0; line-height: 1; }
+.brand-line { font-size: 0.66rem; letter-spacing: 0.16em; margin-top: 0.25rem; font-weight: 600; }
+@media (min-width: 1360px) {
+  /* Wordmark | the pages, centred on the screen | language, order and the one action. */
+  .header-inner { display: grid !important; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important; gap: 2rem; }
+  .header-inner .brand { justify-self: start; }
+  .header-inner .nav-main { justify-self: center; }
+  .header-inner .header-actions { justify-self: end; }
+}
+.nav-main a { position: relative; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding-block: 0.4rem; }
+.nav-main a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 0.35s var(--ease); }
+.nav-main a:hover::after { transform: scaleX(1); }
+.nav-main a[aria-current="page"]::after { transform: scaleX(1); background: var(--terra); height: 2px; }
+.lang { padding: 0; border: 0; background: transparent !important; gap: 0.15rem; }
+.lang-opt { min-width: 32px; height: 32px; border-radius: 0; font-size: 0.78rem; letter-spacing: 0.08em; }
+.lang-opt.is-on { background: transparent !important; color: var(--ink) !important; text-decoration: underline; text-underline-offset: 0.4em; text-decoration-color: var(--terra); }
+.lang-opt + .lang-opt::before { content: none; }
+.cart-btn { border-radius: 0; border-color: transparent; background: transparent; }
+.cart-btn:hover { background: transparent; border-color: var(--line-strong); }
+.book-btn { border-radius: 2px; }
+.book-btn .icon { display: none; }
+.has-hero .site-header:not(.is-solid) .lang-opt.is-on { color: #fff !important; text-decoration-color: var(--gold); }
+.has-hero .site-header:not(.is-solid) .cart-btn { background: transparent; border-color: transparent; }
+.has-hero .site-header:not(.is-solid) .btn-dark { --bg: var(--cream); --fg: var(--ink); }
+.has-hero .site-header:not(.is-solid) .brand-mark { background: transparent; }
+
+/* ---------- Floating WhatsApp: a small night tab, not a green bubble ---------- */
+.wa-float { width: 3.2rem !important; height: 3.2rem !important; border-radius: 50%; background: var(--night); color: var(--cream); box-shadow: 0 0 0 1px rgba(250, 247, 239, 0.25); }
+.wa-float:hover { transform: none; background: #1d4a48; }
+.wa-float .icon { width: 1.35rem !important; height: 1.35rem !important; }
+
+/* ---------- Home hero: the drone film, a place line, two lines of type, a ledger ---------- */
+.hx-shade { background:
+  linear-gradient(180deg, rgba(10, 30, 28, 0.55) 0%, rgba(10, 30, 28, 0) 24%),
+  linear-gradient(0deg, rgba(10, 30, 28, 0.82) 0%, rgba(10, 30, 28, 0.35) 38%, rgba(10, 30, 28, 0) 62%); }
+.hx-place { margin: 0 0 1.1rem; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; color: var(--gold-soft); }
+.hx-title { font-weight: 400; letter-spacing: -0.03em; line-height: 0.95; text-shadow: none; }
+.hx-title .l2 { padding-left: clamp(0rem, 9vw, 9rem); }
+.hx .cine-lead { border-left: 0; padding-left: 0; max-width: 31rem; color: rgba(250, 247, 239, 0.92); }
+.hx-actions .btn-cream { --bg: var(--cream); }
+.hx-wa { border-bottom-color: rgba(250, 247, 239, 0.5); }
+.hx-context { grid-template-columns: repeat(4, minmax(0, 1fr)); border-top-color: rgba(250, 247, 239, 0.3); }
+.hx-context dt { font-size: 0.78rem; letter-spacing: 0.02em; color: var(--gold-soft); }
+.hx-context dd { font-size: 0.9rem; }
+.hx-coords dd { font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+@media (max-width: 860px) {
+  .hx-title .l2 { padding-left: 0; }
+  .hx-context { grid-template-columns: 1fr 1fr; }
+}
+
+/* ---------- Home: the statement, with a photograph hanging from the right ---------- */
+.intro-ed { background: var(--cream); padding-bottom: clamp(4rem, 8vw, 7rem); }
+.intro-ed .intro-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: 0 clamp(1rem, 2vw, 2rem); }
+.intro-ed .intro-text { grid-column: 1 / span 9; grid-row: 1; position: relative; z-index: 2; }
+.intro-ed .intro-statement { font-size: clamp(2.3rem, 3.6vw + 0.6rem, 4.6rem); line-height: 1.04; letter-spacing: -0.025em; max-width: none; }
+.intro-ed .intro-body { margin: clamp(2.2rem, 4vw, 3.5rem) 0 0 clamp(0rem, 8vw, 8.5rem); font-size: 1.12rem; line-height: 1.75; max-width: 30em; }
+.intro-ed .intro-photo { grid-column: 9 / span 4; grid-row: 1; margin-top: clamp(10rem, 15vw, 14rem); }
+@media (max-width: 860px) {
+  .intro-ed .intro-text { grid-column: 1 / -1; }
+  .intro-ed .intro-statement { font-size: clamp(2rem, 8vw, 2.8rem); }
+  .intro-ed .intro-body { margin-left: 0; margin-top: 1.6rem; }
+  .intro-ed .intro-photo { grid-column: 4 / -1; grid-row: 2; margin-top: 2.5rem; }
+}
+
+/* ---------- Comer & Ficar: one split screen, edge to edge ---------- */
+.duo { padding: 0; background: var(--night); }
+.duo .duo-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0; max-width: none; padding: 0; }
+.duo .duo-panel { border-radius: 0; min-height: min(92vh, 860px); margin: 0 !important; transform: none !important; aspect-ratio: auto !important; width: auto; min-width: 0; }
+.duo .duo-panel + .duo-amp + .duo-panel, .duo .duo-stay { border-left: 1px solid rgba(250, 247, 239, 0.18); }
+.duo .duo-media, .duo .duo-media .media { position: absolute; inset: 0; border-radius: 0; }
+.duo .duo-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.duo .duo-panel:hover .duo-media img { transform: scale(1.03); }
+.duo .duo-panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10, 30, 28, 0.78) 0%, rgba(10, 30, 28, 0.1) 55%); z-index: 1; }
+.duo .duo-eat .duo-media img { filter: brightness(1.14) contrast(1.04); }
+.duo .duo-copy { position: absolute; left: clamp(1.5rem, 4vw, 4rem); right: clamp(1.5rem, 4vw, 4rem); bottom: clamp(2rem, 5vw, 4.5rem); z-index: 2; top: auto !important; }
+.duo .duo-title { font-size: clamp(3.6rem, 8vw, 8.5rem); line-height: 0.9; letter-spacing: -0.04em; }
+.duo .duo-line { max-width: 22em; color: rgba(250, 247, 239, 0.86); }
+.duo .duo-link { border-bottom: 1px solid rgba(250, 247, 239, 0.6); padding-bottom: 0.25rem; }
+.duo .duo-amp { position: absolute; left: 53.5%; top: 50%; z-index: 3; transform: translate(-50%, -50%); margin: 0; font-size: clamp(5rem, 9vw, 9rem); color: var(--gold); pointer-events: none; }
+@media (max-width: 860px) {
+  .duo .duo-grid { grid-template-columns: 1fr; }
+  .duo .duo-panel { min-height: 78svh; }
+  .duo .duo-amp { left: 50%; top: 50%; font-size: 5rem; }
+  .duo .duo-stay { border-left: 0; border-top: 1px solid rgba(250, 247, 239, 0.18); }
+}
+
+/* ---------- The coast chapter: night, three frames of different sizes ---------- */
+.coast-ch { background: var(--night); color: var(--on-night); }
+.coast-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 2rem); align-items: start; }
+.coast-text { grid-column: 1 / span 5; grid-row: 1; align-self: end; padding-bottom: 1rem; }
+.coast-a { grid-row: 1; }
+.coast-b, .coast-c { grid-row: 2; }
+.coast-line { color: var(--on-night); font-size: clamp(2.2rem, 2.6vw + 1rem, 3.6rem); line-height: 1.05; }
+.coast-note { margin-top: 1.4rem; color: var(--on-night-2); max-width: 26em; }
+.coast-a { grid-column: 6 / span 7; }
+.coast-b { grid-column: 2 / span 4; }
+.coast-c { grid-column: 7 / span 5; margin-top: clamp(3rem, 8vw, 8rem); }
+.coast-ch .media.has-credit figcaption { color: var(--on-night-2); }
+.coast-ch .media.has-credit .cap-src { color: var(--gold-soft); }
+@media (max-width: 860px) {
+  .coast-text { grid-column: 1 / -1; grid-row: 1; }
+  .coast-a { grid-column: 1 / -1; grid-row: 2; }
+  .coast-b { grid-column: 1 / span 7; grid-row: 3; }
+  .coast-c { grid-column: 4 / -1; grid-row: 4; margin-top: 0; }
+}
+
+/* ---------- Events on the home page: a wide aerial, the words beside it ---------- */
+.ev-teaser { background: var(--cream); }
+.ev-teaser .et-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 3rem); align-items: center; }
+.ev-teaser .et-photos { grid-column: 1 / span 7; display: block; }
+.ev-teaser .et-text { grid-column: 9 / span 4; }
+.ev-teaser .pv-title { font-size: clamp(2.1rem, 2vw + 1.2rem, 3.1rem); line-height: 1.06; }
+.ev-teaser .pv-body { margin: 1.3rem 0 1.6rem; }
+@media (max-width: 860px) { .ev-teaser .et-photos, .ev-teaser .et-text { grid-column: 1 / -1; } }
+
+/* ---------- Discover Liquiçá on the home page: sand, a tall coast and the ruins ---------- */
+.dsc-preview { background: var(--paper); }
+.dp-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 2rem); align-items: start; }
+.dp-text { grid-column: 1 / span 4; align-self: center; }
+.dp-text .pv-title { font-size: clamp(2.1rem, 2vw + 1.2rem, 3.1rem); line-height: 1.06; }
+.dp-text .pv-body { margin: 1.3rem 0 1.4rem; }
+.dp-text .pv-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.8rem; }
+.dp-a { grid-column: 6 / span 4; }
+.dp-b { grid-column: 10 / span 3; margin-top: clamp(4rem, 10vw, 9rem); }
+@media (max-width: 860px) {
+  .dp-text { grid-column: 1 / -1; }
+  .dp-a { grid-column: 1 / span 8; }
+  .dp-b { grid-column: 6 / -1; margin-top: -4rem; }
+}
+
+/* ---------- Final invitation and reviews ---------- */
+.final-cta .scene-note { display: none; }
+.reviews-ed { background: var(--cream); border-top: 1px solid var(--line); }
+.ta-badge { border-radius: 2px; }
+
+/* ---------- Inner page heroes: the photograph, the title low on the left, the caption low on the right ---------- */
+.cine-hero.is-page .media.has-credit { position: absolute; inset: 0; display: block; }
+.cine-hero.is-page .media.has-credit img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
+.cine-hero.is-page .media.has-credit figcaption {
+  position: absolute; z-index: 4; right: var(--gutter); bottom: 1.1rem; max-width: min(30rem, 44vw);
+  padding: 0; text-align: right; justify-content: flex-end; color: rgba(250, 247, 239, 0.78);
+}
+.cine-hero.is-page .media.has-credit .cap-what { display: none; }
+.cine-hero.is-page .media.has-credit .cap-src { color: var(--gold-soft); }
+.cine-title.is-page { font-size: clamp(2.8rem, 4.6vw + 0.8rem, 6rem); letter-spacing: -0.03em; line-height: 0.98; }
+.cine-hero.is-page .media.is-placeholder::after { display: none; }
+
+/* ---------- Footer: night, the tais warp on top, the coordinates ---------- */
+.site-footer { position: relative; background: var(--night); }
+.site-footer .btn { border-radius: 2px; }
+.ft-brand .brand-mark { width: 52px; height: 52px; }
+
+/* ---------- Forms and dialogs: still clear, squarer ---------- */
+.form-card, .book-dialog, .room-ask, .wa-review, .pay-note, .dine-in { border-radius: 2px; }
+.field input, .field select, .field textarea, .pk-btn { border-radius: 2px; }
+
+/* ---------- The menu: a typeset menu, not a shop grid ----------
+   Each category is a chapter: its name stays in the left column while its dishes run down the right in two columns of
+   lines (a small square photo, the name, the price, the description, the add control). The photos stay small on
+   purpose: they are illustrative, so they support the line instead of standing in for Lauhata's own dishes. */
+section.menu .heading.is-center { text-align: left; justify-items: start; }
+section.menu .menu-note, section.menu .dine-in { margin-left: 0; text-align: left; }
+section.menu .menu-search { margin-left: 0; border-radius: 2px; }
+section.menu .menu-search input { border-radius: 2px; }
+section.menu .menu-nav { background: rgba(250, 247, 239, 0.96); border-bottom: 1px solid var(--line); }
+section.menu .menu-nav a { border-radius: 0; background: none !important; color: var(--muted); border-bottom: 2px solid transparent; padding-inline: 0.2rem; margin-inline: 0.6rem; }
+section.menu .menu-nav a:hover { color: var(--ink); }
+section.menu .menu-nav a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--terra); }
+section.menu .menu-cat { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); column-gap: clamp(2rem, 4vw, 4rem); padding-block: clamp(2.8rem, 5vw, 4.5rem); border-top: 1px solid var(--line-strong); margin: 0; }
+section.menu .menu-cat > * { grid-column: 2; }
+section.menu .menu-cat > .menu-cat-head { grid-column: 1; grid-row: 1 / span 30; align-self: start; position: sticky; top: calc(var(--header-h) + 5rem); display: block; padding: 0; border: 0; }
+section.menu .menu-cat-head h3 { font-size: clamp(1.9rem, 2.2vw + 0.6rem, 2.7rem); font-weight: 400; line-height: 1.05; }
+section.menu .menu-cat-head p { margin-top: 0.8rem; font-size: 0.9rem; color: var(--muted); }
+section.menu .menu-group { margin: 1.6rem 0 0; font-size: 0.86rem; font-weight: 700; color: var(--ink); }
+section.menu .menu-group:first-of-type { margin-top: 0; }
+section.menu .menu-cat .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(1.8rem, 3vw, 3rem); row-gap: 0; margin: 0; }
+section.menu .menu-cat .dish { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.1rem; align-items: start; padding: 1.25rem 0; background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; animation: none; overflow: visible; }
+section.menu .menu-cat .dish .dish-photo { width: 7rem; aspect-ratio: 1 / 1; margin: 0; border-radius: 0; }
+section.menu .menu-cat .dish .dish-photo img { width: 100%; height: 100%; object-fit: cover; }
+section.menu .menu-cat .dish-photo.is-placeholder::after { left: 0 !important; right: 0 !important; bottom: 0 !important; top: auto !important; padding: 0.15rem 0.2rem !important; font-size: 0.6rem !important; text-align: center; background: rgba(18, 59, 58, 0.82) !important; }
+section.menu .menu-cat .dish-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1rem; row-gap: 0.3rem; align-items: baseline; padding: 0; }
+section.menu .menu-cat .dish-tag { display: none; }
+section.menu .menu-cat .dish h3 { grid-column: 1; grid-row: 1; margin: 0; font-size: 1.3rem; font-weight: 500; line-height: 1.2; }
+section.menu .menu-cat .dish-foot { display: contents; }
+section.menu .menu-cat .dish-foot .price { grid-column: 2; grid-row: 1; justify-self: end; font-size: 0.85rem; }
+section.menu .menu-cat .dish-foot .price b { font-size: 1.25rem; font-weight: 500; }
+section.menu .menu-cat .dish-desc { grid-column: 1 / -1; margin: 0; font-size: 0.92rem; line-height: 1.55; color: var(--muted); }
+section.menu .menu-cat .dish-add { grid-column: 1 / -1; grid-row: auto; justify-self: start; margin-top: 0.45rem; min-height: 38px; padding: 0 0.85rem; font-size: 0.84rem; border-radius: 2px; }
+section.menu .menu-cat .sample-tag { grid-column: 1 / -1; justify-self: start; border-radius: 0; }
+@media (max-width: 1023px) {
+  section.menu .menu-cat { grid-template-columns: 1fr; }
+  section.menu .menu-cat > * , section.menu .menu-cat > .menu-cat-head { grid-column: 1; grid-row: auto; position: static; }
+  section.menu .menu-cat > .menu-cat-head { margin-bottom: 1rem; }
+}
+/* On a phone the thumbnail is too small to carry a label on top: the label sits under it, like every other caption. */
+@media (max-width: 700px) {
+  section.menu .menu-cat .dish .dish-photo { aspect-ratio: auto; overflow: visible; background: none; }
+  section.menu .menu-cat .dish .dish-photo img { aspect-ratio: 1 / 1; height: auto; }
+  section.menu .menu-cat .dish-photo.is-placeholder::after { position: static !important; display: block !important; margin-top: 0.3rem; padding: 0 !important; background: none !important; color: var(--terra-dark) !important; font-size: 0.66rem !important; line-height: 1.25; text-align: left; }
+}
+@media (max-width: 700px) {
+  section.menu .menu-cat .menu-grid { grid-template-columns: 1fr; }
+  section.menu .menu-cat .dish { grid-template-columns: 5.6rem minmax(0, 1fr); gap: 0.9rem; }
+  section.menu .menu-cat .dish .dish-photo { width: 5.6rem; }
+  section.menu .menu-cat .dish h3 { font-size: 1.18rem; }
+}
+
+/* ---------- Rooms: each room its own chapter ----------
+   Quarto Vista Mar keeps the night (the sea after dark); Suite Família is set on warm sand, a band that runs edge to
+   edge. Square carousel controls; facts as a short ledger, one per line. */
+.rooms-cine .room-row { position: relative; }
+.rooms-cine:has(.room-is-family:last-child) { padding-bottom: 0; }
+.rooms-cine .room-row.room-is-family { color: var(--text); box-shadow: 0 0 0 100vmax var(--paper); clip-path: inset(0 -100vmax); background: var(--paper); padding-block: clamp(4rem, 7vw, 6.5rem); margin-top: clamp(3rem, 6vw, 5rem); margin-bottom: 0; }
+.rooms-cine .room-row.room-is-family .room-row-body h3, .rooms-cine .room-row.room-is-family .room-row-body h3 a { color: var(--ink); }
+.rooms-cine .room-row.room-is-family .room-row-body, .rooms-cine .room-row.room-is-family .room-row-body p, .rooms-cine .room-row.room-is-family .room-kind, .rooms-cine .room-row.room-is-family .from, .rooms-cine .room-row.room-is-family .room-facts-line li { color: var(--body); }
+.rooms-cine .room-row.room-is-family .room-facts-line { border-color: var(--line-strong); }
+.rooms-cine .room-row.room-is-family .btn-cream { --bg: var(--night); --fg: var(--cream); }
+.rooms-cine .room-row.room-is-family .text-link { color: var(--ink); }
+.rooms-cine .room-row.room-is-family .cr-btn { color: var(--ink); border-color: var(--line-strong); }
+.rooms-cine .room-row.room-is-family .cr-count { color: var(--ink); }
+.rooms-cine .room-row:not(.room-is-family) .text-link { color: var(--cream); text-decoration-color: var(--gold); }
+.room-row-body h3 { font-size: clamp(2.4rem, 3vw + 0.8rem, 3.8rem); letter-spacing: -0.02em; line-height: 1; }
+.room-row-body h3 a { text-decoration: none; }
+.room-kind { font-size: 0.86rem; font-weight: 700; letter-spacing: 0.02em; }
+.room-facts-line { display: grid; gap: 0; margin-top: 1.4rem; border-top: 1px solid var(--line-night); }
+.room-facts-line li { padding: 0.65rem 0; border-bottom: 1px solid var(--line-night); }
+.room-facts-line li::before, .room-facts-line li + li::before { content: none !important; }
+.room-row.room-is-family .room-facts-line li { border-color: var(--line); }
+.room-foot { flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; }
+.room-foot-btns { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.6rem; }
+.cr-btn { border-radius: 2px !important; }
+.cr-link, .cr-track { border-radius: 0 !important; }
+
+/* ---------- Phone booking bar: a flat strip on the night, not a floating pill ---------- */
+@media (max-width: 860px) {
+  .mobile-bar { left: 0 !important; right: 0 !important; bottom: 0 !important; border-radius: 0 !important; padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom)) !important; background: var(--night) !important; box-shadow: none !important; gap: 0.5rem; border-top: 1px solid var(--line-night); }
+  .mobile-bar .btn { border-radius: 2px !important; }
+  .mobile-bar .btn-dark { --bg: transparent; --fg: var(--cream); --bd: rgba(250, 247, 239, 0.5); }
+  .mobile-bar .btn-terra { --bg: var(--cream); --fg: var(--ink); }
+  .mobile-bar .wa { border-radius: 2px !important; background: transparent !important; color: var(--cream) !important; border: 1px solid rgba(250, 247, 239, 0.5); }
+}
+
+/* ---------- No accent word in a headline: one voice, one colour ---------- */
+h1 em, h2 em, h3 em, .title em, .pv-title em, .ab-title em, .cu-title em, .dk-title em { font-style: normal !important; color: inherit !important; }
+
+/* ---------- Every sunset frame, wherever it appears: lift the shadows a little ---------- */
+img[src*="por-do-sol"] { filter: brightness(1.14) contrast(1.04) saturate(1.06); }
+
+/* ---------- Discover Liquiçá: the places are a list, not a sequence: no running numbers ---------- */
+.dsc-n { display: none !important; }
+.dsc-item { grid-template-columns: 1fr !important; }
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .duo .duo-media img { transition: none; }
+}

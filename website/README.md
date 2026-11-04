@@ -71,6 +71,18 @@ de cada foto estão em `FOTOS-PRATOS.md`, gerado pelo build.
 - **Notas internas** («a confirmar», «por configurar») já não aparecem ao público: campos sem dados ficam escondidos e o
   preço diz «sob consulta». As etiquetas «Imagem ilustrativa» continuam sempre visíveis.
 
+**Fase 7 — direção «Diário da costa» (5 de novembro de 2026).** Ver `DIRECAO-CRIATIVA.md` (pesquisa, diagnóstico,
+sistema visual, lista de fotografias para o Carlos).
+- **CSS:** `src/assets/css/editorial.css`, carregado depois de todos os outros, define a nova linguagem: papel Soft
+  Cream e capítulos Deep Ocean, fotos sem cantos, botões retangulares, sem rótulo por cima de cada título, o fio de tais.
+- **Legendas:** `figure(t, key, { credit: true })` (em `lib.mjs`) acrescenta por baixo da foto o que ela mostra e
+  «Fotografia real» ou «Imagem ilustrativa». Usado no início e nos heróis das páginas.
+- **Início:** herói com coordenadas reais; frase de apresentação com foto suspensa; Comer & Ficar de ponta a ponta;
+  capítulo noturno da costa com três fotos reais; eventos; Descobrir Liquiçá; convite; opiniões.
+- **Ementa:** cada categoria é um capítulo, com o nome fixo à esquerda e os pratos em linhas à direita, e fotos
+  pequenas (são ilustrativas). O carrinho e o WhatsApp não mudaram.
+- **Quartos:** Quarto Vista Mar fica no oceano noturno; a Suite Família fica numa faixa de areia.
+
 **Fase 6 (4 de novembro de 2026).** Ver também `CHECKLISTS.md` (fontes, confirmações pendentes, conteúdo temporário,
 produção, Google Business Profile, QR da ementa, manutenção e âmbito).
 - **Contacto e morada:** WhatsApp/telefone +670 7740 1111 e morada/coordenadas da Autoridade Municipal de Liquiçá, num só

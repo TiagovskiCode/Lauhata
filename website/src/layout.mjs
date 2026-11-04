@@ -363,6 +363,7 @@ ${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p,
 <link rel="stylesheet" href="/assets/css/picker.css">
 <link rel="stylesheet" href="/assets/css/wide.css">
 <link rel="stylesheet" href="/assets/css/design.css">
+<link rel="stylesheet" href="/assets/css/editorial.css">
 ${jsonLd(businessLd(t))}
 ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>

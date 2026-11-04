@@ -111,7 +111,15 @@ export const usesPlaceholderImages = () => Object.values(images).some((im) => im
  */
 // art: [{ key, media }] swaps in another photo when the media query matches (e.g. a more portrait-friendly
 // crop on phones): the browser then downloads only the photo it shows.
-export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [], decorative = false } = {}) {
+// `credit: true` adds the editorial caption used across the site: what the photo shows, then whether it is a real
+// photograph of Lauhata or an illustrative image. The honesty label is part of the design, not a sticker on top.
+export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [], decorative = false, credit = false } = {}) {
+  let capHtml = caption ? esc(caption) : "";
+  if (credit && !decorative && !caption) {
+    const what = credit === true ? images[key].alt[t.lang] : credit;
+    capHtml = `<span class="cap-what">${esc(what)}</span><span class="cap-src">${esc(images[key].placeholder ? t.common.placeholderImage : t.common.realPhoto)}</span>`;
+    cls = `${cls} has-credit`;
+  }
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
   const srcset = srcsetFor(im);
@@ -123,7 +131,7 @@ export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio
   // stands for the place itself (rooms, galleries, page heroes: see design.css). It goes once the photo is marked real.
   const illus = im.placeholder; // always labelled: an illustrative photo is never shown as Lauhata
   return `<figure class="media ${cls}${parallax ? " has-parallax" : ""}${illus ? " is-placeholder" : ""}"${illus ? ` data-ph="${esc(t.common.placeholderImage)}"` : ""}${style}${attrs ? " " + attrs : ""}>
-  ${sources ? `<picture>${sources}${img}</picture>` : img}${caption ? `\n  <figcaption>${esc(caption)}</figcaption>` : ""}
+  ${sources ? `<picture>${sources}${img}</picture>` : img}${capHtml ? `\n  <figcaption>${capHtml}</figcaption>` : ""}
 </figure>`;
 }
 

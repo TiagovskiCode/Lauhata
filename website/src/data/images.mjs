@@ -8,7 +8,7 @@ export default {
   // The cover of the hero video: its first frame, from the real Lauhata drone footage (videos-originais/). It is the
   // picture the hero shows first; the video then fades in over it from the very same frame, so the change is seamless.
   heroCover: {
-    src: "foto:hero-capa",
+    src: "foto:hero-capa-hd", // first frame of the HD hero film (cover supplied with it, 5 Nov 2026)
     width: 1920,
     alt: { pt: "Vista aérea do Lauhata: o edifício com cobertura azul, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the building with its blue roof, the garden, the palm trees and the beach" },
     placeholder: false,

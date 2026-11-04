@@ -85,7 +85,10 @@ export default {
   },
 
   common: {
-    placeholderImage: "Imagem ilustrativa",    toConfirm: "A confirmar",
+    placeholderImage: "Imagem ilustrativa",
+    realPhoto: "Fotografia real",
+    coords: "8°34′54″ S · 125°20′59″ E",
+    coordsLabel: "Coordenadas do Lauhata",    toConfirm: "A confirmar",
     priceTbc: "Preço sob consulta",
     hoursTbc: "Horário a confirmar",
     whatsapp: "WhatsApp",
@@ -518,7 +521,7 @@ export default {
       eat: { title: "Comer", line: "Sabores da costa, servidos sem pressa.", link: "Explorar a ementa" },
       stay: { title: "Ficar", line: "Fique mais um pouco. O mar espera por si.", link: "Descobrir o alojamento" },
     },
-    intro: { note: "O Lauhata" },
+    intro: { note: "O Lauhata", body: "Restaurante e bar à beira da praia, aberto ao pequeno-almoço, ao almoço e ao jantar. Dois tipos de quarto a poucos passos da areia. Os pedidos fazem-se pelo WhatsApp e o pagamento é feito no local." },
     beach: { note: "A praia em frente", line: "Areia escura, palmeiras e as montanhas atrás." },
     eventsTeaser: { note: "Eventos", title: "Celebrar junto ao mar.", body: "Aniversários, encontros de família, almoços e jantares de grupo: conte-nos a ocasião e a equipa diz-lhe o que é possível.", link: "Planear um evento" },
     preview: { note: "Sobre nós", about: "Conhecer o Lauhata", story: "Ler a nossa história" },

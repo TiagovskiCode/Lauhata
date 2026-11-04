@@ -660,7 +660,8 @@
           }, Math.max(0, COVER_MS - performance.now()));
         }, { once: true });
         heroVideo.preload = "auto";
-        heroVideo.src = heroVideo.dataset.src;
+        // Phones get the lighter 1280 px film when there is one.
+        heroVideo.src = heroVideo.dataset.srcSmall && window.innerWidth < 900 ? heroVideo.dataset.srcSmall : heroVideo.dataset.src;
         heroVideo.load();
       };
       if (document.readyState === "complete") setTimeout(start, 150);
