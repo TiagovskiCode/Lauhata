@@ -8,13 +8,19 @@ export default {
   // once it is registered.
   siteUrl: "https://tiagovskicode.github.io/Lauhata/website/dist",
 
-  // WhatsApp number in international format, digits only (e.g. "67077000000").
-  // PENDING: while empty, forms open WhatsApp without a recipient so the flow can be tested.
-  whatsapp: "",
-  phone: "",
+  // WhatsApp number in international format, digits only. Every booking, order, event and feedback message opens
+  // WhatsApp with this number; it is the only place it is written. Source: Liquiçá Municipal Authority (liquica.gov.tl)
+  // and the Northern Territory (Darwin) international business directory, both listing +670 7740 1111 for Lauhata
+  // (the latter with Carlos Soares as contact). Configured with Tiago's approval on 2026-11-04; Carlos to confirm.
+  whatsapp: "67077401111",
+  phone: "67077401111",
   email: "",
 
+  // Street-level address and the map pin, from the Liquiçá Municipal Authority's points of interest
+  // (liquica.gov.tl, "Restaurante Lauhata Beach"). Used with Tiago's approval on 2026-11-04; Carlos to confirm.
   address: {
+    street: "Aldeia Pissu Kraik, Suku Lauhata",
+    district: { pt: "Posto Administrativo de Bazartete", en: "Bazartete Administrative Post" },
     locality: "Lauhata",
     region: "Liquiçá",
     country: "Timor-Leste",
@@ -22,8 +28,8 @@ export default {
   },
   // Map search used by the embedded map until exact coordinates are confirmed.
   mapQuery: "Lauhata Beach Escape, Liquiçá, Timor-Leste", // the place name as on Google Maps: the pin lands on Lauhata Beach Escape, not on the village
-  // Exact coordinates, e.g. { lat: -8.6, lng: 125.4 }. PENDING.
-  geo: null,
+  // Exact coordinates of the map pin (liquica.gov.tl).
+  geo: { lat: -8.581541, lng: 125.349856 },
 
   // Opening hours of food and beverage, from the printed menu. The menu does not say which days, so
   // each line is labelled by meal (the field is called `days` but holds any label).
@@ -101,6 +107,15 @@ export default {
 
   // Google Analytics 4 measurement ID (e.g. "G-XXXXXXX"). Analytics only loads when set.
   gaId: "",
+
+  // Payment for rooms (and the restaurant) is made in person at Lauhata: the site never takes payments. Shown next to
+  // every booking form and in the WhatsApp messages' wording.
+  payInPerson: true,
+
+  // Sample content for the development preview: drinks the restaurant has not confirmed yet are shown with a visible
+  // "Exemplo" tag and no price, and cannot be ordered. Set to false before launch (or once the real drinks are in
+  // menu.mjs) and the samples disappear.
+  showSamples: true,
 
   // Shows a small "illustrative image" tag on stock photos and the demo-menu notice.
   // Set to false only once every placeholder has been replaced with real content.

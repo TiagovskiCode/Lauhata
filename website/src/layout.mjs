@@ -59,6 +59,7 @@ function businessLd(t) {
     logo: absUrl("/assets/img/brand/logo-lauhata-beach-escape-160.png"),
     address: {
       "@type": "PostalAddress",
+      ...(site.address.street ? { streetAddress: site.address.street } : {}),
       addressLocality: site.address.locality,
       addressRegion: site.address.region,
       addressCountry: site.address.countryCode,
@@ -76,7 +77,7 @@ function businessLd(t) {
       closes: h.closes,
     }));
   }
-  if (site.phone) ld.telephone = site.phone;
+  if (site.phone) ld.telephone = `+${site.phone}`;
   if (site.email) ld.email = site.email;
   if (site.geo) ld.geo = { "@type": "GeoCoordinates", latitude: site.geo.lat, longitude: site.geo.lng };
   const same = Object.values(site.social).filter(Boolean);
@@ -280,7 +281,7 @@ function footer(t) {
     </nav>
     <div class="ft-col">
       <h2 class="footer-h">${esc(F.visit)}</h2>
-      <p class="ft-place">${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}</p>
+      <p class="ft-place">${site.address.street ? `${esc(site.address.street)}<br>` : ""}${esc(site.address.region)}, ${esc(site.address.country)}</p>
       ${hours ? `<p class="ft-sub">${esc(F.hours)}</p><ul class="ft-hours">${hours}</ul>` : ""}
       <ul class="footer-list">${link(maps, F.directions, true)}</ul>
     </div>

@@ -45,7 +45,7 @@ export async function prelaunch(dist) {
   if (unsure) warnings.push(`${unsure} preços das pizzas estão escritos à mão na ementa (campo confirm em menu.mjs): confirmar com o restaurante.`);
   const feat = items.filter((d) => d.featured).length;
   if (feat) warnings.push(`${feat} pratos em «Os mais escolhidos» foram escolhidos sem dados de vendas (campo featured em menu.mjs): confirmar quais são.`);
-  if (rooms.some((r) => r.placeholder)) warnings.push("Descrições dos quartos por confirmar com o Lauhata (aparecem como «a confirmar»).");
+  if (rooms.some((r) => r.placeholder)) warnings.push("Quartos: camas e TV confirmadas pelo dono; fotografias ilustrativas e restantes comodidades (ar condicionado, casa de banho, Wi-Fi…) por confirmar — ver CHECKLISTS.md.");
 
   const unsplash = new Set(html.match(/images\.unsplash\.com\/photo-[\w-]+/g) || []).size;
   const local = new Set(html.match(/assets\/img\/fotos\/[\w-]+?-(?:640|1080|1600)\.jpg/g)?.map((s) => s.replace(/-(?:640|1080|1600)\.jpg$/, "")) || []).size;

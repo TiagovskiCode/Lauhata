@@ -1,10 +1,11 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
 import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { TAIS, tripadvisorBadge } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
 import siteReviews from "./data/reviews.mjs";
+import { sampleDrinks } from "./data/sample-drinks.mjs";
 
 const other = (L) => (L === "pt" ? "en" : "pt");
 const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}`;
@@ -41,11 +42,26 @@ function fromPrice(t, r) {
     : `<p class="from is-tbc"><strong>${esc(t.common.priceTbc)}</strong></p>`;
 }
 
-// Capacity and amenities of a room, only once the owner has confirmed them (site.roomDetailsConfirmed); until then one
-// quiet line says so, instead of chips that look like facts.
+// The owner-confirmed facts of a room, as one quiet line: beds, then each confirmed amenity. Nothing unconfirmed is listed.
 function roomFeatures(t, r) {
-  if (site.roomDetailsConfirmed && r.features.length) return `<ul class="chips">${r.features.map((f) => `<li>${esc(f[t.lang])}</li>`).join("")}</ul>`;
-  return `<p class="room-tbc">${esc(t.land.suites.tbc)}</p>`;
+  const L = t.lang;
+  const facts = [r.beds && r.beds[L], ...(r.amenities || []).map((a) => a[L]), r.suitability && `${t.stay.roomSuits}: ${r.suitability[L]}`].filter(Boolean);
+  return facts.length ? `<ul class="room-facts-line">${facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : "";
+}
+
+// A room's photographs as a carousel: a scroll-snap strip (swipe on touch, arrow keys when focused), previous/next
+// buttons, a position counter, and every photo opens in the site's lightbox (data-gallery). Without JavaScript it is a
+// strip that scrolls sideways.
+function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" } = {}) {
+  const L = t.lang;
+  const C = t.carousel;
+  const n = r.images.length;
+  return `<div class="carousel ${cls}" data-carousel role="group" aria-roledescription="${esc(C.role)}" aria-label="${esc(fmt(C.label, { room: r.name[L] }))}">
+    <div class="cr-track" data-cr-track data-gallery tabindex="0">${r.images
+      .map((k, i) => `<div class="cr-slide" role="group" aria-roledescription="${esc(C.slide)}" aria-label="${esc(fmt(C.count, { n: i + 1, total: n }))}"><a class="cr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes })}</a></div>`)
+      .join("")}</div>
+    ${n > 1 ? `<div class="cr-controls"><button class="cr-btn" type="button" data-cr-prev aria-label="${esc(C.prev)}">${icon("left")}</button><p class="cr-count" data-cr-count aria-live="polite">1 / ${n}</p><button class="cr-btn" type="button" data-cr-next aria-label="${esc(C.next)}">${icon("right")}</button></div>` : ""}
+  </div>`;
 }
 
 // Large alternating rows, one per room type (homepage and stay page).
@@ -56,18 +72,15 @@ function roomRows(t, list = rooms, { arch = false } = {}) {
     .map((r, i) => {
       const n = rooms.findIndex((x) => x.id === r.id); // its number among all room types
       return `<article class="room-row${i % 2 ? " is-flip" : ""}">
-      <a class="room-row-img${arch ? " is-arch" : ""}" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">
-        ${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw", ratio: arch ? "1/1" : "5/4", attrs: "data-clip", parallax: 0.1 })}
-        ${r.badge ? `<span class="pill pill-dark">${esc(r.badge[L])}</span>` : ""}
-      </a>
+      <div class="room-row-img">${roomCarousel(t, r)}</div>
       <div class="room-row-body"${rv(120)}>
-        <span class="room-num">0${n + 1}<small>/0${rooms.length}</small></span>
+        <p class="room-kind">${esc(r.badge ? r.badge[L] : "")}</p>
         <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
         <p>${esc(r.summary[L])}</p>
         ${roomFeatures(t, r)}
         <div class="room-foot">
           ${fromPrice(t, r)}
-          <a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(H.book)}${icon("arrow")}</a>
+          <div class="room-foot-btns"><a class="btn btn-ghost-light" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}</a><a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(H.book)}${icon("arrow")}</a></div>
         </div>
       </div>
     </article>`;
@@ -84,7 +97,8 @@ export function bookingCard(t) {
   const timeOpts = timeOptions(t, { selected: "19:30" });
   const fld = (label, control) => `<label class="bc-field"><span>${esc(label)}</span>${control}</label>`;
   // Quantities are number fields: the picker draws a stepper over them, and without JavaScript they still work.
-  const qty = (name, max) => `<input type="number" name="${name}" min="1" max="${max}" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(q.person)}" data-unit-many="${esc(q.persons)}">`;
+  const qty = (name, max, { min = 1, value = 2, one = q.person, many = q.persons } = {}) => `<input type="number" name="${name}" min="${min}" max="${max}" value="${value}" inputmode="numeric" data-pick="number" data-unit-one="${esc(one)}" data-unit-many="${esc(many)}">`;
+  const f = t.form;
   return `<form class="booking-card" data-quick-wa novalidate aria-label="${esc(q.label)}">
     <div class="bc-tabs" role="tablist">
       <button type="button" role="tab" aria-selected="false" aria-controls="bc-table" data-bc-tab="table">${icon("cutlery")}${esc(q.tabTable)}</button>
@@ -100,12 +114,13 @@ export function bookingCard(t) {
     <div class="bc-row" id="bc-room" role="tabpanel" data-bc-panel="room" hidden>
       ${fld(q.checkIn, `<input type="date" name="checkIn" data-pick="in">`)}
       ${fld(q.checkOut, `<input type="date" name="checkOut" data-pick="out">`)}
-      ${fld(q.guests, qty("guests", 20))}
+      ${fld(f.adults, qty("adults", 20, { one: f.adultOne, many: f.adultMany }))}
+      ${fld(f.children, qty("children", 10, { min: 0, value: 0, one: f.childOne, many: f.childMany }))}
       ${fld(q.room, `<select name="room" data-pick="select"><option value="">${esc(q.roomAny)}</option>${rooms.map((r) => `<option value="${r.id}">${esc(r.name[t.lang])}</option>`).join("")}</select>`)}
       <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitRoom)}</button>
     </div>
     <p class="bc-error" role="alert" hidden data-bc-error></p>
-    <p class="bc-note">${site.responseTime ? esc(site.responseTime[t.lang]) : esc(t.contact.responsePending)}</p>
+    <p class="bc-note">${site.responseTime ? esc(site.responseTime[t.lang]) : esc(t.contact.responsePending)} ${site.payInPerson ? esc(t.form.payNote) : ""}</p>
   </form>`;
 }
 
@@ -141,7 +156,7 @@ function formFooter(t, submitLabel) {
       <button class="btn btn-terra btn-lg" type="submit">${icon("whatsapp")}<span data-submit-label>${esc(submitLabel)}</span></button>
       ${responseLine(t)}
     </div>
-    <p class="form-note">${esc(t.form.note)}</p>`;
+    <p class="form-note">${esc(t.form.note)}${site.payInPerson ? ` ${esc(t.form.payNote)}` : ""}</p>`;
 }
 
 function tableForm(t) {
@@ -162,14 +177,16 @@ function tableForm(t) {
 function roomForm(t) {
   const f = t.form;
   const options = [`<option value="">${esc(f.roomAny)}</option>`, ...rooms.map((r) => `<option value="${r.id}">${esc(r.name[t.lang])}</option>`)].join("");
-  return `<form class="booking-form" data-booking="room" novalidate>
+  return `<form class="booking-form" data-booking="room" data-review-step novalidate>
     <div class="form-grid">
       ${field({ id: "rm-in", name: "checkIn", type: "date", label: f.checkIn, attrs: 'required data-pick="in"' })}
       ${field({ id: "rm-out", name: "checkOut", type: "date", label: f.checkOut, attrs: 'required data-pick="out"' })}
-      ${field({ id: "rm-guests", name: "guests", type: "number", label: f.guests, attrs: `required min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.guestOne)}" data-unit-many="${esc(f.guestMany)}"` })}
-      ${field({ id: "rm-room", name: "room", label: f.roomType, control: `<select data-pick="select">${options}</select>` })}
-      ${field({ id: "rm-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"' })}
-      ${field({ id: "rm-contact", name: "contact", label: f.contact, hint: f.contactHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="80" inputmode="tel"' })}
+      ${field({ id: "rm-adults", name: "adults", type: "number", label: f.adults, attrs: `required min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.adultOne)}" data-unit-many="${esc(f.adultMany)}"` })}
+      ${field({ id: "rm-children", name: "children", type: "number", label: f.children, attrs: `min="0" max="10" value="0" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.childOne)}" data-unit-many="${esc(f.childMany)}"` })}
+      ${field({ id: "rm-room", name: "room", label: f.roomType, control: `<select data-pick="select">${options}</select>`, full: true })}
+      ${field({ id: "rm-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
+      ${field({ id: "rm-email", name: "email", type: "email", label: f.email, optional: f.optional, attrs: 'autocomplete="email" maxlength="120"' })}
+      ${field({ id: "rm-phone", name: "phone", type: "tel", label: f.phone, hint: f.phoneHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"' })}
       ${field({ id: "rm-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: `maxlength="400" placeholder="${esc(f.notesPlaceholder)}"`, full: true })}
     </div>
     ${formFooter(t, f.submitRoom)}
@@ -203,7 +220,36 @@ function dishPhoto(t, d) {
     const src = `/assets/img/pratos/${d.id}-640.jpg`;
     return `<figure class="media dish-photo"><img src="${src}"${big ? ` srcset="${src} 640w, /assets/img/pratos/${d.id}-1080.jpg 1080w" sizes="(min-width: 1000px) 28vw, (min-width: 600px) 45vw, 30vw"` : ""} alt="${esc(d.name)}" width="640" height="480" loading="lazy" decoding="async"></figure>`;
   }
+  // A temporary, openly licensed photo of a similar dish (tools/fotos-temporarias.mjs), labelled "Illustrative image".
+  if (existsSync(tempPhotoFile(d.id))) return tempPhoto(t, d.id, typeof d.name === "string" ? d.name : d.name[t.lang]);
   return `<div class="dish-photo is-pending" aria-hidden="true"><span class="dp-mark">${esc(d.name.trim()[0])}</span><span class="dp-note">${esc(t.order.photoSoon)}</span></div>`;
+}
+const tempPhotoFile = (id, w = 640) => new URL(`./assets/img/pratos-temp/${id}-${w}.jpg`, import.meta.url);
+function tempPhoto(t, id, name) {
+  const src = `/assets/img/pratos-temp/${id}-640.jpg`;
+  const big = existsSync(tempPhotoFile(id, 1080));
+  return `<figure class="media dish-photo is-placeholder" data-ph="${esc(t.common.placeholderImage)}"><img src="${src}"${big ? ` srcset="${src} 640w, /assets/img/pratos-temp/${id}-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw"` : ""} alt="${esc(fmt(t.order.tempAlt, { name }))}" width="640" height="480" loading="lazy" decoding="async"></figure>`;
+}
+
+// The sample drinks of the development preview (src/data/sample-drinks.mjs): photo, name and an "Example" tag; no
+// price and no add button, so nothing unconfirmed can be ordered. Shown only while site.showSamples is true and the
+// menu has no real drinks.
+function sampleDrinksSection(t, cat) {
+  const L = t.lang;
+  const O = t.order;
+  const groups = Object.entries(cat.groups)
+    .map(([g, label]) => {
+      const list = sampleDrinks.filter((d) => d.group === g);
+      return list.length ? `<h4 class="menu-group">${esc(label[L])}</h4><div class="menu-grid">${list.map((d) => `<article class="dish has-photo is-sample" data-dish data-search="${esc(normalize(d.name.pt + " " + d.name.en + " " + cat.name.pt + " " + cat.name.en))}">
+        ${existsSync(tempPhotoFile(d.id)) ? tempPhoto(t, d.id, d.name[L]) : ""}
+        <div class="dish-body"><h3>${esc(d.name[L])}</h3><div class="dish-foot"><span class="sample-tag">${esc(O.sampleTag)}</span></div></div>
+      </article>`).join("")}</div>` : "";
+    })
+    .join("");
+  return `<section class="menu-cat" id="cat-${cat.id}" data-cat="${cat.id}" aria-labelledby="cat-${cat.id}-title">
+      <header class="menu-cat-head"><h3 id="cat-${cat.id}-title">${esc(cat.name[L])}</h3><p>${esc(O.sampleNote)}</p></header>
+      ${groups}
+    </section>`;
 }
 
 // One dish. With \`link\` the name links to the menu (homepage row). \`image\` stays empty until the
@@ -246,10 +292,12 @@ function menuSection(t) {
   const L = t.lang;
   const O = t.order;
   // A category with no dishes yet (the drinks, until the restaurant supplies them) is left out of the page and the bar.
-  const shown = categories.filter((c) => items.some((d) => d.category === c.id));
+  const drinksCat = categories.find((c) => c.id === "drinks");
+  const sampleDrinksOn = site.showSamples && drinksCat && !items.some((d) => d.category === "drinks");
+  const shown = categories.filter((c) => items.some((d) => d.category === c.id) || (sampleDrinksOn && c === drinksCat));
   const nav = shown.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}">${esc(c.name[L])}</a></li>`).join("");
   const sections = shown
-    .map((c) => `<section class="menu-cat" id="cat-${c.id}" data-cat="${c.id}" aria-labelledby="cat-${c.id}-title">
+    .map((c) => (sampleDrinksOn && c === drinksCat ? sampleDrinksSection(t, c) : `<section class="menu-cat" id="cat-${c.id}" data-cat="${c.id}" aria-labelledby="cat-${c.id}-title">
       <header class="menu-cat-head"><h3 id="cat-${c.id}-title">${esc(c.name[L])}</h3>${c.note ? `<p>${esc(c.note[L])}</p>` : ""}</header>
       ${c.groups
         ? Object.entries(c.groups)
@@ -259,7 +307,7 @@ function menuSection(t) {
             })
             .join("")
         : `<div class="menu-grid">${items.filter((d) => d.category === c.id).map((d) => dishCard(t, d)).join("")}</div>`}
-    </section>`)
+    </section>`))
     .join("");
   return `<section class="section menu" id="ementa" aria-labelledby="menu-title" data-menu>
   <div class="wrap">
@@ -312,7 +360,7 @@ function infoGrid(t) {
   const h = t.home.location;
   const hours = site.restaurantHours.length ? site.restaurantHours.map((x) => `${x.days[L]} ${x.hours}`).join(" · ") : null;
   return `<dl class="info-grid"${rv(160)}>
-    <div>${icon("pin")}<dt>${esc(h.address)}</dt><dd>${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}</dd></div>
+    <div>${icon("pin")}<dt>${esc(h.address)}</dt><dd>${site.address.street ? `${esc(site.address.street)}<br>${esc(site.address.district[L])}<br>` : `${esc(site.address.locality)}, `}${esc(site.address.region)}, ${esc(site.address.country)}</dd></div>
     ${hours ? `<div>${icon("clock")}<dt>${esc(h.hours)}</dt><dd>${esc(h.restaurant)}: ${esc(hours)}${site.receptionHours ? `<br>${esc(h.reception)}: ${esc(site.receptionHours[L])}` : ""}</dd></div>` : ""}
     ${site.whatsapp ? `<div>${icon("whatsapp")}<dt>${esc(t.common.whatsapp)}</dt><dd><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a></dd></div>` : ""}
     ${site.email ? `<div>${icon("mail")}<dt>${esc(t.common.email)}</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd></div>` : ""}
@@ -741,6 +789,25 @@ function reviewsSection(t) {
 </section>`;
 }
 
+// Events, on the home page: an invitation, not a list of services.
+function eventsTeaser(t) {
+  const E = t.land.eventsTeaser;
+  return `<section class="section ev-teaser" aria-labelledby="et-title">
+  <div class="wrap et-grid">
+    <div class="et-text">
+      <p class="eyebrow">${esc(E.note)}</p>
+      <h2 id="et-title" class="pv-title" data-split>${esc(E.title)}</h2>
+      <p class="pv-body"${rv(80)}>${esc(E.body)}</p>
+      <a class="btn btn-dark btn-lg" href="${href("events", t.lang)}">${esc(E.link)}${icon("arrow")}</a>
+    </div>
+    <div class="et-photos">
+      <div class="et-a">${figure(t, "sunsetPalms", { sizes: "(min-width: 900px) 34vw, 92vw", ratio: "4/5" })}</div>
+      <div class="et-b">${figure(t, "sunsetGarden", { sizes: "(min-width: 900px) 22vw, 60vw", ratio: "1/1" })}</div>
+    </div>
+  </div>
+</section>`;
+}
+
 // Discover Liquiçá, on the home page: one photograph, one line and the way to the guide.
 function discoverPreview(t) {
   const D = t.land.discoverPage;
@@ -785,6 +852,24 @@ export function about(t) {
   const bc = breadcrumbs(t, [{ name: t.nav.about, path: href("about", L) }]);
   const body = `
 ${pageHero(t, { eyebrow: A.eyebrow, title: A.title, lead: t.home.statement, image: "aerialDay2", crumbs: bc.html })}
+
+<section class="section ab-what" aria-labelledby="ab-what-title">
+  <div class="wrap ab-what-grid">
+    <div>
+      <h2 id="ab-what-title" class="ab-title">${esc(A.whatTitle)}</h2>
+      <p class="ab-body"${rv(60)}>${esc(A.what)}</p>
+      <p class="ab-who"${rv(80)}>${esc(A.who)}</p>
+    </div>
+    <div>
+      <h3 class="h-small">${esc(A.factsTitle)}</h3>
+      <dl class="room-sheet ab-facts"${rv(100)}>${A.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+    </div>
+  </div>
+  <div class="wrap ab-strip">
+    <div class="ab-strip-a">${figure(t, "beachFront", { sizes: "(min-width: 900px) 62vw, 100vw", ratio: "16/9" })}</div>
+    <div class="ab-strip-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 34vw, 100vw", ratio: "4/5" })}</div>
+  </div>
+</section>
 
 <section class="section ab-intro" aria-labelledby="ab-title">
   <div class="wrap ab-grid">
@@ -842,21 +927,61 @@ ${pageHero(t, { eyebrow: E.eyebrow, title: E.title, lead: E.lead, image: "sunset
       ${figure(t, "beachFront", { cls: "booking-img", sizes: "(min-width: 900px) 30vw, 80vw", ratio: "4/3" })}
     </div>
     <div class="form-card"${rv(100)}>
-      <form class="booking-form" data-booking="event" novalidate>
-        <div class="form-grid">
-          ${field({ id: "ev-kind", name: "kind", label: E.kind, control: `<select data-pick="select" data-icon="heart">${kinds}</select>` })}
-          ${field({ id: "ev-date", name: "date", type: "date", label: f.date, attrs: 'required data-pick="date"' })}
-          ${field({ id: "ev-people", name: "people", type: "number", label: f.people, attrs: `required min="1" max="300" value="10" inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` })}
-          ${field({ id: "ev-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"' })}
-          ${field({ id: "ev-contact", name: "contact", label: f.contact, hint: f.contactHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="80" inputmode="tel"', full: true })}
-          ${field({ id: "ev-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: 'maxlength="600"', full: true })}
-        </div>
-        ${formFooter(t, E.submit)}
-      </form>
+      ${eventForm(t)}
     </div>
   </div>
 </section>`;
   return { page: "events", title: t.meta.events.title, description: t.meta.events.description, path: href("events", L), alt: href("events", other(L)), preload: "sunsetPalms", hero: true, ld: [bc.ld], body };
+}
+
+// A general message by WhatsApp, with the subject chosen first.
+function contactForm(t) {
+  const C = t.land.contactForm;
+  const f = t.form;
+  return `<form class="booking-form" data-booking="contact" novalidate data-wa="${esc(C.wa)}" data-err-message="${esc(C.errMessage)}">
+    <div class="form-grid">
+      ${field({ id: "cw-topic", name: "topic", label: C.topic, control: `<select data-pick="select" data-icon="mail">${C.topics.map((x) => `<option>${esc(x)}</option>`).join("")}</select>`, full: true })}
+      ${field({ id: "cw-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
+      ${field({ id: "cw-email", name: "email", type: "email", label: f.email, optional: f.optional, attrs: 'autocomplete="email" maxlength="120"' })}
+      ${field({ id: "cw-phone", name: "phone", type: "tel", label: f.phone, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"' })}
+      ${field({ id: "cw-message", name: "message", type: "textarea", label: C.message, attrs: 'required minlength="10" maxlength="1500" rows="5"', full: true })}
+    </div>
+    ${formFooter(t, C.submit)}
+  </form>`;
+}
+
+// The event enquiry in five steps (event, guests, preferences, idea, contact). Without JavaScript every step shows at
+// once as one long form; with it, one step at a time with a progress line, Back/Continue, and a review of the WhatsApp
+// message before it opens. Only the date, the guest count and the name are required.
+function eventForm(t) {
+  const E = t.land.eventsPage;
+  const f = t.form;
+  const opts = (list) => list.map((o) => `<option>${esc(o)}</option>`).join("");
+  const sel = (id, name, label, list, extra = {}) => field({ id, name, label, control: `<select data-pick="select" data-icon="heart">${opts(list)}</select>`, ...extra });
+  const num = (id, name, label, attrs) => field({ id, name, type: "number", label, attrs: `${attrs} inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` });
+  const step = (i, body) => `<fieldset class="ev-step" data-step="${i}"><legend class="ev-step-title"><span class="ev-step-n">${esc(fmt(E.stepOf, { n: i + 1, total: 5 }))}</span>${esc(E.steps5[i])}</legend><div class="form-grid">${body}</div></fieldset>`;
+  return `<form class="booking-form ev-wizard" data-booking="event" data-steps data-review-step novalidate data-wa="${esc(E.wa)}">
+    <ol class="ev-progress" aria-hidden="true">${E.steps5.map((s, i) => `<li data-progress="${i}"><span>${i + 1}</span>${esc(s)}</li>`).join("")}</ol>
+    ${step(0, `${sel("ev-kind", "kind", E.kind, E.kinds, { full: true })}
+      ${field({ id: "ev-date", name: "date", type: "date", label: f.date, attrs: 'required data-pick="date"' })}
+      ${field({ id: "ev-alt", name: "altDate", type: "date", label: E.altDate, optional: f.optional, attrs: 'data-pick="date"' })}
+      ${sel("ev-flex", "flex", E.flex, E.flexOptions)}
+      ${sel("ev-start", "start", E.start, E.startOptions)}
+      ${sel("ev-duration", "duration", E.duration, E.durationOptions, { full: true })}`)}
+    ${step(1, `${num("ev-people", "people", E.guests, 'required min="1" max="300" value="10"')}
+      ${num("ev-adults", "adults", E.adults, 'min="0" max="300" value=""')}
+      ${num("ev-children", "children", E.children, 'min="0" max="300" value=""')}`)}
+    ${step(2, `${sel("ev-atmo", "atmosphere", E.atmosphere, E.atmosphereOptions)}
+      ${sel("ev-setting", "setting", E.setting, E.settingOptions)}
+      <fieldset class="field is-full ev-topics"><legend>${esc(E.topics)}</legend><p class="hint">${esc(E.topicsHint)}</p><div class="ev-chips">${E.topicOptions.map((o) => `<label class="ev-chip"><input type="checkbox" name="topics" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("")}</div></fieldset>`)}
+    ${step(3, field({ id: "ev-vision", name: "vision", type: "textarea", label: E.vision, hint: E.visionHint, optional: f.optional, attrs: 'maxlength="1500" rows="7"', full: true }))}
+    ${step(4, `${field({ id: "ev-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
+      ${field({ id: "ev-email", name: "email", type: "email", label: E.email, optional: f.optional, attrs: 'autocomplete="email" maxlength="120"' })}
+      ${field({ id: "ev-phone", name: "phone", type: "tel", label: E.phone, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"' })}
+      ${sel("ev-prefer", "prefer", E.prefer, E.preferOptions, { full: true })}`)}
+    <div class="ev-nav"><button type="button" class="btn btn-outline" data-step-back>${esc(E.back)}</button><button type="button" class="btn btn-dark" data-step-next>${esc(E.next)}${icon("arrow")}</button></div>
+    ${formFooter(t, E.submit)}
+  </form>`;
 }
 
 // ================= GALLERY: real photographs only, grouped by what they show =================
@@ -866,18 +991,18 @@ export function gallery(t) {
   const L = t.lang;
   const G = t.land.galleryPage;
   const bc = breadcrumbs(t, [{ name: t.nav.gallery, path: href("gallery", L) }]);
-  const groups = Object.entries(G.groups)
-    .map(([g, title]) => {
-      const keys = Object.keys(images).filter((k) => !images[k].placeholder && images[k].group === g);
-      if (!keys.length) return "";
-      return `<section class="gx-group" aria-labelledby="gx-${g}">
-      <h2 id="gx-${g}" class="gx-title">${esc(title)}</h2>
-      <ul class="gr-grid gx-grid" data-gallery>${keys
-        .map((k, i) => `<li class="gr-item${i === 0 ? " is-wide" : ""}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: i === 0 ? "(min-width: 900px) 80vw, 100vw" : "(min-width: 900px) 31vw, 50vw" })}</a></li>`)
-        .join("")}</ul>
-    </section>`;
-    })
-    .join("");
+  // One mosaic of every real photograph: tiles of different sizes in a 12-column grid that packs densely, so nothing is
+  // left as a large gap; filter buttons show one theme at a time. The tile sizes repeat in a fixed rhythm.
+  const SPANS = [[8, 5], [4, 5], [4, 3], [4, 3], [4, 3], [5, 4], [7, 4], [6, 4], [6, 4], [4, 4], [8, 4]];
+  const all = Object.entries(G.groups).flatMap(([g]) => Object.keys(images).filter((k) => !images[k].placeholder && images[k].group === g));
+  const mosaic = `<div class="gx-filters" role="group" aria-label="${esc(G.filterLabel)}"><button type="button" class="gx-filter" aria-pressed="true" data-filter="all">${esc(G.all)}</button>${Object.entries(G.groups)
+    .filter(([g]) => all.some((k) => images[k].group === g))
+    .map(([g, title]) => `<button type="button" class="gx-filter" aria-pressed="false" data-filter="${g}">${esc(title)}</button>`)
+    .join("")}</div>
+    <ul class="gx-mosaic" data-gallery data-mosaic>${all
+      .map((k, i) => { const [c, r] = SPANS[i % SPANS.length]; return `<li class="gx-tile" data-group="${images[k].group}" style="--c:${c};--r:${r}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: c >= 7 ? "(min-width: 900px) 60vw, 100vw" : "(min-width: 900px) 34vw, 100vw" })}</a></li>`; })
+      .join("")}</ul>`;
+  const groups = mosaic;
   const body = `
 ${pageHero(t, { eyebrow: G.eyebrow, title: G.title, lead: G.lead, image: "aerialGarden", crumbs: bc.html })}
 
@@ -895,6 +1020,14 @@ export function discover(t) {
   const D = t.land.discoverPage;
   const bc = breadcrumbs(t, [{ name: t.nav.discover, path: href("discover", L) }]);
   const maps = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  // Straight-line distance from Lauhata's official coordinates, rounded: never presented as a road distance or a drive time.
+  const km = (g) => {
+    if (!g || !site.geo) return null;
+    const R = 6371, rad = (x) => (x * Math.PI) / 180;
+    const dLat = rad(g[0] - site.geo.lat), dLng = rad(g[1] - site.geo.lng);
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(site.geo.lat)) * Math.cos(rad(g[0])) * Math.sin(dLng / 2) ** 2;
+    return Math.round(2 * R * Math.asin(Math.sqrt(a)));
+  };
   const body = `
 ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastVillage", crumbs: bc.html })}
 
@@ -911,9 +1044,16 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
     <ol class="dsc-list">${D.places
       .map((p, i) => `<li class="dsc-item"${rv((i % 3) * 60)}>
         <span class="dsc-n" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
-        <div><p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${p.map ? `<a class="text-link" href="${maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}${icon("arrow-up-right")}</a>` : ""}</div>
+        <div><p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${km(p.geo) != null ? `<p class="dsc-km">${icon("pin")}${esc(fmt(D.distance, { km: km(p.geo) }))}</p>` : ""}${p.map ? `<a class="text-link" href="${p.geo ? maps(p.geo.join(",")) : maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}${icon("arrow-up-right")}</a>` : ""}</div>
       </li>`)
       .join("")}</ol>
+  </div>
+</section>
+
+<section class="section dsc-map" aria-label="${esc(D.mapLink)}">
+  <div class="wrap">
+    <div class="map-frame dsc-map-frame"><iframe title="${esc(t.location.mapTitle)}" src="https://www.google.com/maps?q=${site.geo ? `${site.geo.lat},${site.geo.lng}` : encodeURIComponent(site.mapQuery)}&z=11&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    <p class="dsc-source">${esc(D.geoSource)}</p>
   </div>
 </section>
 
@@ -974,13 +1114,23 @@ export function home(t) {
     <div class="hx-actions" data-fade style="--d:450ms">
       <a class="btn btn-cream btn-lg" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.heroTable)}</a>
       <a class="btn btn-ghost-light btn-lg" href="${href("stay", L, "#quartos")}" data-book-open="room">${icon("bed")}${esc(t.home.quick.heroRoom)}</a>
+      <a class="hx-wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(hero.whatsapp)}</a>
     </div>
   </div>
+  <dl class="wrap hx-context" data-fade style="--d:600ms">
+    <div><dt>${esc(hero.context.eat)}</dt><dd>${site.restaurantHours.map((h) => `${esc(h.days[L])} ${esc(h.hours)}`).join(" · ")}</dd></div>
+    <div><dt>${esc(hero.context.where)}</dt><dd>${esc(hero.context.whereValue)}</dd></div>
+    <div><dt>${esc(hero.context.book)}</dt><dd>${esc(hero.context.bookValue)}</dd></div>
+  </dl>
 </section>
 
 ${introSection(t)}
 
 ${duoSection(t)}
+
+${sceneSection(t, "beachFront", LD.beach)}
+
+${eventsTeaser(t)}
 
 ${discoverPreview(t)}
 
@@ -1110,19 +1260,18 @@ export function room(t, r) {
   ]);
   const H = t.home.rooms;
   const S = t.stay;
-  // The room sheet shows only what Lauhata has confirmed (site.roomDetailsConfirmed, stayTimes, price). The price is
-  // "on request" until it is set; capacity, beds, amenities and times appear once confirmed, never guessed.
-  const sure = site.roomDetailsConfirmed;
+  // The room sheet shows only owner-confirmed facts (rooms.mjs: beds, amenities, suitability) and the price, "on request"
+  // until it is set. Capacity, bathroom, air conditioning and the like appear only once Carlos confirms them.
   const row = (label, value) => `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`;
   const facts = [
     r.badge ? row(S.roomType, esc(r.badge[L])) : "",
-    sure && r.capacity ? row(S.roomCapacity, esc(r.capacity[L])) : "",
-    sure && r.beds ? row(S.roomBeds, esc(r.beds[L])) : "",
-    sure && r.features.length ? row(S.roomFeatures, r.features.map((f) => esc(f[L])).join(", ")) : "",
+    r.beds ? row(S.roomBeds, esc(r.beds[L])) : "",
+    r.suitability ? row(S.roomSuits, esc(r.suitability[L])) : "",
+    r.amenities && r.amenities.length ? row(S.roomFeatures, r.amenities.map((f) => esc(f[L])).join(", ")) : "",
     site.stayTimes ? row(S.roomCheck, `${esc(S.checkIn)} ${esc(site.stayTimes.checkIn)} · ${esc(S.checkOut)} ${esc(site.stayTimes.checkOut)}`) : "",
     row(S.roomPrice, r.price ? `${esc(r.price)} <small>${esc(H.night)}</small>` : esc(t.common.priceTbc)),
   ].join("");
-  const anyTbc = !sure;
+  const anyTbc = true; // capacity is not confirmed yet: the note invites the guest to ask
   const i = rooms.findIndex((x) => x.id === r.id);
   const others = [rooms[(i + 1) % rooms.length], rooms[(i + 2) % rooms.length]].filter((x) => x.id !== r.id);
   const body = `
@@ -1143,6 +1292,7 @@ ${pageHero(t, {
       <h2 id="sheet-title" class="h-small"${rv(80)}>${esc(S.sheetTitle)}</h2>
       <dl class="room-sheet"${rv(100)}>${facts}</dl>
       ${anyTbc ? `<p class="room-sheet-note">${esc(S.sheetNote)}</p>` : ""}
+      <p class="pay-note">${icon("check")}<span>${esc(t.stay.payNote)}</span></p>
     </div>
     <aside class="room-ask" aria-labelledby="ask-title"${rv(120)}>
       <h2 id="ask-title">${esc(S.askTitle)}</h2>
@@ -1154,10 +1304,9 @@ ${pageHero(t, {
     <a class="room-back" href="${href("stay", L, "#quartos")}">${icon("arrow")}${esc(S.allRooms)}</a>
   </div>
 </section>
-${r.images.length > 1 ? `
-<section class="section room-photos" aria-label="${esc(t.gallery.eyebrow)}">
-  <div class="wrap">${galleryGrid(t, r.images.slice(1), "gallery-room")}</div>
-</section>` : ""}
+<section class="section room-photos" aria-label="${esc(fmt(t.carousel.label, { room: name }))}">
+  <div class="wrap">${roomCarousel(t, r, { sizes: "(min-width: 900px) 70vw, 92vw", cls: "is-wide" })}</div>
+</section>
 
 <section class="section rooms-dark" aria-labelledby="other-title">
   <div class="wrap">
@@ -1212,6 +1361,22 @@ ${pageHero(t, {
     <div class="map-frame"${rv(120)}>
       <iframe title="${esc(t.location.mapTitle)}" src="https://www.google.com/maps?q=${encodeURIComponent(q)}&z=12&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
+  </div>
+</section>
+
+<section class="section booking contact-write" id="escrever" aria-labelledby="cw-title">
+  <div class="wrap booking-grid">
+    <div>
+      ${heading({ eyebrow: t.contact.eyebrow, title: t.land.contactForm.title, id: "cw-title" })}
+      <p class="body-text">${esc(t.land.contactForm.lead)}</p>
+      <p class="cw-shortcuts-lead">${esc(t.land.contactForm.shortcuts)}</p>
+      <ul class="cw-shortcuts">
+        <li><a class="text-link" href="${href("stay", L, "#reservar")}">${esc(t.footer.bookRoom)}${icon("arrow")}</a></li>
+        <li><a class="text-link" href="${href("restaurant", L, "#reservar")}">${esc(t.footer.bookTable)}${icon("arrow")}</a></li>
+        <li><a class="text-link" href="${href("events", L, "#pedido")}">${esc(t.land.eventsPage.formTitle)}${icon("arrow")}</a></li>
+      </ul>
+    </div>
+    <div class="form-card">${contactForm(t)}</div>
   </div>
 </section>
 
@@ -1275,8 +1440,9 @@ export function privacy(t) {
   <div class="wrap narrow prose">
     ${bc.html}
     <h1 class="title">${esc(t.privacy.title)}</h1>
-    <p class="tbc-block">${esc(t.privacy.reviewNote)}</p>
+    ${site.showPlaceholderNotes ? `<p class="tbc-block">${esc(t.privacy.reviewNote)}</p>` : ""}
     ${t.privacy.sections.map((s) => `<h2>${esc(s.h)}</h2><p>${esc(s.p)}</p>`).join("")}
+    ${photoCredits(t)}
   </div>
 </section>`;
   return {
@@ -1288,6 +1454,20 @@ export function privacy(t) {
     ld: [bc.ld],
     body,
   };
+}
+
+// Credits for the temporary, openly licensed photos (src/data/temp-photos.json): each one names its author, licence and
+// source, as CC BY and CC BY-SA require. The list shrinks as Lauhata's own photos replace them.
+function photoCredits(t) {
+  const file = new URL("./data/temp-photos.json", import.meta.url);
+  if (!existsSync(file)) return "";
+  const credits = JSON.parse(readFileSync(file, "utf8"));
+  const rows = Object.entries(credits).filter(([id]) => existsSync(tempPhotoFile(id)) && !existsSync(new URL(`./assets/img/pratos/${id}-640.jpg`, import.meta.url)));
+  if (!rows.length) return "";
+  const C = t.privacy.credits;
+  return `<h2 id="creditos">${esc(C.title)}</h2><p>${esc(C.lead)}</p><ul class="credits">${rows
+    .map(([, c]) => `<li><a href="${esc(c.page)}" target="_blank" rel="noopener">${esc(c.title)}</a> · ${esc(c.creator)} · ${c.licenseUrl ? `<a href="${esc(c.licenseUrl)}" target="_blank" rel="noopener">${esc(c.license)}</a>` : esc(c.license)}</li>`)
+    .join("")}</ul>`;
 }
 
 // ================= 404 =================

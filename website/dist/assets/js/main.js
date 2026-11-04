@@ -158,8 +158,8 @@
         item.addEventListener("click", (e) => {
           e.preventDefault(); // a thumbnail may be a link to the large photo (works without JavaScript)
           opener = item;
-          list = items;
-          show(i);
+          list = items.filter((x) => !x.closest("[hidden]")); // a filtered gallery browses only the photos shown
+          show(list.indexOf(item));
           lb.showModal();
         })
       );
@@ -184,6 +184,56 @@
     });
   }
 
+  /* ---------- Gallery filters ---------- */
+  $$("[data-mosaic]").forEach((grid) => {
+    const buttons = $$(".gx-filter", grid.parentElement);
+    buttons.forEach((b) => b.addEventListener("click", () => {
+      buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      $$(".gx-tile", grid).forEach((tile) => { tile.hidden = b.dataset.filter !== "all" && tile.dataset.group !== b.dataset.filter; });
+      grid.classList.toggle("is-filtered", b.dataset.filter !== "all");
+    }));
+  });
+
+  /* ---------- Room carousels ----------
+     A scroll-snap strip does the swiping (touch, trackpad, Shift+wheel); the buttons and the arrow keys move one photo,
+     the counter follows the photo in view, and the buttons are disabled at either end. */
+  $$("[data-carousel]").forEach((c) => {
+    const track = $("[data-cr-track]", c);
+    const slides = $$(".cr-slide", track);
+    const count = $("[data-cr-count]", c);
+    const prev = $("[data-cr-prev]", c), next = $("[data-cr-next]", c);
+    if (!count || slides.length < 2) return;
+    const current = () => {
+      const x = track.scrollLeft + 4;
+      let i = 0;
+      slides.forEach((s, k) => { if (s.offsetLeft - slides[0].offsetLeft <= x) i = k; });
+      return i;
+    };
+    const go = (i) => {
+      const k = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({ left: slides[k].offsetLeft - slides[0].offsetLeft, behavior: reduced ? "auto" : "smooth" });
+    };
+    const update = () => {
+      const i = current();
+      const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+      const shown = atEnd ? slides.length - 1 : i;
+      count.textContent = `${shown + 1} / ${slides.length}`;
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = atEnd;
+    };
+    prev.addEventListener("click", () => go(current() - 1));
+    next.addEventListener("click", () => go(current() + 1));
+    track.addEventListener("keydown", (e) => {
+      if (e.target !== track) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); go(current() + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(current() - 1); }
+    });
+    let raf = 0;
+    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  });
+
   // "Request this room" on room pages preselects the room in the form.
   $$("[data-room-link]").forEach((a) => {
     const url = new URL(a.href);
@@ -204,6 +254,7 @@
     } else {
       set("checkIn", q.get("date"));
       set("guests", q.get("n"));
+      set("adults", q.get("n"));
       set("room", q.get("room"));
       if (q.get("date") && form.elements.checkOut) {
         const d = new Date(q.get("date") + "T12:00:00");
@@ -241,15 +292,30 @@
       if (!(r >= 1 && r <= 5)) errors.rating = d.errRating;
       if (val("text").length < 20) errors.text = d.errText;
       if (!el.consent.checked) errors.consent = d.errConsent;
+    } else if (form.dataset.booking === "contact") {
+      if (val("message").length < 10) errors.message = form.dataset.errMessage;
+      if (val("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))) errors.email = F.errors.email;
+      if (val("phone") && val("phone").replace(/[^\d]/g, "").length < 7) errors.phone = F.errors.phone;
     } else if (form.dataset.booking === "event") {
+      if (val("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))) errors.email = F.errors.email;
+      if (val("phone") && val("phone").replace(/[^\d]/g, "").length < 7) errors.phone = F.errors.phone;
+      if (val("altDate") && val("altDate") < today) errors.altDate = F.errors.date;
       if (!val("date") || val("date") < today) errors.date = F.errors.date;
       const p = Number(val("people"));
       if (!Number.isInteger(p) || p < 1 || p > 300) errors.people = F.errors.people;
     } else {
       if (!val("checkIn") || val("checkIn") < today) errors.checkIn = F.errors.checkIn;
       if (!val("checkOut") || (val("checkIn") && val("checkOut") <= val("checkIn"))) errors.checkOut = F.errors.checkOut;
-      const g = Number(val("guests"));
-      if (!Number.isInteger(g) || g < 1 || g > 20) errors.guests = F.errors.guests;
+      if (el.adults) {
+        const a = Number(val("adults")), c = Number(val("children") || 0);
+        if (!Number.isInteger(a) || a < 1 || a > 20) errors.adults = F.errors.adults;
+        if (!Number.isInteger(c) || c < 0 || c > 10) errors.children = F.errors.children;
+      } else {
+        const g = Number(val("guests"));
+        if (!Number.isInteger(g) || g < 1 || g > 20) errors.guests = F.errors.guests;
+      }
+      if (val("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))) errors.email = F.errors.email;
+      if (val("phone") && val("phone").replace(/[^\d]/g, "").length < 7) errors.phone = F.errors.phone;
     }
     return errors;
   }
@@ -285,6 +351,22 @@
       const opt = el.experience;
       return fmt(form.dataset.wa, { name: v("name"), experience: opt ? opt.options[opt.selectedIndex].text : "", rating: (form.querySelector('input[name="rating"]:checked') || {}).value || "", text: v("text") });
     }
+    if (form.dataset.booking === "contact") {
+      const s = el.topic;
+      return fmt(form.dataset.wa, { topic: s ? s.options[s.selectedIndex].text : "", name: v("name"), email: v("email") ? fmt(F.waEmail, { email: v("email") }) : "", phone: v("phone") ? fmt(F.waPhone, { phone: v("phone") }) : "", message: v("message") });
+    }
+    if (form.dataset.booking === "event" && form.dataset.wa) {
+      const line = (label, val) => (val ? `\n${label}: ${val}` : "");
+      const pick = (n) => (el[n] && el[n].tagName === "SELECT" ? el[n].options[el[n].selectedIndex].text : v(n));
+      const topics = [...form.querySelectorAll('input[name="topics"]:checked')].map((c) => c.value).join(", ");
+      const lbl = (id) => (form.querySelector(`label[for="${id}"]`)?.childNodes[0]?.textContent || "").trim();
+      return fmt(form.dataset.wa, {
+        kind: pick("kind"), date: fmtDate(v("date")), altDate: line(lbl("ev-alt"), fmtDate(v("altDate"))), flex: pick("flex"), start: pick("start"), duration: pick("duration"),
+        guests: v("people"), adults: line(lbl("ev-adults"), v("adults")), children: line(lbl("ev-children"), v("children")),
+        atmosphere: pick("atmosphere"), setting: pick("setting"), topics: topics || "—", vision: v("vision") || "—",
+        name: v("name"), email: line("Email", v("email")), phone: line(lbl("ev-phone"), v("phone")), prefer: pick("prefer"),
+      });
+    }
     if (form.dataset.booking === "event") {
       return fmt(F.waEvent, { kind: v("kind"), name: v("name"), date: fmtDate(v("date")), people: v("people"), contact, notes });
     }
@@ -294,8 +376,12 @@
       checkOut: fmtDate(v("checkOut")),
       nights: nightsLabel(v("checkIn"), v("checkOut")),
       guests: v("guests"),
+      adults: v("adults"),
+      children: v("children") || "0",
       room: roomSel ? roomSel.options[roomSel.selectedIndex].text : "",
       name: v("name"),
+      email: v("email") ? fmt(F.waEmail, { email: v("email") }) : "",
+      phone: v("phone") ? fmt(F.waPhone, { phone: v("phone") }) : "",
       contact,
       notes,
     });
@@ -323,6 +409,65 @@
       done();
       location.href = win ? CFG.thanks : url;
     }, 400);
+  }
+
+  /* ---------- Forms in steps (the event enquiry) ----------
+     One fieldset at a time; Continue checks the required fields of the step it leaves; the progress line marks the
+     current step; an error found on submit jumps back to its step. */
+  $$("[data-steps]").forEach((form) => {
+    const steps = $$("[data-step]", form);
+    const back = $("[data-step-back]", form), next = $("[data-step-next]", form);
+    const actions = $(".form-actions", form);
+    const dots = $$("[data-progress]", form);
+    let at = 0;
+    form.classList.add("is-stepped");
+    const show = (i, focus = true) => {
+      at = Math.max(0, Math.min(steps.length - 1, i));
+      steps.forEach((s, k) => { s.hidden = k !== at; });
+      dots.forEach((d, k) => { d.classList.toggle("is-on", k === at); d.classList.toggle("is-done", k < at); });
+      back.hidden = at === 0;
+      next.hidden = at === steps.length - 1;
+      actions.hidden = at !== steps.length - 1;
+      if (focus) $("legend", steps[at]).scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" }), (steps[at].querySelector("input, select, textarea, .pk-btn") || next).focus({ preventScroll: true });
+    };
+    const stepErrors = (i) => {
+      const all = validate(form);
+      const names = $$("input, select, textarea", steps[i]).map((x) => x.name);
+      return Object.fromEntries(Object.entries(all).filter(([k]) => names.includes(k)));
+    };
+    next.addEventListener("click", () => { if (showErrors(form, stepErrors(at))) show(at + 1); });
+    back.addEventListener("click", () => show(at - 1));
+    form._goToError = () => {
+      const bad = $(".field.has-error", form);
+      const k = steps.findIndex((s) => s.contains(bad));
+      if (k >= 0 && k !== at) { show(k, false); bad.querySelector("input, select, textarea, .pk-btn")?.focus(); }
+    };
+    show(0, false);
+  });
+
+  // The review step: the exact WhatsApp message, with "Open WhatsApp" and "Change". The panel is built once per form,
+  // takes focus when it opens, and hides again if the guest edits a field.
+  function showReview(form) {
+    let panel = $(".wa-review", form);
+    if (!panel) {
+      panel = document.createElement("div");
+      panel.className = "wa-review";
+      panel.setAttribute("role", "region");
+      panel.tabIndex = -1;
+      panel.innerHTML = `<h3></h3><p class="wa-review-lead"></p><pre class="wa-review-msg"></pre><div class="wa-review-btns"><button type="button" class="btn btn-terra btn-lg" data-review-send></button><button type="button" class="btn btn-outline btn-lg" data-review-edit></button></div>`;
+      $("h3", panel).textContent = F.reviewTitle;
+      $(".wa-review-lead", panel).textContent = F.reviewLead;
+      $("[data-review-send]", panel).textContent = F.reviewSend;
+      $("[data-review-edit]", panel).textContent = F.reviewEdit;
+      panel.setAttribute("aria-label", F.reviewTitle);
+      $(".form-actions", form).after(panel);
+      $("[data-review-send]", panel).addEventListener("click", () => { form._reviewed = true; form.requestSubmit(); });
+      $("[data-review-edit]", panel).addEventListener("click", () => { panel.hidden = true; form.querySelector("input, select, textarea, .pk-btn")?.focus(); });
+      form.addEventListener("input", () => { panel.hidden = true; });
+    }
+    $(".wa-review-msg", panel).textContent = buildMessage(form);
+    panel.hidden = false;
+    panel.focus();
   }
 
   // Shared with order.js: the restaurant order uses the same hand-off to WhatsApp and the thank-you page.
@@ -357,7 +502,10 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (form.elements.website && form.elements.website.value) return; // a filled hidden field means a bot: send nothing
-      if (!showErrors(form, validate(form))) return;
+      if (!showErrors(form, validate(form))) { form._goToError?.(); return; }
+      // Room requests show the message for review first; the guest opens WhatsApp from there.
+      if (form.hasAttribute("data-review-step") && !form._reviewed) return showReview(form);
+      form._reviewed = false;
       const label = $("[data-submit-label]", form);
       const original = label.textContent;
       form.classList.add("is-sending");
@@ -417,7 +565,8 @@
           checkIn: fmtDate(el.checkIn.value),
           checkOut: fmtDate(el.checkOut.value),
           nights: nightsLabel(el.checkIn.value, el.checkOut.value),
-          guests: unitText(el.guests),
+          adults: el.adults ? unitText(el.adults) : "",
+          children: el.children ? unitText(el.children) : "",
           room: el.room && el.room.value ? fmt(F.waQuickRoomType, { room: opt(el.room) }) : "",
         });
       }

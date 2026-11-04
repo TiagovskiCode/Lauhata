@@ -71,6 +71,24 @@ de cada foto estão em `FOTOS-PRATOS.md`, gerado pelo build.
 - **Notas internas** («a confirmar», «por configurar») já não aparecem ao público: campos sem dados ficam escondidos e o
   preço diz «sob consulta». As etiquetas «Imagem ilustrativa» continuam sempre visíveis.
 
+**Fase 6 (4 de novembro de 2026).** Ver também `CHECKLISTS.md` (fontes, confirmações pendentes, conteúdo temporário,
+produção, Google Business Profile, QR da ementa, manutenção e âmbito).
+- **Contacto e morada:** WhatsApp/telefone +670 7740 1111 e morada/coordenadas da Autoridade Municipal de Liquiçá, num só
+  sítio (`site.mjs`). O Carlos deve confirmar.
+- **Quartos:** camas e televisão confirmadas pelo dono (`rooms.mjs`); cada quarto tem um carrossel com 3 fotos (deslizar,
+  botões, setas do teclado, contador, lightbox). As fotos dos quartos continuam ilustrativas e etiquetadas.
+- **Pedido de quarto:** adultos e crianças, email e telefone opcionais, um passo de revisão com a mensagem exata antes de
+  abrir o WhatsApp e a nota de que o pagamento é feito presencialmente no Lauhata.
+- **Eventos:** formulário em 5 passos (evento, convidados, preferências, ideia, contacto) com revisão antes do WhatsApp.
+- **Contactos:** formulário «Escreva-nos» com assunto; mapa no ponto oficial.
+- **Ementa:** cada prato tem uma foto temporária própria (Wikimedia Commons, licenças livres) com a etiqueta «Imagem
+  ilustrativa» e créditos na página de privacidade (`tools/fotos-temporarias.mjs` e `tools/otimizar-temporarias.ps1`).
+  Bebidas de exemplo (`sample-drinks.mjs`), sem preço e sem botão de pedir, desligáveis com `showSamples: false`.
+- **Home:** herói com parágrafo, três caminhos (mesa, quartos, WhatsApp) e uma faixa de informação; praia em panorama,
+  convite para eventos.
+- **Galeria:** mosaico editorial com filtros. **Sobre nós:** o que é o Lauhata, em resumo, com fontes verificadas.
+- **Descobrir Liquiçá:** mapa e distância em linha reta a partir das coordenadas oficiais (nunca tempos de viagem).
+
 **Fase 5 (novembro 2026).**
 - **Seletores no diálogo de reserva:** o calendário, a hora e as listas abriam por trás do diálogo. Causa: o diálogo modal
   fica na «top layer» do navegador, acima de qualquer z-index, e o seletor era anexado ao `<body>`. Agora o seletor abre

@@ -1,0 +1,645 @@
+{
+  "choice-of-eggs": {
+    "query": "fried eggs toast",
+    "title": "Breakfast in Australia; bacon and fried eggs on toast",
+    "creator": "Kgbo",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Breakfast_in_Australia;_bacon_and_fried_eggs_on_toast.jpg",
+    "skip": []
+  },
+  "egg-chicken-sausage-toast": {
+    "query": "sausage egg toast breakfast",
+    "title": "Fresh breakfast served with eggs, sausage, vegetables, and toast in a cafe",
+    "creator": "Shixart1985",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Fresh_breakfast_served_with_eggs,_sausage,_vegetables,_and_toast_in_a_cafe.jpg",
+    "skip": []
+  },
+  "omelette": {
+    "query": "omelette",
+    "title": "Mushrooms omelette - Streets cafe 2025-01-02",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Mushrooms_omelette_-_Streets_cafe_2025-01-02.jpg",
+    "skip": []
+  },
+  "baked-beans-toast": {
+    "query": "baked beans on toast",
+    "title": "BakedBeansAndEggOnToast",
+    "creator": "Unknown",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:BakedBeansAndEggOnToast.jpg",
+    "skip": []
+  },
+  "french-toast": {
+    "query": "french toast",
+    "title": "French toast 001",
+    "creator": "Ocdp",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:French_toast_001.jpg",
+    "skip": []
+  },
+  "pancakes": {
+    "query": "pancakes banana",
+    "title": "Pancakes (Vegan) - Banana (Cropped)",
+    "creator": "Heliodex",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Pancakes_(Vegan)_-_Banana_(Cropped).jpg",
+    "skip": []
+  },
+  "cereal-choices": {
+    "query": "cornflakes bowl milk",
+    "title": "Corn flakes in a bowl",
+    "creator": "JIP",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Corn_flakes_in_a_bowl.jpg",
+    "skip": []
+  },
+  "seasonal-fruit-salad": {
+    "query": "fruit salad bowl",
+    "title": "Plant-fruit-bowl-dish-food-salad-1200225-pxhere",
+    "creator": "Unknown authorUnknown author",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Plant-fruit-bowl-dish-food-salad-1200225-pxhere.jpg",
+    "skip": []
+  },
+  "caesar-salad": {
+    "query": "caesar salad",
+    "title": "Caesar Salad - Purezza 2023-11-22",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Caesar_Salad_-_Purezza_2023-11-22.jpg",
+    "skip": []
+  },
+  "greek-salad": {
+    "query": "greek salad",
+    "title": "Greek salad from supermarket",
+    "creator": "Gesalbte",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Greek_salad_from_supermarket.JPG",
+    "skip": []
+  },
+  "tuna-salad": {
+    "query": "nicoise salad",
+    "title": "Nicoise salad",
+    "creator": "משתמש:צחי לרנר]]. Original uploader was צחי לרנר at he.wikipedia",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Nicoise_salad.JPG",
+    "skip": [
+      "Tuna salad sandwich",
+      "Tuna salad sandwich (1)"
+    ]
+  },
+  "clams-garlic-bread": {
+    "query": "clams white wine",
+    "title": "Clams simmering in white wine sauce",
+    "creator": "Think YUM!",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Clams_simmering_in_white_wine_sauce.jpg",
+    "skip": []
+  },
+  "calamari-rings": {
+    "query": "fried calamari",
+    "title": "Fried Calamari Rings",
+    "creator": "Maksym Kozlenko",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Fried_Calamari_Rings.jpg",
+    "skip": []
+  },
+  "satay-starter": {
+    "query": "sate ayam",
+    "title": "Warung Sate H. Faqih - Sate Ayam 172308",
+    "creator": "Abdul Hanif Arromy",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Warung_Sate_H._Faqih_-_Sate_Ayam_172308.jpg",
+    "skip": []
+  },
+  "spring-rolls-samosa": {
+    "query": "spring rolls",
+    "title": "Spring Rolls (Keema Rolls)",
+    "creator": "Miansari66",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Spring_Rolls_(Keema_Rolls).JPG",
+    "skip": []
+  },
+  "chips-starter": {
+    "query": "french fries ketchup",
+    "title": "French fries, ketchup and hamburger",
+    "creator": "jeffreyw",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:French_fries,_ketchup_and_hamburger.jpg",
+    "skip": []
+  },
+  "potato-soup": {
+    "query": "potato soup",
+    "title": "Cauliflower and potato soup - T @ Hove 2023-10-22",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Cauliflower_and_potato_soup_-_T_@_Hove_2023-10-22.jpg",
+    "skip": []
+  },
+  "tom-yum-prawns": {
+    "query": "tom yum goong",
+    "title": "Tom Yum Goong Noodle Soup - Nok Nok Kitchen at The Cow 2024-03-28",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Tom_Yum_Goong_Noodle_Soup_-_Nok_Nok_Kitchen_at_The_Cow_2024-03-28.jpg",
+    "skip": []
+  },
+  "grilled-fish": {
+    "query": "grilled fish",
+    "title": "Grilled fish in Tokyo",
+    "creator": "Syced",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Grilled_fish_in_Tokyo.jpg",
+    "skip": [
+      "Full breakfast with Breakfast sausage, Scrambled eggs, Grilled chicken fillet, Fried fish fillet, Hash brown, Roasted tomato and Baked beans"
+    ]
+  },
+  "steak-bitoque": {
+    "query": "steak egg",
+    "title": "Skirt steak with chimichurri sauce, scrambled eggs, potatoes, and a salad - San Francisco, CA",
+    "creator": "Daderot",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Skirt_steak_with_chimichurri_sauce,_scrambled_eggs,_potatoes,_and_a_salad_-_San_Francisco,_CA.jpg",
+    "skip": [
+      "Gleidson Santos - Praia de Cacha Prego - Itaparica (40029248715)"
+    ]
+  },
+  "grilled-chicken": {
+    "query": "grilled chicken plate",
+    "title": "Grilled chicken and risotto",
+    "creator": "Infrogmation of New Orleans",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Grilled_chicken_and_risotto.jpg",
+    "skip": []
+  },
+  "grilled-pork-belly": {
+    "query": "grilled pork belly",
+    "title": "Sinugba (Inihaw na liempo) - grilled pork belly, Philippines with dipping sauce",
+    "creator": "Obsidian Soul",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Sinugba_(Inihaw_na_liempo)_-_grilled_pork_belly,_Philippines_with_dipping_sauce.jpg",
+    "skip": []
+  },
+  "saute-prawns": {
+    "query": "garlic prawns",
+    "title": "Garlic prawns and French fries with pepper - Auckland, New Zealand",
+    "creator": "Daderot",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Garlic_prawns_and_French_fries_with_pepper_-_Auckland,_New_Zealand.jpg",
+    "skip": []
+  },
+  "satay-main": {
+    "query": "satay rice",
+    "title": "Special fried rice with sunny-side egg and satay; January 2011",
+    "creator": "HPG Online",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Special_fried_rice_with_sunny-side_egg_and_satay;_January_2011.jpg",
+    "skip": []
+  },
+  "chicken-curry": {
+    "query": "chicken curry",
+    "title": "Chicken curry Trivandrum",
+    "creator": "Abhilashsnair",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Chicken_curry_Trivandrum.jpg",
+    "skip": []
+  },
+  "spaghetti": {
+    "query": "spaghetti bolognese",
+    "title": "Spaghetti Bolognese - Figaros, Brighton 2023-10-06",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Spaghetti_Bolognese_-_Figaros,_Brighton_2023-10-06.jpg",
+    "skip": []
+  },
+  "mie-goreng": {
+    "query": "mie goreng",
+    "title": "Mie Goreng (Solok, Indonesia)",
+    "creator": "Muhranoff",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Mie_Goreng_(Solok,_Indonesia).jpg",
+    "skip": []
+  },
+  "lauhata-special-fried-rice": {
+    "query": "nasi goreng",
+    "title": "Nasi Goreng with Prawn - Bali 2025-09-25",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Nasi_Goreng_with_Prawn_-_Bali_2025-09-25.jpg",
+    "skip": []
+  },
+  "grilled-burger": {
+    "query": "burger fries",
+    "title": "Burger and fries 2",
+    "creator": "Linux rules, Windows drools",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Burger_and_fries_2.jpg",
+    "skip": [
+      "Hamburger, french fries and cupcake marshmallows",
+      "Big Mac hamburger"
+    ]
+  },
+  "club-sandwich": {
+    "query": "club sandwich",
+    "title": "Club-sandwich",
+    "creator": "Memm",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Club-sandwich.jpg",
+    "skip": []
+  },
+  "vegetarian-fried-rice": {
+    "query": "vegetable fried rice",
+    "title": "Malapascua, Vegetable fried rice, Philippines",
+    "creator": "Vyacheslav Argenberg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Malapascua,_Vegetable_fried_rice,_Philippines.jpg",
+    "skip": []
+  },
+  "spaghetti-pesto": {
+    "query": "pasta pesto",
+    "title": "Marienthal, pasta with Bärlauch pesto",
+    "creator": "Gerda Arendt",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Marienthal,_pasta_with_B%C3%A4rlauch_pesto.jpg",
+    "skip": []
+  },
+  "vegetable-curry": {
+    "query": "vegetable curry",
+    "title": "Malaysian Curry Mixed Vegetables (with Boiled Rice) - Ho Chiak 2023-09-17",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Malaysian_Curry_Mixed_Vegetables_(with_Boiled_Rice)_-_Ho_Chiak_2023-09-17.jpg",
+    "skip": []
+  },
+  "vegetarian-dhal-fry": {
+    "query": "dal fry",
+    "title": "Dal Fry with Garlic Tadka",
+    "creator": "Fatimahope",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Dal_Fry_with_Garlic_Tadka.jpg",
+    "skip": []
+  },
+  "stir-fry-vegetables": {
+    "query": "stir fry vegetables",
+    "title": "Stir Fry Vegetables in Pan",
+    "creator": "Alabama Extension",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Stir_Fry_Vegetables_in_Pan.jpg",
+    "skip": [
+      "Stir-fried Mashed Vegetables - Kolkata 2011-02-18 1418"
+    ]
+  },
+  "sauteed-vegetables": {
+    "query": "sauteed vegetables",
+    "title": "Seafood sauteed with vegetables - San Francisco, CA",
+    "creator": "Daderot",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Seafood_sauteed_with_vegetables_-_San_Francisco,_CA.jpg",
+    "skip": []
+  },
+  "green-salad": {
+    "query": "green salad",
+    "title": "Green Salad - Flat Iron 2026-02-24",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Green_Salad_-_Flat_Iron_2026-02-24.jpg",
+    "skip": []
+  },
+  "chips-side": {
+    "query": "fries",
+    "title": "Truffle oil french fries (33024792848)",
+    "creator": "Tony Webster from Minneapolis, Minnesota, United States",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Truffle_oil_french_fries_(33024792848).jpg",
+    "skip": [
+      "Eggs and French fries",
+      "Pork Schnitzel With Chips & Gravy @ Cafe De Vili's Elizabeth - RV90"
+    ]
+  },
+  "spicy-potato-wedges": {
+    "query": "potato wedges",
+    "title": "Potato wedges at Mensa Paderborn (11956794164)",
+    "creator": "Luca Hammer from Paderborn, Germany",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Potato_wedges_at_Mensa_Paderborn_(11956794164).jpg",
+    "skip": []
+  },
+  "garlic-bread": {
+    "query": "garlic bread",
+    "title": "Garlic Bread Mozzarella - Oregano Pizzeria 2025-05-17",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Garlic_Bread_Mozzarella_-_Oregano_Pizzeria_2025-05-17.jpg",
+    "skip": []
+  },
+  "steam-rice": {
+    "query": "white rice",
+    "title": "White rice at a restaurant",
+    "creator": "Calgary Reviews from Calgary, Canada",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:White_rice_at_a_restaurant.jpg",
+    "skip": [
+      "Chinese Steamed Rice Noodle Rolls 02",
+      "Pork Chashu Rice Bowl (M) - Kitokito 2023-06-09"
+    ]
+  },
+  "cheesecake": {
+    "query": "cheesecake",
+    "title": "Soufflé-style cheesecake 001",
+    "creator": "Ocdp",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Souffl%C3%A9-style_cheesecake_001.jpg",
+    "skip": []
+  },
+  "orange-cake": {
+    "query": "orange cake",
+    "title": "Lemon cake and orange cake - Olea 2026-04-10",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Lemon_cake_and_orange_cake_-_Olea_2026-04-10.jpg",
+    "skip": []
+  },
+  "chocolate-mud-cake": {
+    "query": "chocolate cake",
+    "title": "Piece of chocolate cake on a white plate decorated with chocolate sauce",
+    "creator": "Daria YakovlevaMinor edits made by Subsidiary account",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Piece_of_chocolate_cake_on_a_white_plate_decorated_with_chocolate_sauce.jpg",
+    "skip": []
+  },
+  "red-velvet-cake": {
+    "query": "red velvet cake",
+    "title": "Red velvet cake with cream",
+    "creator": "Editor abcdef",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Red_velvet_cake_with_cream.JPG",
+    "skip": []
+  },
+  "mixed-ice-cream": {
+    "query": "ice cream scoops",
+    "title": "Many Kinds of Scoops on the West Counter at the Ice-Cream Parlour of Newport, Melbourne",
+    "creator": "Brassluff",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Many_Kinds_of_Scoops_on_the_West_Counter_at_the_Ice-Cream_Parlour_of_Newport,_Melbourne.jpg",
+    "skip": []
+  },
+  "fruit-platter": {
+    "query": "fruit plate",
+    "title": "Fruit on a plate 2019 G1",
+    "creator": "George Chernilevsky",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Fruit_on_a_plate_2019_G1.jpg",
+    "skip": [
+      "Fruit platter 2 (Hoshigaoka Saryō)"
+    ]
+  },
+  "pizza-margarita": {
+    "query": "pizza margherita",
+    "title": "Margherita pizza on plate",
+    "creator": "Shisma",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Margherita_pizza_on_plate.jpg",
+    "skip": []
+  },
+  "pizza-pepperoni": {
+    "query": "pepperoni pizza",
+    "title": "Pepperoni pizza- boella co. 2024-02-17",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Pepperoni_pizza-_boella_co._2024-02-17.jpg",
+    "skip": []
+  },
+  "pizza-hawaiian": {
+    "query": "hawaiian pizza",
+    "title": "Hawaiian pizza 1",
+    "creator": "@joefoodie from USA",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Hawaiian_pizza_1.jpg",
+    "skip": []
+  },
+  "pizza-spicy-chicken": {
+    "query": "chicken pizza",
+    "title": "Butter chicken pizza at Pizza With a Twist",
+    "creator": "Ser Amantio di Nicolao",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Butter_chicken_pizza_at_Pizza_With_a_Twist.jpg",
+    "skip": []
+  },
+  "pizza-lauhata-seafood": {
+    "query": "seafood pizza",
+    "title": "Seafood pizza (1)",
+    "creator": "投稿者",
+    "license": "Public domain",
+    "licenseUrl": "",
+    "page": "https://commons.wikimedia.org/wiki/File:Seafood_pizza_(1).jpg",
+    "skip": []
+  },
+  "pizza-meat-lover": {
+    "query": "meat pizza",
+    "title": "Meat Tsunami Pizza @ Walkers Arms Hotel, Walkerville 20250415-125130",
+    "creator": "RegionVisitor90",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Meat_Tsunami_Pizza_@_Walkers_Arms_Hotel,_Walkerville_20250415-125130.jpg",
+    "skip": []
+  },
+  "sample-water": {
+    "query": "glass of water",
+    "title": "Glass of water ouside",
+    "creator": "Kurt Kaiser",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Glass_of_water_ouside.jpg",
+    "skip": [
+      "Man sits at table holding a glass of water in a restaurant with wine bottles in the background",
+      "Water droplets on blue glass surface",
+      "Bee drinking water out of a squashed plastic glass (25754476892)"
+    ]
+  },
+  "sample-soft": {
+    "query": "lemonade glass",
+    "title": "Pink lemonade in personalized mason jar glass mugs and raspberries on a table with heart napkin (16380437321)",
+    "creator": "Personal Creations",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Pink_lemonade_in_personalized_mason_jar_glass_mugs_and_raspberries_on_a_table_with_heart_napkin_(16380437321).jpg",
+    "skip": [
+      "The Ol' Soda Fountain - New York Summer 1989",
+      "Arabic Coca-Cola and Fanta glass bottle",
+      "Soft Drink in Canada"
+    ]
+  },
+  "sample-orange-juice": {
+    "query": "fresh orange juice glass",
+    "title": "Glass of Fresh Orange Juice",
+    "creator": "Rebeloasisx",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Glass_of_Fresh_Orange_Juice.jpg",
+    "skip": []
+  },
+  "sample-mango-juice": {
+    "query": "mango juice glass",
+    "title": "Mango juice at Agasi, Lajpat Nagar, Delhi (2025-10-04)",
+    "creator": "Contrapunctus-1",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Mango_juice_at_Agasi,_Lajpat_Nagar,_Delhi_(2025-10-04).jpg",
+    "skip": []
+  },
+  "sample-coffee": {
+    "query": "cup of coffee",
+    "title": "Coffee cup and coffee bean",
+    "creator": "mcfoodie",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Coffee_cup_and_coffee_bean.jpg",
+    "skip": []
+  },
+  "sample-tea": {
+    "query": "cup of tea",
+    "title": "A cup of Assam Tea with lemon",
+    "creator": "Nayan j Nath",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:A_cup_of_Assam_Tea_with_lemon.jpg",
+    "skip": []
+  },
+  "sample-mocktail-passion": {
+    "query": "passion fruit juice",
+    "title": "Passion fruit juice",
+    "creator": "Fumikas Sagisavas",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Passion_fruit_juice.jpg",
+    "skip": [
+      "2020-06-23 19 32 41 A glass of Welch's Passion Fruit Juice in the Franklin Farm section of Oak Hill, Fairfax County, Virginia"
+    ]
+  },
+  "sample-virgin-mojito": {
+    "query": "virgin mojito",
+    "title": "Mocktails (\"Virgin mojito\" and \"Fresh\") - Le Moulin de la Galette, Bayeux 2025-03-25",
+    "creator": "Andy Li",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Mocktails_(%22Virgin_mojito%22_and_%22Fresh%22)_-_Le_Moulin_de_la_Galette,_Bayeux_2025-03-25.jpg",
+    "skip": []
+  },
+  "sample-beer": {
+    "query": "beer glass",
+    "title": "Beer and pizza on display in a restaurant on a rustic table with focus on the glass of beer",
+    "creator": "Nenad Stojkovic",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Beer_and_pizza_on_display_in_a_restaurant_on_a_rustic_table_with_focus_on_the_glass_of_beer.jpg",
+    "skip": [
+      "Homemade traditional Serbian Karadjordje`s sausage with a glass of cold refreshing beer in the restaurant. (49175116362)"
+    ]
+  },
+  "sample-wine": {
+    "query": "red wine glass",
+    "title": "Wine being poured into a glass",
+    "creator": "Fabio Ingrosso",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Wine_being_poured_into_a_glass.jpg",
+    "skip": [
+      "Jan Vermeer van Delft - The Glass of Wine - Google Art Project"
+    ]
+  },
+  "sample-mojito": {
+    "query": "mojito cocktail",
+    "title": "Cocktail Mojito",
+    "creator": "https://unsplash.com/@varshesh",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Cocktail_Mojito.jpg",
+    "skip": []
+  },
+  "sample-pina-colada": {
+    "query": "pina colada cocktail",
+    "title": "Pina Colada Mojito ohne Alkohol",
+    "creator": "Mocktail-Liebe",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Pina_Colada_Mojito_ohne_Alkohol.jpg",
+    "skip": [
+      "Pina Colada",
+      "Pina Colada with key ingredients"
+    ]
+  },
+  "sample-spirits": {
+    "query": "whisky glass",
+    "title": "Whisky glass bird's eye view",
+    "creator": "Harry Mitchell",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Whisky_glass_bird%27s_eye_view.JPG",
+    "skip": []
+  },
+  "sample-coconut": {
+    "query": "coconut drink",
+    "title": "Coconut Drink (Unsplash)",
+    "creator": "Alexander Mils alexandermils",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Coconut_Drink_(Unsplash).jpg",
+    "skip": [
+      "Freshippo coconut water",
+      "Goa, India 37 Young coconut trees"
+    ]
+  }
+}
