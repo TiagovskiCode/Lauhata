@@ -87,7 +87,10 @@ tal, com ligação.
 | Tomadas, água potável | Confirmar | Confirmar |
 | Estacionamento | Confirmar (a Câmara refere estacionamento) | Confirmar |
 
-Para publicar uma comodidade, acrescentá-la a `amenities` do quarto em `src/data/rooms.mjs`.
+**Pendentes de confirmação do Carlos (preparados, não publicados):** Wi-Fi, pequeno-almoço, casa de banho privativa e ar condicionado,
+**em cada uma das duas suites**. Já têm ícone SVG e texto PT/EN em `pendingAmenities` (`src/data/rooms.mjs`). O Booking.com e as
+opiniões mencionam algumas, mas isso não é confirmação. Para publicar uma: copiar a entrada para `amenities` da suite onde o
+Carlos a confirmar; aparece sozinha na linha «Confirmado pelo Lauhata».
 
 ## 3. Conteúdo temporário (substituir ou aprovar antes do lançamento)
 
@@ -118,7 +121,7 @@ Para publicar uma comodidade, acrescentá-la a `amenities` do quarto em `src/dat
 
 ### Ementa por QR code
 
-O endereço estável da ementa é a página **Ementa**: `/restaurante/` em português e `/en/restaurant/` em inglês. Com o
+O endereço estável da ementa é a página **Ementa**: `/restaurant/` em inglês (idioma predefinido) e `/pt/restaurante/` em português. Com o
 domínio final, o QR deve apontar para `https://<domínio>/restaurante/` (não para o endereço temporário do GitHub Pages).
 Gerar o QR só depois de o domínio estar ativo; imprimir num tamanho de pelo menos 3 × 3 cm e testar em telemóveis Android
 e iPhone.

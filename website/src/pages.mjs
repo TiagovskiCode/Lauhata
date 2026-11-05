@@ -27,7 +27,6 @@ function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = 
   <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw", credit: true })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
-    <div data-fade>${crumbs}</div>
     ${eyebrow ? `<p class="eyebrow-rule is-light" data-fade>${esc(eyebrow)}</p>` : ""}
     <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` ${esc(accent)}` : ""}</h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(lead)}</p>
@@ -58,7 +57,7 @@ function suiteAmenities(t, r) {
   const S = t.stay;
   const L = t.lang;
   const beds = (r.bedPlan || []).map((b) => (b === "king" ? ["bed-king", S.amenKing] : b === "single" ? ["bed-single", S.amenSingle] : null)).filter(Boolean);
-  const more = (r.amenities || []).map((a) => [AMEN_ICON[a.en] || "check", a[L]]);
+  const more = (r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]);
   const items = [...beds, ...more];
   if (!items.length) return "";
   return `<div class="si-amen">
@@ -1264,7 +1263,8 @@ export function home(t) {
     </article>`;
   const body = `
 <section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
-  <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}</div>
+  <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}
+    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"${site.heroVideoSmall ? ` data-src-small="${esc(site.heroVideoSmall)}"` : ""}></video>` : ""}</div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content rs-hero-grid">
     <div class="rs-hero-text">
@@ -1272,14 +1272,9 @@ export function home(t) {
       <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
       <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
     </div>
-    ${site.heroVideo ? `<figure class="rs-hero-film" data-fade style="--d:200ms">
-      ${figure(t, "heroSideCover", { eager: true, sizes: "(min-width: 861px) 30vw, 92vw" })}
-      <video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"${site.heroVideoSmall ? ` data-src-small="${esc(site.heroVideoSmall)}"` : ""}></video>
-      <figcaption><span>${esc(RS.filmCaption)}</span><b>${esc(RS.filmReal)}</b></figcaption>
-    </figure>` : ""}
   </div>
   <div class="wrap rs-booking" data-fade style="--d:450ms">${bookingCard(t, { prefix: "hxb", hero: true })}</div>
-  <p class="rs-hero-cap"><span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
+  <p class="rs-hero-cap">${site.heroVideo ? `<span>${esc(RS.filmCaption)}</span><b>${esc(RS.filmReal)}</b>` : `<span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b>`}</p>
 </section>
 
 <section class="section rs-welcome" aria-labelledby="wc-title">
@@ -1658,7 +1653,6 @@ export function privacy(t) {
   const body = `
 <section class="section simple-page">
   <div class="wrap narrow prose">
-    ${bc.html}
     <h1 class="title">${esc(t.privacy.title)}</h1>
     ${site.showPlaceholderNotes ? `<p class="tbc-block">${esc(t.privacy.reviewNote)}</p>` : ""}
     ${t.privacy.sections.map((s) => `<h2>${esc(s.h)}</h2><p>${esc(s.p)}</p>`).join("")}

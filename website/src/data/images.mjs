@@ -13,14 +13,6 @@ export default {
     alt: { pt: "Vista aérea do Lauhata: o edifício com cobertura azul, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the building with its blue roof, the garden, the palm trees and the beach" },
     placeholder: false,
   },
-  // Poster of the home hero's side video: the first frame of "Hero video HD definitivo" (originais/videos/), cropped to
-  // 4:5 like the web versions in src/assets/video/hero-lateral-864.mp4 and -544.mp4.
-  heroSideCover: {
-    src: "foto:hero-lateral-capa",
-    width: 864,
-    alt: { pt: "Vista aérea do Lauhata: os telhados azuis, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the blue roofs, the garden, the palm trees and the beach" },
-    placeholder: false,
-  },
   // Two more real stills from the same drone footage (originais/videos/): the property among its garden and palms, and the
   // wider view down to the beach and the sea. They carry the full-screen "scenes" and the contact page.
   aerialGarden: {

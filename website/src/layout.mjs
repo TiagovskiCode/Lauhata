@@ -25,6 +25,9 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-bed-king" viewBox="0 0 24 24"><path d="M3 19v-8.5M21 19v-8.5M3 15.5h18M3 13h18v2.5M5.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M12.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M3 10.5V6.5a1.5 1.5 0 0 1 1.5-1.5h15A1.5 1.5 0 0 1 21 6.5v4" ${stroke}/></symbol>
     <symbol id="i-bed-single" viewBox="0 0 24 24"><path d="M6.5 19.5v-9M17.5 19.5v-9M6.5 16h11M6.5 13.5h11V16M9 13.5v-1.8a1.2 1.2 0 0 1 1.2-1.2h3.6a1.2 1.2 0 0 1 1.2 1.2v1.8M6.5 10.5V6a1.5 1.5 0 0 1 1.5-1.5h8A1.5 1.5 0 0 1 17.5 6v4.5" ${stroke}/></symbol>
     <symbol id="i-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2" ${stroke}/><path d="M8.5 20.5h7M12 17v3.5" ${stroke}/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 9.5a12.5 12.5 0 0 1 17 0M6.5 12.8a8.2 8.2 0 0 1 11 0M9.4 16a4 4 0 0 1 5.2 0" ${stroke}/><circle cx="12" cy="19" r="1" ${stroke}/></symbol>
+    <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 20V8a4 4 0 0 1 4-4h1.5M9.5 4h3.2a2.3 2.3 0 0 1 2.3 2.3V8M7 11h10l-1 3H8zM9 17v1.5M12 17v2.5M15 17v1.5" ${stroke}/></symbol>
+    <symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5M3.5 10l3.3-.9-.9-3.3M20.5 14l-3.3.9.9 3.3M3.5 14l3.3.9-.9 3.3M20.5 10l-3.3-.9.9-3.3" ${stroke}/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" ${stroke}/></symbol>
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" ${stroke}/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" ${stroke}/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" ${stroke}/></symbol>
@@ -103,9 +106,13 @@ export const logo = (t, cls = "") => `<a class="brand ${cls}" href="${href("home
 function langSwitch(t, alt, cls = "") {
   const L = t.lang;
   const other = L === "pt" ? "en" : "pt";
+  // Fixed order, English first (it is the default language); the current one is the marked, non-link option.
+  const opt = (l) => l === L
+    ? `<span class="lang-opt is-on" aria-current="true">${t.langShort}</span>`
+    : `<a class="lang-opt" href="${alt}" hreflang="${l === "pt" ? "pt" : "en"}" lang="${l === "pt" ? "pt-PT" : "en"}" title="${esc(t.nav.switchLang)}">${l.toUpperCase()}</a>`;
   return `<div class="lang ${cls}" role="group" aria-label="${esc(t.nav.switchLang)}">
-    <span class="lang-opt is-on" aria-current="true">${t.langShort}</span>
-    <a class="lang-opt" href="${alt}" hreflang="${other === "pt" ? "pt" : "en"}" lang="${other === "pt" ? "pt-PT" : "en"}" title="${esc(t.nav.switchLang)}">${other.toUpperCase()}</a>
+    ${opt("en")}
+    ${opt("pt")}
   </div>`;
 }
 
@@ -344,7 +351,7 @@ export function layout(t, o) {
 <meta name="description" content="${esc(o.description)}">
 ${o.robots ? `<meta name="robots" content="${o.robots}">` : `<link rel="canonical" href="${canonical}">`}
 ${o.robots ? "" : LANGS.map((l) => `<link rel="alternate" hreflang="${l === "pt" ? "pt-PT" : "en"}" href="${absUrl(alternates[l])}">`).join("\n")}
-${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alternates.pt)}">`}
+${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alternates.en)}">`}
 <meta name="theme-color" content="#17120F">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">

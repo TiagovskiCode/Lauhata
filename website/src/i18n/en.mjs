@@ -579,7 +579,7 @@ export default {
       discoverEyebrow: "Discover Liquiçá",
       discoverTitle: "A region rich in history, nature and culture.",
       discoverCta: "Explore the region",
-      navCta: "Comer & Ficar"
+      navCta: "Dine & Stay"
     },    duo: {
       aria: "Eat and stay",
       eat: { title: "Eat", line: "Flavours of the coast, served without hurry.", link: "Explore the menu" },

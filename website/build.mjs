@@ -7,7 +7,7 @@ import pt from "./src/i18n/pt.mjs";
 import en from "./src/i18n/en.mjs";
 import { layout } from "./src/layout.mjs";
 import * as P from "./src/pages.mjs";
-import { rooms, absUrl, outFile, LANGS, href } from "./src/lib.mjs";
+import { rooms, absUrl, outFile, LANGS, href, OLD_ROUTES } from "./src/lib.mjs";
 import { prelaunch, printPrelaunch } from "./src/prelaunch.mjs";
 import { items, categories } from "./src/data/menu.mjs";
 import { existsSync } from "node:fs";
@@ -70,6 +70,21 @@ for (const L of LANGS) {
   }
 }
 
+// Addresses from before English became the default: each forwards to its new page (same language), noindex.
+{
+  const stub = async (from, to, lang, title) => {
+    const file = join(dist, outFile(from));
+    if (existsSync(file)) return; // never overwrite a real page
+    await mkdir(dirname(file), { recursive: true });
+    await writeFile(file, relativize(`<!doctype html><html lang="${T[lang].htmlLang}"><head><meta charset="utf-8"><meta name="robots" content="noindex"><link rel="canonical" href="${absUrl(to)}"><meta http-equiv="refresh" content="0; url=${to}"><title>${title}</title></head><body><p><a href="${to}">${title}</a></p></body></html>`, from));
+  };
+  for (const [page, byLang] of Object.entries(OLD_ROUTES)) for (const [L, from] of Object.entries(byLang)) await stub(from, href(page, L), L, T[L].siteName || "Lauhata");
+  for (const r of rooms) for (const L of LANGS) {
+    const base = OLD_ROUTES.stay[L];
+    for (const slug of [r.slug[L], r.oldSlug && r.oldSlug[L]].filter(Boolean)) await stub(`${base}${slug}/`, href("room:" + r.id, L), L, r.name[L]);
+  }
+}
+
 const urls = sitemap
   .flatMap(({ pt: p, en: e }) =>
     [p, e].map(
@@ -77,7 +92,7 @@ const urls = sitemap
     <loc>${absUrl(loc)}</loc>
     <xhtml:link rel="alternate" hreflang="pt-PT" href="${absUrl(p)}"/>
     <xhtml:link rel="alternate" hreflang="en" href="${absUrl(e)}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="${absUrl(p)}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${absUrl(e)}"/>
   </url>`
     )
   )
@@ -96,8 +111,8 @@ await writeFile(
   `# Lauhata — search engines and AI crawlers may read the public pages.
 User-agent: *
 Allow: /
-Disallow: /obrigado/
-Disallow: /en/thank-you/
+Disallow: /thank-you/
+Disallow: /pt/obrigado/
 
 Sitemap: ${absUrl("/sitemap.xml")}
 `

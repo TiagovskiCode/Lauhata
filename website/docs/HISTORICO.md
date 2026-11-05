@@ -338,9 +338,16 @@ Está no fim de `src/assets/css/design.css` («Cinema layer») e nas funções `
 
 - **Cabeçalho:** transparente só no topo da página sobre o herói; fica sólido logo que a página se mexe. Decidido por um
   IntersectionObserver num marcador a 40 px do herói (não por eventos de scroll), com fusão de 0,25 s e fundo sólido sem JS.
-- **Vídeo lateral do herói (home):** «Hero video HD definitivo» (`originais/videos/drone-hd-definitivo/`), recortado em 4:5:
-  `src/assets/video/hero-lateral-864.mp4` (5,3 MB) e `hero-lateral-544.mp4` (2,8 MB, ecrãs < 900 px); capa `hero-lateral-capa-*.jpg`.
-  **Muda a decisão anterior:** com «movimento reduzido», poupança de dados ou 2G, este vídeo não carrega e fica a capa.
+- **Vídeo de fundo do herói (home):** «Hero video HD definitivo» (`originais/videos/drone-hd-definitivo/`) como fundo de todo o herói
+  (`object-fit: cover`, atrás do texto e do painel de pedido): `src/assets/video/hero-fundo-1600.mp4` (16:9, 5,0 MB) e
+  `hero-fundo-540.mp4` (9:16, 2,6 MB, ecrãs < 900 px). Poster/fallback: a fotografia do pôr do sol. O vídeo só é pedido depois do
+  carregamento da página; com «movimento reduzido», poupança de dados, 2G, sem JavaScript ou se falhar, fica a fotografia.
+  **Muda a decisão anterior** (vídeo a tocar sempre). Um filme lateral em cartão foi experimentado e removido.
+- **Inglês por defeito (nov. 2026):** o inglês está na raiz (`/`, `/restaurant/`, `/stay/`…) e o português em `/pt/` (`/pt/restaurante/`…).
+  Rotas em `ROUTES` (`src/lib.mjs`); os endereços antigos (`/restaurante/`, `/en/…`) têm páginas que reencaminham (`OLD_ROUTES`;
+  `build.mjs`); `x-default` e o mapa do site apontam para o inglês. O seletor mostra sempre EN | PT. Sem deteção automática do idioma do navegador.
+- **Caminho visível removido:** já não há «Início / Página» nas páginas interiores; o `BreadcrumbList` (JSON-LD) mantém-se para os motores de busca.
+- **Comodidades pendentes:** `pendingAmenities` em `src/data/rooms.mjs` (Wi-Fi, pequeno-almoço, casa de banho privativa, ar condicionado), com ícones, sem aparecer em nenhuma página.
 - **Raios:** escala única em `resort.css` (`--radius-field` 12, `--radius-card` 16, `--radius-panel` 24, `--radius-pill`).
 - **Opiniões:** cartões; notas das plataformas lado a lado (bolhas do Tripadvisor, barra do Booking.com); a nota de cada
   resumo só aparece quando a plataforma a publica (`rating` em `reviews-external.mjs`). Sem carrossel.

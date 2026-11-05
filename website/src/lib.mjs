@@ -12,8 +12,25 @@ export const esc = (s = "") =>
 export const fmt = (s, vars = {}) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
 
 // ---------- Routes ----------
+// English is the default language (final refinement, Nov 2026): it lives at the site root; Portuguese under /pt/.
+export const DEFAULT_LANG = "en";
 const ROUTES = {
-  home: { pt: "/", en: "/en/" },
+  home: { pt: "/pt/", en: "/" },
+  restaurant: { pt: "/pt/restaurante/", en: "/restaurant/" },
+  stay: { pt: "/pt/alojamento/", en: "/stay/" },
+  about: { pt: "/pt/sobre-nos/", en: "/about/" },
+  discover: { pt: "/pt/descobrir-liquica/", en: "/discover-liquica/" },
+  events: { pt: "/pt/eventos/", en: "/events/" },
+  gallery: { pt: "/pt/galeria/", en: "/gallery/" },
+  contact: { pt: "/pt/contactos/", en: "/contact/" },
+  thanks: { pt: "/pt/obrigado/", en: "/thank-you/" },
+  privacy: { pt: "/pt/privacidade/", en: "/privacy/" },
+  notFound: { pt: "/pt/404.html", en: "/404.html" },
+};
+// The addresses before English became the default (PT at the root, EN under /en/): build.mjs writes a forwarding page at
+// each one, so links already shared keep working. The old PT home ("/") is now the English home, so it is not listed.
+export const OLD_ROUTES = {
+  home: { en: "/en/" },
   restaurant: { pt: "/restaurante/", en: "/en/restaurant/" },
   stay: { pt: "/alojamento/", en: "/en/stay/" },
   about: { pt: "/sobre-nos/", en: "/en/about/" },
@@ -23,7 +40,6 @@ const ROUTES = {
   contact: { pt: "/contactos/", en: "/en/contact/" },
   thanks: { pt: "/obrigado/", en: "/en/thank-you/" },
   privacy: { pt: "/privacidade/", en: "/en/privacy/" },
-  notFound: { pt: "/404.html", en: "/en/404.html" },
 };
 
 export function href(page, lang, hash = "") {

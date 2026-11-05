@@ -1,7 +1,7 @@
 # Lauhata — search engines and AI crawlers may read the public pages.
 User-agent: *
 Allow: /
-Disallow: /obrigado/
-Disallow: /en/thank-you/
+Disallow: /thank-you/
+Disallow: /pt/obrigado/
 
 Sitemap: https://tiagovskicode.github.io/Lauhata/website/dist/sitemap.xml

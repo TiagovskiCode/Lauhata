@@ -157,19 +157,16 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rs-hero .hx-content { position: relative; bottom: auto !important; transform: none; padding-top: calc(var(--header-h) + clamp(2.5rem, 7vh, 5.5rem)); padding-bottom: 2rem; }
 /* Text on the left, the drone film on the right in a rounded 4:5 frame. The frame's height is capped by the viewport so
    the booking panel below always fits; its poster (the film's first frame) is there from the first paint. */
-.rs-hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(2rem, 5vw, 5rem); align-items: end; }
-.rs-hero-film { position: relative; justify-self: end; width: min(100%, 24rem, calc((100svh - 25rem) * 0.8)); min-width: 15rem; aspect-ratio: 4 / 5; margin: 0; overflow: hidden; border-radius: var(--radius-panel); background: var(--night-2); box-shadow: 0 0 0 1px rgba(236, 189, 133, 0.28), var(--shadow-soft); isolation: isolate; }
-.rs-hero-film .media { position: absolute; inset: 0; border-radius: 0 !important; z-index: -2; }
-.rs-hero-film .media img { width: 100%; height: 100%; object-fit: cover; filter: none; }
-.rs-hero-film .hx-video { z-index: -1; border-radius: 0; transition: opacity 1.2s ease; }
-.rs-hero-film figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 0.8rem; padding: 2.2rem 1rem 0.85rem; font-size: 0.74rem; color: rgba(248, 241, 231, 0.85); background: linear-gradient(0deg, rgba(14, 10, 8, 0.72), rgba(14, 10, 8, 0)); }
-.rs-hero-film figcaption b { color: var(--gold-soft); font-weight: 700; }
+.rs-hero-grid { display: block; }
+/* The film is the background of the whole hero: it fills .hx-bg over the photograph poster (object-fit: cover from home.css). */
+.rs-hero .hx-video { object-position: 50% 55%; transition: opacity 1.4s ease; }
 .rs-hero .hx-title { font-size: clamp(3rem, 5.2vw + 0.5rem, 6.2rem); line-height: 0.98; letter-spacing: -0.02em; max-width: 13.5ch; }
 /* A mild warm grade on the real sunset photograph (colour only; nothing added to the picture). */
 .rs-hero .hx-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(232, 120, 42, 0.05) 0%, rgba(232, 120, 42, 0.28) 55%, rgba(198, 47, 33, 0.18) 100%); mix-blend-mode: soft-light; pointer-events: none; }
 .rs-hero .hx-title .line { display: inline; }
 .rs-hero .hx-line { margin-top: 1.4rem; font-size: clamp(1.1rem, 0.6vw + 0.95rem, 1.45rem); color: rgba(248, 241, 231, 0.92); letter-spacing: 0.01em; }
 .rs-hero-cap { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1rem); z-index: 3; display: flex; gap: 0.8rem; margin: 0; max-width: min(28rem, 40vw); font-size: 0.74rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
+.rs-hero-cap { text-shadow: 0 1px 8px rgba(14, 10, 8, 0.85); color: rgba(248, 241, 231, 0.9); }
 .rs-hero-cap b { flex: none; color: var(--gold-soft); }
 .rs-booking { position: relative; z-index: 4; margin-top: auto; padding-bottom: clamp(2rem, 6vh, 3.5rem); }
 
@@ -228,9 +225,7 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
   .rs-hero { min-height: auto; }
   .rs-hero .hx-content { padding-top: calc(var(--header-h) + 2.5rem); }
   /* On a narrow screen the film becomes a short landscape strip under the headline, so the hero does not grow tall. */
-  .rs-hero-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .rs-hero-film { justify-self: stretch; width: 100%; min-width: 0; aspect-ratio: 16 / 9; max-height: 13.5rem; }
-  .rs-hero-film .media img, .rs-hero-film .hx-video { object-position: 50% 40%; }
+  .rs-hero-grid { display: block; }
   .rs-hero-cap { position: static; max-width: none; padding: 0 var(--gutter) 1rem; text-align: left; flex-direction: column; gap: 0.1rem; }
   .rs-booking { margin-top: 1.5rem; }
 }

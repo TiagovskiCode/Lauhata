@@ -8,10 +8,21 @@
 // `price` is shown only when set (e.g. "US$ 60"); until then the page says "price on request". Payment is in person.
 //
 //   beds          owner-confirmed beds, as text, and `bedPlan` for the drawing (king / single)
-//   amenities     owner-confirmed amenities only (shown as a list)
+//   amenities     owner-confirmed amenities only (shown as a list). An entry may carry `icon` (a name from layout.mjs's sprite).
+//                 To publish one of `pendingAmenities` once Carlos confirms it FOR THAT SUITE, copy it into that suite's list.
 //   suitability   owner-confirmed note on who the suite suits (optional)
 //   images        image keys (images.mjs); the first is the lead photo, all of them form the carousel. While Lauhata's own
 //                 photos are missing these are illustrative pictures, labelled as such on the page.
+// Amenities the site is READY to show (icon, label, both languages) but must not publish until the owner confirms each one for
+// each suite. They appear on no page. Source of the doubt: Booking.com and guest reviews mention some of them; that is not
+// confirmation. Tracked in docs/CHECKLISTS.md.
+export const pendingAmenities = [
+  { id: "wifi", icon: "wifi", pt: "Wi-Fi", en: "Wi-Fi" },
+  { id: "breakfast", icon: "coffee", pt: "Pequeno-almoço", en: "Breakfast" },
+  { id: "bathroom", icon: "shower", pt: "Casa de banho privativa", en: "Private bathroom" },
+  { id: "ac", icon: "snowflake", pt: "Ar condicionado", en: "Air conditioning" },
+];
+
 export default [
   {
     id: "sea",

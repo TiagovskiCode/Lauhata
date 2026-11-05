@@ -96,12 +96,12 @@ export default {
     types: [],
   },
 
-  // Home hero side video (refinement phase, 6 Nov 2026): "Hero video HD definitivo" (originais/videos/drone-hd-definitivo/,
-  // 1920×1080, 20.4 s) cropped to the panel's 4:5 and re-encoded: 864×1080 (5.3 MB) for computers and tablets, 544×680
-  // (2.8 MB) for screens narrower than 900 px. Poster: images.mjs `heroSideCover` (its first frame). Leave empty to show
-  // the poster only. The older web versions are kept in originais/videos/web/.
-  heroVideo: "/assets/video/hero-lateral-864.mp4",
-  heroVideoSmall: "/assets/video/hero-lateral-544.mp4",
+  // Home hero background video (final refinement, Nov 2026): "Hero video HD definitivo" (originais/videos/drone-hd-definitivo/,
+  // 1920×1080, 20.4 s, silent) re-encoded: 1600×900 16:9 (5.0 MB) for computers and tablets, and a 540×960 9:16 centre crop
+  // (see heroVideoSmall) for screens narrower than 900 px. Poster and fallback: the sunset photograph (images.mjs
+  // `sunsetPalmsHigh`). Leave empty to show the photograph only. Earlier versions: originais/videos/web/.
+  heroVideo: "/assets/video/hero-fundo-1600.mp4",
+  heroVideoSmall: "/assets/video/hero-fundo-540.mp4",
 
   // Optional fields for search engines (Google). Each one is only written to the page once it is filled.
   // priceRange: e.g. "$$"; servesCuisine: e.g. ["Timorese", "Seafood"];

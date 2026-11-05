@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
+  </url>
+  <url>
     <loc>https://tiagovskicode.github.io/Lauhata/website/dist/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/"/>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/restaurante/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/restaurante/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/restaurante/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurante/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/restaurant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurante/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/restaurante/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/restaurant/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurante/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/restaurant/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurante/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/stay/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/suite-king/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/suite-king/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/suite-king/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/suite-king/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/suite-king/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/suite-king/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/suite-king-e-solteiro/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/suite-king-e-solteiro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king-and-single/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king-and-single/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king-e-solteiro/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king-e-solteiro/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/suite-king-and-single/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king-e-solteiro/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king-and-single/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/alojamento/suite-king-e-solteiro/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king-and-single/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/stay/suite-king-and-single/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/suite-king-and-single/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king-e-solteiro/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/stay/suite-king-and-single/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/alojamento/suite-king-e-solteiro/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/sobre-nos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/sobre-nos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/about/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/sobre-nos/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/sobre-nos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/about/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/sobre-nos/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/about/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/sobre-nos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/about/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/about/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/sobre-nos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/about/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/sobre-nos/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/eventos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/eventos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/events/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/events/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/eventos/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/events/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/events/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/eventos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/events/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/events/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/events/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/events/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/eventos/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/galeria/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/galeria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/gallery/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/galeria/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/gallery/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/gallery/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/galeria/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/gallery/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/gallery/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/gallery/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/gallery/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/galeria/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/descobrir-liquica/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/descobrir-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/discover-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/discover-liquica/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/discover-liquica/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/discover-liquica/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/descobrir-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/discover-liquica/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/discover-liquica/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/discover-liquica/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/discover-liquica/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/descobrir-liquica/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/contactos/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/contactos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/contact/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/contactos/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/contactos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/contact/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/contactos/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/contactos/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/contact/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/contact/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/contactos/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/contact/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/contactos/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/pt/privacidade/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacy/"/>
   </url>
   <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/privacy/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/"/>
-  </url>
-  <url>
-    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/en/privacy/</loc>
-    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/en/privacy/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacidade/"/>
+    <loc>https://tiagovskicode.github.io/Lauhata/website/dist/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/privacidade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacy/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tiagovskicode.github.io/Lauhata/website/dist/privacy/"/>
   </url>
 </urlset>

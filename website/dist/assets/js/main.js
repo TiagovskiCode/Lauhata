@@ -680,7 +680,7 @@
           }, Math.max(0, COVER_MS - performance.now()));
         }, { once: true });
         heroVideo.preload = "auto";
-        // Phones get the lighter 1280 px film when there is one.
+        // Phones get the lighter portrait film when there is one.
         heroVideo.src = heroVideo.dataset.srcSmall && window.innerWidth < 900 ? heroVideo.dataset.srcSmall : heroVideo.dataset.src;
         heroVideo.load();
       };
