@@ -179,8 +179,11 @@
       if (e.ctrlKey || e.defaultPrevented || !free(e.target)) return;
       e.preventDefault();
       const dy = e.deltaMode === 1 ? e.deltaY * 34 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
-      if (!active) { cur = window.scrollY; target = cur; active = true; root.classList.add("is-smoothing"); gsap.ticker.add(smoothTick); }
+      // The target moves BEFORE the ticker is (re)started: GSAP calls a freshly added tick function straight away.
+      const wake = !active;
+      if (wake) { cur = window.scrollY; target = cur; active = true; }
       target = clamp(target + dy, 0, maxY());
+      if (wake) { root.classList.add("is-smoothing"); gsap.ticker.add(smoothTick); }
     }, { passive: false });
     // Anything else that moves the page (keys, anchors, scrollbar drag) takes over: the target follows the real position.
     window.addEventListener("scroll", () => { if (!active) target = cur = window.scrollY; }, { passive: true });

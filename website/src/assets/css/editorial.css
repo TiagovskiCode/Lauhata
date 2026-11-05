@@ -96,15 +96,6 @@ em { color: inherit; }
 /* Every other illustrative label: a plain square tag, not a pill. */
 .media.is-placeholder::after { border-radius: 0 !important; }
 
-/* ---------- The tais warp: the only ornament, at the passage from paper to night ---------- */
-.tais, .site-footer::before {
-  display: block; height: 7px; border: 0;
-  background: repeating-linear-gradient(90deg,
-    var(--night) 0 18px, var(--terra) 18px 21px, var(--night) 21px 30px, var(--gold) 30px 32px,
-    var(--night) 32px 46px, var(--sage) 46px 48px, var(--night) 48px 56px, var(--terra) 56px 57px);
-}
-.site-footer::before { content: ""; position: absolute; left: 0; right: 0; top: 0; }
-
 /* ---------- Header: wordmark, the pages, the language, the order, one action ---------- */
 .site-header { border-bottom: 1px solid transparent; }
 .site-header.is-solid { background: rgba(250, 247, 239, 0.94); border-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }

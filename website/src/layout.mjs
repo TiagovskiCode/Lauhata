@@ -49,8 +49,8 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 // "+670 7740 1111" from the stored digits (country code 670, then two groups of four).
 const fmtPhone = (d) => (/^670\d{8}$/.test(d) ? `+670 ${d.slice(3, 7)} ${d.slice(7)}` : `+${d}`);
 
-// Woven band inspired by Timorese tais: a row of diamonds in terracotta and gold on forest green.
-export const TAIS = `<div class="tais" aria-hidden="true"></div>`;
+// The striped "tais" band between sections was removed (Nov 2026). Kept as an empty export so the pages that place it still build.
+export const TAIS = "";
 
 function jsonLd(obj) {
   return `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, "\\u003c")}</script>`;

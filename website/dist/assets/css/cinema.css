@@ -176,3 +176,9 @@
   html:not(.cine-motion) .cine-slides .slide.is-active img, html:not(.cine-motion) .media.has-parallax img { animation: none; transform: none; }
   html:not(.cine-motion) .day-line span { transform: none; }
 }
+
+/* ---------- Scrolling feel (cinema.js, tier B) ---------- */
+.scroll-progress { position: fixed; left: 0; top: 0; z-index: 90; width: 100%; height: 3px; background: var(--sunset, #e8782a); transform-origin: 0 50%; pointer-events: none; }
+.gs-anim { transition: none !important; will-change: transform, opacity; }
+html.is-smoothing { scroll-behavior: auto; }
+@media (prefers-reduced-motion: reduce) { html:not(.cine-motion) .scroll-progress { display: none; } }

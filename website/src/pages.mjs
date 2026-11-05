@@ -130,7 +130,7 @@ const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encode
 const pend = (v, fallback) => (v ? esc(v) : `<span class="tbc">${esc(fallback)}</span>`);
 
 // ---------- Booking card (hero): request straight to WhatsApp ----------
-// `prefix` keeps ids unique when two cards share a page; `hero` is the home hero panel (room mode first and open).
+// `prefix` keeps ids unique when two cards share a page; `hero` is the home hero panel: it starts collapsed (just the two mode buttons) and opens when the visitor picks one.
 export function bookingCard(t, { prefix = "bc", hero = false } = {}) {
   const q = t.home.quick;
   const timeOpts = timeOptions(t, { selected: "19:30" });
@@ -140,7 +140,7 @@ export function bookingCard(t, { prefix = "bc", hero = false } = {}) {
   const f = t.form;
   const tabT = `<button type="button" role="tab" aria-selected="false" aria-controls="${prefix}-table" data-bc-tab="table">${icon("cutlery")}${esc(hero ? q.heroTabTable : q.tabTable)}</button>`;
   const tabR = `<button type="button" role="tab" aria-selected="false" aria-controls="${prefix}-room" data-bc-tab="room">${icon("bed")}${esc(hero ? q.heroTabRoom : q.tabRoom)}</button>`;
-  return `<form class="booking-card${hero ? " is-hero" : ""}" data-quick-wa${hero ? ' data-default="room"' : ""} novalidate aria-label="${esc(q.label)}">
+  return `<form class="booking-card${hero ? " is-hero" : ""}" data-quick-wa novalidate aria-label="${esc(q.label)}">
     <div class="bc-tabs" role="tablist">
       ${hero ? tabR + tabT : tabT + tabR}
     </div>
@@ -1264,7 +1264,7 @@ export function home(t) {
   const body = `
 <section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
   <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}
-    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"${site.heroVideoSmall ? ` data-src-small="${esc(site.heroVideoSmall)}"` : ""}></video>` : ""}</div>
+    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}</div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content rs-hero-grid">
     <div class="rs-hero-text">

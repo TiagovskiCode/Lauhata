@@ -550,6 +550,18 @@
       errBox.hidden = true;
       $$(".bc-field", card).forEach((f) => f.classList.remove("has-error"));
     });
+    // The hero panel starts collapsed (only the two mode buttons). A second tap on the open mode folds it away again.
+    if (card.classList.contains("is-hero")) {
+      $(".bc-tabs", card).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-bc-tab]");
+        if (!b || b.getAttribute("aria-selected") !== "true") return;
+        e.stopImmediatePropagation();
+        $$("[data-bc-tab]", card).forEach((x) => { x.setAttribute("aria-selected", "false"); });
+        kind = null;
+        card.classList.remove("is-open");
+        panel("table").hidden = true; panel("room").hidden = true; errBox.hidden = true;
+      }, true);
+    }
     const el = card.elements;
     el.checkIn.addEventListener("change", () => {
       if (!el.checkIn.value) return;
@@ -592,7 +604,7 @@
       card.classList.add("is-sending");
       sendToWhatsApp(waUrl(text), kind, () => card.classList.remove("is-sending"));
     });
-    // The hero panel opens on a mode straight away (data-default); the dialog waits for the visitor's choice.
+    // A card opens on a mode straight away only when it asks for one (data-default); the hero panel and the dialog wait for the visitor's choice.
     if (card.dataset.default) $(`[data-bc-tab="${card.dataset.default}"]`, card)?.click();
   });
 
@@ -647,14 +659,18 @@
   if (reduced) revealHero();
   else setTimeout(revealHero, 60);
 
-  // Hero video (site.heroVideo; on the home page it sits in the side panel of the hero). Its poster, the video's own first
-  // frame, is on screen from the start; once the page has loaded the video is fetched and fades in over it, then plays
-  // muted in a loop. It is paused while off screen and it is not fetched with data saver, a 2G connection or
-  // "reduced motion" (the poster stays). If it fails, the poster stays. The hero never waits for it.
+  // Hero video (site.heroVideo): the background of the home hero, on laptop-sized screens only (1280–1920 px wide). The
+  // sunset photograph is on screen from the start; once the page has loaded the video is fetched and fades in over it, then
+  // plays muted in a loop. It is paused while off screen and it is not fetched with data saver, a 2G connection or
+  // "reduced motion" (the photograph stays). If it fails, the photograph stays. The hero never waits for it.
   const heroVideo = $("[data-hero-video]");
   if (heroVideo) {
     const conn = navigator.connection || {};
-    if (reduced || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
+    // The film is for laptop-sized screens only (viewport 1280–1920 px wide); phones, tablets and larger monitors keep the
+    // photograph. Checked again if the window is resized out of that range.
+    const laptop = window.matchMedia("(min-width: 1280px) and (max-width: 1920px)");
+    laptop.addEventListener("change", () => { if (!laptop.matches) heroVideo.remove(); });
+    if (!laptop.matches || reduced || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
       heroVideo.remove();
     } else {
       let onScreen = true;
@@ -680,8 +696,7 @@
           }, Math.max(0, COVER_MS - performance.now()));
         }, { once: true });
         heroVideo.preload = "auto";
-        // Phones get the lighter portrait film when there is one.
-        heroVideo.src = heroVideo.dataset.srcSmall && window.innerWidth < 900 ? heroVideo.dataset.srcSmall : heroVideo.dataset.src;
+        heroVideo.src = heroVideo.dataset.src;
         heroVideo.load();
       };
       if (document.readyState === "complete") setTimeout(start, 150);
