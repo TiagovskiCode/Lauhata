@@ -2,7 +2,8 @@
    It adds: the pinned "a day at Lauhata" scene, the shutter and drift of the full-screen scenes, parallax, and the slow
    push-in of the home hero. It runs after main.js, which has already decided the motion level:
      - tier A (always): the pinned day scene with its cross-fades, colour grade and progress rail (fades only);
-     - tier B (html.cine-motion, i.e. no "reduced motion" or ?movimento=completo): zoom, parallax, shutter, hero push-in.
+     - tier B (html.cine-motion, i.e. no "reduced motion" or ?movimento=completo): zoom, parallax, shutter, hero push-in,
+       inertia scrolling with the mouse wheel, a scroll progress line and staggered entrances of card groups.
    If GSAP is missing or anything here throws, the site falls back to the plain layout (see cleanup()). */
 (() => {
   "use strict";
@@ -19,9 +20,13 @@
 
   // Back to the plain layout: no pin, no inline styles, and the day scene as a simple list.
   function cleanup() {
+    if (smoothTick) gsap.ticker.remove(smoothTick);
+    root.classList.remove("is-smoothing");
+    document.querySelector(".scroll-progress")?.remove();
     created.forEach((st) => st.kill());
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
+    gsap.set(".wc-card, .rv-card, .st-panel, .dsc-also > *", { clearProps: "opacity,transform" });
     gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
   }
   const track = (anim) => { if (anim && anim.scrollTrigger) created.push(anim.scrollTrigger); return anim; };
@@ -143,12 +148,82 @@
     if (l2 && wide) track(gsap.to(l2, { xPercent: 5, ease: "none", scrollTrigger: sc }));
   }
 
+  /* ---------- Inertia scrolling (tier B, computer with a mouse or trackpad) ----------
+     The wheel moves a target; the page eases toward it each frame (GSAP's ticker), so every notch glides and stops softly.
+     It scrolls the real page (window.scrollTo), so the sticky day scene, anchors, find-in-page, keyboard and the scrollbar
+     keep working. Left alone: touch screens, open dialogs, any scrollable box under the pointer (cart, pickers, menus,
+     text areas), pinch-zoom (ctrl+wheel) and the keyboard (it hands control back to the browser). */
+  let smoothTick = null;
+  function initSmooth() {
+    if (!full || !wide || !window.matchMedia("(pointer: fine)").matches) return;
+    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+    const maxY = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    let target = window.scrollY, cur = window.scrollY, active = false;
+    const free = (el) => { // false when the wheel belongs to something else
+      if (document.querySelector("dialog[open]")) return false;
+      for (let n = el; n && n !== document.body && n !== root; n = n.parentElement) {
+        if (n.tagName === "TEXTAREA" || n.tagName === "SELECT" || (n.classList && n.classList.contains("pk-pop"))) return false;
+        const oy = getComputedStyle(n).overflowY;
+        if ((oy === "auto" || oy === "scroll") && n.scrollHeight > n.clientHeight + 1) return false;
+      }
+      return true;
+    };
+    const stop = () => { if (!active) return; active = false; gsap.ticker.remove(smoothTick); root.classList.remove("is-smoothing"); };
+    smoothTick = (time, dt) => {
+      const k = 1 - Math.pow(1 - 0.11, (dt || 16.7) / 16.7); // frame-rate independent ease
+      cur += (target - cur) * k;
+      if (Math.abs(target - cur) < 0.4) { cur = target; window.scrollTo({ top: cur, behavior: "instant" }); stop(); return; }
+      window.scrollTo({ top: cur, behavior: "instant" });
+    };
+    window.addEventListener("wheel", (e) => {
+      if (e.ctrlKey || e.defaultPrevented || !free(e.target)) return;
+      e.preventDefault();
+      const dy = e.deltaMode === 1 ? e.deltaY * 34 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
+      if (!active) { cur = window.scrollY; target = cur; active = true; root.classList.add("is-smoothing"); gsap.ticker.add(smoothTick); }
+      target = clamp(target + dy, 0, maxY());
+    }, { passive: false });
+    // Anything else that moves the page (keys, anchors, scrollbar drag) takes over: the target follows the real position.
+    window.addEventListener("scroll", () => { if (!active) target = cur = window.scrollY; }, { passive: true });
+    window.addEventListener("keydown", (e) => { if (/^(ArrowUp|ArrowDown|PageUp|PageDown|Home|End| )$/.test(e.key)) { stop(); target = cur = window.scrollY; } });
+    window.addEventListener("pointerdown", (e) => { if (e.clientX >= root.clientWidth) { stop(); target = cur = window.scrollY; } }); // scrollbar
+  }
+
+  /* ---------- Reading progress: a thin line under the top edge (tier B) ---------- */
+  function initProgress() {
+    if (!full) return;
+    const bar = document.createElement("div");
+    bar.className = "scroll-progress"; bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+    gsap.set(bar, { scaleX: 0, transformOrigin: "0 50%" });
+    track(gsap.to(bar, { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.25 } }));
+  }
+
+  /* ---------- Cards and panels rise in one after another (tier B) ----------
+     Groups that had no entrance of their own: the four welcome cards, the review cards, the two suites, the Discover links. */
+  function initStagger() {
+    if (!full) return;
+    const sel = ".wc-card, .rv-card, .st-panel, .dsc-also > *";
+    const els = $$(sel).filter((el) => !el.closest(".cine-hero"));
+    if (!els.length) return;
+    gsap.set(els, { opacity: 0, y: 42 });
+    created.push(...ScrollTrigger.batch(els, {
+      start: "top 90%", once: true,
+      onEnter: (batch) => {
+        batch.forEach((el) => el.classList.add("gs-anim"));
+        gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.12, overwrite: true,
+          onComplete: () => batch.forEach((el) => { gsap.set(el, { clearProps: "opacity,transform" }); el.classList.remove("gs-anim"); }) });
+      },
+    }));
+  }
   try {
     initDay();
     initScenes();
     initParallax();
     initHero();
     initPageHeroes();
+    initSmooth();
+    initProgress();
+    initStagger();
     root.classList.add("gsap-ready");
     window.__cinemaReady = true;
     // Images and fonts change heights after load: re-measure the pins once everything has settled.
