@@ -1,11 +1,11 @@
 # Makes the web sizes of the TEMPORARY dish and drink photos fetched by tools/fotos-temporarias.mjs:
-# fotos-originais/temporarias/<id>.jpg  ->  src/assets/img/pratos-temp/<id>-640.jpg and <id>-1080.jpg (4:3, centre crop).
+# originais/fotos/pratos-temporarios/<id>.jpg  ->  src/assets/img/pratos-temp/<id>-640.jpg and <id>-1080.jpg (4:3, centre crop).
 # Windows only (System.Drawing); run from website/:
 #   powershell -ExecutionPolicy Bypass -File tools/otimizar-temporarias.ps1
 Add-Type -AssemblyName System.Drawing
 $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot -Parent
-$srcDir = Join-Path $root "fotos-originais/temporarias"
+$srcDir = Join-Path $root "originais/fotos/pratos-temporarios"
 $outDir = Join-Path $root "src/assets/img/pratos-temp"
 New-Item -ItemType Directory -Force $outDir | Out-Null
 $codec = [System.Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq "image/jpeg" }

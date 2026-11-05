@@ -4,7 +4,7 @@
 //   node tools/fotos-temporarias.mjs --refresh  fetch again for every dish
 //   node tools/fotos-temporarias.mjs --only=id1,id2   reject the current photo of these dishes and fetch another
 //                                                     (the rejected file is added to `skip`, so it never comes back)
-// Writes the originals to fotos-originais/temporarias/<id>.jpg and the credits to src/data/temp-photos.json; then run
+// Writes the originals to originais/fotos/pratos-temporarios/<id>.jpg and the credits to src/data/temp-photos.json; then run
 // `powershell -File tools/otimizar-temporarias.ps1` to make the web sizes. On the site each photo carries an
 // "Illustrative image" label and is credited on the privacy page. A real photo in src/assets/img/pratos/<id>-640.jpg
 // always replaces it. `skip` lists Commons files already rejected for a dish (wrong food), so a re-run picks another.
@@ -14,7 +14,7 @@ import { items } from "../src/data/menu.mjs";
 import { sampleDrinks } from "../src/data/sample-drinks.mjs";
 
 const root = new URL("../", import.meta.url);
-const outDir = new URL("fotos-originais/temporarias/", root);
+const outDir = new URL("originais/fotos/pratos-temporarios/", root);
 const credFile = new URL("src/data/temp-photos.json", root);
 const refresh = process.argv.includes("--refresh");
 const only = (process.argv.find((a) => a.startsWith("--only=")) || "").slice(7).split(",").filter(Boolean);

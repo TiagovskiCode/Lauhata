@@ -7,6 +7,9 @@
   "scripts": {
     "build": "node build.mjs",
     "prelaunch": "node build.mjs --strict",
-    "preview": "node build.mjs && npx --yes http-server@14.1.1 dist -p 8080 -c-1"
+    "preview": "node build.mjs && npx --yes http-server@14.1.1 dist -p 8080 -c-1",
+    "fotos": "powershell -ExecutionPolicy Bypass -File tools/otimizar-fotos.ps1",
+    "fotos:temporarias": "node tools/fotos-temporarias.mjs",
+    "fotos:temporarias:otimizar": "powershell -ExecutionPolicy Bypass -File tools/otimizar-temporarias.ps1"
   }
 }

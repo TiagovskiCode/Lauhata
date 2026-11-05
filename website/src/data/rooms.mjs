@@ -4,7 +4,7 @@
 // internal keys kept for the forms, links and tests; they are never shown.
 // Owner-confirmed (Carlos Soares, November 2026): the beds and the television below. Everything else a guest might ask
 // about (capacity, bathroom, air conditioning, Wi-Fi, breakfast, view, terrace…) is NOT published until Carlos confirms it:
-// see CHECKLISTS.md (some of it is listed on Booking.com and in guest reviews, which is not the same as confirmed).
+// see docs/CHECKLISTS.md (some of it is listed on Booking.com and in guest reviews, which is not the same as confirmed).
 // `price` is shown only when set (e.g. "US$ 60"); until then the page says "price on request". Payment is in person.
 //
 //   beds          owner-confirmed beds, as text, and `bedPlan` for the drawing (king / single)

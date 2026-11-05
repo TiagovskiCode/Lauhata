@@ -58,7 +58,14 @@ tal, com ligação.
 - [ ] Preço por noite de cada quarto, e se inclui pequeno-almoço.
 - [ ] Horas de entrada e saída; horário da receção.
 - [ ] Comodidades (lista abaixo).
-- [ ] Carta de bebidas real, com preços.
+- [ ] Carta de bebidas real, com preços. As 14 bebidas de exemplo (água, água de coco, refrigerantes, sumos de laranja e
+  manga, café, chá, dois sem álcool, cerveja, vinho a copo, mojito, piña colada, espirituosas) **precisam de validação do
+  dono**: quais existem, nomes e preços. A estrutura já está pronta: cada bebida real entra em `menu.mjs` com
+  `category: "drinks"`, `group` e `price`, e passa a poder ser pedida como os pratos.
+- [ ] Nota individual da avaliação do Booking.com (John, Austrália): o Booking não a mostra na ficha, por isso o cartão no
+  site não tem nota. As três do Tripadvisor mostram a nota dada pelo hóspede (5/5), lida a 2026-11-05.
+- [ ] Vídeo lateral do herói (página inicial): é o «Hero video HD definitivo» (drone, recortado em 4:5). Confirmar que o
+  dono aprova o enquadramento.
 - [ ] Que eventos o Lauhata recebe, lotação, se há ementas de grupo.
 - [ ] Transfers de/para Díli: existem? como se pedem?
 - [ ] A história do Lauhata (quem, quando, porquê o nome).
@@ -68,7 +75,7 @@ tal, com ligação.
 
 ### Comodidades dos quartos
 
-| Comodidade | Quarto Vista Mar | Suite Família |
+| Comodidade | Suite King | Suite King & Single |
 |---|---|---|
 | Televisão | Confirmado | Confirmado |
 | Cama King Size | Confirmado | Confirmado |

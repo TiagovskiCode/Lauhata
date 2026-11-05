@@ -42,13 +42,27 @@
   if (bookingSection && "IntersectionObserver" in window) {
     new IntersectionObserver(([e]) => { formInView = e.isIntersecting; onScroll(); }).observe(bookingSection);
   }
+  // Header background. Transparent only while the page sits at the very top of a hero photograph; solid as soon as the page
+  // moves (so no content ever scrolls under a see-through header, and white text never meets the cream sections). The
+  // switch is driven by an IntersectionObserver on a 1px marker 40px down the hero, not by scroll events, which arrive
+  // late or not at all with fast scrolling, restored scroll positions, anchor jumps and smooth scrolling.
+  const heroEl = document.body.classList.contains("has-hero") ? $(".cine-hero") : null;
+  let atTop = !!heroEl && window.scrollY < 40;
+  if (heroEl && "IntersectionObserver" in window) {
+    const mark = document.createElement("span");
+    mark.setAttribute("aria-hidden", "true");
+    mark.style.cssText = "position:absolute;top:40px;left:0;width:1px;height:1px;pointer-events:none;visibility:hidden";
+    heroEl.prepend(mark);
+    new IntersectionObserver(([e]) => { atTop = e.isIntersecting; paintHeader(); }).observe(mark);
+  }
+  function paintHeader() {
+    if (!("IntersectionObserver" in window)) atTop = !!heroEl && window.scrollY < 40;
+    header?.classList.toggle("is-solid", !heroEl || !atTop);
+  }
   function onScroll() {
     const y = window.scrollY;
     const threshold = window.innerHeight * 0.35;
-    // Over a full-screen photo the header stays transparent until the photo has scrolled away.
-    // On phones the hero also holds the booking card, so the header turns solid straight away.
-    const heroEl = document.body.classList.contains("has-hero") && window.innerWidth > 860 ? $(".cine-hero") : null;
-    header?.classList.toggle("is-solid", heroEl ? y > heroEl.offsetHeight - (header?.offsetHeight || 80) : y > 40);
+    paintHeader();
     const hidden = header?.classList.contains("is-hidden");
     if (y < threshold || header?.contains(document.activeElement)) {
       header?.classList.remove("is-hidden");
@@ -99,6 +113,11 @@
   if (nav && navOpen) {
     navOpen.addEventListener("click", () => { nav.showModal(); navOpen.setAttribute("aria-expanded", "true"); });
     $("[data-nav-close]", nav).addEventListener("click", () => nav.close());
+    // The menu is a side drawer: a tap on the dimmed page beside it closes it.
+    nav.addEventListener("click", (e) => {
+      const r = nav.getBoundingClientRect();
+      if (e.target === nav && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) nav.close();
+    });
     nav.addEventListener("close", () => navOpen.setAttribute("aria-expanded", "false"));
     $$("a", nav).forEach((a) => a.addEventListener("click", () => nav.close()));
   }
@@ -577,23 +596,6 @@
     if (card.dataset.default) $(`[data-bc-tab="${card.dataset.default}"]`, card)?.click();
   });
 
-  /* ---------- Home reviews: one summary at a time, previous / next ---------- */
-  $$("[data-rv-carousel]").forEach((box) => {
-    const slides = $$("[data-rv-slide]", box);
-    const count = $("[data-rv-count]", box);
-    if (slides.length < 2) { $(".rv-nav", box)?.remove(); return; }
-    let i = 0;
-    const show = (n) => {
-      i = (n + slides.length) % slides.length;
-      slides.forEach((s, k) => { s.hidden = k !== i; });
-      if (count) count.textContent = `${i + 1} / ${slides.length}`;
-    };
-    $("[data-rv-prev]", box).addEventListener("click", () => show(i - 1));
-    $("[data-rv-next]", box).addEventListener("click", () => show(i + 1));
-    box.classList.add("is-ready");
-    show(0);
-  });
-
   /* ---------- Thank-you page ---------- */
   const thanksBody = $("[data-thanks-body]");
   if (thanksBody) {
@@ -645,15 +647,14 @@
   if (reduced) revealHero();
   else setTimeout(revealHero, 60);
 
-  // Hero video (only if site.heroVideo is set): the photo is already on screen; once the page has loaded
-  // the video is fetched and fades in over it, then plays and loops for as long as the page is open. It always plays,
-  // also with "reduced motion" (a decision of the owner), and there is no pause button; if something pauses it
-  // (a media key, the browser) it starts again. It is only held back while the hero is off screen (it resumes when
-  // the hero comes back) and it is not fetched with data saver or a 2G connection. If it fails, the photo stays.
+  // Hero video (site.heroVideo; on the home page it sits in the side panel of the hero). Its poster, the video's own first
+  // frame, is on screen from the start; once the page has loaded the video is fetched and fades in over it, then plays
+  // muted in a loop. It is paused while off screen and it is not fetched with data saver, a 2G connection or
+  // "reduced motion" (the poster stays). If it fails, the poster stays. The hero never waits for it.
   const heroVideo = $("[data-hero-video]");
   if (heroVideo) {
     const conn = navigator.connection || {};
-    if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
+    if (reduced || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
       heroVideo.remove();
     } else {
       let onScreen = true;

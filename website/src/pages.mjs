@@ -51,6 +51,22 @@ function roomFeatures(t, r) {
   return facts.length ? `<ul class="room-facts-line">${facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : "";
 }
 
+// The suite's confirmed amenities with their icons: the beds (rooms.mjs `bedPlan`) and the owner-confirmed `amenities`.
+// Nothing else is listed (Wi-Fi, breakfast, bathroom, air conditioning are not confirmed: docs/CHECKLISTS.md).
+const AMEN_ICON = { Television: "tv" };
+function suiteAmenities(t, r) {
+  const S = t.stay;
+  const L = t.lang;
+  const beds = (r.bedPlan || []).map((b) => (b === "king" ? ["bed-king", S.amenKing] : b === "single" ? ["bed-single", S.amenSingle] : null)).filter(Boolean);
+  const more = (r.amenities || []).map((a) => [AMEN_ICON[a.en] || "check", a[L]]);
+  const items = [...beds, ...more];
+  if (!items.length) return "";
+  return `<div class="si-amen">
+        <h3 class="si-amen-title">${esc(S.amenTitle)}</h3>
+        <ul>${items.map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
+      </div>`;
+}
+
 // The suite's beds drawn from above, each labelled. Only the beds the owner confirmed (rooms.mjs `bedPlan`); generic
 // proportions, no measurements (the real bed sizes are not known), no walls or furniture (the room layout is not known).
 function bedPlan(t, r) {
@@ -236,7 +252,7 @@ function dishPrice(t, d) {
 // Every dish has its own photo slot: src/assets/img/pratos/<dish id>-640.jpg (4:3, 640 px wide; add <id>-1080.jpg for
 // sharper screens). When the restaurant's photo of that dish is there, it is shown; until then the slot shows a quiet
 // "photo coming soon" tile with the dish's initial, never a stock or AI picture standing in for the real dish.
-// The build lists every slot and its status in FOTOS-PRATOS.md.
+// The build lists every slot and its status in docs/FOTOS-PRATOS.md.
 export const dishPhotoFile = (d, w = 640) => new URL(`./assets/img/pratos/${d.id}-${w}.jpg`, import.meta.url);
 function dishPhoto(t, d) {
   if (d.image) return figure(t, d.image, { sizes: "(min-width: 1000px) 28vw, (min-width: 600px) 45vw, 30vw", ratio: "4/3" });
@@ -262,15 +278,14 @@ function tempPhoto(t, id, name) {
 function sampleDrinksSection(t, cat) {
   const L = t.lang;
   const O = t.order;
-  const groups = Object.entries(cat.groups)
-    .map(([g, label]) => {
-      const list = sampleDrinks.filter((d) => d.group === g);
-      return list.length ? `<h4 class="menu-group">${esc(label[L])}</h4><div class="menu-grid">${list.map((d) => `<article class="dish has-photo is-sample" data-dish data-search="${esc(normalize(d.name.pt + " " + d.name.en + " " + cat.name.pt + " " + cat.name.en))}">
+  // Refinement phase: one compact grid in the groups' order, the group as each card's small tag (most groups hold a
+  // single sample, so a sub-heading per group only repeated the drink's name). Real drinks keep their sub-headings.
+  const order = Object.keys(cat.groups);
+  const list = [...sampleDrinks].sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group));
+  const groups = `<div class="menu-grid is-samples">${list.map((d) => `<article class="dish has-photo is-sample" data-dish data-search="${esc(normalize(d.name.pt + " " + d.name.en + " " + cat.name.pt + " " + cat.name.en))}">
         ${existsSync(tempPhotoFile(d.id)) ? tempPhoto(t, d.id, d.name[L]) : ""}
-        <div class="dish-body"><h3>${esc(d.name[L])}</h3><div class="dish-foot"><span class="sample-tag">${esc(O.sampleTag)}</span></div></div>
-      </article>`).join("")}</div>` : "";
-    })
-    .join("");
+        <div class="dish-body"><h3>${esc(d.name[L])}</h3><div class="dish-foot"><span class="sample-tag">${esc(O.sampleTag)}</span>${cat.groups[d.group] && cat.groups[d.group][L] !== d.name[L] ? `<span class="dish-group">${esc(cat.groups[d.group][L])}</span>` : ""}</div></div>
+      </article>`).join("")}</div>`;
   return `<section class="menu-cat" id="cat-${cat.id}" data-cat="${cat.id}" aria-labelledby="cat-${cat.id}-title">
       <header class="menu-cat-head"><h3 id="cat-${cat.id}-title">${esc(cat.name[L])}</h3><p>${esc(O.sampleNote)}</p></header>
       ${groups}
@@ -841,31 +856,44 @@ function reviewsSection(t) {
   const num = (n) => String(n).replace(".", L === "pt" ? "," : ".");
   const longDate = (iso) => new Date(iso + "T12:00:00Z").toLocaleDateString(L === "pt" ? "pt-PT" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
   const platforms = ["tripadvisor", "booking"].filter((k) => P[k] && P[k].url && P[k].rating && P[k].count);
+  // Rating indicators, drawn from the verified numbers only: Tripadvisor's five bubbles (each filled by the share of the
+  // score it covers) and Booking.com's bar out of 10. Decorative: the number beside them is the accessible text.
+  const bubbles = (rating, scale = 5) => `<span class="rv-bubbles" aria-hidden="true">${Array.from({ length: scale }, (_, i) => `<i style="--f:${Math.round(Math.max(0, Math.min(1, rating - i)) * 100)}%"></i>`).join("")}</span>`;
+  const meter = (k) => k === "booking"
+    ? `<span class="rv-bar" aria-hidden="true"><i style="--p:${Math.round((P[k].rating / P[k].scale) * 100)}%"></i></span>`
+    : bubbles(P[k].rating, P[k].scale);
   const scores = platforms.map((k) => `<a class="rv-score rv-${k}" href="${esc(P[k].url)}" target="_blank" rel="noopener">
         <span class="rv-plat">${esc(R.platforms[k])}</span>
         <span class="rv-num">${esc(num(P[k].rating))}<small>${esc(fmt(R.outOf, { scale: P[k].scale }))}</small></span>
+        ${meter(k)}
         <span class="rv-word">${esc(R.scoreWord[k])} · ${esc(fmt(R.countLong, { count: P[k].count }))}</span>
         <span class="rv-go">${esc(R.readAll)}${icon("arrow-up-right")}</span>
       </a>`).join("");
   const checkedDates = [...new Set(platforms.map((k) => P[k].checked).filter(Boolean))];
   const ext = externalReviews.filter((r) => P[r.platform] && P[r.platform].url);
-  const byline = (r) => `<p class="rv-by"><span>${esc(fmt(R.summaryOf, { author: r.author }))}</span><span>${esc(R.platforms[r.platform])}${r.date ? ` · ${esc(r.date[L])}` : ""}${r.origin ? ` · ${esc(r.origin[L])}` : ""}</span><a href="${esc(P[r.platform].url)}" target="_blank" rel="noopener">${esc(R.readFull)}${icon("arrow-up-right")}</a></p>`;
-  // Final homepage design: a dark section; the title and the two verified scores on the left; on the right one review
-  // summary at a time with previous/next (all of them are listed without JavaScript). No portraits, no invented stars.
+  // Refinement phase: the summaries as cards. The featured one runs across the full width, the others in a row beneath.
+  // Each card shows the score that guest gave only when the platform publishes it (Tripadvisor); never an invented one.
   const RS = t.land.resort;
   const ordered = [ext.find((r) => r.featured) || ext[0], ...ext.filter((r) => !r.featured)].filter(Boolean);
+  const card = (r, i) => `<li class="rv-card${i ? "" : " is-featured"}">
+        <div class="rv-card-top">${r.rating ? `<span class="rv-given" role="img" aria-label="${esc(fmt(R.givenScore, { n: r.rating }))}">${bubbles(r.rating)}</span>` : ""}<span class="rv-card-plat">${esc(R.platforms[r.platform])}</span></div>
+        <p class="rv-card-text" lang="${L}">${esc(r.summary[L])}</p>
+        <div class="rv-card-by">
+          <p><span class="rv-author">${esc(fmt(R.summaryOf, { author: r.author }))}</span>${r.date || r.origin ? `<span class="rv-meta">${[r.date && r.date[L], r.origin && r.origin[L]].filter(Boolean).map(esc).join(" · ")}</span>` : ""}</p>
+          <a href="${esc(P[r.platform].url)}" target="_blank" rel="noopener">${esc(R.readFull)}${icon("arrow-up-right")}</a>
+        </div>
+      </li>`;
   return `<section class="section reviews-ed is-dark" id="opinioes" aria-labelledby="rv-title">
-  <div class="wrap rv-split">
+  <div class="wrap">
     <header class="rv-head">
-      <p class="eyebrow-rule">${esc(RS.reviewsEyebrow)}</p>
-      <h2 id="rv-title" class="rv-title" data-split>${esc(R.title)}</h2>
-      ${scores ? `<div class="rv-scores">${scores}</div>${checkedDates.length ? `<p class="rv-checked">${esc(fmt(R.checked, { date: checkedDates.map(longDate).join(", ") }))}</p>` : ""}` : `<div class="rv-badge">${tripadvisorBadge(t, "is-large")}</div>`}
+      <div class="rv-head-text">
+        <p class="eyebrow-rule">${esc(RS.reviewsEyebrow)}</p>
+        <h2 id="rv-title" class="rv-title" data-split>${esc(R.title)}</h2>
+      </div>
+      ${scores ? `<div class="rv-scores-wrap"><div class="rv-scores">${scores}</div>${checkedDates.length ? `<p class="rv-checked">${esc(fmt(R.checked, { date: checkedDates.map(longDate).join(", ") }))}</p>` : ""}</div>` : `<div class="rv-badge">${tripadvisorBadge(t, "is-large")}</div>`}
     </header>
-    ${ordered.length ? `<div class="rv-carousel" data-rv-carousel>
-      <ul class="rv-slides">${ordered.map((r, i) => `<li class="rv-slide" data-rv-slide${i ? "" : ' data-current'}><p class="rv-feature-text" lang="${L}">${esc(r.summary[L])}</p>${byline(r)}</li>`).join("")}</ul>
-      <div class="rv-nav"><button type="button" class="rv-arrow" data-rv-prev aria-label="${esc(RS.prev)}">${icon("left")}</button><p class="rv-count" data-rv-count aria-live="polite">1 / ${ordered.length}</p><button type="button" class="rv-arrow" data-rv-next aria-label="${esc(RS.next)}">${icon("right")}</button></div>
-      <p class="rv-note">${esc(R.summaryNote)}</p>
-    </div>` : ""}
+    ${ordered.length ? `<ul class="rv-cards">${ordered.map(card).join("")}</ul>
+    <p class="rv-note">${esc(R.summaryNote)}</p>` : ""}
   </div>
   <div class="wrap">
     <div class="rv-own">
@@ -876,7 +904,7 @@ function reviewsSection(t) {
         <form class="booking-form" data-booking="review" novalidate data-wa="${esc(FB.wa)}" data-err-name="${esc(FB.errors.name)}" data-err-rating="${esc(FB.errors.rating)}" data-err-text="${esc(FB.errors.text)}" data-err-consent="${esc(FB.errors.consent)}">
           <div class="form-grid">
             ${field({ id: "fb-name", name: "name", label: FB.name, attrs: 'autocomplete="given-name" required maxlength="40"' })}
-            ${field({ id: "fb-exp", name: "experience", label: FB.experience, control: `<select data-pick="select" data-icon="heart">${exp}</select>` })}
+            ${field({ id: "fb-exp", name: "experience", label: FB.experience, control: `<select data-pick="select" data-icon="star">${exp}</select>` })}
             <fieldset class="field is-full rv-rating"><legend>${esc(FB.rating)}</legend><div class="rv-stars-in">${rating}</div><p class="error" id="fb-rating-err" aria-live="polite"></p></fieldset>
             ${field({ id: "fb-text", name: "text", type: "textarea", label: FB.text, attrs: 'required minlength="20" maxlength="700"', full: true })}
             <div class="field is-full rv-consent"><label><input type="checkbox" name="consent"> <span>${esc(FB.consent)}</span></label><p class="error" aria-live="polite"></p></div>
@@ -1064,28 +1092,29 @@ function eventForm(t) {
   const E = t.land.eventsPage;
   const f = t.form;
   const opts = (list) => list.map((o) => `<option>${esc(o)}</option>`).join("");
-  const sel = (id, name, label, list, extra = {}) => field({ id, name, label, control: `<select data-pick="select" data-icon="heart">${opts(list)}</select>`, ...extra });
+  // Each select gets the icon of what it asks (refinement phase: no single generic icon on every field).
+  const sel = (id, name, label, list, ico, extra = {}) => field({ id, name, label, control: `<select data-pick="select" data-icon="${ico}">${opts(list)}</select>`, ...extra });
   const num = (id, name, label, attrs) => field({ id, name, type: "number", label, attrs: `${attrs} inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` });
   const step = (i, body) => `<fieldset class="ev-step" data-step="${i}"><legend class="ev-step-title"><span class="ev-step-n">${esc(fmt(E.stepOf, { n: i + 1, total: 5 }))}</span>${esc(E.steps5[i])}</legend><div class="form-grid">${body}</div></fieldset>`;
   return `<form class="booking-form ev-wizard" data-booking="event" data-steps data-review-step novalidate data-wa="${esc(E.wa)}">
     <ol class="ev-progress" aria-hidden="true">${E.steps5.map((s, i) => `<li data-progress="${i}"><span>${i + 1}</span>${esc(s)}</li>`).join("")}</ol>
-    ${step(0, `${sel("ev-kind", "kind", E.kind, E.kinds, { full: true })}
+    ${step(0, `${sel("ev-kind", "kind", E.kind, E.kinds, "star", { full: true })}
       ${field({ id: "ev-date", name: "date", type: "date", label: f.date, attrs: 'required data-pick="date"' })}
       ${field({ id: "ev-alt", name: "altDate", type: "date", label: E.altDate, optional: f.optional, attrs: 'data-pick="date"' })}
-      ${sel("ev-flex", "flex", E.flex, E.flexOptions)}
-      ${sel("ev-start", "start", E.start, E.startOptions)}
-      ${sel("ev-duration", "duration", E.duration, E.durationOptions, { full: true })}`)}
+      ${sel("ev-flex", "flex", E.flex, E.flexOptions, "calendar")}
+      ${sel("ev-start", "start", E.start, E.startOptions, "clock")}
+      ${sel("ev-duration", "duration", E.duration, E.durationOptions, "clock", { full: true })}`)}
     ${step(1, `${num("ev-people", "people", E.guests, 'required min="1" max="300" value="10"')}
       ${num("ev-adults", "adults", E.adults, 'min="0" max="300" value=""')}
       ${num("ev-children", "children", E.children, 'min="0" max="300" value=""')}`)}
-    ${step(2, `${sel("ev-atmo", "atmosphere", E.atmosphere, E.atmosphereOptions)}
-      ${sel("ev-setting", "setting", E.setting, E.settingOptions)}
+    ${step(2, `${sel("ev-atmo", "atmosphere", E.atmosphere, E.atmosphereOptions, "sunset")}
+      ${sel("ev-setting", "setting", E.setting, E.settingOptions, "pin")}
       <fieldset class="field is-full ev-topics"><legend>${esc(E.topics)}</legend><p class="hint">${esc(E.topicsHint)}</p><div class="ev-chips">${E.topicOptions.map((o) => `<label class="ev-chip"><input type="checkbox" name="topics" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("")}</div></fieldset>`)}
     ${step(3, field({ id: "ev-vision", name: "vision", type: "textarea", label: E.vision, hint: E.visionHint, optional: f.optional, attrs: 'maxlength="1500" rows="7"', full: true }))}
     ${step(4, `${field({ id: "ev-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
       ${field({ id: "ev-email", name: "email", type: "email", label: E.email, optional: f.optional, attrs: 'autocomplete="email" maxlength="120"' })}
       ${field({ id: "ev-phone", name: "phone", type: "tel", label: E.phone, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"' })}
-      ${sel("ev-prefer", "prefer", E.prefer, E.preferOptions, { full: true })}`)}
+      ${sel("ev-prefer", "prefer", E.prefer, E.preferOptions, "phone", { full: true })}`)}
     <div class="ev-nav"><button type="button" class="btn btn-outline" data-step-back>${esc(E.back)}</button><button type="button" class="btn btn-dark" data-step-next>${esc(E.next)}${icon("arrow")}</button></div>
     ${formFooter(t, E.submit)}
   </form>`;
@@ -1121,7 +1150,7 @@ ${pageHero(t, { eyebrow: G.eyebrow, title: G.title, lead: G.lead, image: "aerial
 
 // Photos for the Discover places, in the order of discoverPage.places: Maubara fort (Commons, illustrative), Aipelo
 // (Lauhata's own drone photo), Liquiçá centre (Commons, illustrative), Maubara weaving (none yet), beaches (none yet),
-// the sea (Lauhata's own drone photo), the salt lake (none yet). See FOTOGRAFIAS.md for the shot list.
+// the sea (Lauhata's own drone photo), the salt lake (none yet). See docs/FOTOGRAFIAS.md for the shot list.
 const PLACE_PHOTOS = ["placeMaubaraFort", "ruinsAerial", "placeLiquicaCentre", null, null, "seaCanoe", null];
 
 // ================= DISCOVER LIQUIÇÁ: a short, sourced guide to the coast around Lauhata =================
@@ -1162,7 +1191,7 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
     const withPhoto = D.places.map((p, i) => [p, PLACE_PHOTOS[i]]).filter(([, k]) => k);
     const without = D.places.filter((p, i) => !PLACE_PHOTOS[i]);
     return `<div class="dsc-rows">${withPhoto.map(([p, k], i) => `<article class="dsc-row${i % 2 ? " is-flip" : ""}">
-      <div class="dsc-row-media">${figure(t, k, { sizes: "(min-width: 900px) 58vw, 100vw", ratio: ["3/2", "4/5", "16/10", "1/1"][i % 4], credit: true })}</div>
+      <div class="dsc-row-media">${figure(t, k, { sizes: "(min-width: 900px) 46vw, 100vw", ratio: ["3/2", "4/3", "16/10", "4/3"][i % 4], credit: true })}</div>
       <div class="dsc-row-text"${rv(60)}>${body(p)}</div>
     </article>`).join("")}</div>
     ${without.length ? `<div class="wrap"><h3 class="dsc-also-title">${esc(D.alsoTitle)}</h3><ul class="dsc-also">${without.map((p) => `<li>${body(p)}</li>`).join("")}</ul></div>` : ""}`;
@@ -1230,17 +1259,24 @@ export function home(t) {
     </a>`;
   const suite = (r) => `<article class="st-panel">
       <a class="st-media" href="${href("room:" + r.id, L)}" aria-label="${esc(r.name[L])}">${figure(t, r.images[0], { sizes: "(min-width: 900px) 34vw, 92vw", decorative: true })}<span class="st-name">${esc(r.name[L])}</span></a>
-      <p class="st-beds">${esc(r.beds[L])}</p>
+      <p class="st-beds">${icon("bed")}${esc(r.beds[L])}</p>
       <div class="st-links"><a class="text-link" href="${href("room:" + r.id, L)}">${esc(RS.stayView)}</a><a class="text-link" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(RS.stayAsk)}</a></div>
     </article>`;
   const body = `
 <section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
   <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}</div>
   <div class="hx-shade" aria-hidden="true"></div>
-  <div class="wrap cine-content hx-content">
-    <p class="eyebrow-rule is-light" data-fade>${esc(RS.heroEyebrow)}</p>
-    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
-    <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
+  <div class="wrap cine-content hx-content rs-hero-grid">
+    <div class="rs-hero-text">
+      <p class="eyebrow-rule is-light" data-fade>${esc(RS.heroEyebrow)}</p>
+      <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
+      <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
+    </div>
+    ${site.heroVideo ? `<figure class="rs-hero-film" data-fade style="--d:200ms">
+      ${figure(t, "heroSideCover", { eager: true, sizes: "(min-width: 861px) 30vw, 92vw" })}
+      <video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"${site.heroVideoSmall ? ` data-src-small="${esc(site.heroVideoSmall)}"` : ""}></video>
+      <figcaption><span>${esc(RS.filmCaption)}</span><b>${esc(RS.filmReal)}</b></figcaption>
+    </figure>` : ""}
   </div>
   <div class="wrap rs-booking" data-fade style="--d:450ms">${bookingCard(t, { prefix: "hxb", hero: true })}</div>
   <p class="rs-hero-cap"><span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
@@ -1264,7 +1300,7 @@ export function home(t) {
 </section>
 
 <section class="rs-story" aria-labelledby="story-title">
-  <div class="rs-story-media">${figure(t, "sunsetSea", { sizes: "100vw" })}</div>
+  <div class="rs-story-media">${figure(t, "aerialCoast", { sizes: "(min-width: 861px) 60vw, 100vw" })}</div>
   <div class="rs-story-shade" aria-hidden="true"></div>
   <div class="wrap rs-story-text">
     <p class="eyebrow-rule is-light">${esc(RS.storyEyebrow)}</p>
@@ -1272,7 +1308,7 @@ export function home(t) {
     <p class="rs-story-body"${rv(60)}>${esc(RS.storyBody)}</p>
     <a class="btn btn-ghost-light btn-pill" href="${href("about", L)}">${esc(RS.storyCta)}${icon("arrow")}</a>
   </div>
-  <p class="rs-story-cap"><span>${esc(images.sunsetSea.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
+  <p class="rs-story-cap"><span>${esc(images.aerialCoast.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
 </section>
 
 <section class="section rs-stay" aria-labelledby="stay-title">
@@ -1452,6 +1488,7 @@ ${pageHero(t, {
     <div class="si-body">
       <p${rv(60)}>${esc(r.description[L])}</p>
       <p class="si-names">${esc(S.namesNote)}</p>
+      ${suiteAmenities(t, r)}
     </div>
   </div>
 </section>

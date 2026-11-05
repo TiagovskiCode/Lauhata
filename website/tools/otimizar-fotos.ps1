@@ -1,16 +1,16 @@
-# Converts the original photos in fotos-originais/ into web-sized JPEGs under
+# Converts the original photos in originais/fotos/maqueta/ into web-sized JPEGs under
 # src/assets/img/fotos/ (<slug>-640.jpg, -1080.jpg, -1600.jpg) and writes the
 # 1200x630 social image. Windows only (System.Drawing); run from website/:
 #   powershell -ExecutionPolicy Bypass -File tools/otimizar-fotos.ps1
 Add-Type -AssemblyName System.Drawing
 $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot -Parent
-$srcDir = Join-Path $root "fotos-originais"
+$srcDir = Join-Path $root "originais/fotos/maqueta"
 $outDir = Join-Path $root "src/assets/img/fotos"
 New-Item -ItemType Directory -Force $outDir | Out-Null
 
 # Dish photos (grilled fish, squid, curry, batar da'an, tukir, banana cake, coffee, coconut water…) are not here on
-# purpose: they showed dishes that are not on Lauhata's real menu. The originals stay in fotos-originais/.
+# purpose: they showed dishes that are not on Lauhata's real menu. The originals stay in originais/fotos/maqueta/.
 # Original file name (start) -> slug, plus an optional crop from the top (px) to drop the
 # cream arch background of "A nossa história".
 $map = @(

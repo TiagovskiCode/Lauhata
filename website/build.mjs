@@ -18,7 +18,7 @@ const T = { pt, en };
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
-// Raw footage is never published: only the web version in src/assets/video/ (see README); the originals live in videos-originais/.
+// Raw footage is never published: originals live in originais/videos/ (outside src/). The filter below is a safety net.
 const isRawVideo = (p) => /[\\/]assets[\\/]img[\\/]video([\\/]|$)/.test(p);
 await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) });
 
@@ -112,7 +112,7 @@ Sitemap: ${absUrl("/sitemap.xml")}
   });
   const missing = rows.filter((r) => r.includes("em falta")).length;
   await writeFile(
-    join(root, "FOTOS-PRATOS.md"),
+    join(root, "docs/FOTOS-PRATOS.md"),
     `# Fotografias dos pratos\n\nGerado por \`node build.mjs\`. Cada prato da ementa tem o seu espaço de fotografia. Basta guardar a foto real com o nome indicado (4:3, 640 px de largura; opcionalmente também \`-1080.jpg\`) e voltar a gerar o site.\n\n${items.length} pratos · ${items.length - missing} com fotografia real · ${missing} em falta.\n\n| Categoria | Prato | Preço | Ficheiro | Estado |\n|---|---|---|---|---|\n${rows.join("\n")}\n`
   );
 }

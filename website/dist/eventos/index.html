@@ -72,6 +72,9 @@
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-cutlery" viewBox="0 0 24 24"><path d="M7 3.5v7a2 2 0 0 0 4 0v-7M9 10.5v10M17 20.5v-17c-2 1-3 3.5-3 7h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3.5 18.5v-11M3.5 14h17v4.5M20.5 14v-2.5a3 3 0 0 0-3-3h-6V14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="11" r="1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bed-king" viewBox="0 0 24 24"><path d="M3 19v-8.5M21 19v-8.5M3 15.5h18M3 13h18v2.5M5.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M12.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M3 10.5V6.5a1.5 1.5 0 0 1 1.5-1.5h15A1.5 1.5 0 0 1 21 6.5v4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bed-single" viewBox="0 0 24 24"><path d="M6.5 19.5v-9M17.5 19.5v-9M6.5 16h11M6.5 13.5h11V16M9 13.5v-1.8a1.2 1.2 0 0 1 1.2-1.2h3.6a1.2 1.2 0 0 1 1.2 1.2v1.8M6.5 10.5V6a1.5 1.5 0 0 1 1.5-1.5h8A1.5 1.5 0 0 1 17.5 6v4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 20.5h7M12 17v3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -202,7 +205,7 @@ Sei que o evento só fica confirmado depois de falarmos. Obrigado!">
     <ol class="ev-progress" aria-hidden="true"><li data-progress="0"><span>1</span>O evento</li><li data-progress="1"><span>2</span>Convidados</li><li data-progress="2"><span>3</span>Preferências</li><li data-progress="3"><span>4</span>A sua ideia</li><li data-progress="4"><span>5</span>Contacto</li></ol>
     <fieldset class="ev-step" data-step="0"><legend class="ev-step-title"><span class="ev-step-n">Passo 1 de 5</span>O evento</legend><div class="form-grid"><div class="field is-full">
     <label for="ev-kind">Ocasião</label>
-    <select id="ev-kind" name="kind" aria-describedby="ev-kind-err" data-pick="select" data-icon="heart"><option>Aniversário</option><option>Encontro de família</option><option>Almoço ou jantar privado</option><option>Aniversário de casamento</option><option>Encontro de amigos</option><option>Refeição de empresa ou reunião informal</option><option>Outra ocasião</option></select>
+    <select id="ev-kind" name="kind" aria-describedby="ev-kind-err" data-pick="select" data-icon="star"><option>Aniversário</option><option>Encontro de família</option><option>Almoço ou jantar privado</option><option>Aniversário de casamento</option><option>Encontro de amigos</option><option>Refeição de empresa ou reunião informal</option><option>Outra ocasião</option></select>
     
     <p class="error" id="ev-kind-err" aria-live="polite"></p>
   </div>
@@ -220,19 +223,19 @@ Sei que o evento só fica confirmado depois de falarmos. Obrigado!">
   </div>
       <div class="field">
     <label for="ev-flex">Flexibilidade de datas</label>
-    <select id="ev-flex" name="flex" aria-describedby="ev-flex-err" data-pick="select" data-icon="heart"><option>Data fixa</option><option>Alguma flexibilidade</option><option>Muito flexível</option></select>
+    <select id="ev-flex" name="flex" aria-describedby="ev-flex-err" data-pick="select" data-icon="calendar"><option>Data fixa</option><option>Alguma flexibilidade</option><option>Muito flexível</option></select>
     
     <p class="error" id="ev-flex-err" aria-live="polite"></p>
   </div>
       <div class="field">
     <label for="ev-start">Hora de início</label>
-    <select id="ev-start" name="start" aria-describedby="ev-start-err" data-pick="select" data-icon="heart"><option>Manhã</option><option>Almoço</option><option>Tarde</option><option>Jantar</option><option>Ainda não sei</option></select>
+    <select id="ev-start" name="start" aria-describedby="ev-start-err" data-pick="select" data-icon="clock"><option>Manhã</option><option>Almoço</option><option>Tarde</option><option>Jantar</option><option>Ainda não sei</option></select>
     
     <p class="error" id="ev-start-err" aria-live="polite"></p>
   </div>
       <div class="field is-full">
     <label for="ev-duration">Duração prevista</label>
-    <select id="ev-duration" name="duration" aria-describedby="ev-duration-err" data-pick="select" data-icon="heart"><option>Até 2 horas</option><option>2 a 4 horas</option><option>Mais de 4 horas</option><option>Ainda não sei</option></select>
+    <select id="ev-duration" name="duration" aria-describedby="ev-duration-err" data-pick="select" data-icon="clock"><option>Até 2 horas</option><option>2 a 4 horas</option><option>Mais de 4 horas</option><option>Ainda não sei</option></select>
     
     <p class="error" id="ev-duration-err" aria-live="polite"></p>
   </div></div></fieldset>
@@ -256,13 +259,13 @@ Sei que o evento só fica confirmado depois de falarmos. Obrigado!">
   </div></div></fieldset>
     <fieldset class="ev-step" data-step="2"><legend class="ev-step-title"><span class="ev-step-n">Passo 3 de 5</span>Preferências</legend><div class="form-grid"><div class="field">
     <label for="ev-atmo">Ambiente que imagina</label>
-    <select id="ev-atmo" name="atmosphere" aria-describedby="ev-atmo-err" data-pick="select" data-icon="heart"><option>Descontraído</option><option>Familiar</option><option>Elegante</option><option>Festivo</option><option>Ainda não sei</option></select>
+    <select id="ev-atmo" name="atmosphere" aria-describedby="ev-atmo-err" data-pick="select" data-icon="sunset"><option>Descontraído</option><option>Familiar</option><option>Elegante</option><option>Festivo</option><option>Ainda não sei</option></select>
     
     <p class="error" id="ev-atmo-err" aria-live="polite"></p>
   </div>
       <div class="field">
     <label for="ev-setting">Ao ar livre ou sob coberto</label>
-    <select id="ev-setting" name="setting" aria-describedby="ev-setting-err" data-pick="select" data-icon="heart"><option>Ao ar livre</option><option>Sob coberto</option><option>Indiferente</option></select>
+    <select id="ev-setting" name="setting" aria-describedby="ev-setting-err" data-pick="select" data-icon="pin"><option>Ao ar livre</option><option>Sob coberto</option><option>Indiferente</option></select>
     
     <p class="error" id="ev-setting-err" aria-live="polite"></p>
   </div>
@@ -293,7 +296,7 @@ Sei que o evento só fica confirmado depois de falarmos. Obrigado!">
   </div>
       <div class="field is-full">
     <label for="ev-prefer">Como prefere ser contactado</label>
-    <select id="ev-prefer" name="prefer" aria-describedby="ev-prefer-err" data-pick="select" data-icon="heart"><option>WhatsApp</option><option>Email</option><option>Telefone</option></select>
+    <select id="ev-prefer" name="prefer" aria-describedby="ev-prefer-err" data-pick="select" data-icon="phone"><option>WhatsApp</option><option>Email</option><option>Telefone</option></select>
     
     <p class="error" id="ev-prefer-err" aria-live="polite"></p>
   </div></div></fieldset>

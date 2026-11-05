@@ -5,7 +5,7 @@
 // `placeholder: true` marks an image that does not show Lauhata itself (stock photos and the
 // illustrative photos made for the mock-up); set it to `false` once a real photo replaces it.
 export default {
-  // The cover of the hero video: its first frame, from the real Lauhata drone footage (videos-originais/). It is the
+  // The cover of the hero video: its first frame, from the real Lauhata drone footage (originais/videos/). It is the
   // picture the hero shows first; the video then fades in over it from the very same frame, so the change is seamless.
   heroCover: {
     src: "foto:hero-capa-hd", // first frame of the HD hero film (cover supplied with it, 5 Nov 2026)
@@ -13,7 +13,15 @@ export default {
     alt: { pt: "Vista aérea do Lauhata: o edifício com cobertura azul, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the building with its blue roof, the garden, the palm trees and the beach" },
     placeholder: false,
   },
-  // Two more real stills from the same drone footage (videos-originais/): the property among its garden and palms, and the
+  // Poster of the home hero's side video: the first frame of "Hero video HD definitivo" (originais/videos/), cropped to
+  // 4:5 like the web versions in src/assets/video/hero-lateral-864.mp4 and -544.mp4.
+  heroSideCover: {
+    src: "foto:hero-lateral-capa",
+    width: 864,
+    alt: { pt: "Vista aérea do Lauhata: os telhados azuis, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the blue roofs, the garden, the palm trees and the beach" },
+    placeholder: false,
+  },
+  // Two more real stills from the same drone footage (originais/videos/): the property among its garden and palms, and the
   // wider view down to the beach and the sea. They carry the full-screen "scenes" and the contact page.
   aerialGarden: {
     src: "foto:aerea-lugar",
@@ -43,7 +51,7 @@ export default {
     alt: { pt: "Vista aérea ampla do Lauhata e da praia de Liquiçá", en: "Wide aerial view of Lauhata and the Liquiçá beach" },
     placeholder: false,
   },
-  // Drone photographs supplied in November 2026 (originals in fotos-originais/drone-2026-11/). `group` places a photo in
+  // Drone photographs supplied in November 2026 (originals in originais/fotos/drone-2026-11/). `group` places a photo in
   // the gallery page: "lauhata" (the property and its beach), "coast" (the sea and the light), "around" (the surroundings).
   // The ruins are described only by what they show: their name and history are not in the project's sources.
   beachFront: {
@@ -112,7 +120,7 @@ export default {
   },
   // Reference photos of places in Discover Liquiçá, from Wikimedia Commons (credited on the privacy page,
   // src/data/temp-photos.json). They show the place, not Lauhata, and are labelled illustrative until Tiago or Carlos
-  // photograph the places themselves: then put the photo in fotos-originais/, size it to the same slug and set
+  // photograph the places themselves: then put the photo in originais/fotos/, size it to the same slug and set
   // placeholder: false.
   placeMaubaraFort: {
     src: "foto:lugar-forte-maubara",

@@ -2,12 +2,15 @@
 // copying review text onto another site). Each summary keeps to what the reviewer said, names the public reviewer
 // handle and date as shown on the platform, and links to the full review. Read on the official pages on 2026-11-05.
 // Facts that reviewers mention about the rooms (air conditioning, breakfast, Wi-Fi...) are deliberately left out of
-// the summaries: they are not confirmed by Lauhata (see CHECKLISTS.md).
+// the summaries: they are not confirmed by Lauhata (see docs/CHECKLISTS.md).
+// `rating`: the score the reviewer gave, as shown on that review (Tripadvisor bubbles, out of 5), read on 2026-11-05.
+// Booking.com does not publish the score of each review on the listing, so its summaries carry none.
 // To quote a review word for word, use Tripadvisor's official widget or ask the reviewer's permission.
 export default [
   {
     platform: "tripadvisor",
     author: "BruceChinoLover",
+    rating: 5,
     date: { pt: "outubro de 2023", en: "October 2023" },
     featured: true,
     summary: {
@@ -18,6 +21,7 @@ export default [
   {
     platform: "tripadvisor",
     author: "judybdarwin",
+    rating: 5,
     date: { pt: "junho de 2023", en: "June 2023" },
     summary: {
       pt: "Quartos limpos e camas confortáveis; o Carlos e a equipa recebem muito bem. As refeições foram boas e a bom preço, e quer voltar.",
@@ -27,6 +31,7 @@ export default [
   {
     platform: "tripadvisor",
     author: "Warwick C",
+    rating: 5,
     date: { pt: "novembro de 2022", en: "November 2022" },
     summary: {
       pt: "Um lugar sossegado, não muito longe de Díli. O Carlos ajudou com o transporte de e para a cidade, e a equipa ajudou a combinar uma visita à prisão de Aipelo e ao forte de Maubara.",

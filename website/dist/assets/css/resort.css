@@ -21,7 +21,7 @@
   --logo-red: #c62f21;
   --bronze: #b58b57;
   --terra: #e8782a;
-  --terra-dark: #a5501a;     /* orange for small text on cream (contrast ≥ 4.5:1) */
+  --terra-dark: #9a4915;     /* orange for small text on cream and sand (≥ 4.5:1 on both; #a5501a gave 4.4:1 on sand) */
   --gold: #d9a25c;
   --gold-soft: #ecbd85;      /* orange-gold for small text on charcoal */
   --forest: #17120f;         /* the old green tokens now point at charcoal: no green palette */
@@ -37,26 +37,38 @@
   --line-strong: rgba(31, 24, 19, 0.28);
   --line-night: rgba(236, 189, 133, 0.24);
 
-  --corner: 999px;
-  --r-img: 14px;
-  --r-card: 18px;
-  --r-lg: 18px;
-  --r: 12px;
-  --r-sm: 10px;
+  /* One radius scale for the whole site (refinement phase). Older names (--r-img, --r-card…) map onto it, so every
+     stylesheet that still uses them follows the same four steps. */
+  --radius-field: 12px;      /* inputs, selects, pickers, small thumbnails */
+  --radius-card: 16px;       /* photographs, cards, galleries */
+  --radius-panel: 24px;      /* large surfaces: booking panel, dialogs, cart, the hero film */
+  --radius-pill: 999px;      /* buttons, tabs, chips, tags */
+  --corner: var(--radius-pill);
+  --r-sm: var(--radius-field);
+  --r: var(--radius-field);
+  --r-img: var(--radius-card);
+  --r-card: var(--radius-card);
+  --r-lg: var(--radius-panel);
+  --shadow-soft: 0 18px 40px -24px rgba(14, 10, 8, 0.45);
 }
 
 body { background: var(--cream); color: var(--body); }
-::selection { background: var(--sunset); color: #fff; }
+::selection { background: var(--sunset); color: #1a120c; }
+:focus-visible { outline: 2px solid var(--sunset); outline-offset: 3px; border-radius: 4px; }
+html { scrollbar-color: var(--bronze) var(--cream); }
+input, textarea, select { caret-color: var(--sunset); }
 
 /* ---------- Eyebrows: small caps label with a short rule, as in the design ---------- */
 .eyebrow-rule { display: flex; align-items: center; gap: 0.9rem; margin: 0 0 1.1rem; font-family: var(--sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--terra-dark); }
 .eyebrow-rule::after { content: ""; width: 3.2rem; height: 1px; background: currentColor; opacity: 0.6; }
-.eyebrow-rule.is-light { color: var(--gold-soft); }
+.eyebrow-rule.is-light, .is-dark .eyebrow-rule, .rooms-cine .eyebrow-rule { color: var(--gold-soft); }
 .heading .eyebrow-rule { margin-bottom: 1rem; }
 
 /* ---------- Headlines ---------- */
 .title, .heading .title { color: var(--ink); }
-em { font-style: italic; color: var(--sunset); }
+/* The italic accent: sunset orange on the dark grounds; on cream it falls to 2.6:1, so light sections use terra-dark. */
+em { font-style: italic; color: var(--terra-dark); }
+.cine-hero em, .is-dark em, .scene em, .final-cta em, .site-footer em, .rs-story em, .rs-discover em, .dusk em, .suites em { color: var(--sunset); }
 h1 em, h2 em, .hx-accent { font-style: italic !important; color: var(--sunset-2) !important; font-weight: 400; }
 
 /* ---------- Buttons: pills ---------- */
@@ -84,8 +96,10 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 .cr-btn { border-radius: 50% !important; }
 
 /* ---------- Header: discreet over the hero, charcoal once scrolled ---------- */
-.site-header { border-bottom-color: transparent; }
-.site-header.is-solid, body:not(.has-hero) .site-header { background: rgba(23, 18, 15, 0.94) !important; border-color: rgba(236, 189, 133, 0.14) !important; }
+/* Transparent only while main.js has confirmed the hero photograph is behind it (no `is-solid`); solid before scripts run
+   (html without .js), on pages without a hero, and everywhere else. The fade is short and ends before content arrives. */
+.site-header { border-bottom-color: transparent; transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.4s var(--ease) !important; }
+.site-header.is-solid, body:not(.has-hero) .site-header, html:not(.js) .site-header { background: rgba(23, 18, 15, 0.94) !important; border-color: rgba(236, 189, 133, 0.14) !important; }
 .site-header .brand-name, .site-header .nav-main a, .site-header .nav-toggle, .site-header .cart-btn, .site-header .lang-opt { color: var(--on-night) !important; }
 .site-header .brand-line { color: rgba(248, 241, 231, 0.7) !important; }
 .site-header .lang-opt:not(.is-on) { color: rgba(248, 241, 231, 0.6) !important; }
@@ -96,8 +110,33 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 .site-header .book-btn .icon { display: inline-block !important; width: 1rem; height: 1rem; }
 .site-header .book-btn:hover { --bg: var(--sunset) !important; --fg: #1a120c !important; --bd: var(--sunset) !important; }
 .brand-mark { background: transparent !important; }
-.mobile-nav { background: var(--night); color: var(--on-night); }
-.mobile-nav-links a { color: var(--on-night); }
+/* Mobile / tablet / portrait-monitor menu: a drawer from the right, not a full black screen. The page stays visible,
+   dimmed, beside it; a tap on the dimmed page, the close button or Escape closes it. Warm brown (lighter than the
+   charcoal sections), white type at a readable but not oversized size, 44px+ touch rows. */
+dialog.mobile-nav { inset: 0 0 0 auto; width: min(23rem, 88vw); height: 100dvh; margin: 0; padding: 0 0 max(1.2rem, env(safe-area-inset-bottom)); border-radius: var(--radius-panel) 0 0 var(--radius-panel); background: #2b2119; color: var(--on-night); box-shadow: -30px 0 60px -30px rgba(0, 0, 0, 0.55); overflow-y: auto; }
+dialog.mobile-nav[open] { animation: drawerIn 0.32s var(--ease); }
+dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+@keyframes drawerIn { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.mobile-nav-top { height: auto; padding: 1rem 1rem 1rem 1.4rem; border-bottom: 1px solid rgba(236, 189, 133, 0.16); }
+.mobile-nav-top .brand { min-height: 44px; }
+.mobile-nav-top .brand-mark { width: 38px; height: 38px; }
+.mobile-nav-top .brand-name { font-size: 1.45rem; color: var(--on-night); }
+.mobile-nav-top .icon-btn { width: 44px; height: 44px; border-radius: 50%; color: var(--on-night); border: 1px solid rgba(248, 241, 231, 0.3); background: transparent; }
+.mobile-nav-top .icon-btn:hover { background: rgba(248, 241, 231, 0.1); }
+.mobile-nav-links { padding: 0.6rem 1.4rem; }
+.mobile-nav-links a { display: flex; align-items: center; min-height: 48px; padding: 0.2rem 0; font-family: var(--serif); font-size: 1.32rem; line-height: 1.2; color: var(--on-night); text-decoration: none; border-bottom: 1px solid rgba(236, 189, 133, 0.13); }
+.mobile-nav-links a:last-child { border-bottom: 0; }
+.mobile-nav-links a:hover { color: var(--gold-soft); }
+.mobile-nav-links a[aria-current="page"] { color: var(--sunset-2); }
+.mobile-nav-cta { gap: 0.6rem; padding: 1rem 1.4rem 0.4rem; }
+.mobile-nav-cta .btn { min-height: 48px; }
+.mobile-nav-cta .btn-dark { --bg: var(--sunset); --fg: #1a120c; }
+.mobile-nav-cta .btn-outline { --bd: rgba(248, 241, 231, 0.55); --fg: var(--on-night); }
+.mobile-nav-cta .btn-outline:hover { --bg: var(--on-night); --fg: var(--night); }
+#mobile-nav .lang { justify-self: center; margin-top: 0.3rem; }
+#mobile-nav .lang-opt { color: rgba(248, 241, 231, 0.7); }
+#mobile-nav .lang-opt.is-on { color: var(--on-night) !important; text-decoration-color: var(--sunset); } /* beats editorial.css ink !important */
+@media (prefers-reduced-motion: reduce) { dialog.mobile-nav[open] { animation: none; } }
 
 /* Seven links, the language, the order and «Comer & Ficar»: tighter spacing so nothing touches. */
 @media (min-width: 1360px) {
@@ -108,12 +147,23 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 }
 
 /* ---------- Home hero: the sunset, the line, the enquiry panel ---------- */
-.rs-hero { min-height: max(100svh, 760px); display: flex; flex-direction: column; justify-content: flex-start; }
+/* height: auto overrides cinema.css's fixed 100svh: on short screens (1024×768, landscape tablets) the hero grows to hold
+   the booking panel instead of clipping its action under overflow: hidden. */
+.rs-hero { height: auto; min-height: max(100svh, 760px); display: flex; flex-direction: column; justify-content: flex-start; }
 .rs-hero .hx-bg img { object-position: 55% 55%; filter: brightness(1.12) saturate(1.12) contrast(1.04); }
 .rs-hero .hx-shade { background:
   linear-gradient(90deg, rgba(14, 10, 8, 0.82) 0%, rgba(14, 10, 8, 0.45) 38%, rgba(14, 10, 8, 0) 70%),
   linear-gradient(180deg, rgba(14, 10, 8, 0.6) 0%, rgba(14, 10, 8, 0) 22%, rgba(14, 10, 8, 0) 55%, rgba(14, 10, 8, 0.75) 100%); }
-.rs-hero .hx-content { position: relative; bottom: auto !important; transform: none; padding-top: calc(var(--header-h) + clamp(3rem, 9vh, 7rem)); padding-bottom: 2rem; }
+.rs-hero .hx-content { position: relative; bottom: auto !important; transform: none; padding-top: calc(var(--header-h) + clamp(2.5rem, 7vh, 5.5rem)); padding-bottom: 2rem; }
+/* Text on the left, the drone film on the right in a rounded 4:5 frame. The frame's height is capped by the viewport so
+   the booking panel below always fits; its poster (the film's first frame) is there from the first paint. */
+.rs-hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(2rem, 5vw, 5rem); align-items: end; }
+.rs-hero-film { position: relative; justify-self: end; width: min(100%, 24rem, calc((100svh - 25rem) * 0.8)); min-width: 15rem; aspect-ratio: 4 / 5; margin: 0; overflow: hidden; border-radius: var(--radius-panel); background: var(--night-2); box-shadow: 0 0 0 1px rgba(236, 189, 133, 0.28), var(--shadow-soft); isolation: isolate; }
+.rs-hero-film .media { position: absolute; inset: 0; border-radius: 0 !important; z-index: -2; }
+.rs-hero-film .media img { width: 100%; height: 100%; object-fit: cover; filter: none; }
+.rs-hero-film .hx-video { z-index: -1; border-radius: 0; transition: opacity 1.2s ease; }
+.rs-hero-film figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 0.8rem; padding: 2.2rem 1rem 0.85rem; font-size: 0.74rem; color: rgba(248, 241, 231, 0.85); background: linear-gradient(0deg, rgba(14, 10, 8, 0.72), rgba(14, 10, 8, 0)); }
+.rs-hero-film figcaption b { color: var(--gold-soft); font-weight: 700; }
 .rs-hero .hx-title { font-size: clamp(3rem, 5.2vw + 0.5rem, 6.2rem); line-height: 0.98; letter-spacing: -0.02em; max-width: 13.5ch; }
 /* A mild warm grade on the real sunset photograph (colour only; nothing added to the picture). */
 .rs-hero .hx-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(232, 120, 42, 0.05) 0%, rgba(232, 120, 42, 0.28) 55%, rgba(198, 47, 33, 0.18) 100%); mix-blend-mode: soft-light; pointer-events: none; }
@@ -124,63 +174,85 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 .rs-booking { position: relative; z-index: 4; margin-top: auto; padding-bottom: clamp(2rem, 6vh, 3.5rem); }
 
 /* The enquiry panel: two modes as pills, the fields in one row, the orange action */
-.booking-card.is-hero { max-width: 66rem; margin: 0 auto; padding: 0.9rem; border-radius: 28px; background: rgba(23, 18, 15, 0.72); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid rgba(236, 189, 133, 0.22); color: var(--on-night); box-shadow: none; }
-.booking-card.is-hero .bc-tabs { display: inline-flex; gap: 0.3rem; padding: 0.25rem; margin: 0 0 0.7rem; border-radius: 999px; background: rgba(248, 241, 231, 0.08); }
-.booking-card.is-hero .bc-tabs button { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 40px; padding: 0 1.1rem; border: 0; border-radius: 999px; background: transparent; color: var(--on-night); font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+/* The enquiry panel. One spacing step (--bc-gap) between every element; each field is its own rounded surface; the action
+   is the only filled orange element. Tabs above, a short note below. */
+.booking-card.is-hero { --bc-gap: 0.6rem; max-width: 76rem; margin: 0 auto; padding: 1rem; border-radius: var(--radius-panel); background: rgba(23, 18, 15, 0.74); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid rgba(236, 189, 133, 0.22); color: var(--on-night); box-shadow: var(--shadow-soft); }
+.booking-card.is-hero .bc-tabs { display: inline-flex; gap: 0.25rem; padding: 0.25rem; margin: 0 0 0.9rem; border-radius: var(--radius-pill); background: rgba(248, 241, 231, 0.08); }
+.booking-card.is-hero .bc-tabs button { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 42px; padding: 0 1.15rem; border: 0; border-radius: var(--radius-pill); background: transparent; color: rgba(248, 241, 231, 0.82); font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; }
+.booking-card.is-hero .bc-tabs button:hover { color: var(--on-night); background: rgba(248, 241, 231, 0.08); }
 .booking-card.is-hero .bc-tabs button[aria-selected="true"] { background: var(--on-night); color: var(--night); }
 .booking-card.is-hero .bc-tabs .icon { width: 1rem; height: 1rem; }
 .booking-card.is-hero .bc-hint { display: none; }
-.booking-card.is-hero .bc-row { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)) max-content; align-items: stretch; gap: 0; }
+.booking-card.is-hero .bc-row { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)) max-content; align-items: stretch; gap: var(--bc-gap); }
 .booking-card.is-hero [data-bc-panel="table"] { --n: 3; }
 .booking-card.is-hero [data-bc-panel="room"] { --n: 5; }
 .booking-card.is-hero .bc-row[hidden] { display: none !important; }
-.booking-card.is-hero .bc-field { display: grid; align-content: center; gap: 0.15rem; min-width: 0; padding: 0.55rem 1.1rem; border-radius: 0; background: transparent !important; color: var(--on-night); }
-.booking-card.is-hero .bc-field + .bc-field { border-left: 1px solid rgba(236, 189, 133, 0.22); }
-.booking-card.is-hero .bc-field > span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-soft); }
-.booking-card.is-hero .bc-field .pk-btn, .booking-card.is-hero .bc-field input, .booking-card.is-hero .bc-field select { color: var(--on-night) !important; background: transparent !important; border: 0 !important; padding-inline: 0 !important; min-height: 34px; font-size: 0.95rem; }
+.booking-card.is-hero .bc-field { display: grid; align-content: center; gap: 0.2rem; min-width: 0; padding: 0.6rem 0.8rem; border: 1px solid rgba(236, 189, 133, 0.18) !important; border-radius: var(--radius-field); background: rgba(248, 241, 231, 0.06) !important; color: var(--on-night); transition: border-color 0.2s ease, background-color 0.2s ease; }
+.booking-card.is-hero .bc-field::before { content: none !important; }
+.booking-card.is-hero .bc-field:hover { border-color: rgba(236, 189, 133, 0.42) !important; }
+.booking-card.is-hero .bc-field:focus-within { border-color: var(--sunset) !important; background: rgba(248, 241, 231, 0.1) !important; }
+.booking-card.is-hero .bc-field > span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-soft); }
+.booking-card.is-hero .bc-field .pk-btn, .booking-card.is-hero .bc-field input, .booking-card.is-hero .bc-field select { color: var(--on-night) !important; background: transparent !important; border: 0 !important; padding-inline: 0 !important; min-height: 32px; font-size: 0.95rem; }
+.booking-card.is-hero .bc-field .pk-btn:focus-visible { outline: none; }
 .booking-card.is-hero .bc-field .pk-btn .icon { color: var(--gold-soft); }
-.booking-card.is-hero .bc-field.has-error { box-shadow: inset 0 -2px 0 var(--sunset); }
-.booking-card.is-hero .bc-submit { grid-column: auto; align-self: center; min-height: 54px; margin-left: 0.6rem; padding-inline: 1.6rem; border-radius: 999px; --bg: var(--sunset); --fg: #1a120c; white-space: nowrap; }
+.booking-card.is-hero .bc-field .pk-btn { gap: 0.45rem; }
+.booking-card.is-hero .bc-field .pk-val { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.booking-card.is-hero .bc-field.has-error { border-color: var(--sunset) !important; box-shadow: none; }
+.booking-card.is-hero .bc-submit { align-self: stretch; min-height: 58px; margin: 0; padding-inline: 1.6rem; border-radius: var(--radius-pill); --bg: var(--sunset); --fg: #1a120c; white-space: nowrap; }
 .booking-card.is-hero .bc-submit:hover { --bg: var(--sunset-2); }
-.booking-card.is-hero .bc-error { margin: 0.6rem 0 0 0.4rem; color: #ffd2b3; font-size: 0.86rem; }
-.booking-card.is-hero .bc-note { margin: 0.6rem 0.4rem 0.1rem; font-size: 0.78rem; color: rgba(248, 241, 231, 0.68); }
-@media (max-width: 1023px) {
-  .booking-card.is-hero .bc-row { grid-auto-flow: row; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
-  .booking-card.is-hero .bc-field { border-left: 0 !important; border-radius: 14px; background: rgba(248, 241, 231, 0.07) !important; }
-  .booking-card.is-hero .bc-submit { grid-column: 1 / -1; margin: 0.3rem 0 0; }
+.booking-card.is-hero .bc-submit:active { transform: translateY(1px); }
+.booking-card.is-hero .bc-error { margin: 0.7rem 0 0; color: #ffd2b3; font-size: 0.86rem; }
+.booking-card.is-hero .bc-note { margin: 0.75rem 0.2rem 0; font-size: 0.78rem; color: rgba(248, 241, 231, 0.7); }
+/* Five room fields and the action need about 1300px to keep their labels whole; below that the room panel drops the
+   action to its own row (the three-field table panel keeps one row down to 1180px). */
+@media (min-width: 1181px) and (max-width: 1340px) {
+  .booking-card.is-hero [data-bc-panel="room"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .booking-card.is-hero [data-bc-panel="room"] .bc-submit { grid-column: 1 / -1; min-height: 50px; }
 }
-@media (max-width: 560px) {
+@media (max-width: 1180px) {
+  .booking-card.is-hero .bc-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .booking-card.is-hero [data-bc-panel="room"] .bc-field:nth-of-type(4) { grid-column: span 1; }
+  .booking-card.is-hero [data-bc-panel="room"] .bc-field:nth-of-type(5) { grid-column: span 2; }
+  .booking-card.is-hero .bc-submit { grid-column: 1 / -1; min-height: 52px; }
+}
+@media (max-width: 640px) {
+  .booking-card.is-hero { padding: 0.8rem; }
   .booking-card.is-hero .bc-row { grid-template-columns: 1fr 1fr; }
   .booking-card.is-hero [data-bc-panel="room"] .bc-field:nth-of-type(5), .booking-card.is-hero [data-bc-panel="table"] .bc-field:nth-of-type(3) { grid-column: 1 / -1; }
   .booking-card.is-hero .bc-field { padding: 0.5rem 0.8rem; }
-  .booking-card.is-hero .bc-field .pk-btn { font-size: 0.88rem; }
+  .booking-card.is-hero .bc-field .pk-btn { font-size: 0.9rem; }
   .booking-card.is-hero .bc-tabs { display: flex; }
   .booking-card.is-hero .bc-tabs button { flex: 1; justify-content: center; padding-inline: 0.6rem; }
 }
 @media (max-width: 860px) {
   .rs-hero { min-height: auto; }
-  .rs-hero .hx-content { padding-top: calc(var(--header-h) + 3.5rem); }
+  .rs-hero .hx-content { padding-top: calc(var(--header-h) + 2.5rem); }
+  /* On a narrow screen the film becomes a short landscape strip under the headline, so the hero does not grow tall. */
+  .rs-hero-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .rs-hero-film { justify-self: stretch; width: 100%; min-width: 0; aspect-ratio: 16 / 9; max-height: 13.5rem; }
+  .rs-hero-film .media img, .rs-hero-film .hx-video { object-position: 50% 40%; }
   .rs-hero-cap { position: static; max-width: none; padding: 0 var(--gutter) 1rem; text-align: left; flex-direction: column; gap: 0.1rem; }
   .rs-booking { margin-top: 1.5rem; }
 }
 
 /* ---------- Welcome: the introduction and four photographic cards ---------- */
 .rs-welcome { background: var(--cream); }
-.wc-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+.wc-grid { display: grid; grid-template-columns: minmax(0, 3.5fr) minmax(0, 8.5fr); gap: clamp(2rem, 3.5vw, 3.5rem); align-items: center; }
 .wc-heading { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 1.8vw + 1.3rem, 3.3rem); line-height: 1.05; color: var(--ink); letter-spacing: -0.01em; }
 .wc-body { margin: 1.3rem 0 1.7rem; max-width: 26em; color: var(--body); }
-.wc-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.7rem, 1vw, 1rem); }
-.wc-card { position: relative; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 3 / 4.3; overflow: hidden; border-radius: var(--r-card); color: var(--on-night); text-decoration: none; isolation: isolate; background: var(--night); }
+.wc-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.75rem, 1.1vw, 1.1rem); }
+.wc-card { position: relative; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 3 / 4.6; overflow: hidden; border-radius: var(--radius-card); color: var(--on-night); text-decoration: none; isolation: isolate; background: var(--night); box-shadow: var(--shadow-soft); transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+@media (hover: hover) { .wc-card:hover { transform: translateY(-3px); box-shadow: 0 26px 50px -28px rgba(14, 10, 8, 0.6); } }
 .wc-media, .wc-media .media { position: absolute; inset: 0; z-index: -2; border-radius: 0 !important; }
 .wc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .wc-card:hover .wc-media img { transform: scale(1.05); }
 .wc-card::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 10, 8, 0) 30%, rgba(14, 10, 8, 0.55) 55%, rgba(14, 10, 8, 0.92) 100%); }
-.wc-icon { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; margin: 0 1.1rem 0.7rem; border: 1px solid rgba(248, 241, 231, 0.6); border-radius: 50%; }
-.wc-icon .icon { width: 1.1rem; height: 1.1rem; }
-.wc-text { display: grid; gap: 0.35rem; padding: 0 1.1rem 1.2rem; }
-.wc-title { font-family: var(--serif); font-weight: 500; font-size: 1.45rem; line-height: 1.1; }
-.wc-line { font-size: 0.84rem; line-height: 1.45; color: rgba(248, 241, 231, 0.82); }
-.wc-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; font-size: 0.84rem; font-weight: 600; }
+.wc-icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 1.25rem 0.8rem; border: 1px solid rgba(236, 189, 133, 0.6); border-radius: 50%; color: var(--gold-soft); background: rgba(14, 10, 8, 0.35); }
+.wc-icon .icon { width: 1.15rem; height: 1.15rem; }
+.wc-text { display: grid; gap: 0.4rem; padding: 0 1.25rem 1.35rem; }
+.wc-title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.45rem, 0.5vw + 1.2rem, 1.75rem); line-height: 1.1; }
+.wc-line { font-size: 0.88rem; line-height: 1.45; color: rgba(248, 241, 231, 0.85); }
+.wc-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.55rem; font-size: 0.86rem; font-weight: 600; }
 .wc-link .icon { width: 0.95rem; height: 0.95rem; transition: transform 0.3s var(--ease); }
 .wc-card:hover .wc-link .icon { transform: translateX(3px); }
 .wc-card:focus-visible { outline: 2px solid var(--sunset); outline-offset: 3px; }
@@ -189,20 +261,20 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
   .wc-grid { grid-template-columns: 1fr; }
   .wc-intro { max-width: 40rem; }
 }
-@media (max-width: 900px) { .wc-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wc-card { aspect-ratio: 4 / 4.6; } }
-@media (max-width: 480px) { .wc-cards { grid-template-columns: 1fr; } .wc-card { aspect-ratio: 4 / 3.4; } }
+@media (max-width: 900px) { .wc-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wc-card { aspect-ratio: 4 / 4.4; } }
+@media (max-width: 480px) { .wc-cards { grid-template-columns: 1fr; } .wc-card { aspect-ratio: 4 / 3.2; } }
 
 /* ---------- Our Story: dark, the photograph on the right ---------- */
-.rs-story, .rs-discover { position: relative; display: flex; align-items: center; min-height: clamp(30rem, 62vh, 44rem); background: var(--night); color: var(--on-night); overflow: hidden; isolation: isolate; }
-.rs-story-media { position: absolute; top: 0; bottom: 0; right: 0; width: 72%; z-index: -2; }
+.rs-story, .rs-discover { position: relative; display: flex; align-items: center; min-height: clamp(26rem, 52vh, 36rem); background: var(--night); color: var(--on-night); overflow: hidden; isolation: isolate; }
+.rs-story-media { position: absolute; top: 0; bottom: 0; right: 0; width: 64%; z-index: -2; }
 .rs-story-media .media, .rs-discover-media .media { position: absolute; inset: 0; }
 .rs-story-media img, .rs-discover-media img { width: 100%; height: 100%; object-fit: cover; }
-.rs-story-media img { filter: brightness(1.2) saturate(1.1); }
-.rs-story-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--night) 0%, var(--night) 28%, rgba(23, 18, 15, 0.55) 52%, rgba(23, 18, 15, 0) 75%); }
-.rs-story-text { position: relative; padding-block: clamp(4rem, 8vw, 7rem); }
-.rs-story-text > * { max-width: 28rem; }
-.rs-story-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.3rem, 2.2vw + 1.3rem, 3.6rem); line-height: 1.05; color: var(--on-night); }
-.rs-story-body { margin: 1.3rem 0 1.8rem; color: var(--on-night-2); }
+.rs-story-media img { object-position: 50% 60%; }
+.rs-story-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, var(--night) 0%, var(--night) 34%, rgba(23, 18, 15, 0.6) 46%, rgba(23, 18, 15, 0) 64%); }
+.rs-story-text { position: relative; padding-block: clamp(3rem, 6vw, 5rem); }
+.rs-story-text > * { max-width: 27rem; }
+.rs-story-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 2vw + 1.3rem, 3.4rem); line-height: 1.05; color: var(--on-night); }
+.rs-story-body { margin: 1.1rem 0 1.5rem; color: var(--on-night-2); }
 .rs-story-cap { position: absolute; right: var(--gutter); bottom: 1rem; z-index: 2; display: flex; gap: 0.8rem; margin: 0; max-width: min(30rem, 50vw); font-size: 0.74rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
 .rs-story-cap b { flex: none; color: var(--gold-soft); }
 @media (max-width: 860px) {
@@ -216,52 +288,79 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 /* ---------- Accommodation: two wide panels with the name over the photograph ---------- */
 .rs-stay { background: var(--cream); }
 .st-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; }
-.st-panels { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: clamp(0.8rem, 1.4vw, 1.4rem); }
-.st-media { position: relative; display: block; aspect-ratio: 16 / 10.5; overflow: hidden; border-radius: var(--r-card); isolation: isolate; color: var(--on-night); text-decoration: none; }
+/* Both suites share one frame: equal columns, the same 4:3 proportion, the same radius, so neither looks more important. */
+.st-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem); align-items: start; }
+.st-media { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-card); isolation: isolate; color: var(--on-night); text-decoration: none; box-shadow: var(--shadow-soft); }
 .st-media .media { position: absolute; inset: 0; border-radius: 0 !important; z-index: -2; }
 .st-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .st-media:hover img { transform: scale(1.04); }
 .st-media::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 10, 8, 0) 50%, rgba(14, 10, 8, 0.72) 100%); }
 .st-name { position: absolute; left: 0; right: 0; bottom: 1rem; text-align: center; font-family: var(--serif); font-size: clamp(1.4rem, 0.8vw + 1rem, 1.9rem); }
 .st-media .media.is-placeholder::after { display: block !important; top: 0.8rem; right: 0.8rem; left: auto; bottom: auto; padding: 0.18rem 0.6rem; font-size: 0.7rem; background: rgba(14, 10, 8, 0.7); color: var(--on-night); }
-.st-beds { margin: 0.9rem 0 0.4rem; font-size: 0.92rem; color: var(--body); }
+.st-beds { display: flex; align-items: center; gap: 0.5rem; min-height: 1.6rem; margin: 1rem 0 0.5rem; font-size: 0.92rem; color: var(--body); }
+.st-beds .icon { width: 1.05rem; height: 1.05rem; color: var(--terra-dark); }
 .st-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
 .st-links .text-link { font-size: 0.92rem; }
 @media (max-width: 1100px) { .st-grid { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .st-panels { grid-template-columns: 1fr; } }
 
-/* ---------- Guest reviews: dark, the heading and scores on the left, one summary at a time ---------- */
+/* ---------- Guest reviews: dark; heading beside the two verified scores, then the summaries as cards ---------- */
 .reviews-ed.is-dark { background: var(--night); color: var(--on-night); border: 0; }
-.rv-split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
-.reviews-ed.is-dark .rv-head { display: block; margin: 0; padding-right: clamp(0rem, 3vw, 3rem); border-right: 1px solid var(--line-night); }
-.reviews-ed.is-dark .rv-title { color: var(--on-night); font-size: clamp(2.3rem, 2.4vw + 1.2rem, 3.8rem); line-height: 1.04; }
-.reviews-ed.is-dark .rv-scores { grid-template-columns: 1fr 1fr; margin-top: 2rem; border-color: var(--line-night); }
-.reviews-ed.is-dark .rv-score { color: var(--on-night); padding: 1.2rem 1rem 1.2rem 0; grid-template-columns: 1fr; grid-template-areas: "plat" "num" "word" "go"; row-gap: 0.4rem; align-items: start; }
-.reviews-ed.is-dark .rv-score + .rv-score { border-color: var(--line-night); padding-left: 1.2rem; }
-.reviews-ed.is-dark .rv-num { font-size: clamp(3rem, 2.4vw + 1.6rem, 4.4rem); color: var(--gold-soft); }
+.reviews-ed.is-dark .rv-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 1.5rem clamp(2rem, 5vw, 5rem); align-items: end; margin: 0 0 clamp(2rem, 4vw, 3rem); padding: 0; border: 0; }
+.reviews-ed.is-dark .rv-title { color: var(--on-night); font-size: clamp(2.3rem, 2.4vw + 1.2rem, 3.8rem); line-height: 1.04; margin: 0; }
+.reviews-ed.is-dark .rv-scores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; margin: 0; border: 0; }
+.reviews-ed.is-dark .rv-score { color: var(--on-night); padding: clamp(1.1rem, 2vw, 1.5rem); grid-template-columns: auto 1fr; grid-template-areas: "plat plat" "num num" "meter meter" "word word" "go go"; row-gap: 0.55rem; align-items: center; border: 1px solid var(--line-night); border-radius: var(--radius-panel); background: rgba(248, 241, 231, 0.04); transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease); }
+.reviews-ed.is-dark .rv-score + .rv-score { border-left: 1px solid var(--line-night); padding-left: clamp(1.1rem, 2vw, 1.5rem); }
+.reviews-ed.is-dark .rv-score:hover { background: rgba(248, 241, 231, 0.08); border-color: rgba(236, 189, 133, 0.4); transform: translateY(-2px); }
+.reviews-ed.is-dark .rv-score:active { transform: none; }
+.reviews-ed.is-dark .rv-plat { margin: 0; font-size: 0.86rem; letter-spacing: 0.02em; color: var(--on-night-2); }
+.reviews-ed.is-dark .rv-num { font-size: clamp(2.8rem, 2vw + 1.6rem, 3.8rem); line-height: 0.9; color: var(--gold-soft); }
 .reviews-ed.is-dark .rv-num small, .reviews-ed.is-dark .rv-word, .reviews-ed.is-dark .rv-checked { color: var(--on-night-2); }
+.reviews-ed.is-dark .rv-word { font-size: 0.9rem; }
 .reviews-ed.is-dark .rv-go { color: var(--on-night); text-decoration-color: var(--sunset); }
-.rv-carousel { padding-top: 0.4rem; }
-.rv-carousel .rv-feature-text { font-family: var(--serif); font-style: italic; font-size: clamp(1.6rem, 1.1vw + 1.2rem, 2.4rem); line-height: 1.25; color: var(--on-night); }
-.rv-carousel .rv-by { color: var(--on-night-2); }
-.rv-carousel .rv-by span:first-child { color: var(--on-night); }
-.rv-carousel .rv-by a { color: var(--gold-soft); text-decoration-color: var(--sunset); }
-.rv-carousel:not(.is-ready) .rv-slide + .rv-slide { margin-top: 2rem; }
-.rv-nav { display: flex; align-items: center; gap: 1rem; margin-top: 1.8rem; }
-.rv-arrow { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid rgba(248, 241, 231, 0.45); border-radius: 50%; background: transparent; color: var(--on-night); cursor: pointer; }
-.rv-arrow:hover { background: var(--on-night); color: var(--night); }
-.rv-arrow .icon { width: 1.1rem; height: 1.1rem; }
-.rv-count { margin: 0; font-size: 0.86rem; color: var(--on-night-2); font-variant-numeric: tabular-nums; }
-.reviews-ed.is-dark .rv-note { color: var(--on-night-2); margin-top: 1.4rem; }
+.reviews-ed.is-dark .rv-checked { margin-top: 0.7rem; }
+.rv-score > .rv-bubbles, .rv-score > .rv-bar { grid-area: meter; }
+/* Tripadvisor bubbles: each circle filled by the share of the score it covers. */
+.rv-bubbles { display: inline-flex; gap: 0.3rem; }
+.rv-bubbles i { width: 0.95rem; height: 0.95rem; border-radius: 50%; border: 1.5px solid var(--gold-soft); background: linear-gradient(90deg, var(--gold-soft) var(--f), transparent var(--f)); }
+/* Booking.com bar: the score out of 10. */
+.rv-bar { display: block; width: 100%; max-width: 11rem; height: 0.42rem; border-radius: var(--radius-pill); background: rgba(248, 241, 231, 0.14); overflow: hidden; }
+.rv-bar i { display: block; width: var(--p); height: 100%; border-radius: inherit; background: var(--gold-soft); }
+/* The summaries: the featured one across the full width, the others in a row of three beneath it. */
+.rv-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; }
+.rv-card { display: flex; flex-direction: column; gap: 0.9rem; padding: clamp(1.1rem, 2vw, 1.5rem); border-radius: var(--radius-card); background: rgba(248, 241, 231, 0.05); border: 1px solid var(--line-night); }
+.rv-card.is-featured { grid-column: 1 / -1; padding: clamp(1.5rem, 3vw, 2.6rem); border-radius: var(--radius-panel); background: rgba(236, 189, 133, 0.08); border-color: rgba(236, 189, 133, 0.22); justify-content: space-between; }
+.rv-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+.rv-card-top .rv-bubbles i { width: 0.75rem; height: 0.75rem; }
+.rv-card-plat { margin-left: auto; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; color: var(--on-night-2); padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); border: 1px solid var(--line-night); }
+.rv-card-text { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--on-night); text-wrap: pretty; }
+.rv-card.is-featured .rv-card-text { max-width: 34em; font-family: var(--serif); font-style: italic; font-size: clamp(1.5rem, 1vw + 1.15rem, 2.2rem); line-height: 1.25; }
+.rv-card-by { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.5rem 1rem; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid var(--line-night); font-size: 0.84rem; }
+.rv-card-by p { margin: 0; display: grid; gap: 0.15rem; }
+.rv-author { color: var(--on-night); font-weight: 600; }
+.rv-meta { color: var(--on-night-2); }
+.rv-card-by a { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 44px; color: var(--gold-soft); text-decoration: underline; text-decoration-color: var(--sunset); text-underline-offset: 0.35em; }
+.rv-card-by a:hover { text-decoration-thickness: 2px; }
+.rv-card-by .icon { width: 0.9rem; height: 0.9rem; }
+.reviews-ed.is-dark .rv-note { color: var(--on-night-2); margin: 1.2rem 0 0; font-size: 0.86rem; }
 .reviews-ed.is-dark .rv-own { margin-top: clamp(2.5rem, 5vw, 4rem); }
 .reviews-ed.is-dark .rv-own .rv-form { border-top-color: var(--line-night); color: var(--on-night); }
 .reviews-ed.is-dark .rv-own .rv-form > summary { color: var(--on-night); }
-.reviews-ed.is-dark .rv-form .booking-form { color: var(--text); background: var(--cream); padding: clamp(1.2rem, 3vw, 2rem); border-radius: var(--r-card); }
+.reviews-ed.is-dark .rv-form .booking-form { color: var(--text); background: var(--cream); padding: clamp(1.2rem, 3vw, 2rem); border-radius: var(--radius-panel); }
 .reviews-ed.is-dark .rv-form-lead { color: var(--on-night-2); }
 @media (max-width: 960px) {
-  .rv-split { grid-template-columns: 1fr; }
-  .reviews-ed.is-dark .rv-head { border-right: 0; padding-right: 0; padding-bottom: 2rem; border-bottom: 1px solid var(--line-night); }
+  .reviews-ed.is-dark .rv-head { grid-template-columns: 1fr; }
+  .rv-cards { grid-template-columns: 1fr; }
 }
+@media (max-width: 420px) { .reviews-ed.is-dark .rv-scores { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .reviews-ed.is-dark .rv-score:hover { transform: none; } }
+
+/* ---------- Suite pages: the confirmed amenities, each with its icon ---------- */
+.si-amen { margin-top: 1.6rem; }
+.si-amen-title { margin: 0 0 0.7rem; font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+.si-amen ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.si-amen li { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 48px; padding: 0.5rem 1rem 0.5rem 0.8rem; border-radius: var(--radius-field); background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-size: 0.95rem; font-weight: 600; }
+.si-amen .icon { width: 1.5rem; height: 1.5rem; flex: none; color: var(--terra-dark); }
 
 /* ---------- Discover Liquiçá: the full-width photograph ---------- */
 .rs-discover-media { position: absolute; inset: 0; z-index: -2; }
@@ -281,6 +380,9 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
   linear-gradient(90deg, rgba(14, 10, 8, 0.78) 0%, rgba(14, 10, 8, 0.3) 50%, rgba(14, 10, 8, 0) 75%),
   linear-gradient(180deg, rgba(14, 10, 8, 0.55) 0%, rgba(14, 10, 8, 0) 25%, rgba(14, 10, 8, 0.6) 100%); }
 .rooms-cine { background: var(--night); }
+/* resort.css's `.heading .title { ink }` (0,2,0, later) beat cinema.css's `.rooms-cine .title` here: dark on dark. */
+.rooms-cine .heading .title { color: var(--on-night); }
+.rooms-cine .room-row.room-is-family .from strong { color: var(--ink); }
 .rooms-cine .room-row.room-is-family { box-shadow: 0 0 0 100vmax var(--cream); background: var(--cream); }
 .suite-spec, .dsc-preview, .booking { background: var(--paper); }
 .ab-intro, .ab-what { background: var(--cream); }
@@ -291,7 +393,6 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 section.menu .menu-nav a[aria-current="true"] { border-bottom-color: var(--sunset); }
 .field input, .field select, .field textarea, .pk-btn { border-radius: var(--r-sm); }
 .form-card, .book-dialog, .room-ask, .wa-review { border-radius: var(--r-card); }
-.pay-note, .dine-in, .room-sheet-note { border-left-color: var(--sunset) !important; }
 .book-dialog .bc-tabs button { border-radius: 999px; }
 .ev-progress li[data-progress] { border-top-color: var(--sunset); }
 .gx-filter { border-radius: 999px; }
@@ -301,6 +402,7 @@ section.menu .menu-nav a[aria-current="true"] { border-bottom-color: var(--sunse
 .site-footer .btn, .contact-actions .btn, .sr-actions .btn, .dn-actions .btn, .room-foot .btn, section.menu .menu-cat .dish-add, .booking .btn, .form-actions .btn, .cart .btn, .pick .btn { border-radius: 999px !important; }
 section.menu .menu-search, section.menu .menu-search input { border-radius: 999px; }
 section.menu .menu-cat .sample-tag { border-radius: 999px; }
+section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
 
 /* ---------- Footer: charcoal, sunset accents ---------- */
 .site-footer::before { height: 3px; background: linear-gradient(90deg, var(--logo-red), var(--sunset) 40%, var(--gold) 100%); }

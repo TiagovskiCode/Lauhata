@@ -137,8 +137,9 @@ dialog.pick::backdrop, dialog.cart::backdrop { background: rgba(11, 30, 26, 0.55
 
 /* ---------- Cart drawer ---------- */
 dialog.cart {
-  width: min(460px, 100%); max-width: none; height: 100%; max-height: none; margin: 0 0 0 auto; padding: 0; border: 0; overflow: hidden;
-  background: var(--cream); color: var(--ink); box-shadow: -24px 0 60px -24px rgba(0, 0, 0, 0.45);
+  /* Refinement phase: a floating rounded panel, inset from the screen edge, instead of a flat full-height strip. */
+  width: min(460px, calc(100% - 1.5rem)); max-width: none; height: calc(100dvh - 1.5rem); max-height: none; margin: 0.75rem 0.75rem 0.75rem auto; padding: 0; border: 0; overflow: hidden;
+  border-radius: var(--radius-panel, 24px); background: var(--cream); color: var(--ink); box-shadow: -24px 0 60px -24px rgba(0, 0, 0, 0.45);
 }
 dialog.cart[open] { display: block; animation: drawerIn 0.4s var(--ease); }
 dialog.cart.is-closing { animation: drawerOut 0.22s ease-in forwards; }
@@ -210,7 +211,7 @@ form[data-order-form].is-sending [type="submit"] { opacity: 0.7; pointer-events:
   .menu-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  dialog.cart { width: 100%; height: auto; max-height: 92dvh; margin: auto 0 0; border-radius: var(--r-lg) var(--r-lg) 0 0; box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, 0.5); }
+  dialog.cart { width: 100%; height: auto; max-height: 92dvh; margin: auto 0 0; border-radius: var(--radius-panel, 24px) var(--radius-panel, 24px) 0 0; box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, 0.5); }
   dialog.cart[open] { animation-name: sheetIn; }
   dialog.cart.is-closing { animation-name: sheetOut; }
   .cart-panel { height: auto; max-height: 92dvh; }

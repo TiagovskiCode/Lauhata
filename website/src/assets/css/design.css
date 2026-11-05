@@ -504,7 +504,7 @@ html:not(.cine-motion) .duo-media img, html:not(.cine-motion) .duo-arrow { trans
 .st-n { font-family: var(--serif); font-style: italic; font-size: 2rem; line-height: 1; color: var(--terra); }
 .st-ch h2 { margin: 0 0 0.6rem; font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 3vw, 2.6rem); color: var(--ink); }
 .st-ch p { margin: 0; font-size: 1.1rem; color: var(--text); max-width: 46ch; }
-.st-ch.is-pending p { color: var(--muted); font-size: 0.98rem; padding-left: 1rem; border-left: 2px solid var(--gold); }
+.st-ch.is-pending p { color: var(--muted); font-size: 0.98rem; }
 .st-next { margin-top: 2.4rem; }
 
 /* ---------- Next steps (About us, Our story) ---------- */
@@ -779,7 +779,7 @@ html:not(.cine-motion) .book-dialog[open] { animation: none; }
 .ev-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 1023px) { .ev-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .ev-steps { grid-template-columns: 1fr; } }
-.ev-expect { margin: 0 0 1.4rem; padding-left: 1rem; border-left: 2px solid var(--gold); color: var(--body); max-width: 46ch; }
+.ev-expect { margin: 0 0 1.4rem; padding: 0.7rem 1rem; border-radius: var(--radius-field, 12px); background: rgba(169, 199, 184, 0.2); color: var(--body); max-width: 46ch; }
 
 /* ---------- Contact: getting here ---------- */
 .get-there { margin-top: 1.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line-strong); }
