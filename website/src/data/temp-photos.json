@@ -641,5 +641,25 @@
       "Freshippo coconut water",
       "Goa, India 37 Young coconut trees"
     ]
+  },
+  "place-maubara-fort": {
+    "query": "",
+    "title": "Maubara Fort, 2018 (07)",
+    "creator": "Bahnfrend",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Maubara_Fort,_2018_(07).jpg",
+    "skip": [],
+    "file": "lugar-forte-maubara"
+  },
+  "place-liquica-centre": {
+    "query": "",
+    "title": "LiquiçáIgreja1",
+    "creator": "Torbenbrinker",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Liqui%C3%A7%C3%A1Igreja1.jpg",
+    "skip": [],
+    "file": "lugar-centro-liquica"
   }
 }

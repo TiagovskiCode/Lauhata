@@ -518,8 +518,8 @@
   });
 
   /* ---------- Hero booking card: date + time/guests straight to WhatsApp ---------- */
-  const card = $("[data-quick-wa]");
-  if (card) {
+  // Every quick card on the page (the home hero panel and the booking dialog each have one).
+  $$("[data-quick-wa]").forEach((card) => {
     const errBox = $("[data-bc-error]", card);
     let kind = null; // nothing is chosen until the visitor picks Restaurant or Stay
     const panel = (k) => $(`[data-bc-panel="${k}"]`, card);
@@ -573,7 +573,26 @@
       card.classList.add("is-sending");
       sendToWhatsApp(waUrl(text), kind, () => card.classList.remove("is-sending"));
     });
-  }
+    // The hero panel opens on a mode straight away (data-default); the dialog waits for the visitor's choice.
+    if (card.dataset.default) $(`[data-bc-tab="${card.dataset.default}"]`, card)?.click();
+  });
+
+  /* ---------- Home reviews: one summary at a time, previous / next ---------- */
+  $$("[data-rv-carousel]").forEach((box) => {
+    const slides = $$("[data-rv-slide]", box);
+    const count = $("[data-rv-count]", box);
+    if (slides.length < 2) { $(".rv-nav", box)?.remove(); return; }
+    let i = 0;
+    const show = (n) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { s.hidden = k !== i; });
+      if (count) count.textContent = `${i + 1} / ${slides.length}`;
+    };
+    $("[data-rv-prev]", box).addEventListener("click", () => show(i - 1));
+    $("[data-rv-next]", box).addEventListener("click", () => show(i + 1));
+    box.classList.add("is-ready");
+    show(0);
+  });
 
   /* ---------- Thank-you page ---------- */
   const thanksBody = $("[data-thanks-body]");

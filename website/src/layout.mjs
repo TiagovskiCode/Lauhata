@@ -40,6 +40,9 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
   </defs>
 </svg>`;
 
+// "+670 7740 1111" from the stored digits (country code 670, then two groups of four).
+const fmtPhone = (d) => (/^670\d{8}$/.test(d) ? `+670 ${d.slice(3, 7)} ${d.slice(7)}` : `+${d}`);
+
 // Woven band inspired by Timorese tais: a row of diamonds in terracotta and gold on forest green.
 export const TAIS = `<div class="tais" aria-hidden="true"></div>`;
 
@@ -192,13 +195,15 @@ function header(t, page, alt) {
   const link = (p, label, hash = "") =>
     `<a href="${href(p, L, hash)}"${page === p && !hash ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
   // Seven destinations: home, menu, accommodation, about us (which also holds the story), events, gallery, contact.
+  // Final design order: Home, Restaurant, Accommodation, Events, Discover Liquiçá, Our Story, Contact. The gallery
+  // stays in the mobile menu and the footer.
   const nav = [
-    link("restaurant", t.nav.menu),
+    link("home", t.nav.home),
+    link("restaurant", t.nav.restaurant || t.nav.menu),
     link("stay", t.nav.stay),
-    link("about", t.nav.about),
     link("events", t.nav.events),
-    link("gallery", t.nav.gallery),
     link("discover", t.nav.discover),
+    link("about", t.nav.story || t.nav.about),
     link("contact", t.nav.contact),
   ].join("");
   return `<header class="site-header" data-header>
@@ -208,18 +213,18 @@ function header(t, page, alt) {
     <div class="header-actions">
       ${langSwitch(t, alt)}
       ${cartButton(t)}
-      <a class="btn btn-dark btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog">${esc(t.nav.book)}${icon("calendar")}</a>
+      <a class="btn btn-dark btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog">${esc(t.land.resort.navCta)}${icon("arrow")}</a>
       <button class="icon-btn nav-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open>${icon("menu")}</button>
     </div>
   </div>
 </header>
 <dialog class="mobile-nav" id="mobile-nav" aria-label="${esc(t.nav.primary)}" data-mobile-nav>
   <div class="mobile-nav-top">
-    ${logo(t)}
+    ${logo(t, "brand-light")}
     <button class="icon-btn" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close>${icon("close")}</button>
   </div>
   <nav class="mobile-nav-links">
-    ${link("home", t.nav.home)}${nav}
+    ${nav}${link("gallery", t.nav.gallery)}
   </nav>
   <div class="mobile-nav-cta">
     <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
@@ -288,15 +293,15 @@ function footer(t) {
     <div class="ft-col">
       <h2 class="footer-h">${esc(F.contact)}</h2>
       <ul class="footer-list">
-        ${link(waLink(t.form.waHello), site.whatsapp ? `WhatsApp +${site.whatsapp}` : t.common.whatsapp, true)}
-        ${site.phone ? link(`tel:+${esc(site.phone)}`, `+${site.phone}`) : ""}
+        ${site.whatsapp ? `<li class="ft-phone"><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${esc(fmtPhone(site.whatsapp))}</a><span>${esc(site.phone && site.phone === site.whatsapp ? F.phoneBoth : "WhatsApp")}</span></li>` : ""}
+        ${site.phone && site.phone !== site.whatsapp ? link(`tel:+${esc(site.phone)}`, fmtPhone(site.phone)) : ""}
         ${site.email ? link(`mailto:${esc(site.email)}`, site.email) : ""}
         ${social.map(([k, u]) => link(esc(u), k[0].toUpperCase() + k.slice(1), true)).join("")}
       </ul>
     </div>
     <div class="ft-col">
       <h2 class="footer-h">${esc(F.reviews)}</h2>
-      ${tripadvisorBadge(t, "is-footer")}
+      <ul class="footer-list ft-scores">${["tripadvisor", "booking"].filter((k) => site.reviews[k] && site.reviews[k].url).map((k) => { const r = site.reviews[k]; return `<li><a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(t.reviews.platforms[k])}</span>${r.rating ? `<b>${esc(String(r.rating).replace(".", t.lang === "pt" ? "," : "."))}<small>/${r.scale}</small></b>` : ""}</a></li>`; }).join("")}</ul>
     </div>
   </div>
   <div class="wrap footer-base">
@@ -337,7 +342,7 @@ export function layout(t, o) {
 ${o.robots ? `<meta name="robots" content="${o.robots}">` : `<link rel="canonical" href="${canonical}">`}
 ${o.robots ? "" : LANGS.map((l) => `<link rel="alternate" hreflang="${l === "pt" ? "pt-PT" : "en"}" href="${absUrl(alternates[l])}">`).join("\n")}
 ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alternates.pt)}">`}
-<meta name="theme-color" content="#0F2E28">
+<meta name="theme-color" content="#17120F">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${esc(site.name)}">
 <meta property="og:locale" content="${t.locale}">
@@ -364,6 +369,7 @@ ${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p,
 <link rel="stylesheet" href="/assets/css/wide.css">
 <link rel="stylesheet" href="/assets/css/design.css">
 <link rel="stylesheet" href="/assets/css/editorial.css">
+<link rel="stylesheet" href="/assets/css/resort.css">
 ${jsonLd(businessLd(t))}
 ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>

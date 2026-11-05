@@ -65,12 +65,22 @@ export default {
   // Guest reviews: the official Tripadvisor listing. `rating` (e.g. 4.5) and `count` (e.g. 120) are shown only when filled
   // in; copy them by hand from the listing and set `checked` to that date ("2026-11-03"). No review text is copied onto
   // the site: reproducing guest reviews needs permission, so the site links to them instead.
+  // Verified by hand on the official pages on 2026-11-05 (Tripadvisor 4.4/5 from 25; Booking.com 8.2/10 from 4).
+  // Update the numbers and `checked` together whenever they are re-read. Review summaries: src/data/reviews-external.mjs.
   reviews: {
     tripadvisor: {
       url: "https://www.tripadvisor.com/Hotel_Review-g4578170-d10355320-Reviews-Lauhata_Beach_Escape-Liquica_Liquica_District.html",
-      rating: null,
-      count: null,
-      checked: null,
+      rating: 4.4,
+      scale: 5,
+      count: 25,
+      checked: "2026-11-05",
+    },
+    booking: {
+      url: "https://www.booking.com/hotel/tl/lauhata-beach-escape.en-gb.html",
+      rating: 8.2,
+      scale: 10,
+      count: 4,
+      checked: "2026-11-05",
     },
   },
 

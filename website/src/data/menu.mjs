@@ -78,22 +78,22 @@ export const items = [
   // ---- Breakfast ----
   {
     id: "choice-of-eggs", category: "breakfast", name: "Choice of Eggs", price: 6,
-    description: text("Scrambled, fried eggs, sunny-side up, served with toast bread & butter", "Ovos mexidos, fritos ou estrelados, servidos com torradas e manteiga"),
+    description: text("Scrambled, fried or sunny-side up, with toast and butter", "Mexidos, fritos ou estrelados, com torradas e manteiga"),
     options: [group("style", "Style", "Preparação", [opt("scrambled", "Scrambled", "Mexidos"), opt("fried", "Fried", "Fritos"), opt("sunny", "Sunny-side up", "Estrelados")])],
   },
   {
     id: "egg-chicken-sausage-toast", category: "breakfast", name: "Egg and Chicken Sausage on Toast", price: 8,
-    description: text("Fried or scrambled. Served with tomato, olive & feta", "Ovos fritos ou mexidos. Servido com tomate, azeitona e feta"),
+    description: text("Fried or scrambled eggs, with tomato, olives and feta", "Ovos fritos ou mexidos, com tomate, azeitona e feta"),
     options: [group("style", "Style", "Preparação", [opt("fried", "Fried", "Fritos"), opt("scrambled", "Scrambled", "Mexidos")])],
   },
   {
     id: "omelette", category: "breakfast", name: "Omelette", price: 6,
-    description: text("Plain, ham & cheese or Spanish", "Simples, de fiambre e queijo ou espanhola"),
+    description: text("Plain, ham and cheese, or Spanish", "Simples, de fiambre e queijo ou espanhola"),
     options: [group("type", "Type", "Tipo", [opt("plain", "Plain", "Simples"), opt("ham-cheese", "Ham & cheese", "Fiambre e queijo"), opt("spanish", "Spanish", "Espanhola")])],
   },
   {
     id: "baked-beans-toast", category: "breakfast", name: "Baked Beans on Toast", price: 6,
-    description: text("Baked beans served on toasted bread", "Baked beans servidos sobre pão torrado"),
+    description: text("Baked beans served on toasted bread", "Feijão cozido (baked beans) sobre pão torrado"),
   },
   {
     id: "french-toast", category: "breakfast", name: "French Toast", price: 6,
@@ -101,12 +101,12 @@ export const items = [
   },
   {
     id: "pancakes", category: "breakfast", name: "Pancakes", price: 6,
-    description: text("Plain or banana and maple syrup", "Simples ou com banana e xarope de ácer"),
+    description: text("Plain, or with banana and maple syrup", "Simples ou com banana e xarope de ácer"),
     options: [group("version", "Version", "Versão", [opt("plain", "Plain", "Simples"), opt("banana-maple", "Banana and maple syrup", "Banana e xarope de ácer")])],
   },
   {
     id: "cereal-choices", category: "breakfast", name: "Cereal Choices", price: 4,
-    description: text("Choco or corn flakes served with hot or cold milk", "Cereais de chocolate ou flocos de milho, servidos com leite quente ou frio"),
+    description: text("Chocolate cereal or cornflakes, with hot or cold milk", "Cereais de chocolate ou flocos de milho, servidos com leite quente ou frio"),
     options: [
       group("cereal", "Cereal", "Cereal", [opt("choco", "Choco", "Chocolate"), opt("corn-flakes", "Corn flakes", "Flocos de milho")]),
       group("milk", "Milk", "Leite", [opt("hot", "Hot", "Quente"), opt("cold", "Cold", "Frio")]),
@@ -124,42 +124,42 @@ export const items = [
   },
   {
     id: "greek-salad", category: "salad", name: "Greek Salad", price: 8,
-    description: text("Feta, olive, tomato and cucumber mix with tossed salad & Lauhata dressing", "Mistura de feta, azeitonas, tomate e pepino com salada variada e molho Lauhata"),
+    description: text("Feta, olives, tomato and cucumber over mixed leaves, with Lauhata dressing", "Feta, azeitonas, tomate e pepino sobre salada variada, com molho Lauhata"),
   },
   {
     id: "tuna-salad", category: "salad", name: "Tuna Salad", price: 8,
-    description: text("Tuna, lettuce, tomato, onion & cucumber with Lauhata dressing", "Atum, alface, tomate, cebola e pepino com molho Lauhata"),
+    description: text("Tuna, lettuce, tomato, onion and cucumber, with Lauhata dressing", "Atum, alface, tomate, cebola e pepino com molho Lauhata"),
   },
 
   // ---- Starters ----
   {
     id: "clams-garlic-bread", category: "starters", name: "Clams & Garlic Bread", price: 10,
-    description: text("Clams cooked in white wine, garlic & coriander leaves", "Amêijoas cozinhadas em vinho branco, alho e folhas de coentros"),
+    description: text("Clams cooked in white wine and garlic, with coriander leaves", "Amêijoas cozinhadas em vinho branco e alho, com folhas de coentros"),
   },
   {
     id: "calamari-rings", category: "starters", name: "Calamari Rings", price: 6,
-    description: text("Calamari served with chilli sauce mixed with mayo sauce", "Anéis de lula servidos com molho de chilli misturado com maionese"),
+    description: text("Calamari rings with a chilli mayonnaise", "Anéis de lula com maionese de chilli"),
   },
   {
     id: "satay-starter", category: "starters", name: "Satay (Starter)", price: 6,
-    description: text("4 satays with tamarind sauce", "4 espetadas satay com molho de tamarindo"),
+    description: text("Four satay skewers with tamarind sauce", "Quatro espetadas de satay com molho de tamarindo"),
     options: [group("meat", "Choice", "Escolha", [opt("chicken", "Chicken", "Frango"), opt("pork", "Pork", "Porco")])],
   },
   {
     id: "spring-rolls-samosa", category: "starters", name: "Spring Rolls or Samosa", price: 6,
-    description: text("Served 8 pieces with sweet chilli sauce", "Servido em 8 peças com molho de chilli doce"),
+    description: text("Eight pieces, with sweet chilli sauce", "Oito peças, com molho de chilli doce"),
     options: [group("kind", "Choice", "Escolha", [opt("spring-rolls", "Spring Rolls", "Spring rolls"), opt("samosa", "Samosa", "Samosa")])],
   },
   {
     id: "chips-starter", category: "starters", name: "Chips", price: null,
-    description: text("Chips served with sweet tomato or chilli sauce", "Batatas fritas servidas com molho doce de tomate ou de chilli"),
+    description: text("Chips with sweet tomato or chilli sauce", "Batatas fritas com molho doce de tomate ou de chilli"),
     options: [chipsSize],
   },
 
   // ---- Soup ----
   {
     id: "potato-soup", category: "soup", name: "Potato Soup", price: 6,
-    description: text("Served with chorizo & plain toasted bread", "Servida com chouriço e pão torrado simples"),
+    description: text("With chorizo and plain toast", "Com chouriço e pão torrado"),
   },
   {
     id: "tom-yum-prawns", category: "soup", name: "Tom Yum Prawns", price: 8,
@@ -169,11 +169,11 @@ export const items = [
   // ---- Main Course ----
   {
     id: "grilled-fish", category: "main", name: "Grilled Fish", price: 18, featured: true,
-    description: text("Slice of fish fillet served with lemon & butter sauce, roasted rosemary potatoes & green salad", "Posta de filete de peixe com molho de limão e manteiga, batatas assadas com alecrim e salada verde"),
+    description: text("Fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad", "Filete de peixe com molho de limão e manteiga, batatas assadas com alecrim e salada verde"),
   },
   {
     id: "steak-bitoque", category: "main", name: "Steak (Bitoque)", price: 19,
-    description: text("Porterhouse steak with chips, salad, fried egg", "Bife porterhouse com batatas fritas, salada e ovo estrelado"),
+    description: text("Porterhouse steak with chips, salad and a fried egg", "Bife porterhouse com batatas fritas, salada e ovo estrelado"),
   },
   {
     id: "grilled-chicken", category: "main", name: "Grilled Chicken", price: 15,
@@ -198,12 +198,12 @@ export const items = [
   },
   {
     id: "spaghetti", category: "main", name: "Spaghetti", price: 15,
-    description: text("Bolognaise or Carbonara with garlic bread", "À bolonhesa ou à carbonara, com pão de alho"),
+    description: text("Bolognese or carbonara, with garlic bread", "À bolonhesa ou à carbonara, com pão de alho"),
     options: [group("sauce", "Sauce", "Molho", [opt("bolognaise", "Bolognaise", "Bolonhesa"), opt("carbonara", "Carbonara", "Carbonara")])],
   },
   {
     id: "mie-goreng", category: "main", name: "Mie Goreng", price: 10,
-    description: text("Fried noodles with chicken, sausage, prawns or mix", "Massa salteada (noodles) com frango, salsicha, gambas ou mista"),
+    description: text("Fried noodles with chicken, sausage or prawns, or mixed", "Massa salteada (noodles) com frango, salsicha ou gambas, ou mista"),
     options: [group("with", "Choice", "Escolha", [opt("chicken", "Chicken", "Frango"), opt("sausage", "Sausage", "Salsicha"), opt("prawns", "Prawns", "Gambas"), opt("mix", "Mix", "Mista")])],
   },
   {
@@ -212,12 +212,12 @@ export const items = [
   },
   {
     id: "grilled-burger", category: "main", name: "Grilled Burger", price: 12,
-    description: text("Lettuce, tomato, onion and cheese, served with French fries", "Alface, tomate, cebola e queijo, servido com batatas fritas"),
+    description: text("With lettuce, tomato, onion and cheese, and French fries", "Alface, tomate, cebola e queijo, servido com batatas fritas"),
     options: [group("meat", "Choice", "Escolha", [opt("beef", "Beef", "Vaca"), opt("chicken", "Chicken", "Frango")])],
   },
   {
     id: "club-sandwich", category: "main", name: "Club Sandwich", price: 10,
-    description: text("Lettuce, tomato, chicken, bacon, egg. Served with French fries", "Alface, tomate, frango, bacon e ovo. Servida com batatas fritas"),
+    description: text("Lettuce, tomato, chicken, bacon and egg, with French fries", "Alface, tomate, frango, bacon e ovo, com batatas fritas"),
     options: [group("bread", "Bread", "Pão", [opt("toasted", "Toasted", "Torrado"), opt("plain", "Plain", "Simples")])],
   },
 
@@ -262,26 +262,26 @@ export const items = [
   // ---- Pizza (the printed prices are handwritten labels stuck above each name: confirm them) ----
   {
     id: "pizza-margarita", category: "pizza", name: "Margarita", price: 17, confirm: true,
-    description: text("Sliced tomato, feta & mozzarella", "Tomate em fatias, feta e mozzarella"),
+    description: text("Sliced tomato, feta and mozzarella", "Tomate em fatias, feta e mozzarella"),
   },
   {
     id: "pizza-pepperoni", category: "pizza", name: "Pepperoni", price: 20, confirm: true,
-    description: text("Onion, mushroom, capsicum, olives, feta, pepperoni & mozzarella", "Cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella"),
+    description: text("Onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella", "Cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella"),
   },
   {
     id: "pizza-hawaiian", category: "pizza", name: "Hawaiian", price: 20, confirm: true,
-    description: text("Ham, pineapple, feta & mozzarella", "Fiambre, ananás, feta e mozzarella"),
+    description: text("Ham, pineapple, feta and mozzarella", "Fiambre, ananás, feta e mozzarella"),
   },
   {
     id: "pizza-spicy-chicken", category: "pizza", name: "Spicy Chicken", price: 20, confirm: true,
-    description: text("Chicken, bacon, chilli, feta & mozzarella", "Frango, bacon, chilli, feta e mozzarella"),
+    description: text("Chicken, bacon, chilli, feta and mozzarella", "Frango, bacon, chilli, feta e mozzarella"),
   },
   {
     id: "pizza-lauhata-seafood", category: "pizza", name: "Lauhata Seafood", price: 21, confirm: true, featured: true,
-    description: text("Tuna, prawns, feta & mozzarella", "Atum, gambas, feta e mozzarella"),
+    description: text("Tuna, prawns, feta and mozzarella", "Atum, gambas, feta e mozzarella"),
   },
   {
     id: "pizza-meat-lover", category: "pizza", name: "Meat Lover", price: 21, confirm: true,
-    description: text("Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta & mozzarella", "Cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella"),
+    description: text("Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella", "Cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella"),
   },
 ].map((d) => ({ options: [], image: null, ...d }));

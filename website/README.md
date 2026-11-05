@@ -71,6 +71,18 @@ de cada foto estão em `FOTOS-PRATOS.md`, gerado pelo build.
 - **Notas internas** («a confirmar», «por configurar») já não aparecem ao público: campos sem dados ficam escondidos e o
   preço diz «sob consulta». As etiquetas «Imagem ilustrativa» continuam sempre visíveis.
 
+**Fase 8 — refinamento a partir do feedback do cliente (5 de novembro de 2026).** Ver `RELATORIO-FASE-8.md`,
+`DIRECAO-CRIATIVA.md` (pesquisa e auditoria), `FOTOGRAFIAS.md` (fotos e lista para o Carlos) e `CHECKLISTS.md`.
+- **Opiniões:** notas verificadas em `site.mjs` (`reviews.tripadvisor`, `reviews.booking`, com a data). Resumos nossos
+  de avaliações públicas em `src/data/reviews-external.mjs`: o texto das avaliações não é copiado.
+- **Suites:** nomes provisórios «Suite King» e «Suite King & Single» (`rooms.mjs`). As moradas novas são `suite-king` e
+  `suite-king-e-solteiro`/`suite-king-and-single`; as antigas reencaminham para as novas (criadas pelo `build.mjs`).
+- **Vídeo do herói:** `src/assets/video/hero-hd.mp4` (1920px) e `hero-hd-1280.mp4` (telemóveis). A capa é o primeiro
+  fotograma (`hero-capa-hd`).
+- **Mapas:** `mapEmbed()` em `pages.mjs` procura «Lauhata Beach Escape» (o marcador coincide com as coordenadas
+  oficiais), com zoom 15.
+- **Ecrãs grandes:** a partir de 1920px a escala de tipo e a largura do conteúdo crescem juntas (`editorial.css`).
+
 **Fase 7 — direção «Diário da costa» (5 de novembro de 2026).** Ver `DIRECAO-CRIATIVA.md` (pesquisa, diagnóstico,
 sistema visual, lista de fotografias para o Carlos).
 - **CSS:** `src/assets/css/editorial.css`, carregado depois de todos os outros, define a nova linguagem: papel Soft

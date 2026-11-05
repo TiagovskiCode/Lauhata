@@ -95,19 +95,36 @@ export default {
     placeholder: false,
     group: "around",
   },
+  // Identified by Tiago on 5 Nov 2026 as the ruins of the Aipelo prison.
   ruinsAerial: {
     src: "foto:arredores-ruinas",
     width: 2000,
-    alt: { pt: "Ruínas de um edifício antigo de pedra junto à costa, vistas de cima", en: "Ruins of an old stone building by the coast, seen from above" },
+    alt: { pt: "As ruínas da prisão de Aipelo junto à costa, vistas de cima", en: "The ruins of Aipelo prison by the coast, seen from above" },
     placeholder: false,
     group: "around",
   },
   ruinsTop: {
     src: "foto:arredores-ruinas-cima",
     width: 2000,
-    alt: { pt: "O recinto das ruínas entre a estrada e a praia, visto de cima", en: "The ruins' grounds between the road and the beach, seen from above" },
+    alt: { pt: "O recinto das ruínas da prisão de Aipelo, entre a estrada e a praia, visto de cima", en: "The grounds of the Aipelo prison ruins, between the road and the beach, seen from above" },
     placeholder: false,
     group: "around",
+  },
+  // Reference photos of places in Discover Liquiçá, from Wikimedia Commons (credited on the privacy page,
+  // src/data/temp-photos.json). They show the place, not Lauhata, and are labelled illustrative until Tiago or Carlos
+  // photograph the places themselves: then put the photo in fotos-originais/, size it to the same slug and set
+  // placeholder: false.
+  placeMaubaraFort: {
+    src: "foto:lugar-forte-maubara",
+    width: 1600,
+    alt: { pt: "A entrada do forte de Maubara, à sombra das árvores", en: "The entrance of Maubara fort, in the shade of the trees" },
+    placeholder: true,
+  },
+  placeLiquicaCentre: {
+    src: "foto:lugar-centro-liquica",
+    width: 1600,
+    alt: { pt: "A igreja no centro de Liquiçá", en: "The church in the centre of Liquiçá" },
+    placeholder: true,
   },
   heroSunset: {
     src: "foto:hero-por-do-sol",

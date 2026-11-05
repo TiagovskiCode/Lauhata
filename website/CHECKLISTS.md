@@ -25,7 +25,30 @@ Carlos**, o que é **conteúdo temporário de pré-visualização** e o que **n�
 **Discrepâncias a resolver com o Carlos:** número de quartos (6 ou 8? o site mostra dois *tipos*); horário (9–22 ou o da
 ementa); bambu, piscina e bungalows (existem hoje?); transfers (o site não os promete).
 
+## 1-B. Avaliações e anúncios (verificado a 5/11/2026)
+
+| Fonte | O que diz | Estado no site |
+|---|---|---|
+| Tripadvisor | 4,4/5, 25 avaliações (14 excelentes, 9 boas, 1 razoável, 1 má); «N.º 1 de 2 B&B em Liquiçá»; página **por reclamar** | Nota e número publicados, com a data; resumos nossos de 3 avaliações |
+| Booking.com | 8,2/10 («Muito bom»), 4 avaliações; pessoal 9,4 | Nota e número publicados; resumo nosso de 1 avaliação |
+| Booking.com (anúncio do próprio Lauhata) | Entrada 14:00–22:00, saída 10:00–11:00; pequeno-almoço; ar condicionado, pátio, mobiliário exterior, chão em mosaico; estacionamento privado gratuito; animais aceites sem custo; aceita só dinheiro; transfer do aeroporto; não há berços nem camas extra; crianças de qualquer idade; música ao vivo, happy hour | **Não publicado:** o anúncio é do Lauhata, mas pode estar desatualizado. Confirmar cada ponto |
+| Opiniões no Tripadvisor (2022–2023) | Quartos com ar condicionado e casa de banho privativa; pequeno-almoço incluído no preço; «sem Wi-Fi» (2023); «só seis quartos»; caiaque de mar; transporte de/para Díli organizado | **Não publicado** como facto: confirmar |
+| Google Maps | Ficha «Lauhata Beach Escape», 4,2 (92) | Não publicado (não foi pedido; pode ser acrescentado) |
+
+**Para mostrar citações literais das avaliações:** reclamar a página no Tripadvisor (Management Center) e usar o widget
+oficial; no Booking.com não há widget para sites de terceiros. Até lá o site mostra resumos nossos, assinalados como
+tal, com ligação.
+
 ## 2. O Carlos tem de confirmar
+
+- [ ] **Nomes das suites:** «Suite King» e «Suite King & Single» são provisórios. Qual é o nome comercial?
+- [ ] **Por suite:** quantas pessoas recebe; casa de banho privativa (duche, água quente); ar condicionado; Wi-Fi; varanda
+  ou pátio; vista; roupeiro; tamanho real das camas.
+- [ ] **Pequeno-almoço:** está incluído no preço da suite?
+- [ ] **Entrada e saída:** as horas do Booking.com (14–22 e 10–11) estão certas?
+- [ ] **Outros:** estacionamento, animais, pagamento (só dinheiro?), berço ou cama extra, transfer do aeroporto.
+- [ ] **Sobremesas e acompanhamentos:** a ementa não tem descrições destes pratos. Há alguma coisa a dizer (por exemplo,
+  os sabores do gelado)?
 
 - [ ] WhatsApp +670 7740 1111 é o número que deve receber os pedidos.
 - [ ] Morada e ponto no mapa (Aldeia Pissu Kraik, Suku Lauhata, Bazartete).

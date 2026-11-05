@@ -7,7 +7,7 @@ import pt from "./src/i18n/pt.mjs";
 import en from "./src/i18n/en.mjs";
 import { layout } from "./src/layout.mjs";
 import * as P from "./src/pages.mjs";
-import { rooms, absUrl, outFile, LANGS } from "./src/lib.mjs";
+import { rooms, absUrl, outFile, LANGS, href } from "./src/lib.mjs";
 import { prelaunch, printPrelaunch } from "./src/prelaunch.mjs";
 import { items, categories } from "./src/data/menu.mjs";
 import { existsSync } from "node:fs";
@@ -59,6 +59,15 @@ for (const L of LANGS) {
   await emit(t, P.privacy(t));
   await emit(t, P.thanks(t));
   await emit(t, P.notFound(t));
+  // The suites were renamed (phase 8): their old addresses forward to the new pages, so shared links keep working.
+  for (const r of rooms) {
+    if (!r.oldSlug) continue;
+    const to = href("room:" + r.id, L);
+    const from = href("stay", L) + r.oldSlug[L] + "/";
+    const file = join(dist, outFile(from));
+    await mkdir(dirname(file), { recursive: true });
+    await writeFile(file, relativize(`<!doctype html><html lang="${t.htmlLang}"><head><meta charset="utf-8"><meta name="robots" content="noindex"><link rel="canonical" href="${absUrl(to)}"><meta http-equiv="refresh" content="0; url=${to}"><title>${r.name[L]}</title></head><body><p><a href="${to}">${r.name[L]}</a></p></body></html>`, from));
+  }
 }
 
 const urls = sitemap

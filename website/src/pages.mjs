@@ -5,6 +5,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { TAIS, tripadvisorBadge } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
 import siteReviews from "./data/reviews.mjs";
+import externalReviews from "./data/reviews-external.mjs";
 import { sampleDrinks } from "./data/sample-drinks.mjs";
 
 const other = (L) => (L === "pt" ? "en" : "pt");
@@ -14,6 +15,7 @@ const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}
 // label above every title; the `eyebrow` argument is kept for callers but no longer printed.
 function heading({ eyebrow, title, accent = "", lead = "", id = "", center = false, tag = "h2", cls = "" }) {
   return `<header class="heading${center ? " is-center" : ""} ${cls}"${rv()}>
+    ${eyebrow ? `<p class="eyebrow-rule">${esc(eyebrow)}</p>` : ""}
     <${tag}${id ? ` id="${id}"` : ""} class="title">${esc(title)}${accent ? `<br><span class="title-2">${esc(accent)}</span>` : ""}</${tag}>
     ${lead ? `<p class="lead">${esc(lead)}</p>` : ""}
   </header>`;
@@ -26,6 +28,7 @@ function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = 
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
     <div data-fade>${crumbs}</div>
+    ${eyebrow ? `<p class="eyebrow-rule is-light" data-fade>${esc(eyebrow)}</p>` : ""}
     <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` ${esc(accent)}` : ""}</h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(lead)}</p>
     <div data-fade style="--d:400ms">${ctas}</div>
@@ -46,6 +49,27 @@ function roomFeatures(t, r) {
   const L = t.lang;
   const facts = [r.beds && r.beds[L], ...(r.amenities || []).map((a) => a[L]), r.suitability && `${t.stay.roomSuits}: ${r.suitability[L]}`].filter(Boolean);
   return facts.length ? `<ul class="room-facts-line">${facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : "";
+}
+
+// The suite's beds drawn from above, each labelled. Only the beds the owner confirmed (rooms.mjs `bedPlan`); generic
+// proportions, no measurements (the real bed sizes are not known), no walls or furniture (the room layout is not known).
+function bedPlan(t, r) {
+  const S = t.stay;
+  const beds = r.bedPlan || [];
+  const dims = { king: [193, 203], single: [90, 190] };
+  let x = 0;
+  const parts = beds.map((b) => {
+    const [w, h] = dims[b];
+    const g = `<g transform="translate(${x} ${203 - h})">
+      <rect class="bp-bed" x="0" y="0" width="${w}" height="${h}" rx="4"/>
+      ${b === "king" ? `<rect class="bp-pillow" x="14" y="12" width="76" height="34" rx="8"/><rect class="bp-pillow" x="103" y="12" width="76" height="34" rx="8"/>` : `<rect class="bp-pillow" x="12" y="12" width="66" height="30" rx="8"/>`}
+      <line class="bp-fold" x1="0" y1="${Math.round(h * 0.62)}" x2="${w}" y2="${Math.round(h * 0.62)}"/>
+      <text class="bp-label" x="${w / 2}" y="${h + 26}" text-anchor="middle">${esc(b === "king" ? S.king : S.single)}</text>    </g>`;
+    x += w + 40;
+    return g;
+  });
+  const width = Math.max(0, x - 40);
+  return `<svg class="bed-plan" viewBox="-6 -6 ${width + 12} 265" role="img" aria-label="${esc(S.bedPlan)}: ${esc(r.beds[t.lang])}">${parts.join("")}</svg>`;
 }
 
 // A room's photographs as a carousel: a scroll-snap strip (swipe on touch, arrow keys when focused), previous/next
@@ -91,32 +115,34 @@ const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encode
 const pend = (v, fallback) => (v ? esc(v) : `<span class="tbc">${esc(fallback)}</span>`);
 
 // ---------- Booking card (hero): request straight to WhatsApp ----------
-export function bookingCard(t) {
+// `prefix` keeps ids unique when two cards share a page; `hero` is the home hero panel (room mode first and open).
+export function bookingCard(t, { prefix = "bc", hero = false } = {}) {
   const q = t.home.quick;
   const timeOpts = timeOptions(t, { selected: "19:30" });
   const fld = (label, control) => `<label class="bc-field"><span>${esc(label)}</span>${control}</label>`;
   // Quantities are number fields: the picker draws a stepper over them, and without JavaScript they still work.
   const qty = (name, max, { min = 1, value = 2, one = q.person, many = q.persons } = {}) => `<input type="number" name="${name}" min="${min}" max="${max}" value="${value}" inputmode="numeric" data-pick="number" data-unit-one="${esc(one)}" data-unit-many="${esc(many)}">`;
   const f = t.form;
-  return `<form class="booking-card" data-quick-wa novalidate aria-label="${esc(q.label)}">
+  const tabT = `<button type="button" role="tab" aria-selected="false" aria-controls="${prefix}-table" data-bc-tab="table">${icon("cutlery")}${esc(hero ? q.heroTabTable : q.tabTable)}</button>`;
+  const tabR = `<button type="button" role="tab" aria-selected="false" aria-controls="${prefix}-room" data-bc-tab="room">${icon("bed")}${esc(hero ? q.heroTabRoom : q.tabRoom)}</button>`;
+  return `<form class="booking-card${hero ? " is-hero" : ""}" data-quick-wa${hero ? ' data-default="room"' : ""} novalidate aria-label="${esc(q.label)}">
     <div class="bc-tabs" role="tablist">
-      <button type="button" role="tab" aria-selected="false" aria-controls="bc-table" data-bc-tab="table">${icon("cutlery")}${esc(q.tabTable)}</button>
-      <button type="button" role="tab" aria-selected="false" aria-controls="bc-room" data-bc-tab="room">${icon("bed")}${esc(q.tabRoom)}</button>
+      ${hero ? tabR + tabT : tabT + tabR}
     </div>
     <p class="bc-hint" data-bc-hint>${esc(q.hint)}</p>
-    <div class="bc-row" id="bc-table" role="tabpanel" data-bc-panel="table" hidden>
+    <div class="bc-row" id="${prefix}-table" role="tabpanel" data-bc-panel="table" hidden>
       ${fld(q.date, `<input type="date" name="date" data-pick="date">`)}
       ${fld(q.time, `<select name="time" data-pick="time">${timeOpts}</select>`)}
       ${fld(q.people, qty("people", 20))}
-      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitTable)}</button>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(hero ? q.heroSubmitTable : q.submitTable)}</button>
     </div>
-    <div class="bc-row" id="bc-room" role="tabpanel" data-bc-panel="room" hidden>
+    <div class="bc-row" id="${prefix}-room" role="tabpanel" data-bc-panel="room" hidden>
       ${fld(q.checkIn, `<input type="date" name="checkIn" data-pick="in">`)}
       ${fld(q.checkOut, `<input type="date" name="checkOut" data-pick="out">`)}
       ${fld(f.adults, qty("adults", 20, { one: f.adultOne, many: f.adultMany }))}
       ${fld(f.children, qty("children", 10, { min: 0, value: 0, one: f.childOne, many: f.childMany }))}
       ${fld(q.room, `<select name="room" data-pick="select"><option value="">${esc(q.roomAny)}</option>${rooms.map((r) => `<option value="${r.id}">${esc(r.name[t.lang])}</option>`).join("")}</select>`)}
-      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(q.submitRoom)}</button>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit">${icon("whatsapp")}${esc(hero ? q.heroSubmitRoom : q.submitRoom)}</button>
     </div>
     <p class="bc-error" role="alert" hidden data-bc-error></p>
     <p class="bc-note">${site.responseTime ? esc(site.responseTime[t.lang]) : esc(t.contact.responsePending)} ${site.payInPerson ? esc(t.form.payNote) : ""}</p>
@@ -397,6 +423,9 @@ function breakfastHours() {
 }
 
 const mapQuery = () => (site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery);
+// Embedded maps search the place name: checked on 5 Nov 2026 that its pin falls exactly on the official coordinates,
+// and the name adds Google's own label and card, so Lauhata is identifiable at a glance. Zoom 15: the coast and the town.
+const mapEmbed = () => `https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=15&output=embed`;
 const directionsLink = () => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery())}`;
 
 // Comer / Dormir: two large panels, one a rounded frame and one an arch, side by side.
@@ -625,7 +654,7 @@ function reachSection(t) {
     </div>
     <div class="rc-map"${rv(120)}>
       <div class="map-frame">
-        <iframe title="${esc(t.location.mapTitle)}" src="https://www.google.com/maps?q=${encodeURIComponent(q)}&z=${site.geo ? 15 : 12}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe title="${esc(t.location.mapTitle)}" src="${mapEmbed()}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
       ${site.geo ? "" : `<p class="rc-note">${esc(R.mapNote)}</p>`}
     </div>
@@ -719,16 +748,27 @@ function introSection(t) {
 // The coast at night-fall: a dark chapter with the beach line and three real photographs of different proportions
 // (a wide sea, a square canoe, a tall garden sunset), each with its caption. Replaces the single full-screen scene.
 function coastChapter(t) {
+  // The client liked the dark frame of the beach with the palms and the mountain: it is the whole screen again, with the
+  // line set low on it. Below, on the night, the words, the coordinates and two smaller real photographs that overlap
+  // the bottom edge of the big one.
   const B = t.land.beach;
-  return `<section class="section coast-ch" aria-labelledby="coast-title">
+  return `<section class="coast-ch" aria-labelledby="coast-title">
+  <div class="coast-stage">
+    <div class="coast-bg">${figure(t, "beachFront", { sizes: "100vw" })}</div>
+    <div class="coast-shade" aria-hidden="true"></div>
+    <div class="wrap coast-over">
+      <p class="coast-note">${esc(B.note)}</p>
+      <h2 id="coast-title" class="coast-line" data-split>${esc(B.line)}</h2>
+    </div>
+    <p class="coast-cap"><span>${esc(images.beachFront.alt[t.lang])}</span><b>${esc(t.common.realPhoto)}</b></p>
+  </div>
   <div class="wrap coast-grid">
     <div class="coast-text">
-      <h2 id="coast-title" class="coast-line" data-split>${esc(B.line)}</h2>
-      <p class="coast-note"${rv(80)}>${esc(B.note)}</p>
+      <p class="coast-body"${rv()}>${esc(B.body)}</p>
+      <p class="coast-coords"><span>${esc(B.place)}</span><span>${esc(t.common.coords)}</span></p>
     </div>
-    <div class="coast-a">${figure(t, "beachFront", { sizes: "(min-width: 900px) 64vw, 100vw", ratio: "16/9", credit: true })}</div>
-    <div class="coast-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 30vw, 60vw", ratio: "1/1", credit: true })}</div>
-    <div class="coast-c">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 36vw, 80vw", ratio: "3/2", credit: true, cls: "is-dusk" })}</div>
+    <div class="coast-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 26vw, 60vw", ratio: "4/5", credit: true })}</div>
+    <div class="coast-c">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 34vw, 80vw", ratio: "3/2", credit: true, cls: "is-dusk" })}</div>
   </div>
 </section>`;
 }
@@ -748,11 +788,31 @@ function duoSection(t) {
         <span class="duo-link">${esc(copy.link)}<i class="duo-arrow" aria-hidden="true"></i></span>
       </div>
     </a>`;
+  // Under each photograph, a band of verified details: when the restaurant serves and what is on the menu; which
+  // suites there are and how a stay is requested. Two actions per side.
+  const shownCats = categories.filter((c) => items.some((d) => d.category === c.id)).map((c) => c.name[L]);
+  const hours = site.restaurantHours.map((h) => `<li><span>${esc(h.days[L])}</span><b>${esc(h.hours)}</b></li>`).join("");
   return `<section class="duo" aria-label="${esc(D.aria)}">
   <div class="duo-grid">
     ${panel("eat", "restaurant", D.eat)}
     <span class="duo-amp" aria-hidden="true">&amp;</span>
     ${panel("stay", "stay", D.stay)}
+  </div>
+  <div class="duo-notes">
+    <div class="dn-col dn-eat">
+      <h3 class="dn-head">${esc(D.eatHead)}</h3>
+      ${hours ? `<p class="dn-label">${esc(D.hoursLabel)}</p><ul class="dn-hours">${hours}</ul>` : ""}
+      <p class="dn-label">${esc(D.menuLabel)}</p>
+      <p class="dn-text">${esc(shownCats.join(", "))}.</p>
+      <p class="dn-small">${esc(D.dineIn)}</p>
+      <div class="dn-actions"><a class="btn btn-cream" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${esc(D.eatBook)}</a><a class="text-link" href="${href("restaurant", L, "#ementa")}">${esc(D.eat.link)}</a></div>
+    </div>
+    <div class="dn-col dn-stay">
+      <h3 class="dn-head">${esc(D.stayHead)}</h3>
+      <ul class="dn-suites">${rooms.map((r) => `<li><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a><span>${esc(r.beds[L])}</span></li>`).join("")}</ul>
+      <p class="dn-small">${esc(D.stayHow)}</p>
+      <div class="dn-actions"><a class="btn btn-cream" href="${href("stay", L, "#reservar")}" data-book-open="room">${esc(D.stayBook)}</a><a class="text-link" href="${href("stay", L)}">${esc(D.stay.link)}</a></div>
+    </div>
   </div>
 </section>`;
 }
@@ -775,17 +835,43 @@ function reviewsSection(t) {
     : "";
   const exp = FB.experiences.map((x) => `<option>${esc(x)}</option>`).join("");
   const rating = [5, 4, 3, 2, 1].map((n) => `<label class="rv-star"><input type="radio" name="rating" value="${n}"><span>${esc(fmt(FB.stars, { n }))}</span></label>`).join("");
-  return `<section class="section reviews-ed" id="opinioes" aria-labelledby="rv-title">
-  <div class="wrap rv-grid">
-    <div>
+  // External reputation (phase 8): the verified scores of both platforms, set large, then our own summaries of a few
+  // public reviews (never the reviews' own words), each with its author, date and a link to the platform.
+  const P = site.reviews || {};
+  const num = (n) => String(n).replace(".", L === "pt" ? "," : ".");
+  const longDate = (iso) => new Date(iso + "T12:00:00Z").toLocaleDateString(L === "pt" ? "pt-PT" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+  const platforms = ["tripadvisor", "booking"].filter((k) => P[k] && P[k].url && P[k].rating && P[k].count);
+  const scores = platforms.map((k) => `<a class="rv-score rv-${k}" href="${esc(P[k].url)}" target="_blank" rel="noopener">
+        <span class="rv-plat">${esc(R.platforms[k])}</span>
+        <span class="rv-num">${esc(num(P[k].rating))}<small>${esc(fmt(R.outOf, { scale: P[k].scale }))}</small></span>
+        <span class="rv-word">${esc(R.scoreWord[k])} · ${esc(fmt(R.countLong, { count: P[k].count }))}</span>
+        <span class="rv-go">${esc(R.readAll)}${icon("arrow-up-right")}</span>
+      </a>`).join("");
+  const checkedDates = [...new Set(platforms.map((k) => P[k].checked).filter(Boolean))];
+  const ext = externalReviews.filter((r) => P[r.platform] && P[r.platform].url);
+  const byline = (r) => `<p class="rv-by"><span>${esc(fmt(R.summaryOf, { author: r.author }))}</span><span>${esc(R.platforms[r.platform])}${r.date ? ` · ${esc(r.date[L])}` : ""}${r.origin ? ` · ${esc(r.origin[L])}` : ""}</span><a href="${esc(P[r.platform].url)}" target="_blank" rel="noopener">${esc(R.readFull)}${icon("arrow-up-right")}</a></p>`;
+  // Final homepage design: a dark section; the title and the two verified scores on the left; on the right one review
+  // summary at a time with previous/next (all of them are listed without JavaScript). No portraits, no invented stars.
+  const RS = t.land.resort;
+  const ordered = [ext.find((r) => r.featured) || ext[0], ...ext.filter((r) => !r.featured)].filter(Boolean);
+  return `<section class="section reviews-ed is-dark" id="opinioes" aria-labelledby="rv-title">
+  <div class="wrap rv-split">
+    <header class="rv-head">
+      <p class="eyebrow-rule">${esc(RS.reviewsEyebrow)}</p>
       <h2 id="rv-title" class="rv-title" data-split>${esc(R.title)}</h2>
-      <p class="rv-lead"${rv(80)}>${esc(R.lead)}</p>
-      <div class="rv-badge"${rv(120)}>${tripadvisorBadge(t, "is-large")}</div>
-    </div>
-    <div>
+      ${scores ? `<div class="rv-scores">${scores}</div>${checkedDates.length ? `<p class="rv-checked">${esc(fmt(R.checked, { date: checkedDates.map(longDate).join(", ") }))}</p>` : ""}` : `<div class="rv-badge">${tripadvisorBadge(t, "is-large")}</div>`}
+    </header>
+    ${ordered.length ? `<div class="rv-carousel" data-rv-carousel>
+      <ul class="rv-slides">${ordered.map((r, i) => `<li class="rv-slide" data-rv-slide${i ? "" : ' data-current'}><p class="rv-feature-text" lang="${L}">${esc(r.summary[L])}</p>${byline(r)}</li>`).join("")}</ul>
+      <div class="rv-nav"><button type="button" class="rv-arrow" data-rv-prev aria-label="${esc(RS.prev)}">${icon("left")}</button><p class="rv-count" data-rv-count aria-live="polite">1 / ${ordered.length}</p><button type="button" class="rv-arrow" data-rv-next aria-label="${esc(RS.next)}">${icon("right")}</button></div>
+      <p class="rv-note">${esc(R.summaryNote)}</p>
+    </div>` : ""}
+  </div>
+  <div class="wrap">
+    <div class="rv-own">
       ${list}
-      <details class="rv-form"${rv(140)}>
-        <summary>${esc(FB.title)}${icon("plus")}</summary>
+      <details class="rv-form">
+        <summary><span>${esc(R.leaveTitle)}</span> ${esc(FB.title)}${icon("plus")}</summary>
         <p class="rv-form-lead">${esc(FB.lead)}</p>
         <form class="booking-form" data-booking="review" novalidate data-wa="${esc(FB.wa)}" data-err-name="${esc(FB.errors.name)}" data-err-rating="${esc(FB.errors.rating)}" data-err-text="${esc(FB.errors.text)}" data-err-consent="${esc(FB.errors.consent)}">
           <div class="form-grid">
@@ -895,12 +981,20 @@ ${pageHero(t, { eyebrow: A.eyebrow, title: A.title, lead: t.home.statement, imag
   </div>
 </section>
 
-<section class="section ab-quote" aria-labelledby="ab-quote-label">
-  <div class="wrap">
-    <p class="cu-label" id="ab-quote-label">${esc(C.quoteLabel)}</p>
-    <p class="cu-big" lang="tet">${esc(C.quote)}</p>
-    <p class="cu-gloss">${esc(C.gloss)}${site.showPlaceholderNotes ? ` <small>${esc(C.glossNote)}</small>` : ""}</p>
-  </div>
+<section class="ab-chapters" aria-label="${esc(A.whatTitle)}">
+  ${[
+    ["eat", "sunsetGarden", href("restaurant", L), A.chapters.menu, "is-dusk"],
+    ["stay", "aerialGarden", href("stay", L), A.chapters.suites, ""],
+    ["coast", "coastVillage", href("discover", L), A.chapters.discover, ""],
+    ["people", "beachFront", href("home", L, "#opinioes"), A.chapters.reviews, ""],
+  ].map(([k, img, link, label, cls], i) => `<article class="abc abc-${k}${i % 2 ? " is-flip" : ""}" aria-labelledby="abc-${k}">
+    <div class="abc-media">${figure(t, img, { sizes: "(min-width: 900px) 55vw, 100vw", ratio: i % 2 ? "4/5" : "3/2", credit: true, cls })}</div>
+    <div class="abc-text">
+      <h2 id="abc-${k}" class="abc-title">${esc(A.chapters[k + "Title"])}</h2>
+      <p${rv(60)}>${esc(A.chapters[k + "Body"])}</p>
+      <a class="text-link" href="${link}">${esc(label)}</a>
+    </div>
+  </article>`).join("")}
 </section>
 
 ${nextSteps(t, A.nextTitle)}`;
@@ -1025,6 +1119,11 @@ ${pageHero(t, { eyebrow: G.eyebrow, title: G.title, lead: G.lead, image: "aerial
   return { page: "gallery", title: t.meta.gallery.title, description: t.meta.gallery.description, path: href("gallery", L), alt: href("gallery", other(L)), preload: "aerialGarden", hero: true, ld: [bc.ld], body };
 }
 
+// Photos for the Discover places, in the order of discoverPage.places: Maubara fort (Commons, illustrative), Aipelo
+// (Lauhata's own drone photo), Liquiçá centre (Commons, illustrative), Maubara weaving (none yet), beaches (none yet),
+// the sea (Lauhata's own drone photo), the salt lake (none yet). See FOTOGRAFIAS.md for the shot list.
+const PLACE_PHOTOS = ["placeMaubaraFort", "ruinsAerial", "placeLiquicaCentre", null, null, "seaCanoe", null];
+
 // ================= DISCOVER LIQUIÇÁ: a short, sourced guide to the coast around Lauhata =================
 // Every place and fact comes from the official tourism site (timorleste.tl, Liquiçá municipality page), which is credited
 // on the page. No distances, travel times, prices or tours are given: none are confirmed. Lauhata does not run these visits.
@@ -1054,18 +1153,25 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
 <section class="section dsc-places" aria-labelledby="dsc-places-title">
   <div class="wrap">
     <h2 id="dsc-places-title" class="gx-title">${esc(D.placesTitle)}</h2>
-    <ol class="dsc-list">${D.places
-      .map((p, i) => `<li class="dsc-item"${rv((i % 3) * 60)}>
-        <span class="dsc-n" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span>
-        <div><p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${km(p.geo) != null ? `<p class="dsc-km">${icon("pin")}${esc(fmt(D.distance, { km: km(p.geo) }))}</p>` : ""}${p.map ? `<a class="text-link" href="${p.geo ? maps(p.geo.join(",")) : maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}${icon("arrow-up-right")}</a>` : ""}</div>
-      </li>`)
-      .join("")}</ol>
   </div>
+  ${(() => {
+    // Places with a photograph get an editorial row each (alternating sides, varied proportions); the others are set as
+    // a short typographic list until someone photographs them. Photo slots: PLACE_PHOTOS below, by place order; a new
+    // photo goes in images.mjs and here.
+    const body = (p) => `<p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${km(p.geo) != null ? `<p class="dsc-km">${esc(fmt(D.distance, { km: km(p.geo) }))}</p>` : ""}${p.map ? `<a class="text-link" href="${p.geo ? maps(p.geo.join(",")) : maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}</a>` : ""}`;
+    const withPhoto = D.places.map((p, i) => [p, PLACE_PHOTOS[i]]).filter(([, k]) => k);
+    const without = D.places.filter((p, i) => !PLACE_PHOTOS[i]);
+    return `<div class="dsc-rows">${withPhoto.map(([p, k], i) => `<article class="dsc-row${i % 2 ? " is-flip" : ""}">
+      <div class="dsc-row-media">${figure(t, k, { sizes: "(min-width: 900px) 58vw, 100vw", ratio: ["3/2", "4/5", "16/10", "1/1"][i % 4], credit: true })}</div>
+      <div class="dsc-row-text"${rv(60)}>${body(p)}</div>
+    </article>`).join("")}</div>
+    ${without.length ? `<div class="wrap"><h3 class="dsc-also-title">${esc(D.alsoTitle)}</h3><ul class="dsc-also">${without.map((p) => `<li>${body(p)}</li>`).join("")}</ul></div>` : ""}`;
+  })()}
 </section>
 
 <section class="section dsc-map" aria-label="${esc(D.mapLink)}">
   <div class="wrap">
-    <div class="map-frame dsc-map-frame"><iframe title="${esc(t.location.mapTitle)}" src="https://www.google.com/maps?q=${site.geo ? `${site.geo.lat},${site.geo.lng}` : encodeURIComponent(site.mapQuery)}&z=11&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    <div class="map-frame dsc-map-frame"><iframe title="${esc(t.location.mapTitle)}" src="${mapEmbed()}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     <p class="dsc-source">${esc(D.geoSource)}</p>
   </div>
 </section>
@@ -1113,44 +1219,86 @@ export function home(t) {
   const hours = site.restaurantHours.length
     ? site.restaurantHours.map((h) => `<div><dt>${esc(h.days[L])}</dt><dd>${esc(h.hours)}</dd></div>`).join("")
     : `<div><dd class="tbc">${esc(t.common.hoursTbc)}</dd></div>`;
+  // Final homepage design (LAUHATA-FINAL-HOMEPAGE-DESIGN.md): sunset hero with the two-mode enquiry panel, the Welcome
+  // introduction with four photographic cards, Our Story, the two suites, guest reviews, Discover Liquiçá.
+  // Photographs: real ones wherever they exist; the suites only have illustrative pictures, which keep their label.
+  const RS = LD.resort;
+  const card = (i, key, page, ic) => `<a class="wc-card" href="${href(page, L)}">
+      <div class="wc-media">${figure(t, key, { sizes: "(min-width: 1100px) 17vw, (min-width: 700px) 45vw, 92vw", decorative: true })}</div>
+      <span class="wc-icon" aria-hidden="true">${icon(ic)}</span>
+      <span class="wc-text"><strong class="wc-title">${esc(RS.cards[i].title)}</strong><span class="wc-line">${esc(RS.cards[i].line)}</span><span class="wc-link">${esc(RS.cards[i].link)}${icon("arrow")}</span></span>
+    </a>`;
+  const suite = (r) => `<article class="st-panel">
+      <a class="st-media" href="${href("room:" + r.id, L)}" aria-label="${esc(r.name[L])}">${figure(t, r.images[0], { sizes: "(min-width: 900px) 34vw, 92vw", decorative: true })}<span class="st-name">${esc(r.name[L])}</span></a>
+      <p class="st-beds">${esc(r.beds[L])}</p>
+      <div class="st-links"><a class="text-link" href="${href("room:" + r.id, L)}">${esc(RS.stayView)}</a><a class="text-link" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(RS.stayAsk)}</a></div>
+    </article>`;
   const body = `
-<section class="cine-hero hx${site.heroVideo ? " has-video" : ""}" aria-labelledby="hero-title">
-  <div class="hx-bg">
-    ${figure(t, "heroCover", { eager: true, sizes: "100vw" })}
-    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" aria-hidden="true" data-hero-video data-src="${esc(site.heroVideo)}"${site.heroVideoSmall ? ` data-src-small="${esc(site.heroVideoSmall)}"` : ""}></video>` : ""}
-  </div>
+<section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
+  <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}</div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content">
-    <p class="hx-place" data-fade>${esc(hero.eyebrow.join(", "))}</p>
-    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(hero.title1)}</span> <span class="line l2">${esc(hero.titleAccent)} ${esc(hero.title2)}</span></h1>
-    <p class="cine-lead" data-fade style="--d:300ms">${esc(hero.lead)}</p>
-    <div class="hx-actions" data-fade style="--d:450ms">
-      <a class="btn btn-cream btn-lg" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.heroTable)}</a>
-      <a class="btn btn-ghost-light btn-lg" href="${href("stay", L, "#quartos")}" data-book-open="room">${icon("bed")}${esc(t.home.quick.heroRoom)}</a>
-      <a class="hx-wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(hero.whatsapp)}</a>
-    </div>
+    <p class="eyebrow-rule is-light" data-fade>${esc(RS.heroEyebrow)}</p>
+    <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
+    <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
   </div>
-  <dl class="wrap hx-context" data-fade style="--d:600ms">
-    <div><dt>${esc(hero.context.eat)}</dt><dd>${site.restaurantHours.map((h) => `${esc(h.days[L])} ${esc(h.hours)}`).join(" · ")}</dd></div>
-    <div><dt>${esc(hero.context.where)}</dt><dd>${esc(hero.context.whereValue)}</dd></div>
-    <div><dt>${esc(hero.context.book)}</dt><dd>${esc(hero.context.bookValue)}</dd></div>
-    <div class="hx-coords"><dt>${esc(t.common.coordsLabel)}</dt><dd>${esc(t.common.coords)}</dd></div>
-  </dl>
+  <div class="wrap rs-booking" data-fade style="--d:450ms">${bookingCard(t, { prefix: "hxb", hero: true })}</div>
+  <p class="rs-hero-cap"><span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
 </section>
 
-${introSection(t)}
+<section class="section rs-welcome" aria-labelledby="wc-title">
+  <div class="wrap wc-grid">
+    <div class="wc-intro">
+      <p class="eyebrow-rule">${esc(RS.welcomeEyebrow)}</p>
+      <h2 id="wc-title" class="wc-heading" data-split>${esc(RS.welcomeTitle)}</h2>
+      <p class="wc-body"${rv(60)}>${esc(RS.welcomeBody)}</p>
+      <a class="btn btn-outline btn-pill" href="${href("about", L)}">${esc(RS.welcomeCta)}${icon("arrow")}</a>
+    </div>
+    <div class="wc-cards">
+      ${card(0, "beachFront", "restaurant", "cutlery")}
+      ${card(1, "roomBright", "stay", "bed")}
+      ${card(2, "sunsetGarden", "events", "heart")}
+      ${card(3, "coastVillage", "discover", "pin")}
+    </div>
+  </div>
+</section>
 
-${duoSection(t)}
+<section class="rs-story" aria-labelledby="story-title">
+  <div class="rs-story-media">${figure(t, "sunsetSea", { sizes: "100vw" })}</div>
+  <div class="rs-story-shade" aria-hidden="true"></div>
+  <div class="wrap rs-story-text">
+    <p class="eyebrow-rule is-light">${esc(RS.storyEyebrow)}</p>
+    <h2 id="story-title" class="rs-story-title" data-split>${esc(RS.storyTitle)}</h2>
+    <p class="rs-story-body"${rv(60)}>${esc(RS.storyBody)}</p>
+    <a class="btn btn-ghost-light btn-pill" href="${href("about", L)}">${esc(RS.storyCta)}${icon("arrow")}</a>
+  </div>
+  <p class="rs-story-cap"><span>${esc(images.sunsetSea.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
+</section>
 
-${coastChapter(t)}
+<section class="section rs-stay" aria-labelledby="stay-title">
+  <div class="wrap st-grid">
+    <div class="st-intro">
+      <p class="eyebrow-rule">${esc(RS.stayEyebrow)}</p>
+      <h2 id="stay-title" class="wc-heading" data-split>${esc(RS.stayTitle)}</h2>
+      <p class="wc-body">${esc(RS.stayBody)}</p>
+      <a class="btn btn-outline btn-pill" href="${href("stay", L)}">${esc(RS.stayCta)}${icon("arrow")}</a>
+    </div>
+    <div class="st-panels">${rooms.map(suite).join("")}</div>
+  </div>
+</section>
 
-${eventsTeaser(t)}
+${reviewsSection(t)}
 
-${discoverPreview(t)}
-
-${finalSection(t, "aerialDay4")}
-
-${reviewsSection(t)}`;
+<section class="rs-discover" aria-labelledby="rsd-title">
+  <div class="rs-discover-media">${figure(t, "ruinsAerial", { sizes: "100vw" })}</div>
+  <div class="rs-discover-shade" aria-hidden="true"></div>
+  <div class="wrap rs-discover-text">
+    <p class="eyebrow-rule is-light">${esc(RS.discoverEyebrow)}</p>
+    <h2 id="rsd-title" class="rs-story-title" data-split>${esc(RS.discoverTitle)}</h2>
+    <a class="btn btn-ghost-light btn-pill" href="${href("discover", L)}">${esc(RS.discoverCta)}${icon("arrow")}</a>
+  </div>
+  <p class="rs-story-cap"><span>${esc(images.ruinsAerial.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
+</section>`;
   return {
     page: "home",
     title: t.meta.home.title,
@@ -1158,7 +1306,7 @@ ${reviewsSection(t)}`;
     path: href("home", L),
     alt: href("home", other(L)),
     preload: [
-      { key: "heroCover", sizes: "100vw" },
+      { key: "sunsetPalmsHigh", sizes: "100vw" },
     ],
     hero: true,
     ld: [faqLd(t)],
@@ -1298,37 +1446,58 @@ ${pageHero(t, {
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
 })}
 
-<section class="section" aria-labelledby="sheet-title">
-  <div class="wrap room-intro">
-    <div>
-      <p class="lead-serif"${rv()}>${esc(r.tagline[L])}</p>
-      <p class="body-text"${rv(60)}>${esc(r.description[L])}</p>
-      <h2 id="sheet-title" class="h-small"${rv(80)}>${esc(S.sheetTitle)}</h2>
-      <dl class="room-sheet"${rv(100)}>${facts}</dl>
-      ${anyTbc ? `<p class="room-sheet-note">${esc(S.sheetNote)}</p>` : ""}
-      <p class="pay-note">${icon("check")}<span>${esc(t.stay.payNote)}</span></p>
+<section class="section suite-intro" aria-labelledby="suite-intro-title">
+  <div class="wrap si-grid">
+    <h2 id="suite-intro-title" class="si-tagline" data-split>${esc(r.tagline[L])}</h2>
+    <div class="si-body">
+      <p${rv(60)}>${esc(r.description[L])}</p>
+      <p class="si-names">${esc(S.namesNote)}</p>
     </div>
-    <aside class="room-ask" aria-labelledby="ask-title"${rv(120)}>
-      <h2 id="ask-title">${esc(S.askTitle)}</h2>
-      <p>${esc(S.askBody)}</p>
-      <a class="btn btn-dark btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.roomBook)}${icon("arrow")}</a>
-      <a class="btn btn-outline btn-lg" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
-      ${responseLine(t)}
-    </aside>
-    <a class="room-back" href="${href("stay", L, "#quartos")}">${icon("arrow")}${esc(S.allRooms)}</a>
   </div>
-</section>
-<section class="section room-photos" aria-label="${esc(fmt(t.carousel.label, { room: name }))}">
-  <div class="wrap">${roomCarousel(t, r, { sizes: "(min-width: 900px) 70vw, 92vw", cls: "is-wide" })}</div>
 </section>
 
-<section class="section rooms-dark" aria-labelledby="other-title">
-  <div class="wrap">
-    ${heading({ eyebrow: S.nextRoom, title: S.otherRooms, id: "other-title" })}
-    <div class="room-pager">${others
-      .map((o) => `<a class="room-next" href="${href("room:" + o.id, L)}">${figure(t, o.images[0], { sizes: "(min-width: 900px) 45vw, 92vw" })}<div><span>${esc(o.badge ? o.badge[L] : S.eyebrow)}</span><strong>${esc(o.name[L])}</strong></div></a>`)
-      .join("")}</div>
+<section class="section room-photos" aria-label="${esc(fmt(t.carousel.label, { room: name }))}">
+  <div class="wrap">${roomCarousel(t, r, { sizes: "(min-width: 900px) 78vw, 92vw", cls: "is-wide" })}</div>
+</section>
+
+<section class="section suite-spec" aria-labelledby="sheet-title">
+  <div class="wrap ss-grid">
+    <figure class="ss-plan"${rv()}>
+      ${bedPlan(t, r)}
+      <figcaption>${esc(S.bedPlan)}</figcaption>
+    </figure>
+    <div class="ss-sheet">
+      <h2 id="sheet-title" class="ss-title">${esc(S.sheetTitle)}</h2>
+      <dl class="room-sheet"${rv(80)}>${facts}${row(S.bookLabel, esc(S.bookValue))}${row(S.payLabel, esc(S.payValue))}</dl>
+      <h3 class="ss-ask-title">${esc(S.askMoreTitle)}</h3>
+      <ul class="ss-ask">${S.askMore.map((q) => `<li>${esc(q)}</li>`).join("")}</ul>
+      <p class="ss-ask-note">${esc(S.askMoreNote)}</p>
+    </div>
   </div>
+</section>
+
+<section class="section suite-request" aria-labelledby="ask-title">
+  <div class="wrap sr-grid">
+    <h2 id="ask-title" class="sr-title">${esc(S.askTitle)}</h2>
+    <div class="sr-body">
+      <p>${esc(S.askBody)}</p>
+      <p class="pay-note">${esc(t.stay.payNote)}</p>
+      <div class="sr-actions">
+        <a class="btn btn-dark btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.roomBook)}</a>
+        <a class="text-link" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${esc(t.common.whatsapp)}</a>
+      </div>
+      ${responseLine(t)}
+    </div>
+  </div>
+</section>
+
+<section class="suite-next" aria-labelledby="other-title">
+  <h2 id="other-title" class="sr-only">${esc(S.otherRooms)}</h2>
+  ${others.map((o) => `<a class="sn-link" href="${href("room:" + o.id, L)}">
+    <div class="sn-media">${figure(t, o.images[0], { sizes: "100vw", decorative: true })}</div>
+    <div class="wrap sn-copy"><span class="sn-kicker">${esc(S.otherRooms)}</span><strong class="sn-name">${esc(o.name[L])}</strong><span class="sn-sum">${esc(o.summary[L])}</span></div>
+  </a>`).join("")}
+  <div class="wrap sn-back"><a class="text-link" href="${href("stay", L, "#quartos")}">${esc(S.allRooms)}</a></div>
 </section>`;
   return {
     page: "stay",
@@ -1366,14 +1535,14 @@ ${pageHero(t, {
       ${infoGrid(t)}
       <div class="get-there"${rv(180)}><h3>${esc(t.land.getThere.title)} ${esc(t.land.getThere.titleAccent)}</h3><p>${esc(t.land.getThere.body)}</p></div>
       <div class="contact-actions"${rv(200)}>
-        <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.heroTable)}</a>
-        <a class="btn btn-outline" href="${href("stay", L, "#reservar")}" data-book-open="room">${icon("bed")}${esc(t.footer.bookRoom)}</a>
-        <a class="btn btn-outline" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
-        <a class="btn btn-outline" href="${mapsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(t.footer.directions)}</a>
+        <a class="btn btn-dark btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
+        <a class="text-link" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${esc(t.home.quick.heroTable)}</a>
+        <a class="text-link" href="${href("stay", L, "#reservar")}" data-book-open="room">${esc(t.footer.bookRoom)}</a>
+        <a class="text-link" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.footer.directions)}</a>
       </div>
     </div>
     <div class="map-frame"${rv(120)}>
-      <iframe title="${esc(t.location.mapTitle)}" src="https://www.google.com/maps?q=${encodeURIComponent(q)}&z=12&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe title="${esc(t.location.mapTitle)}" src="${mapEmbed()}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </section>
@@ -1476,7 +1645,8 @@ function photoCredits(t) {
   const file = new URL("./data/temp-photos.json", import.meta.url);
   if (!existsSync(file)) return "";
   const credits = JSON.parse(readFileSync(file, "utf8"));
-  const rows = Object.entries(credits).filter(([id]) => existsSync(tempPhotoFile(id)) && !existsSync(new URL(`./assets/img/pratos/${id}-640.jpg`, import.meta.url)));
+  // Dish and drink photos (pratos-temp/<id>) until the real dish photo exists; reference photos of places (`file`, in fotos/).
+  const rows = Object.entries(credits).filter(([id, c]) => (c.file ? existsSync(new URL(`./assets/img/fotos/${c.file}-640.jpg`, import.meta.url)) : existsSync(tempPhotoFile(id)) && !existsSync(new URL(`./assets/img/pratos/${id}-640.jpg`, import.meta.url))));
   if (!rows.length) return "";
   const C = t.privacy.credits;
   return `<h2 id="creditos">${esc(C.title)}</h2><p>${esc(C.lead)}</p><ul class="credits">${rows

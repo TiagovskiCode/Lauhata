@@ -2,6 +2,53 @@
 
 Documento interno, 5 de novembro de 2026. Pesquisa e direção escolhida antes da implementação.
 
+---
+
+## Fase 8 — refinamento a partir do feedback do cliente (5 de novembro de 2026)
+
+### Skills
+Impeccable verificada outra vez: **não está instalada** (nem nas skills locais, nem nas sincronizadas, nem no projeto).
+Não foi usada. Usadas: frontend-design (direção), design-critique (auditoria com a sua grelha: primeira impressão,
+usabilidade, hierarquia, consistência, acessibilidade) e os testes do projeto no browser integrado e no Puppeteer.
+
+### Novas referências visitadas (1440px)
+- **NIHI Sumba:** ecrã dividido de ponta a ponta, dois destinos com o mesmo peso, título e frase em cima de cada
+  metade, ação discreta no canto. → Comer & Ficar ganha por baixo das fotos uma faixa de detalhes por metade (o que se
+  come, a que horas; que quartos há, como se pede), em vez de pôr tudo sobre a imagem.
+- **Rosewood:** carrossel de retratos verticais com os vizinhos meio visíveis, títulos pequenos por baixo.
+  → Descobrir Liquiçá usa proporções variadas e legendas, não cartões iguais.
+- **Six Senses:** títulos centrados e curtos, texto ao lado das imagens, muito ar.
+- **Soneva:** a página ficou em branco no browser automático (conteúdo carregado por script); não foi estudada.
+- Aman, Xigera, Casa Angelina, Bürgenstock, Noma, Bastible, F-eat: ver a pesquisa da fase 7, mais abaixo.
+
+### Auditoria (design-critique)
+| Problema | Gravidade | Solução |
+|---|---|---|
+| Opiniões: uma caixa do Tripadvisor sem nota e um formulário; nada que dê confiança | Crítico | Notas verificadas das duas plataformas em tipografia grande, um resumo em destaque e três secundários, ligações às fontes; o formulário passa para segundo plano |
+| Quartos com nomes que não são os oficiais | Crítico | «Suite King» e «Suite King & Single», provisórios |
+| Página do quarto pobre (só cama, TV e preço) | Alto | Especificação tipográfica, esquema das camas, comodidades confirmadas, «pergunte-nos» para o resto, galeria |
+| Comer & Ficar só com uma frase | Alto | Faixa de detalhes verificados por metade |
+| Capítulo da costa: o cliente gostou do escuro com palmeiras e montanha, mas acha-o pouco desenvolvido | Médio | A foto da praia volta a ser a imagem de fundo do ecrã inteiro, com o texto; duas fotos secundárias e uma legenda por baixo |
+| About: bloco «Em tétum — Mai, han, toba.» (o «Em teto Myran Toba» do cliente) | Médio | Removido; About ganha capítulos sobre o que o Lauhata é, com base em factos verificados |
+| Rodapé com o número duas vezes (WhatsApp e telefone) | Médio | Uma linha: «+670 7740 1111 · WhatsApp e telefone» |
+| Mapa em Descobrir e Contactos aberto muito longe (z 11) | Médio | Centrado nas coordenadas oficiais, zoom 15, com marcador |
+| Em 2560 e 3840px o conteúdo fica com 1470px: página vazia | Médio | A escala de tipo e a largura do conteúdo crescem juntas a partir de 1920px |
+| Contactos: quatro botões em caixa seguidos | Menor | Uma ação principal e ligações |
+| Caixas decorativas restantes (Tripadvisor no rodapé, nota de pagamento, «consumo no local», aviso do quarto) | Menor | Linhas tipográficas com filete, sem fundo |
+
+O que funciona e fica: o herói com o filme de drone, a ementa em linhas (passa no teste de sobreposição de 360 a
+3840px), as legendas «Fotografia real / Imagem ilustrativa», o formulário de eventos em 5 passos, a galeria.
+
+### Opiniões: o que foi verificado (5 nov. 2026, nas páginas oficiais)
+- **Tripadvisor:** 4,4/5, 25 avaliações (14 excelentes, 9 boas, 1 razoável, 1 má). Notas parciais: quartos 4,4,
+  serviço 4,3, relação qualidade/preço 4,3, limpeza 4,3, localização 4,3, qualidade do sono 4,5. «N.º 1 de 2 B&B em
+  Liquiçá». A página está «Unclaimed»: o Carlos deve reclamá-la.
+- **Booking.com:** 8,2/10 («Muito bom»), 4 avaliações; pessoal 9,4.
+- **Texto das opiniões:** os termos das duas plataformas não permitem copiar o texto das avaliações para outro site.
+  O site mostra as notas com ligação e **resumos nossos**, assinalados como resumos, com o autor e a data públicos e a
+  ligação para a avaliação completa. Para publicar citações literais: widget oficial do Tripadvisor (Review Snippets,
+  depois de reclamar a página) ou autorização do autor.
+
 ## 1. Skills
 
 - **Impeccable:** não está instalada (verificado nas skills locais, nos plugins e nas skills do claude.ai). Pode ser
