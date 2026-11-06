@@ -903,7 +903,7 @@ export default {
     items: [
       {
         q: "Como posso reservar uma mesa?",
-        a: "Use o formulário da mesa na página inicial ou na página do restaurante e envie a mensagem que se abre no WhatsApp. É um pedido: a mesa só fica reservada depois de a equipa do Lauhata a confirmar nessa conversa.",
+        a: "Use o formulário da mesa na página inicial ou na página do restaurante e envie a mensagem que se abre no WhatsApp. É um pedido: a equipa do Lauhata responde nessa conversa e só então a mesa fica reservada.",
       },
       {
         q: "Como posso reservar uma suite?",

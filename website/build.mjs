@@ -22,6 +22,9 @@ await mkdir(dist, { recursive: true });
 const isRawVideo = (p) => /[\\/]assets[\\/]img[\\/]video([\\/]|$)/.test(p);
 await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) });
 
+// Browsers ask for /favicon.ico on their own; answer with the site icon (a PNG served under that name works everywhere).
+await cp(join(root, "src/assets/img/favicon-64.png"), join(dist, "favicon.ico"));
+
 const sitemap = [];
 let count = 0;
 

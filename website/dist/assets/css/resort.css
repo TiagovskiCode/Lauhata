@@ -397,6 +397,7 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rooms-cine { background: var(--night); }
 /* resort.css's `.heading .title { ink }` (0,2,0, later) beat cinema.css's `.rooms-cine .title` here: dark on dark. */
 .rooms-cine .heading .title { color: var(--on-night); }
+.rooms-cine .heading .title-2 { color: var(--gold-soft); } /* the second line of the heading was muted grey on the night ground: 3.1:1 */
 .rooms-cine .room-row.room-is-family .from strong { color: var(--ink); }
 .rooms-cine .room-row.room-is-family { box-shadow: 0 0 0 100vmax var(--cream); background: var(--cream); }
 .suite-spec, .dsc-preview, .booking { background: var(--paper); }
