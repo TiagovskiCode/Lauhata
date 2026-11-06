@@ -31,7 +31,7 @@ Atualizado a 5 de novembro de 2026. Cada fotografia do site tem uma legenda: **�
   2. Gerar os tamanhos com `tools/otimizar-fotos.ps1` (slug → `<slug>-640/1080/1600.jpg`).
   3. Apontar a chave em `images.mjs` para `foto:<slug>` e pôr `placeholder: false`.
 - **Lugares em Descobrir Liquiçá:** a lista `PLACE_PHOTOS` em `src/pages.mjs` diz que foto acompanha cada lugar.
-  Tecelagem de Maubara, praias e lago salgado ainda não têm foto e aparecem como texto.
+  Descobrir Liquiçá mostra só três lugares (forte de Maubara, ruínas da prisão de Aipelo e centro de Liquiçá); a tecelagem, as praias e o lago salgado foram retirados em nov. 2026.
 
 ## 3. Lista de fotografias para o Carlos (por prioridade)
 

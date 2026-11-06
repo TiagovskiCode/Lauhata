@@ -299,7 +299,10 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rs-stay { background: var(--cream); }
 .st-grid { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; }
 /* Both suites share one frame: equal columns, the same 4:3 proportion, the same radius, so neither looks more important. */
-.st-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem); align-items: start; }
+/* Two suites: the first one large, the second a smaller card; both images keep the same 4:3 ratio. */
+.st-panels { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: clamp(1rem, 1.6vw, 1.5rem); align-items: end; }
+.st-panel:not(.is-main) .st-name { font-size: clamp(1.2rem, 0.6vw + 0.95rem, 1.5rem); }
+.st-panel.is-main .st-media { box-shadow: 0 26px 50px -28px rgba(14, 10, 8, 0.55); }
 .st-media { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--radius-card); isolation: isolate; color: var(--on-night); text-decoration: none; box-shadow: var(--shadow-soft); }
 .st-media .media { position: absolute; inset: 0; border-radius: 0 !important; z-index: -2; }
 .st-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
@@ -307,49 +310,51 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .st-media::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 10, 8, 0) 50%, rgba(14, 10, 8, 0.72) 100%); }
 .st-name { position: absolute; left: 0; right: 0; bottom: 1rem; text-align: center; font-family: var(--serif); font-size: clamp(1.4rem, 0.8vw + 1rem, 1.9rem); }
 .st-media .media.is-placeholder::after { display: block !important; top: 0.8rem; right: 0.8rem; left: auto; bottom: auto; padding: 0.18rem 0.6rem; font-size: 0.7rem; background: rgba(14, 10, 8, 0.7); color: var(--on-night); }
-.st-beds { display: flex; align-items: center; gap: 0.5rem; min-height: 1.6rem; margin: 1rem 0 0.5rem; font-size: 0.92rem; color: var(--body); }
-.st-beds .icon { width: 1.05rem; height: 1.05rem; color: var(--terra-dark); }
+.st-amen { list-style: none; display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; margin: 1rem 0 0.6rem; padding: 0; font-size: 0.9rem; color: var(--body); }
+.st-amen li { display: inline-flex; align-items: center; gap: 0.45rem; }
+.st-amen .icon { width: 1.15rem; height: 1.15rem; color: var(--terra-dark); flex: none; }
 .st-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; }
 .st-links .text-link { font-size: 0.92rem; }
 @media (max-width: 1100px) { .st-grid { grid-template-columns: 1fr; } }
-@media (max-width: 640px) { .st-panels { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .st-panels { grid-template-columns: minmax(0, 1fr); } }
 
-/* ---------- Guest reviews: dark; heading beside the two verified scores, then the summaries as cards ---------- */
+/* ---------- Guest reviews: a dark section; heading beside the two verified scores, then the summaries as cream cards ---------- */
 .reviews-ed.is-dark { background: var(--night); color: var(--on-night); border: 0; }
 .reviews-ed.is-dark .rv-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 1.5rem clamp(2rem, 5vw, 5rem); align-items: end; margin: 0 0 clamp(2rem, 4vw, 3rem); padding: 0; border: 0; }
 .reviews-ed.is-dark .rv-title { color: var(--on-night); font-size: clamp(2.3rem, 2.4vw + 1.2rem, 3.8rem); line-height: 1.04; margin: 0; }
 .reviews-ed.is-dark .rv-scores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; margin: 0; border: 0; }
-.reviews-ed.is-dark .rv-score { color: var(--on-night); padding: clamp(1.1rem, 2vw, 1.5rem); grid-template-columns: auto 1fr; grid-template-areas: "plat plat" "num num" "meter meter" "word word" "go go"; row-gap: 0.55rem; align-items: center; border: 1px solid var(--line-night); border-radius: var(--radius-panel); background: rgba(248, 241, 231, 0.04); transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease); }
-.reviews-ed.is-dark .rv-score + .rv-score { border-left: 1px solid var(--line-night); padding-left: clamp(1.1rem, 2vw, 1.5rem); }
-.reviews-ed.is-dark .rv-score:hover { background: rgba(248, 241, 231, 0.08); border-color: rgba(236, 189, 133, 0.4); transform: translateY(-2px); }
+.reviews-ed.is-dark .rv-score { color: var(--ink); padding: clamp(1.1rem, 2vw, 1.5rem); grid-template-columns: auto 1fr; grid-template-areas: "plat plat" "num num" "meter meter" "word word" "go go"; row-gap: 0.55rem; align-items: center; border: 1px solid transparent; border-radius: var(--radius-panel); background: var(--cream); transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease); }
+.reviews-ed.is-dark .rv-score + .rv-score { border-left: 1px solid transparent; padding-left: clamp(1.1rem, 2vw, 1.5rem); }
+.reviews-ed.is-dark .rv-score:hover { background: var(--paper); border-color: var(--sunset); transform: translateY(-2px); }
 .reviews-ed.is-dark .rv-score:active { transform: none; }
-.reviews-ed.is-dark .rv-plat { margin: 0; font-size: 0.86rem; letter-spacing: 0.02em; color: var(--on-night-2); }
-.reviews-ed.is-dark .rv-num { font-size: clamp(2.8rem, 2vw + 1.6rem, 3.8rem); line-height: 0.9; color: var(--gold-soft); }
-.reviews-ed.is-dark .rv-num small, .reviews-ed.is-dark .rv-word, .reviews-ed.is-dark .rv-checked { color: var(--on-night-2); }
+.reviews-ed.is-dark .rv-plat { margin: 0; font-size: 0.86rem; letter-spacing: 0.02em; color: var(--muted); }
+.reviews-ed.is-dark .rv-num { font-size: clamp(2.8rem, 2vw + 1.6rem, 3.8rem); line-height: 0.9; color: var(--terra-dark); }
+.reviews-ed.is-dark .rv-num small, .reviews-ed.is-dark .rv-word { color: var(--muted); }
+.reviews-ed.is-dark .rv-checked { color: var(--on-night-2); }
 .reviews-ed.is-dark .rv-word { font-size: 0.9rem; }
-.reviews-ed.is-dark .rv-go { color: var(--on-night); text-decoration-color: var(--sunset); }
+.reviews-ed.is-dark .rv-go { color: var(--ink); text-decoration-color: var(--terra-dark); }
 .reviews-ed.is-dark .rv-checked { margin-top: 0.7rem; }
 .rv-score > .rv-bubbles, .rv-score > .rv-bar { grid-area: meter; }
 /* Tripadvisor bubbles: each circle filled by the share of the score it covers. */
 .rv-bubbles { display: inline-flex; gap: 0.3rem; }
-.rv-bubbles i { width: 0.95rem; height: 0.95rem; border-radius: 50%; border: 1.5px solid var(--gold-soft); background: linear-gradient(90deg, var(--gold-soft) var(--f), transparent var(--f)); }
+.rv-bubbles i { width: 0.95rem; height: 0.95rem; border-radius: 50%; border: 1.5px solid var(--terra-dark); background: linear-gradient(90deg, var(--terra-dark) var(--f), transparent var(--f)); }
 /* Booking.com bar: the score out of 10. */
-.rv-bar { display: block; width: 100%; max-width: 11rem; height: 0.42rem; border-radius: var(--radius-pill); background: rgba(248, 241, 231, 0.14); overflow: hidden; }
-.rv-bar i { display: block; width: var(--p); height: 100%; border-radius: inherit; background: var(--gold-soft); }
+.rv-bar { display: block; width: 100%; max-width: 11rem; height: 0.42rem; border-radius: var(--radius-pill); background: rgba(23, 18, 15, 0.12); overflow: hidden; }
+.rv-bar i { display: block; width: var(--p); height: 100%; border-radius: inherit; background: var(--terra-dark); }
 /* The summaries: the featured one across the full width, the others in a row of three beneath it. */
 .rv-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; }
-.rv-card { display: flex; flex-direction: column; gap: 0.9rem; padding: clamp(1.1rem, 2vw, 1.5rem); border-radius: var(--radius-card); background: rgba(248, 241, 231, 0.05); border: 1px solid var(--line-night); }
-.rv-card.is-featured { grid-column: 1 / -1; padding: clamp(1.5rem, 3vw, 2.6rem); border-radius: var(--radius-panel); background: rgba(236, 189, 133, 0.08); border-color: rgba(236, 189, 133, 0.22); justify-content: space-between; }
+.rv-card { display: flex; flex-direction: column; gap: 0.9rem; padding: clamp(1.1rem, 2vw, 1.5rem); border-radius: var(--radius-card); background: var(--cream); border: 1px solid transparent; }
+.rv-card.is-featured { grid-column: 1 / -1; padding: clamp(1.5rem, 3vw, 2.6rem); border-radius: var(--radius-panel); justify-content: space-between; }
 .rv-card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
 .rv-card-top .rv-bubbles i { width: 0.75rem; height: 0.75rem; }
-.rv-card-plat { margin-left: auto; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; color: var(--on-night-2); padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); border: 1px solid var(--line-night); }
-.rv-card-text { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--on-night); text-wrap: pretty; }
+.rv-card-plat { margin-left: auto; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em; color: var(--muted); padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); border: 1px solid var(--line-strong); }
+.rv-card-text { margin: 0; font-size: 1rem; line-height: 1.6; color: var(--ink); text-wrap: pretty; }
 .rv-card.is-featured .rv-card-text { max-width: 34em; font-family: var(--serif); font-style: italic; font-size: clamp(1.5rem, 1vw + 1.15rem, 2.2rem); line-height: 1.25; }
-.rv-card-by { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.5rem 1rem; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid var(--line-night); font-size: 0.84rem; }
+.rv-card-by { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.5rem 1rem; margin-top: auto; padding-top: 0.8rem; border-top: 1px solid var(--line); font-size: 0.84rem; }
 .rv-card-by p { margin: 0; display: grid; gap: 0.15rem; }
-.rv-author { color: var(--on-night); font-weight: 600; }
-.rv-meta { color: var(--on-night-2); }
-.rv-card-by a { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 44px; color: var(--gold-soft); text-decoration: underline; text-decoration-color: var(--sunset); text-underline-offset: 0.35em; }
+.rv-author { color: var(--ink); font-weight: 600; }
+.rv-meta { color: var(--muted); }
+.rv-card-by a { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 44px; color: var(--terra-dark); text-decoration: underline; text-decoration-color: var(--terra-dark); text-underline-offset: 0.35em; }
 .rv-card-by a:hover { text-decoration-thickness: 2px; }
 .rv-card-by .icon { width: 0.9rem; height: 0.9rem; }
 .reviews-ed.is-dark .rv-note { color: var(--on-night-2); margin: 1.2rem 0 0; font-size: 0.86rem; }
@@ -392,6 +397,7 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rooms-cine { background: var(--night); }
 /* resort.css's `.heading .title { ink }` (0,2,0, later) beat cinema.css's `.rooms-cine .title` here: dark on dark. */
 .rooms-cine .heading .title { color: var(--on-night); }
+.rooms-cine .heading .title-2 { color: var(--gold-soft); } /* the second line of the heading was muted grey on the night ground: 3.1:1 */
 .rooms-cine .room-row.room-is-family .from strong { color: var(--ink); }
 .rooms-cine .room-row.room-is-family { box-shadow: 0 0 0 100vmax var(--cream); background: var(--cream); }
 .suite-spec, .dsc-preview, .booking { background: var(--paper); }
@@ -445,3 +451,27 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
 @media (prefers-reduced-motion: reduce) {
   .wc-media img, .st-media img { transition: none; }
 }
+
+/* ---------- Back to top (every page): a small round button, bottom left on computers so it never meets the WhatsApp button ---------- */
+.to-top { position: fixed; left: clamp(1rem, 2vw, 1.6rem); bottom: clamp(1rem, 2vw, 1.6rem); z-index: 44; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid rgba(236, 189, 133, 0.4); border-radius: 50%; background: rgba(23, 18, 15, 0.9); color: var(--on-night); cursor: pointer; opacity: 0; transform: translateY(10px); transition: opacity 0.25s ease, transform 0.25s var(--ease), background-color 0.2s ease, border-color 0.2s ease; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.to-top[hidden] { display: none; }
+.to-top.is-on { opacity: 1; transform: none; }
+.to-top:hover { background: var(--night-2, #2b2119); border-color: var(--sunset); }
+.to-top:hover .icon { transform: translateY(-2px); }
+.to-top:active { transform: scale(0.96); }
+.to-top .icon { width: 20px; height: 20px; transition: transform 0.2s var(--ease); }
+/* Phones: right side, above the bottom bar (and above the cart button when it is showing). */
+@media (max-width: 860px) {
+  .to-top { left: auto; right: 0.8rem; bottom: calc(5.2rem + env(safe-area-inset-bottom)); width: 44px; height: 44px; }
+  body:has(.cart-fab:not([hidden])) .to-top { bottom: calc(9.2rem + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) { .to-top, .to-top .icon { transition: none; } }
+
+/* ---------- Analytics consent banner (only present when a Google Analytics ID is configured) ---------- */
+.consent { position: fixed; left: 50%; bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: 80; display: flex; align-items: center; gap: 1rem 1.4rem; flex-wrap: wrap; justify-content: space-between; width: min(46rem, calc(100% - 1.6rem)); transform: translateX(-50%); padding: 0.9rem 1.1rem; border: 1px solid rgba(236, 189, 133, 0.35); border-radius: var(--radius-panel); background: rgba(23, 18, 15, 0.97); color: var(--on-night); box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7); }
+.consent[hidden] { display: none; }
+.consent p { margin: 0; flex: 1 1 22rem; font-size: 0.9rem; line-height: 1.5; }
+.consent a { color: var(--gold-soft); text-underline-offset: 0.25em; }
+.consent-btns { display: flex; gap: 0.5rem; flex: none; }
+.consent .btn-outline { --bd: rgba(248, 241, 231, 0.5); --fg: var(--on-night); }
+.nf-help { margin: 1.6rem 0 0; color: var(--muted); font-size: 0.95rem; }

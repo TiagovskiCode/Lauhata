@@ -25,7 +25,7 @@ export default {
     },
     discover: {
       title: "Discover Liquiçá — the coast around Lauhata, Timor-Leste",
-      description: "What to see near Lauhata in Liquiçá: Maubara Fort, the Aipelo prison ruins, Maubara weaving, the sea and the coast west of Dili.",
+      description: "What to see near Lauhata in Liquiçá: Maubara Fort, the Aipelo prison ruins and the centre of Liquiçá, on the coast west of Dili.",
     },
     events: {
       title: "Events — Lauhata Beach Escape, Liquiçá",
@@ -33,7 +33,7 @@ export default {
     },
     gallery: {
       title: "Gallery — Lauhata Beach Escape, Liquiçá",
-      description: "Photos of Lauhata, the beach and the Liquiçá coast in Timor-Leste.",
+      description: "Real photographs of Lauhata Beach Escape: the garden, the dark-sand beach in front and the Liquiçá coast in Timor-Leste.",
     },
     about: {
       title: "About us — Lauhata Beach Escape, Liquiçá",
@@ -53,7 +53,7 @@ export default {
     },
     privacy: {
       title: "Privacy policy — Lauhata",
-      description: "How the Lauhata website handles booking and contact request data.",
+      description: "How the Lauhata Beach Escape website handles booking, order and contact requests, what stays in your browser and how analytics work.",
     },
     notFound: {
       title: "Page not found — Lauhata",
@@ -85,6 +85,7 @@ export default {
   },
 
   common: {
+    backToTop: "Back to top",
     placeholderImage: "Illustrative image",
     realPhoto: "Real photograph",
     coords: "8°34′54″ S · 125°20′59″ E",
@@ -567,7 +568,7 @@ export default {
       storyTitle: "More than a destination, a feeling.",
       storyBody: "Lauhata Beach Escape is a place to slow down, where the ocean, nature and local culture come together with warm hospitality.",
       storyCta: "Learn more",
-      stayEyebrow: "Accommodation",
+      stayEyebrow: "Comfort by Lauhata",
       stayTitle: "Stay in comfort by the beach.",
       stayBody: "Two suites, designed for comfort and relaxation.",
       stayCta: "Discover the suites",
@@ -617,7 +618,7 @@ export default {
         stayTitle: "The suites",
         stayBody: "For those who want to stay, there are two suites: the Suite King, with a king-size bed, and the Suite King & Single, with a king-size bed and a single bed, made for a couple travelling with a child. Both have a television. Requests go through WhatsApp, and payment is made in person at Lauhata.",
         coastTitle: "The Liquiçá coast",
-        coastBody: "Lauhata is west of Dili, on the Liquiçá coast, between the sea and the mountains. Nearby there is history and culture to discover: Maubara fort, the ruins of Aipelo prison, the Maubara weaving and the centre of Liquiçá.",
+        coastBody: "Lauhata is west of Dili, on the Liquiçá coast, between the sea and the mountains. Nearby there is history and culture to discover: Maubara fort, the ruins of Aipelo prison and the centre of Liquiçá.",
         peopleTitle: "The people",
         peopleBody: "Lauhata is a local business, run by Carlos Soares and the team. In the public reviews on Tripadvisor and Booking.com, it is the team that guests talk about most: how they welcome people and the help they give during a stay.",
         menu: "See the menu",
@@ -684,15 +685,10 @@ export default {
       introTitle: "Liquiçá, around Lauhata",
       intro: "Liquiçá municipality begins just west of Dili: a coastline of rocky headlands, coves and beaches, with the road following the sea and the island of Alor on the horizon.",
       placesTitle: "What to see",
-      alsoTitle: "Also in the area",
       places: [
         { name: "Maubara Fort", kind: "History", text: "A 17th-century Dutch fort on the coast, its gateway shaded by giant banyan trees.", map: "Maubara Fort, Timor-Leste", geo: [-8.610559, 125.204604] },
         { name: "Aipelo prison ruins", kind: "History", text: "A Portuguese-era colonial site by the sea. Visit it with the respect owed to a place of memory.", map: "Aipelo Prison, Liquiçá, Timor-Leste", geo: [-8.569892, 125.381378] },
         { name: "Liquiçá town centre", kind: "Town", text: "The town centre, with its colonial-era architecture.", map: "Liquiçá, Timor-Leste" },
-        { name: "Maubara weaving", kind: "Crafts", text: "The Maubara weaving cooperative and the baskets hand-woven by women of the region.", map: "Maubara, Timor-Leste" },
-        { name: "Maubara and Ai Pelo beaches", kind: "Beaches", text: "Beaches along the municipality's coast. Before going into the sea, ask locally about the day's conditions.", map: "Maubara Beach, Timor-Leste", geo: [-8.60987, 125.204749] },
-        { name: "The sea", kind: "Nature", text: "The region has coral reefs for diving and, in some seasons, passing whales and dolphins. Sightings are never guaranteed.", map: "" },
-        { name: "The salt lake", kind: "Nature", text: "Known for its pelicans.", map: "" }
       ],
       mapLink: "See on the map",
       distance: "About {km} km from Lauhata as the crow flies (further by road)",
@@ -700,7 +696,6 @@ export default {
       adviceTitle: "Before you go",
       advice: [
         "Check opening times, access and conditions locally: distances and travel times change with the road and the weather.",
-        "Not every beach is safe for swimming. Ask about currents and sea conditions before going in.",
         "Respect local communities, places of memory, sacred sites and the coast's nature.",
         "Lauhata does not run these visits. If you need help finding your way, ask us on WhatsApp."
       ],
@@ -907,24 +902,24 @@ export default {
     title: "Before you book",
     items: [
       {
-        q: "How do I make a booking?",
-        a: "Fill in the table or room form and send the message that opens in WhatsApp. The Lauhata team replies in that conversation.",
+        q: "How can I reserve a table?",
+        a: "Use the table form on the home page or the restaurant page and send the message that opens in WhatsApp. It is a request: the table is only reserved once the Lauhata team confirms it in that conversation.",
       },
       {
-        q: "Is my booking confirmed as soon as I send it?",
-        a: "No. The form prepares a request. The table or room is only booked once Lauhata confirms availability with you.",
+        q: "How can I book a suite?",
+        a: "Choose a suite, pick your dates and send the request on WhatsApp. The team replies to confirm availability and the price; nothing is booked until they do.",
       },
       {
-        q: "How do I find out the room price?",
-        a: "The final price depends on the dates and room type, and Lauhata tells you in their reply to your request.",
+        q: "When can I visit the restaurant?",
+        a: "Breakfast is served from 08:00 to 10:00, and lunch and dinner from 11:00 to 21:00. If you are planning a particular day, ask on WhatsApp first.",
       },
       {
-        q: "Do I have to pay anything on the website?",
-        a: "No. The website takes no payments. Any payment terms are agreed directly with Lauhata.",
+        q: "Is payment made online or at Lauhata?",
+        a: "At Lauhata, in person. The website takes no payments and never asks for card details.",
       },
       {
-        q: "Where is Lauhata?",
-        a: "In Lauhata, in the municipality of Liquiçá, west of Dili. The contact page has the map and directions.",
+        q: "Where is Lauhata Beach Escape?",
+        a: "In Lauhata, Liquiçá, Timor-Leste. The contact page has the address, the map and a link to open directions in Google Maps.",
       },
     ],
   },
@@ -941,7 +936,7 @@ export default {
   thanks: {
     eyebrow: "Request ready",
     title: "Just send the message",
-    tableBody: "We opened WhatsApp with your table request. Send the message so Lauhata receives it and confirms your booking with you.",
+    tableBody: "We opened WhatsApp with your table request. Send the message so Lauhata receives it. Nothing is reserved until the team confirms it with you.",
     eventBody: "We opened WhatsApp with your event request. Send the message: Lauhata replies with what is possible, and nothing is booked until they confirm with you.",
     reviewBody: "We opened WhatsApp with your feedback. Send the message: Lauhata reads it and, if approved, publishes it on the website. Thank you!",
     roomBody: "We opened WhatsApp with your stay request. Send the message so Lauhata can confirm availability and the price.",
@@ -957,6 +952,7 @@ export default {
     title: "Privacy policy",
     credits: { title: "Credits for the illustrative photos", lead: "Some photos in the menu are illustrative, by other authors, under open licences (via Wikimedia Commons). They do not show the dishes served at Lauhata and will be replaced with the restaurant's own photos." },
     reviewNote: "Draft text, to be reviewed by Lauhata before publishing.",
+    statsOn: "This website uses Google Analytics 4 to count visits and clicks (for example on the booking, WhatsApp and directions buttons), only if you accept analytics in the banner. Without your consent nothing is measured. A click or a message prepared in WhatsApp is counted as exactly that, never as a confirmed booking. Google may process this data outside Timor-Leste. You can change your choice by clearing this site's data in your browser.",
     sections: [
       {
         h: "Who we are",
@@ -972,7 +968,12 @@ export default {
       },
       {
         h: "Visitor statistics",
-        p: "If the website uses Google Analytics, anonymous or aggregated usage data is collected to improve the website. This section will be updated if the tool is switched on.",
+        key: "stats",
+        p: "At the moment this website uses no analytics or advertising tools and sets no tracking cookies.",
+      },
+      {
+        h: "What stays in your browser",
+        p: "The restaurant order you build is saved in your own browser (local storage) so it is still there if you come back; it is never sent to us until you choose to send it by WhatsApp. A short-lived note of your last request is kept for the page you see afterwards. You can clear both in your browser settings.",
       },
       {
         h: "Third-party services",
@@ -985,9 +986,21 @@ export default {
     ],
   },
 
+  consent: {
+    label: "Analytics preference",
+    text: "May we use anonymous analytics to see which pages and buttons are used? Nothing is measured unless you accept.",
+    accept: "Accept analytics",
+    decline: "No, thanks",
+    more: "Privacy policy",
+  },
+
   notFound: {
     eyebrow: "Error 404",
-    title: "This page does not exist",
-    body: "The address may be wrong or the page may have moved. Carry on from here:",
+    title: "We could not find that page.",
+    body: "The address may be mistyped, or the page may have moved. The sea is still right where it was: pick up from one of these.",
+    home: "Back to the home page",
+    restaurant: "Explore the restaurant",
+    stay: "See the suites",
+    help: "Looking for something else? Reach the team on the",
   },
 };

@@ -418,7 +418,8 @@
       sessionStorage.setItem("lauhata-wa", url);
       sessionStorage.setItem("lauhata-kind", kind);
     } catch (err) { /* storage unavailable */ }
-    if (window.gtag) window.gtag("event", "generate_lead", { method: "whatsapp", booking_type: kind });
+    // Counted as a hand-off to WhatsApp (only with analytics consent); never as a confirmed booking or order.
+    if (window.LauhataTrack) window.LauhataTrack("whatsapp_request_handoff", { request_type: kind });
     // No "noopener" feature here: with it window.open always returns null and we could not
     // tell a blocked popup apart. The opener link is cut by hand instead.
     const win = window.open(url, "_blank");
@@ -607,6 +608,26 @@
     // A card opens on a mode straight away only when it asks for one (data-default); the hero panel and the dialog wait for the visitor's choice.
     if (card.dataset.default) $(`[data-bc-tab="${card.dataset.default}"]`, card)?.click();
   });
+
+  /* ---------- Back to top: appears after the first screen and a half, glides up (or jumps with reduced motion) ---------- */
+  const toTop = $("[data-to-top]");
+  if (toTop) {
+    let shown = false;
+    const sync = () => {
+      const on = window.scrollY > window.innerHeight * 1.2;
+      if (on === shown) return;
+      shown = on;
+      if (on) { toTop.hidden = false; requestAnimationFrame(() => toTop.classList.add("is-on")); }
+      else { toTop.classList.remove("is-on"); setTimeout(() => { if (!shown) toTop.hidden = true; }, 250); }
+    };
+    window.addEventListener("scroll", sync, { passive: true });
+    toTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      // Keyboard users land back at the start of the page: the first focusable thing is the brand link.
+      setTimeout(() => $(".brand")?.focus({ preventScroll: true }), reduced ? 0 : 500);
+    });
+    sync();
+  }
 
   /* ---------- Thank-you page ---------- */
   const thanksBody = $("[data-thanks-body]");

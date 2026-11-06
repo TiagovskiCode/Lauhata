@@ -26,7 +26,7 @@
     created.forEach((st) => st.kill());
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
-    gsap.set(".wc-card, .rv-card, .st-panel, .dsc-also > *", { clearProps: "opacity,transform" });
+    gsap.set(".wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform" });
     gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
   }
   const track = (anim) => { if (anim && anim.scrollTrigger) created.push(anim.scrollTrigger); return anim; };
@@ -205,7 +205,7 @@
      Groups that had no entrance of their own: the four welcome cards, the review cards, the two suites, the Discover links. */
   function initStagger() {
     if (!full) return;
-    const sel = ".wc-card, .rv-card, .st-panel, .dsc-also > *";
+    const sel = ".wc-card, .rv-card, .st-panel";
     const els = $$(sel).filter((el) => !el.closest(".cine-hero"));
     if (!els.length) return;
     gsap.set(els, { opacity: 0, y: 42 });

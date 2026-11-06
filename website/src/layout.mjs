@@ -28,6 +28,7 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 9.5a12.5 12.5 0 0 1 17 0M6.5 12.8a8.2 8.2 0 0 1 11 0M9.4 16a4 4 0 0 1 5.2 0" ${stroke}/><circle cx="12" cy="19" r="1" ${stroke}/></symbol>
     <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 20V8a4 4 0 0 1 4-4h1.5M9.5 4h3.2a2.3 2.3 0 0 1 2.3 2.3V8M7 11h10l-1 3H8zM9 17v1.5M12 17v2.5M15 17v1.5" ${stroke}/></symbol>
     <symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5M3.5 10l3.3-.9-.9-3.3M20.5 14l-3.3.9.9 3.3M3.5 14l3.3.9-.9 3.3M20.5 10l-3.3-.9.9-3.3" ${stroke}/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19.5V5M5.5 11.5 12 5l6.5 6.5" ${stroke}/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" ${stroke}/></symbol>
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" ${stroke}/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" ${stroke}/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" ${stroke}/></symbol>
@@ -390,8 +391,8 @@ ${o.menu ? menuJson(o.menu) : ""}
 <script src="/assets/js/main.js" defer></script>
 <script src="/assets/js/cinema.js" defer></script>
 <script src="/assets/js/order.js" defer></script>
-${site.gaId ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(site.gaId)}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","${esc(site.gaId)}",{anonymize_ip:true});</script>` : ""}
+${site.gaId ? `<script>window.LAUHATA_GA=${JSON.stringify(site.gaId)};</script>
+<script src="/assets/js/analytics.js" defer></script>` : ""}
 </head>
 <body class="${o.hero ? "has-hero" : ""}">
 ${SPRITE}
@@ -408,6 +409,8 @@ ${cartUi(t)}
   <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 </div>
 <a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
+${site.gaId ? `<div class="consent" data-consent role="region" aria-label="${esc(t.consent.label)}" hidden><p>${esc(t.consent.text)} <a href="${href("privacy", L)}">${esc(t.consent.more)}</a></p><div class="consent-btns"><button type="button" class="btn btn-outline btn-sm" data-consent-no>${esc(t.consent.decline)}</button><button type="button" class="btn btn-terra btn-sm" data-consent-yes>${esc(t.consent.accept)}</button></div></div>` : ""}
+<button class="to-top" type="button" data-to-top aria-label="${esc(t.common.backToTop)}" title="${esc(t.common.backToTop)}" hidden>${icon("up")}</button>
 <dialog class="book-dialog" data-book-dialog aria-labelledby="bd-title-${t.lang}">
   <header class="bd-head"><h2 id="bd-title-${t.lang}">${esc(t.home.quick.title)}</h2><button class="icon-btn" type="button" aria-label="${esc(t.home.quick.close)}" data-book-close>${icon("close")}</button></header>
   <p class="bd-intro">${esc(t.home.quick.intro)}</p>

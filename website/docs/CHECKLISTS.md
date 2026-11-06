@@ -149,3 +149,36 @@ Isto é o plano; o trabalho mensal recorrente depende do acordo de serviço com 
 **Nota sobre o número de páginas:** o site tem 8 destinos principais (Início, Ementa, Alojamento, Sobre nós, Eventos,
 Galeria, Descobrir Liquiçá, Contactos), mais as 2 páginas de quarto que o pacote prevê («uma página por tipo de quarto») e
 as páginas legais e de agradecimento. Confirmar com o Carlos se as páginas de quarto contam dentro das 8.
+
+## 4. Pendente do Carlos antes do lançamento (resumo, nov. 2026)
+
+| Assunto | O que falta | Onde entra |
+|---|---|---|
+| Wi-Fi, pequeno-almoço incluído, casa de banho privativa, ar condicionado | Confirmar, **por suite**, o que é garantido | `pendingAmenities` → `amenities` em `src/data/rooms.mjs` (já têm ícone e texto PT/EN; só aparecem depois de copiados) |
+| Prazo de resposta | Se há um prazo garantido (ex.: «24 horas»). Hoje o site diz só que a equipa responde para confirmar | `responseTime` em `src/data/site.mjs` |
+| Horário do restaurante | Que dias (a ementa só indica 08–10 e 11–21) | `restaurantHours` / FAQ |
+| Contactos e perfis | Email, redes sociais oficiais, telefone fixo | `site.mjs` (`email`, `social`) |
+| Google Analytics 4 | ID de medição (`G-…`). Sem ID, nada é medido e não há aviso de cookies | `gaId` em `site.mjs` (liga o `analytics.js` e o aviso de consentimento) |
+| Política de privacidade | Rever o texto; responsável pelo tratamento, contacto para privacidade e validação legal (o site não afirma conformidade) | `privacy` em `src/i18n/*.mjs` |
+| Testemunhos e casos reais | Autorização escrita para citar hóspedes ou eventos; fotografias de eventos realizados | secção de opiniões / página de Eventos |
+| Equipa | Fotografias reais da equipa, com autorização | Nossa história |
+| Fotografias | Suites (pelo menos 3 por suite), pratos, bebidas, equipa, eventos | ver «Lista de fotos e vídeos» abaixo |
+| Carta de bebidas | Bebidas reais e preços | `menu.mjs` |
+| Nomes das suites | Nomes comerciais definitivos (hoje «Suite King» e «Suite King & Single») | `rooms.mjs` |
+
+### Lista de fotos e vídeos a recolher no Lauhata
+
+- **Pessoas (com autorização escrita):** o Carlos e a equipa à mesa, na cozinha e na receção; retratos naturais, luz do dia, sem pose.
+- **Suites:** cada suite de dia e ao fim da tarde (cama, televisão, casa de banho, varanda se existir, vista); detalhes de roupa de cama.
+- **Restaurante:** o salão ao almoço e ao jantar, mesas postas, o pôr do sol visto da mesa, o bar; cada prato da ementa em 4:3.
+- **Operação:** o pequeno-almoço a ser servido, o café, a chegada de um hóspede.
+- **Exterior:** a praia de manhã e ao fim da tarde, o jardim, a entrada, a fachada à noite.
+- **Eventos:** qualquer evento já realizado (com autorização dos convidados).
+- **Vídeo:** 15–20 s na horizontal 4K do terraço ao pôr do sol; 10 s do mar visto da mesa; um retrato em vídeo do Carlos (opcional, com legendas).
+
+### Conteúdo futuro recomendado (sem inventar)
+
+- Duas ou três opiniões de hóspedes **com autorização escrita** para serem citadas, com nome e data.
+- Uma história de um evento real (casamento, aniversário), com fotografias e autorização.
+- «Como chegar» com o tempo de viagem a partir de Díli, medido pelo próprio Carlos.
+- Uma página «A equipa» só quando houver fotografias reais.

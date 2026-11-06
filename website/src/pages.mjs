@@ -22,9 +22,9 @@ function heading({ eyebrow, title, accent = "", lead = "", id = "", center = fal
 }
 
 // Full-screen photo hero used by inner pages (same language as the homepage hero).
-function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = "" }) {
+function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = "", decorative = false }) {
   return `<section class="cine-hero is-page">
-  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw", credit: true })}</div></div>
+  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw", credit: true, decorative })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
     ${eyebrow ? `<p class="eyebrow-rule is-light" data-fade>${esc(eyebrow)}</p>` : ""}
@@ -53,12 +53,17 @@ function roomFeatures(t, r) {
 // The suite's confirmed amenities with their icons: the beds (rooms.mjs `bedPlan`) and the owner-confirmed `amenities`.
 // Nothing else is listed (Wi-Fi, breakfast, bathroom, air conditioning are not confirmed: docs/CHECKLISTS.md).
 const AMEN_ICON = { Television: "tv" };
-function suiteAmenities(t, r) {
+// The confirmed items of a suite as [icon, label] pairs: its beds, then its owner-confirmed amenities (never the pending ones).
+function suiteAmenityItems(t, r) {
   const S = t.stay;
   const L = t.lang;
   const beds = (r.bedPlan || []).map((b) => (b === "king" ? ["bed-king", S.amenKing] : b === "single" ? ["bed-single", S.amenSingle] : null)).filter(Boolean);
   const more = (r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]);
-  const items = [...beds, ...more];
+  return [...beds, ...more];
+}
+function suiteAmenities(t, r) {
+  const S = t.stay;
+  const items = suiteAmenityItems(t, r);
   if (!items.length) return "";
   return `<div class="si-amen">
         <h3 class="si-amen-title">${esc(S.amenTitle)}</h3>
@@ -1147,10 +1152,9 @@ ${pageHero(t, { eyebrow: G.eyebrow, title: G.title, lead: G.lead, image: "aerial
   return { page: "gallery", title: t.meta.gallery.title, description: t.meta.gallery.description, path: href("gallery", L), alt: href("gallery", other(L)), preload: "aerialGarden", hero: true, ld: [bc.ld], body };
 }
 
-// Photos for the Discover places, in the order of discoverPage.places: Maubara fort (Commons, illustrative), Aipelo
-// (Lauhata's own drone photo), Liquiçá centre (Commons, illustrative), Maubara weaving (none yet), beaches (none yet),
-// the sea (Lauhata's own drone photo), the salt lake (none yet). See docs/FOTOGRAFIAS.md for the shot list.
-const PLACE_PHOTOS = ["placeMaubaraFort", "ruinsAerial", "placeLiquicaCentre", null, null, "seaCanoe", null];
+// Discover shows three places (Nov 2026), each with a photo, in the order of discoverPage.places: Maubara Fort (Commons,
+// illustrative), Aipelo prison ruins (Lauhata's own drone photo), Liquiçá town centre (Commons, illustrative).
+const PLACE_PHOTOS = ["placeMaubaraFort", "ruinsAerial", "placeLiquicaCentre"];
 
 // ================= DISCOVER LIQUIÇÁ: a short, sourced guide to the coast around Lauhata =================
 // Every place and fact comes from the official tourism site (timorleste.tl, Liquiçá municipality page), which is credited
@@ -1188,12 +1192,10 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
     // photo goes in images.mjs and here.
     const body = (p) => `<p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${km(p.geo) != null ? `<p class="dsc-km">${esc(fmt(D.distance, { km: km(p.geo) }))}</p>` : ""}${p.map ? `<a class="text-link" href="${p.geo ? maps(p.geo.join(",")) : maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}</a>` : ""}`;
     const withPhoto = D.places.map((p, i) => [p, PLACE_PHOTOS[i]]).filter(([, k]) => k);
-    const without = D.places.filter((p, i) => !PLACE_PHOTOS[i]);
     return `<div class="dsc-rows">${withPhoto.map(([p, k], i) => `<article class="dsc-row${i % 2 ? " is-flip" : ""}">
       <div class="dsc-row-media">${figure(t, k, { sizes: "(min-width: 900px) 46vw, 100vw", ratio: ["3/2", "4/3", "16/10", "4/3"][i % 4], credit: true })}</div>
       <div class="dsc-row-text"${rv(60)}>${body(p)}</div>
-    </article>`).join("")}</div>
-    ${without.length ? `<div class="wrap"><h3 class="dsc-also-title">${esc(D.alsoTitle)}</h3><ul class="dsc-also">${without.map((p) => `<li>${body(p)}</li>`).join("")}</ul></div>` : ""}`;
+    </article>`).join("")}</div>`;
   })()}
 </section>
 
@@ -1256,9 +1258,9 @@ export function home(t) {
       <span class="wc-icon" aria-hidden="true">${icon(ic)}</span>
       <span class="wc-text"><strong class="wc-title">${esc(RS.cards[i].title)}</strong><span class="wc-line">${esc(RS.cards[i].line)}</span><span class="wc-link">${esc(RS.cards[i].link)}${icon("arrow")}</span></span>
     </a>`;
-  const suite = (r) => `<article class="st-panel">
+  const suite = (r, i) => `<article class="st-panel${i === 0 ? " is-main" : ""}">
       <a class="st-media" href="${href("room:" + r.id, L)}" aria-label="${esc(r.name[L])}">${figure(t, r.images[0], { sizes: "(min-width: 900px) 34vw, 92vw", decorative: true })}<span class="st-name">${esc(r.name[L])}</span></a>
-      <p class="st-beds">${icon("bed")}${esc(r.beds[L])}</p>
+      <ul class="st-amen">${suiteAmenityItems(t, r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
       <div class="st-links"><a class="text-link" href="${href("room:" + r.id, L)}">${esc(RS.stayView)}</a><a class="text-link" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(RS.stayAsk)}</a></div>
     </article>`;
   const body = `
@@ -1312,7 +1314,6 @@ export function home(t) {
       <p class="eyebrow-rule">${esc(RS.stayEyebrow)}</p>
       <h2 id="stay-title" class="wc-heading" data-split>${esc(RS.stayTitle)}</h2>
       <p class="wc-body">${esc(RS.stayBody)}</p>
-      <a class="btn btn-outline btn-pill" href="${href("stay", L)}">${esc(RS.stayCta)}${icon("arrow")}</a>
     </div>
     <div class="st-panels">${rooms.map(suite).join("")}</div>
   </div>
@@ -1340,7 +1341,7 @@ ${reviewsSection(t)}
       { key: "sunsetPalmsHigh", sizes: "100vw" },
     ],
     hero: true,
-    ld: [faqLd(t)],
+    ld: [], // no FAQPage here: the questions are only visible on the contact page, and structured data must match what is shown
     menu: [...dishes, ...bkfDishes],
     body,
   };
@@ -1404,6 +1405,7 @@ ${pageHero(t, {
   title: t.home.two.stayTitle,
   lead: t.home.two.stayBody,
   image: "sunsetSea",
+  decorative: true, // the same photo reappears, described, further down the page
   crumbs: bc.html,
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
 })}
@@ -1473,6 +1475,7 @@ ${pageHero(t, {
   title: name,
   lead: r.summary[L],
   image: r.images[0],
+  decorative: true, // the same photo is the first slide of the carousel below, where it is described
   crumbs: bc.html,
   ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
 })}
@@ -1655,7 +1658,7 @@ export function privacy(t) {
   <div class="wrap narrow prose">
     <h1 class="title">${esc(t.privacy.title)}</h1>
     ${site.showPlaceholderNotes ? `<p class="tbc-block">${esc(t.privacy.reviewNote)}</p>` : ""}
-    ${t.privacy.sections.map((s) => `<h2>${esc(s.h)}</h2><p>${esc(s.p)}</p>`).join("")}
+    ${t.privacy.sections.map((s) => `<h2>${esc(s.h)}</h2><p>${esc(s.key === "stats" && site.gaId ? t.privacy.statsOn : s.p)}</p>`).join("")}
     ${photoCredits(t)}
   </div>
 </section>`;
@@ -1696,11 +1699,11 @@ export function notFound(t) {
     <h1 class="title">${esc(t.notFound.title)}</h1>
     <p class="lead">${esc(t.notFound.body)}</p>
     <div class="btn-row center">
-      <a class="btn btn-dark" href="${href("home", L)}">${esc(t.nav.home)}${icon("arrow")}</a>
-      <a class="btn btn-outline" href="${href("restaurant", L)}">${esc(t.nav.restaurant)}</a>
-      <a class="btn btn-outline" href="${href("stay", L)}">${esc(t.nav.stay)}</a>
-      <a class="btn btn-outline" href="${href("contact", L)}">${esc(t.nav.contact)}</a>
+      <a class="btn btn-dark btn-lg" href="${href("home", L)}">${esc(t.notFound.home)}${icon("arrow")}</a>
+      <a class="btn btn-outline btn-lg" href="${href("restaurant", L)}">${icon("cutlery")}${esc(t.notFound.restaurant)}</a>
+      <a class="btn btn-outline btn-lg" href="${href("stay", L)}">${icon("bed")}${esc(t.notFound.stay)}</a>
     </div>
+    <p class="nf-help">${esc(t.notFound.help)} <a class="text-link" href="${href("contact", L)}">${esc(t.nav.contact)}</a></p>
   </div>
 </section>`;
   return {
