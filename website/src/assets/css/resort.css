@@ -168,6 +168,10 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rs-hero-cap { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1rem); z-index: 3; display: flex; gap: 0.8rem; margin: 0; max-width: min(28rem, 40vw); font-size: 0.74rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
 .rs-hero-cap { text-shadow: 0 1px 8px rgba(14, 10, 8, 0.85); color: rgba(248, 241, 231, 0.9); }
 .rs-hero-cap b { flex: none; color: var(--gold-soft); }
+.rs-hero-cap > span { display: flex; gap: 0.8rem; }
+.rs-hero-cap .cap-film { display: none; }
+.rs-hero.is-film .cap-film { display: flex; }
+.rs-hero.is-film .cap-photo { display: none; }
 .rs-booking { position: relative; z-index: 4; margin-top: auto; padding-bottom: clamp(2rem, 6vh, 3.5rem); }
 
 /* The enquiry panel: two modes as pills, the fields in one row, the orange action */
@@ -422,6 +426,9 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
   .hero-grid, .page-hero-grid, .split-head, .two-grid, .story-grid, .location-grid, .booking-grid, .room-detail, .faq-grid { grid-template-columns: minmax(0, 1fr); }
   .hero-grid > *, .page-hero-grid > *, .split-head > *, .two-grid > *, .story-grid > *, .location-grid > *, .booking-grid > *, .room-detail > *, .faq-grid > * { min-width: 0; }
 }
+
+/* A long button label ("Send the message on WhatsApp") may wrap inside its card instead of pushing past the screen edge. */
+.form-actions .btn, .form-card .btn, .booking-form .btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.25; }
 
 /* Both WhatsApp buttons are WhatsApp green (Nov 2026). */
 .wa-float { background: var(--wa, #25d366) !important; color: #fff !important; box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.5) !important; }

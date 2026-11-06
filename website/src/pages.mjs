@@ -1274,7 +1274,7 @@ export function home(t) {
     </div>
   </div>
   <div class="wrap rs-booking" data-fade style="--d:450ms">${bookingCard(t, { prefix: "hxb", hero: true })}</div>
-  <p class="rs-hero-cap">${site.heroVideo ? `<span>${esc(RS.filmCaption)}</span><b>${esc(RS.filmReal)}</b>` : `<span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b>`}</p>
+  <p class="rs-hero-cap"><span class="cap-photo"><span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></span>${site.heroVideo ? `<span class="cap-film"><span>${esc(RS.filmCaption)}</span><b>${esc(RS.filmReal)}</b></span>` : ""}</p>
 </section>
 
 <section class="section rs-welcome" aria-labelledby="wc-title">

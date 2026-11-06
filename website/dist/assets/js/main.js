@@ -550,6 +550,18 @@
       errBox.hidden = true;
       $$(".bc-field", card).forEach((f) => f.classList.remove("has-error"));
     });
+    // The hero panel starts collapsed (only the two mode buttons). A second tap on the open mode folds it away again.
+    if (card.classList.contains("is-hero")) {
+      $(".bc-tabs", card).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-bc-tab]");
+        if (!b || b.getAttribute("aria-selected") !== "true") return;
+        e.stopImmediatePropagation();
+        $$("[data-bc-tab]", card).forEach((x) => { x.setAttribute("aria-selected", "false"); });
+        kind = null;
+        card.classList.remove("is-open");
+        panel("table").hidden = true; panel("room").hidden = true; errBox.hidden = true;
+      }, true);
+    }
     const el = card.elements;
     el.checkIn.addEventListener("change", () => {
       if (!el.checkIn.value) return;
@@ -592,7 +604,7 @@
       card.classList.add("is-sending");
       sendToWhatsApp(waUrl(text), kind, () => card.classList.remove("is-sending"));
     });
-    // The hero panel opens on a mode straight away (data-default); the dialog waits for the visitor's choice.
+    // A card opens on a mode straight away only when it asks for one (data-default); the hero panel and the dialog wait for the visitor's choice.
     if (card.dataset.default) $(`[data-bc-tab="${card.dataset.default}"]`, card)?.click();
   });
 
@@ -669,7 +681,7 @@
         heroVideo.addEventListener("error", () => heroVideo.remove(), { once: true });
         // The cover (the video's own first frame) is already on screen. The video loads behind it and, as soon as it is
         // really playing, fades in over it: same frame, same framing, so the cover seems to start moving.
-        heroVideo.addEventListener("playing", () => heroVideo.classList.add("is-on"), { once: true });
+        heroVideo.addEventListener("playing", () => { heroVideo.classList.add("is-on"); heroVideo.closest(".cine-hero")?.classList.add("is-film"); }, { once: true });
         heroVideo.addEventListener("canplay", () => {
           // The cover stays on its own for at least COVER_MS after the page started (a fast connection would otherwise
           // swap it for the video straight away). The video waits on its first frame until then, so the fade starts

@@ -681,7 +681,7 @@
         heroVideo.addEventListener("error", () => heroVideo.remove(), { once: true });
         // The cover (the video's own first frame) is already on screen. The video loads behind it and, as soon as it is
         // really playing, fades in over it: same frame, same framing, so the cover seems to start moving.
-        heroVideo.addEventListener("playing", () => heroVideo.classList.add("is-on"), { once: true });
+        heroVideo.addEventListener("playing", () => { heroVideo.classList.add("is-on"); heroVideo.closest(".cine-hero")?.classList.add("is-film"); }, { once: true });
         heroVideo.addEventListener("canplay", () => {
           // The cover stays on its own for at least COVER_MS after the page started (a fast connection would otherwise
           // swap it for the video straight away). The video waits on its first frame until then, so the fade starts

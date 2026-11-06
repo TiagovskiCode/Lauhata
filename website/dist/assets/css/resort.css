@@ -168,6 +168,10 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rs-hero-cap { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1rem); z-index: 3; display: flex; gap: 0.8rem; margin: 0; max-width: min(28rem, 40vw); font-size: 0.74rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
 .rs-hero-cap { text-shadow: 0 1px 8px rgba(14, 10, 8, 0.85); color: rgba(248, 241, 231, 0.9); }
 .rs-hero-cap b { flex: none; color: var(--gold-soft); }
+.rs-hero-cap > span { display: flex; gap: 0.8rem; }
+.rs-hero-cap .cap-film { display: none; }
+.rs-hero.is-film .cap-film { display: flex; }
+.rs-hero.is-film .cap-photo { display: none; }
 .rs-booking { position: relative; z-index: 4; margin-top: auto; padding-bottom: clamp(2rem, 6vh, 3.5rem); }
 
 /* The enquiry panel: two modes as pills, the fields in one row, the orange action */
@@ -200,6 +204,16 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .booking-card.is-hero .bc-submit:active { transform: translateY(1px); }
 .booking-card.is-hero .bc-error { margin: 0.7rem 0 0; color: #ffd2b3; font-size: 0.86rem; }
 .booking-card.is-hero .bc-note { margin: 0.75rem 0.2rem 0; font-size: 0.78rem; color: rgba(248, 241, 231, 0.7); }
+/* Collapsed (every screen size): just the two mode buttons in one compact capsule. A tap on either opens the fields below;
+   a second tap on the open one folds it away again. */
+.booking-card.is-hero:not(.is-open) { width: fit-content; max-width: 100%; margin-inline: 0; padding: 0.4rem; border-radius: var(--radius-pill); }
+.booking-card.is-hero:not(.is-open) .bc-tabs { margin: 0; background: transparent; padding: 0; }
+.booking-card.is-hero:not(.is-open) .bc-tabs button { background: rgba(248, 241, 231, 0.08); }
+.booking-card.is-hero:not(.is-open) .bc-tabs button:hover { background: rgba(248, 241, 231, 0.18); }
+.booking-card.is-hero:not(.is-open) .bc-note, .booking-card.is-hero:not(.is-open) .bc-error { display: none; }
+.booking-card.is-hero.is-open .bc-row:not([hidden]) { animation: bcOpen 0.32s var(--ease) both; }
+@keyframes bcOpen { from { opacity: 0; transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .booking-card.is-hero.is-open .bc-row:not([hidden]) { animation: none; } }
 /* Five room fields and the action need about 1300px to keep their labels whole; below that the room panel drops the
    action to its own row (the three-field table panel keeps one row down to 1180px). */
 @media (min-width: 1181px) and (max-width: 1340px) {
@@ -220,6 +234,7 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
   .booking-card.is-hero .bc-field .pk-btn { font-size: 0.9rem; }
   .booking-card.is-hero .bc-tabs { display: flex; }
   .booking-card.is-hero .bc-tabs button { flex: 1; justify-content: center; padding-inline: 0.6rem; }
+  .booking-card.is-hero:not(.is-open) { width: 100%; }
 }
 @media (max-width: 860px) {
   .rs-hero { min-height: auto; }
@@ -405,12 +420,26 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
 .ft-scores b { color: var(--gold-soft); }
 
 /* ---------- Floating WhatsApp and phone bar: charcoal, not green ---------- */
-.wa-float { background: var(--night) !important; box-shadow: 0 0 0 1px rgba(236, 189, 133, 0.35) !important; }
+/* One-column grids on phones: a plain `1fr` track cannot shrink below its widest child (min-content), which pushed the contact
+   form 24 px past a 360 px screen and made the page scroll sideways. minmax(0, 1fr) lets the track, and its children, shrink. */
 @media (max-width: 860px) {
-  .mobile-bar { background: var(--night) !important; }
+  .hero-grid, .page-hero-grid, .split-head, .two-grid, .story-grid, .location-grid, .booking-grid, .room-detail, .faq-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero-grid > *, .page-hero-grid > *, .split-head > *, .two-grid > *, .story-grid > *, .location-grid > *, .booking-grid > *, .room-detail > *, .faq-grid > * { min-width: 0; }
+}
+
+/* A long button label ("Send the message on WhatsApp") may wrap inside its card instead of pushing past the screen edge. */
+.form-actions .btn, .form-card .btn, .booking-form .btn { max-width: 100%; white-space: normal; text-align: center; line-height: 1.25; }
+
+/* Both WhatsApp buttons are WhatsApp green (Nov 2026). */
+.wa-float { background: var(--wa, #25d366) !important; color: #fff !important; box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.5) !important; }
+.wa-float:hover { filter: brightness(1.08); }
+@media (max-width: 860px) {
+  /* The phone bar is a floating capsule (rounded all round, inset from the screen edges), not a flat strip. */
+  .mobile-bar { left: 0.6rem !important; right: 0.6rem !important; bottom: calc(0.6rem + env(safe-area-inset-bottom)) !important; padding: 0.45rem !important; border-radius: 999px !important; border: 1px solid rgba(236, 189, 133, 0.28) !important; background: rgba(23, 18, 15, 0.94) !important; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.6) !important; }
   .mobile-bar .btn-terra { --bg: var(--sunset); --fg: #1a120c; }
   .mobile-bar .btn { border-radius: 999px !important; }
-  .mobile-bar .wa { border-radius: 50% !important; }
+  .mobile-bar .wa { border-radius: 50% !important; background: var(--wa, #25d366) !important; color: #fff !important; border: 0 !important; }
+  .site-footer { padding-bottom: 6.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
