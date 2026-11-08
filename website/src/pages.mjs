@@ -21,13 +21,13 @@ function heading({ eyebrow, title, accent = "", lead = "", id = "", center = fal
   </header>`;
 }
 
-// Full-screen photo hero used by inner pages (same language as the homepage hero).
+// Full-screen photo hero used by inner pages (same language as the homepage hero). `eyebrow` is accepted but no longer
+// shown (final art direction): the page name is already marked in the header navigation, so the label only repeated it.
 function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = "", decorative = false }) {
   return `<section class="cine-hero is-page">
   <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw", credit: true, decorative })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
-    ${eyebrow ? `<p class="eyebrow-rule is-light" data-fade>${esc(eyebrow)}</p>` : ""}
     <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` ${esc(accent)}` : ""}</h1>
     <p class="cine-lead" data-fade style="--d:300ms">${esc(lead)}</p>
     <div data-fade style="--d:400ms">${ctas}</div>
@@ -1029,7 +1029,7 @@ ${pageHero(t, { eyebrow: A.eyebrow, title: A.title, lead: t.home.statement, imag
   </article>`).join("")}
 </section>
 
-${nextSteps(t, A.nextTitle)}`;
+`;
   return { page: "about", title: t.meta.about.title, description: t.meta.about.description, path: href("about", L), alt: href("about", other(L)), preload: "aerialDay2", hero: true, ld: [bc.ld], body };
 }
 
@@ -1222,21 +1222,7 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
   return { page: "discover", title: t.meta.discover.title, description: t.meta.discover.description, path: href("discover", L), alt: href("discover", other(L)), preload: "coastVillage", hero: true, ld: [bc.ld], body };
 }
 
-// The quiet end of About us and Our story: one line and the three places to go next.
-function nextSteps(t, title) {
-  const L = t.lang;
-  const D = t.land.duo;
-  return `<section class="next-steps" aria-labelledby="ns-title">
-  <div class="wrap ns-inner">
-    <h2 id="ns-title" class="ns-title">${esc(title)}</h2>
-    <div class="ns-links">
-      <a class="btn btn-cream btn-lg" href="${href("restaurant", L)}">${esc(D.eat.link)}${icon("arrow")}</a>
-      <a class="btn btn-ghost-light btn-lg" href="${href("stay", L)}">${esc(D.stay.link)}</a>
-      <a class="btn btn-ghost-light btn-lg" href="${href("contact", L)}">${esc(t.land.aboutPage.contact)}</a>
-    </div>
-  </div>
-</section>`;
-}
+
 
 export function home(t) {
   const L = t.lang;
@@ -1255,7 +1241,6 @@ export function home(t) {
   const RS = LD.resort;
   const card = (i, key, page, ic) => `<a class="wc-card" href="${href(page, L)}">
       <div class="wc-media">${figure(t, key, { sizes: "(min-width: 1100px) 17vw, (min-width: 700px) 45vw, 92vw", decorative: true })}</div>
-      <span class="wc-icon" aria-hidden="true">${icon(ic)}</span>
       <span class="wc-text"><strong class="wc-title">${esc(RS.cards[i].title)}</strong><span class="wc-line">${esc(RS.cards[i].line)}</span><span class="wc-link">${esc(RS.cards[i].link)}${icon("arrow")}</span></span>
     </a>`;
   const suite = (r, i) => `<article class="st-panel${i === 0 ? " is-main" : ""}">
@@ -1270,7 +1255,6 @@ export function home(t) {
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content rs-hero-grid">
     <div class="rs-hero-text">
-      <p class="eyebrow-rule is-light" data-fade>${esc(RS.heroEyebrow)}</p>
       <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
       <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
     </div>
@@ -1414,7 +1398,7 @@ ${pageHero(t, {
   ${HUT_DECO}
   <div class="wrap">
     <div class="split-head">
-      ${heading({ eyebrow: H.eyebrow, title: H.title, accent: H.titleAccent, id: "rooms-title" })}
+      ${heading({ title: H.title, accent: H.titleAccent, id: "rooms-title" })}
       <p class="body-text"${rv(100)}>${esc(H.body)}</p>
     </div>
     ${roomRows(t)}

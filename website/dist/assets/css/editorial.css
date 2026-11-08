@@ -102,7 +102,7 @@ em { color: inherit; }
 .brand { gap: 0.7rem; }
 .brand-mark { width: 42px; height: 42px; padding: 0; border-radius: 50%; box-shadow: none; background: transparent; }
 .brand-name { font-family: var(--serif); font-weight: 500; font-size: 1.75rem; letter-spacing: 0.01em; text-transform: none; margin-right: 0; line-height: 1; }
-.brand-line { font-size: 0.66rem; letter-spacing: 0.16em; margin-top: 0.25rem; font-weight: 600; }
+.brand-line { font-size: 0.72rem; letter-spacing: 0.16em; margin-top: 0.25rem; font-weight: 600; }
 @media (min-width: 1360px) {
   /* Wordmark | the pages, centred on the screen | language, order and the one action. */
   .header-inner { display: grid !important; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important; gap: 1.5rem; }

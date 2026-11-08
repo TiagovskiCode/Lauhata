@@ -551,7 +551,7 @@ export default {
       heroEyebrow: "Lauhata Beach Escape",
       heroTitle: "A little closer to the",
       heroAccent: "ocean.",
-      heroLine: "Relax. Savour. Discover.",
+      heroLine: "A beachfront restaurant and bar and two suites on the Liquiçá coast, west of Dili.",
       filmCaption: "Lauhata from the drone",
       filmReal: "Real footage",
       welcomeEyebrow: "Welcome to Lauhata",
@@ -627,7 +627,6 @@ export default {
         reviews: "Read the reviews"
       },
       photosTitle: "The place, from above.",
-      nextTitle: "Now, eat or stay?",
       contact: "Talk to us",
     },
     eventsPage: {

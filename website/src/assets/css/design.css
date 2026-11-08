@@ -508,10 +508,6 @@ html:not(.cine-motion) .duo-media img, html:not(.cine-motion) .duo-arrow { trans
 .st-next { margin-top: 2.4rem; }
 
 /* ---------- Next steps (About us, Our story) ---------- */
-.next-steps { background: var(--forest); color: var(--paper); padding-block: clamp(4rem, 8vw, 6.5rem); --focus: var(--gold-soft); }
-.ns-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.6rem 3rem; }
-.ns-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 3.6vw, 3.2rem); color: var(--paper); }
-.ns-links { display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
 /* ---------- Menu: every dish with its own photo ----------
    Three columns on a computer (photo above, then name and price on one line, description, add), a compact row on

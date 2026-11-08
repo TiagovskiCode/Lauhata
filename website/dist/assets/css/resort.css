@@ -58,9 +58,11 @@ body { background: var(--cream); color: var(--body); }
 html { scrollbar-color: var(--bronze) var(--cream); }
 input, textarea, select { caret-color: var(--sunset); }
 
-/* ---------- Eyebrows: small caps label with a short rule, as in the design ---------- */
-.eyebrow-rule { display: flex; align-items: center; gap: 0.9rem; margin: 0 0 1.1rem; font-family: var(--sans); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--terra-dark); }
-.eyebrow-rule::after { content: ""; width: 3.2rem; height: 1px; background: currentColor; opacity: 0.6; }
+/* ---------- Section names: a quiet small-caps label, only where it names the section (no decorative rule) ----------
+   Final art-direction pass: the label lost its trailing rule and some of its tracking and weight, so it reads as a
+   section name set in small capitals rather than as a template ornament; labels that repeated the logo or the page
+   hero were removed. */
+.eyebrow-rule { display: block; margin: 0 0 1rem; font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra-dark); }
 .eyebrow-rule.is-light, .is-dark .eyebrow-rule, .rooms-cine .eyebrow-rule { color: var(--gold-soft); }
 .heading .eyebrow-rule { margin-bottom: 1rem; }
 
@@ -164,8 +166,8 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 /* A mild warm grade on the real sunset photograph (colour only; nothing added to the picture). */
 .rs-hero .hx-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(232, 120, 42, 0.05) 0%, rgba(232, 120, 42, 0.28) 55%, rgba(198, 47, 33, 0.18) 100%); mix-blend-mode: soft-light; pointer-events: none; }
 .rs-hero .hx-title .line { display: inline; }
-.rs-hero .hx-line { margin-top: 1.4rem; font-size: clamp(1.1rem, 0.6vw + 0.95rem, 1.45rem); color: rgba(248, 241, 231, 0.92); letter-spacing: 0.01em; }
-.rs-hero-cap { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1rem); z-index: 3; display: flex; gap: 0.8rem; margin: 0; max-width: min(28rem, 40vw); font-size: 0.74rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
+.rs-hero .hx-line { margin-top: 1.4rem; max-width: 34ch; font-size: clamp(1.05rem, 0.45vw + 0.95rem, 1.3rem); line-height: 1.5; color: rgba(248, 241, 231, 0.9); text-wrap: pretty; }
+.rs-hero-cap { position: absolute; right: var(--gutter); top: calc(var(--header-h) + 1rem); z-index: 3; display: flex; gap: 0.8rem; margin: 0; max-width: min(28rem, 40vw); font-size: 0.8rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
 .rs-hero-cap { text-shadow: 0 1px 8px rgba(14, 10, 8, 0.85); color: rgba(248, 241, 231, 0.9); }
 .rs-hero-cap b { flex: none; color: var(--gold-soft); }
 .rs-hero-cap > span { display: flex; gap: 0.8rem; }
@@ -252,13 +254,12 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .wc-body { margin: 1.3rem 0 1.7rem; max-width: 26em; color: var(--body); }
 .wc-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(0.75rem, 1.1vw, 1.1rem); }
 .wc-card { position: relative; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 3 / 4.6; overflow: hidden; border-radius: var(--radius-card); color: var(--on-night); text-decoration: none; isolation: isolate; background: var(--night); box-shadow: var(--shadow-soft); transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease); }
-@media (hover: hover) { .wc-card:hover { transform: translateY(-3px); box-shadow: 0 26px 50px -28px rgba(14, 10, 8, 0.6); } }
+
 .wc-media, .wc-media .media { position: absolute; inset: 0; z-index: -2; border-radius: 0 !important; }
 .wc-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
 .wc-card:hover .wc-media img { transform: scale(1.05); }
 .wc-card::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14, 10, 8, 0) 30%, rgba(14, 10, 8, 0.55) 55%, rgba(14, 10, 8, 0.92) 100%); }
-.wc-icon { display: grid; place-items: center; width: 2.6rem; height: 2.6rem; margin: 0 1.25rem 0.8rem; border: 1px solid rgba(236, 189, 133, 0.6); border-radius: 50%; color: var(--gold-soft); background: rgba(14, 10, 8, 0.35); }
-.wc-icon .icon { width: 1.15rem; height: 1.15rem; }
+
 .wc-text { display: grid; gap: 0.4rem; padding: 0 1.25rem 1.35rem; }
 .wc-title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.45rem, 0.5vw + 1.2rem, 1.75rem); line-height: 1.1; }
 .wc-line { font-size: 0.88rem; line-height: 1.45; color: rgba(248, 241, 231, 0.85); }
@@ -285,7 +286,7 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .rs-story-text > * { max-width: 27rem; }
 .rs-story-title { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 2vw + 1.3rem, 3.4rem); line-height: 1.05; color: var(--on-night); }
 .rs-story-body { margin: 1.1rem 0 1.5rem; color: var(--on-night-2); }
-.rs-story-cap { position: absolute; right: var(--gutter); bottom: 1rem; z-index: 2; display: flex; gap: 0.8rem; margin: 0; max-width: min(30rem, 50vw); font-size: 0.74rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
+.rs-story-cap { position: absolute; right: var(--gutter); bottom: 1rem; z-index: 2; display: flex; gap: 0.8rem; margin: 0; max-width: min(30rem, 50vw); font-size: 0.8rem; color: rgba(248, 241, 231, 0.7); text-align: right; }
 .rs-story-cap b { flex: none; color: var(--gold-soft); }
 @media (max-width: 860px) {
   .rs-story, .rs-discover { flex-direction: column; align-items: stretch; min-height: 0; }
@@ -325,7 +326,8 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .reviews-ed.is-dark .rv-scores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; margin: 0; border: 0; }
 .reviews-ed.is-dark .rv-score { color: var(--ink); padding: clamp(1.1rem, 2vw, 1.5rem); grid-template-columns: auto 1fr; grid-template-areas: "plat plat" "num num" "meter meter" "word word" "go go"; row-gap: 0.55rem; align-items: center; border: 1px solid transparent; border-radius: var(--radius-panel); background: var(--cream); transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease); }
 .reviews-ed.is-dark .rv-score + .rv-score { border-left: 1px solid transparent; padding-left: clamp(1.1rem, 2vw, 1.5rem); }
-.reviews-ed.is-dark .rv-score:hover { background: var(--paper); border-color: var(--sunset); transform: translateY(-2px); }
+.reviews-ed.is-dark .rv-score:hover { background: var(--paper); }
+.reviews-ed.is-dark .rv-score:hover .rv-go { text-decoration-thickness: 2px; }
 .reviews-ed.is-dark .rv-score:active { transform: none; }
 .reviews-ed.is-dark .rv-plat { margin: 0; font-size: 0.86rem; letter-spacing: 0.02em; color: var(--muted); }
 .reviews-ed.is-dark .rv-num { font-size: clamp(2.8rem, 2vw + 1.6rem, 3.8rem); line-height: 0.9; color: var(--terra-dark); }
@@ -368,7 +370,7 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
   .rv-cards { grid-template-columns: 1fr; }
 }
 @media (max-width: 420px) { .reviews-ed.is-dark .rv-scores { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { .reviews-ed.is-dark .rv-score:hover { transform: none; } }
+
 
 /* ---------- Suite pages: the confirmed amenities, each with its icon ---------- */
 .si-amen { margin-top: 1.6rem; }
@@ -475,3 +477,7 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
 .consent-btns { display: flex; gap: 0.5rem; flex: none; }
 .consent .btn-outline { --bd: rgba(248, 241, 231, 0.5); --fg: var(--on-night); }
 .nf-help { margin: 1.6rem 0 0; color: var(--muted); font-size: 0.95rem; }
+
+/* ---------- Numerals: prices, hours, scores and counts in lining, even-width figures ---------- */
+.price, .dl-price, .cl-sub, .rv-num, .ft-scores b { font-variant-numeric: lining-nums; } /* proportional: tabular figures widened the long menu prices past their line */
+.cart-total strong, .cart-fab strong, .ft-hours b, .footer-list b, .info-grid dd, .hours b { font-variant-numeric: lining-nums tabular-nums; }
