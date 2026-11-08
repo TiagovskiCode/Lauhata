@@ -97,11 +97,17 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 .cr-track, .cr-link { border-radius: var(--r-img) !important; }
 .cr-btn { border-radius: 50% !important; }
 
-/* ---------- Header: discreet over the hero, charcoal once scrolled ---------- */
-/* Transparent only while main.js has confirmed the hero photograph is behind it (no `is-solid`); solid before scripts run
-   (html without .js), on pages without a hero, and everywhere else. The fade is short and ends before content arrives. */
-.site-header { border-bottom-color: transparent; transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.4s var(--ease) !important; }
-.site-header.is-solid, body:not(.has-hero) .site-header, html:not(.js) .site-header { background: rgba(23, 18, 15, 0.94) !important; border-color: rgba(236, 189, 133, 0.14) !important; }
+/* ---------- Header: open over the hero, a floating rounded bar once the page moves ----------
+   Final art direction. Of the four options (always transparent / solid strip / glass strip / transparent then solid) the
+   strongest is the last, drawn as a floating capsule: over the hero the navigation sits directly on the photograph; as soon
+   as the page moves (main.js `is-solid`), the same bar fills with charcoal glass, a hairline of sand and a soft shadow,
+   inset from the screen edges. Its geometry never changes between the two states, so the logo and links do not move; only
+   the surface appears. Pages without a hero, and pages before scripts run, start with the bar filled. */
+.site-header, .site-header.is-solid, body:not(.has-hero) .site-header, html:not(.js) .site-header { background: transparent !important; border-color: transparent !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: none !important; }
+.site-header { --pp: clamp(0.85rem, 1.4vw, 1.35rem); transition: transform 0.45s var(--ease) !important; }
+.site-header .header-inner { box-sizing: border-box; width: min(calc(100% - 2 * var(--gutter) + 2 * var(--pp)), calc(var(--wrap) + 2 * var(--pp))); max-width: none; height: calc(100% - 1.25rem); margin: 0.625rem auto 0; padding-inline: var(--pp); border: 1px solid transparent; border-radius: var(--radius-pill); transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+.site-header.is-solid .header-inner, body:not(.has-hero) .site-header .header-inner, html:not(.js) .site-header .header-inner { background: rgba(23, 18, 15, 0.8); border-color: rgba(236, 189, 133, 0.2); box-shadow: 0 18px 40px -22px rgba(8, 5, 3, 0.65); -webkit-backdrop-filter: blur(18px) saturate(1.25); backdrop-filter: blur(18px) saturate(1.25); }
+@media (max-width: 640px) { .site-header .header-inner { height: calc(100% - 1rem); margin-top: 0.5rem; } }
 .site-header .brand-name, .site-header .nav-main a, .site-header .nav-toggle, .site-header .cart-btn, .site-header .lang-opt { color: var(--on-night) !important; }
 .site-header .brand-line { color: rgba(248, 241, 231, 0.7) !important; }
 .site-header .lang-opt:not(.is-on) { color: rgba(248, 241, 231, 0.6) !important; }
@@ -481,3 +487,34 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
 /* ---------- Numerals: prices, hours, scores and counts in lining, even-width figures ---------- */
 .price, .dl-price, .cl-sub, .rv-num, .ft-scores b { font-variant-numeric: lining-nums; } /* proportional: tabular figures widened the long menu prices past their line */
 .cart-total strong, .cart-fab strong, .ft-hours b, .footer-list b, .info-grid dd, .hours b { font-variant-numeric: lining-nums tabular-nums; }
+
+/* ---------- Intro: the horizon opens (first page of a visit; html.lh-intro-on is set inline in <head>) ----------
+   A sand-gold horizon draws itself, the sun rises out of it, the name comes up letter by letter, then the night splits
+   along the horizon into two curved lids that part on the page. Pure CSS, so it starts with the first paint and never
+   waits for scripts or images; ~2.7 s; pointer-events off; hidden by its own timer even if a script fails. */
+.lh-intro { display: none; }
+html.lh-intro-on .lh-intro { display: block; position: fixed; inset: 0; z-index: 300; pointer-events: none; animation: introGone 0s linear 2.85s forwards; }
+.intro-sky, .intro-sea { position: absolute; left: 0; right: 0; height: 50.2%; overflow: hidden; will-change: transform, border-radius; }
+.intro-sky { top: 0; background: radial-gradient(110% 85% at 50% 100%, #3d2617 0%, #22170f 42%, #120d0a 100%); animation: introSky 0.95s cubic-bezier(0.76, 0, 0.18, 1) 1.8s forwards; }
+.intro-sea { bottom: 0; background: linear-gradient(180deg, #17110d 0%, #0e0a08 100%); animation: introSea 0.95s cubic-bezier(0.76, 0, 0.18, 1) 1.8s forwards; }
+.intro-line { position: absolute; left: 50%; top: 50%; width: min(72vw, 46rem); height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft) 18%, var(--gold-soft) 82%, transparent); transform: translateX(-50%) scaleX(0); animation: introLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards, introFade 0.35s ease 1.75s forwards; }
+.intro-sun { position: absolute; left: 50%; bottom: 0; width: clamp(4.2rem, 11vmin, 7.5rem); aspect-ratio: 1; margin-left: calc(clamp(4.2rem, 11vmin, 7.5rem) / -2); border-radius: 50%; background: radial-gradient(circle at 50% 38%, #ffe0b0 0%, #f6a356 38%, var(--sunset) 62%, #b8432a 100%); box-shadow: 0 0 70px 18px rgba(232, 120, 42, 0.28); transform: translateY(75%); opacity: 0; animation: introSun 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards; }
+.intro-glint { position: absolute; left: 50%; top: 0; width: clamp(3rem, 8vmin, 5.5rem); height: 38%; margin-left: calc(clamp(3rem, 8vmin, 5.5rem) / -2); background: linear-gradient(180deg, rgba(246, 163, 86, 0.38), rgba(246, 163, 86, 0)); filter: blur(6px); transform-origin: top; transform: scaleY(0); animation: introGlint 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards; }
+.intro-word { position: absolute; left: 0; right: 0; bottom: clamp(5.2rem, 17vh, 10rem); margin: 0; display: flex; justify-content: center; font-family: var(--serif); font-weight: 400; font-size: clamp(3.1rem, 9vw, 6.6rem); line-height: 1; letter-spacing: 0.015em; color: var(--on-night); overflow: hidden; padding-bottom: 0.08em; }
+.intro-word span { display: inline-block; transform: translateY(105%); animation: introRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(0.45s + var(--i) * 0.055s) forwards; }
+.intro-sub { position: absolute; left: 0; right: 0; top: clamp(1.4rem, 4.5vh, 2.6rem); margin: 0; text-align: center; font-family: var(--sans); font-size: clamp(0.72rem, 1.4vw, 0.85rem); font-weight: 600; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold-soft); opacity: 0; animation: introSub 1s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards; }
+@keyframes introLine { to { transform: translateX(-50%) scaleX(1); } }
+@keyframes introFade { to { opacity: 0; } }
+@keyframes introSun { 0% { opacity: 0; transform: translateY(75%); } 30% { opacity: 1; } 100% { opacity: 1; transform: translateY(46%); } }
+@keyframes introGlint { to { transform: scaleY(1); } }
+@keyframes introRise { to { transform: none; } }
+@keyframes introSub { from { opacity: 0; letter-spacing: 0.6em; } to { opacity: 1; letter-spacing: 0.42em; } }
+@keyframes introSky { to { transform: translateY(-101%); border-radius: 0 0 50% 50% / 0 0 22% 22%; } }
+@keyframes introSea { to { transform: translateY(101%); border-radius: 50% 50% 0 0 / 22% 22% 0 0; } }
+@keyframes introGone { to { visibility: hidden; } }
+
+/* ---------- Microinteractions: buttons answer the pointer, quietly ---------- */
+.btn > .icon:last-child { transition: transform 0.3s var(--ease); }
+@media (hover: hover) { .btn:hover > .icon:last-child { transform: translateX(3px); } }
+.btn:active { transform: translateY(1px); }
+@media (prefers-reduced-motion: reduce) { .btn > .icon:last-child, .btn:active { transition: none; transform: none; } }

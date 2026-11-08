@@ -345,6 +345,8 @@ export function layout(t, o) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* Intro (the horizon opening): once per visit, never with reduced motion unless the site was opened once with
+   ?movimento=completo (remembered, like the rest of the motion). ?intro replays it. Set before first paint: no flash. */try{var q=new URLSearchParams(location.search),m=q.get("movimento");if(m==="completo")localStorage.setItem("lauhata-motion","full");else if(m==="reduzido")localStorage.removeItem("lauhata-motion");var full=localStorage.getItem("lauhata-motion")==="full";if((q.has("intro")||!sessionStorage.getItem("lh-intro"))&&(full||!matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("lh-intro-on");sessionStorage.setItem("lh-intro","1")}}catch(e){}</script>
 <script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
    mid-way (a phone's address bar moving) and rejects its promises; that is harmless, so it is not reported as an error. */
 ["pageswap", "pagereveal"].forEach(function (n) { addEventListener(n, function (e) { var v = e.viewTransition; if (v) ["ready", "finished", "updateCallbackDone"].forEach(function (k) { if (v[k]) v[k].catch(function () {}); }); }); });</script>
@@ -395,6 +397,11 @@ ${site.gaId ? `<script>window.LAUHATA_GA=${JSON.stringify(site.gaId)};</script>
 <script src="/assets/js/analytics.js" defer></script>` : ""}
 </head>
 <body class="${o.hero ? "has-hero" : ""}">
+<div class="lh-intro" aria-hidden="true">
+  <div class="intro-sky"><span class="intro-sun"></span><p class="intro-word">${[..."Lauhata"].map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p></div>
+  <div class="intro-sea"><span class="intro-glint"></span><p class="intro-sub">${esc(t.brandLine)}</p></div>
+  <span class="intro-line"></span>
+</div>
 ${SPRITE}
 <a class="skip-link" href="#main">${esc(t.nav.skip)}</a>
 ${header(t, o.page, o.alt)}

@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>/* Intro (the horizon opening): once per visit, never with reduced motion unless the site was opened once with
+   ?movimento=completo (remembered, like the rest of the motion). ?intro replays it. Set before first paint: no flash. */try{var q=new URLSearchParams(location.search),m=q.get("movimento");if(m==="completo")localStorage.setItem("lauhata-motion","full");else if(m==="reduzido")localStorage.removeItem("lauhata-motion");var full=localStorage.getItem("lauhata-motion")==="full";if((q.has("intro")||!sessionStorage.getItem("lh-intro"))&&(full||!matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("lh-intro-on");sessionStorage.setItem("lh-intro","1")}}catch(e){}</script>
 <script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
    mid-way (a phone's address bar moving) and rejects its promises; that is harmless, so it is not reported as an error. */
 ["pageswap", "pagereveal"].forEach(function (n) { addEventListener(n, function (e) { var v = e.viewTransition; if (v) ["ready", "finished", "updateCallbackDone"].forEach(function (k) { if (v[k]) v[k].catch(function () {}); }); }); });</script>
@@ -54,6 +56,11 @@
 
 </head>
 <body class="has-hero">
+<div class="lh-intro" aria-hidden="true">
+  <div class="intro-sky"><span class="intro-sun"></span><p class="intro-word"><span style="--i:0">L</span><span style="--i:1">a</span><span style="--i:2">u</span><span style="--i:3">h</span><span style="--i:4">a</span><span style="--i:5">t</span><span style="--i:6">a</span></p></div>
+  <div class="intro-sea"><span class="intro-glint"></span><p class="intro-sub">Beach Escape</p></div>
+  <span class="intro-line"></span>
+</div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>

@@ -27,6 +27,7 @@
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
     gsap.set(".wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform" });
+    gsap.set(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img", { clearProps: "clipPath,transform" });
     gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
   }
   const track = (anim) => { if (anim && anim.scrollTrigger) created.push(anim.scrollTrigger); return anim; };
@@ -201,6 +202,21 @@
     track(gsap.to(bar, { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.25 } }));
   }
 
+  /* ---------- Content photographs open from a rounded mask as they arrive (tier B) ----------
+     The picture is first seen as a smaller rounded window that widens to its frame while the image settles from a
+     slight zoom: the same opening gesture as the intro, kept to editorial photographs (not cards, not full-screen scenes). */
+  function initMediaReveal() {
+    if (!full) return;
+    const imgs = $$(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img");
+    if (!imgs.length) return;
+    gsap.set(imgs, { clipPath: "inset(10% 8% 10% 8% round 32px)", scale: 1.12 });
+    created.push(...ScrollTrigger.batch(imgs, {
+      start: "top 88%", once: true,
+      onEnter: (batch) => gsap.to(batch, { clipPath: "inset(0% 0% 0% 0% round 16px)", scale: 1, duration: 1.35, ease: "expo.out", stagger: 0.12, overwrite: true,
+        onComplete: () => gsap.set(batch, { clearProps: "clipPath,transform" }) }),
+    }));
+  }
+
   /* ---------- Cards and panels rise in one after another (tier B) ----------
      Groups that had no entrance of their own: the four welcome cards, the review cards, the two suites, the Discover links. */
   function initStagger() {
@@ -227,6 +243,7 @@
     initSmooth();
     initProgress();
     initStagger();
+    initMediaReveal();
     root.classList.add("gsap-ready");
     window.__cinemaReady = true;
     // Images and fonts change heights after load: re-measure the pins once everything has settled.

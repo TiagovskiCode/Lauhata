@@ -677,8 +677,11 @@
     heroSection?.classList.add("is-ready");
     $$("[data-split]", heroSection || document.createElement("div")).forEach((el) => el.classList.add("is-in"));
   };
+  // With the intro (first page of a visit), the hero copy rises as the horizon opens; the intro then leaves the DOM flow.
+  const intro = document.documentElement.classList.contains("lh-intro-on");
   if (reduced) revealHero();
-  else setTimeout(revealHero, 60);
+  else setTimeout(revealHero, intro ? 1850 : 60);
+  if (intro) setTimeout(() => { document.documentElement.classList.remove("lh-intro-on"); $(".lh-intro")?.remove(); }, 2850);
 
   // Hero video (site.heroVideo): the background of the home hero, on laptop-sized screens only (1280–1920 px wide). The
   // sunset photograph is on screen from the start; once the page has loaded the video is fetched and fades in over it, then

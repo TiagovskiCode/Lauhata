@@ -362,8 +362,11 @@ img[src*="por-do-sol"] { filter: brightness(1.14) contrast(1.04) saturate(1.06);
 /* ---------- Large screens: type and content grow together (QHD, 4K), never just a wider page ---------- */
 :root { --wrap: 80rem; }
 @media (min-width: 1920px) { html { font-size: 106.25%; } }
-@media (min-width: 2400px) { html { font-size: 118.75%; } :root { --gutter: 4rem; } }
-@media (min-width: 3200px) { html { font-size: 150%; } }
+/* 2K and up: the root follows the smaller of width and height, so a 2560×1440 monitor and a 3440×1440 ultrawide get the
+   same readable type (the ultrawide is no taller), while a 3840×2160 screen still reaches 24px (the old 150%). */
+@media (min-width: 2400px) { html { font-size: clamp(19px, min(0.74vw, 1.32vh), 24px); } :root { --gutter: 4rem; } }
+/* Ultrawide (21:9 and wider): the content measure opens up, so the page does not float between two empty bands. */
+@media (min-width: 3000px) and (min-aspect-ratio: 21/9) { :root { --wrap: 96rem; } }
 
 /* ---------- Comer & Ficar: the details under each photograph ---------- */
 .duo-notes { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); background: var(--night); color: var(--on-night); }
