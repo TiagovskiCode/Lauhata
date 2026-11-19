@@ -128,7 +128,7 @@
     const finish = () => { d.classList.remove("is-closing"); if (d.open) d.close(); afterClose(); };
     if (reduced) return finish();
     d.classList.add("is-closing");
-    setTimeout(finish, 220);
+    setTimeout(finish, d === drawer ? 340 : 220); // the cart panel's exit lasts 0.34 s (refine.css)
   }
   [drawer, optDlg].forEach((d) => {
     if (!d) return;
@@ -420,25 +420,32 @@
     }
   }
 
-  /* ---------- Menu: search and category bar ---------- */
+  /* ---------- Menu: search and the category filter ----------
+     "Menu" on the left, "Filter" on the right. The filter is a small popover (a list of buttons, one pressed): it closes on Escape,
+     on a click outside and after a choice, and the active category is shown beside the button with a way to clear it. */
   const menu = $("[data-menu]");
   if (menu) {
     const input = $("[data-menu-search]", menu);
     const clearSearch = $("[data-menu-clear]", menu);
     const status = $("[data-menu-status]", menu);
     const empty = $("[data-menu-empty]", menu);
-    const nav = $("[data-menu-nav]", menu);
     const cats = $$("[data-cat]", menu);
     const dishes = $$("[data-dish]", menu);
-    const links = $$("[data-cat-link]", nav);
+    const fBtn = $("[data-mf-btn]", menu);
+    const fPanel = $("[data-mf-panel]", menu);
+    const fClear = $("[data-mf-clear]", menu);
+    const fCur = $("[data-mf-current]", menu);
+    const opts = $$("[data-cat-filter]", menu);
     const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+    let cat = "all";
 
-    function filter() {
+    function apply() {
       const raw = input.value.trim();
       const tokens = norm(raw).split(/\s+/).filter(Boolean);
       let n = 0;
       dishes.forEach((d) => {
-        const hit = tokens.every((t) => d.dataset.search.includes(t));
+        const inCat = cat === "all" || d.closest("[data-cat]").dataset.cat === cat;
+        const hit = inCat && tokens.every((t) => d.dataset.search.includes(t));
         d.hidden = !hit;
         if (hit) n++;
       });
@@ -447,61 +454,106 @@
       clearSearch.hidden = !raw;
       empty.hidden = n > 0;
       empty.textContent = n ? "" : fmt(O.noResults, { q: raw });
-      status.textContent = tokens.length && n ? (n === 1 ? O.resultOne : fmt(O.results, { n })) : "";
-      spy();
+      status.textContent = (tokens.length || cat !== "all") && n ? (n === 1 ? O.resultOne : fmt(O.results, { n })) : "";
     }
-    input.addEventListener("input", filter);
-    input.addEventListener("keydown", (e) => { if (e.key === "Escape" && input.value) { input.value = ""; filter(); } });
-    clearSearch.addEventListener("click", () => { input.value = ""; filter(); input.focus(); });
+    input.addEventListener("input", apply);
+    input.addEventListener("keydown", (e) => { if (e.key === "Escape" && input.value) { input.value = ""; apply(); } });
+    clearSearch.addEventListener("click", () => { input.value = ""; apply(); input.focus(); });
 
-    // Wide screens: the categories are a vertical list on the left (sticky, no bar above the content), so the offset is the header.
-    const side = window.matchMedia("(min-width: 1000px)");
-    // Jump to a category, leaving room for the sticky bar (and the header when it will be showing).
-    function goTo(section) {
+    function setOpen(open, returnFocus) {
+      fPanel.hidden = !open;
+      fBtn.setAttribute("aria-expanded", String(open));
+      if (open) ($('[aria-pressed="true"]', fPanel) || $("button", fPanel))?.focus();
+      else if (returnFocus) fBtn.focus();
+    }
+    function setCat(id) {
+      cat = id;
+      opts.forEach((o) => o.setAttribute("aria-pressed", String(o.dataset.catFilter === id)));
+      const label = id === "all" ? "" : $(`[data-cat-filter="${id}"] span`, fPanel).textContent;
+      fCur.textContent = label;
+      fClear.hidden = id === "all";
+      fBtn.classList.toggle("is-active", id !== "all");
+      apply();
+    }
+    fBtn.addEventListener("click", () => setOpen(fPanel.hidden));
+    opts.forEach((o) => o.addEventListener("click", () => {
+      setCat(o.dataset.catFilter);
+      setOpen(false, true);
+      const bar = $(".menu-tools", menu);
+      const top = bar.getBoundingClientRect().top;
       const header = $("[data-header]");
+      const limit = (header ? header.offsetHeight : 0) + 12;
+      if (top < limit) window.scrollTo({ top: Math.max(0, window.scrollY + top - limit), behavior: reduced ? "auto" : "smooth" });
+    }));
+    fClear.addEventListener("click", () => { setCat("all"); fBtn.focus(); });
+    document.addEventListener("pointerdown", (e) => { if (!fPanel.hidden && !e.target.closest("[data-mf]")) setOpen(false); });
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !fPanel.hidden) { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
+      if (!fPanel.hidden && (e.key === "ArrowDown" || e.key === "ArrowUp") && e.target.closest("[data-mf-panel]")) {
+        e.preventDefault();
+        const i = opts.indexOf(document.activeElement);
+        opts[(i + (e.key === "ArrowDown" ? 1 : -1) + opts.length) % opts.length].focus();
+      }
+    });
+
+    /* Wide screens (min-width 1000px, the same breakpoint the CSS uses): the categories are a sticky bar of links that scroll to
+       each section and follow the reading position. Narrower screens use the Filter popover above; the two never show together. */
+    const nav = $("[data-menu-nav]", menu);
+    const links = $$("[data-cat-link]", nav);
+    const wide = window.matchMedia("(min-width: 1000px)");
+    function goTo(section) {
+      // The category list is a column on the left (sticky), so only the header's room is kept above the section.
       const top = section.getBoundingClientRect().top + window.scrollY;
-      const down = top > window.scrollY;
-      const y = Math.max(0, side.matches ? top - 112 : top - nav.offsetHeight - 12 - (down ? 0 : header ? header.offsetHeight : 0));
-      window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
+      window.scrollTo({ top: Math.max(0, top - 112), behavior: reduced ? "auto" : "smooth" });
     }
     links.forEach((a) => a.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopImmediatePropagation(); // main.js also hooks in-page anchors; this one needs the bar offset
-      if (input.value) { input.value = ""; filter(); }
-      goTo($(`#cat-${a.dataset.catLink}`));
+      if (input.value) { input.value = ""; apply(); }
+      goTo($("#cat-" + a.dataset.catLink));
       history.replaceState(null, "", a.getAttribute("href"));
     }));
-
-    // Highlight the category being read and keep its chip in view.
     let current = null;
     function spy() {
-      const line = side.matches ? 150 : nav.getBoundingClientRect().bottom + 24;
-      const inside = menu.getBoundingClientRect().top < line && menu.getBoundingClientRect().bottom > line;
+      if (!wide.matches) return;
+      const line = 150;
+      const box = menu.getBoundingClientRect();
       let cur = null;
-      if (inside) cats.forEach((c) => { if (!c.hidden && c.getBoundingClientRect().top <= line) cur = c.dataset.cat; });
-      links.forEach((a) => {
-        const on = a.dataset.catLink === cur;
-        if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
-      });
+      if (box.top < line && box.bottom > line) cats.forEach((c) => { if (!c.hidden && c.getBoundingClientRect().top <= line) cur = c.dataset.cat; });
+      links.forEach((a) => { if (a.dataset.catLink === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
       if (cur && cur !== current) {
-        // Slide only the bar sideways. scrollIntoView would also move the page (it honours the page's scroll-padding).
         const chip = links.find((a) => a.dataset.catLink === cur);
         const bar = chip && chip.closest("ul");
-        if (bar) bar.scrollTo({ left: chip.offsetLeft - (bar.clientWidth - chip.offsetWidth) / 2, behavior: reduced ? "auto" : "smooth" });
+        if (bar && bar.scrollWidth > bar.clientWidth + 2) bar.scrollTo({ left: chip.offsetLeft - (bar.clientWidth - chip.offsetWidth) / 2, behavior: reduced ? "auto" : "smooth" });
       }
       current = cur;
     }
     let ticking = false;
-    let late = 0;
     window.addEventListener("scroll", () => {
-      // The bar moves up and down with the header, so look again once it has settled.
-      clearTimeout(late);
-      late = setTimeout(spy, 450);
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => { ticking = false; spy(); });
     }, { passive: true });
-    nav.addEventListener("transitionend", spy);
+    let prox = 0;
+    let py = null;
+    const proxTick = () => {
+      prox = 0;
+      let moving = false;
+      links.forEach((a) => {
+        const r = a.getBoundingClientRect();
+        const target = py == null ? 0 : Math.max(0, 1 - Math.abs(py - (r.top + r.height / 2)) / 90);
+        const p = (a._p || 0) + (target - (a._p || 0)) * 0.18;
+        a._p = Math.abs(target - p) < 0.01 ? target : p;
+        if (a._p !== target) moving = true;
+        a.style.setProperty("--p", a._p.toFixed(3));
+      });
+      if (moving) prox = requestAnimationFrame(proxTick);
+    };
+    nav.addEventListener("pointermove", (e) => { if (reduced || !wide.matches || e.pointerType === "touch") return; py = e.clientY; if (!prox) prox = requestAnimationFrame(proxTick); });
+    nav.addEventListener("pointerleave", () => { py = null; if (!prox && !reduced) prox = requestAnimationFrame(proxTick); });
+    window.addEventListener("pagehide", () => { cancelAnimationFrame(prox); prox = 0; });
+    wide.addEventListener("change", (e) => { if (e.matches && cat !== "all") setCat("all"); if (e.matches) setOpen(false); spy(); });
+    apply();
     spy();
   }
 

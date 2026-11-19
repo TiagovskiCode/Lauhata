@@ -224,6 +224,7 @@ function header(t, page, alt) {
   // Primary navigation (owner, 19 Nov 2026): exactly Restaurant, Hotel, Experiences, Gallery, Contact, plus a Reserve button. The logo is the way home.
   // "Hotel" is the accommodation pages (/stay/); "Experiences" is the events page. Our Story and Discover Liquiçá live on the
   // home page and in the footer.
+  const items = [["restaurant", t.nav.restaurant], ["stay", t.nav.stay], ["events", t.nav.events], ["gallery", t.nav.gallery], ["contact", t.nav.contact]];
   const nav = [
     link("restaurant", t.nav.restaurant),
     link("stay", t.nav.stay),
@@ -238,23 +239,31 @@ function header(t, page, alt) {
     <div class="header-actions">
       ${langMenu(t, alt)}
       ${cartButton(t)}
-      <a class="btn btn-terra btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog">${esc(t.land.resort.reserve)}</a>
-      <button class="icon-btn nav-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open>${icon("menu")}</button>
+      <a class="btn btn-terra btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog"><span class="bk-long">${esc(t.land.resort.reserveLong)}</span><span class="bk-short">${esc(t.land.resort.reserve)}</span></a>
+      <button class="nav-toggle sm-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="sm-toggle-t">${esc(t.nav.menuBtn)}</span><span class="sm-bars" aria-hidden="true"><i></i><i></i></span></button>
     </div>
   </div>
 </header>
-<dialog class="mobile-nav" id="mobile-nav" aria-label="${esc(t.nav.primary)}" data-mobile-nav>
-  <div class="mobile-nav-top">
-    ${logo(t, "brand-light")}
-    <button class="icon-btn" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close>${icon("close")}</button>
-  </div>
-  <nav class="mobile-nav-links">
-    ${nav}
-  </nav>
-  <div class="mobile-nav-cta">
-    <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
-    <a class="btn btn-outline" href="${href("stay", L, "#reservar")}">${esc(t.home.hero.ctaRoom)}${icon("bed")}</a>
-    ${langSwitch(t, alt, "lang-center")}
+<dialog class="mobile-nav sm-menu" id="mobile-nav" aria-label="${esc(t.nav.primary)}" data-mobile-nav>
+  <div class="sm-layers" aria-hidden="true"><i></i><i></i></div>
+  <div class="sm-panel" data-sm-panel>
+    <div class="sm-top">
+      <button class="sm-close" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close><span class="sm-toggle-t">${esc(t.nav.closeWord)}</span><span class="sm-bars is-x" aria-hidden="true"><i></i><i></i></span></button>
+    </div>
+    <nav class="mobile-nav-links sm-links" aria-label="${esc(t.nav.primary)}">
+      <ol class="sm-list">${items.map(([p, label]) => `<li><a class="sm-link" href="${href(p, L)}"${page === p ? ' aria-current="page"' : ""}><span class="sm-mask"><span class="sm-label">${esc(label)}</span></span></a></li>`).join("")}</ol>
+    </nav>
+    <ul class="sm-sub" data-sm-extra>
+      <li><a href="${href("about", L)}">${esc(t.nav.story)}</a></li>
+      <li><a href="${href("discover", L)}">${esc(t.nav.discover)}</a></li>
+      <li><a href="${href("contact", L, "#faq")}">${esc(t.faq.linkLabel)}</a></li>
+    </ul>
+    <div class="mobile-nav-cta" data-sm-extra>
+      <a class="btn btn-dark" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
+      <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}${icon("bed")}</a>
+      ${langSwitch(t, alt, "lang-center")}
+    </div>
+    ${Object.entries(site.social).filter(([, u]) => u).length ? `<ul class="sm-social" data-sm-extra>${Object.entries(site.social).filter(([, u]) => u).map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
   </div>
 </dialog>`;
 }
@@ -291,8 +300,8 @@ function footer(t, { home = false } = {}) {
     ${home ? "" : `    <div class="ft-cta">
       <p>${esc(F.cta)}</p>
       <div class="ft-cta-btns">
-        <a class="btn btn-cream" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${esc(F.bookTable)}</a>
-        <a class="btn btn-ghost-light" href="${href("stay", L, "#reservar")}" data-book-open="room">${esc(F.bookRoom)}</a>
+        <a class="btn btn-cream" href="${href("contact", L)}" data-book-open="table">${esc(F.bookTable)}</a>
+        <a class="btn btn-ghost-light" href="${href("contact", L)}" data-book-open="room">${esc(F.bookRoom)}</a>
       </div>
     </div>`}
   </div>
@@ -305,6 +314,7 @@ function footer(t, { home = false } = {}) {
         ${link(href("about", L), t.nav.story)}
         ${link(href("events", L), t.nav.events)}
         ${link(href("gallery", L), t.nav.gallery)}
+        ${link(href("contact", L, "#faq"), t.faq.linkLabel)}
         ${link(href("discover", L), t.nav.discover)}
         ${link(href("contact", L), t.nav.contact)}
       </ul>
@@ -329,6 +339,7 @@ function footer(t, { home = false } = {}) {
       <ul class="footer-list ft-scores">${["tripadvisor", "booking"].filter((k) => site.reviews[k] && site.reviews[k].url).map((k) => { const r = site.reviews[k]; return `<li><a href="${esc(r.url)}" target="_blank" rel="noopener"><span>${esc(t.reviews.platforms[k])}</span>${r.rating ? `<b>${esc(String(r.rating).replace(".", t.lang === "pt" ? "," : "."))}<small>/${r.scale}</small></b>` : ""}</a></li>`; }).join("")}</ul>
     </div>
   </div>
+  <div class="ft-mark" aria-hidden="true" data-ft-mark><span>LAUHATA</span></div>
   <div class="wrap footer-base">
     <p>© ${year} ${esc(site.name)}. ${esc(F.rights)}${usesPlaceholderImages() ? ` <span class="footer-note">${esc(t.home.placeholderNote)}</span>` : ""}</p>
     <p><a href="${href("privacy", L)}">${esc(F.privacy)}</a> · ${esc(F.signature)} <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(F.credit)}</a></p>
@@ -416,8 +427,8 @@ ${o.body}
 ${footer(t, { home: o.page === "home" || o.body.includes("scene final-cta") })}
 ${cartUi(t)}
 <div class="mobile-bar" data-mobile-bar>
-  <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
-  <a class="btn btn-terra" href="${href("stay", L, "#reservar")}" data-book-open="room">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
+  <a class="btn btn-dark" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
+  <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
   <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 </div>
 <a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>

@@ -12,6 +12,7 @@ export default {
     width: 1920,
     alt: { pt: "Vista aérea do Lauhata: o edifício com cobertura azul, o jardim, as palmeiras e a praia", en: "Aerial view of Lauhata: the building with its blue roof, the garden, the palm trees and the beach" },
     placeholder: false,
+    group: "lauhata",
   },
   // Two more real stills from the same drone footage (originais/videos/): the property among its garden and palms, and the
   // wider view down to the beach and the sea. They carry the full-screen "scenes" and the contact page.
@@ -36,12 +37,14 @@ export default {
     width: 1920,
     alt: { pt: "Vista aérea do Lauhata, com o edifício, o jardim e a praia ao fundo", en: "Aerial view of Lauhata, with the building, the garden and the beach beyond" },
     placeholder: false,
+    group: "lauhata",
   },
   aerialDay4: {
     src: "foto:aerea-dia-4",
     width: 1920,
     alt: { pt: "Vista aérea ampla do Lauhata e da praia de Liquiçá", en: "Wide aerial view of Lauhata and the Liquiçá beach" },
     placeholder: false,
+    group: "lauhata",
   },
   // Drone photographs supplied in November 2026 (originals in originais/fotos/drone-2026-11/). `group` places a photo in
   // the gallery page: "lauhata" (the property and its beach), "coast" (the sea and the light), "around" (the surroundings).

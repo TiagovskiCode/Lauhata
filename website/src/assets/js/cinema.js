@@ -23,7 +23,7 @@
     created.forEach((st) => st.kill());
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
-    gsap.set(".wl-card, .rp-media, .mo-title, .tt-b, .wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform,clipPath" });
+    gsap.set(".wl-door, .rp-media, .mo-title, .tt-b, .wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform,clipPath" });
     gsap.set(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img", { clearProps: "clipPath,transform" });
     gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
   }
@@ -138,10 +138,10 @@
     if (!full || !wide) return; // phones and small tablets: everything is simply there (no hidden states, less work)
     const ease = "power3.out"; // settles, never overshoots
     const once = (trigger, vars, start = "top 86%") => gsap.from(trigger, { ...vars, ease, scrollTrigger: { trigger: Array.isArray(trigger) ? trigger[0] : trigger, start, once: true } });
-    const cards = $$(".wl-card");
+    const cards = $$(".wl-door");
     if (cards.length) created.push(once(cards, { y: 28, opacity: 0, duration: 0.9, stagger: 0.12 }, "top 88%").scrollTrigger);
     $$(".rp-media").forEach((el) => created.push(once(el, { clipPath: "inset(0 0 100% 0)", duration: 1.3, ease: "power2.inOut" }, "top 85%").scrollTrigger));
-    const mo = $(".mo-title");
+    const mo = null;
     if (mo) created.push(once(mo, { y: 36, opacity: 0, duration: 1 }, "top 82%").scrollTrigger);
     const tt = $(".tt-b");
     if (tt) created.push(once(tt, { y: 40, opacity: 0, duration: 1.1 }, "top 90%").scrollTrigger);

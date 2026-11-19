@@ -133,7 +133,7 @@ export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio
   let capHtml = caption ? esc(caption) : "";
   if (credit && !decorative && !caption) {
     const what = credit === true ? images[key].alt[t.lang] : credit;
-    capHtml = `<span class="cap-what">${esc(what)}</span><span class="cap-src">${esc(images[key].placeholder ? t.common.placeholderImage : t.common.realPhoto)}</span>`;
+    capHtml = `<span class="cap-what">${esc(what)}</span>${images[key].placeholder ? `<span class="cap-src">${esc(t.common.placeholderImage)}</span>` : ""}`;
     cls = `${cls} has-credit`;
   }
   const im = images[key];
@@ -175,7 +175,7 @@ export const money = (n) => site.order.currency + (Number.isInteger(n) ? n : n.t
 // The dishes a page can add to the order, for the cart script (window.LAUHATA_MENU, by dish id).
 export function menuJson(list) {
   const data = Object.fromEntries(
-    list.map((d) => [d.id, { id: d.id, name: d.name, price: d.price, desc: d.description ?? null, options: d.options, photo: existsSync(new URL(`./assets/img/pratos/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos/${d.id}-640.jpg` : null }])
+    list.map((d) => [d.id, { id: d.id, name: d.name, price: d.price, desc: d.description ?? null, options: d.options, photo: existsSync(new URL(`./assets/img/pratos/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos/${d.id}-640.jpg` : existsSync(new URL(`./assets/img/pratos-temp/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos-temp/${d.id}-640.jpg` : null }])
   );
   return `<script>window.LAUHATA_MENU=${JSON.stringify(data).replace(/</g, "\\u003c")};</script>`;
 }

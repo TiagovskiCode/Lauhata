@@ -101,6 +101,8 @@
         bookDialog.showModal();
         const tab = a.dataset.bookOpen && $(`[data-bc-tab="${a.dataset.bookOpen}"]`, bookDialog);
         if (tab) tab.click();
+        const pre = a.dataset.roomLink && $("select[name=\"room\"]", bookDialog);
+        if (pre) { pre.value = a.dataset.roomLink; pre.dispatchEvent(new Event("change", { bubbles: true })); }
         (tab ? $(`[data-bc-panel="${a.dataset.bookOpen}"] input, [data-bc-panel="${a.dataset.bookOpen}"] button`, bookDialog) : $("[data-bc-tab]", bookDialog))?.focus();
       })
     );
@@ -109,19 +111,175 @@
     bookDialog.addEventListener("close", () => opener?.focus());
   }
 
-  /* ---------- Mobile navigation ---------- */
+  /* ---------- Reviews: the third box opens the feedback form below it ---------- */
+  $$("[data-open-feedback]").forEach((a) => a.addEventListener("click", (e) => {
+    const d = $("#rv-form");
+    if (!d) return;
+    e.preventDefault();
+    d.open = true;
+    d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    $("input, textarea, select", d)?.focus({ preventScroll: true });
+  }));
+
+  /* ---------- Dish carousel: previous and next move by one card; swipe and keyboard work on the track itself ---------- */
+  $$("[data-kc]").forEach((root) => {
+    const track = $("[data-kc-track]", root);
+    const prev = $("[data-kc-prev]", root);
+    const next = $("[data-kc-next]", root);
+    if (!track || !prev || !next) return;
+    const step = () => {
+      const item = $(".kc-item", track);
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return item ? item.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+    };
+    const go = (dir) => track.scrollBy({ left: dir * step(), behavior: reduced ? "auto" : "smooth" });
+    const update = () => {
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    };
+    let raf = 0;
+    prev.addEventListener("click", () => go(-1));
+    next.addEventListener("click", () => go(1));
+    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    });
+    window.addEventListener("resize", update);
+    update();
+  });
+
+  /* ---------- Room galleries: one photograph at a time, previous and next, a counter, swipe and arrow keys ---------- */
+  $$("[data-rg]").forEach((root) => {
+    const track = $("[data-rg-track]", root);
+    const prev = $("[data-rg-prev]", root);
+    const next = $("[data-rg-next]", root);
+    const count = $("[data-rg-count]", root);
+    const slides = $$(".rs-slide", track);
+    if (!track || !slides.length) return;
+    const index = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    const go = (i) => track.scrollTo({ left: Math.max(0, Math.min(slides.length - 1, i)) * track.clientWidth, behavior: reduced ? "auto" : "smooth" });
+    const update = () => {
+      const i = index();
+      count.textContent = (i + 1) + " / " + slides.length;
+      prev.disabled = i <= 0;
+      next.disabled = i >= slides.length - 1;
+    };
+    let raf = 0;
+    prev.addEventListener("click", () => go(index() - 1));
+    next.addEventListener("click", () => go(index() + 1));
+    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(index() + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); go(index() - 1); }
+    });
+    window.addEventListener("resize", update);
+    update();
+  });
+
+  /* ---------- Hero scroll cue fades once the visitor scrolls; the footer signature rises into view once ---------- */
+  const cue = $("[data-hx-scroll]");
+  if (cue) {
+    const onScroll = () => cue.classList.toggle("is-gone", window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  const mark = $("[data-ft-mark]");
+  if (mark && !reduced && "IntersectionObserver" in window) {
+    mark.classList.add("is-armed");
+    new IntersectionObserver((entries, io) => {
+      if (entries.some((e) => e.isIntersecting)) { mark.classList.add("is-in"); io.disconnect(); }
+    }, { threshold: 0.25 }).observe(mark);
+  }
+
+  /* ---------- Mobile navigation: the staggered menu (React Bits "StaggeredMenu", rebuilt in plain JS with the GSAP already shipped) ----------
+     The <dialog> stays the container, so the browser still provides the focus trap, Escape and the inert page behind it. Two colour layers
+     slide in, then the panel, then the links rise one after another. Without GSAP (reduced motion, or the file failing to load) the
+     menu simply opens: every final state is already what the CSS shows. GSAP is fetched on the first sign of intent, not on every page. */
   const nav = $("[data-mobile-nav]");
   const navOpen = $("[data-nav-open]");
   if (nav && navOpen) {
-    navOpen.addEventListener("click", () => { nav.showModal(); navOpen.setAttribute("aria-expanded", "true"); });
-    $("[data-nav-close]", nav).addEventListener("click", () => nav.close());
-    // The menu is a side drawer: a tap on the dimmed page beside it closes it.
-    nav.addEventListener("click", (e) => {
-      const r = nav.getBoundingClientRect();
-      if (e.target === nav && (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom)) nav.close();
-    });
-    nav.addEventListener("close", () => navOpen.setAttribute("aria-expanded", "false"));
-    $$("a", nav).forEach((a) => a.addEventListener("click", () => nav.close()));
+    const root = document.documentElement;
+    const panel = $("[data-sm-panel]", nav);
+    const layers = $$(".sm-layers i", nav);
+    const links = $$(".sm-label", nav);
+    const numbers = $$(".sm-link", nav);
+    const extras = $$("[data-sm-extra]", nav);
+    let tl = null;
+    let gsapReady = null;
+    let closing = false;
+    const loadGsap = () => {
+      if (window.gsap) return Promise.resolve(window.gsap);
+      if (!gsapReady) {
+        gsapReady = new Promise((resolve) => {
+          const me = $$("script[src]").find((x) => /\/main(\.min)?\.js/.test(x.src));
+          const el = document.createElement("script");
+          el.src = (me ? me.src.replace(/main[^/]*$/, "") : "/assets/js/") + "vendor/gsap.min.js";
+          el.onload = () => resolve(window.gsap || null);
+          el.onerror = () => resolve(null);
+          document.head.appendChild(el);
+        });
+      }
+      return gsapReady;
+    };
+    ["pointerenter", "focus", "touchstart"].forEach((ev) => navOpen.addEventListener(ev, () => { if (!reduced) loadGsap(); }, { once: true, passive: true }));
+
+    const finish = () => {
+      if (nav.open) nav.close();
+      root.classList.remove("nav-open");
+      navOpen.setAttribute("aria-expanded", "false");
+      nav.classList.remove("sm-wait");
+      closing = false;
+    };
+    function openMenu() {
+      if (nav.open) return;
+      closing = false;
+      const hold = !reduced && !window.gsap; // until GSAP arrives the panel waits off-screen instead of flashing open
+      if (hold) nav.classList.add("sm-wait");
+      nav.showModal();
+      root.classList.add("nav-open");
+      navOpen.setAttribute("aria-expanded", "true");
+      if (reduced) return;
+      loadGsap().then((g) => {
+        nav.classList.remove("sm-wait");
+        if (nav.open && document.activeElement === nav) $("[data-nav-close]", nav).focus({ preventScroll: true }); // the panel was hidden while GSAP loaded
+        if (!g || !nav.open || closing) return;
+        if (tl) tl.kill();
+        g.set(layers, { xPercent: 100 });
+        g.set(panel, { xPercent: 100 });
+        g.set(links, { yPercent: 135, rotate: 6 });
+        g.set(numbers, { "--n": 0 });
+        g.set(extras, { autoAlpha: 0, y: 14 });
+        tl = g.timeline({ defaults: { ease: "power4.out" } })
+          .to(layers, { xPercent: 0, duration: 0.55, stagger: 0.08 }, 0)
+          .to(panel, { xPercent: 0, duration: 0.7 }, 0.16)
+          .to(links, { yPercent: 0, rotate: 0, duration: 0.9, stagger: 0.07 }, 0.36)
+          .to(numbers, { "--n": 1, duration: 0.6, stagger: 0.07 }, 0.5)
+          .to(extras, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.06 }, 0.72);
+      });
+    }
+    function closeMenu(now) {
+      if (!nav.open || (closing && !now)) return;
+      const g = window.gsap;
+      if (now || reduced || !g) { if (tl) tl.kill(); finish(); return; }
+      closing = true;
+      if (tl) tl.kill();
+      tl = g.timeline({ onComplete: finish })
+        .to(extras, { autoAlpha: 0, duration: 0.2 }, 0)
+        .to(panel, { xPercent: 100, duration: 0.4, ease: "power3.in" }, 0)
+        .to(layers, { xPercent: 100, duration: 0.4, ease: "power3.in", stagger: -0.05 }, 0.04);
+    }
+    navOpen.addEventListener("click", openMenu);
+    $("[data-nav-close]", nav).addEventListener("click", () => closeMenu());
+    nav.addEventListener("cancel", (e) => { e.preventDefault(); closeMenu(); }); // Escape: close with the exit animation
+    nav.addEventListener("click", (e) => { if (e.target === nav) closeMenu(); }); // a tap beside the panel
+    nav.addEventListener("close", () => { root.classList.remove("nav-open"); navOpen.setAttribute("aria-expanded", "false"); });
+    // Same-page anchors and the booking buttons need the menu out of the way at once; page links simply leave the page.
+    $$("a", nav).forEach((a) => a.addEventListener("click", () => {
+      if (a.hasAttribute("data-book-open") || (a.getAttribute("href") || "").startsWith("#")) closeMenu(true);
+    }));
+    window.matchMedia("(min-width: 1280px)").addEventListener("change", (e) => { if (e.matches) closeMenu(true); }); // the desktop navigation takes over
+    window.addEventListener("pageshow", (e) => { if (e.persisted) closeMenu(true); });
   }
 
   /* ---------- Reveal on scroll ---------- */
@@ -609,11 +767,13 @@
       errBox.hidden = true;
       $$(".bc-field", card).forEach((f) => f.classList.remove("has-error"));
       const opt = (s) => s.options[s.selectedIndex].text;
-      const unitText = (i) => { const n = Number(i.value) || 1; return `${n} ${n === 1 ? i.dataset.unitOne : i.dataset.unitMany}`; };
+      const unitText = (i) => { const n = i.value === "" ? 1 : Math.max(0, Number(i.value) || 0); return `${n} ${n === 1 ? i.dataset.unitOne : i.dataset.unitMany}`; };
       let text;
       if (kind === "table") {
         if (!el.date.value || el.date.value < today) return fail(el.date, F.errors.date);
-        text = fmt(F.waQuickTable, { date: fmtDate(el.date.value), time: opt(el.time), people: unitText(el.people) });
+        const who = el.tName && el.tName.value.trim() ? fmt(F.waName, { name: el.tName.value.trim() }) : "";
+        const nt = el.tNotes && el.tNotes.value.trim() ? fmt(F.waNotes, { notes: el.tNotes.value.trim() }) : "";
+        text = fmt(F.waQuickTable, { date: fmtDate(el.date.value), time: opt(el.time), people: unitText(el.people), who, notes: nt });
       } else {
         if (!el.checkIn.value || el.checkIn.value < today) return fail(el.checkIn, F.errors.checkIn);
         if (!el.checkOut.value || el.checkOut.value <= el.checkIn.value) return fail(el.checkOut, F.errors.checkOut);
@@ -624,6 +784,8 @@
           adults: el.adults ? unitText(el.adults) : "",
           children: el.children ? unitText(el.children) : "",
           room: el.room && el.room.value ? fmt(F.waQuickRoomType, { room: opt(el.room) }) : "",
+          who: el.rName && el.rName.value.trim() ? fmt(F.waName, { name: el.rName.value.trim() }) : "",
+          notes: el.rNotes && el.rNotes.value.trim() ? fmt(F.waNotes, { notes: el.rNotes.value.trim() }) : "",
         });
       }
       card.classList.add("is-sending");

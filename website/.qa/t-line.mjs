@@ -1,0 +1,23 @@
+export default async ({ open, eval: ev, shot, wait }) => {
+  const out = {};
+  await open("http://localhost:8080/restaurant/", 1440, 900);
+  out.homeLs = await ev(`return !!document.querySelector("[data-ls]")`);
+  await ev(`document.querySelector("#ementa").scrollIntoView();window.scrollBy(0,520);return 1`);
+  await wait(700);
+  await ev(`const a=document.querySelectorAll("[data-cat-link]")[3].getBoundingClientRect();document.querySelector("[data-menu-nav]").dispatchEvent(new PointerEvent("pointermove",{clientX:a.left+5,clientY:a.top+a.height/2,pointerType:"mouse",bubbles:true}));return 1`);
+  await wait(600);
+  out.p = await ev(`return [...document.querySelectorAll("[data-cat-link]")].map(a=>a.style.getPropertyValue("--p"))`);
+  await shot("C:/Users/tiago/Desktop/Lauhata/website/.qa/m3/line-rest.png");
+  await ev(`document.querySelector('[data-cat-link="main"]').click();return 1`);
+  await wait(1400);
+  out.cur = await ev(`return [...document.querySelectorAll("[data-cat-link]")].filter(a=>a.getAttribute("aria-current")).map(a=>a.dataset.catLink)`);
+  await ev(`document.querySelector("[data-menu-nav]").dispatchEvent(new PointerEvent("pointerleave"));return 1`);
+  await wait(800);
+  out.end = await ev(`return [...document.querySelectorAll("[data-cat-link]")].map(a=>a.style.getPropertyValue("--p")).join(",")`);
+  await shot("C:/Users/tiago/Desktop/Lauhata/website/.qa/m3/line-rest2.png");
+  await open("http://localhost:8080/", 1440, 900);
+  out.homeNoLs = await ev(`return !document.querySelector(".ls")`);
+  await open("http://localhost:8080/restaurant/", 820, 1180);
+  out.at820 = await ev(`return {nav:getComputedStyle(document.querySelector(".menu-nav")).display,filter:getComputedStyle(document.querySelector(".menu-filter")).display}`);
+  return out;
+};
