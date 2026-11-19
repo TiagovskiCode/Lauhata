@@ -413,7 +413,7 @@ ${header(t, o.page, o.alt)}
 <main id="main" tabindex="-1">
 ${o.body}
 </main>
-${footer(t, { home: o.page === "home" })}
+${footer(t, { home: o.page === "home" || o.body.includes("scene final-cta") })}
 ${cartUi(t)}
 <div class="mobile-bar" data-mobile-bar>
   <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>

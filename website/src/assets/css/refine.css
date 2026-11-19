@@ -659,3 +659,28 @@ main:focus { outline: none; }
 .final-cta { overflow: hidden; }
 .final-cta.has-panel { padding-top: var(--curve); }
 @media (prefers-reduced-motion: reduce) { .pano-frame img { transform: none !important; } }
+
+/* =====================================================================================================================
+   Design-system rules (audit of 19 Nov 2026). One rule per concern, so pages inherit instead of being fixed one by one.
+   Buttons: primary = sunset fill (one per screen), secondary = outline, tertiary = text link. Cards share one radius and one lift.
+   Inner pages use the same vertical scale as the home page. States: hover lifts or darkens, :active presses, focus is a 2px ring.
+   ===================================================================================================================== */
+main > .section:not(.menu):not(.booking) { padding-block: var(--sec-y); }
+main > .section.booking { padding-block: var(--sec-y); }
+.btn { transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.2s var(--ease), box-shadow 0.25s var(--ease); }
+.btn:not(:disabled):active { transform: translateY(1px); }
+.btn-terra:hover { background: #f08a46; border-color: #f08a46; box-shadow: 0 10px 24px -14px rgba(232, 120, 42, 0.8); }
+.btn-outline:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.text-link { text-decoration-thickness: 1px; text-underline-offset: 0.25em; transition: text-decoration-thickness 0.2s var(--ease), color 0.2s; }
+.text-link:hover { text-decoration-thickness: 2px; }
+.form-card, .room-card, .rp-card, .wl-card { border-radius: var(--radius-card); }
+/* Events: the occasions block no longer leaves a band of empty space */
+.ev-how { padding-block: var(--sec-y); }
+.ev-types { margin-bottom: 0; }
+@media (prefers-reduced-motion: reduce) { .btn, .text-link { transition: none; } .btn:not(:disabled):active { transform: none; } }
+
+/* Form fields: the focus ring is the same 2px ink line as everywhere else (the old orange border was about 2.6:1 on cream, under the 3:1 non-text minimum) */
+.field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible, .pk-btn:focus-visible, .menu-search input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.is-dark .field input:focus-visible, .is-dark .pk-btn:focus-visible { outline-color: var(--on-night); }
+.pk-btn:focus-visible { outline: 2px solid var(--ink) !important; outline-offset: 2px !important; }
+.is-dark .pk-btn:focus-visible, .booking-card.is-hero .pk-btn:focus-visible { outline-color: var(--on-night) !important; }

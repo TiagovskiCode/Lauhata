@@ -506,7 +506,7 @@ function breakfastSection(t, list) {
       <p class="bkf-note"${rv(110)}>${esc(B.note)}</p>
       <h3 class="bkf-list-h"${rv(120)}>${esc(B.list)}</h3>
       <ul class="dish-lines bkf-list"${rv(140)}>${list.map((d) => dishLine(t, d)).join("")}</ul>
-      <div class="btn-row"${rv(160)}><a class="btn btn-dark" href="${href("restaurant", t.lang, "#cat-breakfast")}">${esc(B.cta)}${icon("arrow")}</a></div>
+      <div class="btn-row"${rv(160)}><a class="btn btn-terra" href="${href("restaurant", t.lang, "#cat-breakfast")}">${esc(B.cta)}${icon("arrow")}</a></div>
     </div>
   </div>
 </section>`;
@@ -663,7 +663,7 @@ function reachSection(t) {
             ${row("car", R.fromDili, drive ? esc(drive) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`)}
           </dl>
           <div class="rc-actions">
-            <a class="btn btn-dark" href="${directionsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(R.directions)}</a>
+            <a class="btn btn-outline" href="${directionsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(R.directions)}</a>
             <a class="btn btn-outline" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
           </div>
         </section>
@@ -1232,7 +1232,7 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
     <div>
       <ul class="dsc-advice-list">${D.advice.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
       <p class="dsc-source"><a href="https://timorleste.tl/destinations/municipalities/liquica" target="_blank" rel="noopener">${esc(D.source)}</a></p>
-      <a class="btn btn-dark btn-lg" href="${href("stay", L)}">${esc(D.cta)}${icon("arrow")}</a>
+      <a class="btn btn-terra btn-lg" href="${href("stay", L)}">${esc(D.cta)}${icon("arrow")}</a>
     </div>
   </div>
 </section>`;
@@ -1548,7 +1548,7 @@ ${pageHero(t, {
       <p>${esc(S.askBody)}</p>
       <p class="pay-note">${esc(t.stay.payNote)}</p>
       <div class="sr-actions">
-        <a class="btn btn-dark btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.roomBook)}</a>
+        <a class="btn btn-terra btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(S.roomBook)}</a>
         <a class="text-link" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${esc(t.common.whatsapp)}</a>
       </div>
       ${responseLine(t)}
@@ -1600,7 +1600,7 @@ ${pageHero(t, {
       ${infoGrid(t)}
       <div class="get-there"${rv(180)}><h3>${esc(t.land.getThere.title)} ${esc(t.land.getThere.titleAccent)}</h3><p>${esc(t.land.getThere.body)}</p></div>
       <div class="contact-actions"${rv(200)}>
-        <a class="btn btn-dark btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
+        <a class="btn btn-terra btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
         <a class="text-link" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${esc(t.home.quick.heroTable)}</a>
         <a class="text-link" href="${href("stay", L, "#reservar")}" data-book-open="room">${esc(t.footer.bookRoom)}</a>
         <a class="text-link" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.footer.directions)}</a>
@@ -1635,7 +1635,7 @@ ${pageHero(t, {
   </div>
 </section>
 
-${finalSection(t, "aerialDay4")}`;
+`;
   return {
     page: "contact",
     title: t.meta.contact.title,
@@ -1729,7 +1729,7 @@ export function notFound(t) {
     <h1 class="title">${esc(t.notFound.title)}</h1>
     <p class="lead">${esc(t.notFound.body)}</p>
     <div class="btn-row center">
-      <a class="btn btn-dark btn-lg" href="${href("home", L)}">${esc(t.notFound.home)}${icon("arrow")}</a>
+      <a class="btn btn-terra btn-lg" href="${href("home", L)}">${esc(t.notFound.home)}${icon("arrow")}</a>
       <a class="btn btn-outline btn-lg" href="${href("restaurant", L)}">${icon("cutlery")}${esc(t.notFound.restaurant)}</a>
       <a class="btn btn-outline btn-lg" href="${href("stay", L)}">${icon("bed")}${esc(t.notFound.stay)}</a>
     </div>

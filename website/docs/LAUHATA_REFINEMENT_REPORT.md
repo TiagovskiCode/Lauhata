@@ -335,3 +335,110 @@ Agora vi as cinco referências (Skyview, Ocean Haven, Tropical Nature Homestay, 
 - Não corri o Taste gate nesta ronda, nem repeti os fluxos de pedido de quarto, reserva de mesa e encomenda (não foram alterados; `check-site` e os testes continuam a passar).
 - Typecheck e ESLint: o projeto não os tem.
 - As fotografias de comida, quartos e bar continuam ilustrativas (marcadas no rodapé).
+
+---
+
+## Refinamento cinematográfico: espaço negativo e ritmo (19 de novembro, ronda 8)
+
+### Skills realmente utilizadas
+Só estão instaladas duas relevantes e usei ambas, lendo os ficheiros: **Impeccable** (`reference/layout.md`: ritmo = contraste entre intervalos curtos e generosos, escala de espaçamento documentada, estrutura que corresponde ao conteúdo) e **Taste Skill** (`references/sections.md` e `moments.md`: composições de «place» como uma fotografia em sangria sem nada por cima, uma só vez; um `split` por página; um parallax numa fotografia; revelações de 0,6 a 1,3 s com ease que assenta). Apliquei os princípios à mão; não usei os módulos de efeitos do kit. Não há outras «TasteSkills» instaladas.
+
+### Sistema de espaçamento (variáveis em `refine.css`)
+| Variável | Valor | Uso |
+|---|---|---|
+| `--sec-y` | 80–140 px | secções editoriais |
+| `--sec-y-lg` | 96–160 px | faixa imersiva |
+| `--head-gap` | 32–48 px | título → conteúdo, e entre grupos de cartões |
+| `--rel-gap` | 16–24 px | elementos relacionados |
+| `--curve` | 28–44 px | **uma só curva** nos topos das secções |
+
+### Composição da página inicial (cada secção com identidade própria)
+1. **Hero** (vídeo de drone real, 560–920 px de altura, sem zoom artificial; retirei o zoom que o scroll aplicava).
+2. **Welcome to Lauhata**: texto à esquerda e quatro cartões retangulares em linha, com bastante ar à volta.
+3. **Panorama**: uma fotografia do pôr do sol em sangria total, sem texto, com parallax discreto.
+4. **A Taste of Lauhata**: texto e uma fotografia que sangra até à margem direita do ecrã, com uma pequena sobreposta.
+5. **Find Your Perfect Stay**: os dois quartos reais.
+6. **Experiences & Special Moments**: faixa escura sobre uma fotografia aérea real em largura total, com um só texto.
+7. **Discover the Surroundings**: composição de losangos.
+8. Avaliações (as duas caixas verificadas) e painel de reserva final.
+
+As transições claro/escuro deixaram de ser cortes retos: cada secção sobe sobre a anterior com a mesma curva.
+
+### Animação (GSAP, só na página inicial e só em ecrãs largos)
+| Movimento | Onde | Intenção |
+|---|---|---|
+| Entrada do título do hero | já existente | abertura |
+| Cartões a subir em sequência, uma vez | Welcome | apresentar as quatro experiências |
+| Fotografias dos quartos «a revelar» com um corte, uma vez | Quartos | dar peso ao alojamento |
+| Título da faixa escura a subir, uma vez | Experiências | uma única frase |
+| Fotografia do restaurante a subir, uma vez | Restaurante | entrada da imagem sobreposta |
+| Parallax discreto (±4 %) | Panorama | profundidade |
+Em telemóvel e tablet pequeno (< 861 px) e com movimento reduzido **não há estados escondidos**: tudo aparece logo. O código de recuperação também restaura os novos elementos se algo falhar.
+
+### Validação
+| Verificação | Resultado |
+|---|---|
+| `npm test` | **20/20** |
+| Overflow horizontal e colisão do cabeçalho (início EN/PT, stay, restaurante) | **nenhum** em 1920, 1680, 1440, 1280, 1024, 768, 390 e 375; a sangria da fotografia do restaurante termina exatamente na margem do ecrã. **Encontrei e corrigi um overflow a 390/375 px** causado pela altura mínima do panorama |
+| Capturas | 1440×900 e 1920×1200 (vi 1440 completo e recortes), 375 (vi welcome, panorama e restaurante). **Não vi** 1920 em pormenor, 1680, 1280, 1024 nem 768 desta versão |
+| Lighthouse (servidor com gzip), início | **Desktop 96 / 100 / 100 / 100** (LCP 0,8 s). **Móvel 88–91** nas últimas medições (80–83 antes de limitar as animações a ecrãs largos e de ajustar o tamanho das miniaturas); acessibilidade 100, CLS 0 |
+| Animações | observadas em capturas reais (os cartões, os quartos e o título chegam ao estado final). **Não consegui medir o movimento nem os FPS** (o painel do navegador está oculto), nem testar `prefers-reduced-motion` ativo |
+
+### Problemas e limitações
+- No telemóvel o GSAP e o ScrollTrigger carregam e custam ≈ 0,9 s de thread principal sem fazer nada nesses ecrãs; carregá-los só em ecrãs largos exigiria carregamento dinâmico.
+- Ainda não corri o Taste gate sobre esta versão. Sei que ele vai apontar as animações de entrada e as sobreposições, que nesta ronda pedi eu a mim mesmo por indicação do dono.
+- O hero continua a depender de uma filmagem de drone existente; não verifiquei se é golden hour.
+- Typecheck e ESLint: o projeto não os tem. Nada foi commitado.
+
+---
+
+## Auditoria UI/UX completa e segunda auditoria (19 de novembro, ronda 9)
+
+### 1. Skills: descoberta e uso
+Descobri as skills realmente instaladas e carreguei as que se aplicam; li as instruções de cada uma. **Não** há skills de testes de usabilidade com pessoas, de CRO com dados nem de investigação com utilizadores reais (`design:user-research` e `research-synthesis` precisam de utilizadores/dados que não existem): não as simulei.
+
+| Skill | Especialidade | Uso real nesta ronda | Parte melhorada |
+|---|---|---|---|
+| `design:design-critique` | crítica UX e hierarquia | primeira impressão, usabilidade e consistência por página; deu a lista de prioridades | repetição de chamadas à ação, botão principal inconsistente |
+| `design:accessibility-review` | WCAG | teclado real (Tab), foco, nomes, contraste, alvos de toque | anéis de foco dos formulários |
+| `design:design-system` | design system | auditoria de botões, cartões, espaçamento, estados | regras reutilizáveis em \`refine.css\` |
+| `design:ux-copy` | texto de interface | revisão dos rótulos dos CTAs e das mensagens de WhatsApp | verbos e honestidade («pedido», nunca «reserva confirmada») |
+| \`anthropic-skills:web-performance-audit\` | desempenho, a11y, SEO | CLS, \`aria-label\`, Esc, meta e Open Graph | Lighthouse em 11 páginas |
+| \`taste-skill\` e \`impeccable\` | direção de arte, layout, piso de qualidade | critérios de composição e ritmo (rondas anteriores) e gate/perf | composição da página inicial |
+| Lighthouse 13.6 e \`shoot.mjs\` | teste em navegador e QA visual | medições e capturas reais | verificação |
+
+### 2. Auditoria inicial: problemas reais, por impacto
+| # | Problema (evidência) | Impacto |
+|---|---|---|
+| 1 | **Campos de formulário sem anel de foco visível** (a borda laranja dava ≈ 2,6:1 sobre creme, abaixo de 3:1; os seletores de data/hora ficavam com \`outline: none\`) | alto: WCAG 2.4.7 / 1.4.11 em todos os formulários |
+| 2 | **Dois convites de reserva seguidos** nas páginas Restaurante e Contacto («Your Perfect Getaway Awaits» e logo a seguir o do rodapé), com os mesmos botões; a Contacto repetia WhatsApp/Reservar/Quartos três vezes | alto: ruído em páginas cujo objetivo é uma só ação |
+| 3 | **Botão principal com cor diferente** conforme a página (preto em «Request this room», «WhatsApp» no Contacto, «Stay at Lauhata»; laranja noutras) | médio: a hierarquia «um principal por ecrã» não era legível |
+| 4 | Menu móvel listava **«Gallery» duas vezes** | médio (já corrigido na ronda 6) |
+| 5 | Faixa vazia na página Experiences, por baixo das ocasiões | baixo |
+| 6 | Espaçamento das páginas interiores diferente do da página inicial | baixo |
+| 7 | Estados hover/ativo dos botões e ligações pouco uniformes | baixo |
+
+Não encontrei problemas de contraste de texto, de rótulos ou de semântica (Lighthouse e auditoria própria limpos), nem erros de consola.
+
+### 3. Implementado
+- **Foco dos formulários:** anel de 2 px da cor da tinta em campos, áreas de texto, seletores de data/hora e pesquisa do menu; claro em fundos escuros.
+- **Um só convite de reserva por página:** o rodapé deixa de repetir o convite quando a página já termina com um (início, restaurante); a página **Contacto** deixa de ter o bloco de fecho (é o próprio destino) e fica só com o convite do rodapé.
+- **Regra de botões:** principal = laranja (um por ecrã), secundário = contorno, terciário = ligação de texto. «Request this room», «Stay at Lauhata», «WhatsApp» (Contacto), o botão do pequeno-almoço e o da página 404 passaram a laranja; «Get directions» passou a contorno. O botão preto «Add» do menu fica (interface funcional).
+- **Design system em regras reutilizáveis:** espaçamento vertical único para todas as páginas, transições e estado «premido» nos botões, hover dos botões laranja e de contorno, sublinhado das ligações, raio único nos cartões, bloco de ocasiões dos eventos sem faixa vazia. Tudo com \`prefers-reduced-motion\`.
+
+### 4. Segunda auditoria (executada)
+| Verificação | Resultado |
+|---|---|
+| Testes automáticos | **20/20**; 24 páginas e 2277 ligações sem problemas |
+| Overflow horizontal e colisão do cabeçalho | **nenhum** em 11 páginas (incluindo PT) × 8 larguras (1920, 1680, 1440, 1280, 1024, 768, 390, 375) |
+| Lighthouse móvel (servidor com gzip) | Acessibilidade, boas práticas e SEO **100** em 11 páginas. Desempenho: stay 96, quarto 96, eventos 98, contacto 94, restaurante 91, descobrir 89, sobre 87, galeria 83, privacidade 99, PT início 82, PT alojamento 97 (início: 88–91 na ronda anterior). CLS 0 em todas |
+| Teclado | Tab percorre o Contacto; contorno de 2 px nas ligações, e agora nos campos e seletores (confirmado por \`getComputedStyle\` depois de uma tecla Tab) |
+| Reservar mesa | validação (3 erros) e mensagem correta para o WhatsApp, sem dizer que a mesa está confirmada |
+| Pedir quarto | validação (3 erros), passo de revisão e mensagem correta («I would like to enquire…», pagamento no Lauhata) |
+| Navegação e ligações | cinco páginas na barra, menu móvel de cinco, \`check-site\` sem problemas |
+| Capturas | contacto e eventos (1440), quarto (375) e restaurante (1280) capturados; **vi** contacto e eventos; **não vi** quarto 375 nem restaurante 1280 desta passagem |
+
+### 5. Comparação com a auditoria inicial
+- **Melhorou:** os 7 pontos acima (1–3 e 5 verificados; 4 e 6–7 por regra de CSS, não por medição individual).
+- **Continua pendente:** desempenho móvel da galeria (83) e do PT início (82); página Descobrir: o mapa incorporado aparece cinzento na minha captura (não consegui confirmar se é só carregamento lento); fotografias de comida, quartos e bar continuam ilustrativas; informações do dono em falta (nº de quartos, capacidades, preços, fotografias reais).
+- **Limitações:** não fiz **nova pesquisa na web** nesta ronda (a de referências já feita limita-se ao Aman e às cinco imagens recebidas); não testei com leitor de ecrã nem em telemóvel real; não corri o Taste gate sobre esta versão; typecheck e ESLint não existem no projeto; as animações só foram observadas em capturas reais (o painel está oculto, sem medição de FPS).
