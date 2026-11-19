@@ -40,7 +40,7 @@
   let formInView = false;
   const bookingSection = $("#reservar");
   if (bookingSection && "IntersectionObserver" in window) {
-    new IntersectionObserver(([e]) => { formInView = e.isIntersecting; onScroll(); }).observe(bookingSection);
+    new IntersectionObserver(([e]) => { formInView = e.isIntersecting; onScroll(); }, { rootMargin: "-20% 0px -20% 0px" }).observe(bookingSection);
   }
   // Header background. Transparent only while the page sits at the very top of a hero photograph; solid as soon as the page
   // moves (so no content ever scrolls under a see-through header, and white text never meets the cream sections). The
@@ -59,6 +59,7 @@
     if (!("IntersectionObserver" in window)) atTop = !!heroEl && window.scrollY < 40;
     header?.classList.toggle("is-solid", !heroEl || !atTop);
   }
+  let lastShown = null, lastBar = null;
   function onScroll() {
     const y = window.scrollY;
     const threshold = window.innerHeight * 0.35;
@@ -69,7 +70,7 @@
       anchorY = y;
     } else if (hidden ? y > anchorY : y < anchorY) {
       anchorY = y; // still moving the same way: keep the turning point up to date
-    } else if (Math.abs(y - anchorY) > 12) {
+    } else if (Math.abs(y - anchorY) > (hidden ? 3 : 14)) {
       // Only phones hide the header (they have the bottom bar). On a computer it stays, so "Reservar" is always in reach.
       header?.classList.toggle("is-hidden", y > anchorY && window.innerWidth <= 860);
       anchorY = y;
@@ -78,8 +79,9 @@
     mobileBar?.classList.toggle("is-visible", barOn);
     // Read by CSS: the sticky menu bar moves up when the header hides; the cart button clears the mobile bar.
     const root = document.documentElement;
-    root.style.setProperty("--header-shown", header?.classList.contains("is-hidden") ? "0" : "1");
-    root.classList.toggle("has-bar", barOn);
+    const shown = header?.classList.contains("is-hidden") ? "0" : "1";
+    if (shown !== lastShown) { root.style.setProperty("--header-shown", shown); lastShown = shown; }
+    if (barOn !== lastBar) { root.classList.toggle("has-bar", barOn); lastBar = barOn; }
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -135,6 +137,22 @@
     );
     revealEls.forEach((el) => io.observe(el));
   }
+
+  /* ---------- Language menu (globe button + list): a disclosure, closed by Escape, a click outside or leaving it ---------- */
+  $$("[data-lang-dd]").forEach((dd) => {
+    const btn = $(".lang-dd-btn", dd);
+    const menu = $(".lang-dd-menu", dd);
+    const set = (open, focusBtn = false) => {
+      menu.hidden = !open;
+      btn.setAttribute("aria-expanded", String(open));
+      if (!open && focusBtn) btn.focus();
+    };
+    btn.addEventListener("click", () => set(menu.hidden));
+    btn.addEventListener("keydown", (e) => { if (e.key === "ArrowDown") { e.preventDefault(); set(true); $(".lang-dd-item[href]", menu)?.focus(); } });
+    dd.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menu.hidden) { e.stopPropagation(); set(false, true); } });
+    dd.addEventListener("focusout", (e) => { if (!dd.contains(e.relatedTarget)) set(false); });
+    document.addEventListener("pointerdown", (e) => { if (!dd.contains(e.target)) set(false); });
+  });
 
   /* ---------- Tabs (tablist pattern: click + arrow keys) ---------- */
   function tabs(list, attr, onSelect) {
@@ -294,7 +312,7 @@
     const el = form.elements;
     const errors = {};
     const val = (n) => (el[n] ? el[n].value.trim() : "");
-    if (!val("name")) errors.name = F.errors.name;
+    if (el.name && !val("name")) errors.name = F.errors.name;
     // Optional: WhatsApp already shows Lauhata the sender's number. If filled, it must look valid.
     if (val("contact") && !contactOk(val("contact"))) errors.contact = F.errors.contact;
     if (form.dataset.booking === "table") {
@@ -318,7 +336,8 @@
     } else if (form.dataset.booking === "event") {
       if (val("email") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val("email"))) errors.email = F.errors.email;
       if (val("phone") && val("phone").replace(/[^\d]/g, "").length < 7) errors.phone = F.errors.phone;
-      if (val("altDate") && val("altDate") < today) errors.altDate = F.errors.date;
+      if (val("altDate") && (val("altDate") < today || val("altDate") === val("date"))) errors.altDate = F.errors.date;
+      if (el.time && !val("time")) errors.time = F.errors.time;
       if (!val("date") || val("date") < today) errors.date = F.errors.date;
       const p = Number(val("people"));
       if (!Number.isInteger(p) || p < 1 || p > 300) errors.people = F.errors.people;
@@ -373,6 +392,11 @@
     if (form.dataset.booking === "contact") {
       const s = el.topic;
       return fmt(form.dataset.wa, { topic: s ? s.options[s.selectedIndex].text : "", name: v("name"), email: v("email") ? fmt(F.waEmail, { email: v("email") }) : "", phone: v("phone") ? fmt(F.waPhone, { phone: v("phone") }) : "", message: v("message") });
+    }
+    if (form.dataset.booking === "event" && form.hasAttribute("data-short")) {
+      const alt = v("altDate") ? `\n${form.dataset.altLabel}: ${fmtDate(v("altDate"))}` : "";
+      const kindSel = el.kind;
+      return fmt(form.dataset.wa, { kind: kindSel.options[kindSel.selectedIndex].text, date: fmtDate(v("date")), altDate: alt, time: v("time"), guests: v("people") });
     }
     if (form.dataset.booking === "event" && form.dataset.wa) {
       const line = (label, val) => (val ? `\n${label}: ${val}` : "");

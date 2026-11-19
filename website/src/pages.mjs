@@ -15,7 +15,6 @@ const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}
 // label above every title; the `eyebrow` argument is kept for callers but no longer printed.
 function heading({ eyebrow, title, accent = "", lead = "", id = "", center = false, tag = "h2", cls = "" }) {
   return `<header class="heading${center ? " is-center" : ""} ${cls}"${rv()}>
-    ${eyebrow ? `<p class="eyebrow-rule">${esc(eyebrow)}</p>` : ""}
     <${tag}${id ? ` id="${id}"` : ""} class="title">${esc(title)}${accent ? `<br><span class="title-2">${esc(accent)}</span>` : ""}</${tag}>
     ${lead ? `<p class="lead">${esc(lead)}</p>` : ""}
   </header>`;
@@ -57,7 +56,7 @@ const AMEN_ICON = { Television: "tv" };
 function suiteAmenityItems(t, r) {
   const S = t.stay;
   const L = t.lang;
-  const beds = (r.bedPlan || []).map((b) => (b === "king" ? ["bed-king", S.amenKing] : b === "single" ? ["bed-single", S.amenSingle] : null)).filter(Boolean);
+  const beds = (r.bedPlan || []).map((b) => (b === "queen" ? ["bed-queen", S.amenQueen] : b === "single" ? ["bed-single", S.amenSingle] : null)).filter(Boolean);
   const more = (r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]);
   return [...beds, ...more];
 }
@@ -76,15 +75,15 @@ function suiteAmenities(t, r) {
 function bedPlan(t, r) {
   const S = t.stay;
   const beds = r.bedPlan || [];
-  const dims = { king: [193, 203], single: [90, 190] };
+  const dims = { queen: [193, 203], single: [90, 190] };
   let x = 0;
   const parts = beds.map((b) => {
     const [w, h] = dims[b];
     const g = `<g transform="translate(${x} ${203 - h})">
       <rect class="bp-bed" x="0" y="0" width="${w}" height="${h}" rx="4"/>
-      ${b === "king" ? `<rect class="bp-pillow" x="14" y="12" width="76" height="34" rx="8"/><rect class="bp-pillow" x="103" y="12" width="76" height="34" rx="8"/>` : `<rect class="bp-pillow" x="12" y="12" width="66" height="30" rx="8"/>`}
+      ${b === "queen" ? `<rect class="bp-pillow" x="14" y="12" width="76" height="34" rx="8"/><rect class="bp-pillow" x="103" y="12" width="76" height="34" rx="8"/>` : `<rect class="bp-pillow" x="12" y="12" width="66" height="30" rx="8"/>`}
       <line class="bp-fold" x1="0" y1="${Math.round(h * 0.62)}" x2="${w}" y2="${Math.round(h * 0.62)}"/>
-      <text class="bp-label" x="${w / 2}" y="${h + 26}" text-anchor="middle">${esc(b === "king" ? S.king : S.single)}</text>    </g>`;
+      <text class="bp-label" x="${w / 2}" y="${h + 26}" text-anchor="middle">${esc(b === "queen" ? S.king : S.single)}</text>    </g>`;
     x += w + 40;
     return g;
   });
@@ -105,6 +104,20 @@ function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" 
       .join("")}</div>
     ${n > 1 ? `<div class="cr-controls"><button class="cr-btn" type="button" data-cr-prev aria-label="${esc(C.prev)}">${icon("left")}</button><p class="cr-count" data-cr-count aria-live="polite">1 / ${n}</p><button class="cr-btn" type="button" data-cr-next aria-label="${esc(C.next)}">${icon("right")}</button></div>` : ""}
   </div>`;
+}
+
+// Two equal cards, one per room type: the same photograph ratio, the same blocks in the same order, one action each.
+function roomPair(t) {
+  const L = t.lang;
+  return `<div class="rp-grid">${rooms.map((r) => `<article class="rp-card">
+      <a class="rp-media" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "4/3" })}</a>
+      <div class="rp-body">
+        <h3 class="rp-name"><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
+        <p class="rp-sum">${esc(r.summary[L])}</p>
+        <ul class="rp-meta">${suiteAmenityItems(t, r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
+        <div class="rp-actions"><a class="btn btn-terra" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}${icon("arrow")}</a></div>
+      </div>
+    </article>`).join("")}</div>`;
 }
 
 // Large alternating rows, one per room type (homepage and stay page).
@@ -230,8 +243,7 @@ function roomForm(t) {
       ${field({ id: "rm-children", name: "children", type: "number", label: f.children, attrs: `min="0" max="10" value="0" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.childOne)}" data-unit-many="${esc(f.childMany)}"` })}
       ${field({ id: "rm-room", name: "room", label: f.roomType, control: `<select data-pick="select">${options}</select>`, full: true })}
       ${field({ id: "rm-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
-      ${field({ id: "rm-email", name: "email", type: "email", label: f.email, optional: f.optional, attrs: 'autocomplete="email" maxlength="120"' })}
-      ${field({ id: "rm-phone", name: "phone", type: "tel", label: f.phone, hint: f.phoneHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"' })}
+      ${field({ id: "rm-phone", name: "phone", type: "tel", label: f.phone, hint: f.phoneHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"', full: true })}
       ${field({ id: "rm-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: `maxlength="400" placeholder="${esc(f.notesPlaceholder)}"`, full: true })}
     </div>
     ${formFooter(t, f.submitRoom)}
@@ -339,7 +351,8 @@ function menuSection(t) {
   const drinksCat = categories.find((c) => c.id === "drinks");
   const sampleDrinksOn = site.showSamples && drinksCat && !items.some((d) => d.category === "drinks");
   const shown = categories.filter((c) => items.some((d) => d.category === c.id) || (sampleDrinksOn && c === drinksCat));
-  const nav = shown.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}">${esc(c.name[L])}</a></li>`).join("");
+  const count = (c) => items.filter((d) => d.category === c.id).length;
+  const nav = shown.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}"><span>${esc(c.name[L])}</span>${count(c) ? `<small>${count(c)}</small>` : ""}</a></li>`).join("");
   const sections = shown
     .map((c) => (sampleDrinksOn && c === drinksCat ? sampleDrinksSection(t, c) : `<section class="menu-cat" id="cat-${c.id}" data-cat="${c.id}" aria-labelledby="cat-${c.id}-title">
       <header class="menu-cat-head"><h3 id="cat-${c.id}-title">${esc(c.name[L])}</h3>${c.note ? `<p>${esc(c.note[L])}</p>` : ""}</header>
@@ -358,19 +371,24 @@ function menuSection(t) {
     ${heading({ eyebrow: t.home.dishes.eyebrow, title: t.restaurant.menuTitle, lead: t.restaurant.menuLead, id: "menu-title", center: true })}
     <p class="menu-note"${rv(60)}>${esc(menuNote[L])}</p>
     <p class="dine-in"${rv(80)}>${icon("cutlery")}<span>${esc(O.dineIn)}</span></p>
-    <div class="menu-search"${rv(100)}>
-      <label for="menu-search"><span class="sr-only">${esc(O.searchLabel)}</span>${icon("search")}</label>
-      <input id="menu-search" type="search" placeholder="${esc(O.searchPlaceholder)}" autocomplete="off" enterkeyhint="search" data-menu-search>
-      <button class="icon-btn" type="button" hidden data-menu-clear aria-label="${esc(O.clearSearch)}">${icon("close")}</button>
-    </div>
   </div>
-  <nav class="menu-nav" aria-label="${esc(O.categories)}" data-menu-nav>
-    <div class="wrap"><ul>${nav}</ul></div>
-  </nav>
-  <div class="wrap">
-    <p class="sr-only" role="status" aria-live="polite" data-menu-status></p>
-    ${sections}
-    <p class="menu-empty" hidden data-menu-empty></p>
+  <div class="wrap menu-layout">
+    <aside class="menu-side">
+      <div class="menu-search"${rv(100)}>
+        <label for="menu-search"><span class="sr-only">${esc(O.searchLabel)}</span>${icon("search")}</label>
+        <input id="menu-search" type="search" placeholder="${esc(O.searchPlaceholder)}" autocomplete="off" enterkeyhint="search" data-menu-search>
+        <button class="icon-btn" type="button" hidden data-menu-clear aria-label="${esc(O.clearSearch)}">${icon("close")}</button>
+      </div>
+      <nav class="menu-nav" aria-label="${esc(O.categories)}" data-menu-nav>
+        <p class="menu-nav-title" aria-hidden="true">${esc(O.categories)}</p>
+        <ul>${nav}</ul>
+      </nav>
+    </aside>
+    <div class="menu-body">
+      <p class="sr-only" role="status" aria-live="polite" data-menu-status></p>
+      ${sections}
+      <p class="menu-empty" hidden data-menu-empty></p>
+    </div>
   </div>
 </section>`;
 }
@@ -731,9 +749,27 @@ function gallerySection(t) {
 
 // The last invitation before the footer: the real aerial view of the coast, one line and the two separate actions
 // (a room request and a table request), so it is clear which one each button starts.
-function finalSection(t, key = "aerialCoast") {
+function finalSection(t, key = "aerialCoast", { panel = false } = {}) {
   const F = t.land.final;
   const L = t.lang;
+  const RS = t.land.resort;
+  if (panel) {
+    return `<section class="scene final-cta has-panel" aria-labelledby="final-title">
+  <div class="scene-media">${figure(t, key, { sizes: "100vw", decorative: true })}</div>
+  <div class="wrap scene-text fp-grid">
+    <div class="fp-copy">
+      <h2 id="final-title" class="scene-line final-line">${esc(F.line)}</h2>
+      <p class="final-lead">${esc(F.lead)}</p>
+      <a class="text-link on-dark" href="${href("contact", L)}">${esc(RS.ctaContact)}${icon("arrow")}</a>
+    </div>
+    <div class="fp-panel">
+      <a class="fp-row is-primary" href="${href("restaurant", L, "#reservar")}"><span class="fp-ic">${icon("cutlery")}</span><span class="fp-tx"><strong>${esc(RS.panelTable[0])}</strong><small>${esc(RS.panelTable[1])}</small></span>${icon("arrow")}</a>
+      <a class="fp-row" href="${href("stay", L, "#reservar")}"><span class="fp-ic">${icon("bed")}</span><span class="fp-tx"><strong>${esc(RS.panelRoom[0])}</strong><small>${esc(RS.panelRoom[1])}</small></span>${icon("arrow")}</a>
+      <p class="fp-note">${esc(RS.panelNote)}</p>
+    </div>
+  </div>
+</section>`;
+  }
   return `<section class="scene final-cta" aria-labelledby="final-title">
   <div class="scene-media">${figure(t, key, { sizes: "100vw", decorative: true })}</div>
   <div class="wrap scene-text">
@@ -741,8 +777,9 @@ function finalSection(t, key = "aerialCoast") {
     <h2 id="final-title" class="scene-line final-line" data-split>${esc(F.line)}</h2>
     <p class="final-lead" data-fade>${esc(F.lead)}</p>
     <div class="btn-row" data-fade>
-      <a class="btn btn-cream btn-lg" href="${href("stay", L, "#reservar")}">${esc(F.stay)}${icon("arrow")}</a>
+      <a class="btn btn-terra btn-lg" href="${href("stay", L, "#reservar")}">${esc(F.stay)}${icon("arrow")}</a>
       <a class="btn btn-ghost-light btn-lg" href="${href("restaurant", L, "#reservar")}">${esc(F.eat)}</a>
+      <a class="text-link on-dark" href="${href("contact", L)}">${esc(t.land.resort.ctaContact)}${icon("arrow")}</a>
     </div>
   </div>
 </section>`;
@@ -887,17 +924,14 @@ function reviewsSection(t) {
           <a href="${esc(P[r.platform].url)}" target="_blank" rel="noopener">${esc(R.readFull)}${icon("arrow-up-right")}</a>
         </div>
       </li>`;
-  return `<section class="section reviews-ed is-dark" id="opinioes" aria-labelledby="rv-title">
+  return `<section class="section reviews-ed" id="opinioes" aria-labelledby="rv-title">
   <div class="wrap">
     <header class="rv-head">
       <div class="rv-head-text">
-        <p class="eyebrow-rule">${esc(RS.reviewsEyebrow)}</p>
         <h2 id="rv-title" class="rv-title" data-split>${esc(R.title)}</h2>
       </div>
       ${scores ? `<div class="rv-scores-wrap"><div class="rv-scores">${scores}</div>${checkedDates.length ? `<p class="rv-checked">${esc(fmt(R.checked, { date: checkedDates.map(longDate).join(", ") }))}</p>` : ""}</div>` : `<div class="rv-badge">${tripadvisorBadge(t, "is-large")}</div>`}
     </header>
-    ${ordered.length ? `<ul class="rv-cards">${ordered.map(card).join("")}</ul>
-    <p class="rv-note">${esc(R.summaryNote)}</p>` : ""}
   </div>
   <div class="wrap">
     <div class="rv-own">
@@ -1020,7 +1054,7 @@ ${pageHero(t, { eyebrow: A.eyebrow, title: A.title, lead: t.home.statement, imag
     ["coast", "coastVillage", href("discover", L), A.chapters.discover, ""],
     ["people", "beachFront", href("home", L, "#opinioes"), A.chapters.reviews, ""],
   ].map(([k, img, link, label, cls], i) => `<article class="abc abc-${k}${i % 2 ? " is-flip" : ""}" aria-labelledby="abc-${k}">
-    <div class="abc-media">${figure(t, img, { sizes: "(min-width: 900px) 55vw, 100vw", ratio: i % 2 ? "4/5" : "3/2", credit: true, cls })}</div>
+    <div class="abc-media">${figure(t, img, { sizes: "(min-width: 900px) 55vw, 100vw", ratio: i % 2 ? "4/5" : "3/2", cls })}</div>
     <div class="abc-text">
       <h2 id="abc-${k}" class="abc-title">${esc(A.chapters[k + "Title"])}</h2>
       <p${rv(60)}>${esc(A.chapters[k + "Body"])}</p>
@@ -1043,17 +1077,15 @@ export function events(t) {
   const bc = breadcrumbs(t, [{ name: t.nav.events, path: href("events", L) }]);
   const kinds = E.kinds.map((k) => `<option>${esc(k)}</option>`).join("");
   const body = `
-${pageHero(t, { eyebrow: E.eyebrow, title: E.title, lead: E.lead, image: "sunsetPalms", crumbs: bc.html, ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#pedido">${esc(E.formTitle)}${icon("arrow")}</a></div>` })}
+${pageHero(t, { eyebrow: E.eyebrow, title: E.title, lead: E.lead, image: "sunsetPalms", crumbs: bc.html, ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="#pedido">${esc(t.land.resort.ctaEvent)}${icon("arrow")}</a></div>` })}
 
-<section class="section ev-how" aria-labelledby="ev-how-title">
+<section class="section ev-how" aria-labelledby="ev-types-title">
   <div class="wrap">
     <div class="ev-types">
-      <h2 class="gx-title">${esc(E.typesTitle)}</h2>
+      <h2 id="ev-types-title" class="gx-title">${esc(E.typesTitle)}</h2>
       <p class="ev-types-lead">${esc(E.typesLead)}</p>
       <ul class="ev-type-list">${E.kinds.slice(0, -1).map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
     </div>
-    <h2 id="ev-how-title" class="h-small">${esc(E.howTitle)}</h2>
-    <ol class="ev-steps">${E.steps.map(([h, p], i) => `<li${rv(i * 80)}><span class="ev-n" aria-hidden="true">${i + 1}</span><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ol>
   </div>
 </section>
 
@@ -1089,38 +1121,23 @@ function contactForm(t) {
   </form>`;
 }
 
-// The event enquiry in five steps (event, guests, preferences, idea, contact). Without JavaScript every step shows at
-// once as one long form; with it, one step at a time with a progress line, Back/Continue, and a review of the WhatsApp
-// message before it opens. Only the date, the guest count and the name are required.
+// The event enquiry: one short form, five fields (occasion, preferred date, alternative date, preferred time, guests). Sending
+// checks the fields, prepares the WhatsApp message and opens Lauhata's chat; the planning is done there, with Carlos.
 function eventForm(t) {
   const E = t.land.eventsPage;
-  const f = t.form;
-  const opts = (list) => list.map((o) => `<option>${esc(o)}</option>`).join("");
-  // Each select gets the icon of what it asks (refinement phase: no single generic icon on every field).
-  const sel = (id, name, label, list, ico, extra = {}) => field({ id, name, label, control: `<select data-pick="select" data-icon="${ico}">${opts(list)}</select>`, ...extra });
-  const num = (id, name, label, attrs) => field({ id, name, type: "number", label, attrs: `${attrs} inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` });
-  const step = (i, body) => `<fieldset class="ev-step" data-step="${i}"><legend class="ev-step-title"><span class="ev-step-n">${esc(fmt(E.stepOf, { n: i + 1, total: 5 }))}</span>${esc(E.steps5[i])}</legend><div class="form-grid">${body}</div></fieldset>`;
-  return `<form class="booking-form ev-wizard" data-booking="event" data-steps data-review-step novalidate data-wa="${esc(E.wa)}">
-    <ol class="ev-progress" aria-hidden="true">${E.steps5.map((s, i) => `<li data-progress="${i}"><span>${i + 1}</span>${esc(s)}</li>`).join("")}</ol>
-    ${step(0, `${sel("ev-kind", "kind", E.kind, E.kinds, "star", { full: true })}
-      ${field({ id: "ev-date", name: "date", type: "date", label: f.date, attrs: 'required data-pick="date"' })}
-      ${field({ id: "ev-alt", name: "altDate", type: "date", label: E.altDate, optional: f.optional, attrs: 'data-pick="date"' })}
-      ${sel("ev-flex", "flex", E.flex, E.flexOptions, "calendar")}
-      ${sel("ev-start", "start", E.start, E.startOptions, "clock")}
-      ${sel("ev-duration", "duration", E.duration, E.durationOptions, "clock", { full: true })}`)}
-    ${step(1, `${num("ev-people", "people", E.guests, 'required min="1" max="300" value="10"')}
-      ${num("ev-adults", "adults", E.adults, 'min="0" max="300" value=""')}
-      ${num("ev-children", "children", E.children, 'min="0" max="300" value=""')}`)}
-    ${step(2, `${sel("ev-atmo", "atmosphere", E.atmosphere, E.atmosphereOptions, "sunset")}
-      ${sel("ev-setting", "setting", E.setting, E.settingOptions, "pin")}
-      <fieldset class="field is-full ev-topics"><legend>${esc(E.topics)}</legend><p class="hint">${esc(E.topicsHint)}</p><div class="ev-chips">${E.topicOptions.map((o) => `<label class="ev-chip"><input type="checkbox" name="topics" value="${esc(o)}"><span>${esc(o)}</span></label>`).join("")}</div></fieldset>`)}
-    ${step(3, field({ id: "ev-vision", name: "vision", type: "textarea", label: E.vision, hint: E.visionHint, optional: f.optional, attrs: 'maxlength="1500" rows="7"', full: true }))}
-    ${step(4, `${field({ id: "ev-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
-      ${field({ id: "ev-email", name: "email", type: "email", label: E.email, optional: f.optional, attrs: 'autocomplete="email" maxlength="120"' })}
-      ${field({ id: "ev-phone", name: "phone", type: "tel", label: E.phone, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"' })}
-      ${sel("ev-prefer", "prefer", E.prefer, E.preferOptions, "phone", { full: true })}`)}
-    <div class="ev-nav"><button type="button" class="btn btn-outline" data-step-back>${esc(E.back)}</button><button type="button" class="btn btn-dark" data-step-next>${esc(E.next)}${icon("arrow")}</button></div>
-    ${formFooter(t, E.submit)}
+  const S = E.short;
+  const kinds = E.kinds.map((o) => `<option>${esc(o)}</option>`).join("");
+  return `<form class="booking-form ev-short" data-booking="event" data-short data-wa="${esc(S.wa)}" data-alt-label="${esc(S.altLabel)}" novalidate>
+    <div class="form-grid">
+      ${field({ id: "ev-kind", name: "kind", label: S.occasion, control: `<select data-pick="select" data-icon="star">${kinds}</select>`, full: true })}
+      ${field({ id: "ev-date", name: "date", type: "date", label: S.date, attrs: 'required data-pick="date"' })}
+      ${field({ id: "ev-alt", name: "altDate", type: "date", label: S.altDate, optional: t.form.optional, attrs: 'data-pick="date"' })}
+      ${field({ id: "ev-time", name: "time", label: S.time, control: `<select data-pick="time" required>${timeOptions(t, { placeholder: t.pick.chooseTime })}</select>` })}
+      ${field({ id: "ev-people", name: "people", type: "number", label: S.guests, attrs: `required min="1" max="300" value="10" inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` })}
+    </div>
+    <div class="form-errors" role="alert" hidden data-form-errors>${esc(t.form.errorsTitle)}</div>
+    <div class="form-actions"><button class="btn btn-terra btn-lg" type="submit">${icon("whatsapp")}<span data-submit-label>${esc(S.submit)}</span></button></div>
+    <p class="form-note">${esc(S.note)}</p>
   </form>`;
 }
 
@@ -1140,7 +1157,7 @@ export function gallery(t) {
     .map(([g, title]) => `<button type="button" class="gx-filter" aria-pressed="false" data-filter="${g}">${esc(title)}</button>`)
     .join("")}</div>
     <ul class="gx-mosaic" data-gallery data-mosaic>${all
-      .map((k, i) => { const [c, r] = SPANS[i % SPANS.length]; return `<li class="gx-tile" data-group="${images[k].group}" style="--c:${c};--r:${r}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: c >= 7 ? "(min-width: 900px) 60vw, 100vw" : "(min-width: 900px) 34vw, 100vw" })}</a></li>`; })
+      .map((k, i) => { const [c, r] = SPANS[i % SPANS.length]; return `<li class="gx-tile" data-group="${images[k].group}" style="--c:${c};--r:${r}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: c >= 7 ? "(min-width: 900px) 60vw, 100vw" : "(min-width: 900px) 34vw, 50vw" })}</a></li>`; })
       .join("")}</ul>`;
   const groups = mosaic;
   const body = `
@@ -1248,6 +1265,12 @@ export function home(t) {
       <ul class="st-amen">${suiteAmenityItems(t, r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
       <div class="st-links"><a class="text-link" href="${href("room:" + r.id, L)}">${esc(RS.stayView)}</a><a class="text-link" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(RS.stayAsk)}</a></div>
     </article>`;
+  const wl = (page, hash, key, i) => `<a class="wl-card" href="${href(page, L, hash)}">
+      <span class="wl-media">${figure(t, key, { sizes: "(min-width: 1100px) 16vw, (min-width: 700px) 22vw, (min-width: 480px) 44vw, 38vw", ratio: "4/3", decorative: true })}</span>
+      <span class="wl-text"><strong>${esc(RS.wlCards[i][0])}</strong><span>${esc(RS.wlCards[i][1])}</span><span class="wl-go" aria-hidden="true">${icon("arrow")}</span></span>
+    </a>`;
+  const hoursLine = site.restaurantHours.length ? site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true"> · </i>') : "";
+  const kinds = LD.eventsPage.kinds.slice(0, -1);
   const body = `
 <section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
   <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}
@@ -1257,64 +1280,87 @@ export function home(t) {
     <div class="rs-hero-text">
       <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
       <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
-    </div>
-  </div>
-  <div class="wrap rs-booking" data-fade style="--d:450ms">${bookingCard(t, { prefix: "hxb", hero: true })}</div>
-  <p class="rs-hero-cap"><span class="cap-photo"><span>${esc(images.sunsetPalmsHigh.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></span>${site.heroVideo ? `<span class="cap-film"><span>${esc(RS.filmCaption)}</span><b>${esc(RS.filmReal)}</b></span>` : ""}</p>
-</section>
-
-<section class="section rs-welcome" aria-labelledby="wc-title">
-  <div class="wrap wc-grid">
-    <div class="wc-intro">
-      <p class="eyebrow-rule">${esc(RS.welcomeEyebrow)}</p>
-      <h2 id="wc-title" class="wc-heading" data-split>${esc(RS.welcomeTitle)}</h2>
-      <p class="wc-body"${rv(60)}>${esc(RS.welcomeBody)}</p>
-      <a class="btn btn-outline btn-pill" href="${href("about", L)}">${esc(RS.welcomeCta)}${icon("arrow")}</a>
-    </div>
-    <div class="wc-cards">
-      ${card(0, "beachFront", "restaurant", "cutlery")}
-      ${card(1, "roomBright", "stay", "bed")}
-      ${card(2, "sunsetGarden", "events", "heart")}
-      ${card(3, "coastVillage", "discover", "pin")}
+      <div class="hx-cta" data-fade style="--d:450ms"><a class="btn btn-terra btn-lg" href="#bem-vindo">${esc(RS.heroCta)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${href("about", L)}">${esc(RS.heroCta2)}</a></div>
     </div>
   </div>
 </section>
 
-<section class="rs-story" aria-labelledby="story-title">
-  <div class="rs-story-media">${figure(t, "aerialCoast", { sizes: "(min-width: 861px) 60vw, 100vw" })}</div>
-  <div class="rs-story-shade" aria-hidden="true"></div>
-  <div class="wrap rs-story-text">
-    <p class="eyebrow-rule is-light">${esc(RS.storyEyebrow)}</p>
-    <h2 id="story-title" class="rs-story-title" data-split>${esc(RS.storyTitle)}</h2>
-    <p class="rs-story-body"${rv(60)}>${esc(RS.storyBody)}</p>
-    <a class="btn btn-ghost-light btn-pill" href="${href("about", L)}">${esc(RS.storyCta)}${icon("arrow")}</a>
+<section class="section wl" id="bem-vindo" aria-labelledby="wl-title">
+  <div class="wrap wl-grid">
+    <div class="wl-intro">
+      <h2 id="wl-title" class="pv-title">${esc(RS.wlTitle)}</h2>
+      <p class="pv-body">${esc(RS.wlBody)}</p>
+      <div class="pv-actions"><a class="btn btn-terra" href="${href("about", L)}">${esc(RS.wlCta)}</a></div>
+    </div>
+    <div class="wl-cards">
+      ${wl("restaurant", "", "foodSpread", 0)}
+      ${wl("stay", "", "roomBright", 1)}
+      ${wl("restaurant", "#cat-drinks", "drink", 2)}
+      ${wl("events", "#pedido", "sunsetPalms", 3)}
+    </div>
   </div>
-  <p class="rs-story-cap"><span>${esc(images.aerialCoast.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
 </section>
 
-<section class="section rs-stay" aria-labelledby="stay-title">
-  <div class="wrap st-grid">
-    <div class="st-intro">
-      <p class="eyebrow-rule">${esc(RS.stayEyebrow)}</p>
-      <h2 id="stay-title" class="wc-heading" data-split>${esc(RS.stayTitle)}</h2>
-      <p class="wc-body">${esc(RS.stayBody)}</p>
+<div class="pano" role="presentation">
+  <figure class="pano-frame">${figure(t, "sunsetSea", { sizes: "100vw", decorative: true, parallax: 0.06 })}</figure>
+</div>
+
+<section class="section tt" aria-labelledby="tt-title">
+  <div class="wrap tt-grid">
+    <div class="tt-text">
+      <h2 id="tt-title" class="pv-title">${esc(RS.tasteTitle)}</h2>
+      <p class="wl-head">${esc(RS.tasteLead)}</p>
+      <p class="pv-body">${esc(t.home.two.restBody)}</p>
+      <p class="tt-note">${esc(RS.tasteOrder)}</p>
+      ${hoursLine ? `<p class="tt-hours">${icon("clock")}<span>${hoursLine}</span></p>` : ""}
+      <div class="pv-actions"><a class="btn btn-terra" href="${href("restaurant", L, "#ementa")}">${esc(RS.tasteCta)}</a><a class="text-link" href="${href("restaurant", L, "#reservar")}">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a></div>
     </div>
-    <div class="st-panels">${rooms.map(suite).join("")}</div>
+    <div class="tt-photos">
+      <figure class="tt-a">${figure(t, "seafood", { sizes: "(min-width: 1000px) 52vw, 92vw", ratio: "4/3", decorative: true })}</figure>
+      <figure class="tt-b">${figure(t, "grilledFish", { sizes: "(min-width: 1000px) 20vw, 40vw", ratio: "1/1", decorative: true })}</figure>
+    </div>
+  </div>
+</section>
+
+<section class="section rs-stay" id="quartos" aria-labelledby="stay-title">
+  <div class="wrap">
+    <div class="st-head">
+      <h2 id="stay-title" class="pv-title">${esc(RS.roomsTitle)}</h2>
+      <p class="pv-body">${esc(RS.roomsLead)}</p>
+    </div>
+    ${roomPair(t)}
+    <p class="rp-all"><a class="text-link" href="${href("stay", L)}">${esc(RS.roomsAll)}${icon("arrow")}</a></p>
+  </div>
+</section>
+
+<section class="section mo" aria-labelledby="mo-title">
+  <div class="mo-bg" aria-hidden="true">${figure(t, "aerialDay4", { sizes: "100vw", decorative: true })}</div>
+  <div class="wrap mo-inner">
+    <h2 id="mo-title" class="pv-title mo-title">${esc(RS.expTitle)}</h2>
+    <p class="pv-body">${esc(RS.expLead)}</p>
+    <ul class="mo-kinds">${kinds.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
+    <div class="pv-actions"><a class="btn btn-terra" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}</a></div>
+  </div>
+</section>
+
+<section class="section sx" id="arredores" aria-labelledby="sx-title">
+  <div class="wrap sx-grid">
+    <div class="sx-photos">
+      <figure class="sx-a">${figure(t, "aerialCoast", { sizes: "(min-width: 900px) 40vw, 92vw", ratio: "5/4", decorative: true })}</figure>
+      <figure class="sx-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 18vw, 40vw", ratio: "4/5", decorative: true })}</figure>
+      <figure class="sx-c">${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 14vw, 30vw", ratio: "1/1", decorative: true })}</figure>
+    </div>
+    <div class="sx-text">
+      <h2 id="sx-title" class="pv-title">${esc(RS.dsTitle)}</h2>
+      <p class="pv-body">${esc(LD.aboutPage.chapters.coastBody)}</p>
+      <div class="pv-actions"><a class="btn btn-terra" href="${href("discover", L)}">${esc(RS.discoverCta)}${icon("arrow")}</a><a class="text-link" href="${href("about", L)}">${esc(RS.storyCta)}${icon("arrow")}</a></div>
+    </div>
   </div>
 </section>
 
 ${reviewsSection(t)}
 
-<section class="rs-discover" aria-labelledby="rsd-title">
-  <div class="rs-discover-media">${figure(t, "ruinsAerial", { sizes: "100vw" })}</div>
-  <div class="rs-discover-shade" aria-hidden="true"></div>
-  <div class="wrap rs-discover-text">
-    <p class="eyebrow-rule is-light">${esc(RS.discoverEyebrow)}</p>
-    <h2 id="rsd-title" class="rs-story-title" data-split>${esc(RS.discoverTitle)}</h2>
-    <a class="btn btn-ghost-light btn-pill" href="${href("discover", L)}">${esc(RS.discoverCta)}${icon("arrow")}</a>
-  </div>
-  <p class="rs-story-cap"><span>${esc(images.ruinsAerial.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></p>
-</section>`;
+${finalSection(t, "beachFront", { panel: true })}`;;
   return {
     page: "home",
     title: t.meta.home.title,
@@ -1342,7 +1388,7 @@ ${pageHero(t, {
   lead: t.home.two.restBody,
   image: "sunsetPalmsHigh",
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="#reservar">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
   <p class="hero-hours">${icon("clock")}<span>${site.restaurantHours.length ? site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true"> · </i>') : esc(t.common.hoursTbc)}</span></p>`,
 })}
 
@@ -1391,7 +1437,7 @@ ${pageHero(t, {
   image: "sunsetSea",
   decorative: true, // the same photo reappears, described, further down the page
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="#reservar">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="#reservar">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
 })}
 
 <section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
@@ -1401,7 +1447,7 @@ ${pageHero(t, {
       ${heading({ title: H.title, accent: H.titleAccent, id: "rooms-title" })}
       <p class="body-text"${rv(100)}>${esc(H.body)}</p>
     </div>
-    ${roomRows(t)}
+    ${roomPair(t)}
     ${amenities}
   </div>
 </section>
@@ -1461,7 +1507,7 @@ ${pageHero(t, {
   image: r.images[0],
   decorative: true, // the same photo is the first slide of the carousel below, where it is described
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("stay", L, "#reservar")}" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
 })}
 
 <section class="section suite-intro" aria-labelledby="suite-intro-title">
@@ -1544,7 +1590,7 @@ ${pageHero(t, {
   lead: t.home.location.body,
   image: "coastVillage",
   crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-white btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>`,
 })}
 
 <section class="section location" aria-labelledby="loc2-title">

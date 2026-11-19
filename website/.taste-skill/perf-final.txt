@@ -1,0 +1,55 @@
+
+perf dist/index.html @ 1440px
+  PASS  host CPU load (before/after)               28/42 %        
+  FAIL  total transfer                             7516.1 KiB     html 16.1K  css 46K  js 75.7K  font 99.6K  img 2135K  media 5120K  other 23.7K
+  PASS  requests                                   32             20 by load
+  WARN  images bytes                               2135 KiB       18 files
+  PASS  largest image                              251.9 KiB      images.unsplash.com/photo-1556814901-18c866c057da?auto=format&fit=crop&w=1080&q=72
+  PASS  JS parsed                                  205.7 KiB      6 files, 75.7K gz
+  PASS  CSS                                        46 KiB         1 files
+  PASS  font families                              2              Cormorant Garamond, Manrope
+  PASS  font files                                 3              99.6K
+  PASS  font bytes                                 99.6 KiB       
+  WARN  images without width+height                1              gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+  WARN  below-fold images not lazy                 2              logo-lauhata-beach-escape-160.png, gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+  PASS  oversized images (natural > 2.2x shown)    0              
+  PASS  WebGL live at load                         0              
+  PASS  WebGL live at bottom                       0              
+  PASS  WebGL peak live                            0              0 contexts made in all
+  PASS  long tasks                                 1              runs 3, 1..1, max 181ms
+  PASS  blocking time                              104 ms         runs 3, 88..131 ms; at load 104ms
+  PASS  FCP (CPU, relative)                        408 ms         runs 3, 396..416
+  PASS  LCP (CPU, relative)                        408 ms         runs 3, 396..416, h1.cine-title
+  PASS  layout shift                               0.001          runs 3, 0.001..0.001; at load 0.001
+  PASS  modules loaded, never mounted              0              
+  PASS  broken requests                            0              
+  PASS  page height                                11.3 screens   DOM 892 nodes
+
+perf dist/index.html @ 390px
+  PASS  host CPU load (before/after)               28/42 %        
+  PASS  total transfer                             1193.4 KiB     html 16.1K  css 46K  js 75.7K  font 99.6K  img 939.8K  other 16.1K
+  PASS  requests                                   30             17 by load
+  PASS  images bytes                               939.8 KiB      18 files
+  PASS  largest image                              86.1 KiB       fotos/aerea-costa-640.jpg
+  PASS  JS parsed                                  205.7 KiB      6 files, 75.7K gz
+  PASS  CSS                                        46 KiB         1 files
+  PASS  font families                              2              Cormorant Garamond, Manrope
+  PASS  font files                                 3              99.6K
+  PASS  font bytes                                 99.6 KiB       
+  WARN  images without width+height                1              gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+  WARN  below-fold images not lazy                 2              logo-lauhata-beach-escape-160.png, gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+  WARN  oversized images (natural > 2.2x shown)    2              lauhata-praia-do-mar-640.jpg 358px for 150; photo-1791540133579-af633981d5ff?auto=format&fit=crop&w=480&q=72 358px for 150
+  WARN  upscaled images (natural < 0.75x shown)    3              grilled-fish-640.jpg 117px for 350; lauhata-special-fried-rice-640.jpg 117px for 350; pizza-lauhata-seafood-640.jpg 117px for 350
+  PASS  WebGL live at load                         0              
+  PASS  WebGL live at bottom                       0              
+  PASS  WebGL peak live                            0              0 contexts made in all
+  PASS  long tasks                                 1              runs 3, 1..1, max 164ms
+  PASS  blocking time                              101 ms         runs 3, 97..114 ms; at load 101ms
+  PASS  FCP (CPU, relative)                        316 ms         runs 3, 308..320
+  PASS  LCP (CPU, relative)                        316 ms         runs 3, 308..320, p.hx-line
+  PASS  layout shift                               0.000          runs 3, 0.000..0.000; at load 0.000
+  PASS  modules loaded, never mounted              0              
+  PASS  broken requests                            0              
+  PASS  page height                                14.1 screens   DOM 891 nodes
+
+SUMMARY dist/index.html: 1 FAIL, 7 WARN  -> FAIL

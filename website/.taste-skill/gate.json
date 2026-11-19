@@ -1,0 +1,4013 @@
+{
+ "start": "2026-11-19T06:49:51.270Z",
+ "round": 3,
+ "idle": 0,
+ "errors": 0,
+ "status": "open",
+ "history": [
+  {
+   "at": "2026-11-19T06:55:12.112Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 118,
+   "round": 1,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-19T07:27:23.856Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 107,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-19T07:31:07.863Z",
+   "mode": "manual",
+   "status": "open",
+   "fails": 106,
+   "round": 3,
+   "reused": false,
+   "stopHookActive": false
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": "dist/index.html",
+  "url": null,
+  "root": "dist",
+  "kind": "place",
+  "category": "beachfront restaurant and rooms",
+  "primary": "Reserve a Table",
+  "rounds": 3,
+  "start": "2026-11-19T06:49:51.270Z",
+  "by": "gate.mjs --start"
+ },
+ "manual": true,
+ "roundKey": "166842a9a5a9f39f:da39a3ee",
+ "roundFree": false,
+ "idleFree": false,
+ "blockKey": null,
+ "fp": "166842a9a5a9f39f",
+ "page": "dist/index.html",
+ "found": {
+  "fails": [
+   {
+    "check": "sample-label",
+    "where": "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) \"© 2026 Lauhata Beach Escape. All rights \"",
+    "msg": "a note that the page's names or figures are examples (\"photos are illustrative\"): it reads as an apology and undercuts every claim",
+    "fix": "drop the \"sample\" tags and any note that names and figures are examples: take each from the brief, or remove the claim",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "sample-label"
+    ],
+    "wheres": [
+     "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) \"© 2026 Lauhata Beach Escape. All rights \""
+    ]
+   },
+   {
+    "check": "sample-label",
+    "where": "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) > span.footer-note \"Some photos are illustrative and are mar\"",
+    "msg": "a note that the page's names or figures are examples (\"photos are illustrative\"): it reads as an apology and undercuts every claim",
+    "fix": "drop the \"sample\" tags and any note that names and figures are examples: take each from the brief, or remove the claim",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "sample-label"
+    ],
+    "wheres": [
+     "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) > span.footer-note \"Some photos are illustrative and are mar\""
+    ]
+   },
+   {
+    "check": "nav",
+    "where": "header.site-header > div.wrap.header-inner > a.brand \"Lauhata BEACH ESCAPE\"",
+    "msg": "nav link wraps to a second line",
+    "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "nav"
+    ],
+    "wheres": [
+     "header.site-header > div.wrap.header-inner > a.brand \"Lauhata BEACH ESCAPE\""
+    ]
+   },
+   {
+    "check": "no-visual",
+    "where": "main#main > section.section.am \"Facilities\"",
+    "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "no-visual"
+    ],
+    "wheres": [
+     "main#main > section.section.am \"Facilities\""
+    ]
+   },
+   {
+    "check": "button-styles",
+    "where": "(one screen)",
+    "msg": "3 button styles on one screen: pill, fill #e8782a (\"Explore Our Resort\"); pill, outline #f8f1e7 (\"Discover Our Story\"); pill, fill #e8782a, outline #e8782a (\"Reserve\"); the odd one out: \"Reserve\"",
+    "fix": "one primary and one secondary button: one shape, one height per size, one label size",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "button-styles"
+    ],
+    "wheres": [
+     "(one screen)"
+    ]
+   },
+   {
+    "check": "button-styles",
+    "where": "(the page)",
+    "msg": "5 button styles on the page: pill, fill #e8782a, outline #e8782a x1 (\"Reserve\"); pill, fill #e8782a x6 (\"Explore Our Resort\"); pill, outline #f8f1e7 x6 (\"Discover Our Story\"); pill, fill #17120f x3 (\"Add\"); pill, fill #f7f0e4 x1 (\"Reserve a Table\")",
+    "fix": "one primary and one secondary button: one shape, one height per size, one label size",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "button-styles"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   },
+   {
+    "check": "same-action",
+    "where": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light \"Reserve a Table\"",
+    "msg": "\"Reserve a Table\" appears 2 times in different looks: pill, outline #f8f1e7 and pill, fill #f7f0e4",
+    "fix": "draw one action the same way everywhere (only the nav copy may be one size smaller)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "same-action"
+    ],
+    "wheres": [
+     "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light \"Reserve a Table\""
+    ]
+   },
+   {
+    "check": "copy-headline",
+    "where": "h1#hero-title \"Dine. Stay. Unwind.\"",
+    "msg": "\"Dine. Stay. Unwind.\" does not name what is sold (beachfront restaurant and rooms, beachfront, restaurant, rooms, from flags)",
+    "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "copy-headline"
+    ],
+    "wheres": [
+     "h1#hero-title \"Dine. Stay. Unwind.\""
+    ]
+   },
+   {
+    "check": "copy-headings",
+    "where": "div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3 \"A Culinary Journey\"",
+    "msg": "\"A Culinary Journey\" names no product, part, place or section (8 headings like it; at most one brand line per page) (and 7 more like it: \"Stay in Paradise\", \"Find Your Perfect Stay\", \"Flavours by the Sea\", \"Facilities\", ...)",
+    "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "copy-headings"
+    ],
+    "wheres": [
+     "div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3 \"A Culinary Journey\""
+    ]
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#main > section.scene.final-cta / footer.site-footer",
+    "msg": "42px between these sections, -69% against the median 137px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-gaps"
+    ],
+    "wheres": [
+     "main#main > section.scene.final-cta / footer.site-footer"
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-1080.jpg\"",
+    "msg": "aerea-costa-1080.jpg: 748x421 shown at 705x564, blown up 1.34x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-1080.jpg\""
+    ]
+   },
+   {
+    "check": "effect-kind",
+    "where": "(the page)",
+    "msg": "a place page (--type) moves with the scroll: scroll libraries or timelines (ScrollTrigger, ScrollSmoother): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+    "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "effect-kind"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   },
+   {
+    "check": "section-tile",
+    "where": "section#dine-stay \"Dine & Stay\"",
+    "msg": "the section is 1062px tall (1.18 screens at 1440x900), not one screen or two: the screen one screen on from its top (scroll 2652px) shows 78px of it and 738px of the next section, its heading \"Find Your Perfect Stay\" on screen",
+    "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-tile"
+    ],
+    "wheres": [
+     "section#dine-stay \"Dine & Stay\""
+    ]
+   },
+   {
+    "check": "focus-ring",
+    "where": "main:focus",
+    "msg": "\"main:focus\" in site.css removes the focus outline and sets nothing in its place",
+    "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "focus-ring"
+    ],
+    "wheres": [
+     "main:focus"
+    ]
+   },
+   {
+    "check": "focus-ring",
+    "where": ".cine-bar .bc-field .pk-btn:focus-visible",
+    "msg": "\".cine-bar .bc-field .pk-btn:focus-visible\" in site.css removes the focus outline and sets nothing in its place",
+    "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "focus-ring"
+    ],
+    "wheres": [
+     ".cine-bar .bc-field .pk-btn:focus-visible"
+    ]
+   },
+   {
+    "check": "focus-ring",
+    "where": ".booking-card.is-hero .bc-field .pk-btn:focus-visible",
+    "msg": "\".booking-card.is-hero .bc-field .pk-btn:focus-visible\" in site.css removes the focus outline and sets nothing in its place",
+    "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "focus-ring"
+    ],
+    "wheres": [
+     ".booking-card.is-hero .bc-field .pk-btn:focus-visible"
+    ]
+   },
+   {
+    "check": "focus-visible",
+    "where": "div.wrap.st2-grid > div.st2-text:nth-of-type(2) > div.pv-actions > a.btn.btn-terra \"Read our story\"",
+    "msg": "Tab stop 14, a \"Read our story\": the focus lands on something you cannot see",
+    "fix": "keep the kit's ring (system.css :focus-visible, 2px in --action, there at once); a control that hides itself shows on focus",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "focus-visible"
+    ],
+    "wheres": [
+     "div.wrap.st2-grid > div.st2-text:nth-of-type(2) > div.pv-actions > a.btn.btn-terra \"Read our story\""
+    ]
+   },
+   {
+    "check": "map-link",
+    "where": "div.ft-col:nth-of-type(1) > ul.footer-list:nth-of-type(2) > li > a \"Get directions\"",
+    "msg": "\"Get directions\" promises directions but its search (\"-8.581541,125.349856\") holds no street: a map of a district or a town shows nobody the door",
+    "fix": "with a street from the brief, \"Get directions\" to its search; a district only: \"See the area\"; a town only: no map link",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "map-link"
+    ],
+    "wheres": [
+     "div.ft-col:nth-of-type(1) > ul.footer-list:nth-of-type(2) > li > a \"Get directions\""
+    ]
+   },
+   {
+    "check": "moment-none",
+    "where": "(the page)",
+    "msg": "a place page (--type) deals no moment: every kind carries one, two on a long page (moments.md)",
+    "fix": "deal one (moments.mjs pick --page place --photo) and mount it in its own section",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "moment-none"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "main#main > section.section.am \"Facilities RestaurantBarBeachfrontRooms \"",
+    "msg": "the section is 353px tall (0.4 screens), 547px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+    "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height"
+    ],
+    "wheres": [
+     "main#main > section.section.am \"Facilities RestaurantBarBeachfrontRooms \"",
+     "main#main > section.section.gp \"A Look at LauhataView Gallery\"",
+     "main#main > section.section.mp \"Flavours by the Sea A few of the dishes \"",
+     "main#main > section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfect Getawa\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#quartos \"Find Your Perfect Stay Discover comforta\"",
+    "msg": "the section is 1294px tall (1.4 screens), 394px over one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+    "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#quartos \"Find Your Perfect Stay Discover comforta\"",
+     "#quartos section.section.rs-stay \"Find Your Perfect Stay Discover \""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#opinioes \"Experiences that stay with you Tripadvis\"",
+    "msg": "the section starts at 7649px, 449px below the screen grid (8 x 900px): sections start on whole screens (SR-2)",
+    "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#opinioes \"Experiences that stay with you Tripadvis\"",
+     "#opinioes section.section.reviews-ed \"Experiences that stay with you T\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "footer.site-footer \"Lauhata Beach Escape A table and a room \"",
+    "msg": "the section's content does not fit it: its lowest content ends 822px below its top, past 779px (the section less 72px of bottom padding) (SR-2)",
+    "fix": "fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height"
+    ],
+    "wheres": [
+     "footer.site-footer \"Lauhata Beach Escape A table and a room \""
+    ]
+   },
+   {
+    "check": "section-air",
+    "where": "section#opinioes / main#main > section.scene.final-cta",
+    "msg": "667px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)",
+    "fix": "keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-air"
+    ],
+    "wheres": [
+     "section#opinioes / main#main > section.scene.final-cta"
+    ]
+   },
+   {
+    "check": "section-air",
+    "where": "main#main > section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfect Getawa\"",
+    "msg": "the content fills 34.6% of the section's height (287 of 828px): 55% or more (40% WARN) (SR-3)",
+    "fix": "fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-air"
+    ],
+    "wheres": [
+     "main#main > section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfect Getawa\""
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "h2#mp-title \"Flavours by the Sea\"",
+    "msg": "the screen at scroll 3600px (stride 4) shows 392px of section 5 and the heading of section 5 whole and the content of 2 sections, over 24px each beside section 4: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section"
+    ],
+    "wheres": [
+     "h2#mp-title \"Flavours by the Sea\""
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "main#main > section.section.gp \"A Look at LauhataView Gallery\"",
+    "msg": "the screen at scroll 7200px (stride 8) shows 365px of section 8 and the content of 2 sections, over 24px each beside section 9: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section"
+    ],
+    "wheres": [
+     "main#main > section.section.gp \"A Look at LauhataView Gallery\""
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "section#opinioes \"Experiences that stay with you Tripadvis\"",
+    "msg": "the screen at scroll 8100px (stride 9) shows 290px of section 9 and the content of 2 sections, over 24px each beside section 10: a screen shows one section (another may peek 8px, 24px WARN) (and 8 more like it: scroll 5143px, scroll 4500px, scroll 9000px) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section",
+     "neighbour"
+    ],
+    "wheres": [
+     "section#opinioes \"Experiences that stay with you Tripadvis\"",
+     "#opinioes section.section.reviews-ed \"Experiences that stay with you T\""
+    ]
+   },
+   {
+    "check": "one-heading",
+    "where": "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(1) > h2.footer-h \"Visit us\"",
+    "msg": "the section holds 4 h2 headings: one per section, first in its .wrap (SR-5)",
+    "fix": "give each section one h2, first in its .wrap, and the hero only its h1",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-heading"
+    ],
+    "wheres": [
+     "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(1) > h2.footer-h \"Visit us\""
+    ]
+   },
+   {
+    "check": "one-heading",
+    "where": "h2#mo-title \"Moments That Last\"",
+    "msg": "headings of two sections show whole on one screen at 7 of 186 scroll positions (3.8%; at scroll 5000, 5050, 5100, 5700px), here with \"Facilities\": at most 3% on a desktop (SR-5)",
+    "fix": "make the sections one screen tall so their headings sit a screen apart and two never share one",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-heading"
+    ],
+    "wheres": [
+     "h2#mo-title \"Moments That Last\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "main#main > section.cine-hero.hx \"Dine. Stay. Unwind. A unique destination\"",
+    "msg": "the content of section 1 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)",
+    "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "main#main > section.cine-hero.hx \"Dine. Stay. Unwind. A unique destination\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "section#historia \"More Than a Resort. A Place to Belong. L\"",
+    "msg": "the content of section 2 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (and 11 more like it: \"Dine & Stay A Culinary J\", \"Find Your Perfect Stay D\", \"Flavours by the Sea A fe\") (SR-6)",
+    "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "section#historia \"More Than a Resort. A Place to Belong. L\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "a.skip-link \"Skip to content\"",
+    "msg": "a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)",
+    "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "a.skip-link \"Skip to content\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "header.site-header \"Lauhata Beach Escape HomeRestaurantHotel\"",
+    "msg": "a <header> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (and 10 more like it: \"Lauhata Beach Escape A t\", p.sr-only, \"WhatsApp\") (SR-6)",
+    "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "header.site-header \"Lauhata Beach Escape HomeRestaurantHotel\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "section.scene.final-cta > div.scene-media > figure.media > img",
+    "msg": "the <img> runs 0-1440px, outside the container lines of section 10 at 32-1408px: full width is for background layers and grounds only (SR-6)",
+    "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "section.scene.final-cta > div.scene-media > figure.media > img"
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "main#main > section.cine-hero.hx > div.hx-shade",
+    "msg": "a box runs 0-1440px, outside the container lines of section 1 at 32-1408px: full width is for background layers and grounds only (and 4 more like it: main#main > section.scene.final-cta > div.scene-media, main#main > section.scene.final-cta > div.scene-media > figure.media, \"Sunset over the sea, wit\") (SR-6)",
+    "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "main#main > section.cine-hero.hx > div.hx-shade"
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(3) > h2.footer-h \"Reviews\"",
+    "msg": "the h2 starts 1038px right of the container's left: every h1 and h2 starts on it, 2px either way (and 17 more like it: x 944, x 857, \"More Than a Resort. A Pl\") (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(3) > h2.footer-h \"Reviews\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "section#opinioes > div.wrap:nth-of-type(2) > div.rv-own > details.rv-form \"Have you stayed with us? Leave your feed\"",
+    "msg": "a box over half the container wide runs 80-816px, not on the container's lines at 32-1408px (and 5 more like it: ul.gp-grid > li.gp-0 > a > figure.media, ul.gp-grid > li.gp-3 > a > figure.media, main#main > section.cine-hero.hx > div.hx-shade) (SR-6)",
+    "fix": "run the picture or box from the container's left line to its right line, or put it in a row or a split",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "section#opinioes > div.wrap:nth-of-type(2) > div.rv-own > details.rv-form \"Have you stayed with us? Leave your feed\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "section#dine-stay > div.wrap > div.xp-grid \"A Culinary JourneyDiscover delicious fla\"",
+    "msg": "a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "section#dine-stay > div.wrap > div.xp-grid \"A Culinary JourneyDiscover delicious fla\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "section#quartos > div.wrap > div.rp-grid \"Queen Room A queen-size bed and a televi\"",
+    "msg": "a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "section#quartos > div.wrap > div.rp-grid \"Queen Room A queen-size bed and a televi\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "main#main > section.section.mp > div.wrap > div.menu-grid.mp-grid \"Main Course Grilled Fish Fish fillet wit\"",
+    "msg": "a row of 3 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (and 3 more like it: \"RestaurantBarBeachfrontR\", \"Explore Menu Hotel Our S\", \"© 2026 Lauhata Beach Esc\") (SR-7)",
+    "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "main#main > section.section.mp > div.wrap > div.menu-grid.mp-grid \"Main Course Grilled Fish Fish fillet wit\""
+    ]
+   },
+   {
+    "check": "row-lines",
+    "where": "section.scene.final-cta > div.scene-media > figure.media > img",
+    "msg": "the <img> ends at 1440px, past the container's right line at 1408px (SR-7)",
+    "fix": "end it at the container's right line",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "row-lines"
+    ],
+    "wheres": [
+     "section.scene.final-cta > div.scene-media > figure.media > img"
+    ]
+   },
+   {
+    "check": "split-pair",
+    "where": "main#main > section.section.mo > div.wrap.mo-grid \"Moments That Last Sunset dinners, family\"",
+    "msg": "the two columns of the split start 209px apart at the top (centred on each other): a split's columns are top-aligned, 8px either way (SR-8)",
+    "fix": "top-align both columns of the split (align-items: start)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "split-pair"
+    ],
+    "wheres": [
+     "main#main > section.section.mo > div.wrap.mo-grid \"Moments That Last Sunset dinners, family\""
+    ]
+   },
+   {
+    "check": "split-pair",
+    "where": "footer.site-footer > div.wrap.ft-top \"Lauhata Beach Escape A table and a room \"",
+    "msg": "the two columns of the split start 164px apart at the top: a split's columns are top-aligned, 8px either way (and 1 more like it: \"More Than a Resort. A Pl\") (SR-8)",
+    "fix": "top-align both columns of the split (align-items: start)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "split-pair"
+    ],
+    "wheres": [
+     "footer.site-footer > div.wrap.ft-top \"Lauhata Beach Escape A table and a room \""
+    ]
+   },
+   {
+    "check": "split-pair",
+    "where": "section#historia > div.wrap.st2-grid \"More Than a Resort. A Place to Belong. L\"",
+    "msg": "the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)",
+    "fix": "put the text in the left column and the visual in the right, on every split",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "split-pair"
+    ],
+    "wheres": [
+     "section#historia > div.wrap.st2-grid \"More Than a Resort. A Place to Belong. L\""
+    ]
+   },
+   {
+    "check": "flush",
+    "where": "main#main > section.scene.final-cta > div.wrap.scene-text \"Your Perfect Getaway Awaits Experience t\"",
+    "msg": "its first line sits 0px under the top edge of section.scene.final-cta, where the ground changes",
+    "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "flush"
+    ],
+    "wheres": [
+     "main#main > section.scene.final-cta > div.wrap.scene-text \"Your Perfect Getaway Awaits Experience t\""
+    ]
+   },
+   {
+    "check": "collide",
+    "where": "header.site-header \"Lauhata\"",
+    "msg": "at the top of the page the fixed bar covers the picture \"img: Sunset over the sea, with t\": nothing scrolls it out from under the bar",
+    "fix": "on a phone nothing lies on anything else: let the section grow with its content (min-height for its screens, never a fixed height; --hm: 2 when it needs two) or cut what it holds; keep pictures and cards off the buttons; pad the page under a fixed bar by the bar's height (top: the first section; end: the footer)",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency",
+    "ids": [
+     "collide"
+    ],
+    "wheres": [
+     "header.site-header \"Lauhata\""
+    ]
+   },
+   {
+    "check": "contrast",
+    "where": "main#main > section.scene.final-cta > div.wrap.scene-text > p.final-lead \"Experience the best of Lauhata Liquiçá, \"",
+    "msg": "body text over a picture reads at 3.3:1 at its worst tenth (needs 4.5:1), on a busy ground",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "contrast"
+    ],
+    "wheres": [
+     "main#main > section.scene.final-cta > div.wrap.scene-text > p.final-lead \"Experience the best of Lauhata Liquiçá, \""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "section.cine-hero.hx > div.hx-bg > figure.media > img \"img: Sunset over the sea, with the palm \"",
+    "msg": "por-do-sol-palmeiras-alto-1080.jpg: 390x219 shown at 413x893, blown up 4.08x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "section.cine-hero.hx > div.hx-bg > figure.media > img \"img: Sunset over the sea, with the palm \""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-640.jpg\"",
+    "msg": "aerea-costa-640.jpg: 358x201 shown at 350x280, blown up 1.39x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-640.jpg\""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "div.menu-grid.mp-grid > article.dish:nth-of-type(1) > figure.media.dish-photo > img \"img: Grilled Fish (illustrative image, n\"",
+    "msg": "grilled-fish-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "div.menu-grid.mp-grid > article.dish:nth-of-type(1) > figure.media.dish-photo > img \"img: Grilled Fish (illustrative image, n\""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "div.menu-grid.mp-grid > article.dish:nth-of-type(2) > figure.media.dish-photo > img \"img: Lauhata Special Fried Rice (illustr\"",
+    "msg": "lauhata-special-fried-rice-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "div.menu-grid.mp-grid > article.dish:nth-of-type(2) > figure.media.dish-photo > img \"img: Lauhata Special Fried Rice (illustr\""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "div.menu-grid.mp-grid > article.dish:nth-of-type(3) > figure.media.dish-photo > img \"img: Lauhata Seafood (illustrative image\"",
+    "msg": "pizza-lauhata-seafood-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "div.menu-grid.mp-grid > article.dish:nth-of-type(3) > figure.media.dish-photo > img \"img: Lauhata Seafood (illustrative image\""
+    ]
+   },
+   {
+    "check": "photo-upscale",
+    "where": "section.scene.final-cta > div.scene-media > figure.media > img \"img: por-do-sol-mar-640.jpg\"",
+    "msg": "por-do-sol-mar-640.jpg: 390x219 shown at 414x368, blown up 1.68x",
+    "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "photo-upscale"
+    ],
+    "wheres": [
+     "section.scene.final-cta > div.scene-media > figure.media > img \"img: por-do-sol-mar-640.jpg\""
+    ]
+   },
+   {
+    "check": "edge-right",
+    "where": "#historia div.st2-media",
+    "msg": "ends at x 784.7; the right line is 1360",
+    "fix": "end it on the .wrap right line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-right"
+    ],
+    "wheres": [
+     "#historia div.st2-media"
+    ]
+   },
+   {
+    "check": "edge-right",
+    "where": "#historia figure.media",
+    "msg": "ends at x 784.7; the right line is 1360",
+    "fix": "end it on the .wrap right line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-right"
+    ],
+    "wheres": [
+     "#historia figure.media"
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#historia div.st2-text \"More Than a Resort. A Place to B\"",
+    "msg": "starts at x 856.7; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#historia div.st2-text \"More Than a Resort. A Place to B\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#historia h2.pv-title \"More Than a Resort. A Place to B\"",
+    "msg": "starts at x 856.7; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#historia h2.pv-title \"More Than a Resort. A Place to B\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#historia p.pv-body \"Lauhata Beach Escape is a place \"",
+    "msg": "starts at x 856.7; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#historia p.pv-body \"Lauhata Beach Escape is a place \""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#historia ul.st2-facts \"Beachfront in LiquiçáRestaurant \"",
+    "msg": "starts at x 856.7; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#historia ul.st2-facts \"Beachfront in LiquiçáRestaurant \""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#dine-stay h3 \"A Culinary Journey\"",
+    "msg": "starts at x 116.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#dine-stay h3 \"A Culinary Journey\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#dine-stay p \"Discover delicious flavours, car\"",
+    "msg": "starts at x 116.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#dine-stay p \"Discover delicious flavours, car\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#dine-stay h3 \"Stay in Paradise\"",
+    "msg": "starts at x 772.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#dine-stay h3 \"Stay in Paradise\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#dine-stay p \"Relax, unwind and enjoy a comfor\"",
+    "msg": "starts at x 772.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#dine-stay p \"Relax, unwind and enjoy a comfor\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#quartos h3.rp-name \"Queen Room\"",
+    "msg": "starts at x 111.4; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#quartos h3.rp-name \"Queen Room\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#quartos p.rp-sum \"A queen-size bed and a televisio\"",
+    "msg": "starts at x 111.4; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#quartos p.rp-sum \"A queen-size bed and a televisio\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#quartos ul.room-facts-line \"1 queen-size bedTelevision\"",
+    "msg": "starts at x 111.4; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#quartos ul.room-facts-line \"1 queen-size bedTelevision\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#quartos h3.rp-name \"Queen & Single Room\"",
+    "msg": "starts at x 767.4; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#quartos h3.rp-name \"Queen & Single Room\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#quartos p.rp-sum \"A queen-size bed and a single be\"",
+    "msg": "starts at x 767.4; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#quartos p.rp-sum \"A queen-size bed and a single be\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "#quartos ul.room-facts-line \"1 queen-size bed and 1 single be\"",
+    "msg": "starts at x 767.4; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "#quartos ul.room-facts-line \"1 queen-size bed and 1 single be\""
+    ]
+   },
+   {
+    "check": "edge-right",
+    "where": "section.section.mp figure.media.dish-photo",
+    "msg": "ends at x 488; the right line is 1360",
+    "fix": "end it on the .wrap right line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-right"
+    ],
+    "wheres": [
+     "section.section.mp figure.media.dish-photo"
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp p.dish-tag \"Main Course\"",
+    "msg": "starts at x 99.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp p.dish-tag \"Main Course\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp h3 \"Grilled Fish\"",
+    "msg": "starts at x 99.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp h3 \"Grilled Fish\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp p.dish-desc \"Fish fillet with a lemon and but\"",
+    "msg": "starts at x 99.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp p.dish-desc \"Fish fillet with a lemon and but\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp figure.media.dish-photo",
+    "msg": "starts at x 952; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp figure.media.dish-photo"
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp p.dish-tag \"Pizza\"",
+    "msg": "starts at x 971.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp p.dish-tag \"Pizza\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp h3 \"Lauhata Seafood\"",
+    "msg": "starts at x 971.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp h3 \"Lauhata Seafood\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mp p.dish-desc \"Tuna, prawns, feta and mozzarell\"",
+    "msg": "starts at x 971.2; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mp p.dish-desc \"Tuna, prawns, feta and mozzarell\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mo div.mo-photos",
+    "msg": "starts at x 650.7; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mo div.mo-photos"
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mo figure.mo-a",
+    "msg": "starts at x 650.7; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mo figure.mo-a"
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mo figure.mo-b",
+    "msg": "starts at x 1053.6; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mo figure.mo-b"
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "section.section.mo figure.mo-c",
+    "msg": "starts at x 1053.6; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "section.section.mo figure.mo-c"
+    ]
+   },
+   {
+    "check": "edge-right",
+    "where": "footer.site-footer div.ft-brand \"Lauhata Beach Escape A table and\"",
+    "msg": "ends at x 688; the right line is 1360",
+    "fix": "end it on the .wrap right line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-right"
+    ],
+    "wheres": [
+     "footer.site-footer div.ft-brand \"Lauhata Beach Escape A table and\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "footer.site-footer div.ft-cta \"Reserve a Table or ask for a roo\"",
+    "msg": "starts at x 944; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "footer.site-footer div.ft-cta \"Reserve a Table or ask for a roo\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "footer.site-footer div.ft-col \"Visit us Aldeia Pissu Kraik, Suk\"",
+    "msg": "starts at x 410; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "footer.site-footer div.ft-col \"Visit us Aldeia Pissu Kraik, Suk\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "footer.site-footer div.ft-col \"Contact +670 7740 1111WhatsApp a\"",
+    "msg": "starts at x 740; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "footer.site-footer div.ft-col \"Contact +670 7740 1111WhatsApp a\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "footer.site-footer div.ft-col \"Reviews Tripadvisor4.4/5Booking.\"",
+    "msg": "starts at x 1070; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "footer.site-footer div.ft-col \"Reviews Tripadvisor4.4/5Booking.\""
+    ]
+   },
+   {
+    "check": "edge-left",
+    "where": "footer.site-footer p \"Privacy policy · Website by Elev\"",
+    "msg": "starts at x 1085.3; the lines are 80 and the column starts",
+    "fix": "start it on the .wrap left line",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-left"
+    ],
+    "wheres": [
+     "footer.site-footer p \"Privacy policy · Website by Elev\""
+    ]
+   },
+   {
+    "check": "one-sided",
+    "where": "#historia section.section.st2 \"More Than a Resort. A Place to B\"",
+    "msg": "its visuals end at x 784.7, short of the right line 1360",
+    "fix": "let the row reach both .wrap edges",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "one-sided"
+    ],
+    "wheres": [
+     "#historia section.section.st2 \"More Than a Resort. A Place to B\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "#historia section.section.st2 \"More Than a Resort. A Place to B\"",
+    "msg": "852px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "#historia section.section.st2 \"More Than a Resort. A Place to B\""
+    ]
+   },
+   {
+    "check": "neighbour-ground",
+    "where": "#historia section.section.st2 \"More Than a Resort. A Place to B\"",
+    "msg": "framed, 48px of #dine-stay section.section.xp \"Dine & Stay A Culinary JourneyDi\"'s ground shows",
+    "fix": "end the ground with the section",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour-ground"
+    ],
+    "wheres": [
+     "#historia section.section.st2 \"More Than a Resort. A Place to B\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "#dine-stay section.section.xp \"Dine & Stay A Culinary JourneyDi\"",
+    "msg": "1062px, 1.18 screens; a section is exactly one or two (--h)",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "#dine-stay section.section.xp \"Dine & Stay A Culinary JourneyDi\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.section.mp section.section.mp \"Flavours by the Sea A few of the\"",
+    "msg": "1035px, 1.15 screens; a section is exactly one or two (--h)",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.section.mp section.section.mp \"Flavours by the Sea A few of the\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\"",
+    "msg": "353px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short"
+    ],
+    "wheres": [
+     "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\"",
+    "msg": "353px, 0.39 screens; a section is exactly one or two (--h)",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\""
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\"",
+    "msg": "framed, 419px of section.section.mo section.section.mo \"Moments That Last Sunset dinners\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "section.section.mo section.section.mo \"Moments That Last Sunset dinners\"",
+    "msg": "889px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short"
+    ],
+    "wheres": [
+     "section.section.mo section.section.mo \"Moments That Last Sunset dinners\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.section.mo section.section.mo \"Moments That Last Sunset dinners\"",
+    "msg": "889px, 0.99 screens; a section is exactly one or two (--h)",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.section.mo section.section.mo \"Moments That Last Sunset dinners\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.section.gp section.section.gp \"A Look at LauhataView Gallery\"",
+    "msg": "1264px, 1.40 screens; a section is exactly one or two (--h)",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.section.gp section.section.gp \"A Look at LauhataView Gallery\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\"",
+    "msg": "828px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short"
+    ],
+    "wheres": [
+     "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\""
+    ]
+   },
+   {
+    "check": "screen-height",
+    "where": "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\"",
+    "msg": "828px, 0.92 screens; a section is exactly one or two (--h)",
+    "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-height"
+    ],
+    "wheres": [
+     "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\""
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\"",
+    "msg": "framed, 54px of #opinioes section.section.reviews-ed \"Experiences that stay with you T\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\""
+    ]
+   },
+   {
+    "check": "edge-right",
+    "where": "section.section.mo figure.mo-a",
+    "msg": "ends at x 207.8; the right line is 370",
+    "fix": "end it on the .wrap right line",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "edge-right"
+    ],
+    "wheres": [
+     "section.section.mo figure.mo-a"
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "#quartos section.section.rs-stay \"Find Your Perfect Stay Discover \"",
+    "msg": "framed, 37px of section.section.mp section.section.mp \"Flavours by the Sea A few of the\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "#quartos section.section.rs-stay \"Find Your Perfect Stay Discover \""
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "section.section.mo section.section.mo \"Moments That Last Sunset dinners\"",
+    "msg": "framed, 37px of section.section.gp section.section.gp \"A Look at LauhataView Gallery\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "section.section.mo section.section.mo \"Moments That Last Sunset dinners\""
+    ]
+   },
+   {
+    "check": "copy-slop-word",
+    "msg": "old slop words (elevate)",
+    "fix": "replace each word with the fact it stands in for: the step count, the figure, the material, the place (a word in the client's own name is not counted when the logo, the title before its \":\" or og:site_name writes the name) (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "copy \"elevate\" in \"Privacy policy · Website by Elevate Web Studios\"",
+    "ids": [
+     "copy-slop-word"
+    ],
+    "wheres": [
+     "copy \"elevate\" in \"Privacy policy · Website by Elevate Web Studios\""
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "cut-text",
+    "where": "div.rv-scores-wrap > div.rv-scores > a.rv-score.rv-tripadvisor > span.rv-num \"4.4out of 5\"",
+    "msg": "sits across the edge of a panel behind it",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-only",
+    "where": "section#opinioes \"Experiences that stay with you\"",
+    "msg": "the section is only text: no picture, icon, mock or effect in it",
+    "fix": "give the section a visual: a photograph that fits, the real icons, or a UI fragment on a ground",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "same-action",
+    "where": "section.section.mp > div.wrap > div.pv-actions > a.text-link \"Reserve a Table\"",
+    "msg": "\"Reserve a Table\" is a button in one place and a text link in another: one action in two looks",
+    "fix": "show one action one way: the same button wherever it repeats, or a text link everywhere",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-buttons",
+    "where": "div.wrap.cine-content > div.rs-hero-text > div.hx-cta > a.btn.btn-ghost-light \"Discover Our Story\"",
+    "msg": "\"Discover Our Story\" does not start with a verb (book, buy, try, start, get, see...)",
+    "fix": "label buttons with a verb and what the visitor gets (\"Book a room\", \"Start free trial\")",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-actions",
+    "where": "(the page)",
+    "msg": "12 different button labels on the page (at most 10)",
+    "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-actions",
+    "where": "div.wrap.cine-content > div.rs-hero-text > div.hx-cta > a.btn.btn-ghost-light \"Discover Our Story\"",
+    "msg": "2 labels for one target /about/: \"Discover Our Story\", \"Read our story\"",
+    "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-actions",
+    "where": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-terra \"Request a Room\"",
+    "msg": "2 labels for one target /stay/#reservar: \"Request a Room\", \"See the rooms\"",
+    "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "contrast",
+    "where": "h1#hero-title > em.hx-accent > span.w > span.wi \"Unwind.\"",
+    "msg": "large text over a picture reads at 2.0:1 at its worst tenth (needs 3:1), on a busy ground",
+    "fix": "put the text on a calm part of the picture, or on a solid panel",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "busy-ground",
+    "where": "div.wrap.header-inner > a.brand > span.brand-text > span.brand-name \"Lauhata\"",
+    "msg": "text over a detailed part of a picture (its ground changes by 1.7 L* from one pixel to the next under the words) (and 5 more like it: \"BEACH ESCAPE\", \"Hotel\", \"Experiences\", \"A unique destination in \", ...)",
+    "fix": "move the text to a calm part of the picture, or put it on a panel",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "busy-ground",
+    "where": "h1#hero-title > span.line > span.w:nth-of-type(2) > span.wi \"Stay.\"",
+    "msg": "text over an uneven part of a picture (its luminance spans 0.30 under the words: a shadow or a bright patch behind part of the line)",
+    "fix": "move the text to a calm part of the picture, or put it on a panel",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#main > section.section.mp / main#main > section.section.am",
+    "msg": "uneven space at the edge of a band: 128px outside its edge, 81px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-set",
+    "where": "article.rp-card:nth-of-type(2) > a.rp-media > figure.media > img \"suite-familia-1080.jpg\"",
+    "msg": "13 photographs in more than one look: saturation from 0.16 to 0.62; warm and cool photographs mixed (b* -7 to +27); the odd one out is suite-familia-1080.jpg",
+    "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-credit",
+    "where": "article.xp-card:nth-of-type(2) > a.xp-media > figure.media > img",
+    "msg": "5 library sources (unsplash): photo-1584132905271-512c958d674a, photo-1584132915807-fd1f5fbc078f, photo-1791540133579-af633981d5ff, photo-1785245647510-5547d4388d2a, photo-1556814901-18c866c057da; confirm each shows the client's own product, place or people",
+    "fix": "confirm the library photograph shows the client's own product, place or people; otherwise replace it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-family",
+    "where": "header.site-header",
+    "msg": "the nav's links come in 3 sizes (16, 13, 17px)",
+    "fix": "keep one nav on every screen: the same bar, fill, links and type",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "link-styles",
+    "where": "div.ft-col:nth-of-type(3) > ul.footer-list.ft-scores > li:nth-of-type(1) > a \"Tripadvisor 4.4/5\"",
+    "msg": "text links in 3 looks: no line, regular (5, like \"Queen Room\"); underline, bold (6, like \"See the room\"); border 1px, regular (2, like \"Tripadvisor 4.4/5\")",
+    "fix": "give text links one look wherever they sit: one underline, one weight",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "grounds",
+    "where": "main#main > section.scene.final-cta \"Your Perfect Getaway Awaits Experience t\"",
+    "msg": "4 flat grounds across the page (#17120f section x4, #f7f0e4 section x3, #efe4d2 section x3, #050f0e section): three at most (the base, a surface, an inverse)",
+    "fix": "three flat grounds at most (the base, one surface, one inverse): lay the other bands on one of them",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-tile",
+    "where": "section#historia \"More Than a Resort. A Place to Belong.\"",
+    "msg": "the section is 852px tall (0.95 screens at 1440x900), shorter than the screen: its tile (the screen from its top) shows 768px of it and only 48px of the next section's ground (\"Dine & Stay\"), none of its content",
+    "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "hero-screen",
+    "where": "section.cine-hero.hx > div.hx-bg > figure.media > img \"Sunset over the sea, with the palm trees\"",
+    "msg": "\"Sunset over the sea, with the pa\" starts at 0px, under the 84px nav (it was moving as it was read: told as a WARN, look at it at rest) (SR-1)",
+    "fix": "keep the hero's content between the nav and 24px above the fold (and the action bar): shorten the picture or the text; a docked strip 96px at most",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-air",
+    "where": "main#main > section.section.am \"Facilities RestaurantBarBeachfrontRooms \"",
+    "msg": "the content fills 49.2% of the section's height (174 of 353px): 55% or more (40% WARN) (SR-3)",
+    "fix": "fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "caption",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "card-layout",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "col-edge",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "effect-repeat",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nesting",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "placeholder",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "pricing-tiers",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "proximity",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "sample-label",
+    "where": "(the page)",
+    "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "street-number",
+    "where": "(the page)",
+    "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "postcode",
+    "where": "(the page)",
+    "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "coordinates",
+    "where": "(the page)",
+    "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "company-number",
+    "where": "(the page)",
+    "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "phone-number",
+    "where": "(the page)",
+    "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+    "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav",
+    "where": "header.site-header > div.wrap.header-inner > div.header-actions > button.icon-btn.nav-toggle",
+    "msg": "the nav is lopsided: its last item ends 12px inside the content's edge (370px), while its first starts on the other edge",
+    "fix": "start the nav's first item and end its last on the content's two edges",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "article.rp-card:nth-of-type(1) > div.rp-body > h3.rp-name > a \"Queen Room\"",
+    "msg": "a 137x32px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "article.rp-card:nth-of-type(1) > div.rp-body > div.rp-actions > a.text-link \"See the room\"",
+    "msg": "a 108x40px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "section#quartos > div.wrap > p.rp-all > a.text-link \"View All Rooms\"",
+    "msg": "a 121x40px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "section.section.mp > div.wrap > div.pv-actions > a.text-link \"Reserve a Table\"",
+    "msg": "a 126x40px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "section.section.gp > div.wrap > div.gp-head > a.text-link \"View Gallery\"",
+    "msg": "a 98x40px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.text-link.on-dark \"Get in Touch\"",
+    "msg": "a 101x40px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     390,
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "busy-ground",
+    "where": "section.cine-hero.hx > div.wrap.cine-content > div.rs-hero-text > p.hx-line \"A unique destination in Timor-Leste, whe\"",
+    "msg": "text over a detailed part of a picture (its ground changes by 1.4 L* from one pixel to the next under the words)",
+    "fix": "move the text to a calm part of the picture, or put it on a panel",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#main > section.scene.final-cta / footer.site-footer",
+    "msg": "32px between these sections, -60% against the median 80px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-set",
+    "where": "article.rp-card:nth-of-type(2) > a.rp-media > figure.media > img \"suite-familia-640.jpg\"",
+    "msg": "14 photographs in more than one look: saturation from 0.20 to 0.63; warm and cool photographs mixed (b* -7 to +28); the odd one out is suite-familia-640.jpg",
+    "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-family",
+    "where": "div.mobile-bar",
+    "msg": "the nav changes form as the page scrolls: header.site-header gives way to div.mobile-bar",
+    "fix": "keep one nav on every screen: the same bar, fill, links and type",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "tap-size",
+    "where": "header.site-header > div.wrap.header-inner > a.brand \"Lauhata\"",
+    "msg": "a 114x42px tap target: under the 44px a phone needs",
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box",
+    "widths": [
+     320
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-puffery",
+    "msg": "puffery and dead metaphors (serves as, pivotal, in the heart of, where X meets Y, as seen in): 1, budget 0",
+    "fix": "name the street, the figure or the outlet; plain \"is\" and \"has\" read as a person (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "copy x1: \"where exceptional cui...\"",
+    "exact": false
+   },
+   {
+    "check": "copy-stat-strip",
+    "msg": "stat strip x1",
+    "fix": "a strip only of figures the brief gives (a price, hours, a count); otherwise put each number in the sentence it proves, or leave it out (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "copy x1: \"08:00–10:00 / 11:00–2...\"",
+    "exact": false
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 183,
+   "layout": 15
+  }
+ },
+ "open": [
+  {
+   "check": "sample-label",
+   "where": "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) \"© 2026 Lauhata Beach Escape. All rights \"",
+   "msg": "a note that the page's names or figures are examples (\"photos are illustrative\"): it reads as an apology and undercuts every claim",
+   "fix": "drop the \"sample\" tags and any note that names and figures are examples: take each from the brief, or remove the claim",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "sample-label"
+   ],
+   "wheres": [
+    "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) \"© 2026 Lauhata Beach Escape. All rights \""
+   ]
+  },
+  {
+   "check": "sample-label",
+   "where": "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) > span.footer-note \"Some photos are illustrative and are mar\"",
+   "msg": "a note that the page's names or figures are examples (\"photos are illustrative\"): it reads as an apology and undercuts every claim",
+   "fix": "drop the \"sample\" tags and any note that names and figures are examples: take each from the brief, or remove the claim",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "sample-label"
+   ],
+   "wheres": [
+    "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) > span.footer-note \"Some photos are illustrative and are mar\""
+   ]
+  },
+  {
+   "check": "nav",
+   "where": "header.site-header > div.wrap.header-inner > a.brand \"Lauhata BEACH ESCAPE\"",
+   "msg": "nav link wraps to a second line",
+   "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "nav"
+   ],
+   "wheres": [
+    "header.site-header > div.wrap.header-inner > a.brand \"Lauhata BEACH ESCAPE\""
+   ]
+  },
+  {
+   "check": "no-visual",
+   "where": "main#main > section.section.am \"Facilities\"",
+   "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+   "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "no-visual"
+   ],
+   "wheres": [
+    "main#main > section.section.am \"Facilities\""
+   ]
+  },
+  {
+   "check": "button-styles",
+   "where": "(one screen)",
+   "msg": "3 button styles on one screen: pill, fill #e8782a (\"Explore Our Resort\"); pill, outline #f8f1e7 (\"Discover Our Story\"); pill, fill #e8782a, outline #e8782a (\"Reserve\"); the odd one out: \"Reserve\"",
+   "fix": "one primary and one secondary button: one shape, one height per size, one label size",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "button-styles"
+   ],
+   "wheres": [
+    "(one screen)"
+   ]
+  },
+  {
+   "check": "button-styles",
+   "where": "(the page)",
+   "msg": "5 button styles on the page: pill, fill #e8782a, outline #e8782a x1 (\"Reserve\"); pill, fill #e8782a x6 (\"Explore Our Resort\"); pill, outline #f8f1e7 x6 (\"Discover Our Story\"); pill, fill #17120f x3 (\"Add\"); pill, fill #f7f0e4 x1 (\"Reserve a Table\")",
+   "fix": "one primary and one secondary button: one shape, one height per size, one label size",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "button-styles"
+   ],
+   "wheres": [
+    "(the page)"
+   ]
+  },
+  {
+   "check": "same-action",
+   "where": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light \"Reserve a Table\"",
+   "msg": "\"Reserve a Table\" appears 2 times in different looks: pill, outline #f8f1e7 and pill, fill #f7f0e4",
+   "fix": "draw one action the same way everywhere (only the nav copy may be one size smaller)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "same-action"
+   ],
+   "wheres": [
+    "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light \"Reserve a Table\""
+   ]
+  },
+  {
+   "check": "copy-headline",
+   "where": "h1#hero-title \"Dine. Stay. Unwind.\"",
+   "msg": "\"Dine. Stay. Unwind.\" does not name what is sold (beachfront restaurant and rooms, beachfront, restaurant, rooms, from flags)",
+   "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "copy-headline"
+   ],
+   "wheres": [
+    "h1#hero-title \"Dine. Stay. Unwind.\""
+   ]
+  },
+  {
+   "check": "copy-headings",
+   "where": "div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3 \"A Culinary Journey\"",
+   "msg": "\"A Culinary Journey\" names no product, part, place or section (8 headings like it; at most one brand line per page) (and 7 more like it: \"Stay in Paradise\", \"Find Your Perfect Stay\", \"Flavours by the Sea\", \"Facilities\", ...)",
+   "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "copy-headings"
+   ],
+   "wheres": [
+    "div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3 \"A Culinary Journey\""
+   ]
+  },
+  {
+   "check": "section-gaps",
+   "where": "main#main > section.scene.final-cta / footer.site-footer",
+   "msg": "42px between these sections, -69% against the median 137px",
+   "fix": "use one gap between sections (all within 25% of each other)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-gaps"
+   ],
+   "wheres": [
+    "main#main > section.scene.final-cta / footer.site-footer"
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-1080.jpg\"",
+   "msg": "aerea-costa-1080.jpg: 748x421 shown at 705x564, blown up 1.34x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-1080.jpg\""
+   ]
+  },
+  {
+   "check": "effect-kind",
+   "where": "(the page)",
+   "msg": "a place page (--type) moves with the scroll: scroll libraries or timelines (ScrollTrigger, ScrollSmoother): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+   "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "effect-kind"
+   ],
+   "wheres": [
+    "(the page)"
+   ]
+  },
+  {
+   "check": "section-tile",
+   "where": "section#dine-stay \"Dine & Stay\"",
+   "msg": "the section is 1062px tall (1.18 screens at 1440x900), not one screen or two: the screen one screen on from its top (scroll 2652px) shows 78px of it and 738px of the next section, its heading \"Find Your Perfect Stay\" on screen",
+   "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-tile"
+   ],
+   "wheres": [
+    "section#dine-stay \"Dine & Stay\""
+   ]
+  },
+  {
+   "check": "focus-ring",
+   "where": "main:focus",
+   "msg": "\"main:focus\" in site.css removes the focus outline and sets nothing in its place",
+   "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "focus-ring"
+   ],
+   "wheres": [
+    "main:focus"
+   ]
+  },
+  {
+   "check": "focus-ring",
+   "where": ".cine-bar .bc-field .pk-btn:focus-visible",
+   "msg": "\".cine-bar .bc-field .pk-btn:focus-visible\" in site.css removes the focus outline and sets nothing in its place",
+   "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "focus-ring"
+   ],
+   "wheres": [
+    ".cine-bar .bc-field .pk-btn:focus-visible"
+   ]
+  },
+  {
+   "check": "focus-ring",
+   "where": ".booking-card.is-hero .bc-field .pk-btn:focus-visible",
+   "msg": "\".booking-card.is-hero .bc-field .pk-btn:focus-visible\" in site.css removes the focus outline and sets nothing in its place",
+   "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "focus-ring"
+   ],
+   "wheres": [
+    ".booking-card.is-hero .bc-field .pk-btn:focus-visible"
+   ]
+  },
+  {
+   "check": "focus-visible",
+   "where": "div.wrap.st2-grid > div.st2-text:nth-of-type(2) > div.pv-actions > a.btn.btn-terra \"Read our story\"",
+   "msg": "Tab stop 14, a \"Read our story\": the focus lands on something you cannot see",
+   "fix": "keep the kit's ring (system.css :focus-visible, 2px in --action, there at once); a control that hides itself shows on focus",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "focus-visible"
+   ],
+   "wheres": [
+    "div.wrap.st2-grid > div.st2-text:nth-of-type(2) > div.pv-actions > a.btn.btn-terra \"Read our story\""
+   ]
+  },
+  {
+   "check": "map-link",
+   "where": "div.ft-col:nth-of-type(1) > ul.footer-list:nth-of-type(2) > li > a \"Get directions\"",
+   "msg": "\"Get directions\" promises directions but its search (\"-8.581541,125.349856\") holds no street: a map of a district or a town shows nobody the door",
+   "fix": "with a street from the brief, \"Get directions\" to its search; a district only: \"See the area\"; a town only: no map link",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "map-link"
+   ],
+   "wheres": [
+    "div.ft-col:nth-of-type(1) > ul.footer-list:nth-of-type(2) > li > a \"Get directions\""
+   ]
+  },
+  {
+   "check": "moment-none",
+   "where": "(the page)",
+   "msg": "a place page (--type) deals no moment: every kind carries one, two on a long page (moments.md)",
+   "fix": "deal one (moments.mjs pick --page place --photo) and mount it in its own section",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "moment-none"
+   ],
+   "wheres": [
+    "(the page)"
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "main#main > section.section.am \"Facilities RestaurantBarBeachfrontRooms \"",
+   "msg": "the section is 353px tall (0.4 screens), 547px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+   "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height"
+   ],
+   "wheres": [
+    "main#main > section.section.am \"Facilities RestaurantBarBeachfrontRooms \"",
+    "main#main > section.section.gp \"A Look at LauhataView Gallery\"",
+    "main#main > section.section.mp \"Flavours by the Sea A few of the dishes \"",
+    "main#main > section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfect Getawa\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#quartos \"Find Your Perfect Stay Discover comforta\"",
+   "msg": "the section is 1294px tall (1.4 screens), 394px over one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+   "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#quartos \"Find Your Perfect Stay Discover comforta\"",
+    "#quartos section.section.rs-stay \"Find Your Perfect Stay Discover \""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#opinioes \"Experiences that stay with you Tripadvis\"",
+   "msg": "the section starts at 7649px, 449px below the screen grid (8 x 900px): sections start on whole screens (SR-2)",
+   "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#opinioes \"Experiences that stay with you Tripadvis\"",
+    "#opinioes section.section.reviews-ed \"Experiences that stay with you T\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "footer.site-footer \"Lauhata Beach Escape A table and a room \"",
+   "msg": "the section's content does not fit it: its lowest content ends 822px below its top, past 779px (the section less 72px of bottom padding) (SR-2)",
+   "fix": "fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height"
+   ],
+   "wheres": [
+    "footer.site-footer \"Lauhata Beach Escape A table and a room \""
+   ]
+  },
+  {
+   "check": "section-air",
+   "where": "section#opinioes / main#main > section.scene.final-cta",
+   "msg": "667px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)",
+   "fix": "keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-air"
+   ],
+   "wheres": [
+    "section#opinioes / main#main > section.scene.final-cta"
+   ]
+  },
+  {
+   "check": "section-air",
+   "where": "main#main > section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfect Getawa\"",
+   "msg": "the content fills 34.6% of the section's height (287 of 828px): 55% or more (40% WARN) (SR-3)",
+   "fix": "fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-air"
+   ],
+   "wheres": [
+    "main#main > section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfect Getawa\""
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "h2#mp-title \"Flavours by the Sea\"",
+   "msg": "the screen at scroll 3600px (stride 4) shows 392px of section 5 and the heading of section 5 whole and the content of 2 sections, over 24px each beside section 4: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section"
+   ],
+   "wheres": [
+    "h2#mp-title \"Flavours by the Sea\""
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "main#main > section.section.gp \"A Look at LauhataView Gallery\"",
+   "msg": "the screen at scroll 7200px (stride 8) shows 365px of section 8 and the content of 2 sections, over 24px each beside section 9: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section"
+   ],
+   "wheres": [
+    "main#main > section.section.gp \"A Look at LauhataView Gallery\""
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "section#opinioes \"Experiences that stay with you Tripadvis\"",
+   "msg": "the screen at scroll 8100px (stride 9) shows 290px of section 9 and the content of 2 sections, over 24px each beside section 10: a screen shows one section (another may peek 8px, 24px WARN) (and 8 more like it: scroll 5143px, scroll 4500px, scroll 9000px) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section",
+    "neighbour"
+   ],
+   "wheres": [
+    "section#opinioes \"Experiences that stay with you Tripadvis\"",
+    "#opinioes section.section.reviews-ed \"Experiences that stay with you T\""
+   ]
+  },
+  {
+   "check": "one-heading",
+   "where": "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(1) > h2.footer-h \"Visit us\"",
+   "msg": "the section holds 4 h2 headings: one per section, first in its .wrap (SR-5)",
+   "fix": "give each section one h2, first in its .wrap, and the hero only its h1",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-heading"
+   ],
+   "wheres": [
+    "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(1) > h2.footer-h \"Visit us\""
+   ]
+  },
+  {
+   "check": "one-heading",
+   "where": "h2#mo-title \"Moments That Last\"",
+   "msg": "headings of two sections show whole on one screen at 7 of 186 scroll positions (3.8%; at scroll 5000, 5050, 5100, 5700px), here with \"Facilities\": at most 3% on a desktop (SR-5)",
+   "fix": "make the sections one screen tall so their headings sit a screen apart and two never share one",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-heading"
+   ],
+   "wheres": [
+    "h2#mo-title \"Moments That Last\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "main#main > section.cine-hero.hx \"Dine. Stay. Unwind. A unique destination\"",
+   "msg": "the content of section 1 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)",
+   "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "main#main > section.cine-hero.hx \"Dine. Stay. Unwind. A unique destination\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "section#historia \"More Than a Resort. A Place to Belong. L\"",
+   "msg": "the content of section 2 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (and 11 more like it: \"Dine & Stay A Culinary J\", \"Find Your Perfect Stay D\", \"Flavours by the Sea A fe\") (SR-6)",
+   "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "section#historia \"More Than a Resort. A Place to Belong. L\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "a.skip-link \"Skip to content\"",
+   "msg": "a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)",
+   "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "a.skip-link \"Skip to content\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "header.site-header \"Lauhata Beach Escape HomeRestaurantHotel\"",
+   "msg": "a <header> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (and 10 more like it: \"Lauhata Beach Escape A t\", p.sr-only, \"WhatsApp\") (SR-6)",
+   "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "header.site-header \"Lauhata Beach Escape HomeRestaurantHotel\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "section.scene.final-cta > div.scene-media > figure.media > img",
+   "msg": "the <img> runs 0-1440px, outside the container lines of section 10 at 32-1408px: full width is for background layers and grounds only (SR-6)",
+   "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "section.scene.final-cta > div.scene-media > figure.media > img"
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "main#main > section.cine-hero.hx > div.hx-shade",
+   "msg": "a box runs 0-1440px, outside the container lines of section 1 at 32-1408px: full width is for background layers and grounds only (and 4 more like it: main#main > section.scene.final-cta > div.scene-media, main#main > section.scene.final-cta > div.scene-media > figure.media, \"Sunset over the sea, wit\") (SR-6)",
+   "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "main#main > section.cine-hero.hx > div.hx-shade"
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(3) > h2.footer-h \"Reviews\"",
+   "msg": "the h2 starts 1038px right of the container's left: every h1 and h2 starts on it, 2px either way (and 17 more like it: x 944, x 857, \"More Than a Resort. A Pl\") (SR-6)",
+   "fix": "start the text on the container's left, or on the one split line every split shares",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(3) > h2.footer-h \"Reviews\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "section#opinioes > div.wrap:nth-of-type(2) > div.rv-own > details.rv-form \"Have you stayed with us? Leave your feed\"",
+   "msg": "a box over half the container wide runs 80-816px, not on the container's lines at 32-1408px (and 5 more like it: ul.gp-grid > li.gp-0 > a > figure.media, ul.gp-grid > li.gp-3 > a > figure.media, main#main > section.cine-hero.hx > div.hx-shade) (SR-6)",
+   "fix": "run the picture or box from the container's left line to its right line, or put it in a row or a split",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "section#opinioes > div.wrap:nth-of-type(2) > div.rv-own > details.rv-form \"Have you stayed with us? Leave your feed\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "section#dine-stay > div.wrap > div.xp-grid \"A Culinary JourneyDiscover delicious fla\"",
+   "msg": "a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "section#dine-stay > div.wrap > div.xp-grid \"A Culinary JourneyDiscover delicious fla\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "section#quartos > div.wrap > div.rp-grid \"Queen Room A queen-size bed and a televi\"",
+   "msg": "a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "section#quartos > div.wrap > div.rp-grid \"Queen Room A queen-size bed and a televi\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "main#main > section.section.mp > div.wrap > div.menu-grid.mp-grid \"Main Course Grilled Fish Fish fillet wit\"",
+   "msg": "a row of 3 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (and 3 more like it: \"RestaurantBarBeachfrontR\", \"Explore Menu Hotel Our S\", \"© 2026 Lauhata Beach Esc\") (SR-7)",
+   "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "main#main > section.section.mp > div.wrap > div.menu-grid.mp-grid \"Main Course Grilled Fish Fish fillet wit\""
+   ]
+  },
+  {
+   "check": "row-lines",
+   "where": "section.scene.final-cta > div.scene-media > figure.media > img",
+   "msg": "the <img> ends at 1440px, past the container's right line at 1408px (SR-7)",
+   "fix": "end it at the container's right line",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "row-lines"
+   ],
+   "wheres": [
+    "section.scene.final-cta > div.scene-media > figure.media > img"
+   ]
+  },
+  {
+   "check": "split-pair",
+   "where": "main#main > section.section.mo > div.wrap.mo-grid \"Moments That Last Sunset dinners, family\"",
+   "msg": "the two columns of the split start 209px apart at the top (centred on each other): a split's columns are top-aligned, 8px either way (SR-8)",
+   "fix": "top-align both columns of the split (align-items: start)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "split-pair"
+   ],
+   "wheres": [
+    "main#main > section.section.mo > div.wrap.mo-grid \"Moments That Last Sunset dinners, family\""
+   ]
+  },
+  {
+   "check": "split-pair",
+   "where": "footer.site-footer > div.wrap.ft-top \"Lauhata Beach Escape A table and a room \"",
+   "msg": "the two columns of the split start 164px apart at the top: a split's columns are top-aligned, 8px either way (and 1 more like it: \"More Than a Resort. A Pl\") (SR-8)",
+   "fix": "top-align both columns of the split (align-items: start)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "split-pair"
+   ],
+   "wheres": [
+    "footer.site-footer > div.wrap.ft-top \"Lauhata Beach Escape A table and a room \""
+   ]
+  },
+  {
+   "check": "split-pair",
+   "where": "section#historia > div.wrap.st2-grid \"More Than a Resort. A Place to Belong. L\"",
+   "msg": "the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)",
+   "fix": "put the text in the left column and the visual in the right, on every split",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "split-pair"
+   ],
+   "wheres": [
+    "section#historia > div.wrap.st2-grid \"More Than a Resort. A Place to Belong. L\""
+   ]
+  },
+  {
+   "check": "flush",
+   "where": "main#main > section.scene.final-cta > div.wrap.scene-text \"Your Perfect Getaway Awaits Experience t\"",
+   "msg": "its first line sits 0px under the top edge of section.scene.final-cta, where the ground changes",
+   "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "flush"
+   ],
+   "wheres": [
+    "main#main > section.scene.final-cta > div.wrap.scene-text \"Your Perfect Getaway Awaits Experience t\""
+   ]
+  },
+  {
+   "check": "collide",
+   "where": "header.site-header \"Lauhata\"",
+   "msg": "at the top of the page the fixed bar covers the picture \"img: Sunset over the sea, with t\": nothing scrolls it out from under the bar",
+   "fix": "on a phone nothing lies on anything else: let the section grow with its content (min-height for its screens, never a fixed height; --hm: 2 when it needs two) or cut what it holds; keep pictures and cards off the buttons; pad the page under a fixed bar by the bar's height (top: the first section; end: the footer)",
+   "widths": [
+    390,
+    320
+   ],
+   "from": "consistency",
+   "ids": [
+    "collide"
+   ],
+   "wheres": [
+    "header.site-header \"Lauhata\""
+   ]
+  },
+  {
+   "check": "contrast",
+   "where": "main#main > section.scene.final-cta > div.wrap.scene-text > p.final-lead \"Experience the best of Lauhata Liquiçá, \"",
+   "msg": "body text over a picture reads at 3.3:1 at its worst tenth (needs 4.5:1), on a busy ground",
+   "fix": "put the text on a calm part of the picture, or on a solid panel",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "contrast"
+   ],
+   "wheres": [
+    "main#main > section.scene.final-cta > div.wrap.scene-text > p.final-lead \"Experience the best of Lauhata Liquiçá, \""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "section.cine-hero.hx > div.hx-bg > figure.media > img \"img: Sunset over the sea, with the palm \"",
+   "msg": "por-do-sol-palmeiras-alto-1080.jpg: 390x219 shown at 413x893, blown up 4.08x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "section.cine-hero.hx > div.hx-bg > figure.media > img \"img: Sunset over the sea, with the palm \""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-640.jpg\"",
+   "msg": "aerea-costa-640.jpg: 358x201 shown at 350x280, blown up 1.39x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "div.wrap.st2-grid > div.st2-media > figure.media > img \"img: aerea-costa-640.jpg\""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "div.menu-grid.mp-grid > article.dish:nth-of-type(1) > figure.media.dish-photo > img \"img: Grilled Fish (illustrative image, n\"",
+   "msg": "grilled-fish-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "div.menu-grid.mp-grid > article.dish:nth-of-type(1) > figure.media.dish-photo > img \"img: Grilled Fish (illustrative image, n\""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "div.menu-grid.mp-grid > article.dish:nth-of-type(2) > figure.media.dish-photo > img \"img: Lauhata Special Fried Rice (illustr\"",
+   "msg": "lauhata-special-fried-rice-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "div.menu-grid.mp-grid > article.dish:nth-of-type(2) > figure.media.dish-photo > img \"img: Lauhata Special Fried Rice (illustr\""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "div.menu-grid.mp-grid > article.dish:nth-of-type(3) > figure.media.dish-photo > img \"img: Lauhata Seafood (illustrative image\"",
+   "msg": "pizza-lauhata-seafood-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "div.menu-grid.mp-grid > article.dish:nth-of-type(3) > figure.media.dish-photo > img \"img: Lauhata Seafood (illustrative image\""
+   ]
+  },
+  {
+   "check": "photo-upscale",
+   "where": "section.scene.final-cta > div.scene-media > figure.media > img \"img: por-do-sol-mar-640.jpg\"",
+   "msg": "por-do-sol-mar-640.jpg: 390x219 shown at 414x368, blown up 1.68x",
+   "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "photo-upscale"
+   ],
+   "wheres": [
+    "section.scene.final-cta > div.scene-media > figure.media > img \"img: por-do-sol-mar-640.jpg\""
+   ]
+  },
+  {
+   "check": "edge-right",
+   "where": "#historia div.st2-media",
+   "msg": "ends at x 784.7; the right line is 1360",
+   "fix": "end it on the .wrap right line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-right"
+   ],
+   "wheres": [
+    "#historia div.st2-media"
+   ]
+  },
+  {
+   "check": "edge-right",
+   "where": "#historia figure.media",
+   "msg": "ends at x 784.7; the right line is 1360",
+   "fix": "end it on the .wrap right line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-right"
+   ],
+   "wheres": [
+    "#historia figure.media"
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#historia div.st2-text \"More Than a Resort. A Place to B\"",
+   "msg": "starts at x 856.7; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#historia div.st2-text \"More Than a Resort. A Place to B\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#historia h2.pv-title \"More Than a Resort. A Place to B\"",
+   "msg": "starts at x 856.7; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#historia h2.pv-title \"More Than a Resort. A Place to B\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#historia p.pv-body \"Lauhata Beach Escape is a place \"",
+   "msg": "starts at x 856.7; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#historia p.pv-body \"Lauhata Beach Escape is a place \""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#historia ul.st2-facts \"Beachfront in LiquiçáRestaurant \"",
+   "msg": "starts at x 856.7; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#historia ul.st2-facts \"Beachfront in LiquiçáRestaurant \""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#dine-stay h3 \"A Culinary Journey\"",
+   "msg": "starts at x 116.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#dine-stay h3 \"A Culinary Journey\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#dine-stay p \"Discover delicious flavours, car\"",
+   "msg": "starts at x 116.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#dine-stay p \"Discover delicious flavours, car\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#dine-stay h3 \"Stay in Paradise\"",
+   "msg": "starts at x 772.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#dine-stay h3 \"Stay in Paradise\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#dine-stay p \"Relax, unwind and enjoy a comfor\"",
+   "msg": "starts at x 772.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#dine-stay p \"Relax, unwind and enjoy a comfor\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#quartos h3.rp-name \"Queen Room\"",
+   "msg": "starts at x 111.4; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#quartos h3.rp-name \"Queen Room\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#quartos p.rp-sum \"A queen-size bed and a televisio\"",
+   "msg": "starts at x 111.4; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#quartos p.rp-sum \"A queen-size bed and a televisio\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#quartos ul.room-facts-line \"1 queen-size bedTelevision\"",
+   "msg": "starts at x 111.4; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#quartos ul.room-facts-line \"1 queen-size bedTelevision\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#quartos h3.rp-name \"Queen & Single Room\"",
+   "msg": "starts at x 767.4; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#quartos h3.rp-name \"Queen & Single Room\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#quartos p.rp-sum \"A queen-size bed and a single be\"",
+   "msg": "starts at x 767.4; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#quartos p.rp-sum \"A queen-size bed and a single be\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "#quartos ul.room-facts-line \"1 queen-size bed and 1 single be\"",
+   "msg": "starts at x 767.4; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "#quartos ul.room-facts-line \"1 queen-size bed and 1 single be\""
+   ]
+  },
+  {
+   "check": "edge-right",
+   "where": "section.section.mp figure.media.dish-photo",
+   "msg": "ends at x 488; the right line is 1360",
+   "fix": "end it on the .wrap right line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-right"
+   ],
+   "wheres": [
+    "section.section.mp figure.media.dish-photo"
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp p.dish-tag \"Main Course\"",
+   "msg": "starts at x 99.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp p.dish-tag \"Main Course\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp h3 \"Grilled Fish\"",
+   "msg": "starts at x 99.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp h3 \"Grilled Fish\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp p.dish-desc \"Fish fillet with a lemon and but\"",
+   "msg": "starts at x 99.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp p.dish-desc \"Fish fillet with a lemon and but\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp figure.media.dish-photo",
+   "msg": "starts at x 952; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp figure.media.dish-photo"
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp p.dish-tag \"Pizza\"",
+   "msg": "starts at x 971.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp p.dish-tag \"Pizza\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp h3 \"Lauhata Seafood\"",
+   "msg": "starts at x 971.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp h3 \"Lauhata Seafood\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mp p.dish-desc \"Tuna, prawns, feta and mozzarell\"",
+   "msg": "starts at x 971.2; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mp p.dish-desc \"Tuna, prawns, feta and mozzarell\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mo div.mo-photos",
+   "msg": "starts at x 650.7; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mo div.mo-photos"
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mo figure.mo-a",
+   "msg": "starts at x 650.7; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mo figure.mo-a"
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mo figure.mo-b",
+   "msg": "starts at x 1053.6; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mo figure.mo-b"
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "section.section.mo figure.mo-c",
+   "msg": "starts at x 1053.6; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "section.section.mo figure.mo-c"
+   ]
+  },
+  {
+   "check": "edge-right",
+   "where": "footer.site-footer div.ft-brand \"Lauhata Beach Escape A table and\"",
+   "msg": "ends at x 688; the right line is 1360",
+   "fix": "end it on the .wrap right line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-right"
+   ],
+   "wheres": [
+    "footer.site-footer div.ft-brand \"Lauhata Beach Escape A table and\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "footer.site-footer div.ft-cta \"Reserve a Table or ask for a roo\"",
+   "msg": "starts at x 944; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "footer.site-footer div.ft-cta \"Reserve a Table or ask for a roo\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "footer.site-footer div.ft-col \"Visit us Aldeia Pissu Kraik, Suk\"",
+   "msg": "starts at x 410; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "footer.site-footer div.ft-col \"Visit us Aldeia Pissu Kraik, Suk\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "footer.site-footer div.ft-col \"Contact +670 7740 1111WhatsApp a\"",
+   "msg": "starts at x 740; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "footer.site-footer div.ft-col \"Contact +670 7740 1111WhatsApp a\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "footer.site-footer div.ft-col \"Reviews Tripadvisor4.4/5Booking.\"",
+   "msg": "starts at x 1070; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "footer.site-footer div.ft-col \"Reviews Tripadvisor4.4/5Booking.\""
+   ]
+  },
+  {
+   "check": "edge-left",
+   "where": "footer.site-footer p \"Privacy policy · Website by Elev\"",
+   "msg": "starts at x 1085.3; the lines are 80 and the column starts",
+   "fix": "start it on the .wrap left line",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-left"
+   ],
+   "wheres": [
+    "footer.site-footer p \"Privacy policy · Website by Elev\""
+   ]
+  },
+  {
+   "check": "one-sided",
+   "where": "#historia section.section.st2 \"More Than a Resort. A Place to B\"",
+   "msg": "its visuals end at x 784.7, short of the right line 1360",
+   "fix": "let the row reach both .wrap edges",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "one-sided"
+   ],
+   "wheres": [
+    "#historia section.section.st2 \"More Than a Resort. A Place to B\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "#historia section.section.st2 \"More Than a Resort. A Place to B\"",
+   "msg": "852px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "#historia section.section.st2 \"More Than a Resort. A Place to B\""
+   ]
+  },
+  {
+   "check": "neighbour-ground",
+   "where": "#historia section.section.st2 \"More Than a Resort. A Place to B\"",
+   "msg": "framed, 48px of #dine-stay section.section.xp \"Dine & Stay A Culinary JourneyDi\"'s ground shows",
+   "fix": "end the ground with the section",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour-ground"
+   ],
+   "wheres": [
+    "#historia section.section.st2 \"More Than a Resort. A Place to B\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "#dine-stay section.section.xp \"Dine & Stay A Culinary JourneyDi\"",
+   "msg": "1062px, 1.18 screens; a section is exactly one or two (--h)",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "#dine-stay section.section.xp \"Dine & Stay A Culinary JourneyDi\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.section.mp section.section.mp \"Flavours by the Sea A few of the\"",
+   "msg": "1035px, 1.15 screens; a section is exactly one or two (--h)",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.section.mp section.section.mp \"Flavours by the Sea A few of the\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\"",
+   "msg": "353px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short"
+   ],
+   "wheres": [
+    "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\"",
+   "msg": "353px, 0.39 screens; a section is exactly one or two (--h)",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\""
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\"",
+   "msg": "framed, 419px of section.section.mo section.section.mo \"Moments That Last Sunset dinners\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "section.section.am section.section.am \"Facilities RestaurantBarBeachfro\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "section.section.mo section.section.mo \"Moments That Last Sunset dinners\"",
+   "msg": "889px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short"
+   ],
+   "wheres": [
+    "section.section.mo section.section.mo \"Moments That Last Sunset dinners\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.section.mo section.section.mo \"Moments That Last Sunset dinners\"",
+   "msg": "889px, 0.99 screens; a section is exactly one or two (--h)",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.section.mo section.section.mo \"Moments That Last Sunset dinners\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.section.gp section.section.gp \"A Look at LauhataView Gallery\"",
+   "msg": "1264px, 1.40 screens; a section is exactly one or two (--h)",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.section.gp section.section.gp \"A Look at LauhataView Gallery\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\"",
+   "msg": "828px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short"
+   ],
+   "wheres": [
+    "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\""
+   ]
+  },
+  {
+   "check": "screen-height",
+   "where": "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\"",
+   "msg": "828px, 0.92 screens; a section is exactly one or two (--h)",
+   "fix": "make the section exactly one or two screens (--h: 1 or 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-height"
+   ],
+   "wheres": [
+    "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\""
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\"",
+   "msg": "framed, 54px of #opinioes section.section.reviews-ed \"Experiences that stay with you T\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "section.scene.final-cta section.scene.final-cta \"Liquiçá, Timor-Leste Your Perfec\""
+   ]
+  },
+  {
+   "check": "edge-right",
+   "where": "section.section.mo figure.mo-a",
+   "msg": "ends at x 207.8; the right line is 370",
+   "fix": "end it on the .wrap right line",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "edge-right"
+   ],
+   "wheres": [
+    "section.section.mo figure.mo-a"
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "#quartos section.section.rs-stay \"Find Your Perfect Stay Discover \"",
+   "msg": "framed, 37px of section.section.mp section.section.mp \"Flavours by the Sea A few of the\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "#quartos section.section.rs-stay \"Find Your Perfect Stay Discover \""
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "section.section.mo section.section.mo \"Moments That Last Sunset dinners\"",
+   "msg": "framed, 37px of section.section.gp section.section.gp \"A Look at LauhataView Gallery\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "section.section.mo section.section.mo \"Moments That Last Sunset dinners\""
+   ]
+  },
+  {
+   "check": "copy-slop-word",
+   "msg": "old slop words (elevate)",
+   "fix": "replace each word with the fact it stands in for: the step count, the figure, the material, the place (a word in the client's own name is not counted when the logo, the title before its \":\" or og:site_name writes the name) (references/copy-tells.md)",
+   "widths": [],
+   "from": "copy",
+   "where": "copy \"elevate\" in \"Privacy policy · Website by Elevate Web Studios\"",
+   "ids": [
+    "copy-slop-word"
+   ],
+   "wheres": [
+    "copy \"elevate\" in \"Privacy policy · Website by Elevate Web Studios\""
+   ]
+  }
+ ],
+ "waived": [],
+ "warnCount": 47,
+ "at": "2026-11-19T07:31:07.865Z",
+ "openTold": true
+}

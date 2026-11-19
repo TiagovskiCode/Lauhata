@@ -140,7 +140,7 @@ export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio
   if (!im) throw new Error(`Unknown image: ${key}`);
   const srcset = srcsetFor(im);
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
-  const d = dimsFor(im);
+  const d = dimsFor(im) || (im.src.startsWith("unsplash:") ? { w: 1440, h: 960 } : null); // external stand-ins: a nominal 3:2 reserves the box (the CSS ratio rules the layout)
   const img = `<img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${decorative ? "" : esc(im.alt[t.lang])}"${d ? ` width="${d.w}" height="${d.h}"` : ""} ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>`;
   const sources = art.map((a) => `<source media="${a.media}" srcset="${srcsetFor(images[a.key])}" sizes="${sizes}">`).join("");
   // A stock or illustrative photo is marked in the HTML; the "Illustrative image" label only shows where the picture

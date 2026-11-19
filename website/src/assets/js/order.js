@@ -363,7 +363,8 @@
     const out = [M.hello, M.intro, "", `*${M.title}*`, ""];
     lines.forEach((l) => {
       const opts = l.opts.map((o) => o[LANG]).join(", ");
-      out.push(`• ${l.qty}x ${l.name}${opts ? ` (${opts})` : ""} — ${money(l.cents)}`);
+      // more than one: show the unit price and the line total, so the message adds up at a glance
+      out.push(l.qty > 1 ? `• ${l.qty}x ${l.name}${opts ? ` (${opts})` : ""} — ${money(l.cents)} ${O.each} = ${money(l.cents * l.qty)}` : `• ${l.qty}x ${l.name}${opts ? ` (${opts})` : ""} — ${money(l.cents)}`);
     });
     out.push("", `${M.total}: ${money(total())}`, "", `${M.name}: ${v("name")}`);
     if (type) out.push(`${M.type}: ${type.label[LANG]}`);
@@ -453,12 +454,14 @@
     input.addEventListener("keydown", (e) => { if (e.key === "Escape" && input.value) { input.value = ""; filter(); } });
     clearSearch.addEventListener("click", () => { input.value = ""; filter(); input.focus(); });
 
+    // Wide screens: the categories are a vertical list on the left (sticky, no bar above the content), so the offset is the header.
+    const side = window.matchMedia("(min-width: 1000px)");
     // Jump to a category, leaving room for the sticky bar (and the header when it will be showing).
     function goTo(section) {
       const header = $("[data-header]");
       const top = section.getBoundingClientRect().top + window.scrollY;
       const down = top > window.scrollY;
-      const y = Math.max(0, top - nav.offsetHeight - 12 - (down ? 0 : header ? header.offsetHeight : 0));
+      const y = Math.max(0, side.matches ? top - 112 : top - nav.offsetHeight - 12 - (down ? 0 : header ? header.offsetHeight : 0));
       window.scrollTo({ top: y, behavior: reduced ? "auto" : "smooth" });
     }
     links.forEach((a) => a.addEventListener("click", (e) => {
@@ -472,7 +475,7 @@
     // Highlight the category being read and keep its chip in view.
     let current = null;
     function spy() {
-      const line = nav.getBoundingClientRect().bottom + 24;
+      const line = side.matches ? 150 : nav.getBoundingClientRect().bottom + 24;
       const inside = menu.getBoundingClientRect().top < line && menu.getBoundingClientRect().bottom > line;
       let cur = null;
       if (inside) cats.forEach((c) => { if (!c.hidden && c.getBoundingClientRect().top <= line) cur = c.dataset.cat; });

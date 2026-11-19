@@ -20,13 +20,10 @@
 
   // Back to the plain layout: no pin, no inline styles, and the day scene as a simple list.
   function cleanup() {
-    if (smoothTick) gsap.ticker.remove(smoothTick);
-    root.classList.remove("is-smoothing");
-    document.querySelector(".scroll-progress")?.remove();
     created.forEach((st) => st.kill());
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
-    gsap.set(".wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform" });
+    gsap.set(".wl-card, .rp-media, .mo-title, .tt-b, .wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform,clipPath" });
     gsap.set(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img", { clearProps: "clipPath,transform" });
     gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
   }
@@ -94,18 +91,15 @@
     }
   }
 
-  /* ---------- Scenes: shutter opens, slow drift (tier B) ---------- */
+  /* ---------- Scenes: a slow drift of the photograph (tier B). Only transforms are scrubbed: scrubbing a clip-path on a
+     full-screen image repainted it on every scroll frame, which made the pages stutter right where the booking sections sit. ---------- */
   function initScenes() {
     if (!full) return;
     $$(".scene").forEach((scene) => {
-      const media = $(".scene-media", scene), img = $(".scene-media img", scene);
-      if (!media || !img) return;
-      track(gsap.fromTo(media, { clipPath: "inset(24% 0% 24% 0%)" }, {
-        clipPath: "inset(0% 0% 0% 0%)", ease: "none",
-        scrollTrigger: { trigger: scene, start: "top 92%", end: "top 28%", scrub: 0.6 },
-      }));
-      track(gsap.fromTo(img, { scale: 1.22, yPercent: -4 }, {
-        scale: 1.06, yPercent: 4, ease: "none",
+      const img = $(".scene-media img", scene);
+      if (!img) return;
+      track(gsap.fromTo(img, { scale: 1.14, yPercent: -3 }, {
+        scale: 1.04, yPercent: 3, ease: "none",
         scrollTrigger: { trigger: scene, start: "top bottom", end: "bottom top", scrub: true },
       }));
     });
@@ -128,122 +122,38 @@
   function initPageHeroes() { // inner pages: same push-in and lift-away, on the single hero photo
     if (!full) return;
     $$(".cine-hero.is-page").forEach((hero) => {
-      const img = $(".slide img", hero), content = $(".cine-content", hero);
+      const img = $(".slide img", hero);
       const st = { trigger: hero, start: "top top", end: "bottom top", scrub: true };
       if (img) track(gsap.to(img, { scale: 1.12, yPercent: 4, ease: "none", scrollTrigger: st }));
-      if (content) track(gsap.to(content, { yPercent: -10, opacity: 0.1, ease: "none", scrollTrigger: { ...st, end: "75% top", scrub: 0.6 } }));
     });
   }
 
-  function initHero() {
-    const hero = $(".hx");
-    if (!full || !hero) return;
-    const bg = $(".hx-bg", hero);
-    if (bg) track(gsap.to(bg, { scale: 1.14, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: true } }));
-    // The copy lifts away and the two title lines part in opposite directions as the page moves on, like a title card.
-    const sc = { trigger: hero, start: "top top", end: "70% top", scrub: 0.6 };
-    const content = $(".hx-content", hero);
-    if (content) track(gsap.to(content, { yPercent: -12, opacity: 0.1, ease: "none", scrollTrigger: sc }));
-    const l1 = $(".hx-title .line", hero), l2 = $(".hx-title .l2", hero);
-    if (l1 && wide) track(gsap.to(l1, { xPercent: -5, ease: "none", scrollTrigger: sc }));
-    if (l2 && wide) track(gsap.to(l2, { xPercent: 5, ease: "none", scrollTrigger: sc }));
+  /* ---------- The home hero: the film is the opening, nothing scrubs or zooms it (no artificial zoom) ---------- */
+  function initHero() {}
+
+  /* ---------- Home: each movement has one job (tier B only; content is in place without it) ----------
+     welcome cards rise one after another once; the room photographs "develop" with a wipe once; the dark band's heading lifts once;
+     the panorama drifts very slightly (parallax, see initParallax). */
+  function initHome() {
+    if (!full || !wide) return; // phones and small tablets: everything is simply there (no hidden states, less work)
+    const ease = "power3.out"; // settles, never overshoots
+    const once = (trigger, vars, start = "top 86%") => gsap.from(trigger, { ...vars, ease, scrollTrigger: { trigger: Array.isArray(trigger) ? trigger[0] : trigger, start, once: true } });
+    const cards = $$(".wl-card");
+    if (cards.length) created.push(once(cards, { y: 28, opacity: 0, duration: 0.9, stagger: 0.12 }, "top 88%").scrollTrigger);
+    $$(".rp-media").forEach((el) => created.push(once(el, { clipPath: "inset(0 0 100% 0)", duration: 1.3, ease: "power2.inOut" }, "top 85%").scrollTrigger));
+    const mo = $(".mo-title");
+    if (mo) created.push(once(mo, { y: 36, opacity: 0, duration: 1 }, "top 82%").scrollTrigger);
+    const tt = $(".tt-b");
+    if (tt) created.push(once(tt, { y: 40, opacity: 0, duration: 1.1 }, "top 90%").scrollTrigger);
   }
 
-  /* ---------- Inertia scrolling (tier B, computer with a mouse or trackpad) ----------
-     The wheel moves a target; the page eases toward it each frame (GSAP's ticker), so every notch glides and stops softly.
-     It scrolls the real page (window.scrollTo), so the sticky day scene, anchors, find-in-page, keyboard and the scrollbar
-     keep working. Left alone: touch screens, open dialogs, any scrollable box under the pointer (cart, pickers, menus,
-     text areas), pinch-zoom (ctrl+wheel) and the keyboard (it hands control back to the browser). */
-  let smoothTick = null;
-  function initSmooth() {
-    if (!full || !wide || !window.matchMedia("(pointer: fine)").matches) return;
-    const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-    const maxY = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    let target = window.scrollY, cur = window.scrollY, active = false;
-    const free = (el) => { // false when the wheel belongs to something else
-      if (document.querySelector("dialog[open]")) return false;
-      for (let n = el; n && n !== document.body && n !== root; n = n.parentElement) {
-        if (n.tagName === "TEXTAREA" || n.tagName === "SELECT" || (n.classList && n.classList.contains("pk-pop"))) return false;
-        const oy = getComputedStyle(n).overflowY;
-        if ((oy === "auto" || oy === "scroll") && n.scrollHeight > n.clientHeight + 1) return false;
-      }
-      return true;
-    };
-    const stop = () => { if (!active) return; active = false; gsap.ticker.remove(smoothTick); root.classList.remove("is-smoothing"); };
-    smoothTick = (time, dt) => {
-      const k = 1 - Math.pow(1 - 0.11, (dt || 16.7) / 16.7); // frame-rate independent ease
-      cur += (target - cur) * k;
-      if (Math.abs(target - cur) < 0.4) { cur = target; window.scrollTo({ top: cur, behavior: "instant" }); stop(); return; }
-      window.scrollTo({ top: cur, behavior: "instant" });
-    };
-    window.addEventListener("wheel", (e) => {
-      if (e.ctrlKey || e.defaultPrevented || !free(e.target)) return;
-      e.preventDefault();
-      const dy = e.deltaMode === 1 ? e.deltaY * 34 : e.deltaMode === 2 ? e.deltaY * window.innerHeight : e.deltaY;
-      // The target moves BEFORE the ticker is (re)started: GSAP calls a freshly added tick function straight away.
-      const wake = !active;
-      if (wake) { cur = window.scrollY; target = cur; active = true; }
-      target = clamp(target + dy, 0, maxY());
-      if (wake) { root.classList.add("is-smoothing"); gsap.ticker.add(smoothTick); }
-    }, { passive: false });
-    // Anything else that moves the page (keys, anchors, scrollbar drag) takes over: the target follows the real position.
-    window.addEventListener("scroll", () => { if (!active) target = cur = window.scrollY; }, { passive: true });
-    window.addEventListener("keydown", (e) => { if (/^(ArrowUp|ArrowDown|PageUp|PageDown|Home|End| )$/.test(e.key)) { stop(); target = cur = window.scrollY; } });
-    window.addEventListener("pointerdown", (e) => { if (e.clientX >= root.clientWidth) { stop(); target = cur = window.scrollY; } }); // scrollbar
-  }
-
-  /* ---------- Reading progress: a thin line under the top edge (tier B) ---------- */
-  function initProgress() {
-    if (!full) return;
-    const bar = document.createElement("div");
-    bar.className = "scroll-progress"; bar.setAttribute("aria-hidden", "true");
-    document.body.appendChild(bar);
-    gsap.set(bar, { scaleX: 0, transformOrigin: "0 50%" });
-    track(gsap.to(bar, { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.25 } }));
-  }
-
-  /* ---------- Content photographs open from a rounded mask as they arrive (tier B) ----------
-     The picture is first seen as a smaller rounded window that widens to its frame while the image settles from a
-     slight zoom: the same opening gesture as the intro, kept to editorial photographs (not cards, not full-screen scenes). */
-  function initMediaReveal() {
-    if (!full) return;
-    const imgs = $$(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img");
-    if (!imgs.length) return;
-    gsap.set(imgs, { clipPath: "inset(10% 8% 10% 8% round 32px)", scale: 1.12 });
-    created.push(...ScrollTrigger.batch(imgs, {
-      start: "top 88%", once: true,
-      onEnter: (batch) => gsap.to(batch, { clipPath: "inset(0% 0% 0% 0% round 16px)", scale: 1, duration: 1.35, ease: "expo.out", stagger: 0.12, overwrite: true,
-        onComplete: () => gsap.set(batch, { clearProps: "clipPath,transform" }) }),
-    }));
-  }
-
-  /* ---------- Cards and panels rise in one after another (tier B) ----------
-     Groups that had no entrance of their own: the four welcome cards, the review cards, the two suites, the Discover links. */
-  function initStagger() {
-    if (!full) return;
-    const sel = ".wc-card, .rv-card, .st-panel";
-    const els = $$(sel).filter((el) => !el.closest(".cine-hero"));
-    if (!els.length) return;
-    gsap.set(els, { opacity: 0, y: 42 });
-    created.push(...ScrollTrigger.batch(els, {
-      start: "top 90%", once: true,
-      onEnter: (batch) => {
-        batch.forEach((el) => el.classList.add("gs-anim"));
-        gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.12, overwrite: true,
-          onComplete: () => batch.forEach((el) => { gsap.set(el, { clearProps: "opacity,transform" }); el.classList.remove("gs-anim"); }) });
-      },
-    }));
-  }
   try {
     initDay();
     initScenes();
     initParallax();
     initHero();
+    initHome();
     initPageHeroes();
-    initSmooth();
-    initProgress();
-    initStagger();
-    initMediaReveal();
     root.classList.add("gsap-ready");
     window.__cinemaReady = true;
     // Images and fonts change heights after load: re-measure the pins once everything has settled.

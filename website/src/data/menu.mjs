@@ -61,8 +61,8 @@ export const categories = [
 
 // Printed on the last page of the menu: applies to every dish.
 export const menuNote = {
-  en: "All items are served within 20 to 30 minutes.",
-  pt: "Todos os pratos são servidos em 20 a 30 minutos.",
+  en: "Ask the team about preparation times.",
+  pt: "Pergunte à equipa pelos tempos de preparação.",
 };
 
 const opt = (id, en, pt, price) => ({ id, label: { en, pt }, ...(price == null ? {} : { price }) });

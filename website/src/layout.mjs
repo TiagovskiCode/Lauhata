@@ -17,12 +17,13 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" ${stroke}/></symbol>
     <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" ${stroke}/></symbol>
     <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" ${stroke}/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" ${stroke}/><path d="M3 12h18M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9Z" ${stroke}/></symbol>
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" ${stroke}/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" ${stroke}/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" ${stroke}/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" ${stroke}/></symbol>
     <symbol id="i-cutlery" viewBox="0 0 24 24"><path d="M7 3.5v7a2 2 0 0 0 4 0v-7M9 10.5v10M17 20.5v-17c-2 1-3 3.5-3 7h3" ${stroke}/></symbol>
     <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3.5 18.5v-11M3.5 14h17v4.5M20.5 14v-2.5a3 3 0 0 0-3-3h-6V14" ${stroke}/><circle cx="7.5" cy="11" r="1.8" ${stroke}/></symbol>
-    <symbol id="i-bed-king" viewBox="0 0 24 24"><path d="M3 19v-8.5M21 19v-8.5M3 15.5h18M3 13h18v2.5M5.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M12.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M3 10.5V6.5a1.5 1.5 0 0 1 1.5-1.5h15A1.5 1.5 0 0 1 21 6.5v4" ${stroke}/></symbol>
+    <symbol id="i-bed-queen" viewBox="0 0 24 24"><path d="M3 19v-8.5M21 19v-8.5M3 15.5h18M3 13h18v2.5M5.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M12.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M3 10.5V6.5a1.5 1.5 0 0 1 1.5-1.5h15A1.5 1.5 0 0 1 21 6.5v4" ${stroke}/></symbol>
     <symbol id="i-bed-single" viewBox="0 0 24 24"><path d="M6.5 19.5v-9M17.5 19.5v-9M6.5 16h11M6.5 13.5h11V16M9 13.5v-1.8a1.2 1.2 0 0 1 1.2-1.2h3.6a1.2 1.2 0 0 1 1.2 1.2v1.8M6.5 10.5V6a1.5 1.5 0 0 1 1.5-1.5h8A1.5 1.5 0 0 1 17.5 6v4.5" ${stroke}/></symbol>
     <symbol id="i-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2" ${stroke}/><path d="M8.5 20.5h7M12 17v3.5" ${stroke}/></symbol>
     <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 9.5a12.5 12.5 0 0 1 17 0M6.5 12.8a8.2 8.2 0 0 1 11 0M9.4 16a4 4 0 0 1 5.2 0" ${stroke}/><circle cx="12" cy="19" r="1" ${stroke}/></symbol>
@@ -100,9 +101,24 @@ function businessLd(t) {
 }
 
 export const logo = (t, cls = "") => `<a class="brand ${cls}" href="${href("home", t.lang)}" aria-label="${esc(site.name)} — ${esc(t.nav.home)}">
-  <span class="brand-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
-  <span class="brand-text"><span class="brand-name">Lauhata</span><span class="brand-line">${esc(t.brandLine)}</span></span>
+  <span class="brand-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""${cls ? " loading=\"lazy\"" : ""}></span>
+  <span class="brand-text"><span class="brand-name">Lauhata</span> <span class="brand-line">${esc(t.brandLine)}</span></span>
 </a>`;
+
+// The header's language control: a globe button that opens a short list of the two languages (names in their own
+// language). The current one is marked and is not a link; the other one goes to the same page in that language.
+// Behaviour (open, close on Escape or outside click) is in assets/js/main.js.
+function langMenu(t, alt) {
+  const L = t.lang;
+  const names = { en: "English", pt: "Português" };
+  const item = (l) => l === L
+    ? `<li><span class="lang-dd-item is-on" aria-current="true" lang="${l === "pt" ? "pt-PT" : "en"}">${names[l]}${icon("check")}</span></li>`
+    : `<li><a class="lang-dd-item" href="${alt}" hreflang="${l}" lang="${l === "pt" ? "pt-PT" : "en"}">${names[l]}</a></li>`;
+  return `<div class="lang-dd" data-lang-dd>
+    <button class="lang-dd-btn" type="button" aria-expanded="false" aria-controls="lang-menu-${L}" aria-label="${t.langShort} · ${esc(t.nav.language)}: ${esc(t.langName)}">${icon("globe")}<span aria-hidden="true">${t.langShort}</span>${icon("down")}</button>
+    <ul class="lang-dd-menu" id="lang-menu-${L}" hidden>${item("en")}${item("pt")}</ul>
+  </div>`;
+}
 
 function langSwitch(t, alt, cls = "") {
   const L = t.lang;
@@ -205,16 +221,14 @@ function header(t, page, alt) {
   const L = t.lang;
   const link = (p, label, hash = "") =>
     `<a href="${href(p, L, hash)}"${page === p && !hash ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
-  // Seven destinations: home, menu, accommodation, about us (which also holds the story), events, gallery, contact.
-  // Final design order: Home, Restaurant, Accommodation, Events, Discover Liquiçá, Our Story, Contact. The gallery
-  // stays in the mobile menu and the footer.
+  // Primary navigation (owner, 19 Nov 2026): exactly Restaurant, Hotel, Experiences, Gallery, Contact, plus a Reserve button. The logo is the way home.
+  // "Hotel" is the accommodation pages (/stay/); "Experiences" is the events page. Our Story and Discover Liquiçá live on the
+  // home page and in the footer.
   const nav = [
-    link("home", t.nav.home),
-    link("restaurant", t.nav.restaurant || t.nav.menu),
+    link("restaurant", t.nav.restaurant),
     link("stay", t.nav.stay),
     link("events", t.nav.events),
-    link("discover", t.nav.discover),
-    link("about", t.nav.story || t.nav.about),
+    link("gallery", t.nav.gallery),
     link("contact", t.nav.contact),
   ].join("");
   return `<header class="site-header" data-header>
@@ -222,9 +236,9 @@ function header(t, page, alt) {
     ${logo(t)}
     <nav class="nav-main" aria-label="${esc(t.nav.primary)}">${nav}</nav>
     <div class="header-actions">
-      ${langSwitch(t, alt)}
+      ${langMenu(t, alt)}
       ${cartButton(t)}
-      <a class="btn btn-dark btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog">${esc(t.land.resort.navCta)}${icon("arrow")}</a>
+      <a class="btn btn-terra btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog">${esc(t.land.resort.reserve)}</a>
       <button class="icon-btn nav-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open>${icon("menu")}</button>
     </div>
   </div>
@@ -235,7 +249,7 @@ function header(t, page, alt) {
     <button class="icon-btn" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close>${icon("close")}</button>
   </div>
   <nav class="mobile-nav-links">
-    ${nav}${link("gallery", t.nav.gallery)}
+    ${nav}
   </nav>
   <div class="mobile-nav-cta">
     <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
@@ -260,7 +274,7 @@ export function tripadvisorBadge(t, cls = "") {
 
 // The footer: an invitation with the two booking actions, then where to go, how to find Lauhata, how to reach it and
 // what guests say. Only confirmed details are listed; a missing phone, email or social profile is simply left out.
-function footer(t) {
+function footer(t, { home = false } = {}) {
   const L = t.lang;
   const year = new Date().getFullYear();
   const F = t.footer;
@@ -272,15 +286,15 @@ function footer(t) {
   <div class="wrap ft-top">
     <div class="ft-brand">
       ${logo(t, "brand-light")}
-      <p class="ft-statement">${esc(F.statement)}</p>
+      ${home ? "" : `<p class="ft-statement">${esc(F.statement)}</p>`}
     </div>
-    <div class="ft-cta">
+    ${home ? "" : `    <div class="ft-cta">
       <p>${esc(F.cta)}</p>
       <div class="ft-cta-btns">
         <a class="btn btn-cream" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${esc(F.bookTable)}</a>
         <a class="btn btn-ghost-light" href="${href("stay", L, "#reservar")}" data-book-open="room">${esc(F.bookRoom)}</a>
       </div>
-    </div>
+    </div>`}
   </div>
   <div class="wrap ft">
     <nav class="ft-col" aria-label="${esc(F.explore)}">
@@ -288,7 +302,7 @@ function footer(t) {
       <ul class="footer-list">
         ${link(href("restaurant", L), t.nav.menu)}
         ${link(href("stay", L), t.nav.stay)}
-        ${link(href("about", L), t.nav.about)}
+        ${link(href("about", L), t.nav.story)}
         ${link(href("events", L), t.nav.events)}
         ${link(href("gallery", L), t.nav.gallery)}
         ${link(href("discover", L), t.nav.discover)}
@@ -373,25 +387,16 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p, o.preloadSizes) : preloadImage(p.key, p.sizes, p.media))).join("\n")}
-<link rel="stylesheet" href="/assets/css/main.css">
-<link rel="stylesheet" href="/assets/css/cinema.css">
-<link rel="stylesheet" href="/assets/css/order.css">
-<link rel="stylesheet" href="/assets/css/home.css">
-<link rel="stylesheet" href="/assets/css/landing.css">
-<link rel="stylesheet" href="/assets/css/picker.css">
-<link rel="stylesheet" href="/assets/css/wide.css">
-<link rel="stylesheet" href="/assets/css/design.css">
-<link rel="stylesheet" href="/assets/css/editorial.css">
-<link rel="stylesheet" href="/assets/css/resort.css">
+<link rel="stylesheet" href="/assets/css/site.css">
 ${jsonLd(businessLd(t))}
 ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
 ${o.menu ? menuJson(o.menu) : ""}
 <script src="/assets/js/picker.js" defer></script>
-<script src="/assets/js/vendor/gsap.min.js" defer></script>
-<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
+${o.page === "home" ? `<script src="/assets/js/vendor/gsap.min.js" defer></script>
+<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>` : ""}
 <script src="/assets/js/main.js" defer></script>
-<script src="/assets/js/cinema.js" defer></script>
+${o.page === "home" ? `<script src="/assets/js/cinema.js" defer></script>` : ""}
 <script src="/assets/js/order.js" defer></script>
 ${site.gaId ? `<script>window.LAUHATA_GA=${JSON.stringify(site.gaId)};</script>
 <script src="/assets/js/analytics.js" defer></script>` : ""}
@@ -408,7 +413,7 @@ ${header(t, o.page, o.alt)}
 <main id="main" tabindex="-1">
 ${o.body}
 </main>
-${footer(t)}
+${footer(t, { home: o.page === "home" })}
 ${cartUi(t)}
 <div class="mobile-bar" data-mobile-bar>
   <a class="btn btn-dark" href="${href("restaurant", L, "#reservar")}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
@@ -426,7 +431,7 @@ ${site.gaId ? `<div class="consent" data-consent role="region" aria-label="${esc
 <dialog class="lightbox" data-lightbox aria-label="${esc(t.gallery.label)}">
   <button class="icon-btn lb-close" type="button" aria-label="${esc(t.common.close)}" data-lb-close>${icon("close")}</button>
   <button class="icon-btn lb-prev" type="button" aria-label="${esc(t.common.previous)}" data-lb-prev>${icon("left")}</button>
-  <figure class="lb-figure"><img alt="" data-lb-img><figcaption data-lb-cap></figcaption></figure>
+  <figure class="lb-figure"><img alt="" data-lb-img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><figcaption data-lb-cap></figcaption></figure>
   <button class="icon-btn lb-next" type="button" aria-label="${esc(t.common.next)}" data-lb-next>${icon("right")}</button>
 </dialog>
 </body>

@@ -1,0 +1,359 @@
+gate: checking dist/index.html (place); this takes a few minutes on a CPU Chrome
+gate: 118 FAIL open
+  FAIL sample-label     footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) "© 2026 Lauhata Beach Escape.  [1440]
+       a note that the page's names or figures are examples ("photos are illustrative"): it reads as an apology and undercuts every claim
+       fix: drop the "sample" tags and any note that names and figures are examples: take each from the brief, or remove the claim
+  FAIL sample-label     footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) > span.footer-note "Some phot  [1440]
+       a note that the page's names or figures are examples ("photos are illustrative"): it reads as an apology and undercuts every claim
+       fix: drop the "sample" tags and any note that names and figures are examples: take each from the brief, or remove the claim
+  FAIL nav              header.site-header > div.wrap.header-inner > a.brand "Lauhata BEACH ESCAPE"  [1440]
+       nav link wraps to a second line
+       fix: make the nav one bar from the content's left edge to its right edge, with every link and action inside it
+  FAIL cut-text         h1#hero-title > span.line > span.w:nth-of-type(1) > span.wi "Dine."  [1440, 390]
+       cut 19px at the top by the overflow of h1#hero-title > span.line > span.w:nth-of-type(1) (and 1 more like it: "Stay.")
+       fix: give the text room: no overflow clipping a line, no line past its box
+  FAIL cut-text         h1#hero-title > em.hx-accent > span.w > span.wi "Unwind."  [1440, 390]
+       cut 19px at the top by the overflow of h1#hero-title > em.hx-accent > span.w
+       fix: give the text room: no overflow clipping a line, no line past its box
+  FAIL no-visual        main#main > section.section.am "Facilities"  [1440, 390]
+       no picture, effect or mock in this section; a feature section needs a visual
+       fix: give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits
+  FAIL button-styles    (one screen)  [1440, 390]
+       3 button styles on one screen: pill, fill #e8782a ("Explore Our Resort"); pill, outline #f8f1e7 ("Discover Our Story"); pill, fill #e8782a, outline #e8782a ("Reserve"); the odd one out: "Reserve"
+       fix: one primary and one secondary button: one shape, one height per size, one label size
+  FAIL button-styles    (the page)  [1440, 390]
+       5 button styles on the page: pill, fill #e8782a, outline #e8782a x1 ("Reserve"); pill, fill #e8782a x6 ("Explore Our Resort"); pill, outline #f8f1e7 x6 ("Discover Our Story"); pill, fill #17120f x3 ("Add"); pill, fill #f
+       fix: one primary and one secondary button: one shape, one height per size, one label size
+  FAIL same-action      div.wrap.cine-content > div.rs-hero-text > div.hx-cta > a.btn.btn-ghost-light "Discover Ou  [1440, 390]
+       "Discover Our Story" appears 2 times in different looks: pill, outline #f8f1e7 and pill, fill #e8782a
+       fix: draw one action the same way everywhere (only the nav copy may be one size smaller)
+  FAIL same-action      section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light "Reser  [1440, 390]
+       "Reserve a Table" appears 2 times in different looks: pill, outline #f8f1e7 and pill, fill #f7f0e4
+       fix: draw one action the same way everywhere (only the nav copy may be one size smaller)
+  FAIL copy-headline    h1#hero-title "Dine. Stay. Unwind."  [1440]
+       "Dine. Stay. Unwind." does not name what is sold (beachfront restaurant and rooms, beachfront, restaurant, rooms, from flags)
+       fix: put the category noun in the h1 (and who it is for, or where), in 2 to 8 words
+  FAIL copy-headings    div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3 "A Culinary Journey"  [1440]
+       "A Culinary Journey" names no product, part, place or section (8 headings like it; at most one brand line per page) (and 7 more like it: "Stay in Paradise", "Find Your Perfect Stay", "Flavours by the Sea", "Facilities", 
+       fix: name the thing in every heading: the product, a part, the place or a section noun
+  FAIL heading-scale    div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3 "A Culinary Journey"  [1440, 390]
+       an h3 at 39.4px, as large as the smallest h2 (25.5px) or larger (and 1 more like it: "Stay in Paradise")
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL heading-scale    h2#final-title "Your Perfect Getaway Awaits"  [1440, 390]
+       h2 headings in 4 sizes, 25.5px ("Dine & Stay") to 73px (x2.86)
+       fix: size headings by level: the h1 largest, one size per level, each level below the one above
+  FAIL text-contrast    div.menu-grid.mp-grid > article.dish:nth-of-type(1) > div.dish-body > p.dish-tag "Main Cou  [1440, 390]
+       a caption, label or muted line in #e8782a on #efe4d2 reads 2.34:1 (needs 4.5:1); 3 like it, like "Main Course", "Pizza"
+       fix: body text in the ink at 7:1 or more; grey (4.5:1 or more) only for captions and labels
+  FAIL text-contrast    div.menu-grid.mp-grid > article.dish:nth-of-type(1) > div.dish-body > p.dish-desc "Fish fi  [1440, 390]
+       body text in #6d6056 on #efe4d2 reads 4.83:1 (needs 7:1)
+       fix: body text in the ink at 7:1 or more; grey (4.5:1 or more) only for captions and labels
+  FAIL section-gaps     main#main > section.scene.final-cta / footer.site-footer  [1440]
+       42px between these sections, -69% against the median 137px
+       fix: use one gap between sections (all within 25% of each other)
+  FAIL photo-upscale    div.wrap.st2-grid > div.st2-media > figure.media > img "img: aerea-costa-1080.jpg"  [1440]
+       aerea-costa-1080.jpg: 748x421 shown at 705x564, blown up 1.34x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    div.mo-photos > figure.mo-a > figure.media > img "img: por-do-sol-palmeiras-640.jpg"  [1440]
+       por-do-sol-palmeiras-640.jpg: 489x275 shown at 383x479, blown up 1.74x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    div.mo-photos > figure.mo-b > figure.media > img "img: lauhata-praia-do-mar-640.jpg"  [1440, 390]
+       lauhata-praia-do-mar-640.jpg: 345x194 shown at 306x306, blown up 1.58x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    li.gp-0 > a > figure.media > img "img: costa-por-do-sol-640.jpg"  [1440, 390]
+       costa-por-do-sol-640.jpg: 432x226 shown at 739x462, blown up 2.04x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    li.gp-3 > a > figure.media > img "img: aerea-lugar-640.jpg"  [1440, 390]
+       aerea-lugar-640.jpg: 432x243 shown at 739x462, blown up 1.90x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL effect-kind      (the page)  [1440]
+       a place page (--type) moves with the scroll: scroll libraries or timelines (ScrollTrigger, ScrollSmoother): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or servi
+       fix: take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still
+  FAIL focus-ring       main:focus  [1440]
+       "main:focus" in site.css removes the focus outline and sets nothing in its place
+       fix: keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it
+  FAIL focus-ring       .cine-bar .bc-field .pk-btn:focus-visible  [1440]
+       ".cine-bar .bc-field .pk-btn:focus-visible" in site.css removes the focus outline and sets nothing in its place
+       fix: keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it
+  FAIL focus-ring       .booking-card.is-hero .bc-field .pk-btn:focus-visible  [1440]
+       ".booking-card.is-hero .bc-field .pk-btn:focus-visible" in site.css removes the focus outline and sets nothing in its place
+       fix: keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it
+  FAIL focus-visible    div.wrap.st2-grid > div.st2-text:nth-of-type(2) > div.pv-actions > a.btn.btn-terra "Discov  [1440]
+       Tab stop 14, a "Discover Our Story": the focus lands on something you cannot see
+       fix: keep the kit's ring (system.css :focus-visible, 2px in --action, there at once); a control that hides itself shows on focus
+  FAIL map-link         div.ft-col:nth-of-type(1) > ul.footer-list:nth-of-type(2) > li > a "Get directions"  [1440]
+       "Get directions" promises directions but its search ("-8.581541,125.349856") holds no street: a map of a district or a town shows nobody the door
+       fix: with a street from the brief, "Get directions" to its search; a district only: "See the area"; a town only: no map link
+  FAIL moment-none      (the page)  [1440]
+       a place page (--type) deals no moment: every kind carries one, two on a long page (moments.md)
+       fix: deal one (moments.mjs pick --page place --photo) and mount it in its own section
+  FAIL section-height   main#main > section.section.am "Facilities RestaurantBarBeachfrontRooms "  [1440]
+       the section is 343px tall (0.4 screens), 557px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height (screen-height) section#quartos "Find Your Perfect Stay Discover comforta"  [1440]
+       the section is 1291px tall (1.4 screens), 391px over one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)
+       fix: set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit
+  FAIL section-height (screen-short, screen-height) section#opinioes "Experiences that stay with you Tripadvis"  [1440]
+       the section starts at 7602px, 402px below the screen grid (8 x 900px): sections start on whole screens (SR-2)
+       fix: make every section above it exactly one or two screens tall, so this one starts on a whole screen
+  FAIL section-height   footer.site-footer "LauhataBeach Escape A table and a room b"  [1440]
+       the section's content does not fit it: its lowest content ends 822px below its top, past 779px (the section less 72px of bottom padding) (SR-2)
+       fix: fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups
+  FAIL section-air      section#opinioes / main#main > section.scene.final-cta  [1440]
+       622px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)
+       fix: keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)
+  FAIL one-section (neighbour) section#quartos "Find Your Perfect Stay Discover comforta"  [1440, 390]
+       the screen at scroll 3600px (stride 4) shows 384px of section 4 and the content of 2 sections, over 24px each beside section 5: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section      main#main > section.section.gp "A Look at LauhataView Gallery"  [1440]
+       the screen at scroll 7200px (stride 8) shows 318px of section 8 and the content of 2 sections, over 24px each beside section 9: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-section      h2#am-title "Facilities"  [1440]
+       the screen at scroll 4500px (stride 5) shows 295px of section 6 and the heading of section 6 whole and the content of 2 sections, over 24px each beside section 5: a screen shows one section (another may peek 8px, 24px WA
+       fix: make each section exactly one screen or two, so a screen shows one section and no neighbour peeks
+  FAIL one-heading      footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(1) > h2.footer-h "Visit us"  [1440]
+       the section holds 4 h2 headings: one per section, first in its .wrap (SR-5)
+       fix: give each section one h2, first in its .wrap, and the hero only its h1
+  FAIL container-edges  main#main > section.cine-hero.hx "Dine. Stay. Unwind. A unique destination"  [1440]
+       the content of section 1 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges  section#historia "More Than a Resort. A Place to Belong. L"  [1440]
+       the content of section 2 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (and 11 more like it: "Dine & Stay A Culinary J", "Find Your Perfe
+       fix: use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone
+  FAIL container-edges  a.skip-link "Skip to content"  [1440]
+       a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)
+       fix: build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing
+  FAIL container-edges  header.site-header "LauhataBeach Escape HomeRestaurantHotelE"  [1440]
+       a <header> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (and 10 more like it: "LauhataBeach Escape A ta", p.sr-only, "WhatsApp") (SR-6)
+       fix: build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing
+  FAIL container-edges  section.scene.final-cta > div.scene-media > figure.media > img  [1440]
+       the <img> runs 0-1440px, outside the container lines of section 10 at 32-1408px: full width is for background layers and grounds only (SR-6)
+       fix: keep it inside the container lines (.wrap): full width is for background layers and grounds only
+  FAIL container-edges  main#main > section.cine-hero.hx > div.hx-shade  [1440]
+       a box runs 0-1440px, outside the container lines of section 1 at 32-1408px: full width is for background layers and grounds only (and 4 more like it: main#main > section.scene.final-cta > div.scene-media, main#main > sec
+       fix: keep it inside the container lines (.wrap): full width is for background layers and grounds only
+  FAIL container-edges  footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(3) > h2.footer-h "Reviews"  [1440]
+       the h2 starts 1038px right of the container's left: every h1 and h2 starts on it, 2px either way (and 17 more like it: x 944, x 857, "More Than a Resort. A Pl") (SR-6)
+       fix: start the text on the container's left, or on the one split line every split shares
+  FAIL container-edges  section#opinioes > div.wrap:nth-of-type(2) > div.rv-own > details.rv-form "Have you stayed  [1440]
+       a box over half the container wide runs 80-816px, not on the container's lines at 32-1408px (and 5 more like it: ul.gp-grid > li.gp-0 > a > figure.media, ul.gp-grid > li.gp-3 > a > figure.media, main#main > section.cine-
+       fix: run the picture or box from the container's left line to its right line, or put it in a row or a split
+  FAIL row-lines        section#dine-stay > div.wrap > div.xp-grid "A Culinary JourneyDiscover delicious fla"  [1440]
+       a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines        section#quartos > div.wrap > div.rp-grid "Queen Room A queen-size bed and a televi"  [1440]
+       a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines        main#main > section.section.mp > div.wrap > div.menu-grid.mp-grid "Main Course Grilled Fis  [1440]
+       a row of 3 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (and 3 more like it: "RestaurantBarBeachfrontR", "Ex
+       fix: start the row's first item on the container's left line and end its last on the right line, every item one height
+  FAIL row-lines        section.scene.final-cta > div.scene-media > figure.media > img  [1440]
+       the <img> ends at 1440px, past the container's right line at 1408px (SR-7)
+       fix: end it at the container's right line
+  FAIL split-pair       main#main > section.section.mo > div.wrap.mo-grid "Moments That Last Sunset dinners, famil  [1440]
+       the two columns of the split start 208px apart at the top (centred on each other): a split's columns are top-aligned, 8px either way (SR-8)
+       fix: top-align both columns of the split (align-items: start)
+  FAIL split-pair       footer.site-footer > div.wrap.ft-top "LauhataBeach Escape A table and a room b"  [1440]
+       the two columns of the split start 164px apart at the top: a split's columns are top-aligned, 8px either way (and 1 more like it: "More Than a Resort. A Pl") (SR-8)
+       fix: top-align both columns of the split (align-items: start)
+  FAIL split-pair       section#historia > div.wrap.st2-grid "More Than a Resort. A Place to Belong. L"  [1440]
+       the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)
+       fix: put the text in the left column and the visual in the right, on every split
+  FAIL nav-covers       div.mobile-bar "Restaurant Stay"  [390]
+       sits on top of the text "Experience the best of Lauhata Liquiçá, " while the page scrolls: part of the line shows beside it
+       fix: make the fixed nav one opaque band across the whole screen, or let it scroll away with the page
+  FAIL collide          header.site-header "Lauhata"  [390, 320]
+       at the top of the page the fixed bar covers the picture "img: Sunset over the sea, with t": nothing scrolls it out from under the bar
+       fix: on a phone nothing lies on anything else: let the section grow with its content (min-height for its screens, never a fixed height; --hm: 2 when it needs two) or cut what it holds; keep pictures and cards off the buttons;
+  FAIL centre-axis      div.wrap > ul.am-list > li:nth-of-type(5) > span "Events"  [390]
+       centred text 88px left of the middle of its page (108px against 195px)
+       fix: centre the block on its container (margin-inline: auto), or set it on the left grid
+  FAIL contrast         main#main > section.scene.final-cta > div.wrap.scene-text > p.final-lead "Experience the b  [390]
+       body text over a picture reads at 2.4:1 at its worst tenth (needs 4.5:1), on a busy ground
+       fix: put the text on a calm part of the picture, or on a solid panel
+  FAIL photo-upscale    section.cine-hero.hx > div.hx-bg > figure.media > img "img: Sunset over the sea, with the   [390]
+       por-do-sol-palmeiras-alto-1080.jpg: 390x219 shown at 412x893, blown up 4.08x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    div.wrap.st2-grid > div.st2-media > figure.media > img "img: aerea-costa-640.jpg"  [390]
+       aerea-costa-640.jpg: 358x201 shown at 350x280, blown up 1.39x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    div.menu-grid.mp-grid > article.dish:nth-of-type(1) > figure.media.dish-photo > img "img:   [390]
+       grilled-fish-640.jpg: 117x87 shown at 350x350, blown up 4.02x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    div.menu-grid.mp-grid > article.dish:nth-of-type(2) > figure.media.dish-photo > img "img:   [390]
+       lauhata-special-fried-rice-640.jpg: 117x87 shown at 350x350, blown up 4.02x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    div.menu-grid.mp-grid > article.dish:nth-of-type(3) > figure.media.dish-photo > img "img:   [390]
+       pizza-lauhata-seafood-640.jpg: 117x87 shown at 350x350, blown up 4.02x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    li.gp-1 > a > figure.media > img "img: photo-1785245647510-5547d4388d2a?au"  [390]
+       photo-1785245647510-5547d4388d2a: 179x269 shown at 350x219, blown up 1.96x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    li.gp-2 > a > figure.media > img "img: photo-1556814901-18c866c057da?auto="  [390]
+       photo-1556814901-18c866c057da: 179x224 shown at 350x219, blown up 1.96x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL photo-upscale    section.scene.final-cta > div.scene-media > figure.media > img "img: por-do-sol-mar-640.jp  [390]
+       por-do-sol-mar-640.jpg: 390x219 shown at 416x452, blown up 2.06x
+       fix: use a source at least as wide as the picture is shown (twice that for sharp screens)
+  FAIL edge-right       #historia div.st2-media  [1440]
+       ends at x 784.7; the right line is 1360
+       fix: end it on the .wrap right line
+  FAIL edge-right       #historia figure.media  [1440]
+       ends at x 784.7; the right line is 1360
+       fix: end it on the .wrap right line
+  FAIL edge-left        #historia div.st2-text "More Than a Resort. A Place to B"  [1440]
+       starts at x 856.7; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #historia h2.pv-title "More Than a Resort. A Place to B"  [1440]
+       starts at x 856.7; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #historia p.pv-body "Lauhata Beach Escape is a place "  [1440]
+       starts at x 856.7; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #historia ul.st2-facts "Beachfront in LiquiçáRestaurant "  [1440]
+       starts at x 856.7; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #dine-stay h3 "A Culinary Journey"  [1440, 390]
+       starts at x 116.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #dine-stay p "Discover delicious flavours, car"  [1440]
+       starts at x 116.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #dine-stay h3 "Stay in Paradise"  [1440, 390]
+       starts at x 772.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #dine-stay p "Relax, unwind and enjoy a comfor"  [1440]
+       starts at x 772.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #quartos h3.rp-name "Queen Room"  [1440]
+       starts at x 111.4; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #quartos p.rp-sum "A queen-size bed and a televisio"  [1440]
+       starts at x 111.4; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #quartos ul.room-facts-line "1 queen-size bedTelevision"  [1440]
+       starts at x 111.4; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #quartos h3.rp-name "Queen & Single Room"  [1440]
+       starts at x 767.4; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #quartos p.rp-sum "A queen-size bed and a single be"  [1440]
+       starts at x 767.4; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        #quartos ul.room-facts-line "1 queen-size bed and 1 single be"  [1440]
+       starts at x 767.4; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-right       section.section.mp figure.media.dish-photo  [1440]
+       ends at x 488; the right line is 1360
+       fix: end it on the .wrap right line
+  FAIL edge-left        section.section.mp p.dish-tag "Main Course"  [1440]
+       starts at x 99.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mp h3 "Grilled Fish"  [1440]
+       starts at x 99.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mp p.dish-desc "Fish fillet with a lemon and but"  [1440]
+       starts at x 99.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mp figure.media.dish-photo  [1440]
+       starts at x 952; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mp p.dish-tag "Pizza"  [1440]
+       starts at x 971.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mp h3 "Lauhata Seafood"  [1440]
+       starts at x 971.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mp p.dish-desc "Tuna, prawns, feta and mozzarell"  [1440]
+       starts at x 971.2; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mo div.mo-photos  [1440]
+       starts at x 650.7; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mo figure.mo-a  [1440]
+       starts at x 650.7; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mo figure.mo-b  [1440, 390]
+       starts at x 1053.6; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        section.section.mo figure.mo-c  [1440, 390]
+       starts at x 1053.6; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-right       footer.site-footer div.ft-brand "LauhataBeach Escape A table and "  [1440]
+       ends at x 688; the right line is 1360
+       fix: end it on the .wrap right line
+  FAIL edge-left        footer.site-footer div.ft-cta "Reserve a Table or ask for a roo"  [1440]
+       starts at x 944; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        footer.site-footer div.ft-col "Visit us Aldeia Pissu Kraik, Suk"  [1440]
+       starts at x 410; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        footer.site-footer div.ft-col "Contact +670 7740 1111WhatsApp a"  [1440]
+       starts at x 740; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        footer.site-footer div.ft-col "Reviews Tripadvisor4.4/5Booking."  [1440]
+       starts at x 1070; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL edge-left        footer.site-footer p "Privacy policy · Website by Elev"  [1440]
+       starts at x 1085.3; the lines are 80 and the column starts
+       fix: start it on the .wrap left line
+  FAIL one-sided        #historia section.section.st2 "More Than a Resort. A Place to B"  [1440]
+       its visuals end at x 784.7, short of the right line 1360
+       fix: let the row reach both .wrap edges
+  FAIL screen-short (screen-height) #historia section.section.st2 "More Than a Resort. A Place to B"  [1440]
+       852px tall; one screen under the nav is 900px
+       fix: make the section one full screen (--h: 1, layout-v4.md section 2)
+  FAIL neighbour-ground #historia section.section.st2 "More Than a Resort. A Place to B"  [1440]
+       framed, 48px of #dine-stay section.section.xp "Dine & Stay A Culinary JourneyDi"'s ground shows
+       fix: end the ground with the section
+  FAIL screen-height    #dine-stay section.section.xp "Dine & Stay A Culinary JourneyDi"  [1440]
+       1025px, 1.14 screens; a section is exactly one or two (--h)
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL screen-height    section.section.mp section.section.mp "Flavours by the Sea A few of the"  [1440, 390]
+       1037px, 1.15 screens; a section is exactly one or two (--h)
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL screen-short     section.section.am section.section.am "Facilities RestaurantBarBeachfro"  [1440, 390]
+       343px tall; one screen under the nav is 900px
+       fix: make the section one full screen (--h: 1, layout-v4.md section 2)
+  FAIL screen-height    section.section.am section.section.am "Facilities RestaurantBarBeachfro"  [1440, 390]
+       343px, 0.38 screens; a section is exactly one or two (--h)
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL sparse           section.section.am section.section.am "Facilities RestaurantBarBeachfro"  [1440]
+       its content fills 49% of its screen; merge it or give it its visual (0.55 is the aim)
+       fix: fill the section or make it a screen shorter
+  FAIL neighbour        section.section.am section.section.am "Facilities RestaurantBarBeachfro"  [1440, 390]
+       framed, 429px of section.section.mo section.section.mo "Moments That Last Sunset dinners" shows
+       fix: keep the next section's heading and picture out of this screen
+  FAIL screen-short     section.section.mo section.section.mo "Moments That Last Sunset dinners"  [1440, 390]
+       889px tall; one screen under the nav is 900px
+       fix: make the section one full screen (--h: 1, layout-v4.md section 2)
+  FAIL screen-height    section.section.mo section.section.mo "Moments That Last Sunset dinners"  [1440, 390]
+       889px, 0.99 screens; a section is exactly one or two (--h)
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL screen-height    section.section.gp section.section.gp "A Look at LauhataView Gallery"  [1440]
+       1266px, 1.41 screens; a section is exactly one or two (--h)
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL neighbour        #opinioes section.section.reviews-ed "Experiences that stay with you T"  [1440]
+       framed, 58px of section.scene.final-cta section.scene.final-cta "Liquiçá, Timor-Leste Your Perfec" shows
+       fix: keep the next section's heading and picture out of this screen
+  FAIL screen-short     section.scene.final-cta section.scene.final-cta "Liquiçá, Timor-Leste Your Perfec"  [1440, 390]
+       828px tall; one screen under the nav is 900px
+       fix: make the section one full screen (--h: 1, layout-v4.md section 2)
+  FAIL screen-height    section.scene.final-cta section.scene.final-cta "Liquiçá, Timor-Leste Your Perfec"  [1440, 390]
+       828px, 0.92 screens; a section is exactly one or two (--h)
+       fix: make the section exactly one or two screens (--h: 1 or 2)
+  FAIL neighbour        section.scene.final-cta section.scene.final-cta "Liquiçá, Timor-Leste Your Perfec"  [1440, 390]
+       framed, 54px of #opinioes section.section.reviews-ed "Experiences that stay with you T" shows
+       fix: keep the next section's heading and picture out of this screen
+  FAIL edge-right       section.section.mo figure.mo-a  [390]
+       ends at x 207.8; the right line is 370
+       fix: end it on the .wrap right line
+  FAIL neighbour        section.section.mo section.section.mo "Moments That Last Sunset dinners"  [390]
+       framed, 40px of section.section.gp section.section.gp "A Look at LauhataView Gallery" shows
+       fix: keep the next section's heading and picture out of this screen
+  FAIL copy-slop-word   copy "elevate" in "Privacy policy · Website by Elevate Web Studios"
+       old slop words (elevate)
+       fix: replace each word with the fact it stands in for: the step count, the figure, the material, the place (a word in the client's own name is not counted when the logo, the title before its ":" or og:site_name writes the nam
+  46 WARN (not blocking), first: cut-text div.rv-scores-wrap > div.rv-scores > a.r; text-only section#opinioes "Experiences that stay ; same-action section.section.mp > div.wrap > div.pv-a; copy-buttons div.wrap.cine-content > div.rs-hero-text; copy-actions (the page)
+A FAIL you judge false: add {"check": "<id>", "target": "<its where, enough to name that one finding>", "reason": "<why, 12+ characters>"} to .taste-skill/waivers.json (one finding each, 5 at most, never for kit-edited or checker-gaming); it goes in your report. Never edit the kit's files or hide the page from the checker.
+GATE: FAIL 118 (round 1 of 3)

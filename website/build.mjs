@@ -1,6 +1,6 @@
 // Static build: renders every page in PT and EN into dist/, copies assets and writes
 // sitemap.xml and robots.txt. No dependencies: `node build.mjs`.
-import { mkdir, writeFile, rm, cp } from "node:fs/promises";
+import { mkdir, writeFile, rm, cp, readFile, readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import pt from "./src/i18n/pt.mjs";
@@ -22,6 +22,32 @@ await mkdir(dist, { recursive: true });
 const isRawVideo = (p) => /[\\/]assets[\\/]img[\\/]video([\\/]|$)/.test(p);
 await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) });
 
+let esbuild = null;
+try { esbuild = await import("esbuild"); } catch { /* optional: the site builds without it, just less compressed */ }
+
+// One stylesheet instead of eleven: the files are joined in cascade order (the last one, refine.css, is the final layer),
+// stripped of comments and line breaks, and the originals are not published. Fewer render-blocking requests.
+const CSS_FILES = ["main", "cinema", "order", "home", "landing", "picker", "wide", "design", "editorial", "resort", "refine"];
+{
+  const parts = [];
+  for (const name of CSS_FILES) parts.push(await readFile(join(root, `src/assets/css/${name}.css`), "utf8"));
+  const bundle = parts.join(String.fromCharCode(10)).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s*[\r\n]+\s*/g, " ").trim() + String.fromCharCode(10);
+  // esbuild (a dev dependency) minifies it properly when it is installed; without it the comment-stripped text above is used.
+  let out = bundle;
+  if (esbuild) out = (await esbuild.transform(bundle, { loader: "css", minify: true })).code;
+  await writeFile(join(dist, "assets/css/site.css"), out);
+  for (const name of CSS_FILES) await rm(join(dist, `assets/css/${name}.css`), { force: true });
+}
+
+// The site scripts (not the vendor files, which already ship minified) are minified too.
+if (esbuild) {
+  for (const f of await readdir(join(dist, "assets/js"))) {
+    if (!f.endsWith(".js")) continue;
+    const p = join(dist, "assets/js", f);
+    await writeFile(p, (await esbuild.transform(await readFile(p, "utf8"), { minify: true, target: "es2019" })).code);
+  }
+}
+
 // Browsers ask for /favicon.ico on their own; answer with the site icon (a PNG served under that name works everywhere).
 await cp(join(root, "src/assets/img/favicon-64.png"), join(dist, "favicon.ico"));
 
@@ -35,7 +61,8 @@ let count = 0;
 function relativize(html, pagePath) {
   const depth = pagePath.split("/").length - 2;
   const up = depth > 0 ? "../".repeat(depth) : "./";
-  return html.replace(/(["'(]|, )\/(?=["'#?a-z0-9])/gi, `$1${up}`);
+  // "url=/" catches the meta refresh of the redirect pages, which would otherwise leave a project-site subfolder.
+  return html.replace(/(["'(]|, |url=)\/(?=["'#?a-z0-9])/gi, `$1${up}`);
 }
 
 async function emit(t, page) {

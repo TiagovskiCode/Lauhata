@@ -1,0 +1,1577 @@
+{
+ "page": "C:\\Users\\tiago\\Desktop\\Lauhata\\website\\dist\\index.html",
+ "url": "http://127.0.0.1:5200/index.html",
+ "at": "2026-11-19T07:27:50.959Z",
+ "out": "C:\\Users\\tiago\\Desktop\\Lauhata\\website\\.taste-skill\\gate\\consistency",
+ "widths": [
+  {
+   "width": 1440,
+   "height": 900,
+   "screens": 14,
+   "held": 0,
+   "errors": [
+    "audit: page: TypeError: p.children is not iterable\n    at Object.audit (<anonymous>:2788:26)\n    at <anonymous>:1:13",
+    "address: page: TypeError: p.children is not iterable\n    at row (<anonymous>:31:26)\n    at inline (<anonymous>:38:63)\n    at ownerOf (<anonymous>:51:163)\n    at walkText (<anonymous>:62:25)\n    at probe (<anonymous>:70:3)\n    at <anonymous>:113:3"
+   ],
+   "findings": [
+    {
+     "check": "sample-label",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1)",
+     "text": "© 2026 Lauhata Beach Escape. All rights reserved",
+     "msg": "a note that the page's names or figures are examples (\"photos are illustrative\"): it reads as an apology and undercuts every claim",
+     "stop": 13,
+     "crop": "1440-27-sample-label.jpg",
+     "fix": "drop the \"sample\" tags and any note that names and figures are examples: take each from the brief, or remove the claim"
+    },
+    {
+     "check": "sample-label",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.footer-base > p:nth-of-type(1) > span.footer-note",
+     "text": "Some photos are illustrative and are marked as s",
+     "msg": "a note that the page's names or figures are examples (\"photos are illustrative\"): it reads as an apology and undercuts every claim",
+     "stop": 13,
+     "crop": "1440-28-sample-label.jpg",
+     "fix": "drop the \"sample\" tags and any note that names and figures are examples: take each from the brief, or remove the claim"
+    },
+    {
+     "check": "nav",
+     "sev": "FAIL",
+     "sel": "header.site-header > div.wrap.header-inner > a.brand",
+     "text": "Lauhata BEACH ESCAPE",
+     "stop": 0,
+     "msg": "nav link wraps to a second line",
+     "crop": "1440-01-nav.jpg",
+     "fix": "make the nav one bar from the content's left edge to its right edge, with every link and action inside it"
+    },
+    {
+     "check": "no-visual",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.am",
+     "text": "Facilities",
+     "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+     "stop": 6,
+     "crop": "1440-15-no-visual.jpg",
+     "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits"
+    },
+    {
+     "check": "button-styles",
+     "sev": "FAIL",
+     "sel": "(one screen)",
+     "text": "",
+     "stop": 0,
+     "msg": "3 button styles on one screen: pill, fill #e8782a (\"Explore Our Resort\"); pill, outline #f8f1e7 (\"Discover Our Story\"); pill, fill #e8782a, outline #e8782a (\"Reserve\"); the odd one out: \"Reserve\"",
+     "crop": "1440-02-button-styles.jpg",
+     "fix": "one primary and one secondary button: one shape, one height per size, one label size"
+    },
+    {
+     "check": "button-styles",
+     "sev": "FAIL",
+     "sel": "(one screen)",
+     "text": "",
+     "stop": 12,
+     "msg": "3 button styles on one screen: pill, outline #f8f1e7 (\"See the rooms\"); pill, fill #e8782a, outline #e8782a (\"Reserve\"); pill, fill #f7f0e4 (\"Reserve a Table\"); the odd one out: \"Reserve a Table\"",
+     "crop": "1440-23-button-styles.jpg",
+     "fix": "one primary and one secondary button: one shape, one height per size, one label size"
+    },
+    {
+     "check": "button-styles",
+     "sev": "FAIL",
+     "sel": "(the page)",
+     "text": "",
+     "stop": 0,
+     "msg": "5 button styles on the page: pill, fill #e8782a, outline #e8782a x1 (\"Reserve\"); pill, fill #e8782a x6 (\"Explore Our Resort\"); pill, outline #f8f1e7 x6 (\"Discover Our Story\"); pill, fill #17120f x3 (\"Add\"); pill, fill #f7f0e4 x1 (\"Reserve a Table\")",
+     "crop": "1440-03-button-styles.jpg",
+     "fix": "one primary and one secondary button: one shape, one height per size, one label size"
+    },
+    {
+     "check": "same-action",
+     "sev": "FAIL",
+     "sel": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light",
+     "text": "Reserve a Table",
+     "stop": 11,
+     "msg": "\"Reserve a Table\" appears 2 times in different looks: pill, outline #f8f1e7 and pill, fill #f7f0e4",
+     "crop": "1440-20-same-action.jpg",
+     "fix": "draw one action the same way everywhere (only the nav copy may be one size smaller)"
+    },
+    {
+     "check": "copy-headline",
+     "sev": "FAIL",
+     "sel": "h1#hero-title",
+     "text": "Dine. Stay. Unwind.",
+     "msg": "\"Dine. Stay. Unwind.\" does not name what is sold (beachfront restaurant and rooms, beachfront, restaurant, rooms, from flags)",
+     "stop": 0,
+     "crop": "1440-04-copy-headline.jpg",
+     "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words"
+    },
+    {
+     "check": "copy-headings",
+     "sev": "FAIL",
+     "sel": "div.xp-grid > article.xp-card:nth-of-type(1) > div.xp-text > h3",
+     "text": "A Culinary Journey",
+     "msg": "\"A Culinary Journey\" names no product, part, place or section (8 headings like it; at most one brand line per page) (and 7 more like it: \"Stay in Paradise\", \"Find Your Perfect Stay\", \"Flavours by the Sea\", \"Facilities\", ...)",
+     "stop": 3,
+     "crop": "1440-13-copy-headings.jpg",
+     "fix": "name the thing in every heading: the product, a part, the place or a section noun"
+    },
+    {
+     "check": "section-gaps",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta / footer.site-footer",
+     "text": "",
+     "stop": 12,
+     "msg": "42px between these sections, -69% against the median 137px",
+     "crop": "1440-24-section-gaps.jpg",
+     "fix": "use one gap between sections (all within 25% of each other)"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "div.wrap.st2-grid > div.st2-media > figure.media > img",
+     "text": "img: aerea-costa-1080.jpg",
+     "msg": "aerea-costa-1080.jpg: 748x421 shown at 705x564, blown up 1.34x",
+     "stop": 1,
+     "crop": "1440-11-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "effect-kind",
+     "sev": "FAIL",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "a place page (--type) moves with the scroll: scroll libraries or timelines (ScrollTrigger, ScrollSmoother): effects fit tech, gaming and software pages and a product with a technical subject, never a place, shop or service page (house rule)",
+     "fix": "take the scroll-driven motion off: on a place, shop or service page the page scrolls plainly and the parts sit still",
+     "stop": null
+    },
+    {
+     "check": "section-tile",
+     "sev": "FAIL",
+     "sel": "section#dine-stay",
+     "text": "Dine & Stay",
+     "shows": "section#quartos",
+     "msg": "the section is 1062px tall (1.18 screens at 1440x900), not one screen or two: the screen one screen on from its top (scroll 2652px) shows 78px of it and 738px of the next section, its heading \"Find Your Perfect Stay\" on screen",
+     "stop": 15,
+     "crop": "1440-30-section-tile.jpg",
+     "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb"
+    },
+    {
+     "check": "focus-ring",
+     "sev": "FAIL",
+     "sel": "main:focus",
+     "text": "",
+     "msg": "\"main:focus\" in site.css removes the focus outline and sets nothing in its place",
+     "stop": null,
+     "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it"
+    },
+    {
+     "check": "focus-ring",
+     "sev": "FAIL",
+     "sel": ".cine-bar .bc-field .pk-btn:focus-visible",
+     "text": "",
+     "msg": "\".cine-bar .bc-field .pk-btn:focus-visible\" in site.css removes the focus outline and sets nothing in its place",
+     "stop": null,
+     "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it"
+    },
+    {
+     "check": "focus-ring",
+     "sev": "FAIL",
+     "sel": ".booking-card.is-hero .bc-field .pk-btn:focus-visible",
+     "text": "",
+     "msg": "\".booking-card.is-hero .bc-field .pk-btn:focus-visible\" in site.css removes the focus outline and sets nothing in its place",
+     "stop": null,
+     "fix": "keep the kit's :focus-visible ring, or put a change of the same strength (a 2px line in --action) in the rule that removes it"
+    },
+    {
+     "check": "focus-visible",
+     "sev": "FAIL",
+     "sel": "div.wrap.st2-grid > div.st2-text:nth-of-type(2) > div.pv-actions > a.btn.btn-terra",
+     "text": "Read our story",
+     "stop": 21,
+     "msg": "Tab stop 14, a \"Read our story\": the focus lands on something you cannot see",
+     "fix": "keep the kit's ring (system.css :focus-visible, 2px in --action, there at once); a control that hides itself shows on focus"
+    },
+    {
+     "check": "map-link",
+     "sev": "FAIL",
+     "sel": "div.ft-col:nth-of-type(1) > ul.footer-list:nth-of-type(2) > li > a",
+     "text": "Get directions",
+     "msg": "\"Get directions\" promises directions but its search (\"-8.581541,125.349856\") holds no street: a map of a district or a town shows nobody the door",
+     "stop": 12,
+     "crop": "1440-25-map-link.jpg",
+     "fix": "with a street from the brief, \"Get directions\" to its search; a district only: \"See the area\"; a town only: no map link"
+    },
+    {
+     "check": "cut-text",
+     "sev": "WARN",
+     "sel": "div.rv-scores-wrap > div.rv-scores > a.rv-score.rv-tripadvisor > span.rv-num",
+     "text": "4.4out of 5",
+     "msg": "sits across the edge of a panel behind it",
+     "stop": 10,
+     "crop": "1440-18-cut-text.jpg",
+     "fix": "give the text room: no overflow clipping a line, no line past its box"
+    },
+    {
+     "check": "text-only",
+     "sev": "WARN",
+     "sel": "section#opinioes",
+     "text": "Experiences that stay with you",
+     "msg": "the section is only text: no picture, icon, mock or effect in it",
+     "stop": 10,
+     "crop": "1440-19-text-only.jpg",
+     "fix": "give the section a visual: a photograph that fits, the real icons, or a UI fragment on a ground"
+    },
+    {
+     "check": "same-action",
+     "sev": "WARN",
+     "sel": "section.section.mp > div.wrap > div.pv-actions > a.text-link",
+     "text": "Reserve a Table",
+     "msg": "\"Reserve a Table\" is a button in one place and a text link in another: one action in two looks",
+     "fix": "show one action one way: the same button wherever it repeats, or a text link everywhere",
+     "stop": 6,
+     "crop": "1440-16-same-action.jpg"
+    },
+    {
+     "check": "copy-buttons",
+     "sev": "WARN",
+     "sel": "div.wrap.cine-content > div.rs-hero-text > div.hx-cta > a.btn.btn-ghost-light",
+     "text": "Discover Our Story",
+     "msg": "\"Discover Our Story\" does not start with a verb (book, buy, try, start, get, see...)",
+     "stop": 0,
+     "crop": "1440-05-copy-buttons.jpg",
+     "fix": "label buttons with a verb and what the visitor gets (\"Book a room\", \"Start free trial\")"
+    },
+    {
+     "check": "copy-actions",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "12 different button labels on the page (at most 10)",
+     "stop": null,
+     "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close"
+    },
+    {
+     "check": "copy-actions",
+     "sev": "WARN",
+     "sel": "div.wrap.cine-content > div.rs-hero-text > div.hx-cta > a.btn.btn-ghost-light",
+     "text": "Discover Our Story",
+     "msg": "2 labels for one target /about/: \"Discover Our Story\", \"Read our story\"",
+     "stop": 0,
+     "crop": "1440-06-copy-actions.jpg",
+     "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close"
+    },
+    {
+     "check": "copy-actions",
+     "sev": "WARN",
+     "sel": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-terra",
+     "text": "Request a Room",
+     "msg": "2 labels for one target /stay/#reservar: \"Request a Room\", \"See the rooms\"",
+     "stop": 11,
+     "crop": "1440-21-copy-actions.jpg",
+     "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close"
+    },
+    {
+     "check": "copy-actions",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "the main action \"Reserve a Table\" does not read word for word the same in the nav or hero",
+     "stop": null,
+     "fix": "few actions, one wording: at most 2 in the hero, the main action word for word in nav, hero and close"
+    },
+    {
+     "check": "contrast",
+     "sev": "WARN",
+     "sel": "h1#hero-title > em.hx-accent > span.w > span.wi",
+     "text": "Unwind.",
+     "stop": 0,
+     "msg": "large text over a picture reads at 2.0:1 at its worst tenth (needs 3:1), on a busy ground",
+     "crop": "1440-07-contrast.jpg",
+     "fix": "put the text on a calm part of the picture, or on a solid panel"
+    },
+    {
+     "check": "busy-ground",
+     "sev": "WARN",
+     "sel": "div.wrap.header-inner > a.brand > span.brand-text > span.brand-name",
+     "text": "Lauhata",
+     "stop": 0,
+     "msg": "text over a detailed part of a picture (its ground changes by 1.7 L* from one pixel to the next under the words) (and 5 more like it: \"BEACH ESCAPE\", \"Hotel\", \"Experiences\", \"A unique destination in \", ...)",
+     "crop": "1440-08-busy-ground.jpg",
+     "fix": "move the text to a calm part of the picture, or put it on a panel"
+    },
+    {
+     "check": "busy-ground",
+     "sev": "WARN",
+     "sel": "h1#hero-title > span.line > span.w:nth-of-type(2) > span.wi",
+     "text": "Stay.",
+     "stop": 0,
+     "msg": "text over an uneven part of a picture (its luminance spans 0.30 under the words: a shadow or a bright patch behind part of the line)",
+     "crop": "1440-09-busy-ground.jpg",
+     "fix": "move the text to a calm part of the picture, or put it on a panel"
+    },
+    {
+     "check": "section-gaps",
+     "sev": "WARN",
+     "sel": "main#main > section.section.mp / main#main > section.section.am",
+     "text": "",
+     "stop": 6,
+     "msg": "uneven space at the edge of a band: 128px outside its edge, 81px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+     "crop": "1440-17-section-gaps.jpg",
+     "fix": "use one gap between sections (all within 25% of each other)"
+    },
+    {
+     "check": "photo-set",
+     "sev": "WARN",
+     "sel": "article.rp-card:nth-of-type(2) > a.rp-media > figure.media > img",
+     "text": "suite-familia-1080.jpg",
+     "stop": 4,
+     "msg": "13 photographs in more than one look: saturation from 0.16 to 0.62; warm and cool photographs mixed (b* -7 to +27); the odd one out is suite-familia-1080.jpg",
+     "crop": "1440-14-photo-set.jpg",
+     "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out"
+    },
+    {
+     "check": "photo-credit",
+     "sev": "WARN",
+     "sel": "article.xp-card:nth-of-type(2) > a.xp-media > figure.media > img",
+     "text": "",
+     "stop": 2,
+     "msg": "5 library sources (unsplash): photo-1584132905271-512c958d674a, photo-1584132915807-fd1f5fbc078f, photo-1791540133579-af633981d5ff, photo-1785245647510-5547d4388d2a, photo-1556814901-18c866c057da; confirm each shows the client's own product, place or people",
+     "fix": "confirm the library photograph shows the client's own product, place or people; otherwise replace it"
+    },
+    {
+     "check": "nav-family",
+     "sev": "WARN",
+     "sel": "header.site-header",
+     "text": "",
+     "stop": 0,
+     "msg": "the nav's links come in 3 sizes (16, 13, 17px)",
+     "crop": "1440-10-nav-family.jpg",
+     "fix": "keep one nav on every screen: the same bar, fill, links and type"
+    },
+    {
+     "check": "nav-family",
+     "sev": "WARN",
+     "sel": "header.site-header",
+     "text": "",
+     "stop": 1,
+     "msg": "the nav changes form as the page scrolls: its bar moves from 0-1440px to 60-1380px; its fill changes from none to #17120f",
+     "crop": "1440-12-nav-family.jpg",
+     "fix": "keep one nav on every screen: the same bar, fill, links and type"
+    },
+    {
+     "check": "link-styles",
+     "sev": "WARN",
+     "sel": "div.ft-col:nth-of-type(3) > ul.footer-list.ft-scores > li:nth-of-type(1) > a",
+     "text": "Tripadvisor 4.4/5",
+     "msg": "text links in 3 looks: no line, regular (5, like \"Queen Room\"); underline, bold (6, like \"See the room\"); border 1px, regular (2, like \"Tripadvisor 4.4/5\")",
+     "stop": 12,
+     "crop": "1440-26-link-styles.jpg",
+     "fix": "give text links one look wherever they sit: one underline, one weight"
+    },
+    {
+     "check": "grounds",
+     "sev": "WARN",
+     "sel": "main#main > section.scene.final-cta",
+     "text": "Your Perfect Getaway Awaits Experience t",
+     "msg": "4 flat grounds across the page (#17120f section x4, #f7f0e4 section x3, #efe4d2 section x3, #050f0e section): three at most (the base, a surface, an inverse)",
+     "stop": 11,
+     "crop": "1440-22-grounds.jpg",
+     "fix": "three flat grounds at most (the base, one surface, one inverse): lay the other bands on one of them"
+    },
+    {
+     "check": "moment-none",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "a place page (--type) deals no moment: every kind carries one, two on a long page (moments.md)",
+     "fix": "deal one (moments.mjs pick --page place --photo) and mount it in its own section",
+     "stop": null
+    },
+    {
+     "check": "section-tile",
+     "sev": "WARN",
+     "sel": "section#historia",
+     "text": "More Than a Resort. A Place to Belong.",
+     "shows": "section#dine-stay",
+     "msg": "the section is 852px tall (0.95 screens at 1440x900), shorter than the screen: its tile (the screen from its top) shows 768px of it and only 48px of the next section's ground (\"Dine & Stay\"), none of its content",
+     "stop": 14,
+     "crop": "1440-29-section-tile.jpg",
+     "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb"
+    },
+    {
+     "check": "hero-screen",
+     "sev": "WARN",
+     "sel": "section.cine-hero.hx > div.hx-bg > figure.media > img",
+     "text": "Sunset over the sea, with the palm trees",
+     "msg": "\"Sunset over the sea, with the pa\" starts at 0px, under the 84px nav (it was moving as it was read: told as a WARN, look at it at rest) (SR-1)",
+     "fix": "keep the hero's content between the nav and 24px above the fold (and the action bar): shorten the picture or the text; a docked strip 96px at most",
+     "rule": "SR-1 T4",
+     "crop": "1440-rhythm-08-hero-screen.jpg"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.am",
+     "text": "Facilities RestaurantBarBeachfrontRooms ",
+     "msg": "the section is 353px tall (0.4 screens), 547px short of one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+     "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+     "rule": "SR-2 T-height",
+     "crop": "1440-rhythm-01-section-height.jpg"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "section#quartos",
+     "text": "Find Your Perfect Stay Discover comforta",
+     "msg": "the section is 1294px tall (1.4 screens), 394px over one screen (900px): every section after the hero is one screen or two, 2px either way (SR-2)",
+     "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+     "rule": "SR-2 T-height"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.gp",
+     "text": "A Look at LauhataView Gallery",
+     "msg": "the section is 1264px tall (1.4 screens), 364px over one screen (900px): every section after the hero is one screen or two, 2px either way (and 7 more like it: \"Dine & Stay A Culinary J\", \"Flavours by the Sea A fe\", \"Experiences that stay wi\") (SR-2)",
+     "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+     "rule": "SR-2 T-height"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "section#opinioes",
+     "text": "Experiences that stay with you Tripadvis",
+     "msg": "the section starts at 7649px, 449px below the screen grid (8 x 900px): sections start on whole screens (SR-2)",
+     "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+     "rule": "SR-2 T-grid"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.mp",
+     "text": "Flavours by the Sea A few of the dishes ",
+     "msg": "the section starts at 4108px, 392px above the screen grid (5 x 900px): sections start on whole screens (SR-2)",
+     "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+     "rule": "SR-2 T-grid"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta",
+     "text": "Liquiçá, Timor-Leste Your Perfect Getawa",
+     "msg": "the section starts at 8474px, 374px below the screen grid (9 x 900px): sections start on whole screens (and 6 more like it: \"Lauhata Beach Escape A t\", \"Facilities RestaurantBar\", \"Find Your Perfect Stay D\") (SR-2)",
+     "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+     "rule": "SR-2 T-grid"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta",
+     "text": "Liquiçá, Timor-Leste Your Perfect Getawa",
+     "msg": "the section's content does not fit it: its lowest content ends 828px below its top, past 756px (the section less 72px of bottom padding) (SR-2)",
+     "fix": "fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups",
+     "rule": "SR-2 T-fit"
+    },
+    {
+     "check": "section-height",
+     "sev": "FAIL",
+     "sel": "footer.site-footer",
+     "text": "Lauhata Beach Escape A table and a room ",
+     "msg": "the section's content does not fit it: its lowest content ends 822px below its top, past 779px (the section less 72px of bottom padding) (SR-2)",
+     "fix": "fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups",
+     "rule": "SR-2 T-fit"
+    },
+    {
+     "check": "section-air",
+     "sev": "FAIL",
+     "sel": "section#opinioes / main#main > section.scene.final-cta",
+     "text": "",
+     "msg": "667px of air between the content of these two sections: 128-480px (64-600px WARN) (SR-3)",
+     "fix": "keep 128-480px of air between the content of neighbouring sections (112-420px on a phone): the sections' padding (--padt, --padb)",
+     "rule": "SR-3 T-gap",
+     "crop": "1440-rhythm-02-section-air.jpg"
+    },
+    {
+     "check": "section-air",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta",
+     "text": "Liquiçá, Timor-Leste Your Perfect Getawa",
+     "msg": "the content fills 34.6% of the section's height (287 of 828px): 55% or more (40% WARN) (SR-3)",
+     "fix": "fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block",
+     "rule": "SR-3 T-fill"
+    },
+    {
+     "check": "section-air",
+     "sev": "WARN",
+     "sel": "main#main > section.section.am",
+     "text": "Facilities RestaurantBarBeachfrontRooms ",
+     "msg": "the content fills 49.2% of the section's height (174 of 353px): 55% or more (40% WARN) (SR-3)",
+     "fix": "fill the section to 55%: more content, a picture or a background layer, or merge it into the section above as its last block",
+     "rule": "SR-3 T-fill"
+    },
+    {
+     "check": "one-section",
+     "sev": "FAIL",
+     "sel": "h2#mp-title",
+     "text": "Flavours by the Sea",
+     "msg": "the screen at scroll 3600px (stride 4) shows 392px of section 5 and the heading of section 5 whole and the content of 2 sections, over 24px each beside section 4: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+     "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+     "rule": "SR-4 T-views",
+     "crop": "1440-rhythm-03-one-section.jpg"
+    },
+    {
+     "check": "one-section",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.gp",
+     "text": "A Look at LauhataView Gallery",
+     "msg": "the screen at scroll 7200px (stride 8) shows 365px of section 8 and the content of 2 sections, over 24px each beside section 9: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+     "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+     "rule": "SR-4 T-views"
+    },
+    {
+     "check": "one-section",
+     "sev": "FAIL",
+     "sel": "section#opinioes",
+     "text": "Experiences that stay with you Tripadvis",
+     "msg": "the screen at scroll 8100px (stride 9) shows 290px of section 9 and the content of 2 sections, over 24px each beside section 10: a screen shows one section (another may peek 8px, 24px WARN) (and 8 more like it: scroll 5143px, scroll 4500px, scroll 9000px) (SR-4)",
+     "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+     "rule": "SR-4 T-views"
+    },
+    {
+     "check": "one-heading",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(1) > h2.footer-h",
+     "text": "Visit us",
+     "msg": "the section holds 4 h2 headings: one per section, first in its .wrap (SR-5)",
+     "fix": "give each section one h2, first in its .wrap, and the hero only its h1",
+     "rule": "SR-5 T1",
+     "crop": "1440-rhythm-04-one-heading.jpg"
+    },
+    {
+     "check": "one-heading",
+     "sev": "FAIL",
+     "sel": "h2#mo-title",
+     "text": "Moments That Last",
+     "msg": "headings of two sections show whole on one screen at 7 of 186 scroll positions (3.8%; at scroll 5000, 5050, 5100, 5700px), here with \"Facilities\": at most 3% on a desktop (SR-5)",
+     "fix": "make the sections one screen tall so their headings sit a screen apart and two never share one",
+     "rule": "SR-5 T2"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "main#main > section.cine-hero.hx",
+     "text": "Dine. Stay. Unwind. A unique destination",
+     "msg": "the content of section 1 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (SR-6)",
+     "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+     "rule": "SR-6 T1-margins",
+     "crop": "1440-rhythm-05-container-edges.jpg"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "section#historia",
+     "text": "More Than a Resort. A Place to Belong. L",
+     "msg": "the content of section 2 runs 32px from the left and 32px from the right: the margin is 64-120px at 1440px (one container, equal margins, 2px either way) (and 11 more like it: \"Dine & Stay A Culinary J\", \"Find Your Perfect Stay D\", \"Flavours by the Sea A fe\") (SR-6)",
+     "fix": "use one container on every section and the nav (.wrap): one margin left and right, 64-120px on a desktop, 16-24px on a phone",
+     "rule": "SR-6 T1-margins"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "a.skip-link",
+     "text": "Skip to content",
+     "msg": "a <a> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (SR-6)",
+     "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+     "rule": "SR-6 T1-structure"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "header.site-header",
+     "text": "Lauhata Beach Escape HomeRestaurantHotel",
+     "msg": "a <header> at the top of the page, outside header.nav, main, footer.closing and nav.actionbar (and 10 more like it: \"Lauhata Beach Escape A t\", p.sr-only, \"WhatsApp\") (SR-6)",
+     "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+     "rule": "SR-6 T1-structure"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "section.scene.final-cta > div.scene-media > figure.media > img",
+     "text": "",
+     "msg": "the <img> runs 0-1440px, outside the container lines of section 10 at 32-1408px: full width is for background layers and grounds only (SR-6)",
+     "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+     "rule": "SR-6 T2-containment"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "main#main > section.cine-hero.hx > div.hx-shade",
+     "text": "",
+     "msg": "a box runs 0-1440px, outside the container lines of section 1 at 32-1408px: full width is for background layers and grounds only (and 4 more like it: main#main > section.scene.final-cta > div.scene-media, main#main > section.scene.final-cta > div.scene-media > figure.media, \"Sunset over the sea, wit\") (SR-6)",
+     "fix": "keep it inside the container lines (.wrap): full width is for background layers and grounds only",
+     "rule": "SR-6 T2-containment"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.ft > div.ft-col:nth-of-type(3) > h2.footer-h",
+     "text": "Reviews",
+     "msg": "the h2 starts 1038px right of the container's left: every h1 and h2 starts on it, 2px either way (and 17 more like it: x 944, x 857, \"More Than a Resort. A Pl\") (SR-6)",
+     "fix": "start the text on the container's left, or on the one split line every split shares",
+     "rule": "SR-6 T3-left-lines"
+    },
+    {
+     "check": "container-edges",
+     "sev": "FAIL",
+     "sel": "section#opinioes > div.wrap:nth-of-type(2) > div.rv-own > details.rv-form",
+     "text": "Have you stayed with us? Leave your feed",
+     "msg": "a box over half the container wide runs 80-816px, not on the container's lines at 32-1408px (and 5 more like it: ul.gp-grid > li.gp-0 > a > figure.media, ul.gp-grid > li.gp-3 > a > figure.media, main#main > section.cine-hero.hx > div.hx-shade) (SR-6)",
+     "fix": "run the picture or box from the container's left line to its right line, or put it in a row or a split",
+     "rule": "SR-6 T6-right-edges"
+    },
+    {
+     "check": "row-lines",
+     "sev": "FAIL",
+     "sel": "section#dine-stay > div.wrap > div.xp-grid",
+     "text": "A Culinary JourneyDiscover delicious fla",
+     "msg": "a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)",
+     "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+     "rule": "SR-7 T-rows",
+     "crop": "1440-rhythm-06-row-lines.jpg"
+    },
+    {
+     "check": "row-lines",
+     "sev": "FAIL",
+     "sel": "section#quartos > div.wrap > div.rp-grid",
+     "text": "Queen Room A queen-size bed and a televi",
+     "msg": "a row of 2 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (SR-7)",
+     "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+     "rule": "SR-7 T-rows"
+    },
+    {
+     "check": "row-lines",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.mp > div.wrap > div.menu-grid.mp-grid",
+     "text": "Main Course Grilled Fish Fish fillet wit",
+     "msg": "a row of 3 items: its first item starts at 80px, the container's left line at 32px; its last item ends at 1360px, the container's right line at 1408px (2px either way) (and 3 more like it: \"RestaurantBarBeachfrontR\", \"Explore Menu Hotel Our S\", \"© 2026 Lauhata Beach Esc\") (SR-7)",
+     "fix": "start the row's first item on the container's left line and end its last on the right line, every item one height",
+     "rule": "SR-7 T-rows"
+    },
+    {
+     "check": "row-lines",
+     "sev": "FAIL",
+     "sel": "section.scene.final-cta > div.scene-media > figure.media > img",
+     "text": "",
+     "msg": "the <img> ends at 1440px, past the container's right line at 1408px (SR-7)",
+     "fix": "end it at the container's right line",
+     "rule": "SR-7 T-right"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.mo > div.wrap.mo-grid",
+     "text": "Moments That Last Sunset dinners, family",
+     "msg": "the two columns of the split start 209px apart at the top (centred on each other): a split's columns are top-aligned, 8px either way (SR-8)",
+     "fix": "top-align both columns of the split (align-items: start)",
+     "rule": "SR-8 T-mode",
+     "crop": "1440-rhythm-07-split-pair.jpg"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.ft-top",
+     "text": "Lauhata Beach Escape A table and a room ",
+     "msg": "the two columns of the split start 164px apart at the top: a split's columns are top-aligned, 8px either way (and 1 more like it: \"More Than a Resort. A Pl\") (SR-8)",
+     "fix": "top-align both columns of the split (align-items: start)",
+     "rule": "SR-8 T-mode"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "section#historia > div.wrap.st2-grid",
+     "text": "More Than a Resort. A Place to Belong. L",
+     "msg": "the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)",
+     "fix": "put the text in the left column and the visual in the right, on every split",
+     "rule": "SR-8 T-orientation"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.ft-top",
+     "text": "Lauhata Beach Escape A table and a room ",
+     "msg": "the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)",
+     "fix": "put the text in the left column and the visual in the right, on every split",
+     "rule": "SR-8 T-orientation"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "footer.site-footer > div.wrap.ft-top",
+     "text": "Lauhata Beach Escape A table and a room ",
+     "msg": "the split's columns are off the page's one pair of lines: its right column starts at x 944, the first split's at 857; its right column starts at x 944, on none of the split lines 615 (k=5), 732 (k=6), 849 (k=7) (SR-8)",
+     "fix": "start every split's right column on one shared line (wrap.left + k x (width + 24) / 12, k 5, 6 or 7; 6 on a place page) and end the left one 24px before it",
+     "rule": "SR-8 T-pair"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.mo > div.wrap.mo-grid",
+     "text": "Moments That Last Sunset dinners, family",
+     "msg": "the split's columns are off the page's one pair of lines: its right column starts at x 651, the first split's at 857; its right column starts at x 651, on none of the split lines 615 (k=5), 732 (k=6), 849 (k=7) (and 1 more like it: \"More Than a Resort. A Pl\") (SR-8)",
+     "fix": "start every split's right column on one shared line (wrap.left + k x (width + 24) / 12, k 5, 6 or 7; 6 on a place page) and end the left one 24px before it",
+     "rule": "SR-8 T-pair"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "section#historia > div.wrap.st2-grid",
+     "text": "More Than a Resort. A Place to Belong. L",
+     "msg": "the split does not run edge to edge on the container: its left column starts at 80px, the container's left at 32px; its right column ends at 1360px, the container's right at 1408px (SR-8)",
+     "fix": "run the split from the container's left line to its right line",
+     "rule": "SR-8 T-edges"
+    },
+    {
+     "check": "split-pair",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.mo > div.wrap.mo-grid",
+     "text": "Moments That Last Sunset dinners, family",
+     "msg": "the split does not run edge to edge on the container: its left column starts at 80px, the container's left at 32px; its right column ends at 1360px, the container's right at 1408px (and 1 more like it: \"Lauhata Beach Escape A t\") (SR-8)",
+     "fix": "run the split from the container's left line to its right line",
+     "rule": "SR-8 T-edges"
+    },
+    {
+     "check": "caption",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "card-layout",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "col-edge",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "effect-repeat",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "nesting",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "placeholder",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "pricing-tiers",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "proximity",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "sample-label",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "street-number",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "postcode",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "coordinates",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "company-number",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "phone-number",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    }
+   ],
+   "glAsked": 0
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "screens": 17,
+   "held": 0,
+   "errors": [
+    "audit: page: TypeError: p.children is not iterable\n    at Object.audit (<anonymous>:2788:26)\n    at <anonymous>:1:13",
+    "address: page: TypeError: p.children is not iterable\n    at row (<anonymous>:31:26)\n    at inline (<anonymous>:38:63)\n    at ownerOf (<anonymous>:51:163)\n    at walkText (<anonymous>:62:25)\n    at probe (<anonymous>:70:3)\n    at <anonymous>:113:3"
+   ],
+   "findings": [
+    {
+     "check": "flush",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta > div.wrap.scene-text",
+     "text": "Your Perfect Getaway Awaits Experience the best ",
+     "msg": "its first line sits 0px under the top edge of section.scene.final-cta, where the ground changes",
+     "stop": 13,
+     "crop": "390-22-flush.jpg",
+     "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)"
+    },
+    {
+     "check": "flush",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta > div.wrap.scene-text",
+     "text": "Your Perfect Getaway Awaits Experience the best ",
+     "msg": "its last line sits 0px above the lower edge of section.scene.final-cta, where the ground changes to the footer",
+     "stop": 14,
+     "crop": "390-25-flush.jpg",
+     "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)"
+    },
+    {
+     "check": "collide",
+     "sev": "FAIL",
+     "sel": "header.site-header",
+     "text": "Lauhata",
+     "msg": "at the top of the page the fixed bar covers the picture \"img: Sunset over the sea, with t\": nothing scrolls it out from under the bar",
+     "rest": "top",
+     "stop": 0,
+     "crop": "390-01-collide.jpg",
+     "fix": "on a phone nothing lies on anything else: let the section grow with its content (min-height for its screens, never a fixed height; --hm: 2 when it needs two) or cut what it holds; keep pictures and cards off the buttons; pad the page under a fixed bar by the bar's height (top: the first section; end: the footer)"
+    },
+    {
+     "check": "no-visual",
+     "sev": "FAIL",
+     "sel": "main#main > section.section.am",
+     "text": "Facilities",
+     "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+     "stop": 9,
+     "crop": "390-17-no-visual.jpg",
+     "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits"
+    },
+    {
+     "check": "button-styles",
+     "sev": "FAIL",
+     "sel": "(one screen)",
+     "text": "",
+     "stop": 7,
+     "msg": "3 button styles on one screen: pill, outline #faf7ef (\"Restaurant\"); pill, fill #e8782a (\"Stay\"); pill, fill #17120f (\"Add\"); the odd one out: \"Add\"",
+     "crop": "390-13-button-styles.jpg",
+     "fix": "one primary and one secondary button: one shape, one height per size, one label size"
+    },
+    {
+     "check": "button-styles",
+     "sev": "FAIL",
+     "sel": "(one screen)",
+     "text": "",
+     "stop": 14,
+     "msg": "3 button styles on one screen: pill, fill #e8782a (\"Request a Room\"); pill, outline #f8f1e7 (\"Reserve a Table\"); pill, fill #f7f0e4 (\"Reserve a Table\"); the odd one out: \"Reserve a Table\"",
+     "crop": "390-26-button-styles.jpg",
+     "fix": "one primary and one secondary button: one shape, one height per size, one label size"
+    },
+    {
+     "check": "button-styles",
+     "sev": "FAIL",
+     "sel": "(the page)",
+     "text": "",
+     "stop": 14,
+     "msg": "4 button styles on the page: pill, fill #e8782a x7 (\"Explore Our Resort\"); pill, outline #f8f1e7 x7 (\"Discover Our Story\"); pill, fill #17120f x3 (\"Add\"); pill, fill #f7f0e4 x1 (\"Reserve a Table\")",
+     "crop": "390-27-button-styles.jpg",
+     "fix": "one primary and one secondary button: one shape, one height per size, one label size"
+    },
+    {
+     "check": "same-action",
+     "sev": "FAIL",
+     "sel": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.btn.btn-ghost-light",
+     "text": "Reserve a Table",
+     "stop": 14,
+     "msg": "\"Reserve a Table\" appears 2 times in different looks: pill, outline #f8f1e7 and pill, fill #f7f0e4",
+     "crop": "390-28-same-action.jpg",
+     "fix": "draw one action the same way everywhere (only the nav copy may be one size smaller)"
+    },
+    {
+     "check": "contrast",
+     "sev": "FAIL",
+     "sel": "main#main > section.scene.final-cta > div.wrap.scene-text > p.final-lead",
+     "text": "Experience the best of Lauhata Liquiçá, from mem",
+     "stop": 13,
+     "msg": "body text over a picture reads at 3.3:1 at its worst tenth (needs 4.5:1), on a busy ground",
+     "crop": "390-23-contrast.jpg",
+     "fix": "put the text on a calm part of the picture, or on a solid panel"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "section.cine-hero.hx > div.hx-bg > figure.media > img",
+     "text": "img: Sunset over the sea, with the palm trees in ",
+     "msg": "por-do-sol-palmeiras-alto-1080.jpg: 390x219 shown at 413x893, blown up 4.08x",
+     "stop": 0,
+     "crop": "390-02-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "div.wrap.st2-grid > div.st2-media > figure.media > img",
+     "text": "img: aerea-costa-640.jpg",
+     "msg": "aerea-costa-640.jpg: 358x201 shown at 350x280, blown up 1.39x",
+     "stop": 1,
+     "crop": "390-07-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "div.menu-grid.mp-grid > article.dish:nth-of-type(1) > figure.media.dish-photo > img",
+     "text": "img: Grilled Fish (illustrative image, not the di",
+     "msg": "grilled-fish-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+     "stop": 7,
+     "crop": "390-14-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "div.menu-grid.mp-grid > article.dish:nth-of-type(2) > figure.media.dish-photo > img",
+     "text": "img: Lauhata Special Fried Rice (illustrative ima",
+     "msg": "lauhata-special-fried-rice-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+     "stop": 7,
+     "crop": "390-15-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "div.menu-grid.mp-grid > article.dish:nth-of-type(3) > figure.media.dish-photo > img",
+     "text": "img: Lauhata Seafood (illustrative image, not the",
+     "msg": "pizza-lauhata-seafood-640.jpg: 117x87 shown at 350x350, blown up 4.02x",
+     "stop": 8,
+     "crop": "390-16-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "photo-upscale",
+     "sev": "FAIL",
+     "sel": "section.scene.final-cta > div.scene-media > figure.media > img",
+     "text": "img: por-do-sol-mar-640.jpg",
+     "msg": "por-do-sol-mar-640.jpg: 390x219 shown at 414x368, blown up 1.68x",
+     "stop": 14,
+     "crop": "390-29-photo-upscale.jpg",
+     "fix": "use a source at least as wide as the picture is shown (twice that for sharp screens)"
+    },
+    {
+     "check": "nav",
+     "sev": "WARN",
+     "sel": "header.site-header > div.wrap.header-inner > div.header-actions > button.icon-btn.nav-toggle",
+     "text": "",
+     "stop": 0,
+     "msg": "the nav is lopsided: its last item ends 12px inside the content's edge (370px), while its first starts on the other edge",
+     "fix": "start the nav's first item and end its last on the content's two edges",
+     "crop": "390-03-nav.jpg"
+    },
+    {
+     "check": "tap-size",
+     "sev": "WARN",
+     "sel": "article.rp-card:nth-of-type(1) > div.rp-body > h3.rp-name > a",
+     "text": "Queen Room",
+     "msg": "a 137x32px tap target: under the 44px a phone needs",
+     "stop": 4,
+     "crop": "390-09-tap-size.jpg",
+     "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+    },
+    {
+     "check": "tap-size",
+     "sev": "WARN",
+     "sel": "article.rp-card:nth-of-type(1) > div.rp-body > div.rp-actions > a.text-link",
+     "text": "See the room",
+     "msg": "a 108x40px tap target: under the 44px a phone needs",
+     "stop": 5,
+     "crop": "390-10-tap-size.jpg",
+     "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+    },
+    {
+     "check": "tap-size",
+     "sev": "WARN",
+     "sel": "section#quartos > div.wrap > p.rp-all > a.text-link",
+     "text": "View All Rooms",
+     "msg": "a 121x40px tap target: under the 44px a phone needs",
+     "stop": 6,
+     "crop": "390-12-tap-size.jpg",
+     "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+    },
+    {
+     "check": "tap-size",
+     "sev": "WARN",
+     "sel": "section.section.mp > div.wrap > div.pv-actions > a.text-link",
+     "text": "Reserve a Table",
+     "msg": "a 126x40px tap target: under the 44px a phone needs",
+     "stop": 9,
+     "crop": "390-18-tap-size.jpg",
+     "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+    },
+    {
+     "check": "tap-size",
+     "sev": "WARN",
+     "sel": "section.section.gp > div.wrap > div.gp-head > a.text-link",
+     "text": "View Gallery",
+     "msg": "a 98x40px tap target: under the 44px a phone needs",
+     "stop": 11,
+     "crop": "390-20-tap-size.jpg",
+     "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+    },
+    {
+     "check": "tap-size",
+     "sev": "WARN",
+     "sel": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.text-link.on-dark",
+     "text": "Get in Touch",
+     "msg": "a 101x40px tap target: under the 44px a phone needs",
+     "stop": 14,
+     "crop": "390-30-tap-size.jpg",
+     "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+    },
+    {
+     "check": "cut-text",
+     "sev": "WARN",
+     "sel": "div.rv-scores-wrap > div.rv-scores > a.rv-score.rv-tripadvisor > span.rv-num",
+     "text": "4.4out of 5",
+     "msg": "sits across the edge of a panel behind it (and 1 more like it: \"8.2out of 10\")",
+     "stop": 12,
+     "crop": "390-21-cut-text.jpg",
+     "fix": "give the text room: no overflow clipping a line, no line past its box"
+    },
+    {
+     "check": "text-only",
+     "sev": "WARN",
+     "sel": "section#opinioes",
+     "text": "Experiences that stay with you",
+     "msg": "the section is only text: no picture, icon, mock or effect in it",
+     "stop": 13,
+     "crop": "390-24-text-only.jpg",
+     "fix": "give the section a visual: a photograph that fits, the real icons, or a UI fragment on a ground"
+    },
+    {
+     "check": "same-action",
+     "sev": "WARN",
+     "sel": "section.section.mp > div.wrap > div.pv-actions > a.text-link",
+     "text": "Reserve a Table",
+     "msg": "\"Reserve a Table\" is a button in one place and a text link in another: one action in two looks",
+     "fix": "show one action one way: the same button wherever it repeats, or a text link everywhere",
+     "stop": 9,
+     "crop": "390-19-same-action.jpg"
+    },
+    {
+     "check": "contrast",
+     "sev": "WARN",
+     "sel": "h1#hero-title > em.hx-accent > span.w > span.wi",
+     "text": "Unwind.",
+     "stop": 0,
+     "msg": "large text over a picture reads at 2.9:1 at its worst tenth (needs 3:1)",
+     "crop": "390-04-contrast.jpg",
+     "fix": "put the text on a calm part of the picture, or on a solid panel"
+    },
+    {
+     "check": "busy-ground",
+     "sev": "WARN",
+     "sel": "h1#hero-title > span.line > span.w:nth-of-type(2) > span.wi",
+     "text": "Stay.",
+     "stop": 0,
+     "msg": "text over an uneven part of a picture (its luminance spans 0.26 under the words: a shadow or a bright patch behind part of the line)",
+     "crop": "390-05-busy-ground.jpg",
+     "fix": "move the text to a calm part of the picture, or put it on a panel"
+    },
+    {
+     "check": "busy-ground",
+     "sev": "WARN",
+     "sel": "section.cine-hero.hx > div.wrap.cine-content > div.rs-hero-text > p.hx-line",
+     "text": "A unique destination in Timor-Leste, where excep",
+     "stop": 0,
+     "msg": "text over a detailed part of a picture (its ground changes by 1.4 L* from one pixel to the next under the words)",
+     "crop": "390-06-busy-ground.jpg",
+     "fix": "move the text to a calm part of the picture, or put it on a panel"
+    },
+    {
+     "check": "section-gaps",
+     "sev": "WARN",
+     "sel": "main#main > section.scene.final-cta / footer.site-footer",
+     "text": "",
+     "stop": 14,
+     "msg": "32px between these sections, -60% against the median 80px",
+     "crop": "390-31-section-gaps.jpg",
+     "fix": "use one gap between sections (all within 25% of each other)"
+    },
+    {
+     "check": "photo-set",
+     "sev": "WARN",
+     "sel": "article.rp-card:nth-of-type(2) > a.rp-media > figure.media > img",
+     "text": "suite-familia-640.jpg",
+     "stop": 5,
+     "msg": "14 photographs in more than one look: saturation from 0.20 to 0.63; warm and cool photographs mixed (b* -7 to +28); the odd one out is suite-familia-640.jpg",
+     "crop": "390-11-photo-set.jpg",
+     "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out"
+    },
+    {
+     "check": "photo-credit",
+     "sev": "WARN",
+     "sel": "article.xp-card:nth-of-type(2) > a.xp-media > figure.media > img",
+     "text": "",
+     "stop": 3,
+     "msg": "5 library sources (unsplash): photo-1584132905271-512c958d674a, photo-1584132915807-fd1f5fbc078f, photo-1791540133579-af633981d5ff, photo-1785245647510-5547d4388d2a, photo-1556814901-18c866c057da; confirm each shows the client's own product, place or people",
+     "fix": "confirm the library photograph shows the client's own product, place or people; otherwise replace it"
+    },
+    {
+     "check": "nav-family",
+     "sev": "WARN",
+     "sel": "div.mobile-bar",
+     "text": "",
+     "stop": 1,
+     "msg": "the nav changes form as the page scrolls: header.site-header gives way to div.mobile-bar",
+     "crop": "390-08-nav-family.jpg",
+     "fix": "keep one nav on every screen: the same bar, fill, links and type"
+    },
+    {
+     "check": "link-styles",
+     "sev": "WARN",
+     "sel": "div.ft-col:nth-of-type(3) > ul.footer-list.ft-scores > li:nth-of-type(1) > a",
+     "text": "Tripadvisor 4.4/5",
+     "msg": "text links in 3 looks: no line, regular (5, like \"Queen Room\"); underline, bold (6, like \"See the room\"); border 1px, regular (2, like \"Tripadvisor 4.4/5\")",
+     "stop": 16,
+     "crop": "390-33-link-styles.jpg",
+     "fix": "give text links one look wherever they sit: one underline, one weight"
+    },
+    {
+     "check": "grounds",
+     "sev": "WARN",
+     "sel": "main#main > section.scene.final-cta",
+     "text": "Your Perfect Getaway Awaits Experience t",
+     "msg": "4 flat grounds across the page (#17120f section x4, #f7f0e4 section x5, #efe4d2 section x3, #050f0e section): three at most (the base, a surface, an inverse)",
+     "stop": 14,
+     "crop": "390-32-grounds.jpg",
+     "fix": "three flat grounds at most (the base, one surface, one inverse): lay the other bands on one of them"
+    },
+    {
+     "check": "caption",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "card-layout",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "col-edge",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "effect-repeat",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "nesting",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "placeholder",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "pricing-tiers",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "proximity",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "sample-label",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the page audit (captions, card layouts, column edges, repeated effects, nesting, stand-in text, price tiers, spacing) (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "street-number",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "postcode",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "coordinates",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "company-number",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    },
+    {
+     "check": "phone-number",
+     "sev": "WARN",
+     "sel": "(the page)",
+     "text": "",
+     "msg": "partly measured: the address block (page: TypeError: p.children is not iterable)",
+     "fix": "run the check again on a quieter machine; if it keeps failing, the probe error line says what stopped it"
+    }
+   ],
+   "glAsked": 0
+  }
+ ],
+ "notChecked": [
+  "scroll-linked (stepping)",
+  "scroll-reveal (the reveal walk; IntersectionObserver reveals are read)",
+  "hover-spill",
+  "hidden-visual",
+  "loop-pause",
+  "forms",
+  "reduced-motion",
+  "the dead-IntersectionObserver walk (hidden content is read with scripts off and under reduced motion)",
+  "hover-move"
+ ],
+ "shaders": 0,
+ "hidden": {
+  "screens": 24,
+  "quick": true
+ },
+ "sweep": {
+  "widths": [
+   1280,
+   1152,
+   1024,
+   896,
+   768
+  ],
+  "errors": [],
+  "findings": []
+ },
+ "narrow": {
+  "width": 320,
+  "height": 640,
+  "errors": [],
+  "findings": [
+   {
+    "check": "collide",
+    "sev": "FAIL",
+    "sel": "header.site-header",
+    "text": "Lauhata",
+    "msg": "at the top of the page the fixed bar covers the picture \"img: Sunset over the sea, with t\": nothing scrolls it out from under the bar",
+    "rest": "top",
+    "crop": "narrow-320-01-collide.jpg",
+    "width": 320,
+    "fix": "on a phone nothing lies on anything else: let the section grow with its content (min-height for its screens, never a fixed height; --hm: 2 when it needs two) or cut what it holds; keep pictures and cards off the buttons; pad the page under a fixed bar by the bar's height (top: the first section; end: the footer)"
+   },
+   {
+    "check": "tap-size",
+    "sev": "WARN",
+    "sel": "header.site-header > div.wrap.header-inner > a.brand",
+    "text": "Lauhata",
+    "msg": "a 114x42px tap target: under the 44px a phone needs",
+    "crop": "narrow-320-02-tap-size.jpg",
+    "width": 320,
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+   },
+   {
+    "check": "tap-size",
+    "sev": "WARN",
+    "sel": "article.rp-card:nth-of-type(1) > div.rp-body > h3.rp-name > a",
+    "text": "Queen Room",
+    "msg": "a 137x32px tap target: under the 44px a phone needs",
+    "crop": "narrow-320-03-tap-size.jpg",
+    "width": 320,
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+   },
+   {
+    "check": "tap-size",
+    "sev": "WARN",
+    "sel": "article.rp-card:nth-of-type(1) > div.rp-body > div.rp-actions > a.text-link",
+    "text": "See the room",
+    "msg": "a 108x40px tap target: under the 44px a phone needs",
+    "crop": "narrow-320-04-tap-size.jpg",
+    "width": 320,
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+   },
+   {
+    "check": "tap-size",
+    "sev": "WARN",
+    "sel": "section#quartos > div.wrap > p.rp-all > a.text-link",
+    "text": "View All Rooms",
+    "msg": "a 121x40px tap target: under the 44px a phone needs",
+    "crop": "narrow-320-05-tap-size.jpg",
+    "width": 320,
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+   },
+   {
+    "check": "tap-size",
+    "sev": "WARN",
+    "sel": "section.section.mp > div.wrap > div.pv-actions > a.text-link",
+    "text": "Reserve a Table",
+    "msg": "a 126x40px tap target: under the 44px a phone needs",
+    "crop": "narrow-320-06-tap-size.jpg",
+    "width": 320,
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+   },
+   {
+    "check": "tap-size",
+    "sev": "WARN",
+    "sel": "section.scene.final-cta > div.wrap.scene-text > div.btn-row > a.text-link.on-dark",
+    "text": "Get in Touch",
+    "msg": "a 101x40px tap target: under the 44px a phone needs",
+    "width": 320,
+    "fix": "make every link and control outside running text 44px tall on a phone: display: inline-flex; align-items: center; min-height: 44px (a footer list then needs no gap), a 44px small button, or a transparent ::before laid past the box"
+   }
+  ]
+ },
+ "counts": {
+  "FAIL": 70,
+  "WARN": 75
+ },
+ "checks": {
+  "assets": "PASS",
+  "shader-lint": "PASS",
+  "gl-fallback": "PASS",
+  "empty-visual": "PASS",
+  "hero-fill": "PASS",
+  "flush": "FAIL",
+  "placeholder": "WARN",
+  "sample-label": "FAIL",
+  "caption": "WARN",
+  "credit-wall": "PASS",
+  "nav": "FAIL",
+  "nav-covers": "PASS",
+  "spill": "PASS",
+  "off-viewport": "PASS",
+  "fold-card": "PASS",
+  "hover-spill": "not checked",
+  "overlap-text": "PASS",
+  "collide": "FAIL",
+  "tap-size": "WARN",
+  "row-gap": "PASS",
+  "cut-text": "WARN",
+  "fold-cut": "PASS",
+  "marquee": "PASS",
+  "scroll-linked": "not checked",
+  "scroll-reveal": "not checked",
+  "pinned": "PASS",
+  "loop-pause": "not checked",
+  "reduced-motion": "not checked",
+  "hidden-content": "PASS",
+  "webgl": "PASS",
+  "no-visual": "FAIL",
+  "text-only": "WARN",
+  "card-visual": "PASS",
+  "hidden-visual": "not checked",
+  "card-family": "PASS",
+  "card-layout": "WARN",
+  "nesting": "WARN",
+  "effect-repeat": "WARN",
+  "ui-fit": "PASS",
+  "ui-centre": "PASS",
+  "dark-ground": "PASS",
+  "button-styles": "FAIL",
+  "button-shape": "PASS",
+  "same-action": "FAIL",
+  "button-picture": "PASS",
+  "cta": "PASS",
+  "pricing-tiers": "WARN",
+  "copy-headline": "FAIL",
+  "copy-fact": "PASS",
+  "copy-headings": "FAIL",
+  "copy-buttons": "WARN",
+  "copy-actions": "WARN",
+  "heading-scale": "PASS",
+  "stagger": "PASS",
+  "top-stagger": "PASS",
+  "off-grid": "PASS",
+  "col-edge": "WARN",
+  "right-edge": "PASS",
+  "centre-axis": "PASS",
+  "tilt": "PASS",
+  "contrast": "FAIL",
+  "text-contrast": "PASS",
+  "body-size": "PASS",
+  "busy-ground": "WARN",
+  "section-gaps": "FAIL",
+  "proximity": "WARN",
+  "hole": "PASS",
+  "links": "PASS",
+  "forms": "not checked",
+  "photo-upscale": "FAIL",
+  "photo-set": "WARN",
+  "photo-credit": "WARN",
+  "nav-family": "WARN",
+  "nav-labels": "PASS",
+  "link-styles": "WARN",
+  "heading-align": "PASS",
+  "label-centre": "PASS",
+  "fake-button": "PASS",
+  "stranded-action": "PASS",
+  "orphan": "PASS",
+  "unit-break": "PASS",
+  "tab-wrap": "PASS",
+  "effects-fit": "PASS",
+  "fade-cut": "PASS",
+  "photo-weight": "PASS",
+  "copy-length": "PASS",
+  "nav-current": "PASS",
+  "progress-bar": "PASS",
+  "photo-repeat": "PASS",
+  "button-contrast": "PASS",
+  "photo-print": "PASS",
+  "grounds": "WARN",
+  "split-align": "PASS",
+  "fact-agree": "PASS",
+  "fold-action": "PASS",
+  "action-count": "PASS",
+  "one-screen": "PASS",
+  "hover": "not checked",
+  "hover-move": "not checked",
+  "product-shown": "PASS",
+  "same-object": "PASS",
+  "font-load": "PASS",
+  "visual-caption": "PASS",
+  "visual-empty": "PASS",
+  "effect-kind": "FAIL",
+  "hero-enter": "PASS",
+  "moment-none": "WARN",
+  "street-number": "WARN",
+  "postcode": "WARN",
+  "coordinates": "WARN",
+  "company-number": "WARN",
+  "phone-number": "WARN",
+  "hero-screen": "WARN",
+  "section-height": "FAIL",
+  "section-air": "FAIL",
+  "one-section": "FAIL",
+  "one-heading": "FAIL",
+  "container-edges": "FAIL",
+  "row-lines": "FAIL",
+  "split-pair": "FAIL",
+  "motion-layer": "PASS",
+  "count-text": "PASS",
+  "loop-cycle": "PASS",
+  "section-tile": "FAIL",
+  "empty-area": "PASS",
+  "a11y-name": "PASS",
+  "img-alt": "PASS",
+  "field-label": "PASS",
+  "heading-order": "PASS",
+  "tabindex": "PASS",
+  "focus-ring": "FAIL",
+  "focus-visible": "FAIL",
+  "focus-hidden": "PASS",
+  "skip-link": "PASS",
+  "menu-toggle": "PASS",
+  "lang": "PASS",
+  "page-meta": "PASS",
+  "share-meta": "PASS",
+  "action-repeat": "PASS",
+  "map-link": "FAIL",
+  "open-now": "PASS",
+  "assumed": "PASS",
+  "run-on": "PASS",
+  "form-fields": "PASS",
+  "form-send": "PASS"
+ }
+}

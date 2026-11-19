@@ -518,3 +518,20 @@ html.lh-intro-on .lh-intro { display: block; position: fixed; inset: 0; z-index:
 @media (hover: hover) { .btn:hover > .icon:last-child { transform: translateX(3px); } }
 .btn:active { transform: translateY(1px); }
 @media (prefers-reduced-motion: reduce) { .btn > .icon:last-child, .btn:active { transition: none; transform: none; } }
+
+/* ---------- Language dropdown (globe button + list) ---------- */
+.lang-dd { position: relative; }
+.lang-dd-btn { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; padding: 0 0.8rem; border: 1px solid transparent; border-radius: var(--radius-pill); background: transparent; color: var(--on-night); font: inherit; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: background-color 0.25s var(--ease), border-color 0.25s; }
+.lang-dd-btn .icon { width: 1.15rem; height: 1.15rem; }
+.lang-dd-btn .icon:last-child { width: 0.9rem; height: 0.9rem; opacity: 0.7; transition: transform 0.3s var(--ease); }
+.lang-dd-btn:hover, .lang-dd-btn[aria-expanded="true"] { background: rgba(248, 241, 231, 0.1); border-color: rgba(236, 189, 133, 0.35); }
+.lang-dd-btn[aria-expanded="true"] .icon:last-child { transform: rotate(180deg); }
+.lang-dd-menu { position: absolute; right: 0; top: calc(100% + 0.7rem); z-index: 60; min-width: 11.5rem; margin: 0; padding: 0.35rem; list-style: none; border: 1px solid var(--line-night); border-radius: var(--radius-card); background: var(--night); box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.6); animation: langIn 0.22s var(--ease); }
+.lang-dd-menu[hidden] { display: none; }
+@keyframes langIn { from { opacity: 0; transform: translateY(-6px); } }
+.lang-dd-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 44px; padding: 0 0.9rem; border-radius: var(--radius-field); color: var(--on-night); font-size: 0.95rem; text-decoration: none; }
+a.lang-dd-item:hover, a.lang-dd-item:focus-visible { background: rgba(248, 241, 231, 0.1); }
+.lang-dd-item.is-on { color: var(--gold-soft); font-weight: 600; }
+.lang-dd-item .icon { width: 1.05rem; height: 1.05rem; }
+@media (max-width: 1099px) { .header-actions > .lang-dd { display: none; } }
+@media (prefers-reduced-motion: reduce) { .lang-dd-menu { animation: none; } .lang-dd-btn, .lang-dd-btn .icon { transition: none; } }

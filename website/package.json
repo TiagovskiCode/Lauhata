@@ -10,6 +10,11 @@
     "preview": "node build.mjs && npx --yes http-server@14.1.1 dist -p 8080 -c-1",
     "fotos": "powershell -ExecutionPolicy Bypass -File tools/otimizar-fotos.ps1",
     "fotos:temporarias": "node tools/fotos-temporarias.mjs",
-    "fotos:temporarias:otimizar": "powershell -ExecutionPolicy Bypass -File tools/otimizar-temporarias.ps1"
+    "fotos:temporarias:otimizar": "powershell -ExecutionPolicy Bypass -File tools/otimizar-temporarias.ps1",
+    "check": "node tools/check-site.mjs",
+    "test": "node build.mjs && node --test tests/site.test.mjs && node tools/check-site.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2"
   }
 }

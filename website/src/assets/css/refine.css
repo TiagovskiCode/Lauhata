@@ -1,0 +1,661 @@
+/* =====================================================================================================================
+   refine.css — the final layer of the cascade (Nov 2026 redesign, built on the 8 November version).
+   Rules followed from the installed skills:
+     Taste (place): no caption under a picture, nothing fades in on scroll, no parallax on text, one action per screen.
+     Impeccable craft floor: no eyebrow above a heading, no 01/02/03 section numbers, no one-sided bars, no gradient text.
+     Apple HIG: sidebars.md (two levels at most, current section marked), pop-up-buttons.md (a flat list of exclusive choices
+     = the language list), accessibility.md (44px targets, contrast, focus), entering-data.md (short forms).
+   Persuade = the editorial pages (home, story, gallery). Operate = the menu, cart and forms: clarity before expression.
+   ===================================================================================================================== */
+
+/* ---------- Header ---------- */
+.site-header .brand-mark { width: 60px; height: 60px; }
+.site-header .brand-name { font-size: 1.45rem; }
+@media (max-width: 860px) { .site-header .brand-mark { width: 50px; height: 50px; } }
+@media (max-width: 640px) { .site-header .brand-name { font-size: 1.2rem; } }
+
+/* ---------- Floating actions: WhatsApp and Back to top form one group at the bottom right ---------- */
+.to-top { left: auto; right: 1.4rem; bottom: calc(1.4rem + 3.2rem + 0.75rem); }
+.cart-fab { bottom: calc(1.4rem + 3.2rem + 0.75rem + 48px + 0.75rem); }
+@media (min-width: 1600px) { .to-top { bottom: calc(1.4rem + 3.6rem + 0.75rem); } .cart-fab { bottom: calc(1.4rem + 3.6rem + 0.75rem + 48px + 0.75rem); } }
+
+/* ---------- No labels above headings (Impeccable) ---------- */
+.eyebrow-rule, .hx-eyebrow, .rs-hero .hx-eyebrow { display: none !important; }
+
+/* ---------- Home · welcome: an introduction with two photographs ---------- */
+.ws { background: var(--cream); padding-block: clamp(4.5rem, 9vw, 8rem); }
+.ws-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4rem); align-items: center; }
+.ws-title { margin: 0; max-width: 15ch; font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 3.4vw + 1rem, 4.4rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
+.ws-body { margin: 1.4rem 0 1.8rem; max-width: 30rem; font-size: 1.12rem; line-height: 1.7; color: var(--body); }
+.ws-link { font-weight: 600; }
+.ws-photos { position: relative; min-width: 0; padding-bottom: clamp(3rem, 8vw, 6rem); }
+.ws-a { margin: 0 0 0 clamp(0rem, 8vw, 6rem); aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radius-card); }
+.ws-b { position: absolute; left: 0; bottom: 0; width: 46%; margin: 0; aspect-ratio: 5 / 4; overflow: hidden; border-radius: var(--radius-card); border: 6px solid var(--cream); }
+.ws-a .media, .ws-b .media { height: 100%; border-radius: 0 !important; }
+.ws-a img, .ws-b img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
+@media (min-width: 900px) { .ws-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(3rem, 7vw, 7rem); } }
+
+/* ---------- Home · story ---------- */
+.rs-story-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.6rem; }
+.text-link.on-dark { color: var(--on-night); }
+.rs-story-cap { display: none; }
+
+/* ---------- Reviews: exactly two platform boxes ---------- */
+.rv-cards, .rv-note { display: none; }
+
+/* ---------- Menu: categories in a left column on wide screens, scroll-aware ---------- */
+.menu-side { display: contents; }
+.menu-nav-title { display: none; }
+.menu-nav a small { margin-left: 0.5rem; font-size: 0.78rem; font-variant-numeric: lining-nums tabular-nums; opacity: 0.7; }
+@media (min-width: 1000px) {
+  section.menu .menu-layout { display: grid; grid-template-columns: 16rem minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
+  section.menu .menu-side { display: block; position: sticky; top: 7rem; align-self: start; padding-top: clamp(2rem, 4vw, 3.2rem); }
+  section.menu .menu-side .menu-search { width: 100%; max-width: none; margin: 0 0 1.8rem; }
+  section.menu .menu-side .menu-nav { position: static; top: auto; background: none; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  section.menu .menu-nav-title { display: block; margin: 0 0 0.9rem; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra-dark); }
+  section.menu .menu-side .menu-nav ul { display: grid; gap: 0; padding: 0; overflow: visible; }
+  section.menu .menu-side .menu-nav li { display: block; }
+  section.menu .menu-side .menu-nav a { display: flex; align-items: center; justify-content: space-between; margin: 0; min-height: 44px; padding: 0.55rem 0 0.55rem 1.1rem; border: 0; border-left: 1px solid var(--line-strong); border-radius: 0; background: none !important; color: var(--muted); font-size: 1rem; font-weight: 500; white-space: normal; transition: color 0.25s var(--ease), border-color 0.25s, padding-left 0.3s var(--ease); }
+  section.menu .menu-side .menu-nav a:hover { color: var(--ink); padding-left: 1.35rem; }
+  section.menu .menu-side .menu-nav a[aria-current="true"] { margin: 0; padding-left: 1.35rem; border-left: 2px solid var(--sunset); color: var(--ink); font-weight: 700; background: none; }
+  section.menu .menu-body .menu-cat { display: block; scroll-margin-top: 7rem; padding-block: 0 clamp(2.4rem, 4vw, 3.4rem); padding-top: clamp(2rem, 4vw, 3.2rem); border-top: 0; }
+  section.menu .menu-body .menu-cat > .menu-cat-head { position: static; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1.2rem; margin: 0 0 0.6rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line-strong); }
+  section.menu .menu-body .menu-cat > * { grid-column: auto; }
+  section.menu .menu-body .menu-cat-head h3 { font-size: clamp(2rem, 2.4vw + 0.6rem, 2.8rem); }
+  section.menu .menu-body .menu-cat-head p { margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) { section.menu .menu-side .menu-nav a { transition: none; } }
+
+/* ---------- Forms: an error line reserves its space, so showing or clearing a message never moves the fields (measured: a layout shift of 0.0135 each time) ---------- */
+.field .error { min-height: 1.25rem; margin-top: 0.3rem; }
+.field .error:empty { visibility: hidden; }
+.field .hint + .error { margin-top: 0.15rem; }
+
+/* ---------- Footer: the logo carries it ---------- */
+.site-footer .ft-brand .brand-mark { width: 76px; height: 76px; }
+.site-footer .ft-brand .brand-name { font-size: 1.7rem; }
+.site-footer .ft-brand { display: grid; gap: 1.4rem; }
+.site-footer .ft-statement { font-size: clamp(1.9rem, 2.4vw + 0.8rem, 3rem); max-width: 16ch; }
+
+/* ---------- Type: the hero's accent word stays roman (an italic serif display line is the stock look) ---------- */
+h1 em, h2 em, .hx-accent { font-style: normal !important; }
+
+/* ---------- Nothing waits hidden for the scroll (Taste: no fade-in on scroll) ---------- */
+.js [data-reveal], html.js [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none !important; transition: none !important; }
+.pk-btn:focus-visible { outline: 2px solid var(--sunset); outline-offset: 2px; }
+
+/* =====================================================================================================================
+   Round 2 (19 Nov 2026): six-item header, hero with two plain actions, a homepage that reads as a sequence, equal room cards,
+   Our Story without the overlap, reviews on their own ground.
+   ===================================================================================================================== */
+
+/* ---------- Header: one flex row (logo · six links · language and cart); the links get room and a larger size ---------- */
+.site-header .header-inner { display: flex !important; align-items: center; gap: 1.5rem !important; }
+.site-header .header-inner .nav-main { margin-inline: auto; justify-self: auto; gap: clamp(1.1rem, 1.8vw, 2.3rem) !important; }
+.site-header .header-actions { margin-left: 0; flex: none; }
+.site-header .nav-main a { font-size: 1rem; padding-block: 0.55rem; letter-spacing: 0.005em; }
+@media (min-width: 1200px) { .site-header .header-inner .nav-main { display: flex !important; } .site-header .nav-toggle { display: none !important; } }
+@media (max-width: 1199px) { .site-header .header-inner .nav-main { display: none !important; } .site-header .nav-toggle { display: inline-grid !important; } .site-header .header-actions { margin-left: auto; } }
+.site-header .brand { flex: none; }
+
+/* ---------- Hero: the copy sits low and left, two actions of ordinary size; nothing in it opens or resizes ---------- */
+.rs-hero { min-height: max(100svh, 640px); justify-content: flex-end; }
+.rs-hero .hx-content { padding-top: calc(var(--header-h) + 2rem); padding-bottom: clamp(3rem, 9vh, 6rem); }
+.rs-hero .hx-title { max-width: 14ch; font-size: clamp(2.7rem, 4.6vw + 0.6rem, 5.6rem); line-height: 1.08; padding-bottom: 0.1em; }
+.hx-title .w, .hx-title .wi { padding-bottom: 0.14em; margin-bottom: -0.14em; }
+.rs-hero .hx-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+.rs-hero .hx-cta .btn { min-height: 52px; padding-inline: 1.7rem; font-size: 1rem; }
+@media (max-width: 520px) { .rs-hero .hx-cta .btn { flex: 1 1 100%; justify-content: center; } }
+.rs-booking { display: none; }
+
+/* ---------- Homepage rhythm: one ground per section, alternating, each with its own padding ---------- */
+.ws, .pv-rest, .pv-events { background: var(--cream); }
+.ds, .rs-stay { background: var(--paper); }
+.ds, .pv, .rs-stay { padding-block: clamp(4rem, 8vw, 7rem); }
+
+/* Dine & Stay: two equal doors */
+.ds-doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem); }
+.ds-door { display: grid; gap: 1.1rem; text-decoration: none; color: inherit; }
+.ds-door-media { overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 16 / 10; }
+.ds-door-media .media, .ds-door-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.ds-door-media img { transition: transform 0.6s var(--ease); }
+.ds-door:hover .ds-door-media img { transform: scale(1.03); }
+.ds-door-text { display: grid; gap: 0.35rem; }
+.ds-door-text strong { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 1.4vw + 1rem, 2.2rem); color: var(--ink); }
+.ds-door-text > span:not(.wc-link) { color: var(--body); }
+.ds-door .wc-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem; font-weight: 600; color: var(--terra-dark); }
+@media (max-width: 640px) { .ds-doors { grid-template-columns: minmax(0, 1fr); } }
+
+/* Preview sections (restaurant, events): photograph and text side by side, text vertically centred */
+.pv-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.pv-media { overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 4 / 3; }
+.pv-media .media, .pv-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.pv-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 2.6vw + 0.9rem, 3.4rem); line-height: 1.08; letter-spacing: -0.012em; color: var(--ink); text-wrap: balance; }
+.pv-body { margin: 1.1rem 0 0; max-width: 34rem; font-size: 1.08rem; line-height: 1.7; color: var(--body); }
+.pv-hours { display: grid; gap: 0.35rem; margin: 1.6rem 0 0; max-width: 26rem; font-size: 0.98rem; }
+.pv-hours > div { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: 0.45rem; border-bottom: 1px solid var(--line); }
+.pv-hours dt { color: var(--muted); }
+.pv-hours dd { margin: 0; font-weight: 600; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.pv-dishes { list-style: none; margin: 1.4rem 0 0; padding: 0; max-width: 26rem; }
+.pv-dishes li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.5rem; border-bottom: 1px solid var(--line); color: var(--ink); }
+.pv-price { font-variant-numeric: lining-nums tabular-nums; color: var(--body); }
+.pv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.6rem; margin-top: 2rem; }
+@media (min-width: 900px) { .pv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pv-grid.is-flip .pv-media { order: 2; } }
+
+/* Stay: the heading, then two equal room cards */
+.st-head { max-width: 40rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.rp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 2.4vw, 2rem); align-items: stretch; }
+.rp-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-card); background: var(--cream); border: 1px solid var(--line); }
+.rp-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.rp-media .media, .rp-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.rp-media img { transition: transform 0.6s var(--ease); }
+.rp-card:hover .rp-media img { transform: scale(1.03); }
+.rp-body { display: flex; flex-direction: column; gap: 0.7rem; padding: clamp(1.25rem, 2.2vw, 1.9rem); }
+.rp-name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 1.2vw + 1.2rem, 2.3rem); line-height: 1.1; }
+.rp-name a { color: var(--ink); text-decoration: none; }
+.rp-sum { margin: 0; color: var(--body); line-height: 1.6; }
+.rp-body .room-facts-line { margin: 0; }
+.rp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.4rem; margin-top: auto; padding-top: 1rem; }
+@media (max-width: 760px) { .rp-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Story preview: the photograph and the shade stay inside the section */
+.rs-story { position: relative; isolation: isolate; overflow: hidden; }
+.rs-story-shade { position: absolute; inset: 0; }
+
+/* Final invitation */
+.final-cta .btn-row { align-items: center; gap: 0.8rem 1.6rem; }
+.final-cta .btn-lg { min-height: 52px; padding-inline: 1.7rem; font-size: 1rem; }
+
+/* ---------- Reviews: its own ground, a clear step away from the dark footer; title and cards share a left edge ---------- */
+.reviews-ed { background: var(--cream); color: var(--ink); padding-block: clamp(4rem, 8vw, 7rem); border-top: 0; }
+.reviews-ed .rv-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 2.4rem); align-items: start; margin-bottom: 0; }
+.reviews-ed .rv-title { margin: 0; max-width: 18ch; font-size: clamp(2.2rem, 3vw + 1rem, 4rem); line-height: 1.06; }
+.reviews-ed .rv-scores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.5rem); max-width: none; border: 0; }
+.reviews-ed .rv-score { align-content: start; padding: clamp(1.25rem, 2.4vw, 2rem); background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-card); min-height: 100%; }
+.reviews-ed .rv-score + .rv-score { border-left: 1px solid var(--line); padding-left: clamp(1.25rem, 2.4vw, 2rem); }
+.reviews-ed .rv-own { margin-top: clamp(2rem, 4vw, 3rem); max-width: 46rem; }
+.reviews-ed .rv-scores-wrap { min-width: 0; }
+@media (max-width: 640px) { .reviews-ed .rv-scores { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Our Story: the title is sticky only when it sits in its own column (it sat over its own paragraphs) ---------- */
+.ab-title { position: static; }
+@media (min-width: 861px) { .ab-grid > .ab-title { position: sticky; top: calc(var(--header-h) + 2.5rem); align-self: start; } }
+
+/* Review boxes: one clear column inside each box (platform, score, meter, count, link), on any width */
+.reviews-ed .rv-score { grid-template-columns: minmax(0, 1fr); grid-template-areas: "plat" "num" "meter" "word" "go"; row-gap: 0.55rem; justify-items: start; }
+.reviews-ed .rv-score > .rv-bubbles, .reviews-ed .rv-score > .rv-bar { grid-area: meter; }
+.reviews-ed .rv-num { font-size: clamp(3.4rem, 4vw + 1.6rem, 6rem); }
+.reviews-ed .rv-score .rv-go { margin-top: 0.4rem; }
+
+/* ---------- Gate fixes (Taste): readable facts on the cream room cards, one button language, headings sized by level, nothing fades in on scroll ---------- */
+.rp-body .room-facts-line { color: var(--body); font-size: 0.95rem; }
+.rp-body .room-facts-line li + li::before { color: var(--terra-dark); }
+.rp-name { font-size: clamp(1.3rem, 0.6vw + 1.1rem, 1.55rem); }
+.final-line { font-size: clamp(2.4rem, 4.4vw + 0.6rem, 4.6rem); line-height: 1.08; padding-bottom: 0.1em; }
+.final-line .w, .final-line .wi { padding-bottom: 0.16em; margin-bottom: -0.16em; }
+.final-cta [data-fade], .final-cta .final-lead, .final-cta .btn-row, .final-cta .scene-note { opacity: 1 !important; transform: none !important; transition: none !important; }
+.site-header .nav-main a { white-space: nowrap; }
+.btn-ghost-light { background: transparent; }
+
+/* Phones: the Back-to-top button sits above the mobile bar and the order button, never under them */
+@media (max-width: 860px) {
+  .to-top { right: 0.9rem; bottom: calc(5rem + env(safe-area-inset-bottom)); }
+  .has-bar .to-top { bottom: calc(9.6rem + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 380px) {
+  .site-header .brand-mark { width: 42px; height: 42px; }
+  .site-header .brand-name { font-size: 1.05rem; }
+  .site-header .header-inner { gap: 0.5rem !important; }
+}
+
+/* =====================================================================================================================
+   Round 3 (brief of 19 Nov 2026): "Luxury coastal hospitality". Dark cinematic sections (hero, the two experiences, moments,
+   footer) alternate with warm, open ones (story, rooms, menu, facilities, gallery, reviews). One radius, one set of colours.
+   ===================================================================================================================== */
+
+/* ---------- Header: six links, the Reserve button, language, cart ---------- */
+@media (min-width: 1280px) { .site-header .header-inner .nav-main { display: flex !important; } .site-header .nav-toggle { display: none !important; } .site-header .book-btn { display: inline-flex !important; } }
+@media (max-width: 1279px) { .site-header .header-inner .nav-main { display: none !important; } .site-header .nav-toggle { display: inline-grid !important; } .site-header .header-actions { margin-left: auto; } .site-header .book-btn { display: none !important; } }
+.site-header .nav-main a { font-size: 0.98rem; }
+.site-header .book-btn { --bg: var(--sunset) !important; --fg: #1a120c !important; --bd: var(--sunset) !important; padding-inline: 1.3rem; }
+.site-header .book-btn:hover { --bg: #f08a46 !important; --bd: #f08a46 !important; }
+
+/* ---------- Hero: "Dine. Stay. Unwind." with an italic, orange last word ---------- */
+.rs-hero .hx-title { max-width: 11ch; font-size: clamp(3.4rem, 6.4vw + 0.6rem, 7.2rem); line-height: 1.02; letter-spacing: -0.02em; }
+.hx-title .line { display: inline; }
+.hx-accent { display: block; font-style: italic !important; color: var(--sunset); }
+.rs-hero .hx-line { max-width: 30rem; font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.3rem); }
+
+/* ---------- Our Story: an open, editorial split on cream ---------- */
+.st2 { background: var(--cream); padding-block: clamp(5rem, 10vw, 9rem); }
+.st2-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+.st2-media { margin: 0; overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 5 / 4; }
+.st2-media .media, .st2-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.st2-facts { list-style: none; margin: 1.8rem 0 0; padding: 0; max-width: 26rem; }
+.st2-facts li { padding-block: 0.7rem; border-bottom: 1px solid var(--line-strong); color: var(--ink); font-weight: 500; }
+.st2-facts li:first-child { border-top: 1px solid var(--line-strong); }
+@media (min-width: 900px) { .st2-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+
+/* ---------- The two experiences: equal, dark ---------- */
+.xp { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
+.xp .ds-title { color: var(--on-night); }
+.xp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 2.4vw, 2rem); }
+.xp-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-card); background: rgba(248, 241, 231, 0.05); border: 1px solid rgba(236, 189, 133, 0.2); }
+.xp-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.xp-media .media, .xp-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; transition: transform 0.6s var(--ease); }
+.xp-card:hover .xp-media img { transform: scale(1.03); }
+.xp-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.8rem; padding: clamp(1.4rem, 2.6vw, 2.2rem); }
+.xp-text h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 1.4vw + 1.2rem, 2.5rem); line-height: 1.1; color: var(--on-night); }
+.xp-text p { margin: 0 0 0.6rem; max-width: 30rem; line-height: 1.65; color: var(--on-night-2, rgba(248, 241, 231, 0.78)); }
+@media (max-width: 760px) { .xp-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Rooms ---------- */
+.rs-stay { background: var(--paper); }
+.rp-all { margin: clamp(1.6rem, 3vw, 2.4rem) 0 0; }
+
+/* ---------- Menu preview ---------- */
+.mp { background: var(--cream); padding-block: clamp(4.5rem, 9vw, 8rem); }
+.mp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem); }
+.mp .pv-actions { margin-top: clamp(1.8rem, 3vw, 2.6rem); }
+@media (max-width: 899px) { .mp-grid { gap: 0.9rem; } .mp-grid .dish-body { padding: 0.9rem; } }
+@media (max-width: 699px) { .mp-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Facilities: only what Lauhata really has ---------- */
+.am { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+.am-list { list-style: none; margin: clamp(1.6rem, 3vw, 2.4rem) 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.am-list li { display: grid; justify-items: center; gap: 0.7rem; padding: 0.4rem 0.8rem; text-align: center; font-weight: 500; color: var(--ink); }
+.am-list li + li { border-left: 1px solid var(--line-strong); }
+.am-list .icon { width: 2rem; height: 2rem; color: var(--terra-dark); }
+@media (max-width: 860px) { .am-list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.6rem; } .am-list li { border-left: 0 !important; } }
+
+/* ---------- Moments That Last: dark, photographs lead ---------- */
+.mo { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
+.mo .pv-title { color: var(--on-night); }
+.mo .pv-body { color: var(--on-night-2, rgba(248, 241, 231, 0.78)); }
+.mo-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4rem); align-items: center; }
+.mo-photos { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: clamp(0.75rem, 1.6vw, 1.25rem); }
+.mo-photos figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
+.mo-photos .media, .mo-photos img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.mo-a { grid-row: 1 / span 2; aspect-ratio: 4 / 5; }
+.mo-b, .mo-c { aspect-ratio: 1 / 1; }
+@media (min-width: 900px) { .mo-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+
+/* ---------- Gallery preview ---------- */
+.gp { background: var(--cream); padding-block: clamp(4rem, 8vw, 7rem); }
+.gp-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.8rem 2rem; margin-bottom: clamp(1.6rem, 3vw, 2.4rem); }
+.gp-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(0.6rem, 1.4vw, 1.1rem); }
+.gp-grid li { overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 16 / 10; }
+.gp-grid a, .gp-grid .media, .gp-grid img { display: block; width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.gp-0, .gp-3 { grid-column: span 7; } .gp-1, .gp-2 { grid-column: span 5; }
+.gp-grid img { transition: transform 0.6s var(--ease); } .gp-grid li:hover img { transform: scale(1.03); }
+@media (max-width: 640px) { .gp-0, .gp-1, .gp-2, .gp-3 { grid-column: span 12; } }
+
+/* ---------- Reviews sit on sand, between the cream gallery and the photographic closing call ---------- */
+.reviews-ed { background: var(--paper); }
+.reviews-ed .rv-score { background: var(--cream); }
+
+@media (prefers-reduced-motion: reduce) { .xp-media img, .gp-grid img, .rp-media img { transition: none; } }
+
+/* =====================================================================================================================
+   QA pass (19 Nov 2026): fixes for what the Taste gate and the screenshots found in the redesign
+   ===================================================================================================================== */
+/* Hero words are masked for their entrance: leave room above and below so ascenders and descenders are never cut */
+.hx-title .w, .hx-title .wi, .final-line .w, .final-line .wi { padding-top: 0.2em; margin-top: -0.2em; }
+
+/* Contrast: dish tag and description on the sand cards */
+.dish-tag { color: var(--terra-dark); }
+.mp .dish-desc, .menu .dish-desc { color: var(--ink); }
+
+/* Headings sized by level: every section h2 shares one scale, card h3 sit below it */
+.pv-title, .ds-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2.1rem, 2.2vw + 1.1rem, 3.2rem); line-height: 1.1; }
+.xp-text h3, .rp-name { font-size: clamp(1.45rem, 0.8vw + 1.15rem, 1.8rem); }
+
+/* Closing call: a calm, darker ground behind the text on any width */
+.final-cta .scene-media { position: absolute; inset: 0; }
+.final-cta .scene-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23, 18, 15, 0.45), rgba(23, 18, 15, 0.78)); pointer-events: none; }
+.final-cta .scene-text { position: relative; z-index: 1; }
+.final-cta .final-lead { color: var(--on-night); }
+
+/* Facilities: five items; on phones the last one centres under the pair above it */
+@media (max-width: 860px) { .am-list li:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+
+/* The phone bar is one opaque band, so text never shows through it */
+@media (max-width: 860px) { .mobile-bar { background: var(--night) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; } }
+
+/* Focus is always visible: one ring, light on dark grounds */
+main:focus { outline: none; }
+.btn:focus-visible, .text-link:focus-visible, .lang-dd-btn:focus-visible, .nav-main a:focus-visible, .cart-btn:focus-visible, .icon-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.rs-hero .btn:focus-visible, .xp .btn:focus-visible, .mo .btn:focus-visible, .final-cta .btn:focus-visible, .final-cta .text-link:focus-visible, .site-header .nav-main a:focus-visible, .site-header .lang-dd-btn:focus-visible, .site-header .cart-btn:focus-visible, .site-header .icon-btn:focus-visible, .site-footer a:focus-visible { outline-color: var(--on-night); }
+.bc-field .pk-btn:focus-visible { outline: 2px solid var(--sunset) !important; outline-offset: 2px; }
+
+/* Section titles that were left without their serif voice and spacing */
+.ds-title { margin: 0 0 clamp(1.6rem, 3vw, 2.4rem); font-family: var(--serif); font-weight: 400; color: var(--ink); text-wrap: balance; }
+.xp .ds-title { color: var(--on-night); }
+/* Hero: the photograph shows through; the shade only protects the header and the copy */
+.rs-hero .hx-shade { background: linear-gradient(180deg, rgba(23, 18, 15, 0.5) 0%, rgba(23, 18, 15, 0.08) 28%, rgba(23, 18, 15, 0.12) 52%, rgba(23, 18, 15, 0.8) 100%); }
+@media (max-width: 860px) { .rs-hero .hx-shade { background: linear-gradient(180deg, rgba(23, 18, 15, 0.5) 0%, rgba(23, 18, 15, 0.24) 30%, rgba(23, 18, 15, 0.56) 55%, rgba(23, 18, 15, 0.86) 100%); } }
+
+/* QA pass 2: text over photographs sits on enough shade; the phone bar is one full-width opaque band */
+.rs-hero .hx-line { color: #fff; text-shadow: 0 1px 14px rgba(14, 10, 8, 0.6); }
+@media (max-width: 860px) {
+  .final-cta .scene-text { padding: 1.4rem var(--gutter); background: rgba(23, 18, 15, 0.66); }
+  .mobile-bar { left: 0 !important; right: 0 !important; bottom: 0 !important; border-radius: 0 !important; border-left: 0 !important; border-right: 0 !important; padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom)) !important; }
+}
+
+/* =====================================================================================================================
+   Round 5: reference-inspired homepage. Light, photographic sections carry the page; two dark bands (the hero and the
+   experiences) give it contrast. Order: hero · welcome with four photo cards · facilities strip · rooms · a taste of Lauhata ·
+   what makes it special (dark) · our story (asymmetric) · gallery · reviews · the closing call.
+   ===================================================================================================================== */
+.wl, .hs, .rs-stay, .tt, .sx, .gp, .reviews-ed { color: var(--ink); }
+.wl { background: var(--cream); padding-block: clamp(5rem, 9vw, 8.5rem); }
+.hs { background: var(--paper); padding-block: clamp(1.6rem, 3vw, 2.4rem); border-block: 1px solid var(--line); }
+.rs-stay { background: var(--cream); }
+.tt { background: var(--paper); }
+.xs { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
+.sx { background: var(--cream); padding-block: clamp(5rem, 10vw, 9rem); }
+.gp { background: var(--paper); }
+.reviews-ed { background: var(--cream); }
+.reviews-ed .rv-score { background: var(--paper); }
+.xs .ds-title { color: var(--on-night); }
+
+/* ---------- Welcome: text on the left, four photographs on the right in an asymmetric grid ---------- */
+.wl-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+.wl-head { margin: 0.9rem 0 0; font-family: var(--serif); font-size: clamp(1.3rem, 0.9vw + 1.05rem, 1.7rem); line-height: 1.3; color: var(--terra-dark); }
+.wl-intro .pv-body { margin-top: 1.1rem; }
+.wl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: clamp(10rem, 15vw, 14rem); gap: clamp(0.7rem, 1.4vw, 1.1rem); }
+.wl-card { position: relative; display: block; overflow: hidden; border-radius: var(--radius-card); color: #fff; text-decoration: none; isolation: isolate; }
+.wl-card .media, .wl-card img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; transition: transform 0.7s var(--ease); }
+.wl-card:hover .media img, .wl-card:hover > img { transform: scale(1.04); }
+.wl-card::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(23, 18, 15, 0) 45%, rgba(23, 18, 15, 0.78) 100%); }
+.wl-text { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 1rem; z-index: 2; display: grid; gap: 0.2rem; }
+.wl-text strong { font-family: var(--serif); font-weight: 500; font-size: clamp(1.25rem, 0.6vw + 1.05rem, 1.55rem); line-height: 1.15; }
+.wl-text span { font-size: 0.92rem; line-height: 1.4; color: rgba(255, 255, 255, 0.9); }
+.wl-a { grid-row: span 2; }
+.wl-d { grid-column: 1 / -1; }
+@media (min-width: 900px) { .wl-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+@media (max-width: 560px) { .wl-cards { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 13rem; } .wl-a { grid-row: span 1; } .wl-a, .wl-d { grid-column: auto; } }
+
+/* ---------- Facilities strip: compact, neutral, dividers between items ---------- */
+.hs-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: nowrap; justify-content: space-between; gap: 0.5rem; }
+.hs-list li { flex: 1 1 0; display: flex; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.5rem 0.6rem; font-weight: 500; font-size: 0.98rem; color: var(--ink); text-align: left; }
+.hs-list li + li { border-left: 1px solid var(--line-strong); }
+.hs-list .icon { flex: none; width: 1.55rem; height: 1.55rem; color: var(--terra-dark); }
+@media (max-width: 860px) {
+  .hs-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 0.4rem; }
+  .hs-list li { justify-content: flex-start; border-left: 0 !important; }
+  .hs-list li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/* ---------- Rooms: a quiet lift on hover ---------- */
+.rp-card { transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); box-shadow: 0 1px 2px rgba(23, 18, 15, 0.04); }
+.rp-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(23, 18, 15, 0.35); }
+
+/* ---------- A taste of Lauhata: text and a three-photograph mosaic ---------- */
+.tt { padding-block: clamp(5rem, 9vw, 8.5rem); }
+.tt-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+.tt-hours { display: flex; align-items: flex-start; gap: 0.6rem; margin: 1.4rem 0 0; font-size: 0.98rem; color: var(--body); }
+.tt-hours .icon { flex: none; width: 1.2rem; height: 1.2rem; margin-top: 0.15rem; color: var(--terra-dark); }
+.tt-hours b { color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.tt-photos { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: auto auto; gap: clamp(0.7rem, 1.4vw, 1.1rem); }
+.tt-photos figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
+.tt-photos .media, .tt-photos img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.tt-photos img { transition: transform 0.7s var(--ease); } .tt-photos figure:hover img { transform: scale(1.03); }
+.tt-a { grid-row: 1 / span 2; aspect-ratio: 3 / 4; }
+.tt-b, .tt-c { aspect-ratio: 1 / 1; }
+@media (min-width: 900px) { .tt-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+
+/* ---------- What makes Lauhata special: three dark panels ---------- */
+.xs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem); }
+.xs .xp-text h3 { font-size: clamp(1.45rem, 0.8vw + 1.15rem, 1.8rem); }
+@media (max-width: 900px) { .xs-grid { grid-template-columns: minmax(0, 1fr); max-width: 40rem; } }
+
+/* ---------- Our story: one dominant photograph, two smaller ones overlapping it ---------- */
+.sx-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+.sx-photos { position: relative; padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+.sx-photos figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
+.sx-photos .media, .sx-photos img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+.sx-a { width: 84%; margin-left: auto; aspect-ratio: 5 / 4; }
+.sx-b { position: absolute; left: 0; bottom: 0; width: 40%; aspect-ratio: 4 / 5; border: 6px solid var(--cream); }
+.sx-c { position: absolute; right: 0; top: clamp(-1.5rem, -2vw, -0.5rem); width: 24%; aspect-ratio: 1 / 1; border: 6px solid var(--cream); }
+.btn-ghost-dark { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+.btn-ghost-dark:hover { background: var(--ink); color: var(--cream); }
+@media (min-width: 900px) { .sx-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+@media (max-width: 560px) { .sx-c { display: none; } .sx-a { width: 88%; } .sx-b { width: 44%; } }
+
+/* ---------- Gallery preview: the first photograph is the featured one ---------- */
+.gp-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.gp-0 { grid-column: span 7; aspect-ratio: 16 / 11; }
+.gp-1 { grid-column: span 5; aspect-ratio: 16 / 11; }
+.gp-2 { grid-column: span 5; aspect-ratio: 16 / 11; }
+.gp-3 { grid-column: span 7; aspect-ratio: 16 / 11; }
+@media (max-width: 640px) { .gp-0, .gp-1, .gp-2, .gp-3 { grid-column: span 12; } }
+
+/* ---------- Focus on the new interactive cards ---------- */
+.wl-card:focus-visible { outline: 3px solid var(--sunset); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .wl-card .media img, .tt-photos img, .rp-card { transition: none; } .rp-card:hover { transform: none; } }
+.tt-a { aspect-ratio: auto; min-height: 100%; }
+.tt-a .media { height: 100%; }
+@media (max-width: 560px) { .tt-a { min-height: 0; aspect-ratio: 3 / 4; } }
+
+/* =====================================================================================================================
+   Round 6: details taken from the five references (seen at last): round icon badges and a fact under each facility
+   (Skyview, Ocean Haven, the homestay), centred room heading with a fine gold rule and an outlined "all rooms" button
+   (Ocean Haven), icon meta rows on the room cards, round badges on the experience photographs, a soft curved edge where the
+   hero meets the page (homestay), an interlocking diamond collage for Our Story (Northview) and a panel with the two actions
+   over the closing photograph (Northview / Skyview).
+   ===================================================================================================================== */
+
+/* the hero hands over to the page with a soft curve */
+.wl { position: relative; z-index: 2; margin-top: -2.5rem; border-radius: 2.5rem 2.5rem 0 0; }
+
+/* facilities: badge, label, one confirmed fact */
+.hs { padding-block: clamp(2rem, 4vw, 3rem); }
+.hs-list li { flex-direction: column; align-items: center; gap: 0.35rem; text-align: center; }
+.hs-badge { display: grid; place-items: center; width: 3.4rem; height: 3.4rem; margin-bottom: 0.35rem; border-radius: 50%; background: var(--cream); border: 1px solid var(--line); box-shadow: 0 8px 20px -10px rgba(23, 18, 15, 0.3); }
+.hs-badge .icon { width: 1.5rem; height: 1.5rem; color: var(--terra-dark); }
+.hs-list strong { font-weight: 600; font-size: 0.98rem; color: var(--ink); }
+.hs-list small { font-size: 0.86rem; line-height: 1.35; color: var(--body); }
+@media (max-width: 860px) { .hs-list { row-gap: 1.4rem; } .hs-list li { justify-content: flex-start; } }
+
+/* rooms: centred heading with a gold rule, icon meta row, outlined "all rooms" button */
+.rs-stay .st-head { margin-inline: auto; text-align: center; }
+.rs-stay .st-head .pv-body { margin-inline: auto; }
+.rs-stay .st-head .pv-title::after, .xs .ds-title::after { content: ""; display: block; width: 3rem; height: 2px; margin: 1.1rem auto 0; background: var(--gold); }
+.rp-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.3rem; list-style: none; margin: 0.2rem 0 0; padding: 0.9rem 0 0; border-top: 1px solid var(--line); }
+.rp-meta li { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.93rem; color: var(--body); }
+.rp-meta .icon { flex: none; width: 1.15rem; height: 1.15rem; color: var(--terra-dark); }
+.rp-all { text-align: center; }
+.rp-all .text-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1.5px solid var(--ink); border-radius: 999px; text-decoration: none; }
+.rp-all .text-link:hover { background: var(--ink); color: var(--cream); }
+
+/* experiences: centred title, round badge on the photograph's lower edge */
+.xs .ds-title { text-align: center; }
+.xs .xp-card { position: relative; }
+.xs .xp-badge { grid-row: 2; grid-column: 1; align-self: start; justify-self: start; z-index: 2; display: grid; place-items: center; width: 3.2rem; height: 3.2rem; margin-left: clamp(1.4rem, 2.6vw, 2.2rem); transform: translateY(-50%); border-radius: 50%; background: var(--cream); border: 1.5px solid var(--gold); color: var(--terra-dark); box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5); }
+.xs .xp-badge .icon { width: 1.4rem; height: 1.4rem; }
+.xs .xp-text { grid-row: 2; grid-column: 1; padding-top: calc(clamp(1.4rem, 2.6vw, 2.2rem) + 1.4rem); }
+
+/* our story: interlocking diamonds on wide screens, rectangles on small ones */
+@media (min-width: 900px) {
+  .sx-photos { padding-bottom: 0; aspect-ratio: 1 / 0.92; }
+  .sx-photos figure { border: 0; border-radius: 0; }
+  .sx-a, .sx-b, .sx-c { position: absolute; margin: 0; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); aspect-ratio: 1 / 1; }
+  .sx-a { right: 0; top: 0; left: auto; width: 64%; }
+  .sx-b { left: 0; bottom: 4%; top: auto; width: 38%; }
+  .sx-c { display: block; right: 3%; bottom: 0; top: auto; width: 28%; }
+  .sx-photos .media, .sx-photos img { height: 100%; }
+}
+
+/* closing call: the two actions in a panel over the photograph */
+.has-panel .fp-grid { display: grid; gap: clamp(1.6rem, 3vw, 2.4rem); align-items: end; }
+@media (min-width: 900px) { .has-panel .fp-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); align-items: center; } }
+.fp-copy .final-lead { max-width: 30rem; }
+.fp-panel { display: grid; gap: 0.8rem; padding: clamp(1rem, 2vw, 1.4rem); border: 1px solid rgba(236, 189, 133, 0.32); border-radius: var(--radius-card); background: rgba(23, 18, 15, 0.74); }
+.fp-row { display: flex; align-items: center; gap: 1rem; min-height: 64px; padding: 0.9rem 1.1rem; border: 1px solid rgba(236, 189, 133, 0.4); border-radius: 14px; color: #fff; text-decoration: none; transition: background-color 0.25s var(--ease), border-color 0.25s; }
+.fp-row:hover { background: rgba(248, 241, 231, 0.12); }
+.fp-row.is-primary { background: var(--sunset); border-color: var(--sunset); color: #1a120c; }
+.fp-row.is-primary:hover { background: #f08a46; border-color: #f08a46; }
+.fp-ic .icon { width: 1.6rem; height: 1.6rem; }
+.fp-tx { flex: 1; display: grid; gap: 0.1rem; min-width: 0; }
+.fp-tx strong { font-size: 1.08rem; font-weight: 600; }
+.fp-tx small { font-size: 0.9rem; opacity: 0.92; }
+.fp-row > .icon:last-child { flex: none; width: 1.2rem; height: 1.2rem; }
+.fp-note { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.45; color: rgba(255, 255, 255, 0.88); }
+.has-panel .scene-text { padding-block: clamp(3rem, 7vw, 6rem); }
+@media (max-width: 860px) { .has-panel .scene-text { background: transparent; } .has-panel .fp-copy { padding: 1.2rem; background: rgba(23, 18, 15, 0.66); border-radius: var(--radius-card); } }
+.fp-row:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (min-width: 900px) {
+  .sx-photos { aspect-ratio: 1 / 0.98; }
+  .sx-a { width: 74%; }
+  .sx-b { width: 48%; bottom: 0; }
+  .sx-c { width: 34%; right: 4%; bottom: 0; }
+}
+
+/* =====================================================================================================================
+   Round 7: a compact, balanced homepage on 16:10 screens. One spacing system for every section, a hero that no longer takes
+   more than the screen, smaller titles, shorter photographs, and the Welcome section with four horizontal cards in one row.
+   Sections: hero · welcome · restaurant · rooms · experiences (dark) · surroundings · reviews · closing call.
+   ===================================================================================================================== */
+:root { --sec-y: clamp(3rem, 4.4vw, 4.75rem); --sec-gap: clamp(1.75rem, 3.2vw, 3rem); }
+
+/* spacing: one vertical rhythm */
+.wl, .tt, .rs-stay, .mo, .sx, .reviews-ed { padding-block: var(--sec-y); }
+.tt-grid, .mo-grid, .sx-grid, .wl-grid { gap: var(--sec-gap) clamp(2rem, 4vw, 4rem); }
+.st-head { margin-bottom: clamp(1.4rem, 2.4vw, 2.2rem); }
+
+/* hero: never taller than the screen, a calmer headline */
+.rs-hero { min-height: clamp(560px, 88svh, 860px); }
+.rs-hero .hx-title { font-size: clamp(3rem, 4.4vw + 0.6rem, 5.8rem); }
+.rs-hero .hx-content { padding-bottom: clamp(2.5rem, 7vh, 4.5rem); }
+
+/* titles: one scale */
+.pv-title, .ds-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2rem, 1.5vw + 1.25rem, 2.8rem); line-height: 1.12; }
+.pv-body { margin-top: 1rem; font-size: 1.04rem; line-height: 1.65; }
+.pv-actions { margin-top: 1.5rem; }
+
+/* welcome: introduction on the left, four horizontal cards in one row on the right */
+.wl { padding-top: calc(var(--sec-y) + 0.5rem); }
+.wl-grid { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; }
+.wl-intro { max-width: 34rem; }
+.wl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; gap: 1rem; }
+.wl-card { position: relative; display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-card); background: var(--paper); border: 1px solid var(--line); color: var(--ink); text-decoration: none; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
+.wl-card::after { content: none; }
+.wl-card:hover { transform: translateY(-4px); box-shadow: 0 18px 36px -22px rgba(23, 18, 15, 0.4); }
+.wl-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.wl-media .media, .wl-media img { position: static; display: block; width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; transition: transform 0.7s var(--ease); }
+.wl-card:hover .wl-media img { transform: scale(1.04); }
+.wl-text { position: relative; inset: auto; display: grid; align-content: start; gap: 0.3rem; padding: 0.9rem 1rem 2.6rem; }
+.wl-text strong { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; line-height: 1.15; color: var(--ink); }
+.wl-text > span:not(.wl-go) { font-size: 0.9rem; line-height: 1.4; color: var(--body); }
+.wl-go { position: absolute; right: 0.9rem; bottom: 0.8rem; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--sunset); color: #1a120c; transition: transform 0.3s var(--ease); }
+.wl-go .icon { width: 0.95rem; height: 0.95rem; }
+.wl-card:hover .wl-go { transform: translateX(3px); }
+@media (min-width: 1100px) { .wl-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } .wl-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; } .wl-text { padding-inline: 0.85rem; } .wl-text strong { font-size: 1.2rem; } }
+@media (min-width: 700px) and (max-width: 1099px) { .wl-grid { grid-template-columns: minmax(0, 1fr); } .wl-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; } }
+@media (max-width: 699px) { .wl-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 479px) { .wl-cards { grid-template-columns: minmax(0, 1fr); } .wl-card { grid-template-columns: 38% minmax(0, 1fr); grid-template-rows: auto; } .wl-media { aspect-ratio: auto; height: 100%; min-height: 7.5rem; } .wl-text { padding-bottom: 1rem; padding-right: 3rem; } }
+.wl-card:focus-visible { outline: 3px solid var(--sunset); outline-offset: 3px; }
+
+/* restaurant: a shorter mosaic */
+.tt-photos { max-width: 38rem; margin-inline: auto; width: 100%; }
+.tt-a { aspect-ratio: auto; min-height: 100%; }
+.tt-b, .tt-c { aspect-ratio: 4 / 3; }
+.tt-note { margin: 1rem 0 0; font-size: 0.98rem; line-height: 1.55; color: var(--body); }
+.tt-hours { margin-top: 0.9rem; }
+@media (max-width: 560px) { .tt-a { min-height: 0; aspect-ratio: 3 / 4; } }
+
+/* rooms: shorter photographs */
+.rp-media { aspect-ratio: 16 / 10; }
+
+/* experiences: dark band with a lead, the occasions and three photographs */
+.mo-kinds { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.3rem 0 0; padding: 0; max-width: 34rem; }
+.mo-kinds li { padding: 0.4rem 0.9rem; border: 1px solid rgba(236, 189, 133, 0.4); border-radius: 999px; font-size: 0.92rem; color: var(--on-night); }
+.mo-photos { max-width: 38rem; margin-inline: auto; width: 100%; }
+.mo-a { aspect-ratio: auto; min-height: 100%; }
+.mo-b, .mo-c { aspect-ratio: 4 / 3; }
+@media (max-width: 560px) { .mo-a { min-height: 0; aspect-ratio: 4 / 5; } }
+.mo .btn-terra:focus-visible { outline-color: var(--on-night); }
+
+/* surroundings: the diamond composition, lighter */
+@media (min-width: 900px) { .sx-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); } .sx-photos { max-width: 34rem; margin-inline: auto; width: 100%; aspect-ratio: 1 / 0.9; } }
+
+/* reviews, closing call: same rhythm */
+.reviews-ed .rv-title { max-width: 20ch; }
+.has-panel .scene-text { padding-block: clamp(2.5rem, 5vw, 4.5rem); }
+.final-cta { min-height: 0; }
+
+/* =====================================================================================================================
+   Round 8: cinematic rhythm. One spacing system with real negative space; every section edge is a soft overlapping curve (one
+   radius), so light and dark bands meet like layers, not stacked blocks. The page alternates a panorama that bleeds across the
+   screen, a text-and-photograph split that bleeds to the right edge, a framed pair of rooms, a dark band over a full-bleed
+   photograph, a diamond composition and a closing panel. Decisions follow Impeccable layout.md (rhythm = tight vs generous
+   intervals, a documented scale) and the Taste skill's place compositions (a bleed photograph with nothing on it, once; a split,
+   once; one parallax photograph; reveals that settle in 0.6-1.3 s).
+   ===================================================================================================================== */
+:root {
+  --sec-y: clamp(5rem, 8.5vw, 8.75rem);      /* editorial sections: 80-140 px */
+  --sec-y-lg: clamp(6rem, 10vw, 10rem);       /* the immersive band: 96-160 px */
+  --head-gap: clamp(2rem, 3vw, 3rem);         /* heading to content: 32-48 px */
+  --rel-gap: clamp(1rem, 1.6vw, 1.5rem);      /* related items: 16-24 px */
+  --curve: clamp(1.75rem, 3vw, 2.75rem);      /* the one soft edge */
+}
+
+/* ---------- vertical rhythm ---------- */
+.wl, .tt, .rs-stay, .sx, .reviews-ed { padding-block: var(--sec-y); }
+.mo { padding-block: var(--sec-y-lg); }
+.has-panel .scene-text { padding-block: var(--sec-y); }
+.st-head { margin-bottom: var(--head-gap); }
+.pv-body { margin-top: 1.4rem; }
+.pv-actions { margin-top: 2.2rem; }
+.rp-grid { gap: clamp(1.5rem, 2.6vw, 2.5rem); }
+.rp-all { margin-top: var(--head-gap); }
+.wl-grid, .tt-grid, .sx-grid { gap: var(--head-gap) clamp(3rem, 6vw, 6rem); }
+
+/* ---------- soft overlapping edges between every band ---------- */
+.wl, .tt, .rs-stay, .mo, .sx, .reviews-ed, .final-cta { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; }
+.rs-hero .hx-content { padding-bottom: calc(var(--curve) + clamp(1.5rem, 4vh, 3rem)); }
+.rs-hero { min-height: clamp(620px, 92svh, 920px); }
+.wl { padding-top: calc(var(--sec-y) + 0.5rem); }
+.tt { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
+
+/* ---------- welcome: more air around the cards ---------- */
+.wl-grid { gap: clamp(2.5rem, 4.5vw, 4.5rem); }
+.wl-cards { gap: clamp(0.9rem, 1.5vw, 1.4rem); }
+@media (min-width: 1100px) { .wl-grid { grid-template-columns: minmax(0, 3.6fr) minmax(0, 8.4fr); } .wl-cards { gap: 1.1rem; } }
+
+/* ---------- the panorama: one photograph across the whole screen, nothing on it ---------- */
+.pano { position: relative; z-index: 0; }
+.pano-frame { width: 100%; margin: 0; overflow: hidden; aspect-ratio: 21 / 8; min-height: 16rem; max-height: 62svh; }
+.pano-frame .media, .pano-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
+.pano .media { height: 100%; }
+
+/* ---------- the restaurant: text, and a photograph that bleeds to the right edge with a small one overlapping it ---------- */
+.tt { overflow-x: clip; }
+.tt-photos { display: block; position: relative; max-width: 36rem; width: 100%; margin: 0 auto; padding-bottom: 2.75rem; }
+.tt-a { margin: 0; min-height: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-card); }
+.tt-b { position: absolute; right: 6%; bottom: 0; left: auto; width: 36%; margin: 0; aspect-ratio: 1 / 1; border: 6px solid var(--paper); border-radius: var(--radius-card); }
+.tt-photos figure { overflow: hidden; }
+@media (min-width: 1000px) {
+  .tt-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
+  .tt-photos { max-width: none; width: auto; margin: 0 calc(-1 * max(var(--gutter, 1.5rem), (100vw - var(--wrap, 1240px)) / 2)) 0 0; padding-bottom: 3.25rem; }
+  .tt-a { border-radius: var(--radius-card) 0 0 var(--radius-card); aspect-ratio: 16 / 11; }
+  .tt-b { left: -7%; right: auto; width: 30%; }
+}
+
+/* ---------- experiences: a dark band over a full-bleed photograph, one voice, left aligned ---------- */
+.mo { isolation: isolate; overflow: hidden; display: flex; align-items: center; min-height: clamp(30rem, 72svh, 44rem); color: var(--on-night); background: var(--night); }
+.mo .wrap { width: 100%; }
+.mo-bg { position: absolute; inset: 0; z-index: -1; }
+.mo-bg .media, .mo-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
+.mo-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(23, 18, 15, 0.94) 0%, rgba(23, 18, 15, 0.78) 44%, rgba(23, 18, 15, 0.22) 100%); }
+.mo-inner > * { max-width: 36rem; }
+.mo-inner .mo-kinds { margin-top: 1.8rem; }
+@media (max-width: 700px) { .mo-bg::after { background: linear-gradient(180deg, rgba(23, 18, 15, 0.86), rgba(23, 18, 15, 0.92)); } }
+
+/* ---------- surroundings, reviews, closing call ---------- */
+.reviews-ed { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
+.final-cta { overflow: hidden; }
+.final-cta.has-panel { padding-top: var(--curve); }
+@media (prefers-reduced-motion: reduce) { .pano-frame img { transform: none !important; } }

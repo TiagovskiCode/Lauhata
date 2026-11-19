@@ -164,7 +164,7 @@ export default {
   roomFamily: {
     src: "foto:suite-familia",
     width: 1536,
-    alt: { pt: "Suite com duas camas, cadeiras de vime e varanda com vista para o mar", en: "Suite with two beds, wicker chairs and a balcony with a sea view" },
+    alt: { pt: "Quarto com duas camas, cadeiras de vime e varanda com vista para o mar", en: "Room with two beds, wicker chairs and a balcony with a sea view" },
     placeholder: true,
   },
   weaving: {

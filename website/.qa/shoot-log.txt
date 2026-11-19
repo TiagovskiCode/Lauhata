@@ -1,0 +1,43 @@
+saved .qa/shots/home-1440.png (1440x10115, 12 screens)
+shoot: timed out
+estaurant-1440.png (1440x11389, 13 screens)
+saved .qa/shots/stay-1440.png (1440x3935, 5 screens)
+saved .qa/shots/room-1440.png (1440x5266, 6 screens)
+WARNING: still loading 3 s after they came on screen (their frames may show empty): photo-1788927790674-09bcb30d688f?auto=format&fit=crop&w=1440, por-do-sol-mar-1600.jpg
+saved .qa/shots/events-1440.png (1440x2986, 4 screens)
+shoot: timed out
+shoot: timed out
+saved .qa/shots/events-1440.png (1440x2986, 4 screens)
+saved .qa/shots/gallery-1440.png (1440x3541, 4 screens)
+saved .qa/shots/about-1440.png (1440x6415, 8 screens)
+saved .qa/shots/contact-1440.png (1440x4868, 6 screens)
+saved .qa/shots/discover-1440.png (1440x5300, 6 screens)
+shoot: Chrome did not start
+shoot: Chrome did not start
+saved .qa/shots/stay-1024.png (1024x3469, 5 screens)
+saved .qa/shots/room-1024.png (1024x4624, 7 screens)
+WARNING: still loading 3 s after they came on screen (their frames may show empty): por-do-sol-mar-1600.jpg
+saved .qa/shots/events-1024.png (1024x2644, 4 screens)
+saved .qa/shots/gallery-1024.png (1024x2821, 4 screens)
+saved .qa/shots/about-1024.png (1024x5450, 8 screens)
+saved .qa/shots/contact-1024.png (1024x4364, 6 screens)
+saved .qa/shots/discover-1024.png (1024x4242, 6 screens)
+saved .qa/shots/home-768.png (768x9151, 9 screens)
+saved .qa/shots/restaurant-768.png (768x11699, 12 screens)
+saved .qa/shots/stay-768.png (768x4009, 4 screens)
+saved .qa/shots/room-768.png (768x5815, 6 screens)
+saved .qa/shots/events-768.png (768x3234, 4 screens)
+saved .qa/shots/gallery-768.png (768x3133, 4 screens)
+saved .qa/shots/about-768.png (768x8767, 9 screens)
+saved .qa/shots/contact-768.png (768x5474, 6 screens)
+saved .qa/shots/discover-768.png (768x6281, 7 screens)
+saved .qa/shots/home-375.png (375x11917, 15 screens)
+saved .qa/shots/restaurant-375.png (375x17367, 22 screens)
+saved .qa/shots/stay-375.png (375x5552, 7 screens)
+saved .qa/shots/room-375.png (375x6040, 8 screens)
+saved .qa/shots/events-375.png (375x4114, 6 screens)
+saved .qa/shots/gallery-375.png (375x3768, 5 screens)
+saved .qa/shots/about-375.png (375x7774, 10 screens)
+saved .qa/shots/contact-375.png (375x6106, 8 screens)
+saved .qa/shots/discover-375.png (375x5880, 8 screens)
+ALLDONE
