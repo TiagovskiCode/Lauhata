@@ -159,7 +159,7 @@
      One photograph at a time on a scroll-snap strip (swipe, arrow keys, previous/next). Above it, one bar per photograph: the active
      bar fills over STORY_MS (a CSS animation), and when it ends the next photograph shows. The last photograph stays: it does not loop.
      Choosing a bar, the arrows or a swipe restarts the bar of the photograph then shown. The timer IS the animation, so there is no
-     interval to clear; it pauses (animation-play-state) while the gallery is hovered, focused or touched, while the tab is hidden and
+     interval to clear; it pauses (animation-play-state) while the gallery is hovered, has keyboard focus or is touched, while the tab is hidden and
      while the gallery is off screen. With reduced motion nothing plays: the bars only show which photograph is in view. */
   const STORY_MS = 5000;
   $$("[data-rg]").forEach((root) => {
@@ -170,9 +170,10 @@
     const slides = $$(".rs-slide", track);
     if (!track || !slides.length) return;
     root.style.setProperty("--story-ms", STORY_MS + "ms");
-    let active = -1, hold = 0, onScreen = !("IntersectionObserver" in window);
+    let active = -1, hold = 0, target = -1, onScreen = !("IntersectionObserver" in window);
     const index = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
-    const go = (i) => track.scrollTo({ left: Math.max(0, Math.min(slides.length - 1, i)) * track.clientWidth, behavior: reduced ? "auto" : "smooth" });
+    // `target`: while the strip glides to a photograph the code chose, the scroll positions on the way are not a new choice
+    const go = (i) => { target = Math.max(0, Math.min(slides.length - 1, i)); track.scrollTo({ left: target * track.clientWidth, behavior: reduced ? "auto" : "smooth" }); };
     // the bars: done before the active one, filling at the active one, empty after; the animation restarts only when the photograph changes
     const show = (i) => {
       if (i === active) return;
@@ -196,7 +197,15 @@
     // the fill ends: the next photograph (the last one stays)
     root.addEventListener("animationend", (e) => { if (e.target.matches(".rs-bar.is-active i") && active < slides.length - 1) { show(active + 1); go(active); } });
     let raf = 0;
-    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => show(index())); }, { passive: true });
+    track.addEventListener("scroll", () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const i = index();
+        if (target >= 0) { if (i === target && Math.abs(track.scrollLeft - target * track.clientWidth) < 2) target = -1; return; }
+        show(i); // a swipe or a trackpad
+      });
+    }, { passive: true });
+    track.addEventListener("pointerdown", () => { target = -1; }, { passive: true });
     track.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") { e.preventDefault(); go(index() + 1); }
       else if (e.key === "ArrowLeft") { e.preventDefault(); go(index() - 1); }
@@ -204,8 +213,9 @@
     // pausing: pointer over, focus inside, finger down
     root.addEventListener("mouseenter", () => press(true));
     root.addEventListener("mouseleave", () => press(false));
-    root.addEventListener("focusin", () => press(true));
-    root.addEventListener("focusout", () => press(false));
+    let kbFocus = false;
+    root.addEventListener("focusin", (e) => { const k = e.target.matches(":focus-visible"); if (k !== kbFocus) { kbFocus = k; press(k); } });
+    root.addEventListener("focusout", (e) => { if (kbFocus && !root.contains(e.relatedTarget)) { kbFocus = false; press(false); } });
     root.addEventListener("touchstart", () => press(true), { passive: true });
     ["touchend", "touchcancel"].forEach((n) => root.addEventListener(n, () => press(false), { passive: true }));
     document.addEventListener("visibilitychange", sync);

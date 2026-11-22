@@ -492,6 +492,7 @@ a.lang-opt:hover { color: var(--ink); }
 .social { display: flex; gap: 1rem; margin-top: 1rem; font-size: 0.9rem; }
 .footer-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.8rem 2rem; margin-top: 3.5rem; padding-block: 1.6rem; border-top: 1px solid var(--line-light); font-size: 0.8rem; color: rgba(243, 233, 215, 0.55); }
 .footer-base a { text-decoration: none; }
+@media (min-width: 861px) { .footer-base { padding-right: 5.5rem; } }
 .footer-base a:hover { text-decoration: underline; }
 
 /* ---------- Floating WhatsApp + mobile bar ---------- */
@@ -513,6 +514,13 @@ a.lang-opt:hover { color: var(--ink); }
 .lb-figure figcaption { font-size: 0.9rem; opacity: 0.8; text-align: center; }
 .lb-close { position: absolute; top: 1rem; right: 1rem; }
 .lb-prev, .lb-next { margin: 0 0.5rem; background: rgba(243, 233, 215, 0.08); }
+@media (max-width: 640px) {
+  .lightbox[open] { grid-template-columns: minmax(0, 1fr); }
+  .lb-figure { grid-column: 1; grid-row: 1; padding-inline: 0.5rem; }
+  .lb-prev, .lb-next { position: absolute; top: 50%; z-index: 1; margin: -22px 0 0; background: rgba(11, 30, 26, 0.7); }
+  .lb-prev { left: 0.5rem; }
+  .lb-next { right: 0.5rem; }
+}
 
 /* ---------- Reveal on scroll (JS adds .js; skipped with reduced motion) ---------- */
 .js [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: var(--d, 0ms); }

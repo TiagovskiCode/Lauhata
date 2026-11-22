@@ -418,19 +418,17 @@ section.menu .menu-search, section.menu .menu-search input { border-radius: 999p
   .wc-media img, .st-media img { transition: none; }
 }
 
-/* ---------- Back to top (every page): a small round button, bottom left on computers so it never meets the WhatsApp button ---------- */
-.to-top { position: fixed; left: clamp(1rem, 2vw, 1.6rem); bottom: clamp(1rem, 2vw, 1.6rem); z-index: 44; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid rgba(236, 189, 133, 0.4); border-radius: 50%; background: rgba(23, 18, 15, 0.9); color: var(--on-night); cursor: pointer; opacity: 0; transform: translateY(10px); transition: opacity 0.25s ease, transform 0.25s var(--ease), background-color 0.2s ease, border-color 0.2s ease; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+/* ---------- Back to top: a small round button above the WhatsApp button, on computers only ---------- */
+.to-top { position: fixed; right: 1.4rem; bottom: calc(1.4rem + 3.2rem + 0.5rem); z-index: 44; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid rgba(236, 189, 133, 0.4); border-radius: 50%; background: rgba(23, 18, 15, 0.9); color: var(--on-night); cursor: pointer; opacity: 0; transform: translateY(10px); transition: opacity 0.25s ease, transform 0.25s var(--ease), background-color 0.2s ease, border-color 0.2s ease; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 .to-top[hidden] { display: none; }
 .to-top.is-on { opacity: 1; transform: none; }
 .to-top:hover { background: var(--night-2, #2b2119); border-color: var(--sunset); }
 .to-top:hover .icon { transform: translateY(-2px); }
 .to-top:active { transform: scale(0.96); }
 .to-top .icon { width: 20px; height: 20px; transition: transform 0.2s var(--ease); }
-/* Phones: right side, above the bottom bar (and above the cart button when it is showing). */
-@media (max-width: 860px) {
-  .to-top { left: auto; right: 0.8rem; bottom: calc(5.2rem + env(safe-area-inset-bottom)); width: 44px; height: 44px; }
-  body:has(.cart-fab:not([hidden])) .to-top { bottom: calc(9.2rem + env(safe-area-inset-bottom)); }
-}
+@media (min-width: 1600px) { .to-top { bottom: calc(1.4rem + 3.6rem + 0.5rem); } }
+/* Phones and tablets have the action bar: a floating button there covered text, FAQ toggles and buttons. */
+@media (max-width: 860px) { .to-top { display: none; } }
 @media (prefers-reduced-motion: reduce) { .to-top, .to-top .icon { transition: none; } }
 
 /* ---------- Analytics consent banner (only present when a Google Analytics ID is configured) ---------- */

@@ -359,3 +359,12 @@ test("lightbox, bottom bar and page lock: 100dvh with a fallback, contained imag
   assert.ok(/\.mobile-bar\{[^}]*position:fixed;[^}]*bottom:0/.test(css), "bar anchored to the bottom");
   assert.ok(/viewport-fit=cover/.test(read("index.html")), "safe areas available");
 });
+
+test("stabilisation round: stacked room cards keep their own height, the back-to-top button is not shown with the phone bar, cards adapt to their own width", () => {
+  const css = read("assets/css/site.css").replace(/\s+/g, "");
+  assert.ok(!/\.rp-grid\{[^}]*grid-auto-rows:1fr/.test(css), "stacked room cards are stretched to the same height");
+  assert.ok(/@media\(max-width:860px\)\{\.to-top\{display:none\}\}/.test(css), "back-to-top floats over content on phones");
+  assert.ok(/\.rp-card\{container-type:inline-size/.test(css) && /\.dcard\{container-type:inline-size/.test(css) && /\.menu-body\{container-type:inline-size\}/.test(css), "container queries for cards");
+  const js = readFileSync(join(root, "src/assets/js/main.js"), "utf8");
+  assert.ok(/:focus-visible/.test(js) && /target = -1/.test(js), "the room gallery pauses on keyboard focus only and ignores its own glide");
+});
