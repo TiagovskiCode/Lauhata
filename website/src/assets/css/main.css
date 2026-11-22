@@ -239,7 +239,7 @@ a.lang-opt:hover { color: var(--ink); }
 .bc-tabs button:not([aria-selected="true"]):hover { background: var(--cream); }
 .bc-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1.25fr; gap: 0.6rem; align-items: stretch; }
 .bc-row[hidden] { display: none; }
-.bc-field { display: grid; gap: 0.15rem; padding: 0.65rem 0.9rem 0.55rem; border-radius: var(--r-sm); background: var(--cream); border: 1px solid transparent; transition: border-color 0.2s; }
+.bc-field { display: grid; min-width: 0; gap: 0.15rem; padding: 0.65rem 0.9rem 0.55rem; border-radius: var(--r-sm); background: var(--cream); border: 1px solid transparent; transition: border-color 0.2s; }
 .bc-field:focus-within { border-color: var(--terra); }
 .bc-field > span { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .bc-field input, .bc-field select { width: 100%; border: 0; background: transparent; padding: 0; font-size: 0.98rem; font-weight: 500; color: var(--ink); outline: none; min-height: 28px; }
@@ -595,7 +595,7 @@ a.lang-opt:hover { color: var(--ink); }
   .hero-chip { left: 3%; bottom: 5%; }
   .bc-tabs button { flex: 1; justify-content: center; padding-inline: 0.6rem; font-size: 0.8rem; white-space: nowrap; }
   .bc-tabs button .icon { display: none; }
-  .bc-row { grid-template-columns: 1fr; }
+  .bc-row { grid-template-columns: minmax(0, 1fr); }
   .features-grid, .review-grid, .form-grid, .info-grid, .sand-cards, .footer-grid { grid-template-columns: 1fr; }
   .timeline { grid-template-columns: 1fr; }
   .step { display: grid; grid-template-columns: 52px 1fr; column-gap: 1rem; }
