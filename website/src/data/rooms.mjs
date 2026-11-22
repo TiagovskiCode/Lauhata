@@ -7,16 +7,28 @@
 // The ids ("sea", "family") are internal keys kept for the forms, links and tests; they are never shown.
 // Owner-confirmed: the beds and the television below. Everything else a guest might ask about (capacity, bathroom, air
 // conditioning, Wi-Fi, breakfast, view, terrace…) is NOT published until Carlos confirms it: see docs/CHECKLISTS.md.
-// `price` is shown only when set; until then the page says "price on request". Payment is in person.
+// `price` is per night and per room (never per guest); shown only when set. Payment is in person.
+//   capacity      who the room sleeps; `capacityPending: true` marks a capacity the establishment still has to confirm
 //
 //   beds          owner-confirmed beds, as text, and `bedPlan` for the drawing (queen / single)
 //   amenities     owner-confirmed amenities only (shown as a list)
 //   images        image keys (images.mjs); the first is the lead photo. While Lauhata's own photos are missing these are
 //                 illustrative pictures, labelled as such on the page.
+// What the accommodation offers as a whole (brief of 22 Nov 2026, confirmed by the client; the Booking.com listing says the same). It is
+// the offer of Lauhata, NOT a feature of one room type, so it is shown once, beside both rooms. Nothing else may be added.
+export const lodgingAmenities = [
+  { id: "airport", icon: "plane", en: "Airport transfer", pt: "Transfer do aeroporto" },
+  { id: "nosmoke", icon: "nosmoke", en: "Non-smoking rooms", pt: "Quartos para não fumadores" },
+  { id: "parking", icon: "car", en: "Free parking", pt: "Estacionamento gratuito" },
+  { id: "restaurant", icon: "cutlery", en: "On-site restaurant", pt: "Restaurante no local" },
+  { id: "beach", icon: "waves", en: "Beachfront location", pt: "Em frente à praia" },
+  { id: "bar", icon: "glass", en: "Bar", pt: "Bar" },
+  { id: "breakfast", icon: "coffee", en: "Breakfast", pt: "Pequeno-almoço" },
+  { id: "wifi", icon: "wifi", en: "Wi-Fi", pt: "Wi-Fi" },
+  { id: "bathroom", icon: "shower", en: "Private bathroom", pt: "Casa de banho privativa" },
+];
+// Still NOT confirmed, so never shown: copy an entry into `lodgingAmenities` once Carlos confirms it.
 export const pendingAmenities = [
-  { id: "wifi", icon: "wifi", pt: "Wi-Fi", en: "Wi-Fi" },
-  { id: "breakfast", icon: "coffee", pt: "Pequeno-almoço", en: "Breakfast" },
-  { id: "bathroom", icon: "shower", pt: "Casa de banho privativa", en: "Private bathroom" },
   { id: "ac", icon: "snowflake", pt: "Ar condicionado", en: "Air conditioning" },
 ];
 
@@ -40,7 +52,8 @@ export default [
     bedPlan: ["queen"],
     amenities: [{ pt: "Televisão", en: "Television" }],
     suitability: null,
-    price: null,
+    price: "$90", // per night, per room (not per guest); client brief of 22 Nov 2026
+    capacity: { pt: "Até 2 adultos", en: "Up to 2 adults" },
     images: ["roomWarm", "roomBright", "verandaBamboo", "sunsetSea"],
     featured: true,
     placeholder: true,
@@ -64,7 +77,11 @@ export default [
     bedPlan: ["queen", "single"],
     amenities: [{ pt: "Televisão", en: "Television" }],
     suitability: null,
-    price: null,
+    price: "$90", // per night, per room (not per guest); client brief of 22 Nov 2026
+    capacity: { pt: "Até 2 adultos e 2 crianças", en: "Up to 2 adults and 2 children" },
+    // PENDING: two children are the intended maximum, subject to the children's ages and the occupancy conditions, which Lauhata
+    // must confirm. It is shown with a line saying so (stay.capacityPending); do not turn it into a firm policy before then.
+    capacityPending: true,
     images: ["roomFamily", "roomForest", "verandaWicker", "palmShadow"],
     placeholder: true,
   },

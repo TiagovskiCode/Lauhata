@@ -162,6 +162,17 @@ Sitemap: ${absUrl("/sitemap.xml")}
   );
 }
 
+// Every drink price on the site is an estimate until Carlos confirms it: the list he has to validate, one row per drink.
+{
+  const { sampleDrinks } = await import("./src/data/sample-drinks.mjs");
+  const groups = (await import("./src/data/menu.mjs")).categories.find((c) => c.id === "drinks").groups;
+  const rows = sampleDrinks.map((d) => `| ${groups[d.group].pt} | ${d.name.pt} / ${d.name.en} | $${d.price} | por confirmar |`);
+  await writeFile(
+    join(root, "docs/PRECOS-PROVISORIOS-BEBIDAS.md"),
+    `# Preços provisórios das bebidas\n\nGerado por \`node build.mjs\` a partir de \`src/data/sample-drinks.mjs\`. **Todos os valores abaixo são estimativas** (USD, por dose, em linha com a escala da ementa), criadas a 22 de novembro de 2026 com autorização do cliente até o Carlos confirmar os preços reais. Os nomes das bebidas também não estão confirmados. O site mostra-os como «preço provisório» e não permite pedi-los.\n\nPara validar: confirmar com o Carlos que bebidas existem e o preço de cada uma; depois acrescentá-las a \`src/data/menu.mjs\` (categoria \`drinks\`, com \`group\` e \`price\`) e desligar \`showSamples\` em \`src/data/site.mjs\`.\n\n| Grupo | Bebida | Preço estimado | Estado |\n|---|---|---|---|\n${rows.join("\n")}\n\n${sampleDrinks.length} bebidas com preço estimado.\n`
+  );
+}
+
 console.log(`Built ${count} pages into dist/`);
 
 const report = await prelaunch(dist);

@@ -563,6 +563,41 @@
     new IntersectionObserver(([e]) => root.classList.toggle("hero-bar", e.isIntersecting), { threshold: 0.4 }).observe(hero);
   }
 
+  /* ---------- Dish dialog: a card opens its photograph, name, price and description ----------
+     The card holds a <template> with the details; this fills the single dialog from it. The browser provides the focus trap, Escape and the
+     inert page; the backdrop click, the close button and the return of focus are added here. An order button inside the dialog is the
+     same [data-add] button as ever (handled above); a dish with options closes this dialog first so the options dialog is the only one open. */
+  const dd = $("[data-dish-dialog]");
+  if (dd) {
+    const ddPhoto = $("[data-dd-photo]", dd);
+    const ddName = $("[data-dd-name]", dd);
+    const ddDetail = $("[data-dd-detail]", dd);
+    let opener = null;
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-dish-open]");
+      if (!b) return;
+      const card = b.closest("[data-dish]");
+      const photo = $(".dc-photo", card);
+      const tpl = $("template[data-dc-detail]", card);
+      if (!card || !photo || !tpl) return;
+      opener = b;
+      ddName.textContent = b.textContent.trim();
+      ddPhoto.replaceChildren(...photo.cloneNode(true).childNodes);
+      $$("img", ddPhoto).forEach((img) => { img.loading = "eager"; img.sizes = "(min-width: 760px) 34rem, 92vw"; });
+      ddDetail.replaceChildren(tpl.content.cloneNode(true));
+      dd.scrollTop = 0;
+      if (!dd.open) dd.showModal();
+    });
+    $("[data-dd-close]", dd).addEventListener("click", () => dd.close());
+    dd.addEventListener("click", (e) => {
+      if (e.target === dd) { dd.close(); return; }
+      const add = e.target.closest("[data-add]");
+      const item = add && MENU[add.dataset.add];
+      if (item && item.options.length) dd.close();
+    });
+    dd.addEventListener("close", () => { if (opener && opener.isConnected) opener.focus({ preventScroll: true }); });
+  }
+
   /* ---------- Keep everything in sync ---------- */
   window.addEventListener("storage", (e) => { if (e.key === KEY) { load(); render(); } }); // another tab changed the cart
   window.addEventListener("pageshow", (e) => { // back from WhatsApp: the page may come from the cache

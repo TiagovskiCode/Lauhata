@@ -33,7 +33,6 @@ em { font-weight: 400; color: var(--terra-dark); }
 .btn-outline:hover { --bd: var(--forest); --bg: rgba(18, 59, 58, 0.05); }
 .btn-sm { font-size: 0.7rem; letter-spacing: 0.12em; }
 .btn-lg { min-height: 56px; padding-inline: 1.9rem; }
-.mobile-bar .btn { font-size: 0.7rem; letter-spacing: 0.1em; padding-inline: 0.6rem; }
 .btn:disabled, .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* ---------- Brand: symbol + wordmark (the Primary lockup lives in assets/img/brand/) ---------- */
@@ -51,9 +50,6 @@ em { font-weight: 400; color: var(--terra-dark); }
    Every stock or illustrative photo is marked in the HTML (.is-placeholder). The label is shown where the photo stands
    for the place itself (rooms, galleries, page heroes); it is hidden for atmosphere shots, which the footer note covers. */
 .media.is-placeholder::after { display: none; }
-.su-img .media.is-placeholder::after,
-.room-row-img .media.is-placeholder::after,
-.room-img .media.is-placeholder::after,
 .gallery-item .media.is-placeholder::after,
 .cine-hero.is-page .media.is-placeholder::after {
   display: block; left: auto; right: 0.8rem; top: auto; bottom: 0.8rem;
@@ -67,7 +63,7 @@ em { font-weight: 400; color: var(--terra-dark); }
 
 /* Keyboard focus: terracotta on light sections, light gold on the dark ones (terracotta on deep teal is too faint). */
 :focus-visible { outline-color: var(--focus, var(--terra-dark)); }
-.suites, .site-footer, .dusk, .rooms-dark, .cine-hero, .cine-cta, .mobile-bar .btn-dark, dialog.cart, dialog.pick { --focus: var(--gold-soft); }
+.site-footer, .dusk, .rooms-dark, .cine-hero, .cine-cta, .mobile-bar .btn-dark, dialog.cart, dialog.pick { --focus: var(--gold-soft); }
 
 .gallery-section { background: var(--cream); }
 
@@ -78,17 +74,16 @@ em { font-weight: 400; color: var(--terra-dark); }
 .faq details[open] summary .icon { background: var(--ink); color: var(--paper); }
 
 /* ---------- Sections that slide over the previous one ---------- */
-.suites, .cult, .reach, .site-footer {
+.cult, .reach, .site-footer {
   position: relative; border-radius: var(--round) var(--round) 0 0; margin-top: calc(var(--round) * -1);
 }
-.suites { padding-top: calc(var(--section) + var(--round) * 0.4); }
 .reach { padding-top: calc(var(--section) + var(--round) * 0.4); }
 .site-footer { padding-top: calc(clamp(2rem, 3.4vw, 2.6rem) + var(--round) * 0.5); }
 .site-footer .tais { display: none; }
 
 /* ---------- Contrast (WCAG AA, 4.5:1 for small text) ---------- */
 .eyebrow, .eat-featured, .tbc-label, .rc-group h3 { color: var(--terra-dark); }
-.eyebrow-light, .suites .eyebrow, .dusk .eyebrow, .cine-hero .eyebrow { color: var(--gold-soft); }
+.eyebrow-light, .dusk .eyebrow, .cine-hero .eyebrow { color: var(--gold-soft); }
 .footer-base, .footer-base a { color: rgba(243, 233, 215, 0.78); }
 .footer-note, .room-num small { color: rgba(243, 233, 215, 0.74); }
 .pk-btn.is-empty .pk-val { opacity: 1; color: var(--muted); }
@@ -159,7 +154,7 @@ em { font-weight: 400; color: var(--terra-dark); }
 
 /* ---------- Fewer template tells ---------- */
 /* Numbers that are not a sequence (the two ways to visit, the three rooms) go; the day timeline keeps its numbers. */
-.ch-n, .su-rail span, .su-top, .room-num { display: none; }
+.ch-n, .room-num { display: none; }
 /* Section labels read as plain sentences; only the place line in the hero keeps tracked capitals. */
 .eyebrow { font-size: 0.95rem; font-weight: 600; letter-spacing: 0.03em; text-transform: none; }
 .eyebrow-dots, .hx .eyebrow { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; }
@@ -172,10 +167,9 @@ body { font-weight: 400; line-height: 1.65; }
 .nav-main a { font-weight: 500; }
 .btn { text-transform: none; letter-spacing: 0.01em; font-size: 0.95rem; font-weight: 600; }
 .btn-sm { font-size: 0.88rem; letter-spacing: 0.01em; }
-.mobile-bar .btn { font-size: 0.9rem; letter-spacing: 0; }
-.h-small, .footer-h, .bc-field > span, .dish-tag, .room-facts dt, .hero-chip small, .cart-total span,
+.h-small, .footer-h, .bc-field > span, .room-facts dt, .hero-chip small, .cart-total span,
 .bkf-hours span, .bkf-list-h, .cu-slot h3, .cu-group, .cu-label, .rc-group h3, .rc-row dt, .eat-hours h3, .eat-featured,
-.pk-group h4, .su-top em {
+.pk-group h4 {
   text-transform: none; letter-spacing: 0.01em; font-size: 0.9rem; font-weight: 600;
 }
 .footer-h { font-size: 0.95rem; }
@@ -313,7 +307,6 @@ html:not(.cine-motion) .gr-link img { transition: none; }
 .final-cta .btn-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
 /* The "Illustrative image" tag reads as a plain label, like every other label on the site. */
-.su-img .media.is-placeholder::after, .room-row-img .media.is-placeholder::after, .room-img .media.is-placeholder::after,
 .gallery-item .media.is-placeholder::after, .cine-hero.is-page .media.is-placeholder::after { text-transform: none; letter-spacing: 0.01em; font-size: 0.78rem; font-weight: 600; }
 
 /* In the phone menu the language switch is a full-size touch target (44 px). */
@@ -340,25 +333,6 @@ html:not(.cine-motion) .gr-link img { transition: none; }
 .menu .menu-cat-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem 1.4rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line-strong); }
 .menu .menu-cat-head h3 { font-size: clamp(2.1rem, 3.6vw, 3rem); font-weight: 500; color: var(--ink); }
 .menu .menu-cat-head p { margin: 0; max-width: 52ch; }
-.menu .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(2.5rem, 6vw, 5.5rem); row-gap: 0; margin-top: 0; }
-.menu .dish { background: none; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; overflow: visible; animation: none; }
-.menu .dish:hover { transform: none; box-shadow: none; }
-.menu .dish-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 1.4rem; row-gap: 0.35rem; align-items: baseline; padding: 1.35rem 0 1.25rem; }
-.menu .dish-foot { display: contents; }
-.menu .dish-tag { grid-column: 1 / -1; margin: 0; }
-.menu .dish h3 { grid-column: 1; margin: 0; font-size: clamp(1.35rem, 1.6vw, 1.55rem); font-weight: 500; line-height: 1.2; color: var(--ink); }
-.menu .dish-foot .price { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; white-space: nowrap; }
-.menu.is-searching .dish-foot .price { grid-row: 2; }
-.menu .dish-foot .price b { font-size: 1.45rem; font-weight: 500; color: var(--ink); }
-.menu .dish-desc { grid-column: 1; margin: 0; max-width: 46ch; font-size: 0.93rem; line-height: 1.55; color: var(--body); }
-.menu .dish-add { grid-column: 2; align-self: start; justify-self: end; margin: 0; min-height: 40px; padding-inline: 0.95rem; --bg: transparent; --fg: var(--forest); --bd: var(--line-strong); font-size: 0.85rem; }
-.menu .dish-add:hover { --bg: var(--forest); --fg: var(--cream); --bd: var(--forest); }
-.menu .dish-add.is-added { --bg: var(--wa); --fg: #fff; --bd: var(--wa); }
-@media (max-width: 760px) {
-  .menu .menu-grid { grid-template-columns: 1fr; }
-  .menu .dish-body { column-gap: 1rem; padding: 1.15rem 0 1.1rem; }
-  .menu .dish h3 { font-size: 1.3rem; }
-}
 
 /* ---------- Room page: a calm introduction, a room sheet and one clear request ---------- */
 .room-intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(2.5rem, 7vw, 6.5rem); align-items: start; }
@@ -512,24 +486,15 @@ html:not(.cine-motion) .duo-media img, html:not(.cine-motion) .duo-arrow { trans
 /* ---------- Menu: every dish with its own photo ----------
    Three columns on a computer (photo above, then name and price on one line, description, add), a compact row on
    a phone (small square photo beside the text) so a long menu stays quick to read. */
-.menu .menu-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(1.4rem, 2.6vw, 2.4rem); row-gap: clamp(2rem, 3.4vw, 2.8rem); margin-top: clamp(1.4rem, 2.4vw, 2rem); }
-.menu .dish { border-bottom: 0; }
-.menu .dish-body { padding: 0.95rem 0 0; }
 .dish-photo { position: relative; margin: 0; aspect-ratio: 4 / 3; border-radius: var(--r-sm); overflow: hidden; background: var(--sand); }
 .dish-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
-.menu .dish:hover .dish-photo img { transform: scale(1.04); }
 .dish-photo.is-pending { display: grid; place-items: center; align-content: center; gap: 0.3rem; background: linear-gradient(160deg, var(--paper), var(--sand)); border: 1px solid var(--line); }
 .dp-mark { font-family: var(--serif); font-style: italic; font-size: clamp(2.6rem, 4vw, 3.4rem); line-height: 1; color: var(--sage); filter: brightness(0.82); }
 .dp-note { font-size: 0.78rem; font-weight: 500; color: var(--muted); }
-.menu .dish .media.is-placeholder::after { display: block; left: auto; right: 0.6rem; top: auto; bottom: 0.6rem; padding: 0.18rem 0.55rem; background: rgba(18, 59, 58, 0.72); color: var(--paper); font-size: 0.72rem; font-weight: 600; text-transform: none; letter-spacing: 0; }
-@media (max-width: 1023px) and (min-width: 761px) { .menu .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
-  .menu .menu-grid { grid-template-columns: 1fr; row-gap: 0; }
-  .menu .dish { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: 0.95rem; align-items: start; padding: 1rem 0; border-bottom: 1px solid var(--line); }
   .dish-photo { aspect-ratio: 1; }
   .dish-photo.is-pending .dp-note { display: none; }
   .dp-mark { font-size: 2.2rem; }
-  .menu .dish-body { padding: 0; }
 }
 html:not(.cine-motion) .dish-photo img { transition: none; }
 .intro-statement { font-size: clamp(2rem, 3.7vw, 3.7rem); max-width: 21ch; }
@@ -540,15 +505,6 @@ html:not(.cine-motion) .dish-photo img { transition: none; }
 .hero-hours i { font-style: normal; opacity: 0.6; }
 /* Menu density: smaller photo slots, four across on wide screens. */
 .dish-photo { aspect-ratio: 3 / 2; }
-@media (min-width: 1200px) { .menu .menu-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .menu .dish h3 { font-size: 1.3rem; } .menu .dish-foot .price b { font-size: 1.3rem; } }
-/* On a phone the add button goes under the description, so the text keeps its full width. */
-@media (max-width: 760px) {
-  .menu .dish-body { grid-template-columns: minmax(0, 1fr) auto; }
-  .menu .dish-desc { grid-column: 1 / -1; }
-  .menu .dish-add { grid-column: 1 / -1; grid-row: auto; justify-self: start; margin-top: 0.5rem; }
-}
-.menu .dish-desc { grid-column: 1 / -1; }
-.menu .dish-add { grid-column: 1 / -1; grid-row: auto; justify-self: start; margin-top: 0.6rem; }
 @media (max-width: 760px) { .dish-photo { aspect-ratio: 1; } }
 @media (min-width: 861px) { .ab-title { position: sticky; top: calc(var(--header-h) + 2.5rem); } }
 
@@ -818,7 +774,6 @@ html:not(.cine-motion) .book-dialog[open] { animation: none; }
 .cr-btn:hover { opacity: 1; background: rgba(250, 247, 239, 0.08); }
 .cr-btn:disabled { opacity: 0.3; cursor: default; }
 .cr-btn .icon { width: 20px; height: 20px; }
-.room-row-img { color: var(--cream); }
 .room-photos .carousel { color: var(--ink); }
 .cr-link .media.is-placeholder::after { display: block; left: auto; right: 0.7rem; top: auto; bottom: 0.7rem; padding: 0.2rem 0.6rem; background: rgba(18, 59, 58, 0.72); color: var(--paper); font-size: 0.76rem; font-weight: 600; text-transform: none; letter-spacing: 0; }
 html:not(.cine-motion) .cr-link img { transition: none; }
@@ -913,7 +868,6 @@ html:not(.cine-motion) .gx-tile img { transition: none; }
 @media (max-width: 860px) { .ab-what-grid, .ab-strip { grid-template-columns: 1fr; } }
 
 /* ---------- Menu samples ---------- */
-.sample-tag { display: inline-flex; align-items: center; min-height: 28px; padding: 0 0.7rem; border: 1px dashed var(--line-strong); border-radius: var(--r-sm); font-size: 0.82rem; font-weight: 600; color: var(--muted); }
 .dish-photo.is-placeholder::after { display: block; left: auto; right: 0.6rem; top: auto; bottom: 0.6rem; padding: 0.18rem 0.55rem; background: rgba(18, 59, 58, 0.72); color: var(--paper); font-size: 0.72rem; font-weight: 600; text-transform: none; letter-spacing: 0; }
 
 .credits { padding-left: 1.1rem; font-size: 0.85rem; color: var(--body); }
@@ -927,9 +881,5 @@ html:not(.cine-motion) .gx-tile img { transition: none; }
 @media (max-width: 760px) { .dsc-map-frame { aspect-ratio: 4 / 3; } }
 
 /* ---------- Room facts ---------- */
-.room-kind { margin: 0 0 0.4rem; font-size: 0.9rem; font-weight: 600; color: var(--gold-soft); }
-.room-facts-line { display: flex; flex-wrap: wrap; gap: 0.3rem 0; margin: 1rem 0 0; padding: 0; list-style: none; font-size: 0.95rem; color: rgba(243, 233, 215, 0.88); }
-.room-facts-line li + li::before { content: "·"; margin: 0 0.65rem; color: var(--gold-soft); }
-.room-foot-btns { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .pay-note { display: flex; gap: 0.6rem; align-items: flex-start; margin: 1rem 0 0; padding: 0.9rem 1rem; border-radius: var(--r-sm); background: rgba(169, 199, 184, 0.28); font-size: 0.92rem; color: var(--forest); }
 .pay-note .icon { flex: none; width: 18px; height: 18px; margin-top: 0.15rem; }

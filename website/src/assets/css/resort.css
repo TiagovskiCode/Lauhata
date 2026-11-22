@@ -63,14 +63,14 @@ input, textarea, select { caret-color: var(--sunset); }
    section name set in small capitals rather than as a template ornament; labels that repeated the logo or the page
    hero were removed. */
 .eyebrow-rule { display: block; margin: 0 0 1rem; font-family: var(--sans); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra-dark); }
-.eyebrow-rule.is-light, .is-dark .eyebrow-rule, .rooms-cine .eyebrow-rule { color: var(--gold-soft); }
+.eyebrow-rule.is-light, .is-dark .eyebrow-rule { color: var(--gold-soft); }
 .heading .eyebrow-rule { margin-bottom: 1rem; }
 
 /* ---------- Headlines ---------- */
 .title, .heading .title { color: var(--ink); }
 /* The italic accent: sunset orange on the dark grounds; on cream it falls to 2.6:1, so light sections use terra-dark. */
 em { font-style: italic; color: var(--terra-dark); }
-.cine-hero em, .is-dark em, .scene em, .final-cta em, .site-footer em, .rs-story em, .rs-discover em, .dusk em, .suites em { color: var(--sunset); }
+.cine-hero em, .is-dark em, .scene em, .final-cta em, .site-footer em, .rs-story em, .rs-discover em, .dusk em { color: var(--sunset); }
 h1 em, h2 em, .hx-accent { font-style: italic !important; color: var(--sunset-2) !important; font-weight: 400; }
 
 /* ---------- Buttons: pills ---------- */
@@ -93,7 +93,6 @@ h1 em, h2 em, .hx-accent { font-style: italic !important; color: var(--sunset-2)
 .cine-hero .media, .cine-hero .media img, .coast-stage .media, .coast-stage img, .sn-media .media, .sn-media img,
 .rs-story-media .media, .rs-story-media img, .rs-discover-media .media, .rs-discover-media img, .duo .media, .duo img { border-radius: 0 !important; }
 .media.is-placeholder::after { border-radius: 999px !important; background: rgba(23, 18, 15, 0.8) !important; color: var(--on-night) !important; }
-section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 var(--r-sm) var(--r-sm) !important; }
 .cr-track, .cr-link { border-radius: var(--r-img) !important; }
 .cr-btn { border-radius: 50% !important; }
 
@@ -118,33 +117,6 @@ section.menu .menu-cat .dish-photo.is-placeholder::after { border-radius: 0 0 va
 .site-header .book-btn .icon { display: inline-block !important; width: 1rem; height: 1rem; }
 .site-header .book-btn:hover { --bg: var(--sunset) !important; --fg: #1a120c !important; --bd: var(--sunset) !important; }
 .brand-mark { background: transparent !important; }
-/* Mobile / tablet / portrait-monitor menu: a drawer from the right, not a full black screen. The page stays visible,
-   dimmed, beside it; a tap on the dimmed page, the close button or Escape closes it. Warm brown (lighter than the
-   charcoal sections), white type at a readable but not oversized size, 44px+ touch rows. */
-dialog.mobile-nav { inset: 0 0 0 auto; width: min(23rem, 88vw); height: 100dvh; margin: 0; padding: 0 0 max(1.2rem, env(safe-area-inset-bottom)); border-radius: var(--radius-panel) 0 0 var(--radius-panel); background: #2b2119; color: var(--on-night); box-shadow: -30px 0 60px -30px rgba(0, 0, 0, 0.55); overflow-y: auto; }
-dialog.mobile-nav[open] { animation: drawerIn 0.32s var(--ease); }
-dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
-@keyframes drawerIn { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
-.mobile-nav-top { height: auto; padding: 1rem 1rem 1rem 1.4rem; border-bottom: 1px solid rgba(236, 189, 133, 0.16); }
-.mobile-nav-top .brand { min-height: 44px; }
-.mobile-nav-top .brand-mark { width: 38px; height: 38px; }
-.mobile-nav-top .brand-name { font-size: 1.45rem; color: var(--on-night); }
-.mobile-nav-top .icon-btn { width: 44px; height: 44px; border-radius: 50%; color: var(--on-night); border: 1px solid rgba(248, 241, 231, 0.3); background: transparent; }
-.mobile-nav-top .icon-btn:hover { background: rgba(248, 241, 231, 0.1); }
-.mobile-nav-links { padding: 0.6rem 1.4rem; }
-.mobile-nav-links a { display: flex; align-items: center; min-height: 48px; padding: 0.2rem 0; font-family: var(--serif); font-size: 1.32rem; line-height: 1.2; color: var(--on-night); text-decoration: none; border-bottom: 1px solid rgba(236, 189, 133, 0.13); }
-.mobile-nav-links a:last-child { border-bottom: 0; }
-.mobile-nav-links a:hover { color: var(--gold-soft); }
-.mobile-nav-links a[aria-current="page"] { color: var(--sunset-2); }
-.mobile-nav-cta { gap: 0.6rem; padding: 1rem 1.4rem 0.4rem; }
-.mobile-nav-cta .btn { min-height: 48px; }
-.mobile-nav-cta .btn-dark { --bg: var(--sunset); --fg: #1a120c; }
-.mobile-nav-cta .btn-outline { --bd: rgba(248, 241, 231, 0.55); --fg: var(--on-night); }
-.mobile-nav-cta .btn-outline:hover { --bg: var(--on-night); --fg: var(--night); }
-#mobile-nav .lang { justify-self: center; margin-top: 0.3rem; }
-#mobile-nav .lang-opt { color: rgba(248, 241, 231, 0.7); }
-#mobile-nav .lang-opt.is-on { color: var(--on-night) !important; text-decoration-color: var(--sunset); } /* beats editorial.css ink !important */
-@media (prefers-reduced-motion: reduce) { dialog.mobile-nav[open] { animation: none; } }
 
 /* Seven links, the language, the order and «Comer & Ficar»: tighter spacing so nothing touches. */
 @media (min-width: 1360px) {
@@ -402,18 +374,11 @@ dialog.mobile-nav::backdrop { background: rgba(14, 10, 8, 0.42); -webkit-backdro
 .cine-hero.is-page .cine-shade { background:
   linear-gradient(90deg, rgba(14, 10, 8, 0.78) 0%, rgba(14, 10, 8, 0.3) 50%, rgba(14, 10, 8, 0) 75%),
   linear-gradient(180deg, rgba(14, 10, 8, 0.55) 0%, rgba(14, 10, 8, 0) 25%, rgba(14, 10, 8, 0.6) 100%); }
-.rooms-cine { background: var(--night); }
-/* resort.css's `.heading .title { ink }` (0,2,0, later) beat cinema.css's `.rooms-cine .title` here: dark on dark. */
-.rooms-cine .heading .title { color: var(--on-night); }
-.rooms-cine .heading .title-2 { color: var(--gold-soft); } /* the second line of the heading was muted grey on the night ground: 3.1:1 */
-.rooms-cine .room-row.room-is-family .from strong { color: var(--ink); }
-.rooms-cine .room-row.room-is-family { box-shadow: 0 0 0 100vmax var(--cream); background: var(--cream); }
 .suite-spec, .dsc-preview, .booking { background: var(--paper); }
 .ab-intro, .ab-what { background: var(--cream); }
-.duo-notes, .coast-ch, .site-footer, .suites, .dusk, .rooms-dark { background: var(--night); }
-.room-row-body h3, .sn-name, .si-tagline, .sr-title, .ss-title, .abc-title, .dsc-row-text h3 { letter-spacing: -0.01em; }
+.duo-notes, .coast-ch, .site-footer, .dusk, .rooms-dark { background: var(--night); }
+.sn-name, .si-tagline, .sr-title, .ss-title, .abc-title, .dsc-row-text h3 { letter-spacing: -0.01em; }
 .dsc-kind { color: var(--terra-dark); }
-.menu-cat .dish .dish-photo, section.menu .menu-cat .dish .dish-photo { border-radius: var(--r-sm); overflow: hidden; }
 section.menu .menu-nav a[aria-current="true"] { border-bottom-color: var(--sunset); }
 .field input, .field select, .field textarea, .pk-btn { border-radius: var(--r-sm); }
 .form-card, .book-dialog, .room-ask, .wa-review { border-radius: var(--r-card); }
@@ -423,10 +388,8 @@ section.menu .menu-nav a[aria-current="true"] { border-bottom-color: var(--sunse
 .gx-filter[aria-pressed="true"], .gx-filter.is-on { background: var(--night); color: var(--on-night); border-color: var(--night); }
 
 /* ---------- Every remaining square control from the previous direction becomes rounded ---------- */
-.site-footer .btn, .contact-actions .btn, .sr-actions .btn, .dn-actions .btn, .room-foot .btn, section.menu .menu-cat .dish-add, .booking .btn, .form-actions .btn, .cart .btn, .pick .btn { border-radius: 999px !important; }
+.site-footer .btn, .contact-actions .btn, .sr-actions .btn, .dn-actions .btn, .booking .btn, .form-actions .btn, .cart .btn, .pick .btn { border-radius: 999px !important; }
 section.menu .menu-search, section.menu .menu-search input { border-radius: 999px; }
-section.menu .menu-cat .sample-tag { border-radius: 999px; }
-section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
 
 /* ---------- Footer: charcoal, sunset accents ---------- */
 .site-footer::before { height: 3px; background: linear-gradient(90deg, var(--logo-red), var(--sunset) 40%, var(--gold) 100%); }
@@ -448,11 +411,6 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
 .wa-float { background: var(--wa, #25d366) !important; color: #fff !important; box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.5) !important; }
 .wa-float:hover { filter: brightness(1.08); }
 @media (max-width: 860px) {
-  /* The phone bar is a floating capsule (rounded all round, inset from the screen edges), not a flat strip. */
-  .mobile-bar { left: 0.6rem !important; right: 0.6rem !important; bottom: calc(0.6rem + env(safe-area-inset-bottom)) !important; padding: 0.45rem !important; border-radius: 999px !important; border: 1px solid rgba(236, 189, 133, 0.28) !important; background: rgba(23, 18, 15, 0.94) !important; -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.6) !important; }
-  .mobile-bar .btn-terra { --bg: var(--sunset); --fg: #1a120c; }
-  .mobile-bar .btn { border-radius: 999px !important; }
-  .mobile-bar .wa { border-radius: 50% !important; background: var(--wa, #25d366) !important; color: #fff !important; border: 0 !important; }
   .site-footer { padding-bottom: 6.5rem; }
 }
 
@@ -488,25 +446,28 @@ section.menu .menu-cat .dish-group { margin-left: 0.6rem; font-size: 0.8rem; fon
 .price, .dl-price, .cl-sub, .rv-num, .ft-scores b { font-variant-numeric: lining-nums; } /* proportional: tabular figures widened the long menu prices past their line */
 .cart-total strong, .cart-fab strong, .ft-hours b, .footer-list b, .info-grid dd, .hours b { font-variant-numeric: lining-nums tabular-nums; }
 
-/* ---------- Intro: the horizon opens (first page of a visit; html.lh-intro-on is set inline in <head>) ----------
-   A sand-gold horizon draws itself, the sun rises out of it, the name comes up letter by letter, then the night splits
-   along the horizon into two curved lids that part on the page. Pure CSS, so it starts with the first paint and never
-   waits for scripts or images; ~2.7 s; pointer-events off; hidden by its own timer even if a script fails. */
+/* ---------- Intro: sunrise over the water (first page of a visit; html.lh-intro-on is set inline in <head>) ----------
+   A gold horizon draws itself, the sun rises out of it and lays a path of light across the sea, three ripples spread from
+   the horizon, the name comes up letter by letter, then the night splits along the horizon into two curved lids that part on
+   the page. Pure CSS, so it starts with the first paint and never waits for scripts or images; 2.3 s in all; pointer-events
+   off; hidden by its own timer even if a script fails. Not shown when the visitor asks for reduced motion (see <head>). */
 .lh-intro { display: none; }
-html.lh-intro-on .lh-intro { display: block; position: fixed; inset: 0; z-index: 300; pointer-events: none; animation: introGone 0s linear 2.85s forwards; }
+html.lh-intro-on .lh-intro { display: block; position: fixed; inset: 0; z-index: 300; pointer-events: none; animation: introGone 0s linear 2.35s forwards; }
 .intro-sky, .intro-sea { position: absolute; left: 0; right: 0; height: 50.2%; overflow: hidden; will-change: transform, border-radius; }
-.intro-sky { top: 0; background: radial-gradient(110% 85% at 50% 100%, #3d2617 0%, #22170f 42%, #120d0a 100%); animation: introSky 0.95s cubic-bezier(0.76, 0, 0.18, 1) 1.8s forwards; }
-.intro-sea { bottom: 0; background: linear-gradient(180deg, #17110d 0%, #0e0a08 100%); animation: introSea 0.95s cubic-bezier(0.76, 0, 0.18, 1) 1.8s forwards; }
-.intro-line { position: absolute; left: 50%; top: 50%; width: min(72vw, 46rem); height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft) 18%, var(--gold-soft) 82%, transparent); transform: translateX(-50%) scaleX(0); animation: introLine 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards, introFade 0.35s ease 1.75s forwards; }
-.intro-sun { position: absolute; left: 50%; bottom: 0; width: clamp(4.2rem, 11vmin, 7.5rem); aspect-ratio: 1; margin-left: calc(clamp(4.2rem, 11vmin, 7.5rem) / -2); border-radius: 50%; background: radial-gradient(circle at 50% 38%, #ffe0b0 0%, #f6a356 38%, var(--sunset) 62%, #b8432a 100%); box-shadow: 0 0 70px 18px rgba(232, 120, 42, 0.28); transform: translateY(75%); opacity: 0; animation: introSun 1.35s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards; }
-.intro-glint { position: absolute; left: 50%; top: 0; width: clamp(3rem, 8vmin, 5.5rem); height: 38%; margin-left: calc(clamp(3rem, 8vmin, 5.5rem) / -2); background: linear-gradient(180deg, rgba(246, 163, 86, 0.38), rgba(246, 163, 86, 0)); filter: blur(6px); transform-origin: top; transform: scaleY(0); animation: introGlint 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards; }
+.intro-sky { top: 0; background: radial-gradient(120% 90% at 50% 100%, #6e3519 0%, #35200f 34%, #1a110b 64%, #0f0a07 100%); animation: introSky 0.85s cubic-bezier(0.76, 0, 0.18, 1) 1.45s forwards; }
+.intro-sea { bottom: 0; background: linear-gradient(180deg, #24170e 0%, #120c08 46%, #0c0806 100%); animation: introSea 0.85s cubic-bezier(0.76, 0, 0.18, 1) 1.45s forwards; }
+.intro-line { position: absolute; left: 50%; top: 50%; width: min(72vw, 46rem); height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft) 18%, var(--gold-soft) 82%, transparent); transform: translateX(-50%) scaleX(0); animation: introLine 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards, introFade 0.3s ease 1.4s forwards; }
+.intro-sun { position: absolute; left: 50%; bottom: 0; width: clamp(4.2rem, 11vmin, 7.5rem); aspect-ratio: 1; margin-left: calc(clamp(4.2rem, 11vmin, 7.5rem) / -2); border-radius: 50%; background: radial-gradient(circle at 50% 38%, #ffe0b0 0%, #f6a356 38%, var(--sunset) 62%, #b8432a 100%); box-shadow: 0 0 90px 26px rgba(232, 120, 42, 0.32); transform: translateY(75%); opacity: 0; animation: introSun 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards; }
+.intro-glint { position: absolute; left: 50%; top: 0; width: clamp(3.4rem, 9vmin, 6.2rem); height: 70%; margin-left: calc(clamp(3.4rem, 9vmin, 6.2rem) / -2); background: linear-gradient(180deg, rgba(246, 163, 86, 0.5), rgba(246, 163, 86, 0.14) 55%, rgba(246, 163, 86, 0)); -webkit-mask: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent); mask: linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent); filter: blur(5px); transform-origin: top; transform: scaleY(0); animation: introGlint 1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards; }
+.intro-ripple { position: absolute; left: 50%; top: calc(var(--k) * 15%); width: min(60vw, 34rem); height: 1px; margin-left: calc(min(30vw, 17rem) * -1); background: linear-gradient(90deg, transparent, rgba(246, 163, 86, 0.7), transparent); opacity: 0; transform: scaleX(0.15); animation: introRipple 0.95s cubic-bezier(0.22, 1, 0.36, 1) calc(0.55s + var(--k) * 0.16s) forwards; }
 .intro-word { position: absolute; left: 0; right: 0; bottom: clamp(5.2rem, 17vh, 10rem); margin: 0; display: flex; justify-content: center; font-family: var(--serif); font-weight: 400; font-size: clamp(3.1rem, 9vw, 6.6rem); line-height: 1; letter-spacing: 0.015em; color: var(--on-night); overflow: hidden; padding-bottom: 0.08em; }
-.intro-word span { display: inline-block; transform: translateY(105%); animation: introRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(0.45s + var(--i) * 0.055s) forwards; }
-.intro-sub { position: absolute; left: 0; right: 0; top: clamp(1.4rem, 4.5vh, 2.6rem); margin: 0; text-align: center; font-family: var(--sans); font-size: clamp(0.72rem, 1.4vw, 0.85rem); font-weight: 600; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold-soft); opacity: 0; animation: introSub 1s cubic-bezier(0.22, 1, 0.36, 1) 0.95s forwards; }
+.intro-word span { display: inline-block; transform: translateY(105%); animation: introRise 0.8s cubic-bezier(0.22, 1, 0.36, 1) calc(0.35s + var(--i) * 0.05s) forwards; }
+.intro-sub { position: absolute; left: 0; right: 0; top: clamp(1.4rem, 4.5vh, 2.6rem); margin: 0; text-align: center; font-family: var(--sans); font-size: clamp(0.72rem, 1.4vw, 0.85rem); font-weight: 600; letter-spacing: 0.42em; text-transform: uppercase; color: var(--gold-soft); opacity: 0; animation: introSub 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.8s forwards; }
 @keyframes introLine { to { transform: translateX(-50%) scaleX(1); } }
 @keyframes introFade { to { opacity: 0; } }
 @keyframes introSun { 0% { opacity: 0; transform: translateY(75%); } 30% { opacity: 1; } 100% { opacity: 1; transform: translateY(46%); } }
 @keyframes introGlint { to { transform: scaleY(1); } }
+@keyframes introRipple { 0% { opacity: 0; transform: scaleX(0.15); } 35% { opacity: 1; } 100% { opacity: 0; transform: scaleX(1); } }
 @keyframes introRise { to { transform: none; } }
 @keyframes introSub { from { opacity: 0; letter-spacing: 0.6em; } to { opacity: 1; letter-spacing: 0.42em; } }
 @keyframes introSky { to { transform: translateY(-101%); border-radius: 0 0 50% 50% / 0 0 22% 22%; } }

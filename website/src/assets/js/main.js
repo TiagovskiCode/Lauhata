@@ -111,15 +111,21 @@
     bookDialog.addEventListener("close", () => opener?.focus());
   }
 
-  /* ---------- Reviews: the third box opens the feedback form below it ---------- */
-  $$("[data-open-feedback]").forEach((a) => a.addEventListener("click", (e) => {
-    const d = $("#rv-form");
-    if (!d) return;
-    e.preventDefault();
-    d.open = true;
-    d.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-    $("input, textarea, select", d)?.focus({ preventScroll: true });
-  }));
+  /* ---------- Reviews: the dark box opens the feedback dialog ----------
+     A <dialog>: the browser traps focus, closes on Escape and makes the page behind inert. A click on the backdrop (the dialog element itself,
+     never its content) closes it too; focus goes back to the box that opened it. The form is the same as before: it prepares a WhatsApp message. */
+  const fb = $("[data-fb-dialog]");
+  if (fb) {
+    let opener = null;
+    $$("[data-open-feedback]").forEach((btn) => btn.addEventListener("click", () => {
+      opener = btn;
+      if (!fb.open) fb.showModal();
+      $("input[name='name']", fb)?.focus({ preventScroll: true });
+    }));
+    $("[data-fb-close]", fb).addEventListener("click", () => fb.close());
+    fb.addEventListener("click", (e) => { if (e.target === fb) fb.close(); });
+    fb.addEventListener("close", () => opener?.focus({ preventScroll: true }));
+  }
 
   /* ---------- Dish carousel: previous and next move by one card; swipe and keyboard work on the track itself ---------- */
   $$("[data-kc]").forEach((root) => {
@@ -149,32 +155,68 @@
     update();
   });
 
-  /* ---------- Room galleries: one photograph at a time, previous and next, a counter, swipe and arrow keys ---------- */
+  /* ---------- Room galleries: three progress bars, story-like ----------
+     One photograph at a time on a scroll-snap strip (swipe, arrow keys, previous/next). Above it, one bar per photograph: the active
+     bar fills over STORY_MS (a CSS animation), and when it ends the next photograph shows. The last photograph stays: it does not loop.
+     Choosing a bar, the arrows or a swipe restarts the bar of the photograph then shown. The timer IS the animation, so there is no
+     interval to clear; it pauses (animation-play-state) while the gallery is hovered, focused or touched, while the tab is hidden and
+     while the gallery is off screen. With reduced motion nothing plays: the bars only show which photograph is in view. */
+  const STORY_MS = 5000;
   $$("[data-rg]").forEach((root) => {
     const track = $("[data-rg-track]", root);
     const prev = $("[data-rg-prev]", root);
     const next = $("[data-rg-next]", root);
-    const count = $("[data-rg-count]", root);
+    const bars = $$("[data-rg-bar]", root);
     const slides = $$(".rs-slide", track);
     if (!track || !slides.length) return;
+    root.style.setProperty("--story-ms", STORY_MS + "ms");
+    let active = -1, hold = 0, onScreen = !("IntersectionObserver" in window);
     const index = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
     const go = (i) => track.scrollTo({ left: Math.max(0, Math.min(slides.length - 1, i)) * track.clientWidth, behavior: reduced ? "auto" : "smooth" });
-    const update = () => {
-      const i = index();
-      count.textContent = (i + 1) + " / " + slides.length;
+    // the bars: done before the active one, filling at the active one, empty after; the animation restarts only when the photograph changes
+    const show = (i) => {
+      if (i === active) return;
+      active = i;
+      bars.forEach((b, k) => {
+        b.classList.toggle("is-done", k < i);
+        b.classList.toggle("is-active", k === i);
+        if (k === i) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+      });
+      const fill = bars[i] && $("i", bars[i]);
+      if (fill) { fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = ""; }
       prev.disabled = i <= 0;
       next.disabled = i >= slides.length - 1;
     };
-    let raf = 0;
+    const sync = () => root.classList.toggle("is-held", hold > 0 || document.hidden || !onScreen);
+    const press = (on) => { hold += on ? 1 : -1; sync(); };
+    root.classList.toggle("is-story", !reduced);
+    bars.forEach((b, k) => b.addEventListener("click", () => { show(k); go(k); }));
     prev.addEventListener("click", () => go(index() - 1));
     next.addEventListener("click", () => go(index() + 1));
-    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+    // the fill ends: the next photograph (the last one stays)
+    root.addEventListener("animationend", (e) => { if (e.target.matches(".rs-bar.is-active i") && active < slides.length - 1) { show(active + 1); go(active); } });
+    let raf = 0;
+    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => show(index())); }, { passive: true });
     track.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") { e.preventDefault(); go(index() + 1); }
       else if (e.key === "ArrowLeft") { e.preventDefault(); go(index() - 1); }
     });
-    window.addEventListener("resize", update);
-    update();
+    // pausing: pointer over, focus inside, finger down
+    root.addEventListener("mouseenter", () => press(true));
+    root.addEventListener("mouseleave", () => press(false));
+    root.addEventListener("focusin", () => press(true));
+    root.addEventListener("focusout", () => press(false));
+    root.addEventListener("touchstart", () => press(true), { passive: true });
+    ["touchend", "touchcancel"].forEach((n) => root.addEventListener(n, () => press(false), { passive: true }));
+    document.addEventListener("visibilitychange", sync);
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(([en]) => { onScreen = en.isIntersecting; sync(); }, { threshold: 0.5 });
+      io.observe(root);
+      window.addEventListener("pagehide", () => io.disconnect(), { once: true });
+    }
+    window.addEventListener("resize", () => go(active));
+    show(index());
+    sync();
   });
 
   /* ---------- Hero scroll cue fades once the visitor scrolls; the footer signature rises into view once ---------- */
@@ -192,88 +234,44 @@
     }, { threshold: 0.25 }).observe(mark);
   }
 
-  /* ---------- Mobile navigation: the staggered menu (React Bits "StaggeredMenu", rebuilt in plain JS with the GSAP already shipped) ----------
-     The <dialog> stays the container, so the browser still provides the focus trap, Escape and the inert page behind it. Two colour layers
-     slide in, then the panel, then the links rise one after another. Without GSAP (reduced motion, or the file failing to load) the
-     menu simply opens: every final state is already what the CSS shows. GSAP is fetched on the first sign of intent, not on every page. */
+  /* ---------- Mobile navigation: a plain drawer ----------
+     The <dialog> is the container, so the browser provides the focus trap, Escape and the inert page behind it. The panel slides in from the
+     right (moving left) and back out with one short CSS transition; there is no timeline and no library. With reduced motion it simply appears. */
   const nav = $("[data-mobile-nav]");
   const navOpen = $("[data-nav-open]");
   if (nav && navOpen) {
     const root = document.documentElement;
-    const panel = $("[data-sm-panel]", nav);
-    const layers = $$(".sm-layers i", nav);
-    const links = $$(".sm-label", nav);
-    const numbers = $$(".sm-link", nav);
-    const extras = $$("[data-sm-extra]", nav);
-    let tl = null;
-    let gsapReady = null;
     let closing = false;
-    const loadGsap = () => {
-      if (window.gsap) return Promise.resolve(window.gsap);
-      if (!gsapReady) {
-        gsapReady = new Promise((resolve) => {
-          const me = $$("script[src]").find((x) => /\/main(\.min)?\.js/.test(x.src));
-          const el = document.createElement("script");
-          el.src = (me ? me.src.replace(/main[^/]*$/, "") : "/assets/js/") + "vendor/gsap.min.js";
-          el.onload = () => resolve(window.gsap || null);
-          el.onerror = () => resolve(null);
-          document.head.appendChild(el);
-        });
-      }
-      return gsapReady;
-    };
-    ["pointerenter", "focus", "touchstart"].forEach((ev) => navOpen.addEventListener(ev, () => { if (!reduced) loadGsap(); }, { once: true, passive: true }));
-
+    let timer = 0;
     const finish = () => {
+      clearTimeout(timer);
+      nav.classList.remove("is-open");
       if (nav.open) nav.close();
       root.classList.remove("nav-open");
       navOpen.setAttribute("aria-expanded", "false");
-      nav.classList.remove("sm-wait");
       closing = false;
     };
-    function openMenu() {
+    const openMenu = () => {
       if (nav.open) return;
       closing = false;
-      const hold = !reduced && !window.gsap; // until GSAP arrives the panel waits off-screen instead of flashing open
-      if (hold) nav.classList.add("sm-wait");
       nav.showModal();
       root.classList.add("nav-open");
       navOpen.setAttribute("aria-expanded", "true");
-      if (reduced) return;
-      loadGsap().then((g) => {
-        nav.classList.remove("sm-wait");
-        if (nav.open && document.activeElement === nav) $("[data-nav-close]", nav).focus({ preventScroll: true }); // the panel was hidden while GSAP loaded
-        if (!g || !nav.open || closing) return;
-        if (tl) tl.kill();
-        g.set(layers, { xPercent: 100 });
-        g.set(panel, { xPercent: 100 });
-        g.set(links, { yPercent: 135, rotate: 6 });
-        g.set(numbers, { "--n": 0 });
-        g.set(extras, { autoAlpha: 0, y: 14 });
-        tl = g.timeline({ defaults: { ease: "power4.out" } })
-          .to(layers, { xPercent: 0, duration: 0.55, stagger: 0.08 }, 0)
-          .to(panel, { xPercent: 0, duration: 0.7 }, 0.16)
-          .to(links, { yPercent: 0, rotate: 0, duration: 0.9, stagger: 0.07 }, 0.36)
-          .to(numbers, { "--n": 1, duration: 0.6, stagger: 0.07 }, 0.5)
-          .to(extras, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.06 }, 0.72);
-      });
-    }
-    function closeMenu(now) {
+      // Two frames: the panel is first painted off-screen, then the class moves it in (a transition needs a starting state).
+      requestAnimationFrame(() => requestAnimationFrame(() => nav.classList.add("is-open")));
+    };
+    const closeMenu = (now) => {
       if (!nav.open || (closing && !now)) return;
-      const g = window.gsap;
-      if (now || reduced || !g) { if (tl) tl.kill(); finish(); return; }
+      if (now || reduced) { finish(); return; }
       closing = true;
-      if (tl) tl.kill();
-      tl = g.timeline({ onComplete: finish })
-        .to(extras, { autoAlpha: 0, duration: 0.2 }, 0)
-        .to(panel, { xPercent: 100, duration: 0.4, ease: "power3.in" }, 0)
-        .to(layers, { xPercent: 100, duration: 0.4, ease: "power3.in", stagger: -0.05 }, 0.04);
-    }
+      nav.classList.remove("is-open");
+      timer = setTimeout(finish, 360); // the transition lasts 300 ms; this also covers a browser that skips it
+    };
     navOpen.addEventListener("click", openMenu);
     $("[data-nav-close]", nav).addEventListener("click", () => closeMenu());
-    nav.addEventListener("cancel", (e) => { e.preventDefault(); closeMenu(); }); // Escape: close with the exit animation
+    nav.addEventListener("cancel", (e) => { e.preventDefault(); closeMenu(); }); // Escape: close with the exit transition
     nav.addEventListener("click", (e) => { if (e.target === nav) closeMenu(); }); // a tap beside the panel
-    nav.addEventListener("close", () => { root.classList.remove("nav-open"); navOpen.setAttribute("aria-expanded", "false"); });
+    nav.addEventListener("close", () => { clearTimeout(timer); nav.classList.remove("is-open"); root.classList.remove("nav-open"); navOpen.setAttribute("aria-expanded", "false"); closing = false; });
     // Same-page anchors and the booking buttons need the menu out of the way at once; page links simply leave the page.
     $$("a", nav).forEach((a) => a.addEventListener("click", () => {
       if (a.hasAttribute("data-book-open") || (a.getAttribute("href") || "").startsWith("#")) closeMenu(true);
@@ -866,8 +864,8 @@
   // With the intro (first page of a visit), the hero copy rises as the horizon opens; the intro then leaves the DOM flow.
   const intro = document.documentElement.classList.contains("lh-intro-on");
   if (reduced) revealHero();
-  else setTimeout(revealHero, intro ? 1850 : 60);
-  if (intro) setTimeout(() => { document.documentElement.classList.remove("lh-intro-on"); $(".lh-intro")?.remove(); }, 2850);
+  else setTimeout(revealHero, intro ? 1500 : 60);
+  if (intro) setTimeout(() => { document.documentElement.classList.remove("lh-intro-on"); $(".lh-intro")?.remove(); }, 2400);
 
   // Hero video (site.heroVideo): the background of the home hero, on laptop-sized screens only (1280–1920 px wide). The
   // sunset photograph is on screen from the start; once the page has loaded the video is fetched and fades in over it, then
@@ -935,17 +933,6 @@
   onEnter($$("[data-split]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-fade]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-clip]"), { threshold: 0.2 });
-
-  // Rooms: the panel under the pointer (or with focus, or tapped) opens; the first is open to begin with.
-  $$("[data-suites]").forEach((row) => {
-    const panels = $$("[data-su]", row);
-    const open = (p) => panels.forEach((x) => x.classList.toggle("is-on", x === p));
-    panels.forEach((p) => {
-      p.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") open(p); });
-      p.addEventListener("focusin", () => open(p));
-      p.addEventListener("click", (e) => { if (!e.target.closest("a, button")) open(p); });
-    });
-  });
 
   // Parallax is for a mouse and a wide screen only: on a phone the image just sits in its frame. When GSAP is on the page, cinema.js does it.
   const parallaxImgs = !window.gsap && fine && window.matchMedia("(min-width: 861px)").matches ? $$("[data-parallax]") : []; // with GSAP (cinema.js) it does the parallax

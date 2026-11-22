@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>/* Intro (the horizon opening): once per visit, never with reduced motion unless the site was opened once with
    ?movimento=completo (remembered, like the rest of the motion). ?intro replays it. Set before first paint: no flash. */try{var q=new URLSearchParams(location.search),m=q.get("movimento");if(m==="completo")localStorage.setItem("lauhata-motion","full");else if(m==="reduzido")localStorage.removeItem("lauhata-motion");var full=localStorage.getItem("lauhata-motion")==="full";if((q.has("intro")||!sessionStorage.getItem("lh-intro"))&&(full||!matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("lh-intro-on");sessionStorage.setItem("lh-intro","1")}}catch(e){}</script>
 <script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="../assets/css/site.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://tiagovskicode.github.io/Lauhata/website/dist/#business","name":"Lauhata Beach Escape","url":"https://tiagovskicode.github.io/Lauhata/website/dist/","image":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/og-image.jpg","logo":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/brand/logo-lauhata-beach-escape-160.png","address":{"@type":"PostalAddress","streetAddress":"Aldeia Pissu Kraik, Suku Lauhata","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%20Beach%20Escape%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste","hasMenu":"https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/#ementa","telephone":"+67077401111","geo":{"@type":"GeoCoordinates","latitude":-8.581541,"longitude":125.349856}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tiagovskicode.github.io/Lauhata/website/dist/"},{"@type":"ListItem","position":2,"name":"Restaurant","item":"https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/"}]}</script>
-<script>window.LAUHATA={"lang":"en","whatsapp":"67077401111","thanks":"../thank-you/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"Only if you prefer to be contacted on another number or by email.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","adults":"Adults","children":"Children","adultOne":"adult","adultMany":"adults","childOne":"child","childMany":"children","email":"Email","phone":"Phone / WhatsApp","phoneHint":"If it differs from the number you send the message from.","payNote":"Payment is made in person at Lauhata. The website never asks for payment details.","reviewTitle":"Review your request","reviewLead":"This is the message that will open in WhatsApp. When you send it, the request reaches Lauhata; it is confirmed only once the team replies.","reviewSend":"Open WhatsApp","reviewEdit":"Change","guestOne":"guest","guestMany":"guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","adults":"Enter between 1 and 20 adults.","children":"Enter between 0 and 10 children.","email":"Enter a valid email.","phone":"Enter a valid number.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}{contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waEmail":"\nEmail: {email}","waPhone":"\nPhone: {phone}","waAnyRoom":"No preference","waName":"\nName: {name}","waNotes":"\nNotes: {notes}","waContact":"\nContact: {contact}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}{who}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nName: {name}{email}{phone}\nPreferred room: {room}\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{notes}\n\nCould you please confirm availability and provide any relevant information? I understand payment is made in person at Lauhata.\n\nThank you.","waQuickRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{room}{who}{notes}\n\nCould you confirm availability and the price? I understand payment is made in person at Lauhata. Thank you.","waQuickRoomType":"\nRoom: {room}","waEvent":"Hello! I would like to know if Lauhata could host an event.\n\nOccasion: {kind}\nDate: {date}\nPeople: {people}\nName: {name}{contact}{notes}\n\nCould you tell me what is possible? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"backToTop":"Back to top","placeholderImage":"Illustrative image","realPhoto":"","coords":"8°34′54″ S · 125°20′59″ E","coordsLabel":"Lauhata's coordinates","toConfirm":"To be confirmed","priceTbc":"Price on request","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Reserve a Table","requestRoom":"Request a Room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"},"order":{"photoSoon":"Photo coming soon","tempAlt":"{name} (illustrative image, not the dish served at Lauhata)","sampleTag":"Example","sampleNote":"The drinks list is being prepared. For now these are examples, without prices: ask the team what is available today.","cartTitle":"Your order","open":"Open your order","close":"Close","viewOrder":"View order","itemOne":"1 item","itemMany":"{n} items","emptyTitle":"Your order is empty","emptyBody":"Pick dishes from the menu and they will appear here.","viewMenu":"See the menu","add":"Add","added":"Added","choose":"Choose","unavailable":"Price on request","remove":"Remove {name}","increase":"One more: {name}","decrease":"One less: {name}","qty":"Quantity","each":"each","total":"Total","continue":"Keep browsing","checkout":"Place order","back":"Back to your order","detailsTitle":"Your details","name":"Name","type":"Order type","table":"Table number","notes":"Order notes","optional":"optional","notesPlaceholder":"Allergies, preferences…","dineIn":"Orders are for eating at the restaurant. We do not offer delivery or takeaway.","send":"Send order to the restaurant","sending":"Opening WhatsApp…","note":"When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website.","errorsTitle":"Please check the highlighted fields.","errors":{"name":"Please enter your name.","type":"Please choose the order type.","table":"Please enter the table number.","choose":"Please choose an option.","tooBig":"The order is too big for a single message. Remove some items or send it in two parts."},"customize":"Customise","addToOrder":"Add to order","cancel":"Cancel","searchLabel":"Search the menu","searchPlaceholder":"Search for a dish…","clearSearch":"Clear search","noResults":"No dishes found for “{q}”.","resultOne":"1 dish found","results":"{n} dishes found","menuWord":"Menu","filter":"Filter","filterBy":"Filter the menu by category","filterAll":"All dishes","filterClear":"Clear filter","categories":"Menu categories","inOrder":"{name} added to your order","menuHours":"Hours","msg":{"hello":"Hello, Lauhata!","intro":"I would like to place the following order, to eat at the restaurant:","title":"Restaurant order","total":"Total","name":"Name","type":"Order type","table":"Table","notes":"Notes","bye":"Looking forward to your confirmation. Thank you!"}},"pick":{"chooseDate":"Choose a date","chooseTime":"Choose a time","dateDialog":"Choose a date","rangeDialog":"Choose your dates","timeDialog":"Choose a time","numberDialog":"Quantity","selectDialog":"Choose","close":"Close","prev":"Previous month","next":"Next month","today":"Today","clear":"Clear","done":"Done","stepIn":"Choose check-in","stepOut":"Choose check-out","nightOne":"1 night","nightMany":"{n} nights","less":"Fewer","more":"More","max":"Maximum: {n}","morning":"Morning","afternoon":"Afternoon","evening":"Evening"}}};</script>
+<script>window.LAUHATA={"lang":"en","whatsapp":"67077401111","thanks":"../thank-you/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"Only if you prefer to be contacted on another number or by email.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","adults":"Adults","children":"Children","adultOne":"adult","adultMany":"adults","childOne":"child","childMany":"children","email":"Email","phone":"Phone / WhatsApp","phoneHint":"If it differs from the number you send the message from.","payNote":"Payment is made in person at Lauhata. The website never asks for payment details.","reviewTitle":"Review your request","reviewLead":"This is the message that will open in WhatsApp. When you send it, the request reaches Lauhata; it is confirmed only once the team replies.","reviewSend":"Open WhatsApp","reviewEdit":"Change","guestOne":"guest","guestMany":"guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","adults":"Enter between 1 and 20 adults.","children":"Enter between 0 and 10 children.","email":"Enter a valid email.","phone":"Enter a valid number.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}{contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waEmail":"\nEmail: {email}","waPhone":"\nPhone: {phone}","waAnyRoom":"No preference","waName":"\nName: {name}","waNotes":"\nNotes: {notes}","waContact":"\nContact: {contact}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}{who}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nName: {name}{email}{phone}\nPreferred room: {room}\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{notes}\n\nCould you please confirm availability and provide any relevant information? I understand payment is made in person at Lauhata.\n\nThank you.","waQuickRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{room}{who}{notes}\n\nCould you confirm availability and the price? I understand payment is made in person at Lauhata. Thank you.","waQuickRoomType":"\nRoom: {room}","waEvent":"Hello! I would like to know if Lauhata could host an event.\n\nOccasion: {kind}\nDate: {date}\nPeople: {people}\nName: {name}{contact}{notes}\n\nCould you tell me what is possible? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"backToTop":"Back to top","placeholderImage":"Illustrative image","realPhoto":"","coords":"8°34′54″ S · 125°20′59″ E","coordsLabel":"Lauhata's coordinates","toConfirm":"To be confirmed","priceTbc":"Price on request","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Reserve a Table","requestRoom":"Request a Room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"},"order":{"photoSoon":"Photo coming soon","tempAlt":"{name} (illustrative image, not the dish served at Lauhata)","sampleTag":"Example","sampleNote":"Prices are provisional estimates, to be confirmed with the restaurant. Ask the team what is available today.","provisionalNote":"Provisional price: to be confirmed with the restaurant.","cartTitle":"Your order","open":"Open your order","close":"Close","viewOrder":"View order","itemOne":"1 item","itemMany":"{n} items","emptyTitle":"Your order is empty","emptyBody":"Pick dishes from the menu and they will appear here.","viewMenu":"See the menu","add":"Add","added":"Added","choose":"Choose","unavailable":"Price on request","remove":"Remove {name}","increase":"One more: {name}","decrease":"One less: {name}","qty":"Quantity","each":"each","total":"Total","continue":"Keep browsing","checkout":"Place order","back":"Back to your order","detailsTitle":"Your details","name":"Name","type":"Order type","table":"Table number","notes":"Order notes","optional":"optional","notesPlaceholder":"Allergies, preferences…","dineIn":"Orders are for eating at the restaurant. We do not offer delivery or takeaway.","send":"Send order to the restaurant","sending":"Opening WhatsApp…","note":"When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website.","errorsTitle":"Please check the highlighted fields.","errors":{"name":"Please enter your name.","type":"Please choose the order type.","table":"Please enter the table number.","choose":"Please choose an option.","tooBig":"The order is too big for a single message. Remove some items or send it in two parts."},"customize":"Customise","addToOrder":"Add to order","cancel":"Cancel","searchLabel":"Search the menu","searchPlaceholder":"Search for a dish…","clearSearch":"Clear search","noResults":"No dishes found for “{q}”.","resultOne":"1 dish found","results":"{n} dishes found","menuWord":"Menu","filter":"Filter","filterBy":"Filter the menu by category","filterAll":"All dishes","filterClear":"Clear filter","categories":"Menu categories","inOrder":"{name} added to your order","menuHours":"Hours","msg":{"hello":"Hello, Lauhata!","intro":"I would like to place the following order, to eat at the restaurant:","title":"Restaurant order","total":"Total","name":"Name","type":"Order type","table":"Table","notes":"Notes","bye":"Looking forward to your confirmation. Thank you!"}},"pick":{"chooseDate":"Choose a date","chooseTime":"Choose a time","dateDialog":"Choose a date","rangeDialog":"Choose your dates","timeDialog":"Choose a time","numberDialog":"Quantity","selectDialog":"Choose","close":"Close","prev":"Previous month","next":"Next month","today":"Today","clear":"Clear","done":"Done","stepIn":"Choose check-in","stepOut":"Choose check-out","nightOne":"1 night","nightMany":"{n} nights","less":"Fewer","more":"More","max":"Maximum: {n}","morning":"Morning","afternoon":"Afternoon","evening":"Evening"}}};</script>
 <script>window.LAUHATA_MENU={"choice-of-eggs":{"id":"choice-of-eggs","name":"Choice of Eggs","price":6,"desc":{"en":"Scrambled, fried or sunny-side up, with toast and butter","pt":"Mexidos, fritos ou estrelados, com torradas e manteiga"},"options":[{"id":"style","label":{"en":"Style","pt":"Preparação"},"choices":[{"id":"scrambled","label":{"en":"Scrambled","pt":"Mexidos"}},{"id":"fried","label":{"en":"Fried","pt":"Fritos"}},{"id":"sunny","label":{"en":"Sunny-side up","pt":"Estrelados"}}]}],"photo":"../assets/img/pratos-temp/choice-of-eggs-640.jpg"},"egg-chicken-sausage-toast":{"id":"egg-chicken-sausage-toast","name":"Egg and Chicken Sausage on Toast","price":8,"desc":{"en":"Fried or scrambled eggs, with tomato, olives and feta","pt":"Ovos fritos ou mexidos, com tomate, azeitona e feta"},"options":[{"id":"style","label":{"en":"Style","pt":"Preparação"},"choices":[{"id":"fried","label":{"en":"Fried","pt":"Fritos"}},{"id":"scrambled","label":{"en":"Scrambled","pt":"Mexidos"}}]}],"photo":"../assets/img/pratos-temp/egg-chicken-sausage-toast-640.jpg"},"omelette":{"id":"omelette","name":"Omelette","price":6,"desc":{"en":"Plain, ham and cheese, or Spanish","pt":"Simples, de fiambre e queijo ou espanhola"},"options":[{"id":"type","label":{"en":"Type","pt":"Tipo"},"choices":[{"id":"plain","label":{"en":"Plain","pt":"Simples"}},{"id":"ham-cheese","label":{"en":"Ham & cheese","pt":"Fiambre e queijo"}},{"id":"spanish","label":{"en":"Spanish","pt":"Espanhola"}}]}],"photo":"../assets/img/pratos-temp/omelette-640.jpg"},"baked-beans-toast":{"id":"baked-beans-toast","name":"Baked Beans on Toast","price":6,"desc":{"en":"Baked beans served on toasted bread","pt":"Feijão cozido (baked beans) sobre pão torrado"},"options":[],"photo":"../assets/img/pratos-temp/baked-beans-toast-640.jpg"},"french-toast":{"id":"french-toast","name":"French Toast","price":6,"desc":{"en":"Served with honey and cinnamon","pt":"Servido com mel e canela"},"options":[],"photo":"../assets/img/pratos-temp/french-toast-640.jpg"},"pancakes":{"id":"pancakes","name":"Pancakes","price":6,"desc":{"en":"Plain, or with banana and maple syrup","pt":"Simples ou com banana e xarope de ácer"},"options":[{"id":"version","label":{"en":"Version","pt":"Versão"},"choices":[{"id":"plain","label":{"en":"Plain","pt":"Simples"}},{"id":"banana-maple","label":{"en":"Banana and maple syrup","pt":"Banana e xarope de ácer"}}]}],"photo":"../assets/img/pratos-temp/pancakes-640.jpg"},"cereal-choices":{"id":"cereal-choices","name":"Cereal Choices","price":4,"desc":{"en":"Chocolate cereal or cornflakes, with hot or cold milk","pt":"Cereais de chocolate ou flocos de milho, servidos com leite quente ou frio"},"options":[{"id":"cereal","label":{"en":"Cereal","pt":"Cereal"},"choices":[{"id":"choco","label":{"en":"Choco","pt":"Chocolate"}},{"id":"corn-flakes","label":{"en":"Corn flakes","pt":"Flocos de milho"}}]},{"id":"milk","label":{"en":"Milk","pt":"Leite"},"choices":[{"id":"hot","label":{"en":"Hot","pt":"Quente"}},{"id":"cold","label":{"en":"Cold","pt":"Frio"}}]}],"photo":"../assets/img/pratos-temp/cereal-choices-640.jpg"},"seasonal-fruit-salad":{"id":"seasonal-fruit-salad","name":"Seasonal Fruit Salad","price":5,"desc":{"en":"Selection of fruits in season","pt":"Seleção de frutas da época"},"options":[],"photo":"../assets/img/pratos-temp/seasonal-fruit-salad-640.jpg"},"caesar-salad":{"id":"caesar-salad","name":"Caesar Salad","price":8,"desc":{"en":"Seared herb chicken with lettuce, boiled egg, pork bacon, crouton & Caesar dressing","pt":"Frango selado com ervas, alface, ovo cozido, bacon de porco, croutons e molho Caesar"},"options":[],"photo":"../assets/img/pratos-temp/caesar-salad-640.jpg"},"greek-salad":{"id":"greek-salad","name":"Greek Salad","price":8,"desc":{"en":"Feta, olives, tomato and cucumber over mixed leaves, with Lauhata dressing","pt":"Feta, azeitonas, tomate e pepino sobre salada variada, com molho Lauhata"},"options":[],"photo":"../assets/img/pratos-temp/greek-salad-640.jpg"},"tuna-salad":{"id":"tuna-salad","name":"Tuna Salad","price":8,"desc":{"en":"Tuna, lettuce, tomato, onion and cucumber, with Lauhata dressing","pt":"Atum, alface, tomate, cebola e pepino com molho Lauhata"},"options":[],"photo":"../assets/img/pratos-temp/tuna-salad-640.jpg"},"clams-garlic-bread":{"id":"clams-garlic-bread","name":"Clams & Garlic Bread","price":10,"desc":{"en":"Clams cooked in white wine and garlic, with coriander leaves","pt":"Amêijoas cozinhadas em vinho branco e alho, com folhas de coentros"},"options":[],"photo":"../assets/img/pratos-temp/clams-garlic-bread-640.jpg"},"calamari-rings":{"id":"calamari-rings","name":"Calamari Rings","price":6,"desc":{"en":"Calamari rings with a chilli mayonnaise","pt":"Anéis de lula com maionese de chilli"},"options":[],"photo":"../assets/img/pratos-temp/calamari-rings-640.jpg"},"satay-starter":{"id":"satay-starter","name":"Satay (Starter)","price":6,"desc":{"en":"Four satay skewers with tamarind sauce","pt":"Quatro espetadas de satay com molho de tamarindo"},"options":[{"id":"meat","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}},{"id":"pork","label":{"en":"Pork","pt":"Porco"}}]}],"photo":"../assets/img/pratos-temp/satay-starter-640.jpg"},"spring-rolls-samosa":{"id":"spring-rolls-samosa","name":"Spring Rolls or Samosa","price":6,"desc":{"en":"Eight pieces, with sweet chilli sauce","pt":"Oito peças, com molho de chilli doce"},"options":[{"id":"kind","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"spring-rolls","label":{"en":"Spring Rolls","pt":"Spring rolls"}},{"id":"samosa","label":{"en":"Samosa","pt":"Samosa"}}]}],"photo":"../assets/img/pratos-temp/spring-rolls-samosa-640.jpg"},"chips-starter":{"id":"chips-starter","name":"Chips","price":null,"desc":{"en":"Chips with sweet tomato or chilli sauce","pt":"Batatas fritas com molho doce de tomate ou de chilli"},"options":[{"id":"size","label":{"en":"Size","pt":"Tamanho"},"choices":[{"id":"small","label":{"en":"Small","pt":"Pequenas"},"price":5},{"id":"large","label":{"en":"Large","pt":"Grandes"},"price":10}]}],"photo":"../assets/img/pratos-temp/chips-starter-640.jpg"},"potato-soup":{"id":"potato-soup","name":"Potato Soup","price":6,"desc":{"en":"With chorizo and plain toast","pt":"Com chouriço e pão torrado"},"options":[],"photo":"../assets/img/pratos-temp/potato-soup-640.jpg"},"tom-yum-prawns":{"id":"tom-yum-prawns","name":"Tom Yum Prawns","price":8,"desc":{"en":"Clear spicy seafood broth","pt":"Caldo de marisco picante e límpido"},"options":[],"photo":"../assets/img/pratos-temp/tom-yum-prawns-640.jpg"},"grilled-fish":{"id":"grilled-fish","name":"Grilled Fish","price":18,"desc":{"en":"Fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad","pt":"Filete de peixe com molho de limão e manteiga, batatas assadas com alecrim e salada verde"},"options":[],"photo":"../assets/img/pratos-temp/grilled-fish-640.jpg"},"steak-bitoque":{"id":"steak-bitoque","name":"Steak (Bitoque)","price":19,"desc":{"en":"Porterhouse steak with chips, salad and a fried egg","pt":"Bife porterhouse com batatas fritas, salada e ovo estrelado"},"options":[],"photo":"../assets/img/pratos-temp/steak-bitoque-640.jpg"},"grilled-chicken":{"id":"grilled-chicken","name":"Grilled Chicken","price":15,"desc":{"en":"Served with roast potato and salad","pt":"Servido com batata assada e salada"},"options":[],"photo":"../assets/img/pratos-temp/grilled-chicken-640.jpg"},"grilled-pork-belly":{"id":"grilled-pork-belly","name":"Grilled Pork Belly","price":15,"desc":{"en":"Served with roast potato and salad","pt":"Servida com batata assada e salada"},"options":[],"photo":"../assets/img/pratos-temp/grilled-pork-belly-640.jpg"},"saute-prawns":{"id":"saute-prawns","name":"Sauté Prawns","price":18,"desc":{"en":"Prawns served with green salad and garlic bread","pt":"Gambas servidas com salada verde e pão de alho"},"options":[],"photo":"../assets/img/pratos-temp/saute-prawns-640.jpg"},"satay-main":{"id":"satay-main","name":"Satay (Main Course)","price":12,"desc":{"en":"6 satay sticks served with steamed rice and chilli","pt":"6 espetadas satay servidas com arroz branco e chilli"},"options":[{"id":"meat","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}},{"id":"pork","label":{"en":"Pork","pt":"Porco"}}]}],"photo":"../assets/img/pratos-temp/satay-main-640.jpg"},"chicken-curry":{"id":"chicken-curry","name":"Chicken Curry","price":15,"desc":{"en":"Served with steamed rice and salad","pt":"Servido com arroz branco e salada"},"options":[],"photo":"../assets/img/pratos-temp/chicken-curry-640.jpg"},"spaghetti":{"id":"spaghetti","name":"Spaghetti","price":15,"desc":{"en":"Bolognese or carbonara, with garlic bread","pt":"À bolonhesa ou à carbonara, com pão de alho"},"options":[{"id":"sauce","label":{"en":"Sauce","pt":"Molho"},"choices":[{"id":"bolognaise","label":{"en":"Bolognaise","pt":"Bolonhesa"}},{"id":"carbonara","label":{"en":"Carbonara","pt":"Carbonara"}}]}],"photo":"../assets/img/pratos-temp/spaghetti-640.jpg"},"mie-goreng":{"id":"mie-goreng","name":"Mie Goreng","price":10,"desc":{"en":"Fried noodles with chicken, sausage or prawns, or mixed","pt":"Massa salteada (noodles) com frango, salsicha ou gambas, ou mista"},"options":[{"id":"with","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}},{"id":"sausage","label":{"en":"Sausage","pt":"Salsicha"}},{"id":"prawns","label":{"en":"Prawns","pt":"Gambas"}},{"id":"mix","label":{"en":"Mix","pt":"Mista"}}]}],"photo":"../assets/img/pratos-temp/mie-goreng-640.jpg"},"lauhata-special-fried-rice":{"id":"lauhata-special-fried-rice","name":"Lauhata Special Fried Rice","price":10,"desc":{"en":"Chicken, sausage, prawns and egg","pt":"Frango, salsicha, gambas e ovo"},"options":[],"photo":"../assets/img/pratos-temp/lauhata-special-fried-rice-640.jpg"},"grilled-burger":{"id":"grilled-burger","name":"Grilled Burger","price":12,"desc":{"en":"With lettuce, tomato, onion and cheese, and French fries","pt":"Alface, tomate, cebola e queijo, servido com batatas fritas"},"options":[{"id":"meat","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"beef","label":{"en":"Beef","pt":"Vaca"}},{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}}]}],"photo":"../assets/img/pratos-temp/grilled-burger-640.jpg"},"club-sandwich":{"id":"club-sandwich","name":"Club Sandwich","price":10,"desc":{"en":"Lettuce, tomato, chicken, bacon and egg, with French fries","pt":"Alface, tomate, frango, bacon e ovo, com batatas fritas"},"options":[{"id":"bread","label":{"en":"Bread","pt":"Pão"},"choices":[{"id":"toasted","label":{"en":"Toasted","pt":"Torrado"}},{"id":"plain","label":{"en":"Plain","pt":"Simples"}}]}],"photo":"../assets/img/pratos-temp/club-sandwich-640.jpg"},"vegetarian-fried-rice":{"id":"vegetarian-fried-rice","name":"Vegetarian Fried Rice","price":8,"desc":{"en":"Served with fried egg and green salad","pt":"Servido com ovo frito e salada verde"},"options":[],"photo":"../assets/img/pratos-temp/vegetarian-fried-rice-640.jpg"},"spaghetti-pesto":{"id":"spaghetti-pesto","name":"Spaghetti Pesto","price":8,"desc":{"en":"Served with garlic bread","pt":"Servido com pão de alho"},"options":[],"photo":"../assets/img/pratos-temp/spaghetti-pesto-640.jpg"},"vegetable-curry":{"id":"vegetable-curry","name":"Vegetable Curry","price":8,"desc":{"en":"Served with steamed rice and chapati","pt":"Servido com arroz branco e chapati"},"options":[],"photo":"../assets/img/pratos-temp/vegetable-curry-640.jpg"},"vegetarian-dhal-fry":{"id":"vegetarian-dhal-fry","name":"Vegetarian Dhal Fry","price":8,"desc":{"en":"Served with steamed rice and chapati","pt":"Servido com arroz branco e chapati"},"options":[],"photo":"../assets/img/pratos-temp/vegetarian-dhal-fry-640.jpg"},"stir-fry-vegetables":{"id":"stir-fry-vegetables","name":"Stir-fry Vegetables","price":6,"desc":{"en":"Local vegetables","pt":"Legumes locais"},"options":[],"photo":"../assets/img/pratos-temp/stir-fry-vegetables-640.jpg"},"sauteed-vegetables":{"id":"sauteed-vegetables","name":"Sauteed Vegetables","price":4,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/sauteed-vegetables-640.jpg"},"green-salad":{"id":"green-salad","name":"Green Salad","price":4,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/green-salad-640.jpg"},"chips-side":{"id":"chips-side","name":"Chips","price":null,"desc":null,"options":[{"id":"size","label":{"en":"Size","pt":"Tamanho"},"choices":[{"id":"small","label":{"en":"Small","pt":"Pequenas"},"price":5},{"id":"large","label":{"en":"Large","pt":"Grandes"},"price":10}]}],"photo":"../assets/img/pratos-temp/chips-side-640.jpg"},"spicy-potato-wedges":{"id":"spicy-potato-wedges","name":"Spicy Potato Wedges","price":5,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/spicy-potato-wedges-640.jpg"},"garlic-bread":{"id":"garlic-bread","name":"Garlic Bread","price":4,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/garlic-bread-640.jpg"},"steam-rice":{"id":"steam-rice","name":"Steam Rice","price":2,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/steam-rice-640.jpg"},"cheesecake":{"id":"cheesecake","name":"Cheesecake","price":5,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/cheesecake-640.jpg"},"orange-cake":{"id":"orange-cake","name":"Orange Cake","price":5,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/orange-cake-640.jpg"},"chocolate-mud-cake":{"id":"chocolate-mud-cake","name":"Chocolate Mud Cake","price":5,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/chocolate-mud-cake-640.jpg"},"red-velvet-cake":{"id":"red-velvet-cake","name":"Red Velvet Cake","price":5,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/red-velvet-cake-640.jpg"},"mixed-ice-cream":{"id":"mixed-ice-cream","name":"Mixed Ice Cream","price":4,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/mixed-ice-cream-640.jpg"},"fruit-platter":{"id":"fruit-platter","name":"Fruit Platter","price":5,"desc":null,"options":[],"photo":"../assets/img/pratos-temp/fruit-platter-640.jpg"},"pizza-margarita":{"id":"pizza-margarita","name":"Margarita","price":17,"desc":{"en":"Sliced tomato, feta and mozzarella","pt":"Tomate em fatias, feta e mozzarella"},"options":[],"photo":"../assets/img/pratos-temp/pizza-margarita-640.jpg"},"pizza-pepperoni":{"id":"pizza-pepperoni","name":"Pepperoni","price":20,"desc":{"en":"Onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella","pt":"Cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella"},"options":[],"photo":"../assets/img/pratos-temp/pizza-pepperoni-640.jpg"},"pizza-hawaiian":{"id":"pizza-hawaiian","name":"Hawaiian","price":20,"desc":{"en":"Ham, pineapple, feta and mozzarella","pt":"Fiambre, ananás, feta e mozzarella"},"options":[],"photo":"../assets/img/pratos-temp/pizza-hawaiian-640.jpg"},"pizza-spicy-chicken":{"id":"pizza-spicy-chicken","name":"Spicy Chicken","price":20,"desc":{"en":"Chicken, bacon, chilli, feta and mozzarella","pt":"Frango, bacon, chilli, feta e mozzarella"},"options":[],"photo":"../assets/img/pratos-temp/pizza-spicy-chicken-640.jpg"},"pizza-lauhata-seafood":{"id":"pizza-lauhata-seafood","name":"Lauhata Seafood","price":21,"desc":{"en":"Tuna, prawns, feta and mozzarella","pt":"Atum, gambas, feta e mozzarella"},"options":[],"photo":"../assets/img/pratos-temp/pizza-lauhata-seafood-640.jpg"},"pizza-meat-lover":{"id":"pizza-meat-lover","name":"Meat Lover","price":21,"desc":{"en":"Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella","pt":"Cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella"},"options":[],"photo":"../assets/img/pratos-temp/pizza-meat-lover-640.jpg"}};</script>
 <script src="../assets/js/picker.js" defer></script>
 
@@ -47,7 +47,7 @@
 <body class="has-hero">
 <div class="lh-intro" aria-hidden="true">
   <div class="intro-sky"><span class="intro-sun"></span><p class="intro-word"><span style="--i:0">L</span><span style="--i:1">a</span><span style="--i:2">u</span><span style="--i:3">h</span><span style="--i:4">a</span><span style="--i:5">t</span><span style="--i:6">a</span></p></div>
-  <div class="intro-sea"><span class="intro-glint"></span><p class="intro-sub">Beach Escape</p></div>
+  <div class="intro-sea"><span class="intro-glint"></span><span class="intro-ripple" style="--k:1"></span><span class="intro-ripple" style="--k:2"></span><span class="intro-ripple" style="--k:3"></span><p class="intro-sub">Beach Escape</p></div>
   <span class="intro-line"></span>
 </div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -77,6 +77,9 @@
     <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 20V8a4 4 0 0 1 4-4h1.5M9.5 4h3.2a2.3 2.3 0 0 1 2.3 2.3V8M7 11h10l-1 3H8zM9 17v1.5M12 17v2.5M15 17v1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5M3.5 10l3.3-.9-.9-3.3M20.5 14l-3.3.9.9 3.3M3.5 14l3.3.9-.9 3.3M20.5 10l-3.3-.9.9-3.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19.5V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5 4 12l-.5-2 7-.8L8 4.5 9.5 4l5.5 4.2 4.3-.6c1.1-.2 1.9.9 1.2 1.7l-.6.6-4.2 1.6 1.4 6.6-1.5.7-3.2-5.3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-nosmoke" viewBox="0 0 24 24"><path d="M3.5 15.5h12v3h-12zM15.5 15.5v3M19 15.5v3M18.5 12.5c0-1.4 1.5-2 1.5-3.5M16.5 12.5c0-1.6 1.7-2.2 1.7-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.6 5.6l12.8 12.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-glass" viewBox="0 0 24 24"><path d="M5 4.5h14l-7 8zM12 12.5V19M8 19.5h8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -109,26 +112,26 @@
   </div>
       <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog" aria-label="Open your order"><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-count" data-cart-count hidden>0</span></button>
       <a class="btn btn-terra btn-sm book-btn" href="../contact/" data-book-open aria-haspopup="dialog"><span class="bk-long">Make a Reservation</span><span class="bk-short">Reserve</span></a>
-      <button class="nav-toggle sm-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="sm-toggle-t">Menu</span><span class="sm-bars" aria-hidden="true"><i></i><i></i></span></button>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="nav-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
     </div>
   </div>
 </header>
-<dialog class="mobile-nav sm-menu" id="mobile-nav" aria-label="Main" data-mobile-nav>
-  <div class="sm-layers" aria-hidden="true"><i></i><i></i></div>
-  <div class="sm-panel" data-sm-panel>
-    <div class="sm-top">
-      <button class="sm-close" type="button" aria-label="Close menu" data-nav-close><span class="sm-toggle-t">Close</span><span class="sm-bars is-x" aria-hidden="true"><i></i><i></i></span></button>
+<dialog class="mobile-nav" id="mobile-nav" aria-label="Main" data-mobile-nav>
+  <div class="mn-panel">
+    <div class="mn-top">
+      <span class="mn-title">Menu</span>
+      <button class="mn-close icon-btn" type="button" aria-label="Close menu" data-nav-close><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
     </div>
-    <nav class="mobile-nav-links sm-links" aria-label="Main">
-      <ol class="sm-list"><li><a class="sm-link" href="../restaurant/" aria-current="page"><span class="sm-mask"><span class="sm-label">Restaurant</span></span></a></li><li><a class="sm-link" href="../stay/"><span class="sm-mask"><span class="sm-label">Hotel</span></span></a></li><li><a class="sm-link" href="../events/"><span class="sm-mask"><span class="sm-label">Experiences</span></span></a></li><li><a class="sm-link" href="../gallery/"><span class="sm-mask"><span class="sm-label">Gallery</span></span></a></li><li><a class="sm-link" href="../contact/"><span class="sm-mask"><span class="sm-label">Contact</span></span></a></li></ol>
+    <nav class="mn-links" aria-label="Main">
+      <ul><li><a href="../restaurant/" aria-current="page">Restaurant</a></li><li><a href="../stay/">Hotel</a></li><li><a href="../events/">Experiences</a></li><li><a href="../gallery/">Gallery</a></li><li><a href="../contact/">Contact</a></li></ul>
     </nav>
-    <ul class="sm-sub" data-sm-extra>
+    <ul class="mn-sub">
       <li><a href="../about/">Our Story</a></li>
       <li><a href="../discover-liquica/">Discover Liquiçá</a></li>
       <li><a href="../contact/#faq">FAQ</a></li>
     </ul>
-    <div class="mobile-nav-cta" data-sm-extra>
-      <a class="btn btn-dark" href="../contact/" data-book-open="table">Reserve a Table<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+    <div class="mn-cta">
+      <a class="btn btn-terra" href="../contact/" data-book-open="table">Reserve a Table<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
       <a class="btn btn-outline" href="../contact/" data-book-open="room">Request a Room<svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg></a>
       <div class="lang lang-center" role="group" aria-label="Ler em português">
     <span class="lang-opt is-on" aria-current="true">EN</span>
@@ -186,663 +189,917 @@
       <p class="sr-only" role="status" aria-live="polite" data-menu-status></p>
       <section class="menu-cat" id="cat-breakfast" data-cat="breakfast" aria-labelledby="cat-breakfast-title">
       <header class="menu-cat-head"><h3 id="cat-breakfast-title">Breakfast</h3><p>Served with chilled juice. Breakfast is served from 8:00 am to 10:00 am.</p></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="choice of eggs scrambled, fried or sunny-side up, with toast and butter mexidos, fritos ou estrelados, com torradas e manteiga breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/choice-of-eggs-640.jpg" srcset="../assets/img/pratos-temp/choice-of-eggs-640.jpg 640w, ../assets/img/pratos-temp/choice-of-eggs-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Choice of Eggs (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Choice of Eggs</h3>
-        <p class="dish-desc">Scrambled, fried or sunny-side up, with toast and butter</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="choice-of-eggs" aria-label="Choose: Choice of Eggs"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="choice of eggs scrambled, fried or sunny-side up, with toast and butter mexidos, fritos ou estrelados, com torradas e manteiga breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/choice-of-eggs-640.jpg" srcset="../assets/img/pratos-temp/choice-of-eggs-640.jpg 640w, ../assets/img/pratos-temp/choice-of-eggs-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Choice of Eggs (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Choice of Eggs</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="egg and chicken sausage on toast fried or scrambled eggs, with tomato, olives and feta ovos fritos ou mexidos, com tomate, azeitona e feta breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/egg-chicken-sausage-toast-640.jpg" srcset="../assets/img/pratos-temp/egg-chicken-sausage-toast-640.jpg 640w, ../assets/img/pratos-temp/egg-chicken-sausage-toast-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Egg and Chicken Sausage on Toast (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Egg and Chicken Sausage on Toast</h3>
-        <p class="dish-desc">Fried or scrambled eggs, with tomato, olives and feta</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="egg-chicken-sausage-toast" aria-label="Choose: Egg and Chicken Sausage on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Scrambled, fried or sunny-side up, with toast and butter</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="choice-of-eggs" aria-label="Choose: Choice of Eggs"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="egg and chicken sausage on toast fried or scrambled eggs, with tomato, olives and feta ovos fritos ou mexidos, com tomate, azeitona e feta breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/egg-chicken-sausage-toast-640.jpg" srcset="../assets/img/pratos-temp/egg-chicken-sausage-toast-640.jpg 640w, ../assets/img/pratos-temp/egg-chicken-sausage-toast-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Egg and Chicken Sausage on Toast (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Egg and Chicken Sausage on Toast</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="omelette plain, ham and cheese, or spanish simples, de fiambre e queijo ou espanhola breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/omelette-640.jpg" srcset="../assets/img/pratos-temp/omelette-640.jpg 640w, ../assets/img/pratos-temp/omelette-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Omelette (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Omelette</h3>
-        <p class="dish-desc">Plain, ham and cheese, or Spanish</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="omelette" aria-label="Choose: Omelette"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Fried or scrambled eggs, with tomato, olives and feta</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="egg-chicken-sausage-toast" aria-label="Choose: Egg and Chicken Sausage on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="omelette plain, ham and cheese, or spanish simples, de fiambre e queijo ou espanhola breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/omelette-640.jpg" srcset="../assets/img/pratos-temp/omelette-640.jpg 640w, ../assets/img/pratos-temp/omelette-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Omelette (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Omelette</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="baked beans on toast baked beans served on toasted bread feijao cozido (baked beans) sobre pao torrado breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/baked-beans-toast-640.jpg" srcset="../assets/img/pratos-temp/baked-beans-toast-640.jpg 640w, ../assets/img/pratos-temp/baked-beans-toast-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Baked Beans on Toast (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Baked Beans on Toast</h3>
-        <p class="dish-desc">Baked beans served on toasted bread</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="baked-beans-toast" aria-label="Add: Baked Beans on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Plain, ham and cheese, or Spanish</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="omelette" aria-label="Choose: Omelette"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="baked beans on toast baked beans served on toasted bread feijao cozido (baked beans) sobre pao torrado breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/baked-beans-toast-640.jpg" srcset="../assets/img/pratos-temp/baked-beans-toast-640.jpg 640w, ../assets/img/pratos-temp/baked-beans-toast-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Baked Beans on Toast (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Baked Beans on Toast</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="french toast served with honey and cinnamon servido com mel e canela breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/french-toast-640.jpg" srcset="../assets/img/pratos-temp/french-toast-640.jpg 640w, ../assets/img/pratos-temp/french-toast-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="French Toast (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>French Toast</h3>
-        <p class="dish-desc">Served with honey and cinnamon</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="french-toast" aria-label="Add: French Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Baked beans served on toasted bread</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="baked-beans-toast" aria-label="Add: Baked Beans on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="french toast served with honey and cinnamon servido com mel e canela breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/french-toast-640.jpg" srcset="../assets/img/pratos-temp/french-toast-640.jpg 640w, ../assets/img/pratos-temp/french-toast-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="French Toast (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">French Toast</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="pancakes plain, or with banana and maple syrup simples ou com banana e xarope de acer breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pancakes-640.jpg" alt="Pancakes (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Pancakes</h3>
-        <p class="dish-desc">Plain, or with banana and maple syrup</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pancakes" aria-label="Choose: Pancakes"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Served with honey and cinnamon</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="french-toast" aria-label="Add: French Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="pancakes plain, or with banana and maple syrup simples ou com banana e xarope de acer breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pancakes-640.jpg" alt="Pancakes (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Pancakes</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="cereal choices chocolate cereal or cornflakes, with hot or cold milk cereais de chocolate ou flocos de milho, servidos com leite quente ou frio breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/cereal-choices-640.jpg" srcset="../assets/img/pratos-temp/cereal-choices-640.jpg 640w, ../assets/img/pratos-temp/cereal-choices-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Cereal Choices (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Cereal Choices</h3>
-        <p class="dish-desc">Chocolate cereal or cornflakes, with hot or cold milk</p>
-        <div class="dish-foot">
-          <span class="price"><b>$4</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="cereal-choices" aria-label="Choose: Cereal Choices"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Plain, or with banana and maple syrup</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pancakes" aria-label="Choose: Pancakes"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="cereal choices chocolate cereal or cornflakes, with hot or cold milk cereais de chocolate ou flocos de milho, servidos com leite quente ou frio breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/cereal-choices-640.jpg" srcset="../assets/img/pratos-temp/cereal-choices-640.jpg 640w, ../assets/img/pratos-temp/cereal-choices-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Cereal Choices (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Cereal Choices</button></h3>
+        <p class="dc-price"><b class="">$4</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="seasonal fruit salad selection of fruits in season selecao de frutas da epoca breakfast pequeno-almoco">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/seasonal-fruit-salad-640.jpg" srcset="../assets/img/pratos-temp/seasonal-fruit-salad-640.jpg 640w, ../assets/img/pratos-temp/seasonal-fruit-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Seasonal Fruit Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Breakfast</p>
-        <h3>Seasonal Fruit Salad</h3>
-        <p class="dish-desc">Selection of fruits in season</p>
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="seasonal-fruit-salad" aria-label="Add: Seasonal Fruit Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$4</b></p>
+        
+        <p class="dd-desc">Chocolate cereal or cornflakes, with hot or cold milk</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="cereal-choices" aria-label="Choose: Cereal Choices"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="seasonal fruit salad selection of fruits in season selecao de frutas da epoca breakfast pequeno-almoco">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/seasonal-fruit-salad-640.jpg" srcset="../assets/img/pratos-temp/seasonal-fruit-salad-640.jpg 640w, ../assets/img/pratos-temp/seasonal-fruit-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Seasonal Fruit Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Seasonal Fruit Salad</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
+        
+        <p class="dd-desc">Selection of fruits in season</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="seasonal-fruit-salad" aria-label="Add: Seasonal Fruit Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-salad" data-cat="salad" aria-labelledby="cat-salad-title">
       <header class="menu-cat-head"><h3 id="cat-salad-title">Salad</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="caesar salad seared herb chicken with lettuce, boiled egg, pork bacon, crouton &amp; caesar dressing frango selado com ervas, alface, ovo cozido, bacon de porco, croutons e molho caesar salad saladas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/caesar-salad-640.jpg" srcset="../assets/img/pratos-temp/caesar-salad-640.jpg 640w, ../assets/img/pratos-temp/caesar-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Caesar Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Salad</p>
-        <h3>Caesar Salad</h3>
-        <p class="dish-desc">Seared herb chicken with lettuce, boiled egg, pork bacon, crouton &amp; Caesar dressing</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="caesar-salad" aria-label="Add: Caesar Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="caesar salad seared herb chicken with lettuce, boiled egg, pork bacon, crouton &amp; caesar dressing frango selado com ervas, alface, ovo cozido, bacon de porco, croutons e molho caesar salad saladas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/caesar-salad-640.jpg" srcset="../assets/img/pratos-temp/caesar-salad-640.jpg 640w, ../assets/img/pratos-temp/caesar-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Caesar Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Caesar Salad</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="greek salad feta, olives, tomato and cucumber over mixed leaves, with lauhata dressing feta, azeitonas, tomate e pepino sobre salada variada, com molho lauhata salad saladas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/greek-salad-640.jpg" srcset="../assets/img/pratos-temp/greek-salad-640.jpg 640w, ../assets/img/pratos-temp/greek-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Greek Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Salad</p>
-        <h3>Greek Salad</h3>
-        <p class="dish-desc">Feta, olives, tomato and cucumber over mixed leaves, with Lauhata dressing</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="greek-salad" aria-label="Add: Greek Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Seared herb chicken with lettuce, boiled egg, pork bacon, crouton &amp; Caesar dressing</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="caesar-salad" aria-label="Add: Caesar Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="greek salad feta, olives, tomato and cucumber over mixed leaves, with lauhata dressing feta, azeitonas, tomate e pepino sobre salada variada, com molho lauhata salad saladas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/greek-salad-640.jpg" srcset="../assets/img/pratos-temp/greek-salad-640.jpg 640w, ../assets/img/pratos-temp/greek-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Greek Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Greek Salad</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="tuna salad tuna, lettuce, tomato, onion and cucumber, with lauhata dressing atum, alface, tomate, cebola e pepino com molho lauhata salad saladas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/tuna-salad-640.jpg" srcset="../assets/img/pratos-temp/tuna-salad-640.jpg 640w, ../assets/img/pratos-temp/tuna-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Tuna Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Salad</p>
-        <h3>Tuna Salad</h3>
-        <p class="dish-desc">Tuna, lettuce, tomato, onion and cucumber, with Lauhata dressing</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="tuna-salad" aria-label="Add: Tuna Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Feta, olives, tomato and cucumber over mixed leaves, with Lauhata dressing</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="greek-salad" aria-label="Add: Greek Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="tuna salad tuna, lettuce, tomato, onion and cucumber, with lauhata dressing atum, alface, tomate, cebola e pepino com molho lauhata salad saladas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/tuna-salad-640.jpg" srcset="../assets/img/pratos-temp/tuna-salad-640.jpg 640w, ../assets/img/pratos-temp/tuna-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Tuna Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Tuna Salad</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Tuna, lettuce, tomato, onion and cucumber, with Lauhata dressing</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="tuna-salad" aria-label="Add: Tuna Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-starters" data-cat="starters" aria-labelledby="cat-starters-title">
       <header class="menu-cat-head"><h3 id="cat-starters-title">Starters</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="clams &amp; garlic bread clams cooked in white wine and garlic, with coriander leaves ameijoas cozinhadas em vinho branco e alho, com folhas de coentros starters entradas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/clams-garlic-bread-640.jpg" alt="Clams &amp; Garlic Bread (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Starters</p>
-        <h3>Clams &amp; Garlic Bread</h3>
-        <p class="dish-desc">Clams cooked in white wine and garlic, with coriander leaves</p>
-        <div class="dish-foot">
-          <span class="price"><b>$10</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="clams-garlic-bread" aria-label="Add: Clams &amp; Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="clams &amp; garlic bread clams cooked in white wine and garlic, with coriander leaves ameijoas cozinhadas em vinho branco e alho, com folhas de coentros starters entradas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/clams-garlic-bread-640.jpg" alt="Clams &amp; Garlic Bread (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Clams &amp; Garlic Bread</button></h3>
+        <p class="dc-price"><b class="">$10</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="calamari rings calamari rings with a chilli mayonnaise aneis de lula com maionese de chilli starters entradas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/calamari-rings-640.jpg" srcset="../assets/img/pratos-temp/calamari-rings-640.jpg 640w, ../assets/img/pratos-temp/calamari-rings-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Calamari Rings (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Starters</p>
-        <h3>Calamari Rings</h3>
-        <p class="dish-desc">Calamari rings with a chilli mayonnaise</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="calamari-rings" aria-label="Add: Calamari Rings"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$10</b></p>
+        
+        <p class="dd-desc">Clams cooked in white wine and garlic, with coriander leaves</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="clams-garlic-bread" aria-label="Add: Clams &amp; Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="calamari rings calamari rings with a chilli mayonnaise aneis de lula com maionese de chilli starters entradas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/calamari-rings-640.jpg" srcset="../assets/img/pratos-temp/calamari-rings-640.jpg 640w, ../assets/img/pratos-temp/calamari-rings-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Calamari Rings (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Calamari Rings</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="satay (starter) four satay skewers with tamarind sauce quatro espetadas de satay com molho de tamarindo starters entradas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/satay-starter-640.jpg" srcset="../assets/img/pratos-temp/satay-starter-640.jpg 640w, ../assets/img/pratos-temp/satay-starter-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Satay (Starter) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Starters</p>
-        <h3>Satay (Starter)</h3>
-        <p class="dish-desc">Four satay skewers with tamarind sauce</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="satay-starter" aria-label="Choose: Satay (Starter)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Calamari rings with a chilli mayonnaise</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="calamari-rings" aria-label="Add: Calamari Rings"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="satay (starter) four satay skewers with tamarind sauce quatro espetadas de satay com molho de tamarindo starters entradas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/satay-starter-640.jpg" srcset="../assets/img/pratos-temp/satay-starter-640.jpg 640w, ../assets/img/pratos-temp/satay-starter-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Satay (Starter) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Satay (Starter)</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="spring rolls or samosa eight pieces, with sweet chilli sauce oito pecas, com molho de chilli doce starters entradas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spring-rolls-samosa-640.jpg" srcset="../assets/img/pratos-temp/spring-rolls-samosa-640.jpg 640w, ../assets/img/pratos-temp/spring-rolls-samosa-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spring Rolls or Samosa (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Starters</p>
-        <h3>Spring Rolls or Samosa</h3>
-        <p class="dish-desc">Eight pieces, with sweet chilli sauce</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="spring-rolls-samosa" aria-label="Choose: Spring Rolls or Samosa"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Four satay skewers with tamarind sauce</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="satay-starter" aria-label="Choose: Satay (Starter)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="spring rolls or samosa eight pieces, with sweet chilli sauce oito pecas, com molho de chilli doce starters entradas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spring-rolls-samosa-640.jpg" srcset="../assets/img/pratos-temp/spring-rolls-samosa-640.jpg 640w, ../assets/img/pratos-temp/spring-rolls-samosa-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spring Rolls or Samosa (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Spring Rolls or Samosa</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="chips chips with sweet tomato or chilli sauce batatas fritas com molho doce de tomate ou de chilli starters entradas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chips-starter-640.jpg" srcset="../assets/img/pratos-temp/chips-starter-640.jpg 640w, ../assets/img/pratos-temp/chips-starter-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chips (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Starters</p>
-        <h3>Chips</h3>
-        <p class="dish-desc">Chips with sweet tomato or chilli sauce</p>
-        <div class="dish-foot">
-          <span class="price">Small <b>$5</b> · Large <b>$10</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="chips-starter" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Eight pieces, with sweet chilli sauce</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="spring-rolls-samosa" aria-label="Choose: Spring Rolls or Samosa"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="chips chips with sweet tomato or chilli sauce batatas fritas com molho doce de tomate ou de chilli starters entradas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chips-starter-640.jpg" srcset="../assets/img/pratos-temp/chips-starter-640.jpg 640w, ../assets/img/pratos-temp/chips-starter-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chips (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Chips</button></h3>
+        <p class="dc-price"><b class="">$5–$10</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price">Small <b>$5</b> · Large <b>$10</b></p>
+        
+        <p class="dd-desc">Chips with sweet tomato or chilli sauce</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="chips-starter" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-soup" data-cat="soup" aria-labelledby="cat-soup-title">
       <header class="menu-cat-head"><h3 id="cat-soup-title">Soup</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="potato soup with chorizo and plain toast com chourico e pao torrado soup sopas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/potato-soup-640.jpg" srcset="../assets/img/pratos-temp/potato-soup-640.jpg 640w, ../assets/img/pratos-temp/potato-soup-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Potato Soup (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Soup</p>
-        <h3>Potato Soup</h3>
-        <p class="dish-desc">With chorizo and plain toast</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="potato-soup" aria-label="Add: Potato Soup"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="potato soup with chorizo and plain toast com chourico e pao torrado soup sopas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/potato-soup-640.jpg" srcset="../assets/img/pratos-temp/potato-soup-640.jpg 640w, ../assets/img/pratos-temp/potato-soup-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Potato Soup (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Potato Soup</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="tom yum prawns clear spicy seafood broth caldo de marisco picante e limpido soup sopas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/tom-yum-prawns-640.jpg" srcset="../assets/img/pratos-temp/tom-yum-prawns-640.jpg 640w, ../assets/img/pratos-temp/tom-yum-prawns-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Tom Yum Prawns (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Soup</p>
-        <h3>Tom Yum Prawns</h3>
-        <p class="dish-desc">Clear spicy seafood broth</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="tom-yum-prawns" aria-label="Add: Tom Yum Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">With chorizo and plain toast</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="potato-soup" aria-label="Add: Potato Soup"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="tom yum prawns clear spicy seafood broth caldo de marisco picante e limpido soup sopas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/tom-yum-prawns-640.jpg" srcset="../assets/img/pratos-temp/tom-yum-prawns-640.jpg 640w, ../assets/img/pratos-temp/tom-yum-prawns-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Tom Yum Prawns (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Tom Yum Prawns</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Clear spicy seafood broth</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="tom-yum-prawns" aria-label="Add: Tom Yum Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-main" data-cat="main" aria-labelledby="cat-main-title">
       <header class="menu-cat-head"><h3 id="cat-main-title">Main Course</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="grilled fish fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad filete de peixe com molho de limao e manteiga, batatas assadas com alecrim e salada verde main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-fish-640.jpg" srcset="../assets/img/pratos-temp/grilled-fish-640.jpg 640w, ../assets/img/pratos-temp/grilled-fish-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Grilled Fish (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Grilled Fish</h3>
-        <p class="dish-desc">Fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad</p>
-        <div class="dish-foot">
-          <span class="price"><b>$18</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="grilled-fish" aria-label="Add: Grilled Fish"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="grilled fish fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad filete de peixe com molho de limao e manteiga, batatas assadas com alecrim e salada verde main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-fish-640.jpg" srcset="../assets/img/pratos-temp/grilled-fish-640.jpg 640w, ../assets/img/pratos-temp/grilled-fish-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Grilled Fish (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Grilled Fish</button></h3>
+        <p class="dc-price"><b class="">$18</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="steak (bitoque) porterhouse steak with chips, salad and a fried egg bife porterhouse com batatas fritas, salada e ovo estrelado main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/steak-bitoque-640.jpg" srcset="../assets/img/pratos-temp/steak-bitoque-640.jpg 640w, ../assets/img/pratos-temp/steak-bitoque-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Steak (Bitoque) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Steak (Bitoque)</h3>
-        <p class="dish-desc">Porterhouse steak with chips, salad and a fried egg</p>
-        <div class="dish-foot">
-          <span class="price"><b>$19</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="steak-bitoque" aria-label="Add: Steak (Bitoque)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$18</b></p>
+        
+        <p class="dd-desc">Fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="grilled-fish" aria-label="Add: Grilled Fish"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="steak (bitoque) porterhouse steak with chips, salad and a fried egg bife porterhouse com batatas fritas, salada e ovo estrelado main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/steak-bitoque-640.jpg" srcset="../assets/img/pratos-temp/steak-bitoque-640.jpg 640w, ../assets/img/pratos-temp/steak-bitoque-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Steak (Bitoque) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Steak (Bitoque)</button></h3>
+        <p class="dc-price"><b class="">$19</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="grilled chicken served with roast potato and salad servido com batata assada e salada main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-chicken-640.jpg" srcset="../assets/img/pratos-temp/grilled-chicken-640.jpg 640w, ../assets/img/pratos-temp/grilled-chicken-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Grilled Chicken (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Grilled Chicken</h3>
-        <p class="dish-desc">Served with roast potato and salad</p>
-        <div class="dish-foot">
-          <span class="price"><b>$15</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="grilled-chicken" aria-label="Add: Grilled Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$19</b></p>
+        
+        <p class="dd-desc">Porterhouse steak with chips, salad and a fried egg</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="steak-bitoque" aria-label="Add: Steak (Bitoque)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="grilled chicken served with roast potato and salad servido com batata assada e salada main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-chicken-640.jpg" srcset="../assets/img/pratos-temp/grilled-chicken-640.jpg 640w, ../assets/img/pratos-temp/grilled-chicken-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Grilled Chicken (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Grilled Chicken</button></h3>
+        <p class="dc-price"><b class="">$15</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="grilled pork belly served with roast potato and salad servida com batata assada e salada main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-pork-belly-640.jpg" srcset="../assets/img/pratos-temp/grilled-pork-belly-640.jpg 640w, ../assets/img/pratos-temp/grilled-pork-belly-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Grilled Pork Belly (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Grilled Pork Belly</h3>
-        <p class="dish-desc">Served with roast potato and salad</p>
-        <div class="dish-foot">
-          <span class="price"><b>$15</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="grilled-pork-belly" aria-label="Add: Grilled Pork Belly"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$15</b></p>
+        
+        <p class="dd-desc">Served with roast potato and salad</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="grilled-chicken" aria-label="Add: Grilled Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="grilled pork belly served with roast potato and salad servida com batata assada e salada main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-pork-belly-640.jpg" srcset="../assets/img/pratos-temp/grilled-pork-belly-640.jpg 640w, ../assets/img/pratos-temp/grilled-pork-belly-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Grilled Pork Belly (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Grilled Pork Belly</button></h3>
+        <p class="dc-price"><b class="">$15</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="saute prawns prawns served with green salad and garlic bread gambas servidas com salada verde e pao de alho main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/saute-prawns-640.jpg" srcset="../assets/img/pratos-temp/saute-prawns-640.jpg 640w, ../assets/img/pratos-temp/saute-prawns-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Sauté Prawns (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Sauté Prawns</h3>
-        <p class="dish-desc">Prawns served with green salad and garlic bread</p>
-        <div class="dish-foot">
-          <span class="price"><b>$18</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="saute-prawns" aria-label="Add: Sauté Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$15</b></p>
+        
+        <p class="dd-desc">Served with roast potato and salad</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="grilled-pork-belly" aria-label="Add: Grilled Pork Belly"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="saute prawns prawns served with green salad and garlic bread gambas servidas com salada verde e pao de alho main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/saute-prawns-640.jpg" srcset="../assets/img/pratos-temp/saute-prawns-640.jpg 640w, ../assets/img/pratos-temp/saute-prawns-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Sauté Prawns (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Sauté Prawns</button></h3>
+        <p class="dc-price"><b class="">$18</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="satay (main course) 6 satay sticks served with steamed rice and chilli 6 espetadas satay servidas com arroz branco e chilli main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/satay-main-640.jpg" srcset="../assets/img/pratos-temp/satay-main-640.jpg 640w, ../assets/img/pratos-temp/satay-main-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Satay (Main Course) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Satay (Main Course)</h3>
-        <p class="dish-desc">6 satay sticks served with steamed rice and chilli</p>
-        <div class="dish-foot">
-          <span class="price"><b>$12</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="satay-main" aria-label="Choose: Satay (Main Course)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$18</b></p>
+        
+        <p class="dd-desc">Prawns served with green salad and garlic bread</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="saute-prawns" aria-label="Add: Sauté Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="satay (main course) 6 satay sticks served with steamed rice and chilli 6 espetadas satay servidas com arroz branco e chilli main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/satay-main-640.jpg" srcset="../assets/img/pratos-temp/satay-main-640.jpg 640w, ../assets/img/pratos-temp/satay-main-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Satay (Main Course) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Satay (Main Course)</button></h3>
+        <p class="dc-price"><b class="">$12</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="chicken curry served with steamed rice and salad servido com arroz branco e salada main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chicken-curry-640.jpg" srcset="../assets/img/pratos-temp/chicken-curry-640.jpg 640w, ../assets/img/pratos-temp/chicken-curry-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chicken Curry (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Chicken Curry</h3>
-        <p class="dish-desc">Served with steamed rice and salad</p>
-        <div class="dish-foot">
-          <span class="price"><b>$15</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="chicken-curry" aria-label="Add: Chicken Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$12</b></p>
+        
+        <p class="dd-desc">6 satay sticks served with steamed rice and chilli</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="satay-main" aria-label="Choose: Satay (Main Course)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="chicken curry served with steamed rice and salad servido com arroz branco e salada main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chicken-curry-640.jpg" srcset="../assets/img/pratos-temp/chicken-curry-640.jpg 640w, ../assets/img/pratos-temp/chicken-curry-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chicken Curry (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Chicken Curry</button></h3>
+        <p class="dc-price"><b class="">$15</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="spaghetti bolognese or carbonara, with garlic bread a bolonhesa ou a carbonara, com pao de alho main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spaghetti-640.jpg" srcset="../assets/img/pratos-temp/spaghetti-640.jpg 640w, ../assets/img/pratos-temp/spaghetti-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spaghetti (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Spaghetti</h3>
-        <p class="dish-desc">Bolognese or carbonara, with garlic bread</p>
-        <div class="dish-foot">
-          <span class="price"><b>$15</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="spaghetti" aria-label="Choose: Spaghetti"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$15</b></p>
+        
+        <p class="dd-desc">Served with steamed rice and salad</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="chicken-curry" aria-label="Add: Chicken Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="spaghetti bolognese or carbonara, with garlic bread a bolonhesa ou a carbonara, com pao de alho main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spaghetti-640.jpg" srcset="../assets/img/pratos-temp/spaghetti-640.jpg 640w, ../assets/img/pratos-temp/spaghetti-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spaghetti (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Spaghetti</button></h3>
+        <p class="dc-price"><b class="">$15</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="mie goreng fried noodles with chicken, sausage or prawns, or mixed massa salteada (noodles) com frango, salsicha ou gambas, ou mista main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/mie-goreng-640.jpg" srcset="../assets/img/pratos-temp/mie-goreng-640.jpg 640w, ../assets/img/pratos-temp/mie-goreng-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Mie Goreng (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Mie Goreng</h3>
-        <p class="dish-desc">Fried noodles with chicken, sausage or prawns, or mixed</p>
-        <div class="dish-foot">
-          <span class="price"><b>$10</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="mie-goreng" aria-label="Choose: Mie Goreng"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$15</b></p>
+        
+        <p class="dd-desc">Bolognese or carbonara, with garlic bread</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="spaghetti" aria-label="Choose: Spaghetti"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="mie goreng fried noodles with chicken, sausage or prawns, or mixed massa salteada (noodles) com frango, salsicha ou gambas, ou mista main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/mie-goreng-640.jpg" srcset="../assets/img/pratos-temp/mie-goreng-640.jpg 640w, ../assets/img/pratos-temp/mie-goreng-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Mie Goreng (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Mie Goreng</button></h3>
+        <p class="dc-price"><b class="">$10</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="lauhata special fried rice chicken, sausage, prawns and egg frango, salsicha, gambas e ovo main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/lauhata-special-fried-rice-640.jpg" srcset="../assets/img/pratos-temp/lauhata-special-fried-rice-640.jpg 640w, ../assets/img/pratos-temp/lauhata-special-fried-rice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Lauhata Special Fried Rice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Lauhata Special Fried Rice</h3>
-        <p class="dish-desc">Chicken, sausage, prawns and egg</p>
-        <div class="dish-foot">
-          <span class="price"><b>$10</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="lauhata-special-fried-rice" aria-label="Add: Lauhata Special Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$10</b></p>
+        
+        <p class="dd-desc">Fried noodles with chicken, sausage or prawns, or mixed</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="mie-goreng" aria-label="Choose: Mie Goreng"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="lauhata special fried rice chicken, sausage, prawns and egg frango, salsicha, gambas e ovo main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/lauhata-special-fried-rice-640.jpg" srcset="../assets/img/pratos-temp/lauhata-special-fried-rice-640.jpg 640w, ../assets/img/pratos-temp/lauhata-special-fried-rice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Lauhata Special Fried Rice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Lauhata Special Fried Rice</button></h3>
+        <p class="dc-price"><b class="">$10</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="grilled burger with lettuce, tomato, onion and cheese, and french fries alface, tomate, cebola e queijo, servido com batatas fritas main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-burger-640.jpg" alt="Grilled Burger (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Grilled Burger</h3>
-        <p class="dish-desc">With lettuce, tomato, onion and cheese, and French fries</p>
-        <div class="dish-foot">
-          <span class="price"><b>$12</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="grilled-burger" aria-label="Choose: Grilled Burger"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$10</b></p>
+        
+        <p class="dd-desc">Chicken, sausage, prawns and egg</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="lauhata-special-fried-rice" aria-label="Add: Lauhata Special Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="grilled burger with lettuce, tomato, onion and cheese, and french fries alface, tomate, cebola e queijo, servido com batatas fritas main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/grilled-burger-640.jpg" alt="Grilled Burger (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Grilled Burger</button></h3>
+        <p class="dc-price"><b class="">$12</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="club sandwich lettuce, tomato, chicken, bacon and egg, with french fries alface, tomate, frango, bacon e ovo, com batatas fritas main course pratos principais">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/club-sandwich-640.jpg" srcset="../assets/img/pratos-temp/club-sandwich-640.jpg 640w, ../assets/img/pratos-temp/club-sandwich-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Club Sandwich (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Main Course</p>
-        <h3>Club Sandwich</h3>
-        <p class="dish-desc">Lettuce, tomato, chicken, bacon and egg, with French fries</p>
-        <div class="dish-foot">
-          <span class="price"><b>$10</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="club-sandwich" aria-label="Choose: Club Sandwich"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$12</b></p>
+        
+        <p class="dd-desc">With lettuce, tomato, onion and cheese, and French fries</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="grilled-burger" aria-label="Choose: Grilled Burger"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="club sandwich lettuce, tomato, chicken, bacon and egg, with french fries alface, tomate, frango, bacon e ovo, com batatas fritas main course pratos principais">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/club-sandwich-640.jpg" srcset="../assets/img/pratos-temp/club-sandwich-640.jpg 640w, ../assets/img/pratos-temp/club-sandwich-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Club Sandwich (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Club Sandwich</button></h3>
+        <p class="dc-price"><b class="">$10</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$10</b></p>
+        
+        <p class="dd-desc">Lettuce, tomato, chicken, bacon and egg, with French fries</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="club-sandwich" aria-label="Choose: Club Sandwich"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-vegetarian" data-cat="vegetarian" aria-labelledby="cat-vegetarian-title">
       <header class="menu-cat-head"><h3 id="cat-vegetarian-title">Vegetarian</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="vegetarian fried rice served with fried egg and green salad servido com ovo frito e salada verde vegetarian vegetariano">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/vegetarian-fried-rice-640.jpg" srcset="../assets/img/pratos-temp/vegetarian-fried-rice-640.jpg 640w, ../assets/img/pratos-temp/vegetarian-fried-rice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Vegetarian Fried Rice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Vegetarian</p>
-        <h3>Vegetarian Fried Rice</h3>
-        <p class="dish-desc">Served with fried egg and green salad</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="vegetarian-fried-rice" aria-label="Add: Vegetarian Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="vegetarian fried rice served with fried egg and green salad servido com ovo frito e salada verde vegetarian vegetariano">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/vegetarian-fried-rice-640.jpg" srcset="../assets/img/pratos-temp/vegetarian-fried-rice-640.jpg 640w, ../assets/img/pratos-temp/vegetarian-fried-rice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Vegetarian Fried Rice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Vegetarian Fried Rice</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="spaghetti pesto served with garlic bread servido com pao de alho vegetarian vegetariano">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spaghetti-pesto-640.jpg" srcset="../assets/img/pratos-temp/spaghetti-pesto-640.jpg 640w, ../assets/img/pratos-temp/spaghetti-pesto-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spaghetti Pesto (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Vegetarian</p>
-        <h3>Spaghetti Pesto</h3>
-        <p class="dish-desc">Served with garlic bread</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="spaghetti-pesto" aria-label="Add: Spaghetti Pesto"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Served with fried egg and green salad</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="vegetarian-fried-rice" aria-label="Add: Vegetarian Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="spaghetti pesto served with garlic bread servido com pao de alho vegetarian vegetariano">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spaghetti-pesto-640.jpg" srcset="../assets/img/pratos-temp/spaghetti-pesto-640.jpg 640w, ../assets/img/pratos-temp/spaghetti-pesto-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spaghetti Pesto (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Spaghetti Pesto</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="vegetable curry served with steamed rice and chapati servido com arroz branco e chapati vegetarian vegetariano">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/vegetable-curry-640.jpg" srcset="../assets/img/pratos-temp/vegetable-curry-640.jpg 640w, ../assets/img/pratos-temp/vegetable-curry-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Vegetable Curry (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Vegetarian</p>
-        <h3>Vegetable Curry</h3>
-        <p class="dish-desc">Served with steamed rice and chapati</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="vegetable-curry" aria-label="Add: Vegetable Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Served with garlic bread</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="spaghetti-pesto" aria-label="Add: Spaghetti Pesto"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="vegetable curry served with steamed rice and chapati servido com arroz branco e chapati vegetarian vegetariano">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/vegetable-curry-640.jpg" srcset="../assets/img/pratos-temp/vegetable-curry-640.jpg 640w, ../assets/img/pratos-temp/vegetable-curry-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Vegetable Curry (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Vegetable Curry</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="vegetarian dhal fry served with steamed rice and chapati servido com arroz branco e chapati vegetarian vegetariano">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/vegetarian-dhal-fry-640.jpg" srcset="../assets/img/pratos-temp/vegetarian-dhal-fry-640.jpg 640w, ../assets/img/pratos-temp/vegetarian-dhal-fry-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Vegetarian Dhal Fry (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Vegetarian</p>
-        <h3>Vegetarian Dhal Fry</h3>
-        <p class="dish-desc">Served with steamed rice and chapati</p>
-        <div class="dish-foot">
-          <span class="price"><b>$8</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="vegetarian-dhal-fry" aria-label="Add: Vegetarian Dhal Fry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Served with steamed rice and chapati</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="vegetable-curry" aria-label="Add: Vegetable Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="vegetarian dhal fry served with steamed rice and chapati servido com arroz branco e chapati vegetarian vegetariano">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/vegetarian-dhal-fry-640.jpg" srcset="../assets/img/pratos-temp/vegetarian-dhal-fry-640.jpg 640w, ../assets/img/pratos-temp/vegetarian-dhal-fry-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Vegetarian Dhal Fry (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Vegetarian Dhal Fry</button></h3>
+        <p class="dc-price"><b class="">$8</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="stir-fry vegetables local vegetables legumes locais vegetarian vegetariano">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/stir-fry-vegetables-640.jpg" srcset="../assets/img/pratos-temp/stir-fry-vegetables-640.jpg 640w, ../assets/img/pratos-temp/stir-fry-vegetables-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Stir-fry Vegetables (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Vegetarian</p>
-        <h3>Stir-fry Vegetables</h3>
-        <p class="dish-desc">Local vegetables</p>
-        <div class="dish-foot">
-          <span class="price"><b>$6</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="stir-fry-vegetables" aria-label="Add: Stir-fry Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$8</b></p>
+        
+        <p class="dd-desc">Served with steamed rice and chapati</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="vegetarian-dhal-fry" aria-label="Add: Vegetarian Dhal Fry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="stir-fry vegetables local vegetables legumes locais vegetarian vegetariano">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/stir-fry-vegetables-640.jpg" srcset="../assets/img/pratos-temp/stir-fry-vegetables-640.jpg 640w, ../assets/img/pratos-temp/stir-fry-vegetables-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Stir-fry Vegetables (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Stir-fry Vegetables</button></h3>
+        <p class="dc-price"><b class="">$6</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$6</b></p>
+        
+        <p class="dd-desc">Local vegetables</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="stir-fry-vegetables" aria-label="Add: Stir-fry Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-sides" data-cat="sides" aria-labelledby="cat-sides-title">
       <header class="menu-cat-head"><h3 id="cat-sides-title">Side Order</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="sauteed vegetables side order acompanhamentos">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sauteed-vegetables-640.jpg" srcset="../assets/img/pratos-temp/sauteed-vegetables-640.jpg 640w, ../assets/img/pratos-temp/sauteed-vegetables-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Sauteed Vegetables (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Side Order</p>
-        <h3>Sauteed Vegetables</h3>
-        
-        <div class="dish-foot">
-          <span class="price"><b>$4</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="sauteed-vegetables" aria-label="Add: Sauteed Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="sauteed vegetables side order acompanhamentos">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sauteed-vegetables-640.jpg" srcset="../assets/img/pratos-temp/sauteed-vegetables-640.jpg 640w, ../assets/img/pratos-temp/sauteed-vegetables-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Sauteed Vegetables (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Sauteed Vegetables</button></h3>
+        <p class="dc-price"><b class="">$4</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="green salad side order acompanhamentos">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/green-salad-640.jpg" srcset="../assets/img/pratos-temp/green-salad-640.jpg 640w, ../assets/img/pratos-temp/green-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Green Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Side Order</p>
-        <h3>Green Salad</h3>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$4</b></p>
         
-        <div class="dish-foot">
-          <span class="price"><b>$4</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="green-salad" aria-label="Add: Green Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
-      </div>
-    </article><article class="dish has-photo" data-dish data-search="chips side order acompanhamentos">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chips-side-640.jpg" srcset="../assets/img/pratos-temp/chips-side-640.jpg 640w, ../assets/img/pratos-temp/chips-side-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chips (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Side Order</p>
-        <h3>Chips</h3>
         
-        <div class="dish-foot">
-          <span class="price">Small <b>$5</b> · Large <b>$10</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="chips-side" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
-        </div>
-      </div>
-    </article><article class="dish has-photo" data-dish data-search="spicy potato wedges side order acompanhamentos">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spicy-potato-wedges-640.jpg" srcset="../assets/img/pratos-temp/spicy-potato-wedges-640.jpg 640w, ../assets/img/pratos-temp/spicy-potato-wedges-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spicy Potato Wedges (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Side Order</p>
-        <h3>Spicy Potato Wedges</h3>
         
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="spicy-potato-wedges" aria-label="Add: Spicy Potato Wedges"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+        <button class="btn btn-terra dd-add" type="button" data-add="sauteed-vegetables" aria-label="Add: Sauteed Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="green salad side order acompanhamentos">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/green-salad-640.jpg" srcset="../assets/img/pratos-temp/green-salad-640.jpg 640w, ../assets/img/pratos-temp/green-salad-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Green Salad (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Green Salad</button></h3>
+        <p class="dc-price"><b class="">$4</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="garlic bread side order acompanhamentos">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/garlic-bread-640.jpg" srcset="../assets/img/pratos-temp/garlic-bread-640.jpg 640w, ../assets/img/pratos-temp/garlic-bread-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Garlic Bread (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Side Order</p>
-        <h3>Garlic Bread</h3>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$4</b></p>
         
-        <div class="dish-foot">
-          <span class="price"><b>$4</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="garlic-bread" aria-label="Add: Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
-      </div>
-    </article><article class="dish has-photo" data-dish data-search="steam rice side order acompanhamentos">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/steam-rice-640.jpg" srcset="../assets/img/pratos-temp/steam-rice-640.jpg 640w, ../assets/img/pratos-temp/steam-rice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Steam Rice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Side Order</p>
-        <h3>Steam Rice</h3>
         
-        <div class="dish-foot">
-          <span class="price"><b>$2</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="steam-rice" aria-label="Add: Steam Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="green-salad" aria-label="Add: Green Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="chips side order acompanhamentos">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chips-side-640.jpg" srcset="../assets/img/pratos-temp/chips-side-640.jpg 640w, ../assets/img/pratos-temp/chips-side-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chips (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Chips</button></h3>
+        <p class="dc-price"><b class="">$5–$10</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price">Small <b>$5</b> · Large <b>$10</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="chips-side" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="spicy potato wedges side order acompanhamentos">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/spicy-potato-wedges-640.jpg" srcset="../assets/img/pratos-temp/spicy-potato-wedges-640.jpg 640w, ../assets/img/pratos-temp/spicy-potato-wedges-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spicy Potato Wedges (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Spicy Potato Wedges</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="spicy-potato-wedges" aria-label="Add: Spicy Potato Wedges"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="garlic bread side order acompanhamentos">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/garlic-bread-640.jpg" srcset="../assets/img/pratos-temp/garlic-bread-640.jpg 640w, ../assets/img/pratos-temp/garlic-bread-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Garlic Bread (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Garlic Bread</button></h3>
+        <p class="dc-price"><b class="">$4</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$4</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="garlic-bread" aria-label="Add: Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="steam rice side order acompanhamentos">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/steam-rice-640.jpg" srcset="../assets/img/pratos-temp/steam-rice-640.jpg 640w, ../assets/img/pratos-temp/steam-rice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Steam Rice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Steam Rice</button></h3>
+        <p class="dc-price"><b class="">$2</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$2</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="steam-rice" aria-label="Add: Steam Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-dessert" data-cat="dessert" aria-labelledby="cat-dessert-title">
       <header class="menu-cat-head"><h3 id="cat-dessert-title">Dessert</h3><p>Based on availability.</p></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="cheesecake dessert sobremesas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/cheesecake-640.jpg" srcset="../assets/img/pratos-temp/cheesecake-640.jpg 640w, ../assets/img/pratos-temp/cheesecake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Cheesecake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Dessert</p>
-        <h3>Cheesecake</h3>
-        
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="cheesecake" aria-label="Add: Cheesecake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="cheesecake dessert sobremesas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/cheesecake-640.jpg" srcset="../assets/img/pratos-temp/cheesecake-640.jpg 640w, ../assets/img/pratos-temp/cheesecake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Cheesecake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Cheesecake</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="orange cake dessert sobremesas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/orange-cake-640.jpg" srcset="../assets/img/pratos-temp/orange-cake-640.jpg 640w, ../assets/img/pratos-temp/orange-cake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Orange Cake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Dessert</p>
-        <h3>Orange Cake</h3>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
         
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="orange-cake" aria-label="Add: Orange Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
-      </div>
-    </article><article class="dish has-photo" data-dish data-search="chocolate mud cake dessert sobremesas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chocolate-mud-cake-640.jpg" srcset="../assets/img/pratos-temp/chocolate-mud-cake-640.jpg 640w, ../assets/img/pratos-temp/chocolate-mud-cake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chocolate Mud Cake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Dessert</p>
-        <h3>Chocolate Mud Cake</h3>
         
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="chocolate-mud-cake" aria-label="Add: Chocolate Mud Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
-      </div>
-    </article><article class="dish has-photo" data-dish data-search="red velvet cake dessert sobremesas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/red-velvet-cake-640.jpg" srcset="../assets/img/pratos-temp/red-velvet-cake-640.jpg 640w, ../assets/img/pratos-temp/red-velvet-cake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Red Velvet Cake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Dessert</p>
-        <h3>Red Velvet Cake</h3>
         
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="red-velvet-cake" aria-label="Add: Red Velvet Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+        <button class="btn btn-terra dd-add" type="button" data-add="cheesecake" aria-label="Add: Cheesecake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="orange cake dessert sobremesas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/orange-cake-640.jpg" srcset="../assets/img/pratos-temp/orange-cake-640.jpg 640w, ../assets/img/pratos-temp/orange-cake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Orange Cake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Orange Cake</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="mixed ice cream dessert sobremesas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/mixed-ice-cream-640.jpg" srcset="../assets/img/pratos-temp/mixed-ice-cream-640.jpg 640w, ../assets/img/pratos-temp/mixed-ice-cream-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Mixed Ice Cream (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Dessert</p>
-        <h3>Mixed Ice Cream</h3>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
         
-        <div class="dish-foot">
-          <span class="price"><b>$4</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="mixed-ice-cream" aria-label="Add: Mixed Ice Cream"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
-      </div>
-    </article><article class="dish has-photo" data-dish data-search="fruit platter dessert sobremesas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/fruit-platter-640.jpg" srcset="../assets/img/pratos-temp/fruit-platter-640.jpg 640w, ../assets/img/pratos-temp/fruit-platter-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Fruit Platter (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Dessert</p>
-        <h3>Fruit Platter</h3>
         
-        <div class="dish-foot">
-          <span class="price"><b>$5</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="fruit-platter" aria-label="Add: Fruit Platter"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="orange-cake" aria-label="Add: Orange Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="chocolate mud cake dessert sobremesas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/chocolate-mud-cake-640.jpg" srcset="../assets/img/pratos-temp/chocolate-mud-cake-640.jpg 640w, ../assets/img/pratos-temp/chocolate-mud-cake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Chocolate Mud Cake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Chocolate Mud Cake</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="chocolate-mud-cake" aria-label="Add: Chocolate Mud Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="red velvet cake dessert sobremesas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/red-velvet-cake-640.jpg" srcset="../assets/img/pratos-temp/red-velvet-cake-640.jpg 640w, ../assets/img/pratos-temp/red-velvet-cake-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Red Velvet Cake (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Red Velvet Cake</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="red-velvet-cake" aria-label="Add: Red Velvet Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="mixed ice cream dessert sobremesas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/mixed-ice-cream-640.jpg" srcset="../assets/img/pratos-temp/mixed-ice-cream-640.jpg 640w, ../assets/img/pratos-temp/mixed-ice-cream-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Mixed Ice Cream (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Mixed Ice Cream</button></h3>
+        <p class="dc-price"><b class="">$4</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$4</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="mixed-ice-cream" aria-label="Add: Mixed Ice Cream"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="fruit platter dessert sobremesas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/fruit-platter-640.jpg" srcset="../assets/img/pratos-temp/fruit-platter-640.jpg 640w, ../assets/img/pratos-temp/fruit-platter-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Fruit Platter (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Fruit Platter</button></h3>
+        <p class="dc-price"><b class="">$5</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$5</b></p>
+        
+        
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="fruit-platter" aria-label="Add: Fruit Platter"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-pizza" data-cat="pizza" aria-labelledby="cat-pizza-title">
       <header class="menu-cat-head"><h3 id="cat-pizza-title">Pizza</h3></header>
-      <div class="menu-grid"><article class="dish has-photo" data-dish data-search="margarita sliced tomato, feta and mozzarella tomate em fatias, feta e mozzarella pizza pizzas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-margarita-640.jpg" srcset="../assets/img/pratos-temp/pizza-margarita-640.jpg 640w, ../assets/img/pratos-temp/pizza-margarita-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Margarita (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Pizza</p>
-        <h3>Margarita</h3>
-        <p class="dish-desc">Sliced tomato, feta and mozzarella</p>
-        <div class="dish-foot">
-          <span class="price"><b>$17</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pizza-margarita" aria-label="Add: Margarita"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <div class="menu-grid"><article class="dcard" data-dish data-search="margarita sliced tomato, feta and mozzarella tomate em fatias, feta e mozzarella pizza pizzas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-margarita-640.jpg" srcset="../assets/img/pratos-temp/pizza-margarita-640.jpg 640w, ../assets/img/pratos-temp/pizza-margarita-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Margarita (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Margarita</button></h3>
+        <p class="dc-price"><b class="">$17</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="pepperoni onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella pizza pizzas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-pepperoni-640.jpg" srcset="../assets/img/pratos-temp/pizza-pepperoni-640.jpg 640w, ../assets/img/pratos-temp/pizza-pepperoni-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Pepperoni (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Pizza</p>
-        <h3>Pepperoni</h3>
-        <p class="dish-desc">Onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella</p>
-        <div class="dish-foot">
-          <span class="price"><b>$20</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pizza-pepperoni" aria-label="Add: Pepperoni"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$17</b></p>
+        
+        <p class="dd-desc">Sliced tomato, feta and mozzarella</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pizza-margarita" aria-label="Add: Margarita"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="pepperoni onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella pizza pizzas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-pepperoni-640.jpg" srcset="../assets/img/pratos-temp/pizza-pepperoni-640.jpg 640w, ../assets/img/pratos-temp/pizza-pepperoni-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Pepperoni (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Pepperoni</button></h3>
+        <p class="dc-price"><b class="">$20</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="hawaiian ham, pineapple, feta and mozzarella fiambre, ananas, feta e mozzarella pizza pizzas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-hawaiian-640.jpg" srcset="../assets/img/pratos-temp/pizza-hawaiian-640.jpg 640w, ../assets/img/pratos-temp/pizza-hawaiian-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Hawaiian (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Pizza</p>
-        <h3>Hawaiian</h3>
-        <p class="dish-desc">Ham, pineapple, feta and mozzarella</p>
-        <div class="dish-foot">
-          <span class="price"><b>$20</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pizza-hawaiian" aria-label="Add: Hawaiian"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$20</b></p>
+        
+        <p class="dd-desc">Onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pizza-pepperoni" aria-label="Add: Pepperoni"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="hawaiian ham, pineapple, feta and mozzarella fiambre, ananas, feta e mozzarella pizza pizzas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-hawaiian-640.jpg" srcset="../assets/img/pratos-temp/pizza-hawaiian-640.jpg 640w, ../assets/img/pratos-temp/pizza-hawaiian-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Hawaiian (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Hawaiian</button></h3>
+        <p class="dc-price"><b class="">$20</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="spicy chicken chicken, bacon, chilli, feta and mozzarella frango, bacon, chilli, feta e mozzarella pizza pizzas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-spicy-chicken-640.jpg" srcset="../assets/img/pratos-temp/pizza-spicy-chicken-640.jpg 640w, ../assets/img/pratos-temp/pizza-spicy-chicken-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spicy Chicken (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Pizza</p>
-        <h3>Spicy Chicken</h3>
-        <p class="dish-desc">Chicken, bacon, chilli, feta and mozzarella</p>
-        <div class="dish-foot">
-          <span class="price"><b>$20</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pizza-spicy-chicken" aria-label="Add: Spicy Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$20</b></p>
+        
+        <p class="dd-desc">Ham, pineapple, feta and mozzarella</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pizza-hawaiian" aria-label="Add: Hawaiian"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="spicy chicken chicken, bacon, chilli, feta and mozzarella frango, bacon, chilli, feta e mozzarella pizza pizzas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-spicy-chicken-640.jpg" srcset="../assets/img/pratos-temp/pizza-spicy-chicken-640.jpg 640w, ../assets/img/pratos-temp/pizza-spicy-chicken-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spicy Chicken (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Spicy Chicken</button></h3>
+        <p class="dc-price"><b class="">$20</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="lauhata seafood tuna, prawns, feta and mozzarella atum, gambas, feta e mozzarella pizza pizzas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-lauhata-seafood-640.jpg" srcset="../assets/img/pratos-temp/pizza-lauhata-seafood-640.jpg 640w, ../assets/img/pratos-temp/pizza-lauhata-seafood-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Lauhata Seafood (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Pizza</p>
-        <h3>Lauhata Seafood</h3>
-        <p class="dish-desc">Tuna, prawns, feta and mozzarella</p>
-        <div class="dish-foot">
-          <span class="price"><b>$21</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pizza-lauhata-seafood" aria-label="Add: Lauhata Seafood"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$20</b></p>
+        
+        <p class="dd-desc">Chicken, bacon, chilli, feta and mozzarella</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pizza-spicy-chicken" aria-label="Add: Spicy Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="lauhata seafood tuna, prawns, feta and mozzarella atum, gambas, feta e mozzarella pizza pizzas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-lauhata-seafood-640.jpg" srcset="../assets/img/pratos-temp/pizza-lauhata-seafood-640.jpg 640w, ../assets/img/pratos-temp/pizza-lauhata-seafood-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Lauhata Seafood (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Lauhata Seafood</button></h3>
+        <p class="dc-price"><b class="">$21</b></p>
       </div>
-    </article><article class="dish has-photo" data-dish data-search="meat lover onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella pizza pizzas">
-      <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-meat-lover-640.jpg" srcset="../assets/img/pratos-temp/pizza-meat-lover-640.jpg 640w, ../assets/img/pratos-temp/pizza-meat-lover-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Meat Lover (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-      <div class="dish-body">
-        <p class="dish-tag">Pizza</p>
-        <h3>Meat Lover</h3>
-        <p class="dish-desc">Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella</p>
-        <div class="dish-foot">
-          <span class="price"><b>$21</b></span>
-          <button class="btn btn-dark btn-sm dish-add" type="button" data-add="pizza-meat-lover" aria-label="Add: Meat Lover"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
-        </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$21</b></p>
+        
+        <p class="dd-desc">Tuna, prawns, feta and mozzarella</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pizza-lauhata-seafood" aria-label="Add: Lauhata Seafood"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
+    </article><article class="dcard" data-dish data-search="meat lover onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella pizza pizzas">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/pizza-meat-lover-640.jpg" srcset="../assets/img/pratos-temp/pizza-meat-lover-640.jpg 640w, ../assets/img/pratos-temp/pizza-meat-lover-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Meat Lover (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Meat Lover</button></h3>
+        <p class="dc-price"><b class="">$21</b></p>
       </div>
+      <template data-dc-detail>
+        <p class="dd-price"><b>$21</b></p>
+        
+        <p class="dd-desc">Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella</p>
+        
+        <button class="btn btn-terra dd-add" type="button" data-add="pizza-meat-lover" aria-label="Add: Meat Lover"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
+      </template>
     </article></div>
     </section><section class="menu-cat" id="cat-drinks" data-cat="drinks" aria-labelledby="cat-drinks-title">
-      <header class="menu-cat-head"><h3 id="cat-drinks-title">Drinks</h3><p>The drinks list is being prepared. For now these are examples, without prices: ask the team what is available today.</p></header>
-      <div class="menu-grid is-samples"><article class="dish has-photo is-sample" data-dish data-search="agua water bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-water-640.jpg" srcset="../assets/img/pratos-temp/sample-water-640.jpg 640w, ../assets/img/pratos-temp/sample-water-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Water (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Water</h3><div class="dish-foot"><span class="sample-tag">Example</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="agua de coco coconut water bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-coconut-640.jpg" srcset="../assets/img/pratos-temp/sample-coconut-640.jpg 640w, ../assets/img/pratos-temp/sample-coconut-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Coconut water (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Coconut water</h3><div class="dish-foot"><span class="sample-tag">Example</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="refrigerantes soft drinks bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-soft-640.jpg" srcset="../assets/img/pratos-temp/sample-soft-640.jpg 640w, ../assets/img/pratos-temp/sample-soft-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Soft drinks (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Soft drinks</h3><div class="dish-foot"><span class="sample-tag">Example</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="sumo natural de laranja fresh orange juice bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-orange-juice-640.jpg" srcset="../assets/img/pratos-temp/sample-orange-juice-640.jpg 640w, ../assets/img/pratos-temp/sample-orange-juice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Fresh orange juice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Fresh orange juice</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Fresh juices</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="sumo natural de manga fresh mango juice bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-mango-juice-640.jpg" srcset="../assets/img/pratos-temp/sample-mango-juice-640.jpg 640w, ../assets/img/pratos-temp/sample-mango-juice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Fresh mango juice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Fresh mango juice</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Fresh juices</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="cafe coffee bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-coffee-640.jpg" srcset="../assets/img/pratos-temp/sample-coffee-640.jpg 640w, ../assets/img/pratos-temp/sample-coffee-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Coffee (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Coffee</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Coffee and tea</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="cha tea bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-tea-640.jpg" srcset="../assets/img/pratos-temp/sample-tea-640.jpg 640w, ../assets/img/pratos-temp/sample-tea-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Tea (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Tea</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Coffee and tea</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="mocktail de maracuja passion fruit mocktail bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-mocktail-passion-640.jpg" srcset="../assets/img/pratos-temp/sample-mocktail-passion-640.jpg 640w, ../assets/img/pratos-temp/sample-mocktail-passion-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Passion fruit mocktail (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Passion fruit mocktail</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Alcohol-free</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="mojito sem alcool virgin mojito bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-virgin-mojito-640.jpg" srcset="../assets/img/pratos-temp/sample-virgin-mojito-640.jpg 640w, ../assets/img/pratos-temp/sample-virgin-mojito-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Virgin mojito (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Virgin mojito</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Alcohol-free</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="cerveja beer bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-beer-640.jpg" srcset="../assets/img/pratos-temp/sample-beer-640.jpg 640w, ../assets/img/pratos-temp/sample-beer-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Beer (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Beer</h3><div class="dish-foot"><span class="sample-tag">Example</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="vinho (copo) wine (glass) bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-wine-640.jpg" srcset="../assets/img/pratos-temp/sample-wine-640.jpg 640w, ../assets/img/pratos-temp/sample-wine-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Wine (glass) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Wine (glass)</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Wine</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="mojito mojito bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-mojito-640.jpg" alt="Mojito (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Mojito</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Cocktails</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="pina colada pina colada bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-pina-colada-640.jpg" srcset="../assets/img/pratos-temp/sample-pina-colada-640.jpg 640w, ../assets/img/pratos-temp/sample-pina-colada-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Piña colada (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Piña colada</h3><div class="dish-foot"><span class="sample-tag">Example</span><span class="dish-group">Cocktails</span></div></div>
-      </article><article class="dish has-photo is-sample" data-dish data-search="bebidas espirituosas spirits bebidas drinks">
-        <figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-spirits-640.jpg" srcset="../assets/img/pratos-temp/sample-spirits-640.jpg 640w, ../assets/img/pratos-temp/sample-spirits-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spirits (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure>
-        <div class="dish-body"><h3>Spirits</h3><div class="dish-foot"><span class="sample-tag">Example</span></div></div>
-      </article></div>
+      <header class="menu-cat-head"><h3 id="cat-drinks-title">Drinks</h3><p>Prices are provisional estimates, to be confirmed with the restaurant. Ask the team what is available today.</p></header>
+      <div class="menu-grid is-samples"><article class="dcard" data-dish data-search="agua water bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-water-640.jpg" srcset="../assets/img/pratos-temp/sample-water-640.jpg 640w, ../assets/img/pratos-temp/sample-water-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Water (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Water</button></h3>
+        <p class="dc-price"><b>$1</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$1</p>
+        
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="agua de coco coconut water bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-coconut-640.jpg" srcset="../assets/img/pratos-temp/sample-coconut-640.jpg 640w, ../assets/img/pratos-temp/sample-coconut-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Coconut water (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Coconut water</button></h3>
+        <p class="dc-price"><b>$3</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$3</p>
+        
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="refrigerantes soft drinks bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-soft-640.jpg" srcset="../assets/img/pratos-temp/sample-soft-640.jpg 640w, ../assets/img/pratos-temp/sample-soft-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Soft drinks (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Soft drinks</button></h3>
+        <p class="dc-price"><b>$2</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$2</p>
+        
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="sumo natural de laranja fresh orange juice bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-orange-juice-640.jpg" srcset="../assets/img/pratos-temp/sample-orange-juice-640.jpg 640w, ../assets/img/pratos-temp/sample-orange-juice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Fresh orange juice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Fresh orange juice</button></h3>
+        <p class="dc-price"><b>$4</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$4</p>
+        <p class="dd-tag">Fresh juices</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="sumo natural de manga fresh mango juice bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-mango-juice-640.jpg" srcset="../assets/img/pratos-temp/sample-mango-juice-640.jpg 640w, ../assets/img/pratos-temp/sample-mango-juice-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Fresh mango juice (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Fresh mango juice</button></h3>
+        <p class="dc-price"><b>$4</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$4</p>
+        <p class="dd-tag">Fresh juices</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="cafe coffee bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-coffee-640.jpg" srcset="../assets/img/pratos-temp/sample-coffee-640.jpg 640w, ../assets/img/pratos-temp/sample-coffee-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Coffee (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Coffee</button></h3>
+        <p class="dc-price"><b>$2</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$2</p>
+        <p class="dd-tag">Coffee and tea</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="cha tea bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-tea-640.jpg" srcset="../assets/img/pratos-temp/sample-tea-640.jpg 640w, ../assets/img/pratos-temp/sample-tea-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Tea (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Tea</button></h3>
+        <p class="dc-price"><b>$2</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$2</p>
+        <p class="dd-tag">Coffee and tea</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="mocktail de maracuja passion fruit mocktail bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-mocktail-passion-640.jpg" srcset="../assets/img/pratos-temp/sample-mocktail-passion-640.jpg 640w, ../assets/img/pratos-temp/sample-mocktail-passion-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Passion fruit mocktail (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Passion fruit mocktail</button></h3>
+        <p class="dc-price"><b>$5</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$5</p>
+        <p class="dd-tag">Alcohol-free</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="mojito sem alcool virgin mojito bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-virgin-mojito-640.jpg" srcset="../assets/img/pratos-temp/sample-virgin-mojito-640.jpg 640w, ../assets/img/pratos-temp/sample-virgin-mojito-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Virgin mojito (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Virgin mojito</button></h3>
+        <p class="dc-price"><b>$5</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$5</p>
+        <p class="dd-tag">Alcohol-free</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="cerveja beer bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-beer-640.jpg" srcset="../assets/img/pratos-temp/sample-beer-640.jpg 640w, ../assets/img/pratos-temp/sample-beer-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Beer (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Beer</button></h3>
+        <p class="dc-price"><b>$3</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$3</p>
+        
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="vinho (copo) wine (glass) bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-wine-640.jpg" srcset="../assets/img/pratos-temp/sample-wine-640.jpg 640w, ../assets/img/pratos-temp/sample-wine-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Wine (glass) (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Wine (glass)</button></h3>
+        <p class="dc-price"><b>$6</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$6</p>
+        <p class="dd-tag">Wine</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="mojito mojito bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-mojito-640.jpg" alt="Mojito (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Mojito</button></h3>
+        <p class="dc-price"><b>$7</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$7</p>
+        <p class="dd-tag">Cocktails</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="pina colada pina colada bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-pina-colada-640.jpg" srcset="../assets/img/pratos-temp/sample-pina-colada-640.jpg 640w, ../assets/img/pratos-temp/sample-pina-colada-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Piña colada (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Piña colada</button></h3>
+        <p class="dc-price"><b>$7</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$7</p>
+        <p class="dd-tag">Cocktails</p>
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article><article class="dcard" data-dish data-search="bebidas espirituosas spirits bebidas drinks">
+      <div class="dc-photo"><figure class="media dish-photo is-placeholder" data-ph="Illustrative image"><img src="../assets/img/pratos-temp/sample-spirits-640.jpg" srcset="../assets/img/pratos-temp/sample-spirits-640.jpg 640w, ../assets/img/pratos-temp/sample-spirits-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw" alt="Spirits (illustrative image, not the dish served at Lauhata)" width="640" height="480" loading="lazy" decoding="async"></figure></div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">Spirits</button></h3>
+        <p class="dc-price"><b>$5</b></p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">$5</p>
+        
+        
+        <p class="dd-note">Provisional price: to be confirmed with the restaurant.</p>
+        
+      </template>
+    </article></div>
     </section>
       <p class="menu-empty" hidden data-menu-empty></p>
     </div>
   </div>
+  <dialog class="dish-dialog" data-dish-dialog aria-labelledby="dd-title">
+    <button class="icon-btn dd-close" type="button" aria-label="Close" data-dd-close><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    <div class="dd-photo" data-dd-photo></div>
+    <div class="dd-body">
+      <h2 id="dd-title" class="dd-name" data-dd-name></h2>
+      <div data-dd-detail></div>
+    </div>
+  </dialog>
 </section>
 
 <section class="scene final-cta" aria-labelledby="final-title">

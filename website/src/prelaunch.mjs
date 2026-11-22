@@ -4,7 +4,8 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import site from "./data/site.mjs";
-import rooms from "./data/rooms.mjs";
+import rooms, { pendingAmenities } from "./data/rooms.mjs";
+import { sampleDrinks } from "./data/sample-drinks.mjs";
 import { items } from "./data/menu.mjs";
 
 async function builtHtml(dist) {
@@ -32,7 +33,6 @@ export async function prelaunch(dist) {
   if (!site.driveFromDili) warnings.push("Tempo de viagem desde Díli por preencher (`driveFromDili`).");
   if (!Object.values(site.social).some(Boolean)) warnings.push("Redes sociais por preencher (`social`).");
   if (!site.reviewsUrl) warnings.push("Página de avaliações (Google/TripAdvisor) por preencher (`reviewsUrl`).");
-  if (!site.amenities.length) warnings.push("Comodidades do alojamento por confirmar (`amenities`): a secção fica escondida.");
 
   const noPriceRooms = rooms.filter((r) => !r.price).length;
   const orderable = (d) => d.price != null || d.options.some((g) => g.choices.some((c) => c.price != null));
@@ -45,7 +45,11 @@ export async function prelaunch(dist) {
   if (unsure) warnings.push(`${unsure} preços das pizzas estão escritos à mão na ementa (campo confirm em menu.mjs): confirmar com o restaurante.`);
   const feat = items.filter((d) => d.featured).length;
   if (feat) warnings.push(`${feat} pratos em «Os mais escolhidos» foram escolhidos sem dados de vendas (campo featured em menu.mjs): confirmar quais são.`);
-  if (rooms.some((r) => r.placeholder)) warnings.push("Quartos: camas e TV confirmadas pelo dono; fotografias ilustrativas e restantes comodidades (ar condicionado, casa de banho, Wi-Fi…) por confirmar — ver docs/CHECKLISTS.md.");
+  if (rooms.some((r) => r.placeholder)) warnings.push("Quartos: fotografias ilustrativas (faltam fotos reais de cada quarto).");
+  if (pendingAmenities.length) warnings.push(`Comodidades por confirmar (\`pendingAmenities\` em rooms.mjs): ${pendingAmenities.map((a) => a.pt).join(", ")}.`);
+  for (const r of rooms.filter((x) => x.capacityPending)) warnings.push(`Capacidade pendente do ${r.name.pt} (\`capacityPending\` em rooms.mjs): ${r.capacity.pt}, a confirmar idades das crianças e condições de ocupação.`);
+  const provisional = sampleDrinks.filter((d) => d.provisional).length;
+  if (provisional) warnings.push(`${provisional} bebidas com preço PROVISÓRIO estimado (\`provisional\` em sample-drinks.mjs): validar com o Carlos — lista em docs/PRECOS-PROVISORIOS-BEBIDAS.md.`);
 
   const unsplash = new Set(html.match(/images\.unsplash\.com\/photo-[\w-]+/g) || []).size;
   const local = new Set(html.match(/assets\/img\/fotos\/[\w-]+?-(?:640|1080|1600)\.jpg/g)?.map((s) => s.replace(/-(?:640|1080|1600)\.jpg$/, "")) || []).size;

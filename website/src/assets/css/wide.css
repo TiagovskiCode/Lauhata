@@ -32,13 +32,10 @@
   .ch-title { font-size: clamp(3.6rem, 6.2vw, 6.8rem); }
   .ch-sleep .ch-title { font-size: clamp(3.2rem, 5vw, 5.4rem); }
   .bkf-hours b { font-size: clamp(2.6rem, 3.4vw, 3.6rem); }
-  .su-row { height: clamp(540px, 68vh, 640px); }
-  .su-body h3 { font-size: clamp(2.1rem, 3vw, 3rem); }
 
   .cu-title { font-size: clamp(2.8rem, 5.2vw, 6rem); }
   .cu-big { font-size: clamp(3.2rem, 9vw, 10rem); }
   .cine-cta-title { font-size: clamp(2.8rem, 5.6vw, 6.2rem); }
   .statement-text { font-size: clamp(2rem, 3.6vw, 4rem); }
-  .room-row-body h3 { font-size: clamp(2.2rem, 2.8vw, 3rem); }
   .pull-quote { font-size: clamp(2.4rem, 3.2vw, 3.4rem); }
 }

@@ -1,6 +1,7 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
 import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
+import { lodgingAmenities } from "./data/rooms.mjs";
 import { existsSync, readFileSync } from "node:fs";
 import { TAIS, tripadvisorBadge } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
@@ -35,19 +36,14 @@ function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = 
 </section>`;
 }
 
-// "From US$ X / night", or a clear "price to be confirmed" until Lauhata supplies the price.
-function fromPrice(t, r) {
-  const H = t.home.rooms;
-  return r.price
-    ? `<p class="from"><span>${esc(H.from)}</span><strong>${esc(r.price)}</strong> <small>${esc(H.night)}</small></p>`
-    : `<p class="from is-tbc"><strong>${esc(t.common.priceTbc)}</strong></p>`;
-}
-
-// The owner-confirmed facts of a room, as one quiet line: beds, then each confirmed amenity. Nothing unconfirmed is listed.
-function roomFeatures(t, r) {
+// Everything the accommodation offers, once, for both room types (rooms.mjs `lodgingAmenities`), plus the price rule.
+function lodgingBlock(t, { note = true } = {}) {
   const L = t.lang;
-  const facts = [r.beds && r.beds[L], ...(r.amenities || []).map((a) => a[L]), r.suitability && `${t.stay.roomSuits}: ${r.suitability[L]}`].filter(Boolean);
-  return facts.length ? `<ul class="room-facts-line">${facts.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : "";
+  return `<div class="rp-lodging">
+    <h3 class="rp-lodging-title">${esc(t.stay.lodgingTitle)}</h3>
+    <ul class="rp-amen">${lodgingAmenities.map((a) => `<li>${icon(a.icon)}<span>${esc(a[L])}</span></li>`).join("")}</ul>
+    ${note ? `<p class="rp-note">${esc(t.stay.perNightNote)}</p>` : ""}
+  </div>`;
 }
 
 // The suite's confirmed amenities with their icons: the beds (rooms.mjs `bedPlan`) and the owner-confirmed `amenities`.
@@ -107,42 +103,28 @@ function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" 
   </div>`;
 }
 
-// Two equal cards, one per room type: the same photograph ratio, the same blocks in the same order, one action each.
+// Two equal cards, one per room type: the same photograph ratio, the same blocks in the same order, one action each. Each card reads
+// in the order a guest decides: name and price, who it sleeps, the beds, then the action. The accommodation's shared offer sits below.
 function roomPair(t) {
   const L = t.lang;
+  const tv = (r) => (r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]);
   return `<div class="rp-grid">${rooms.map((r) => `<article class="rp-card">
-      <a class="rp-media" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "4/3" })}</a>
+      <a class="rp-media" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "3/2" })}</a>
       <div class="rp-body">
-        <h3 class="rp-name"><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
-        <p class="rp-sum">${esc(r.summary[L])}</p>
-        <ul class="rp-meta">${suiteAmenityItems(t, r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
+        <div class="rp-head">
+          <h3 class="rp-name"><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
+          <p class="rp-price"><strong>${esc(r.price || t.common.priceTbc)}</strong>${r.price ? `<span>${esc(t.home.rooms.night)}</span>` : ""}</p>
+        </div>
+        <ul class="rp-spec">
+          <li>${icon("users")}<span>${esc(r.capacity[L])}</span></li>
+          <li>${icon("bed")}<span>${esc(r.beds[L])}</span></li>
+          ${tv(r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}
+        </ul>
+        ${r.capacityPending ? `<p class="rp-pending">${esc(t.stay.capacityPending)}</p>` : ""}
         <div class="rp-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}${icon("arrow")}</a></div>
       </div>
-    </article>`).join("")}</div>`;
-}
-
-// Large alternating rows, one per room type (homepage and stay page).
-function roomRows(t, list = rooms, { arch = false } = {}) {
-  const L = t.lang;
-  const H = t.home.rooms;
-  return `<div class="room-rows">${list
-    .map((r, i) => {
-      const n = rooms.findIndex((x) => x.id === r.id); // its number among all room types
-      return `<article class="room-row room-is-${r.id}${i % 2 ? " is-flip" : ""}">
-      <div class="room-row-img">${roomCarousel(t, r)}</div>
-      <div class="room-row-body"${rv(120)}>
-        <p class="room-kind">${esc(r.badge ? r.badge[L] : "")}</p>
-        <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
-        <p>${esc(r.summary[L])}</p>
-        ${roomFeatures(t, r)}
-        <div class="room-foot">
-          ${fromPrice(t, r)}
-          <div class="room-foot-btns"><a class="btn btn-cream" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(H.book)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}</a></div>
-        </div>
-      </div>
-    </article>`;
-    })
-    .join("")}</div>`;
+    </article>`).join("")}</div>
+  ${lodgingBlock(t)}`;
 }
 
 const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery)}`;
@@ -293,46 +275,87 @@ function tempPhoto(t, id, name) {
   return `<figure class="media dish-photo is-placeholder" data-ph="${esc(t.common.placeholderImage)}"><img src="${src}"${big ? ` srcset="${src} 640w, /assets/img/pratos-temp/${id}-1080.jpg 1080w" sizes="(min-width: 1200px) 22vw, (min-width: 600px) 45vw, 30vw"` : ""} alt="${esc(fmt(t.order.tempAlt, { name }))}" width="640" height="480" loading="lazy" decoding="async"></figure>`;
 }
 
-// The sample drinks of the development preview (src/data/sample-drinks.mjs): photo, name and an "Example" tag; no
-// price and no add button, so nothing unconfirmed can be ordered. Shown only while site.showSamples is true and the
-// menu has no real drinks.
+// A menu dish as a visual card: photograph, name, price. Everything else (description, the order button) lives in the dish dialog, which
+// assets/js/order.js fills from the <template> below when the card is opened. The name is the one real control (a button stretched
+// over the whole card), so the card is a single focus stop. `opts.tag`/`opts.provisional` serve the drinks.
+const cardPrice = (t, d) => {
+  const sized = sizePriced(d);
+  if (sized) {
+    const prices = sized.choices.map((c) => c.price).filter((p) => p != null);
+    const lo = Math.min(...prices), hi = Math.max(...prices);
+    return lo === hi ? money(lo) : `${money(lo)}–${money(hi)}`;
+  }
+  return d.price != null ? money(d.price) : esc(t.common.priceTbc);
+};
+function dcard(t, { id, name, search, photo, priceHtml, priceFull, desc = "", tag = "", note = "", add = "" }) {
+  return `<article class="dcard" data-dish data-search="${esc(search)}">
+      <div class="dc-photo">${photo}</div>
+      <div class="dc-line">
+        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">${esc(name)}</button></h3>
+        <p class="dc-price">${priceHtml}</p>
+      </div>
+      <template data-dc-detail>
+        <p class="dd-price">${priceFull}</p>
+        ${tag ? `<p class="dd-tag">${esc(tag)}</p>` : ""}
+        ${desc ? `<p class="dd-desc">${esc(desc)}</p>` : ""}
+        ${note ? `<p class="dd-note">${esc(note)}</p>` : ""}
+        ${add}
+      </template>
+    </article>`;
+}
+
+// One dish of the menu. \`image\` stays empty until the restaurant has a real photo of that dish: a card without a picture beats a
+// picture of another dish. Descriptions are the ones in menu.mjs; a dish without one simply has none in its dialog.
+function dishCard(t, d) {
+  const L = t.lang;
+  const O = t.order;
+  const cat = categories.find((c) => c.id === d.category);
+  const search = normalize([d.name, d.description?.en, d.description?.pt, cat.name.en, cat.name.pt].filter(Boolean).join(" "));
+  const verb = d.options.length ? O.choose : O.add;
+  return dcard(t, {
+    id: d.id, name: d.name, search, photo: dishPhoto(t, d),
+    priceHtml: `<b class="${canOrder(d) ? "" : "is-tbc"}">${cardPrice(t, d)}</b>`,
+    priceFull: dishPrice(t, d),
+    desc: d.description ? d.description[L] : "",
+    add: canOrder(d) ? `<button class="btn btn-terra dd-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(verb)}</span></span></button>` : "",
+  });
+}
+
+// The drinks (src/data/sample-drinks.mjs): photograph, name and a PROVISIONAL price. The restaurant has not sent its drinks list, so
+// every name and price here is an estimate to be validated by Carlos (docs/PRECOS-PROVISORIOS-BEBIDAS.md is generated by the build and
+// lists them all). They are labelled "provisional price" on the card's dialog and cannot be added to an order. Shown only while
+// site.showSamples is true and the menu has no real drinks.
 function sampleDrinksSection(t, cat) {
   const L = t.lang;
   const O = t.order;
-  // Refinement phase: one compact grid in the groups' order, the group as each card's small tag (most groups hold a
-  // single sample, so a sub-heading per group only repeated the drink's name). Real drinks keep their sub-headings.
   const order = Object.keys(cat.groups);
   const list = [...sampleDrinks].sort((a, b) => order.indexOf(a.group) - order.indexOf(b.group));
-  const groups = `<div class="menu-grid is-samples">${list.map((d) => `<article class="dish has-photo is-sample" data-dish data-search="${esc(normalize(d.name.pt + " " + d.name.en + " " + cat.name.pt + " " + cat.name.en))}">
-        ${existsSync(tempPhotoFile(d.id)) ? tempPhoto(t, d.id, d.name[L]) : ""}
-        <div class="dish-body"><h3>${esc(d.name[L])}</h3><div class="dish-foot"><span class="sample-tag">${esc(O.sampleTag)}</span>${cat.groups[d.group] && cat.groups[d.group][L] !== d.name[L] ? `<span class="dish-group">${esc(cat.groups[d.group][L])}</span>` : ""}</div></div>
-      </article>`).join("")}</div>`;
+  const groups = `<div class="menu-grid is-samples">${list.map((d) => dcard(t, {
+    id: d.id, name: d.name[L],
+    search: normalize(d.name.pt + " " + d.name.en + " " + cat.name.pt + " " + cat.name.en),
+    photo: existsSync(tempPhotoFile(d.id)) ? tempPhoto(t, d.id, d.name[L]) : `<div class="dish-photo is-pending" aria-hidden="true"><span class="dp-mark">${esc(d.name[L].trim()[0])}</span></div>`,
+    priceHtml: `<b>${money(d.price)}</b>`,
+    priceFull: money(d.price),
+    tag: cat.groups[d.group] && cat.groups[d.group][L] !== d.name[L] ? cat.groups[d.group][L] : "",
+    note: O.provisionalNote,
+  })).join("")}</div>`;
   return `<section class="menu-cat" id="cat-${cat.id}" data-cat="${cat.id}" aria-labelledby="cat-${cat.id}-title">
       <header class="menu-cat-head"><h3 id="cat-${cat.id}-title">${esc(cat.name[L])}</h3><p>${esc(O.sampleNote)}</p></header>
       ${groups}
     </section>`;
 }
 
-// One dish. With \`link\` the name links to the menu (homepage row). \`image\` stays empty until the
-// restaurant has a real photo of that dish: a card without a picture beats a picture of another dish.
-function dishCard(t, d, { link = "" } = {}) {
-  const L = t.lang;
+// The dish dialog: one per menu, filled on demand. A <dialog>: focus trap, Escape and an inert page come from the browser.
+function dishDialog(t) {
   const O = t.order;
-  const cat = categories.find((c) => c.id === d.category);
-  const search = normalize([d.name, d.description?.en, d.description?.pt, cat.name.en, cat.name.pt].filter(Boolean).join(" "));
-  const verb = d.options.length ? O.choose : O.add;
-  return `<article class="dish has-photo" data-dish data-search="${esc(search)}">
-      ${dishPhoto(t, d)}
-      <div class="dish-body">
-        <p class="dish-tag">${esc(cat.name[L])}</p>
-        <h3>${link ? `<a class="dish-link" href="${link}">${esc(d.name)}</a>` : esc(d.name)}</h3>
-        ${d.description ? `<p class="dish-desc">${esc(d.description[L])}</p>` : ""}
-        <div class="dish-foot">
-          <span class="price${canOrder(d) ? "" : " is-tbc"}">${dishPrice(t, d)}</span>
-          ${canOrder(d) ? `<button class="btn btn-dark btn-sm dish-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(verb)}</span></span></button>` : ""}
-        </div>
-      </div>
-    </article>`;
+  return `<dialog class="dish-dialog" data-dish-dialog aria-labelledby="dd-title">
+    <button class="icon-btn dd-close" type="button" aria-label="${esc(t.common.close)}" data-dd-close>${icon("close")}</button>
+    <div class="dd-photo" data-dd-photo></div>
+    <div class="dd-body">
+      <h2 id="dd-title" class="dd-name" data-dd-name></h2>
+      <div data-dd-detail></div>
+    </div>
+  </dialog>`;
 }
 
 // A dish as one line of a printed menu: name and description, price, and a round add button.
@@ -405,32 +428,9 @@ function menuSection(t) {
       <p class="menu-empty" hidden data-menu-empty></p>
     </div>
   </div>
+  ${dishDialog(t)}
 </section>`;
 }
-
-function roomCards(t, list, cls = "") {
-  const L = t.lang;
-  const h = t.home.rooms;
-  return `<div class="room-grid ${cls}">${list
-    .map((r, i) => `<article class="room-card"${rv(i * 90)}>
-      <a class="room-img" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">
-        ${figure(t, r.images[0], { sizes: "(min-width: 1000px) 30vw, 92vw", ratio: "3/2" })}
-        ${r.badge ? `<span class="pill pill-dark">${esc(r.badge[L])}</span>` : ""}
-      </a>
-      <div class="room-body">
-        <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
-        <p>${esc(r.summary[L])}</p>
-        ${roomFeatures(t, r)}
-        <div class="room-foot">
-          ${fromPrice(t, r)}
-          <a class="btn btn-cream btn-sm" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(h.book)}${icon("arrow")}</a>
-        </div>
-      </div>
-    </article>`)
-    .join("")}</div>`;
-}
-
-const HUT_DECO = ""; // (the faint watermark was removed with the symbol redesign: the logo is the supplied one)
 
 function infoGrid(t) {
   const L = t.lang;
@@ -531,45 +531,6 @@ function breakfastSection(t, list) {
       <ul class="dish-lines bkf-list"${rv(140)}>${list.map((d) => dishLine(t, d)).join("")}</ul>
       <div class="btn-row"${rv(160)}><a class="btn btn-terra" href="${href("restaurant", t.lang, "#cat-breakfast")}">${esc(B.cta)}${icon("arrow")}</a></div>
     </div>
-  </div>
-</section>`;
-}
-
-// Rooms: panels that open on hover or focus (the first is open); on a phone they stack as cards. Capacity and
-// amenities only show once the owner has confirmed them (site.roomDetailsConfirmed).
-function suitesSection(t) {
-  const L = t.lang;
-  const S = t.land.suites;
-  const sure = site.roomDetailsConfirmed;
-  return `<section class="suites" id="quartos" aria-labelledby="rooms-title">
-  <div class="wrap">
-    <div class="su-head">
-      ${heading({ eyebrow: S.eyebrow, title: S.title, accent: S.titleAccent, id: "rooms-title" })}
-      <div${rv(100)}>
-        <p class="su-lead">${esc(S.body)}</p>
-        <a class="btn btn-cream" href="${href("stay", L, "#quartos")}">${esc(S.all)}${icon("arrow")}</a>
-      </div>
-    </div>
-    <div class="su-row" data-suites>${rooms
-      .map((r, i) => `<article class="su${i === 0 ? " is-on" : ""}" data-su>
-      <a class="su-img" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 56vw, 92vw" })}</a>
-      <div class="su-rail" aria-hidden="true"><span>0${i + 1}</span><b>${esc(r.name[L])}</b></div>
-      <div class="su-body">
-        <p class="su-top"><span>0${i + 1}<small>/0${rooms.length}</small></span></p>
-        <h3><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
-        <p class="su-sum">${esc(r.tagline[L])}</p>
-        ${sure && r.features.length ? `<ul class="chips">${r.features.map((f) => `<li>${esc(f[L])}</li>`).join("")}</ul>` : ""}
-        ${sure || r.price ? "" : `<p class="su-tbc">${esc(S.tbc)}</p>`}
-        <div class="su-foot">
-          ${r.price ? fromPrice(t, r) : ""}
-          <div class="su-btns">
-            <a class="btn btn-ghost-light btn-sm" href="${href("room:" + r.id, L)}">${esc(S.view)}</a>
-            <a class="btn btn-cream btn-sm" href="${waLink(fmt(S.wa, { room: r.name[L] }))}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(S.enquire)}</a>
-          </div>
-        </div>
-      </div>
-    </article>`)
-      .join("")}</div>
   </div>
 </section>`;
 }
@@ -933,11 +894,11 @@ function reviewsSection(t) {
         <span class="rv-word">${esc(R.scoreWord[k])} · ${esc(fmt(R.countLong, { count: P[k].count }))}</span>
         <span class="rv-go">${esc(R.readAll)}${icon("arrow-up-right")}</span>
       </a>`).join("");
-  const ownCard = `<a class="rv-score rv-own-card" href="#rv-form" data-open-feedback>
+  const ownCard = `<button type="button" class="rv-score rv-own-card" data-open-feedback aria-haspopup="dialog" aria-controls="rv-form">
         <span class="rv-plat">${esc(t.land.resort.rvOwnTitle)}</span>
         <span class="rv-num rv-own-line">${esc(t.land.resort.rvOwnBody)}</span>
         <span class="rv-go">${esc(t.land.resort.rvOwnCta)}${icon("arrow")}</span>
-      </a>`;
+      </button>`;
   const scores = scoreCards + ownCard;
   const checkedDates = [...new Set(platforms.map((k) => P[k].checked).filter(Boolean))];
   const ext = externalReviews.filter((r) => P[r.platform] && P[r.platform].url);
@@ -962,15 +923,14 @@ function reviewsSection(t) {
       ${scores ? `<div class="rv-scores-wrap"><div class="rv-scores">${scores}</div>${checkedDates.length ? `<p class="rv-checked">${esc(fmt(R.checked, { date: checkedDates.map(longDate).join(", ") }))}</p>` : ""}</div>` : `<div class="rv-badge">${tripadvisorBadge(t, "is-large")}</div>`}
     </header>
   </div>
-  <div class="wrap">
-    <div class="rv-own">
-      ${list}
-      <details class="rv-form" id="rv-form">
-        <summary><span>${esc(R.leaveTitle)}</span> ${esc(FB.title)}${icon("plus")}</summary>
-        <p class="rv-form-lead">${esc(FB.lead)}</p>
-        <form class="booking-form" data-booking="review" novalidate data-wa="${esc(FB.wa)}" data-err-name="${esc(FB.errors.name)}" data-err-rating="${esc(FB.errors.rating)}" data-err-text="${esc(FB.errors.text)}" data-err-consent="${esc(FB.errors.consent)}">
+  ${list ? `<div class="wrap"><div class="rv-own">${list}</div></div>` : ""}
+</section>
+<dialog class="fb-dialog" id="rv-form" aria-labelledby="fb-title" data-fb-dialog>
+  <header class="fb-head"><h2 id="fb-title">${esc(t.land.resort.rvOwnTitle)}</h2><button class="icon-btn" type="button" aria-label="${esc(t.common.close)}" data-fb-close>${icon("close")}</button></header>
+  <p class="fb-lead">${esc(FB.lead)}</p>
+  <form class="booking-form" data-booking="review" novalidate data-wa="${esc(FB.wa)}" data-err-name="${esc(FB.errors.name)}" data-err-rating="${esc(FB.errors.rating)}" data-err-text="${esc(FB.errors.text)}" data-err-consent="${esc(FB.errors.consent)}">
           <div class="form-grid">
-            ${field({ id: "fb-name", name: "name", label: FB.name, attrs: 'autocomplete="given-name" required maxlength="40"' })}
+            ${field({ id: "fb-name", name: "name", label: FB.name,  })}
             ${field({ id: "fb-exp", name: "experience", label: FB.experience, control: `<select data-pick="select" data-icon="star">${exp}</select>` })}
             <fieldset class="field is-full rv-rating"><legend>${esc(FB.rating)}</legend><div class="rv-stars-in">${rating}</div><p class="error" id="fb-rating-err" aria-live="polite"></p></fieldset>
             ${field({ id: "fb-text", name: "text", type: "textarea", label: FB.text, attrs: 'required minlength="20" maxlength="700"', full: true })}
@@ -981,10 +941,7 @@ function reviewsSection(t) {
           <div class="form-actions"><button class="btn btn-dark btn-lg" type="submit">${icon("whatsapp")}<span data-submit-label>${esc(FB.submit)}</span></button></div>
           <p class="form-note">${esc(FB.note)}</p>
         </form>
-      </details>
-    </div>
-  </div>
-</section>`;
+</dialog>`;
 }
 
 // Events, on the home page: an invitation, not a list of services.
@@ -1309,8 +1266,8 @@ export function home(t) {
       <span class="wk-media">${figure(t, key, { sizes: "(min-width: 1100px) 19vw, (min-width: 700px) 28vw, 40vw", ratio: "4/5", decorative: true })}</span>
       <span class="wk-body"><strong>${esc(RS.wlCards[i][0])}</strong><span>${esc(RS.wlCards[i][1])}</span><span class="wk-go">${esc(RS.wlCards[i][2])}${icon("arrow")}</span></span>
     </a>`;
-  // From the kitchen: ten dishes of the menu, each with a photograph of a similar dish (illustrative, labelled); names, texts and prices come from menu.mjs only.
-  const fdIds = ["grilled-fish", "saute-prawns", "lauhata-special-fried-rice", "steak-bitoque", "satay-main", "chicken-curry", "tom-yum-prawns", "calamari-rings", "mie-goreng", "grilled-chicken"];
+  // From the kitchen: eight dishes of the menu (a PROVISIONAL editorial selection for variety of look and kind, NOT best-sellers: no sales data; confirm with Carlos), each with a photograph of a similar dish (illustrative, labelled); names, texts and prices come from menu.mjs only.
+  const fdIds = ["grilled-fish", "saute-prawns", "lauhata-special-fried-rice", "steak-bitoque", "satay-main", "chicken-curry", "tom-yum-prawns", "grilled-chicken"];
   const fd = fdIds.map((id) => items.find((d) => d.id === id)).filter(Boolean);
   const fdDish = (d) => `<li class="kc-item"><article class="kc-card">
       <div class="kc-media">${dishPhoto(t, d)}</div>
@@ -1388,15 +1345,15 @@ ${special}
 <section class="section ex" id="experiencias" aria-labelledby="ex-title">
   <div class="wrap ex-grid">
     <div class="ex-photos">
-      <figure class="ex-big">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 44vw, 92vw", ratio: "4/5", decorative: true })}</figure>
+      <figure class="ex-big">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 44vw, 92vw", ratio: "4/5", decorative: true })}<figcaption><span>${esc(images.sunsetSea.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></figcaption></figure>
       <figure class="ex-small">${figure(t, "aerialGarden", { sizes: "(min-width: 900px) 24vw, 52vw", ratio: "1/1", decorative: true })}</figure>
     </div>
     <div class="ex-copy">
-      <h2 id="ex-title" class="ex-title">${esc(RS.expTitle)}</h2>
-      <p class="ex-lead">${esc(RS.expLead)}</p>
-      <div class="ex-item"><h3>${esc(RS.xCards[0][0])}</h3><p>${esc(RS.xCards[0][1])}</p></div>
-      <div class="ex-item"><h3>${esc(RS.xCards[1][0])}</h3><p>${esc(RS.xCards[1][1])}</p><ul class="mo-kinds">${kinds.map((k) => `<li>${esc(k)}</li>`).join("")}</ul></div>
-      <div class="pv-actions"><a class="btn btn-terra" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}</a></div>
+      <h2 id="ex-title" class="ex-title" data-split>${esc(RS.expTitle)}</h2>
+      <p class="ex-lead"${rv(60)}>${esc(RS.expLead)}</p>
+      <div class="ex-item ex-sun"${rv(120)}><h3>${esc(RS.xCards[0][0])}</h3><p>${esc(RS.xCards[0][1])}</p></div>
+      <div class="ex-item"${rv(180)}><h3>${esc(RS.xCards[1][0])}</h3><p>${esc(RS.xCards[1][1])}</p><ul class="mo-kinds">${kinds.map((k) => `<li>${esc(k)}</li>`).join("")}</ul></div>
+      <div class="pv-actions"${rv(240)}><a class="btn btn-terra" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}${icon("arrow")}</a></div>
     </div>
   </div>
 </section>
@@ -1470,34 +1427,39 @@ ${finalSection(t, "aerialGarden")}`;
   };
 }
 
-// ================= STAY: two large horizontal rooms, mirrored, each with its own photo carousel =================
-// Photographs: the first three of each room (rooms.mjs); today they are illustrative pictures and say so on the picture.
-// Features: only what the owner confirmed (beds, television). Wi-Fi, bathroom and breakfast stay out until confirmed.
+// ================= STAY: two large horizontal rooms, mirrored, each with its own photo gallery =================
+// Photographs: the first three of each room (rooms.mjs); today they are illustrative pictures and say so on the picture. Each gallery
+// is a scroll-snap strip with three progress bars on top (story-like: the active bar fills, then the next photograph shows; main.js).
+// Facts: the price per night (rooms.mjs, $90), who it sleeps (the Queen & Single Room's children's ages are PENDING, flagged on the card)
+// and the beds. What the whole accommodation offers is listed once below the two rooms (lodgingBlock).
 function roomShowcase(t) {
   const L = t.lang;
   const S = t.stay;
   return `<div class="rs-list">${rooms
     .map((r, i) => {
       const imgs = r.images.slice(0, 3);
-      const feats = suiteAmenityItems(t, r);
+      const specs = [["users", r.capacity[L]], ...suiteAmenityItems(t, r)];
       return `<article class="rs-room${i % 2 ? " is-flip" : ""}" id="room-${r.id}" aria-labelledby="rs-${r.id}">
       <div class="rs-gallery" data-rg>
-        <ul class="rs-track" data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k, j) => `<li class="rs-slide">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "4/3" })}</li>`).join("")}</ul>
+        <ul class="rs-track" data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" })}</li>`).join("")}</ul>
+        <div class="rs-bars" role="group" aria-label="${esc(fmt(t.carousel.label, { room: r.name[L] }))}">${imgs.map((k, j) => `<button class="rs-bar" type="button" data-rg-bar aria-label="${esc(fmt(t.carousel.goTo, { n: j + 1, total: imgs.length }))}"><i></i></button>`).join("")}</div>
         <div class="rs-ctrl">
-          <button class="kc-btn" type="button" data-rg-prev aria-label="${esc(t.common.previous)}">${icon("left")}</button>
-          <span class="rs-count" data-rg-count aria-live="polite">1 / ${imgs.length}</span>
-          <button class="kc-btn" type="button" data-rg-next aria-label="${esc(t.common.next)}">${icon("right")}</button>
+          <button class="kc-btn" type="button" data-rg-prev aria-label="${esc(t.carousel.prev)}">${icon("left")}</button>
+          <button class="kc-btn" type="button" data-rg-next aria-label="${esc(t.carousel.next)}">${icon("right")}</button>
         </div>
       </div>
       <div class="rs-info">
         <h3 id="rs-${r.id}" class="rs-name">${esc(r.name[L])}</h3>
+        <p class="rs-price"><strong>${esc(r.price || t.common.priceTbc)}</strong>${r.price ? `<span>${esc(t.home.rooms.night)}</span>` : ""}</p>
         <p class="rs-desc">${esc(r.description[L])}</p>
-        <ul class="rs-feats">${feats.map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
+        <ul class="rs-feats">${specs.map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
+        ${r.capacityPending ? `<p class="rp-pending">${esc(S.capacityPending)}</p>` : ""}
         <div class="rs-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(S.viewRoom)}${icon("arrow")}</a></div>
       </div>
     </article>`;
     })
-    .join("")}</div>`;
+    .join("")}</div>
+  ${lodgingBlock(t)}`;
 }
 
 // ================= STAY =================
@@ -1519,8 +1481,7 @@ ${pageHero(t, {
   ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
 })}
 
-<section class="section rooms-cine" id="quartos" aria-labelledby="rooms-title">
-  ${HUT_DECO}
+<section class="section rooms-stay" id="quartos" aria-labelledby="rooms-title">
   <div class="wrap">
     <div class="split-head">
       ${heading({ title: H.title, accent: H.titleAccent, id: "rooms-title" })}
@@ -1558,6 +1519,7 @@ export function room(t, r) {
   const row = (label, value) => `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`;
   const facts = [
     r.badge ? row(S.roomType, esc(r.badge[L])) : "",
+    r.capacity ? row(S.roomCapacity, esc(r.capacity[L]) + (r.capacityPending ? ` <small class="rp-pending">${esc(S.capacityPending)}</small>` : "")) : "",
     r.beds ? row(S.roomBeds, esc(r.beds[L])) : "",
     r.suitability ? row(S.roomSuits, esc(r.suitability[L])) : "",
     r.amenities && r.amenities.length ? row(S.roomFeatures, r.amenities.map((f) => esc(f[L])).join(", ")) : "",
@@ -1607,6 +1569,7 @@ ${pageHero(t, {
       <p class="ss-ask-note">${esc(S.askMoreNote)}</p>
     </div>
   </div>
+  <div class="wrap">${lodgingBlock(t)}</div>
 </section>
 
 <section class="section suite-request" aria-labelledby="ask-title">

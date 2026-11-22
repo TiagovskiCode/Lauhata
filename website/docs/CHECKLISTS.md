@@ -3,6 +3,23 @@
 Atualizado a 4 de novembro de 2026. Este documento separa o que está **confirmado**, o que **precisa de confirmação do
 Carlos**, o que é **conteúdo temporário de pré-visualização** e o que **não pode ser publicado**.
 
+## 0. Atualização de 22 de novembro de 2026 (pedido do cliente) — prevalece sobre o resto deste documento
+
+- **Nomes oficiais dos quartos:** «Queen Room» (1 cama Queen Size) e «Queen & Single Room» (1 cama Queen Size + 1 cama de
+  solteiro). Não há cama King em lado nenhum. As referências a «Suite King», «Suite Família» e «Quarto Vista Mar» abaixo são
+  históricas.
+- **Preço:** **$90 por noite**, por quarto (não por pessoa), nos dois quartos (`price` em `src/data/rooms.mjs`). Pagamento no local.
+- **Capacidade:** Queen Room, até 2 adultos. Queen & Single Room, **até 2 adultos e 2 crianças, PENDENTE DE CONFIRMAÇÃO**
+  (idades das crianças e condições de ocupação): está marcada com `capacityPending: true` em `rooms.mjs` e o site mostra a
+  frase «a confirmar» junto da capacidade. Quando o Lauhata confirmar, retirar `capacityPending`.
+- **Comodidades do alojamento (publicadas, uma só vez, para os dois quartos):** transfer do aeroporto, quartos para não
+  fumadores, estacionamento gratuito, restaurante no local, em frente à praia, bar, pequeno-almoço, Wi-Fi, casa de banho
+  privativa (`lodgingAmenities` em `rooms.mjs`). Nada mais. Ar condicionado continua **por confirmar** (`pendingAmenities`).
+- **Bebidas:** têm agora **preços provisórios em USD**, estimados (não confirmados), marcados `provisional: true` em
+  `src/data/sample-drinks.mjs`. Lista completa gerada em `docs/PRECOS-PROVISORIOS-BEBIDAS.md`. O site rotula-os «preço
+  provisório» e não os deixa pedir. **Não são preços oficiais.**
+- **Carrossel «A cozinha»:** 8 pratos, seleção editorial provisória (não são «os mais vendidos»).
+
 ## 1. Pesquisa: fontes e fiabilidade
 
 | Facto | Fonte | Fiabilidade | No site? |
@@ -41,7 +58,7 @@ tal, com ligação.
 
 ## 2. O Carlos tem de confirmar
 
-- [ ] **Nomes das suites:** «Suite King» e «Suite King & Single» são provisórios. Qual é o nome comercial?
+- [x] **Nomes dos quartos:** «Queen Room» e «Queen & Single Room» (confirmado a 22/11/2026).
 - [ ] **Por suite:** quantas pessoas recebe; casa de banho privativa (duche, água quente); ar condicionado; Wi-Fi; varanda
   ou pátio; vista; roupeiro; tamanho real das camas.
 - [ ] **Pequeno-almoço:** está incluído no preço da suite?
@@ -54,11 +71,11 @@ tal, com ligação.
 - [ ] Morada e ponto no mapa (Aldeia Pissu Kraik, Suku Lauhata, Bazartete).
 - [ ] Horário do restaurante e do bar (ementa: 08–10 e 11–21; Câmara: 09–22).
 - [ ] Email e telefone fixo, se houver; redes sociais oficiais.
-- [ ] Ocupação máxima de cada quarto (adultos e crianças).
-- [ ] Preço por noite de cada quarto, e se inclui pequeno-almoço.
+- [ ] Ocupação do Queen & Single Room: confirmar «2 adultos + 2 crianças» e até que idade (marcado como pendente no código e no site). Queen Room: 2 adultos, indicado pelo cliente.
+- [x] Preço por noite: $90 por quarto (22/11/2026). Falta saber se o pequeno-almoço está incluído no preço (o site lista o pequeno-almoço como comodidade do alojamento, sem dizer que está incluído).
 - [ ] Horas de entrada e saída; horário da receção.
 - [ ] Comodidades (lista abaixo).
-- [ ] Carta de bebidas real, com preços. As 14 bebidas de exemplo (água, água de coco, refrigerantes, sumos de laranja e
+- [ ] Carta de bebidas real, com preços. As 14 bebidas de exemplo (com preços provisórios estimados, ver `PRECOS-PROVISORIOS-BEBIDAS.md`) (água, água de coco, refrigerantes, sumos de laranja e
   manga, café, chá, dois sem álcool, cerveja, vinho a copo, mojito, piña colada, espirituosas) **precisam de validação do
   dono**: quais existem, nomes e preços. A estrutura já está pronta: cada bebida real entra em `menu.mjs` com
   `category: "drinks"`, `group` e `price`, e passa a poder ser pedida como os pratos.
@@ -98,7 +115,7 @@ Carlos a confirmar; aparece sozinha na linha «Confirmado pelo Lauhata».
   CC BY, CC BY-SA), uma por prato, todas com a etiqueta «Imagem ilustrativa» e com crédito na página de privacidade.
   Lista: `src/data/temp-photos.json`; originais em `fotos-originais/temporarias/`. Para substituir uma, guardar a foto real
   em `src/assets/img/pratos/<id>-640.jpg` (ver `FOTOS-PRATOS.md`).
-- **Bebidas de exemplo:** `src/data/sample-drinks.mjs`, marcadas «Exemplo», sem preço, não se podem pedir. Desligar com
+- **Bebidas de exemplo:** `src/data/sample-drinks.mjs`, com **preço provisório estimado** (`provisional: true`, lista em `PRECOS-PROVISORIOS-BEBIDAS.md`), não se podem pedir. Desligar com
   `showSamples: false` em `site.mjs` antes do lançamento ou quando houver a carta real.
 - **Fotos dos quartos:** ilustrativas (Unsplash e imagens da maqueta), etiquetadas. Faltam pelo menos 3 fotos reais de cada
   quarto.
@@ -154,7 +171,9 @@ as páginas legais e de agradecimento. Confirmar com o Carlos se as páginas de 
 
 | Assunto | O que falta | Onde entra |
 |---|---|---|
-| Wi-Fi, pequeno-almoço incluído, casa de banho privativa, ar condicionado | Confirmar, **por suite**, o que é garantido | `pendingAmenities` → `amenities` em `src/data/rooms.mjs` (já têm ícone e texto PT/EN; só aparecem depois de copiados) |
+| Ar condicionado (único ponto ainda por confirmar); pequeno-almoço incluído no preço? | Confirmar | `pendingAmenities` → `lodgingAmenities` em `src/data/rooms.mjs` |
+| Capacidade do Queen & Single Room | Idades das crianças e condições (2 adultos + 2 crianças é a intenção) | `capacityPending` em `src/data/rooms.mjs` |
+| Preços das bebidas | Validar os 14 preços provisórios | `docs/PRECOS-PROVISORIOS-BEBIDAS.md` |
 | Prazo de resposta | Se há um prazo garantido (ex.: «24 horas»). Hoje o site diz só que a equipa responde para confirmar | `responseTime` em `src/data/site.mjs` |
 | Horário do restaurante | Que dias (a ementa só indica 08–10 e 11–21) | `restaurantHours` / FAQ |
 | Contactos e perfis | Email, redes sociais oficiais, telefone fixo | `site.mjs` (`email`, `social`) |
@@ -164,7 +183,7 @@ as páginas legais e de agradecimento. Confirmar com o Carlos se as páginas de 
 | Equipa | Fotografias reais da equipa, com autorização | Nossa história |
 | Fotografias | Suites (pelo menos 3 por suite), pratos, bebidas, equipa, eventos | ver «Lista de fotos e vídeos» abaixo |
 | Carta de bebidas | Bebidas reais e preços | `menu.mjs` |
-| Nomes das suites | Nomes comerciais definitivos (hoje «Suite King» e «Suite King & Single») | `rooms.mjs` |
+| Nomes dos quartos | Confirmados: «Queen Room» e «Queen & Single Room» | `rooms.mjs` |
 
 ### Lista de fotos e vídeos a recolher no Lauhata
 

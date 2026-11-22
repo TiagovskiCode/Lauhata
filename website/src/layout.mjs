@@ -30,6 +30,9 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 20V8a4 4 0 0 1 4-4h1.5M9.5 4h3.2a2.3 2.3 0 0 1 2.3 2.3V8M7 11h10l-1 3H8zM9 17v1.5M12 17v2.5M15 17v1.5" ${stroke}/></symbol>
     <symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5M3.5 10l3.3-.9-.9-3.3M20.5 14l-3.3.9.9 3.3M3.5 14l3.3.9-.9 3.3M20.5 10l-3.3-.9.9-3.3" ${stroke}/></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19.5V5M5.5 11.5 12 5l6.5 6.5" ${stroke}/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5 4 12l-.5-2 7-.8L8 4.5 9.5 4l5.5 4.2 4.3-.6c1.1-.2 1.9.9 1.2 1.7l-.6.6-4.2 1.6 1.4 6.6-1.5.7-3.2-5.3z" ${stroke}/></symbol>
+    <symbol id="i-nosmoke" viewBox="0 0 24 24"><path d="M3.5 15.5h12v3h-12zM15.5 15.5v3M19 15.5v3M18.5 12.5c0-1.4 1.5-2 1.5-3.5M16.5 12.5c0-1.6 1.7-2.2 1.7-4" ${stroke}/><circle cx="12" cy="12" r="9" ${stroke}/><path d="M5.6 5.6l12.8 12.8" ${stroke}/></symbol>
+    <symbol id="i-glass" viewBox="0 0 24 24"><path d="M5 4.5h14l-7 8zM12 12.5V19M8 19.5h8" ${stroke}/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" ${stroke}/></symbol>
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" ${stroke}/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" ${stroke}/></symbol>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" ${stroke}/></symbol>
@@ -240,30 +243,30 @@ function header(t, page, alt) {
       ${langMenu(t, alt)}
       ${cartButton(t)}
       <a class="btn btn-terra btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog"><span class="bk-long">${esc(t.land.resort.reserveLong)}</span><span class="bk-short">${esc(t.land.resort.reserve)}</span></a>
-      <button class="nav-toggle sm-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="sm-toggle-t">${esc(t.nav.menuBtn)}</span><span class="sm-bars" aria-hidden="true"><i></i><i></i></span></button>
+      <button class="nav-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="nav-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
     </div>
   </div>
 </header>
-<dialog class="mobile-nav sm-menu" id="mobile-nav" aria-label="${esc(t.nav.primary)}" data-mobile-nav>
-  <div class="sm-layers" aria-hidden="true"><i></i><i></i></div>
-  <div class="sm-panel" data-sm-panel>
-    <div class="sm-top">
-      <button class="sm-close" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close><span class="sm-toggle-t">${esc(t.nav.closeWord)}</span><span class="sm-bars is-x" aria-hidden="true"><i></i><i></i></span></button>
+<dialog class="mobile-nav" id="mobile-nav" aria-label="${esc(t.nav.primary)}" data-mobile-nav>
+  <div class="mn-panel">
+    <div class="mn-top">
+      <span class="mn-title">${esc(t.nav.menuBtn)}</span>
+      <button class="mn-close icon-btn" type="button" aria-label="${esc(t.nav.closeMenu)}" data-nav-close>${icon("close")}</button>
     </div>
-    <nav class="mobile-nav-links sm-links" aria-label="${esc(t.nav.primary)}">
-      <ol class="sm-list">${items.map(([p, label]) => `<li><a class="sm-link" href="${href(p, L)}"${page === p ? ' aria-current="page"' : ""}><span class="sm-mask"><span class="sm-label">${esc(label)}</span></span></a></li>`).join("")}</ol>
+    <nav class="mn-links" aria-label="${esc(t.nav.primary)}">
+      <ul>${items.map(([p, label]) => `<li><a href="${href(p, L)}"${page === p ? ' aria-current="page"' : ""}>${esc(label)}</a></li>`).join("")}</ul>
     </nav>
-    <ul class="sm-sub" data-sm-extra>
+    <ul class="mn-sub">
       <li><a href="${href("about", L)}">${esc(t.nav.story)}</a></li>
       <li><a href="${href("discover", L)}">${esc(t.nav.discover)}</a></li>
       <li><a href="${href("contact", L, "#faq")}">${esc(t.faq.linkLabel)}</a></li>
     </ul>
-    <div class="mobile-nav-cta" data-sm-extra>
-      <a class="btn btn-dark" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
+    <div class="mn-cta">
+      <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
       <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}${icon("bed")}</a>
       ${langSwitch(t, alt, "lang-center")}
     </div>
-    ${Object.entries(site.social).filter(([, u]) => u).length ? `<ul class="sm-social" data-sm-extra>${Object.entries(site.social).filter(([, u]) => u).map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
+    ${Object.entries(site.social).filter(([, u]) => u).length ? `<ul class="mn-social">${Object.entries(site.social).filter(([, u]) => u).map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
   </div>
 </dialog>`;
 }
@@ -369,7 +372,7 @@ export function layout(t, o) {
 <html lang="${t.htmlLang}">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script>/* Intro (the horizon opening): once per visit, never with reduced motion unless the site was opened once with
    ?movimento=completo (remembered, like the rest of the motion). ?intro replays it. Set before first paint: no flash. */try{var q=new URLSearchParams(location.search),m=q.get("movimento");if(m==="completo")localStorage.setItem("lauhata-motion","full");else if(m==="reduzido")localStorage.removeItem("lauhata-motion");var full=localStorage.getItem("lauhata-motion")==="full";if((q.has("intro")||!sessionStorage.getItem("lh-intro"))&&(full||!matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("lh-intro-on");sessionStorage.setItem("lh-intro","1")}}catch(e){}</script>
 <script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
@@ -415,7 +418,7 @@ ${site.gaId ? `<script>window.LAUHATA_GA=${JSON.stringify(site.gaId)};</script>
 <body class="${o.hero ? "has-hero" : ""}">
 <div class="lh-intro" aria-hidden="true">
   <div class="intro-sky"><span class="intro-sun"></span><p class="intro-word">${[..."Lauhata"].map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p></div>
-  <div class="intro-sea"><span class="intro-glint"></span><p class="intro-sub">${esc(t.brandLine)}</p></div>
+  <div class="intro-sea"><span class="intro-glint"></span>${[1, 2, 3].map((k) => `<span class="intro-ripple" style="--k:${k}"></span>`).join("")}<p class="intro-sub">${esc(t.brandLine)}</p></div>
   <span class="intro-line"></span>
 </div>
 ${SPRITE}

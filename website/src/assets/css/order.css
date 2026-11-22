@@ -71,24 +71,10 @@ html.has-modal { overflow: hidden; }
 .menu-cat[hidden] { display: none; }
 .menu-cat-head h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 3vw, 2.5rem); line-height: 1.1; }
 .menu-cat-head p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.93rem; }
-.menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(0.8rem, 1.6vw, 1.2rem); margin-top: 1.2rem; }
 .menu-empty { padding: 3rem 0 1rem; text-align: center; color: var(--muted); }
 .menu-empty[hidden] { display: none; }
 
 /* Dish cards (menu and homepage row). No picture until the restaurant has a photo of the dish. */
-.menu .dish-tag { display: none; }
-.menu.is-searching .dish-tag { display: block; }
-.menu .dish { position: relative; border: 1px solid var(--line); box-shadow: none; }
-.menu .dish-body { padding: 1.2rem 1.3rem 1.1rem; }
-.menu .dish h3 { margin-top: 0; font-size: 1.45rem; font-weight: 400; }
-.menu .dish-desc { font-size: 0.9rem; line-height: 1.5; }
-.dish-foot { gap: 0.8rem; flex-wrap: wrap; }
-.dish-foot .price { font-size: 0.92rem; color: var(--muted); }
-.dish-foot .price b { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; color: var(--ink); }
-.dish-add { position: relative; z-index: 2; margin-left: auto; }
-.dish-add [data-add-label] { display: inline-flex; align-items: center; gap: 0.45rem; }
-.dish-add .icon { width: 1.05em; height: 1.05em; }
-.dish-add.is-added { --bg: var(--wa); }
 
 /* ---------- Options dialog ---------- */
 dialog.pick {
@@ -207,16 +193,19 @@ form[data-order-form].is-sending [type="submit"] { opacity: 0.7; pointer-events:
   .cart-fab { left: 0.6rem; right: 0.6rem; bottom: 0.6rem; justify-content: center; min-height: 56px; }
   .has-bar .cart-fab { bottom: 5.3rem; }
 }
-@media (max-width: 760px) {
-  .menu-grid { grid-template-columns: 1fr; }
-}
 @media (max-width: 640px) {
-  dialog.cart { width: 100%; height: auto; max-height: 92dvh; margin: auto 0 0; border-radius: var(--radius-panel, 24px) var(--radius-panel, 24px) 0 0; box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, 0.5); }
+  /* fit-content, not auto: a modal dialog is fixed with top and bottom set, so height:auto would stretch it to max-height even when the order is empty */
+  dialog.cart { width: 100%; height: fit-content; max-height: 92dvh; margin: auto 0 0; border-radius: var(--radius-panel, 24px) var(--radius-panel, 24px) 0 0; box-shadow: 0 -20px 60px -20px rgba(0, 0, 0, 0.5); }
   dialog.cart[open] { animation-name: sheetIn; }
   dialog.cart.is-closing { animation-name: sheetOut; }
   .cart-panel { height: auto; max-height: 92dvh; }
   .cart-scroll { padding-inline: 1.25rem; }
   .cart-foot, .cart-head { padding-inline: 1.25rem; }
+  .cart-head { padding-block: 0.7rem; }
+  .cart-empty { gap: 0.45rem; padding: 1.4rem 0.5rem 0.8rem; }
+  .cart-empty-mark { width: 40px; height: 40px; }
+  .cart-empty h3 { font-size: 1.4rem; }
+  .cart-empty p { margin-bottom: 0.5rem; }
   dialog.pick { width: 100%; max-width: none; margin: auto 0 0; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 92dvh; }
   dialog.pick[open] { animation-name: sheetIn; }
   dialog.pick.is-closing { animation-name: sheetOut; }

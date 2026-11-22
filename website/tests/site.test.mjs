@@ -30,14 +30,41 @@ test("EN and PT have exactly the same text keys", async () => {
   assert.deepEqual([...b].filter((k) => !a.has(k)), [], "keys only in PT");
 });
 
-test("the room types are exactly Queen Room and Queen & Single Room, with no king bed and no invented capacity or price", async () => {
+test("the room types are exactly Queen Room and Queen & Single Room: $90 a night, the stated capacity, the Queen & Single children's capacity flagged as pending", async () => {
   const rooms = (await import(pathToFileURL(join(root, "src/data/rooms.mjs")))).default;
   assert.deepEqual(rooms.map((r) => r.name.en), ["Queen Room", "Queen & Single Room"]);
   assert.deepEqual(rooms.map((r) => r.name.pt), ["Queen Room", "Queen & Single Room"]);
   assert.deepEqual(rooms.map((r) => r.bedPlan), [["queen"], ["queen", "single"]]);
   for (const r of rooms) {
-    assert.equal(r.price, null, "no price is published until the owner confirms it");
-    assert.equal(r.suitability, null, "no occupancy claim is published");
+    assert.equal(r.price, "$90", "the price is $90 per night (client brief of 22 Nov 2026)");
+    assert.equal(r.suitability, null, "no extra occupancy claim is published");
+    assert.ok(r.capacity.en && r.capacity.pt, "capacity in both languages");
+  }
+  assert.equal(rooms[0].capacity.en, "Up to 2 adults");
+  assert.ok(!rooms[0].capacityPending, "the Queen Room capacity is firm");
+  assert.equal(rooms[1].capacityPending, true, "two children in the Queen & Single Room await Lauhata's confirmation of ages and occupancy");
+});
+
+test("the nine shared amenities, and nothing else, are listed once on the home page, the stay page and each room page, in both languages", async () => {
+  const { lodgingAmenities } = await import(pathToFileURL(join(root, "src/data/rooms.mjs")));
+  assert.deepEqual(lodgingAmenities.map((a) => a.en), ["Airport transfer", "Non-smoking rooms", "Free parking", "On-site restaurant", "Beachfront location", "Bar", "Breakfast", "Wi-Fi", "Private bathroom"]);
+  for (const f of ["index.html", "stay/index.html", "stay/queen-room/index.html", "stay/queen-and-single-room/index.html", "pt/index.html", "pt/alojamento/index.html", "pt/alojamento/queen-room/index.html"]) {
+    const h = read(f);
+    assert.equal([...h.matchAll(/<ul class="rp-amen">/g)].length, 1, f + ": the shared amenities block");
+    const ul = h.match(/<ul class="rp-amen">[\s\S]*?<\/ul>/)[0];
+    assert.equal([...ul.matchAll(/<li>/g)].length, 9, f + ": nine amenities");
+    assert.ok(!/\bking\b/i.test(h.replace(/<script[\s\S]*?<\/script>/g, "")), f + ": a king bed is mentioned");
+  }
+});
+
+test("stay page: a light ground, the price and capacity per room, and three progress bars on each gallery in place of a '1 / 3' counter", () => {
+  for (const f of ["stay/index.html", "pt/alojamento/index.html"]) {
+    const h = read(f);
+    assert.ok(/<section class="section rooms-stay"/.test(h) && !/rooms-cine/.test(h), f + ": light section");
+    assert.equal([...h.matchAll(/data-rg-bar/g)].length, 6, f + ": three bars on each of two galleries");
+    assert.ok(!/data-rg-count/.test(h) && !/\d \/ \d<\/span>/.test(h), f + ": the numeric counter is back");
+    assert.equal([...h.matchAll(/class="rs-price"/g)].length, 2, f + ": price on both rooms");
+    assert.equal([...h.matchAll(/class="rp-pending"/g)].length, 1, f + ": the pending capacity is flagged once");
   }
 });
 
@@ -104,7 +131,7 @@ test("the stay page shows two large mirrored rooms, each with its own gallery of
     assert.deepEqual(tracks, [3, 3], f);
     const srcs = [...stay.matchAll(/<li class="rs-slide">[\s\S]*?src="([^"]+)"/g)].map((m) => m[1]);
     assert.equal(new Set(srcs).size, 6, f + ": a photograph is repeated");
-    assert.ok(!/Wi-?Fi|Private bathroom|Casa de banho|Breakfast included/i.test(stay.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<symbol[\s\S]*?<\/symbol>/g, "")), f + ": an unconfirmed amenity is published");
+    assert.ok(!/Air conditioning|Ar condicionado|Breakfast included|Pequeno-almoço incluído/i.test(stay.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<symbol[\s\S]*?<\/symbol>/g, "")), f + ": an unconfirmed amenity is published");
   }
 });
 
@@ -156,8 +183,8 @@ test("the menu: every dish has a unique id, a category that exists, and categori
 test("the mobile menu lists the same five links as the header, each once", () => {
   for (const f of ["index.html", "pt/index.html", "stay/index.html"]) {
     const h = read(f);
-    const m = h.match(/<nav class="mobile-nav-links sm-links"[^>]*>([\s\S]*?)<\/nav>/)[1];
-    const labels = [...m.matchAll(/<span class="sm-label">([^<]+)<\/span>/g)].map((x) => x[1]);
+    const m = h.match(/<nav class="mn-links"[^>]*>([\s\S]*?)<\/nav>/)[1];
+    const labels = [...m.matchAll(/<a [^>]*>([^<]+)<\/a>/g)].map((x) => x[1]);
     assert.equal(labels.length, 5, `${f}: ${labels.join(", ")}`);
     assert.equal(new Set(labels).size, 5, `${f}: a link appears twice`);
     // the same five destinations as the desktop header, in the same order
@@ -166,14 +193,14 @@ test("the mobile menu lists the same five links as the header, each once", () =>
   }
 });
 
-test("staggered menu: one header, one logo in it, a toggle that controls the dialog, two layers and a panel, no empty social list", () => {
+test("mobile menu: one header, a circular toggle that controls a plain drawer, no staggered-menu code left anywhere", () => {
   const h = read("index.html");
   assert.equal([...h.matchAll(/<header class="site-header"/g)].length, 1);
-  assert.ok(/class="nav-toggle sm-toggle"[^>]*aria-expanded="false"[^>]*aria-controls="mobile-nav"/.test(h), "toggle");
-  assert.ok(/<dialog class="mobile-nav sm-menu" id="mobile-nav"/.test(h) && /class="sm-layers"/.test(h) && /data-sm-panel/.test(h));
-  const dlg = h.match(/<dialog class="mobile-nav sm-menu"[\s\S]*?<\/dialog>/)[0];
-  assert.ok(!/class="brand/.test(dlg), "the panel repeats the logo");
-  assert.ok(!/class="sm-social"/.test(dlg), "an empty or invented social list is shown");
+  assert.ok(/class="nav-toggle"[^>]*aria-expanded="false"[^>]*aria-controls="mobile-nav"/.test(h), "toggle");
+  const dlg = h.match(/<dialog class="mobile-nav" id="mobile-nav"[\s\S]*?<\/dialog>/)[0];
+  assert.ok(/class="mn-panel"/.test(dlg) && /data-nav-close/.test(dlg), "drawer panel and close button");
+  assert.ok(!/class="brand/.test(dlg), "the drawer repeats the logo");
+  for (const f of ["assets/js/main.js", "assets/css/site.css", "index.html"]) assert.ok(!/staggered|sm-layers|sm-toggle|data-sm-/i.test(read(f)), f + ": staggered-menu leftovers");
 });
 
 test("line index: only on the restaurant page (menu categories, 1000px and up); the home page and the other pages have no sidebar", () => {
@@ -204,7 +231,7 @@ test("the home page: exactly three welcome cards, a special strip with six icon 
   const h = read("index.html");
   assert.equal([...h.matchAll(/<a class="wk-card"/g)].length, 3);
   assert.equal([...h.matchAll(/<li><svg[^>]*class="icon"[^>]*>[\s\S]*?<\/svg><strong>/g)].length >= 6, true, "six icon items in the special strip");
-  assert.ok(/class="section fd"/.test(h) && [...h.matchAll(/<article class="kc-card"/g)].length === 10, "ten carousel dishes");
+  assert.ok(/class="section fd"/.test(h) && [...h.matchAll(/<article class="kc-card"/g)].length === 8, "eight carousel dishes");
   const main = h.match(/<main[\s\S]*?<\/main>/)[0];
   assert.ok(!/href="[^"]*gallery\//.test(main), "the homepage links to the gallery from a section");
   assert.ok(!/class="section gp"/.test(main) && !/class="hs"/.test(main), "gallery preview or facilities strip is back");
@@ -237,14 +264,14 @@ test("the hero is exactly one screen and the ghost button keeps a readable hover
   assert.ok(/\.btn-ghost-light:hover[^{]*\{background:var\(--cream\);color:var\(--ink\)/.test(css), "ghost hover colours");
 });
 
-test("the kitchen carousel: ten equal cards, previous and next buttons with labels, a keyboard-reachable track", () => {
+test("the kitchen carousel: eight equal cards, previous and next buttons with labels, a keyboard-reachable track", () => {
   for (const f of ["index.html", "pt/index.html"]) {
     const h = read(f);
-    assert.equal([...h.matchAll(/<li class="kc-item">/g)].length, 10, f);
+    assert.equal([...h.matchAll(/<li class="kc-item">/g)].length, 8, f);
     assert.ok(/data-kc-prev aria-label="[^"]+"/.test(h) && /data-kc-next aria-label="[^"]+"/.test(h), f + ": arrow labels");
     assert.ok(/data-kc-track tabindex="0"/.test(h), f + ": track not focusable");
     const names = [...h.matchAll(/<article class="kc-card">[\s\S]*?<h3>([^<]+)<\/h3>/g)].map((m) => m[1]);
-    assert.equal(new Set(names).size, 10, f + ": a dish is repeated");
+    assert.equal(new Set(names).size, 8, f + ": the kitchen carousel shows eight different dishes");
   }
 });
 
@@ -266,7 +293,7 @@ test("restaurant menu: a category bar for wide screens and a Filter popover for 
 test("quick add: each carousel card has an Add to Cart button wired to a dish that the cart script knows", () => {
   const h = read("index.html");
   const ids = [...h.matchAll(/class="kc-add" type="button" data-add="([^"]+)"/g)].map((m) => m[1]);
-  assert.ok(ids.length >= 9, "buttons " + ids.length);
+  assert.ok(ids.length >= 8, "buttons " + ids.length);
   const menu = JSON.parse(h.match(/window\.LAUHATA_MENU\s*=\s*(\{[\s\S]*?\});?\s*<\/script>/)[1]);
   for (const id of ids) assert.ok(menu[id], id + " is not in the cart's menu data");
 });
@@ -299,4 +326,36 @@ test("the cart drawer has its own keyframes and a closing time that matches them
   assert.ok(/@keyframescartIn\{/.test(css) && /dialog\.cart\[open\]\{animation:cartIn/.test(css), "cart keyframes");
   const js = readFileSync(join(root, "src/assets/js/order.js"), "utf8");
   assert.ok(/d === drawer \? 340 : 220/.test(js), "closing time matches the 0.34 s exit");
+});
+
+test("restaurant menu: dishes are photo-name-price cards that open one dialog; drinks carry provisional prices that are flagged and never orderable", () => {
+  for (const [f, flag] of [["restaurant/index.html", "Provisional price"], ["pt/restaurante/index.html", "Preço provisório"]]) {
+    const h = read(f);
+    assert.ok([...h.matchAll(/<article class="dcard"/g)].length >= 60, f + ": dish cards");
+    assert.equal([...h.matchAll(/<dialog class="dish-dialog"/g)].length, 1, f + ": one dish dialog");
+    assert.ok(/data-dish-open/.test(h) && /data-dd-close/.test(h), f + ": opener and close button");
+    assert.ok(!/class="dish-body"|class="dish-foot"/.test(h), f + ": the old dish row is back");
+    const drinks = h.match(/<section class="menu-cat" id="cat-drinks"[\s\S]*?<\/section>/)[0];
+    const cards = [...drinks.matchAll(/<article class="dcard"[\s\S]*?<\/article>/g)].map((m) => m[0]);
+    assert.ok(cards.length >= 10, f + ": the sample drinks");
+    for (const c of cards) assert.ok(/<p class="dc-price"><b>\$\d/.test(c) && c.includes(flag) && !/data-add=/.test(c), f + ": a drink without a flagged price, or one that can be ordered");
+  }
+});
+
+test("the 'Share your experience' card opens a feedback dialog; the old inline 'Have you stayed with us?' toggle is gone", () => {
+  for (const f of ["index.html", "pt/index.html"]) {
+    const h = read(f);
+    assert.ok(/<button type="button" class="rv-score rv-own-card" data-open-feedback/.test(h), f + ": the card is a button");
+    assert.ok(/<dialog class="fb-dialog" id="rv-form"/.test(h) && /data-fb-close/.test(h), f + ": the dialog");
+    assert.ok(!/<details class="rv-form"/.test(h) && !/Have you stayed with us|Já ficou connosco/.test(h), f + ": the old toggle");
+  }
+});
+
+test("lightbox, bottom bar and page lock: 100dvh with a fallback, contained image, solid anchored bar, no scrollbar jump under a modal", () => {
+  const css = read("assets/css/site.css").replace(/\s+/g, "");
+  assert.ok(/\.lightbox\[open\]\{[^}]*height:100dvh/.test(css) || /\.lightbox[^{]*\{[^}]*height:100dvh/.test(css), "lightbox 100dvh");
+  assert.ok(/\.lb-figureimg\{[^}]*object-fit:contain/.test(css), "lightbox image is contained");
+  assert.ok(/html\{scrollbar-gutter:stable\}/.test(css) && /html:has\(dialog\[open\]\)\{overflow:hidden\}/.test(css), "no sideways jump when a dialog opens");
+  assert.ok(/\.mobile-bar\{[^}]*position:fixed;[^}]*bottom:0/.test(css), "bar anchored to the bottom");
+  assert.ok(/viewport-fit=cover/.test(read("index.html")), "safe areas available");
 });

@@ -24,7 +24,7 @@
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
     gsap.set(".wl-door, .rp-media, .mo-title, .tt-b, .wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform,clipPath" });
-    gsap.set(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img", { clearProps: "clipPath,transform" });
+    gsap.set(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img, .ex-big img, .ex-small img", { clearProps: "clipPath,transform" });
     gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
   }
   const track = (anim) => { if (anim && anim.scrollTrigger) created.push(anim.scrollTrigger); return anim; };
