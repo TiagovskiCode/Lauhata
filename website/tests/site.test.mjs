@@ -402,3 +402,23 @@ test("dish photography policy: no illustrative dish photograph is shown by defau
   assert.ok(!/is-diet/.test(main), "a diet label was inferred outside the verified section");
   assert.ok(!/pratos-temp/.test(read("assets/js/order.js")) && !/LAUHATA_MENU[^;]*pratos-temp/.test(read("index.html")), "cart data points at illustrative photos");
 });
+
+test("maps: no Google frame loads on page view; a facade with a real photograph offers to load it and links to Google Maps", () => {
+  for (const f of ["discover-liquica/index.html", "contact/index.html", "pt/descobrir-liquica/index.html"]) {
+    const h = read(f).replace(/<script[\s\S]*?<\/script>/g, "");
+    assert.ok(!/<iframe[^>]*google\.com\/maps/.test(h), f + ": a Google map loads with the page");
+    assert.ok(/data-map-facade[^>]*data-src="https:\/\/www\.google\.com\/maps/.test(h) && /data-map-load/.test(h), f + ": facade");
+    assert.ok(/class="mf-actions"[\s\S]*?href="https:\/\/www\.google\.com\/maps\/search/.test(h), f + ": direct link to Google Maps");
+  }
+});
+
+test("original media never reaches the build; Lauhata's own photographs of the rooms and garden are used where they belong", () => {
+  const all = walk(dist).map((f) => f.replace(/\\/g, "/"));
+  assert.ok(!all.some((f) => /DJI_|media-source|\.dng$|\.mov$/i.test(f)), "an original file is in dist");
+  assert.ok(!all.some((f) => statSync(f).size > 8 * 1024 * 1024), "a file over 8 MB is in dist");
+  const stay = read("stay/index.html");
+  assert.ok(/quartos-varanda-/.test(stay) && /class="rs-place"/.test(stay), "stay hero and the place photographs");
+  assert.ok(/quarto-entrada-/.test(read("index.html")), "welcome stay card uses the real entrance photograph");
+  const g = read("gallery/index.html");
+  assert.ok(/data-filter="stay"/.test(g) && [...g.matchAll(/data-group="stay"/g)].length === 5, "gallery group for the rooms and garden");
+});

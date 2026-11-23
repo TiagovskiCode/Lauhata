@@ -27,3 +27,9 @@ O menu móvel é agora uma gaveta simples (alteração posterior à do menu esca
 
 ## Git
 Alterações só no diretório de trabalho; sem commit nem deploy.
+
+## Ronda seguinte (Premium Digital Experience, 23 de novembro de 2026)
+- **Mapas:** o Google Maps já não carrega com a página (Discover, Contact): uma fachada com fotografia aérea real do Lauhata, o local, «Mostrar o mapa» e «Abrir no Google Maps». Fim da caixa cinzenta enquanto o mapa carregava; nenhum pedido ao Google sem o visitante o pedir. O mapa recebe o foco quando aparece.
+- **Bug grave encontrado e corrigido em telemóvel:** nas páginas Contact e Discover, a moldura do mapa combinava `aspect-ratio` com `min-height`, o que a obrigava a ter 427–465 px de largura; o telemóvel encolhia a página inteira (zoom-out) para caber. Os meus varrimentos anteriores mediam `innerWidth`, que cresce com esse zoom-out, e por isso não o apanharam; o varrimento passou a comparar com a largura real do ecrã. 11 páginas × 8 tamanhos: sem overflow.
+- **Vídeo do hero:** auditado e mantido (só em ecrãs 1280–1920, carregado depois da página, não carrega com `prefers-reduced-motion`, poupança de dados ou 2G, pausa fora do ecrã, a fotografia fica se falhar). Não otimizei o ficheiro (5,3 MB): não há ffmpeg neste ambiente.
+- `npm test` 43/43 (novo teste dos mapas). Lighthouse móvel: home 97, contacto 90, Discover 88; acessibilidade, boas práticas e SEO 100; CLS 0.

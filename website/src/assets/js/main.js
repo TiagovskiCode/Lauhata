@@ -340,6 +340,22 @@
     });
   }
 
+  /* ---------- Map facades: the Google map replaces the photograph only when the visitor asks for it ---------- */
+  $$("[data-map-facade]").forEach((box) => {
+    const btn = $("[data-map-load]", box);
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const frame = document.createElement("iframe");
+      frame.title = box.dataset.title || "Map";
+      frame.src = box.dataset.src;
+      frame.loading = "eager";
+      frame.referrerPolicy = "no-referrer-when-downgrade";
+      box.classList.add("is-live");
+      box.replaceChildren(frame);
+      frame.focus({ preventScroll: true });
+    });
+  });
+
   /* ---------- Gallery lightbox ---------- */
   const lb = $("[data-lightbox]");
   if (lb) {

@@ -501,6 +501,21 @@ function breakfastHours() {
 const mapQuery = () => (site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery);
 // Embedded maps search the place name: checked on 5 Nov 2026 that its pin falls exactly on the official coordinates,
 // and the name adds Google's own label and card, so Lauhata is identifiable at a glance. Zoom 15: the coast and the town.
+// The Google map loads only when the visitor asks for it: no empty grey box while a third-party frame loads, no Google request on
+// every visit, and the "open in Google Maps" link works straight away. Behaviour in assets/js/main.js ([data-map-facade]).
+function mapFacade(t, cls = "") {
+  return `<div class="map-frame map-facade ${cls}" data-map-facade data-src="${esc(mapEmbed())}" data-title="${esc(t.location.mapTitle)}">
+      ${figure(t, "aerialTop", { sizes: "(min-width: 900px) 60vw, 100vw", decorative: true, cls: "mf-photo" })}
+      <div class="mf-inner">
+        <p class="mf-place">${icon("pin")}<span>Lauhata · ${esc(site.address.region)}, ${esc(site.address.country)}</span></p>
+        <div class="mf-actions">
+          <button class="btn btn-terra" type="button" data-map-load>${esc(t.location.mapLoad)}</button>
+          <a class="text-link on-dark" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
+        </div>
+        <p class="mf-note">${esc(t.location.mapNote)}</p>
+      </div>
+    </div>`;
+}
 const mapEmbed = () => `https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=15&output=embed`;
 const directionsLink = () => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery())}`;
 
@@ -690,9 +705,7 @@ function reachSection(t) {
       </div>
     </div>
     <div class="rc-map"${rv(120)}>
-      <div class="map-frame">
-        <iframe title="${esc(t.location.mapTitle)}" src="${mapEmbed()}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
+      ${mapFacade(t)}
       ${site.geo ? "" : `<p class="rc-note">${esc(R.mapNote)}</p>`}
     </div>
   </div>
@@ -1202,7 +1215,7 @@ export function discover(t) {
     return Math.round(2 * R * Math.asin(Math.sqrt(a)));
   };
   const body = `
-${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastVillage", crumbs: bc.html })}
+${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastMountains", crumbs: bc.html })}
 
 <section class="section dsc-intro" aria-labelledby="dsc-intro-title">
   <div class="wrap ab-grid">
@@ -1230,7 +1243,7 @@ ${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastV
 
 <section class="section dsc-map" aria-label="${esc(D.mapLink)}">
   <div class="wrap">
-    <div class="map-frame dsc-map-frame"><iframe title="${esc(t.location.mapTitle)}" src="${mapEmbed()}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    ${mapFacade(t, "dsc-map-frame")}
     <p class="dsc-source">${esc(D.geoSource)}</p>
   </div>
 </section>
@@ -1300,7 +1313,7 @@ export function home(t) {
   const kinds = LD.eventsPage.kinds.slice(0, 4);
   const body = `
 <section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
-  <div class="hx-bg">${figure(t, "sunsetPalmsHigh", { eager: true, sizes: "100vw" })}
+  <div class="hx-bg">${figure(t, "heroFilmCover", { eager: true, sizes: "100vw" })}
     ${site.heroVideo ? `<video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}</div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content rs-hero-grid">
@@ -1321,7 +1334,7 @@ export function home(t) {
       <div class="pv-actions"><a class="btn btn-terra" href="${href("about", L)}">${esc(RS.wlCta)}</a></div>
       <p class="wl-meta"><span class="wm">${icon("pin")}<span>${esc(t.land.beach.place)}</span></span>${hoursLine ? `<span class="wm">${icon("clock")}<span>${hoursLine}</span></span>` : ""}</p>
     </div>
-    <div class="wl-cards">${wk("restaurant", "aerialDay2", 0)}${wk("stay", "roomBright", 1)}${wk("events", "sunsetGarden", 2)}</div>
+    <div class="wl-cards">${wk("restaurant", "aerialDay2", 0)}${wk("stay", "stayEntrance", 1)}${wk("events", "sunsetGarden", 2)}</div>
   </div>
 </section>
 
@@ -1401,7 +1414,7 @@ ${finalSection(t, "beachFront", { panel: true })}`;;
     path: href("home", L),
     alt: href("home", other(L)),
     preload: [
-      { key: "sunsetPalmsHigh", sizes: "100vw" },
+      { key: "heroFilmCover", sizes: "100vw" },
     ],
     hero: true,
     ld: [], // no FAQPage here: the questions are only visible on the contact page, and structured data must match what is shown
@@ -1511,7 +1524,7 @@ ${pageHero(t, {
   eyebrow: t.stay.eyebrow,
   title: t.home.two.stayTitle,
   lead: t.home.two.stayBody,
-  image: "sunsetSea",
+  image: "stayVeranda",
   decorative: true, // the same photo reappears, described, further down the page
   crumbs: bc.html,
   ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
@@ -1524,6 +1537,15 @@ ${pageHero(t, {
       <p class="body-text"${rv(100)}>${esc(H.body)}</p>
     </div>
     ${roomShowcase(t)}
+    <div class="rs-place">
+      <div class="rs-place-text">
+        <h3 class="rs-place-title">${esc(t.stay.placeTitle)}</h3>
+        <p>${esc(t.stay.placeLead)}</p>
+      </div>
+      <div class="rs-place-photos" data-gallery>
+        ${["stayWalkway", "stayGarden", "gardenTable"].map((k, i) => `<a class="rs-place-${i}" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: i ? "(min-width: 900px) 24vw, 46vw" : "(min-width: 900px) 46vw, 92vw" })}</a>`).join("")}
+      </div>
+    </div>
     ${roomCompare(t)}
     ${amenities}
   </div>
@@ -1691,9 +1713,7 @@ ${pageHero(t, {
         <a class="text-link" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.footer.directions)}</a>
       </div>
     </div>
-    <div class="map-frame"${rv(120)}>
-      <iframe title="${esc(t.location.mapTitle)}" src="${mapEmbed()}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
+    ${mapFacade(t)}
   </div>
 </section>
 

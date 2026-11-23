@@ -16,6 +16,65 @@ export default {
   },
   // Two more real stills from the same drone footage (originais/videos/): the property among its garden and palms, and the
   // wider view down to the beach and the sea. They carry the full-screen "scenes" and the contact page.
+  // ---- Lauhata's own photographs, 15 Nov 2026 (media-source/DJI_08xx.JPG, 4000x2250; web sizes by tools/otimizar-drone-2026-11.ps1).
+  // The rooms are photographed from outside (entrances, veranda, garden): they show the accommodation, not the inside of a room type.
+  // The first frame of the home hero film (hero-costa-1440.mp4, from DJI_0827): the cover the film fades in over, so the start of the
+  // video and the picture before it are the same frame. Regenerate it from the film if the film changes (see docs/MEDIA_SOURCE_INVENTORY.md).
+  heroFilmCover: {
+    src: "foto:hero-costa",
+    width: 1600,
+    alt: { pt: "Vista aérea do Lauhata: o restaurante entre as palmeiras, a praia de areia escura à frente", en: "Aerial view of Lauhata: the restaurant among the palm trees, the dark-sand beach in front" },
+    placeholder: false,
+      },
+  coastMountains: {
+    src: "foto:costa-montanhas",
+    width: 4000,
+    alt: { pt: "Lauhata visto do mar: a praia de areia escura, as palmeiras e as montanhas de Liquiçá atrás", en: "Lauhata seen from the sea: the dark-sand beach, the palm trees and the Liquiçá mountains behind" },
+    placeholder: false,
+    group: "lauhata",
+  },
+  aerialTop: {
+    src: "foto:vista-de-cima",
+    width: 4000,
+    alt: { pt: "O Lauhata visto de cima: o jardim, os edifícios, a praia e o mar", en: "Lauhata from directly above: the garden, the buildings, the beach and the sea" },
+    placeholder: false,
+    group: "lauhata",
+  },
+  stayVeranda: {
+    src: "foto:quartos-varanda",
+    width: 4000,
+    alt: { pt: "A varanda dos quartos, com cadeiras de madeira e uma mesa", en: "The rooms' veranda, with wooden chairs and a table" },
+    placeholder: false,
+    group: "stay",
+  },
+  stayEntrance: {
+    src: "foto:quarto-entrada",
+    width: 4000,
+    alt: { pt: "A porta de um quarto e o banco de madeira na varanda", en: "A room's door and the wooden bench on the veranda" },
+    placeholder: false,
+    group: "stay",
+  },
+  stayWalkway: {
+    src: "foto:quartos-corredor",
+    width: 4000,
+    alt: { pt: "A varanda que liga os quartos, entre plantas e o jardim", en: "The veranda that runs past the rooms, between plants and the garden" },
+    placeholder: false,
+    group: "stay",
+  },
+  stayGarden: {
+    src: "foto:quartos-jardim",
+    width: 4000,
+    alt: { pt: "O edifício dos quartos atrás das palmeiras, visto do jardim", en: "The rooms' building behind the palm trees, seen from the garden" },
+    placeholder: false,
+    group: "stay",
+  },
+  gardenTable: {
+    src: "foto:jardim-varanda",
+    width: 4000,
+    alt: { pt: "Uma mesa no jardim, junto à varanda dos quartos", en: "A table in the garden, beside the rooms' veranda" },
+    placeholder: false,
+    group: "stay",
+  },
   aerialGarden: {
     src: "foto:aerea-lugar",
     width: 1920,

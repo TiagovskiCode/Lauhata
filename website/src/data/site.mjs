@@ -100,7 +100,7 @@ export default {
   // re-encoded to 1600×900 (5.0 MB). It plays ONLY on laptop-sized screens (viewport 1280–1920 px wide, see main.js); phones,
   // tablets and larger monitors keep the sunset photograph (images.mjs `sunsetPalmsHigh`), which is also the poster and the
   // fallback. Leave empty to show the photograph everywhere. Earlier versions: originais/videos/web/.
-  heroVideo: "/assets/video/hero-fundo-1600.mp4",
+  heroVideo: "/assets/video/hero-costa-1440.mp4",
 
   // Optional fields for search engines (Google). Each one is only written to the page once it is filled.
   // priceRange: e.g. "$$"; servesCuisine: e.g. ["Timorese", "Seafood"];

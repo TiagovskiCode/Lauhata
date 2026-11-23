@@ -7,7 +7,7 @@ export default async ({ open, eval: ev, wait }) => {
   for (const [w, h, m] of sizes) {
     for (const p of pages) {
       await open("http://localhost:8080" + p, w, h, m);
-      const r = await ev(`document.documentElement.style.scrollBehavior="auto";const o=document.documentElement.scrollWidth-document.documentElement.clientWidth;const culprits=[];if(o>0){for(const e of document.querySelectorAll("body *")){const b=e.getBoundingClientRect();if(b.right>innerWidth+1&&b.width>0&&getComputedStyle(e).position!=="fixed"&&!e.closest("dialog,.kc-track,.rs-track,.menu-nav ul,[hidden]"))culprits.push(e.tagName+"."+String(e.className).slice(0,30));}}return {o,culprits:culprits.slice(0,4)}`);
+      const r = await ev(`document.documentElement.style.scrollBehavior="auto";const o=Math.max(document.documentElement.scrollWidth-document.documentElement.clientWidth, innerWidth-${w});const culprits=[];if(o>0){for(const e of document.querySelectorAll("body *")){const b=e.getBoundingClientRect();if(b.right>${w}+1&&b.width>0&&getComputedStyle(e).position!=="fixed"&&!e.closest("dialog,.kc-track,.rs-track,.menu-nav ul,[hidden]"))culprits.push(e.tagName+"."+String(e.className).slice(0,30));}}return {o,culprits:culprits.slice(0,4)}`);
       checks++;
       if (r.o > 0) bad.push({ page: p, size: `${w}x${h}`, overflow: r.o, culprits: r.culprits });
     }
