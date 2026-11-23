@@ -380,3 +380,18 @@ test("dialogs that host pickers do not keep a fill-forwards transform animation 
   const js = readFileSync(join(root, "src/assets/js/picker.js"), "utf8");
   assert.ok(/containing block/.test(js) && /maxHeight/.test(js), "picker safety net and height cap");
 });
+
+test("dish photography policy: no illustrative dish photograph is shown by default; branded placeholders stand in and Vegetarian labels come from the menu's own section", () => {
+  for (const f of ["index.html", "restaurant/index.html", "pt/index.html", "pt/restaurante/index.html"]) {
+    const h = read(f);
+    assert.ok(!/pratos-temp\//.test(h), f + ": an illustrative dish photograph is in the page");
+    assert.ok(!/Illustrative image|Imagem ilustrativa/.test(h.replace(/<script[\s\S]*?<\/script>/g, "")) || !/class="media dish-photo/.test(h), f + ": an illustrative label on a dish");
+  }
+  const r = read("restaurant/index.html");
+  assert.ok([...r.matchAll(/class="dish-photo is-branded"/g)].length >= 50, "branded placeholders");
+  const veg = r.match(/<section class="menu-cat" id="cat-vegetarian"[\s\S]*?<\/section>/)[0];
+  assert.ok([...veg.matchAll(/<li class="is-diet">Vegetarian<\/li>/g)].length >= 5, "Vegetarian labels in the vegetarian section");
+  const main = r.match(/<section class="menu-cat" id="cat-main"[\s\S]*?<\/section>/)[0];
+  assert.ok(!/is-diet/.test(main), "a diet label was inferred outside the verified section");
+  assert.ok(!/pratos-temp/.test(read("assets/js/order.js")) && !/LAUHATA_MENU[^;]*pratos-temp/.test(read("index.html")), "cart data points at illustrative photos");
+});

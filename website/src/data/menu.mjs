@@ -15,6 +15,13 @@
 //   image       key (in images.mjs) of a real photo of THIS dish, or null. Until the restaurant has photos,
 //               cards are shown without a picture instead of with a stock or illustrative one.
 //   featured    true = shown in the homepage's "most chosen" row (3 dishes). PENDING: Lauhata to confirm.
+//   special     true = labelled "Today's special" (price stays the dish's own; no data is duplicated). Set and clear it daily.
+//   available   false = labelled "Not available today" and cannot be ordered (omit it while the dish is available).
+//   diet        verified labels only: "vegetarian" | "vegan" | "spicy" | "seafood". Dishes in the Vegetarian section get
+//               "Vegetarian" from the menu itself. Nothing is inferred from a dish name.
+//   allergens   [{ en, pt }] listed only when the restaurant confirmed them for that dish; never guessed.
+//   Photographs: a real photo is src/assets/img/pratos/<id>-640.jpg (and -1080.jpg), approved by the restaurant. Without it the card
+//   shows the branded placeholder. Illustrative pictures (pratos-temp) show only if site.dishPhotos.showIllustrative is true.
 //   confirm     true = the printed price is handwritten or unclear; check it with the restaurant.
 
 export const categories = [

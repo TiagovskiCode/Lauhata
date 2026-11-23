@@ -128,6 +128,12 @@ export default {
   // menu.mjs) and the samples disappear.
   showSamples: true,
 
+  // Dish photography policy. A dish photograph is shown only when it is REAL: a file src/assets/img/pratos/<dish id>-640.jpg that
+  // the restaurant approved, or an image key in menu.mjs that is not flagged as a placeholder. Everything else shows the branded
+  // placeholder. The ILLUSTRATIVE pictures in src/assets/img/pratos-temp/ (openly licensed photographs of similar dishes) are kept
+  // for the future but are NEVER the customer-facing default: they appear only if this is set to true, with their label.
+  dishPhotos: { showIllustrative: false },
+
   // Shows a small "illustrative image" tag on stock photos and the demo-menu notice.
   // Set to false only once every placeholder has been replaced with real content.
   showPlaceholderNotes: false,

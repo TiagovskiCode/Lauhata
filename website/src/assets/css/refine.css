@@ -1387,3 +1387,40 @@ html:has(dialog[open]) { overflow: hidden; }
 
 .dl-photo .dish-photo.is-placeholder::after { position: absolute; inset: auto 0 0 0; left: 0; right: 0; bottom: 0; top: auto; max-width: none; padding: 0.15rem 0.25rem; border-radius: 0 !important; background: rgba(23, 18, 15, 0.72) !important; color: #fff !important; font-size: 0.6rem; line-height: 1.15; text-align: center; white-space: normal; }
 .dl-photo .dish-photo { position: relative; }
+
+/* =====================================================================================================================
+   Dish photography policy: REAL photograph, branded PLACEHOLDER (the default), ILLUSTRATIVE only behind a flag. Diet and special labels.
+   ===================================================================================================================== */
+.dish-photo.is-branded { position: relative; display: grid; place-items: center; align-content: center; gap: 0.45rem; background: repeating-linear-gradient(135deg, rgba(161, 74, 24, 0.07) 0 1px, transparent 1px 10px), linear-gradient(160deg, var(--paper), var(--sand)); box-shadow: inset 0 0 0 1px rgba(23, 18, 15, 0.08); }
+.dish-photo.is-branded .icon { width: 1.7rem; height: 1.7rem; color: var(--terra-dark); opacity: 0.75; }
+.dish-photo.is-branded .bp-word { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.32em; text-indent: 0.32em; text-transform: uppercase; color: var(--muted); }
+.kc-media .dish-photo.is-branded, .dl-photo .dish-photo.is-branded { margin: 0; width: 100%; border-radius: 0; }
+.kc-media .dish-photo.is-branded { aspect-ratio: 4 / 3; }
+.dl-photo .dish-photo.is-branded { aspect-ratio: 1 / 1; }
+.cl-thumb.is-brand { display: grid; place-items: center; background: linear-gradient(160deg, var(--paper), var(--sand)); color: var(--terra-dark); }
+.cl-thumb.is-brand .icon { width: 1.5rem; height: 1.5rem; }
+.dl-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.45rem 0 0; padding: 0; list-style: none; }
+.dl-badges li { padding: 0.15rem 0.6rem; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.02em; color: var(--body); }
+.dl-badges .is-special { border-color: var(--sunset); background: var(--sunset); color: #1a120c; }
+.dl-badges .is-off { border-color: var(--error, #b3261e); color: var(--error, #b3261e); }
+.dline.is-off { opacity: 0.62; }
+.mi-notes .menu-note.is-allergy { max-width: 28rem; }
+.kc-media .dish-photo.is-branded { aspect-ratio: 16 / 10; }
+
+/* ---------- Stay: photographs open the lightbox; a compact comparison of what is confirmed ---------- */
+.rs-zoom { display: block; cursor: zoom-in; }
+.rs-zoom:focus-visible { outline: 2px solid var(--on-night); outline-offset: -4px; }
+.rs-compare-wrap { margin-top: clamp(3rem, 6vw, 5rem); max-width: 54rem; }
+.rs-compare { width: 100%; border-collapse: collapse; color: var(--on-night); }
+.rs-compare caption { padding-bottom: 1rem; text-align: left; font-family: var(--serif); font-size: clamp(1.5rem, 1vw + 1.2rem, 2rem); color: var(--on-night); }
+.rs-compare th, .rs-compare td { padding: 0.8rem 1rem 0.8rem 0; text-align: left; vertical-align: top; border-bottom: 1px solid rgba(250, 247, 239, 0.16); font-weight: 400; }
+.rs-compare thead th { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; }
+.rs-compare tbody th { width: 28%; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(250, 247, 239, 0.7); }
+.rs-compare-note { margin: 1rem 0 0; max-width: 40rem; font-size: 0.9rem; line-height: 1.55; color: rgba(250, 247, 239, 0.7); }
+/* The comparison sits on the light ground of the rooms section */
+.rs-compare { color: var(--ink); }
+.rs-compare caption { color: var(--ink); }
+.rs-compare th, .rs-compare td { border-bottom-color: var(--line-strong); }
+.rs-compare tbody th { color: var(--muted); }
+.rs-compare-note { color: var(--body); }
+.rs-zoom:focus-visible { outline-color: var(--ink); }

@@ -243,7 +243,7 @@ const normalize = (v) => v.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLo
 
 // A dish can be ordered when it has a price: its own, or one per size (chips).
 const sizePriced = (d) => d.options.find((g) => g.choices.some((c) => c.price != null));
-const canOrder = (d) => d.price != null || Boolean(sizePriced(d));
+const canOrder = (d) => d.available !== false && (d.price != null || Boolean(sizePriced(d)));
 
 // Price on a card: the dish price, or each size with its price, or "price to be confirmed".
 function dishPrice(t, d) {
@@ -264,9 +264,14 @@ function dishPhoto(t, d) {
     const src = `/assets/img/pratos/${d.id}-640.jpg`;
     return `<figure class="media dish-photo"><img src="${src}"${big ? ` srcset="${src} 640w, /assets/img/pratos/${d.id}-1080.jpg 1080w" sizes="(min-width: 1000px) 28vw, (min-width: 600px) 45vw, 30vw"` : ""} alt="${esc(d.name)}" width="640" height="480" loading="lazy" decoding="async"></figure>`;
   }
-  // A temporary, openly licensed photo of a similar dish (tools/fotos-temporarias.mjs), labelled "Illustrative image".
-  if (existsSync(tempPhotoFile(d.id))) return tempPhoto(t, d.id, typeof d.name === "string" ? d.name : d.name[t.lang]);
-  return `<div class="dish-photo is-pending" aria-hidden="true"><span class="dp-mark">${esc(d.name.trim()[0])}</span><span class="dp-note">${esc(t.order.photoSoon)}</span></div>`;
+  // ILLUSTRATIVE (openly licensed photo of a similar dish, tools/fotos-temporarias.mjs): only when site.dishPhotos.showIllustrative is on.
+  if (site.dishPhotos.showIllustrative && existsSync(tempPhotoFile(d.id))) return tempPhoto(t, d.id, typeof d.name === "string" ? d.name : d.name[t.lang]);
+  // PLACEHOLDER: the branded tile, which never pretends to show the dish.
+  return brandedPhoto(t, d.category);
+}
+function brandedPhoto(t, category) {
+  const ic = category === "breakfast" || category === "drinks" ? "coffee" : "cutlery";
+  return `<div class="dish-photo is-branded" role="img" aria-label="${esc(t.order.photoSoon)}">${icon(ic)}<span class="bp-word" aria-hidden="true">Lauhata</span></div>`;
 }
 const tempPhotoFile = (id, w = 640) => new URL(`./assets/img/pratos-temp/${id}-${w}.jpg`, import.meta.url);
 function tempPhoto(t, id, name) {
@@ -287,12 +292,13 @@ const cardPrice = (t, d) => {
   }
   return d.price != null ? money(d.price) : esc(t.common.priceTbc);
 };
-function dcard(t, { id, name, search, photo, priceHtml, priceFull, desc = "", tag = "", note = "", add = "" }) {
+function dcard(t, { id, name, search, photo, priceHtml, priceFull, desc = "", tag = "", note = "", add = "", badges = [], off = false }) {
   // The menu as it was: a small photograph, the name and the price on one line, the description under them, then the order button.
-  return `<article class="dline" data-dish data-search="${esc(search)}">
+  return `<article class="dline${off ? " is-off" : ""}" data-dish data-search="${esc(search)}">
       <div class="dl-photo">${photo}</div>
       <div class="dl-body">
         <div class="dl-head"><h3 class="dl-name">${esc(name)}</h3><p class="dl-price">${priceHtml}</p></div>
+        ${badges.length ? `<ul class="dl-badges">${badges.map((b) => `<li class="${esc(b[0])}">${esc(b[1])}</li>`).join("")}</ul>` : ""}
         ${tag ? `<p class="dl-tag">${esc(tag)}</p>` : ""}
         ${desc ? `<p class="dl-desc">${esc(desc)}</p>` : ""}
         ${note ? `<p class="dl-note">${esc(note)}</p>` : ""}
@@ -309,7 +315,17 @@ function dishCard(t, d) {
   const cat = categories.find((c) => c.id === d.category);
   const search = normalize([d.name, d.description?.en, d.description?.pt, cat.name.en, cat.name.pt].filter(Boolean).join(" "));
   const verb = d.options.length ? O.choose : O.add;
+  // Verified labels only: "Vegetarian" comes from the menu's own Vegetarian section or an explicit `diet` entry; specials and unavailable
+  // dishes are flags in menu.mjs. Nothing is inferred from a dish name, and allergens are only ever shown when listed in `allergens`.
+  const diet = new Set([...(d.diet || []), ...(d.category === "vegetarian" ? ["vegetarian"] : [])]);
+  const badges = [
+    ...(d.special && d.available !== false ? [["is-special", O.special]] : []),
+    ...(d.available === false ? [["is-off", O.unavailable]] : []),
+    ...["vegetarian", "vegan", "spicy", "seafood"].filter((k) => diet.has(k)).map((k) => ["is-diet", O.diet[k]]),
+    ...(d.allergens && d.allergens.length ? [["is-allergen", fmt(O.allergens, { list: d.allergens.map((a) => a[L] || a).join(", ") })]] : []),
+  ];
   return dcard(t, {
+    badges, off: d.available === false,
     id: d.id, name: d.name, search, photo: dishPhoto(t, d),
     priceHtml: `<b class="${canOrder(d) ? "" : "is-tbc"}">${cardPrice(t, d)}</b>`,
     priceFull: dishPrice(t, d),
@@ -330,7 +346,7 @@ function sampleDrinksSection(t, cat) {
   const groups = `<div class="menu-grid is-samples">${list.map((d) => dcard(t, {
     id: d.id, name: d.name[L],
     search: normalize(d.name.pt + " " + d.name.en + " " + cat.name.pt + " " + cat.name.en),
-    photo: existsSync(tempPhotoFile(d.id)) ? tempPhoto(t, d.id, d.name[L]) : `<div class="dish-photo is-pending" aria-hidden="true"><span class="dp-mark">${esc(d.name[L].trim()[0])}</span></div>`,
+    photo: site.dishPhotos.showIllustrative && existsSync(tempPhotoFile(d.id)) ? tempPhoto(t, d.id, d.name[L]) : brandedPhoto(t, "drinks"),
     priceHtml: `<b>${money(d.price)}</b>`,
     priceFull: money(d.price),
     tag: cat.groups[d.group] && cat.groups[d.group][L] !== d.name[L] ? cat.groups[d.group][L] : "",
@@ -401,6 +417,7 @@ function menuSection(t) {
     <div class="mi-notes">
       <p class="menu-note">${esc(menuNote[L])}</p>
       <p class="dine-in">${icon("cutlery")}<span>${esc(O.dineIn)}</span></p>
+      <p class="menu-note is-allergy">${esc(O.allergyNote)}</p>
     </div>
   </div>
   <div class="wrap menu-layout">
@@ -1301,7 +1318,7 @@ export function home(t) {
       <div class="pv-actions"><a class="btn btn-terra" href="${href("about", L)}">${esc(RS.wlCta)}</a></div>
       <p class="wl-meta"><span class="wm">${icon("pin")}<span>${esc(t.land.beach.place)}</span></span>${hoursLine ? `<span class="wm">${icon("clock")}<span>${hoursLine}</span></span>` : ""}</p>
     </div>
-    <div class="wl-cards">${wk("restaurant", "foodSpread", 0)}${wk("stay", "roomBright", 1)}${wk("events", "sunsetGarden", 2)}</div>
+    <div class="wl-cards">${wk("restaurant", "aerialDay2", 0)}${wk("stay", "roomBright", 1)}${wk("events", "sunsetGarden", 2)}</div>
   </div>
 </section>
 
@@ -1428,6 +1445,26 @@ ${finalSection(t, "aerialGarden")}`;
 // is a scroll-snap strip with three progress bars on top (story-like: the active bar fills, then the next photograph shows; main.js).
 // Facts: the price per night (rooms.mjs, $90), who it sleeps (the Queen & Single Room's children's ages are PENDING, flagged on the card)
 // and the beds. What the whole accommodation offers is listed once below the two rooms (lodgingBlock).
+function roomCompare(t) {
+  const L = t.lang;
+  const S = t.stay;
+  const has = (r, en) => (r.amenities || []).some((a) => a.en === en);
+  const cell = (v) => `<td>${v}</td>`;
+  return `<div class="rs-compare-wrap">
+    <table class="rs-compare">
+      <caption>${esc(S.cmpTitle)}</caption>
+      <thead><tr><td></td>${rooms.map((r) => `<th scope="col">${esc(r.name[L])}</th>`).join("")}</tr></thead>
+      <tbody>
+        <tr><th scope="row">${esc(S.cmpBeds)}</th>${rooms.map((r) => cell(esc(r.beds[L]))).join("")}</tr>
+        <tr><th scope="row">${esc(S.cmpCapacity)}</th>${rooms.map((r) => cell(r.capacity ? esc(r.capacity[L]) : esc(S.cmpAsk))).join("")}</tr>
+        <tr><th scope="row">${esc(S.cmpTv)}</th>${rooms.map((r) => cell(has(r, "Television") ? esc(S.cmpYes) : esc(S.cmpAsk))).join("")}</tr>
+        <tr><th scope="row">${esc(S.cmpPrice)}</th>${rooms.map((r) => cell(r.price ? esc(r.price) : esc(t.common.priceTbc))).join("")}</tr>
+      </tbody>
+    </table>
+    <p class="rs-compare-note">${esc(S.cmpNote)}</p>
+  </div>`;
+}
+
 function roomShowcase(t) {
   const L = t.lang;
   const S = t.stay;
@@ -1437,7 +1474,7 @@ function roomShowcase(t) {
       const specs = [["users", r.capacity[L]], ...suiteAmenityItems(t, r)];
       return `<article class="rs-room${i % 2 ? " is-flip" : ""}" id="room-${r.id}" aria-labelledby="rs-${r.id}">
       <div class="rs-gallery" data-rg>
-        <ul class="rs-track" data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" })}</li>`).join("")}</ul>
+        <ul class="rs-track" data-gallery data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide"><a class="rs-zoom" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" })}</a></li>`).join("")}</ul>
         <div class="rs-bars" role="group" aria-label="${esc(fmt(t.carousel.label, { room: r.name[L] }))}">${imgs.map((k, j) => `<button class="rs-bar" type="button" data-rg-bar aria-label="${esc(fmt(t.carousel.goTo, { n: j + 1, total: imgs.length }))}"><i></i></button>`).join("")}</div>
         <div class="rs-ctrl">
           <button class="kc-btn" type="button" data-rg-prev aria-label="${esc(t.carousel.prev)}">${icon("left")}</button>
@@ -1484,6 +1521,7 @@ ${pageHero(t, {
       <p class="body-text"${rv(100)}>${esc(H.body)}</p>
     </div>
     ${roomShowcase(t)}
+    ${roomCompare(t)}
     ${amenities}
   </div>
 </section>`;
