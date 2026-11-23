@@ -328,17 +328,19 @@ test("the cart drawer has its own keyframes and a closing time that matches them
   assert.ok(/d === drawer \? 340 : 220/.test(js), "closing time matches the 0.34 s exit");
 });
 
-test("restaurant menu: dishes are photo-name-price cards that open one dialog; drinks carry provisional prices that are flagged and never orderable", () => {
+test("restaurant menu: each dish is a row with a small photograph, the name and price, the description and the order button; drinks carry provisional prices that are flagged and never orderable", () => {
   for (const [f, flag] of [["restaurant/index.html", "Provisional price"], ["pt/restaurante/index.html", "Preço provisório"]]) {
     const h = read(f);
-    assert.ok([...h.matchAll(/<article class="dcard"/g)].length >= 60, f + ": dish cards");
-    assert.equal([...h.matchAll(/<dialog class="dish-dialog"/g)].length, 1, f + ": one dish dialog");
-    assert.ok(/data-dish-open/.test(h) && /data-dd-close/.test(h), f + ": opener and close button");
-    assert.ok(!/class="dish-body"|class="dish-foot"/.test(h), f + ": the old dish row is back");
+    const rows = [...h.matchAll(/<article class="dline"[\s\S]*?<\/article>/g)].map((m) => m[0]);
+    assert.ok(rows.length >= 60, f + ": dish rows");
+    assert.ok(!/<dialog class="dish-dialog"/.test(h) && !/class="dcard"/.test(h), f + ": the card-and-dialog design is back");
+    for (const r of rows.slice(0, 20)) assert.ok(/class="dl-photo"/.test(r) && /class="dl-name"/.test(r) && /class="dl-price"/.test(r), f + ": a row lacks photo, name or price");
+    assert.ok(rows.filter((r) => /class="dl-desc"/.test(r)).length >= 40, f + ": descriptions");
+    assert.ok(rows.filter((r) => /data-add="/.test(r)).length >= 40, f + ": order buttons");
     const drinks = h.match(/<section class="menu-cat" id="cat-drinks"[\s\S]*?<\/section>/)[0];
-    const cards = [...drinks.matchAll(/<article class="dcard"[\s\S]*?<\/article>/g)].map((m) => m[0]);
+    const cards = [...drinks.matchAll(/<article class="dline"[\s\S]*?<\/article>/g)].map((m) => m[0]);
     assert.ok(cards.length >= 10, f + ": the sample drinks");
-    for (const c of cards) assert.ok(/<p class="dc-price"><b>\$\d/.test(c) && c.includes(flag) && !/data-add=/.test(c), f + ": a drink without a flagged price, or one that can be ordered");
+    for (const c of cards) assert.ok(/<p class="dl-price"><b>\$\d/.test(c) && c.includes(flag) && !/data-add=/.test(c), f + ": a drink without a flagged price, or one that can be ordered");
   }
 });
 
@@ -367,4 +369,14 @@ test("stabilisation round: stacked room cards keep their own height, the back-to
   assert.ok(/\.rp-card\{container-type:inline-size/.test(css) && /\.dcard\{container-type:inline-size/.test(css) && /\.menu-body\{container-type:inline-size\}/.test(css), "container queries for cards");
   const js = readFileSync(join(root, "src/assets/js/main.js"), "utf8");
   assert.ok(/:focus-visible/.test(js) && /target = -1/.test(js), "the room gallery pauses on keyboard focus only and ignores its own glide");
+});
+
+test("dialogs that host pickers do not keep a fill-forwards transform animation (it made popups land far from their field and scroll the dialog sideways)", () => {
+  const css = read("assets/css/site.css").replace(/\s+/g, "");
+  for (const d of ["book-dialog", "fb-dialog", "dish-dialog"]) {
+    const m = css.match(new RegExp(`\.${d}\[open\]\{animation:[^}]*\}`));
+    if (m) assert.ok(!/(both|forwards)/.test(m[0]), `${d}: ${m[0]}`);
+  }
+  const js = readFileSync(join(root, "src/assets/js/picker.js"), "utf8");
+  assert.ok(/containing block/.test(js) && /maxHeight/.test(js), "picker safety net and height cap");
 });

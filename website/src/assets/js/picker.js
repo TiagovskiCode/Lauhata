@@ -54,16 +54,37 @@
     const r = cur.trigger.getBoundingClientRect();
     const vw = document.documentElement.clientWidth, vh = window.innerHeight;
     if (r.bottom < 0 || r.top > vh) return close();
-    const w = pop.offsetWidth, h = pop.offsetHeight, gap = 10;
+    pop.style.maxHeight = "";
+    pop.style.overflowY = "";
+    const w = pop.offsetWidth, gap = 10;
+    let h = pop.offsetHeight;
     const left = Math.min(Math.max(12, r.left), Math.max(12, vw - w - 12));
+    const below = vh - r.bottom - gap - 12, above = r.top - gap - 12;
     let top = r.bottom + gap, side = "down";
-    if (top + h > vh - 12) {
-      if (r.top - gap - h >= 12) { top = r.top - gap - h; side = "up"; }
-      else top = Math.max(12, vh - h - 12);
+    if (h > below) {
+      if (h <= above) { top = r.top - gap - h; side = "up"; }
+      else {
+        // Too tall for either side: use the roomier side and let the list scroll, instead of sliding over the field it belongs to.
+        const room = Math.max(below, above, 160);
+        pop.style.maxHeight = `${room}px`;
+        pop.style.overflowY = "auto";
+        h = Math.min(h, room);
+        if (below >= above) top = r.bottom + gap;
+        else { top = r.top - gap - h; side = "up"; }
+        top = Math.max(12, top);
+      }
     }
     pop.style.left = `${left}px`;
     pop.style.top = `${top}px`;
     pop.dataset.side = side;
+    // Safety net: a transformed ancestor (an animated dialog, for instance) becomes the containing block of a fixed element, which
+    // shifts the popover by that ancestor's offset and makes the dialog scroll sideways. Measure where it really landed and correct it.
+    const got = pop.getBoundingClientRect();
+    const dx = got.left - left, dy = got.top - top;
+    if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+      pop.style.left = `${left - dx}px`;
+      pop.style.top = `${top - dy}px`;
+    }
   }
 
   function show(trigger, label, build) {

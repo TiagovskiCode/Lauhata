@@ -1301,7 +1301,7 @@ html:has(dialog[open]) { overflow: hidden; }
 .reviews-ed button.rv-own-card:hover .rv-go { text-decoration-thickness: 2px; }
 .fb-dialog { width: min(34rem, calc(100vw - 1.5rem)); max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); margin: auto; padding: clamp(1.4rem, 3vw, 2.1rem); border: 0; border-radius: var(--radius-panel); background: var(--cream); color: var(--ink); box-shadow: 0 40px 90px -30px rgba(8, 5, 3, 0.7); overflow: auto; overscroll-behavior: contain; }
 .fb-dialog::backdrop { background: rgba(14, 10, 8, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
-.fb-dialog[open] { animation: fbIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.fb-dialog[open] { animation: fbIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 .fb-dialog[open]::backdrop { animation: fbVeil 0.4s ease both; }
 @keyframes fbIn { from { opacity: 0; transform: translateY(18px) scale(0.98); } }
 @keyframes fbVeil { from { opacity: 0; } }
@@ -1338,7 +1338,7 @@ html:has(dialog[open]) { overflow: hidden; }
 
 .dish-dialog { width: min(34rem, calc(100vw - 1.5rem)); max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; border-radius: var(--radius-panel); background: var(--cream); color: var(--ink); box-shadow: 0 40px 90px -30px rgba(8, 5, 3, 0.7); overflow: auto; overscroll-behavior: contain; }
 .dish-dialog::backdrop { background: rgba(14, 10, 8, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
-.dish-dialog[open] { animation: fbIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.dish-dialog[open] { animation: fbIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
 .dish-dialog[open]::backdrop { animation: fbVeil 0.4s ease both; }
 .dd-photo .dish-photo { margin: 0; aspect-ratio: 3 / 2; border-radius: 0; }
 .dd-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -1354,3 +1354,36 @@ html:has(dialog[open]) { overflow: hidden; }
 .dd-add [data-add-label] { display: inline-flex; align-items: center; gap: 0.45rem; }
 .dd-add.is-added { --bg: var(--wa); }
 @media (prefers-reduced-motion: reduce) { .dish-dialog[open], .dish-dialog[open]::backdrop { animation: none; } .dc-photo .dish-photo img { transition: none; } }
+
+/* Fields inside the cream feedback dialog sit on a sand surface, so they stay visible (they were cream on cream) */
+.fb-dialog .field input, .fb-dialog .field textarea, .fb-dialog .pk-btn { background: var(--paper); border: 1px solid var(--line-strong); }
+
+/* ---------- Menu rows, as before: a small photograph, name and price on one line, the description under them, then the order button ---------- */
+.menu-body { container-type: inline-size; }
+.menu-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 clamp(2rem, 4vw, 3.5rem); margin-top: 0.6rem; }
+@container (min-width: 40rem) { .menu-grid { grid-template-columns: minmax(0, 1fr); gap: 0 clamp(2rem, 4vw, 3.5rem); } }
+@container (min-width: 52rem) { .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.dline { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1rem; align-items: start; padding: 1.15rem 0; border-bottom: 1px solid var(--line); }
+.dline[hidden] { display: none; }
+.dl-photo { overflow: hidden; border-radius: var(--r-sm); background: var(--sand); }
+.dl-photo .dish-photo { margin: 0; aspect-ratio: 1 / 1; border-radius: 0; }
+.dl-photo .dish-photo img { width: 100%; height: 100%; object-fit: cover; }
+.dl-body { min-width: 0; }
+.dl-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.3rem 1rem; }
+.dl-name { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(1.2rem, 0.7vw + 1rem, 1.45rem); line-height: 1.2; color: var(--ink); }
+.dl-price { flex: none; margin: 0; font-family: var(--serif); font-size: 1.3rem; white-space: nowrap; color: var(--ink); }
+.dl-price b { font-weight: 400; }
+.dl-price b.is-tbc { font-family: var(--sans); font-size: 0.8rem; color: var(--muted); }
+.dl-tag { margin: 0.2rem 0 0; font-size: 0.82rem; font-weight: 600; color: var(--terra-dark); }
+.dl-desc { margin: 0.35rem 0 0; font-size: 0.93rem; line-height: 1.5; color: var(--body); }
+.dl-note { margin: 0.4rem 0 0; font-size: 0.82rem; color: var(--muted); }
+.d-add { display: inline-flex; align-items: center; margin-top: 0.7rem; min-height: 40px; padding: 0 0.95rem; border: 1px solid var(--line-strong); border-radius: 999px; background: transparent; color: var(--ink); font: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease); }
+.d-add [data-add-label] { display: inline-flex; align-items: center; gap: 0.4rem; }
+.d-add .icon { width: 0.95rem; height: 0.95rem; }
+.d-add:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.d-add.is-added { background: var(--wa, #25d366); border-color: var(--wa, #25d366); color: #fff; }
+.d-add:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+@media (max-width: 520px) { .dline { grid-template-columns: 5.5rem minmax(0, 1fr); gap: 0.85rem; } }
+
+.dl-photo .dish-photo.is-placeholder::after { position: absolute; inset: auto 0 0 0; left: 0; right: 0; bottom: 0; top: auto; max-width: none; padding: 0.15rem 0.25rem; border-radius: 0 !important; background: rgba(23, 18, 15, 0.72) !important; color: #fff !important; font-size: 0.6rem; line-height: 1.15; text-align: center; white-space: normal; }
+.dl-photo .dish-photo { position: relative; }

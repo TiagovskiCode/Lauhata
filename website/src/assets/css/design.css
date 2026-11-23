@@ -524,7 +524,7 @@ html:not(.cine-motion) .dish-photo img { transition: none; }
 /* ---------- Booking dialog ---------- */
 .book-dialog { width: min(36rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: clamp(1.4rem, 3vw, 2rem); border: 0; border-radius: var(--r-card); background: var(--paper); color: var(--text); box-shadow: 0 30px 80px -30px rgba(8, 24, 20, 0.55); overflow: auto; --focus: var(--terra-dark); }
 .book-dialog::backdrop { background: rgba(8, 24, 20, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
-.book-dialog[open] { animation: bdIn 0.35s var(--ease) both; }
+.book-dialog[open] { animation: bdIn 0.35s var(--ease) backwards; }
 @keyframes bdIn { from { opacity: 0; transform: translateY(14px); } }
 html:not(.cine-motion) .book-dialog[open] { animation: none; }
 .bd-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }

@@ -288,19 +288,16 @@ const cardPrice = (t, d) => {
   return d.price != null ? money(d.price) : esc(t.common.priceTbc);
 };
 function dcard(t, { id, name, search, photo, priceHtml, priceFull, desc = "", tag = "", note = "", add = "" }) {
-  return `<article class="dcard" data-dish data-search="${esc(search)}">
-      <div class="dc-photo">${photo}</div>
-      <div class="dc-line">
-        <h3 class="dc-name"><button class="dc-open" type="button" data-dish-open aria-haspopup="dialog">${esc(name)}</button></h3>
-        <p class="dc-price">${priceHtml}</p>
-      </div>
-      <template data-dc-detail>
-        <p class="dd-price">${priceFull}</p>
-        ${tag ? `<p class="dd-tag">${esc(tag)}</p>` : ""}
-        ${desc ? `<p class="dd-desc">${esc(desc)}</p>` : ""}
-        ${note ? `<p class="dd-note">${esc(note)}</p>` : ""}
+  // The menu as it was: a small photograph, the name and the price on one line, the description under them, then the order button.
+  return `<article class="dline" data-dish data-search="${esc(search)}">
+      <div class="dl-photo">${photo}</div>
+      <div class="dl-body">
+        <div class="dl-head"><h3 class="dl-name">${esc(name)}</h3><p class="dl-price">${priceHtml}</p></div>
+        ${tag ? `<p class="dl-tag">${esc(tag)}</p>` : ""}
+        ${desc ? `<p class="dl-desc">${esc(desc)}</p>` : ""}
+        ${note ? `<p class="dl-note">${esc(note)}</p>` : ""}
         ${add}
-      </template>
+      </div>
     </article>`;
 }
 
@@ -317,7 +314,7 @@ function dishCard(t, d) {
     priceHtml: `<b class="${canOrder(d) ? "" : "is-tbc"}">${cardPrice(t, d)}</b>`,
     priceFull: dishPrice(t, d),
     desc: d.description ? d.description[L] : "",
-    add: canOrder(d) ? `<button class="btn btn-terra dd-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(verb)}</span></span></button>` : "",
+    add: canOrder(d) ? `<button class="d-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(verb)}</span></span></button>` : "",
   });
 }
 
@@ -366,7 +363,7 @@ function dishLine(t, d) {
   return `<li class="dish-line">
       <div class="dl-text"><h3>${esc(d.name)}</h3>${d.description ? `<p>${esc(d.description[L])}</p>` : ""}</div>
       <span class="dl-price">${dishPrice(t, d)}</span>
-      ${canOrder(d) ? `<button class="dl-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}</span></button>` : ""}
+      ${canOrder(d) ? `<button class="d-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}</span></button>` : ""}
     </li>`;
 }
 
@@ -428,7 +425,6 @@ function menuSection(t) {
       <p class="menu-empty" hidden data-menu-empty></p>
     </div>
   </div>
-  ${dishDialog(t)}
 </section>`;
 }
 
