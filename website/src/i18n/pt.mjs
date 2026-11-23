@@ -368,6 +368,7 @@ export default {
     roomsEyebrow: "Quartos",
     roomsTitle: "Os quartos",
     cmpTitle: "Os dois tipos de quarto lado a lado",
+    photoSoon: "As fotografias deste quarto estarão disponíveis em breve",
     cmpCapacity: "Lotação",
     cmpBeds: "Camas",
     cmpTv: "Televisão",

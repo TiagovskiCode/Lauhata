@@ -185,15 +185,15 @@
       });
       const fill = bars[i] && $("i", bars[i]);
       if (fill) { fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = ""; }
-      prev.disabled = i <= 0;
-      next.disabled = i >= slides.length - 1;
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= slides.length - 1;
     };
     const sync = () => root.classList.toggle("is-held", hold > 0 || document.hidden || !onScreen);
     const press = (on) => { hold += on ? 1 : -1; sync(); };
     root.classList.toggle("is-story", !reduced);
     bars.forEach((b, k) => b.addEventListener("click", () => { show(k); go(k); }));
-    prev.addEventListener("click", () => go(index() - 1));
-    next.addEventListener("click", () => go(index() + 1));
+    if (prev) prev.addEventListener("click", () => go(index() - 1));
+    if (next) next.addEventListener("click", () => go(index() + 1));
     // the fill ends: the next photograph (the last one stays)
     root.addEventListener("animationend", (e) => { if (e.target.matches(".rs-bar.is-active i") && active < slides.length - 1) { show(active + 1); go(active); } });
     let raf = 0;

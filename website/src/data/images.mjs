@@ -163,12 +163,14 @@ export default {
     width: 1513,
     alt: { pt: "Quarto com cama de madeira, tais na parede e portadas abertas para o jardim", en: "Bedroom with a wooden bed, tais on the wall and shutters open to the garden" },
     placeholder: true,
+    kind: "room",
   },
   roomFamily: {
     src: "foto:suite-familia",
     width: 1536,
     alt: { pt: "Quarto com duas camas, cadeiras de vime e varanda com vista para o mar", en: "Room with two beds, wicker chairs and a balcony with a sea view" },
     placeholder: true,
+    kind: "room",
   },
   weaving: {
     src: "foto:tais",
@@ -250,30 +252,36 @@ export default {
     src: "unsplash:1774280954999-9758f11f3d41",
     alt: { pt: "Quarto em madeira com janela grande para a vegetação", en: "Wooden bedroom with a large window onto greenery" },
     placeholder: true,
+    kind: "room",
   },
   roomWarm: {
     src: "unsplash:1584132915807-fd1f5fbc078f",
     alt: { pt: "Cama com roupa branca e cortinas de tons quentes", en: "Bed with white linen and warm-toned curtains" },
     placeholder: true,
+    kind: "room",
   },
   roomBright: {
     src: "unsplash:1584132905271-512c958d674a",
     alt: { pt: "Cama de casal num quarto luminoso", en: "Double bed in a bright room" },
     placeholder: true,
+    kind: "room",
   },
   verandaWicker: {
     src: "unsplash:1785245647510-5547d4388d2a",
     alt: { pt: "Varanda com cadeiras de vime", en: "Veranda with wicker chairs" },
     placeholder: true,
+    kind: "room",
   },
   verandaBamboo: {
     src: "unsplash:1788927790674-09bcb30d688f",
     alt: { pt: "Varanda com grades de bambu e plantas", en: "Veranda with bamboo railings and plants" },
     placeholder: true,
+    kind: "room",
   },
   palmShadow: {
     src: "unsplash:1530177150700-84cd9a3b059b",
     alt: { pt: "Sombra de folhas de palmeira numa parede clara", en: "Palm-leaf shadow on a pale wall" },
     placeholder: true,
+    kind: "room",
   },
 };

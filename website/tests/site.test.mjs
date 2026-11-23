@@ -57,11 +57,12 @@ test("the nine shared amenities, and nothing else, are listed once on the home p
   }
 });
 
-test("stay page: a light ground, the price and capacity per room, and three progress bars on each gallery in place of a '1 / 3' counter", () => {
+test("stay page: a light ground, the price and capacity per room, and progress bars (not a '1 / 3' counter) when a room has several real photographs", async () => {
   for (const f of ["stay/index.html", "pt/alojamento/index.html"]) {
     const h = read(f);
     assert.ok(/<section class="section rooms-stay"/.test(h) && !/rooms-cine/.test(h), f + ": light section");
-    assert.equal([...h.matchAll(/data-rg-bar/g)].length, 6, f + ": three bars on each of two galleries");
+    const stock = await illustrativeRooms();
+    assert.equal([...h.matchAll(/data-rg-bar/g)].length, stock ? 6 : 0, f + ": bars follow the number of real photographs (three each only with illustrative previews on)");
     assert.ok(!/data-rg-count/.test(h) && !/\d \/ \d<\/span>/.test(h), f + ": the numeric counter is back");
     assert.equal([...h.matchAll(/class="rs-price"/g)].length, 2, f + ": price on both rooms");
     assert.equal([...h.matchAll(/class="rp-pending"/g)].length, 1, f + ": the pending capacity is flagged once");
@@ -122,15 +123,23 @@ test("the hero has two plain actions and no expanding booking widget", () => {
   for (const label of ["Reserve a Table", "Request a Room", "Plan Your Event", "Get in Touch"]) assert.ok(h.includes(label), `missing CTA: ${label}`);
 });
 
-test("the stay page shows two large mirrored rooms, each with its own gallery of three photographs and no unconfirmed amenity", () => {
+async function illustrativeRooms() { return (await import(pathToFileURL(join(root, "src/data/site.mjs")))).default.illustrativeRooms === true; }
+
+test("the stay page shows two large mirrored rooms; stock room pictures are never shown as Lauhata's (branded placeholder instead); no unconfirmed amenity", async () => {
   for (const f of ["stay/index.html", "pt/alojamento/index.html"]) {
     const stay = read(f);
     assert.equal([...stay.matchAll(/<article class="rs-room( is-flip)?"/g)].length, 2, f);
     assert.equal([...stay.matchAll(/class="rs-room is-flip"/g)].length, 1, f + ": second room is mirrored");
     const tracks = [...stay.matchAll(/data-rg-track[\s\S]*?<\/ul>/g)].map((m) => [...m[0].matchAll(/<li class="rs-slide">/g)].length);
-    assert.deepEqual(tracks, [3, 3], f);
-    const srcs = [...stay.matchAll(/<li class="rs-slide">[\s\S]*?src="([^"]+)"/g)].map((m) => m[1]);
-    assert.equal(new Set(srcs).size, 6, f + ": a photograph is repeated");
+    if (await illustrativeRooms()) {
+      assert.deepEqual(tracks, [3, 3], f);
+      const srcs = [...stay.matchAll(/<li class="rs-slide">[\s\S]*?src="([^"]+)"/g)].map((m) => m[1]);
+      assert.equal(new Set(srcs).size, 6, f + ": a photograph is repeated");
+    } else {
+      assert.deepEqual(tracks, [1, 1], f + ": a placeholder is not repeated to fake a gallery");
+      assert.equal([...stay.matchAll(/class="media room-photo is-branded/g)].length, 2, f);
+      assert.ok(!/unsplash\.com/.test(stay.match(/<section class="section rooms-stay"[\s\S]*?<\/section>/)[0]), f + ": a stock photograph in the rooms");
+    }
     assert.ok(!/Air conditioning|Ar condicionado|Breakfast included|Pequeno-almoço incluído/i.test(stay.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<symbol[\s\S]*?<\/symbol>/g, "")), f + ": an unconfirmed amenity is published");
   }
 });
@@ -328,19 +337,17 @@ test("the cart drawer has its own keyframes and a closing time that matches them
   assert.ok(/d === drawer \? 340 : 220/.test(js), "closing time matches the 0.34 s exit");
 });
 
-test("restaurant menu: each dish is a row with a small photograph, the name and price, the description and the order button; drinks carry provisional prices that are flagged and never orderable", () => {
+test("restaurant menu: each dish is a row with a small photograph, the name and price, the description and the order button; provisional drink prices are not public", () => {
   for (const [f, flag] of [["restaurant/index.html", "Provisional price"], ["pt/restaurante/index.html", "Preço provisório"]]) {
     const h = read(f);
     const rows = [...h.matchAll(/<article class="dline"[\s\S]*?<\/article>/g)].map((m) => m[0]);
-    assert.ok(rows.length >= 60, f + ": dish rows");
+    assert.ok(rows.length >= 50, f + ": dish rows");
     assert.ok(!/<dialog class="dish-dialog"/.test(h) && !/class="dcard"/.test(h), f + ": the card-and-dialog design is back");
     for (const r of rows.slice(0, 20)) assert.ok(/class="dl-photo"/.test(r) && /class="dl-name"/.test(r) && /class="dl-price"/.test(r), f + ": a row lacks photo, name or price");
     assert.ok(rows.filter((r) => /class="dl-desc"/.test(r)).length >= 40, f + ": descriptions");
     assert.ok(rows.filter((r) => /data-add="/.test(r)).length >= 40, f + ": order buttons");
-    const drinks = h.match(/<section class="menu-cat" id="cat-drinks"[\s\S]*?<\/section>/)[0];
-    const cards = [...drinks.matchAll(/<article class="dline"[\s\S]*?<\/article>/g)].map((m) => m[0]);
-    assert.ok(cards.length >= 10, f + ": the sample drinks");
-    for (const c of cards) assert.ok(/<p class="dl-price"><b>\$\d/.test(c) && c.includes(flag) && !/data-add=/.test(c), f + ": a drink without a flagged price, or one that can be ordered");
+    // The sample drinks carry provisional prices: they stay out of the public menu until the restaurant confirms them (site.showSamples).
+    assert.ok(!/id="cat-drinks"/.test(h) && !h.replace(/<script[\s\S]*?<\/script>/g, "").includes(flag), f + ": a provisional drink price is public");
   }
 });
 

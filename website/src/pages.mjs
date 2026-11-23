@@ -1,6 +1,6 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
-import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
+import { isStockRoom, esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
 import { lodgingAmenities } from "./data/rooms.mjs";
 import { existsSync, readFileSync } from "node:fs";
 import { TAIS, tripadvisorBadge } from "./layout.mjs";
@@ -91,12 +91,15 @@ function bedPlan(t, r) {
 // A room's photographs as a carousel: a scroll-snap strip (swipe on touch, arrow keys when focused), previous/next
 // buttons, a position counter, and every photo opens in the site's lightbox (data-gallery). Without JavaScript it is a
 // strip that scrolls sideways.
+// The photographs of a room that may be shown: the real ones; while there are none, only the first picture (it renders as the branded placeholder).
+const roomPhotos = (r, max = 99) => { const real = r.images.filter((k) => images[k].kind === "room" && !images[k].placeholder); return (real.length ? real : [r.images[0]]).slice(0, max); };
 function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" } = {}) {
   const L = t.lang;
   const C = t.carousel;
-  const n = r.images.length;
+  const imgs = roomPhotos(r);
+  const n = imgs.length;
   return `<div class="carousel ${cls}" data-carousel role="group" aria-roledescription="${esc(C.role)}" aria-label="${esc(fmt(C.label, { room: r.name[L] }))}">
-    <div class="cr-track" data-cr-track data-gallery tabindex="0">${r.images
+    <div class="cr-track" data-cr-track data-gallery tabindex="0">${imgs
       .map((k, i) => `<div class="cr-slide" role="group" aria-roledescription="${esc(C.slide)}" aria-label="${esc(fmt(C.count, { n: i + 1, total: n }))}"><a class="cr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes })}</a></div>`)
       .join("")}</div>
     ${n > 1 ? `<div class="cr-controls"><button class="cr-btn" type="button" data-cr-prev aria-label="${esc(C.prev)}">${icon("left")}</button><p class="cr-count" data-cr-count aria-live="polite">1 / ${n}</p><button class="cr-btn" type="button" data-cr-next aria-label="${esc(C.next)}">${icon("right")}</button></div>` : ""}
@@ -1470,16 +1473,16 @@ function roomShowcase(t) {
   const S = t.stay;
   return `<div class="rs-list">${rooms
     .map((r, i) => {
-      const imgs = r.images.slice(0, 3);
+      const imgs = roomPhotos(r, 3);
       const specs = [["users", r.capacity[L]], ...suiteAmenityItems(t, r)];
       return `<article class="rs-room${i % 2 ? " is-flip" : ""}" id="room-${r.id}" aria-labelledby="rs-${r.id}">
       <div class="rs-gallery" data-rg>
-        <ul class="rs-track" data-gallery data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide"><a class="rs-zoom" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" })}</a></li>`).join("")}</ul>
-        <div class="rs-bars" role="group" aria-label="${esc(fmt(t.carousel.label, { room: r.name[L] }))}">${imgs.map((k, j) => `<button class="rs-bar" type="button" data-rg-bar aria-label="${esc(fmt(t.carousel.goTo, { n: j + 1, total: imgs.length }))}"><i></i></button>`).join("")}</div>
-        <div class="rs-ctrl">
+        <ul class="rs-track" data-gallery data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide">${isStockRoom(k) ? figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" }) : `<a class="rs-zoom" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" })}</a>`}</li>`).join("")}</ul>
+        ${imgs.length > 1 ? `<div class="rs-bars" role="group" aria-label="${esc(fmt(t.carousel.label, { room: r.name[L] }))}">${imgs.map((k, j) => `<button class="rs-bar" type="button" data-rg-bar aria-label="${esc(fmt(t.carousel.goTo, { n: j + 1, total: imgs.length }))}"><i></i></button>`).join("")}</div>` : ""}
+        ${imgs.length > 1 ? `<div class="rs-ctrl">
           <button class="kc-btn" type="button" data-rg-prev aria-label="${esc(t.carousel.prev)}">${icon("left")}</button>
           <button class="kc-btn" type="button" data-rg-next aria-label="${esc(t.carousel.next)}">${icon("right")}</button>
-        </div>
+        </div>` : ""}
       </div>
       <div class="rs-info">
         <h3 id="rs-${r.id}" class="rs-name">${esc(r.name[L])}</h3>

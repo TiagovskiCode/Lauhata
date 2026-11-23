@@ -123,16 +123,22 @@ export default {
   // every booking form and in the WhatsApp messages' wording.
   payInPerson: true,
 
+  // OFF: the sample drinks carry provisional prices, which must not be public. Turn on only to preview the drinks layout.
   // Sample content for the development preview: drinks the restaurant has not confirmed yet are shown with a visible
   // "Exemplo" tag and no price, and cannot be ordered. Set to false before launch (or once the real drinks are in
   // menu.mjs) and the samples disappear.
-  showSamples: true,
+  showSamples: false,
 
   // Dish photography policy. A dish photograph is shown only when it is REAL: a file src/assets/img/pratos/<dish id>-640.jpg that
   // the restaurant approved, or an image key in menu.mjs that is not flagged as a placeholder. Everything else shows the branded
   // placeholder. The ILLUSTRATIVE pictures in src/assets/img/pratos-temp/ (openly licensed photographs of similar dishes) are kept
   // for the future but are NEVER the customer-facing default: they appear only if this is set to true, with their label.
   dishPhotos: { showIllustrative: false },
+
+  // Room photography policy, same idea: the pictures of the rooms are stock or mock-up images, not photographs of Lauhata's rooms.
+  // Until the owner supplies real ones (keep kind: "room" and set placeholder: false on the image in images.mjs; a landscape photo is not a room photo) each room shows a branded placeholder.
+  // Set to true only to preview the layout with the illustrative pictures (they carry their "Illustrative image" label).
+  illustrativeRooms: false,
 
   // Shows a small "illustrative image" tag on stock photos and the demo-menu notice.
   // Set to false only once every placeholder has been replaced with real content.

@@ -129,6 +129,8 @@ export const usesPlaceholderImages = () => Object.values(images).some((im) => im
 // crop on phones): the browser then downloads only the photo it shows.
 // `credit: true` adds the editorial caption used across the site: what the photo shows, then whether it is a real
 // photograph of Lauhata or an illustrative image. The honesty label is part of the design, not a sticker on top.
+// A room picture that is a stock or mock-up image (images.mjs kind: "room", placeholder: true) is not shown as Lauhata's room unless site.illustrativeRooms.
+export const isStockRoom = (key) => Boolean(images[key] && images[key].kind === "room" && images[key].placeholder && !site.illustrativeRooms);
 export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [], decorative = false, credit = false } = {}) {
   let capHtml = caption ? esc(caption) : "";
   if (credit && !decorative && !caption) {
@@ -138,6 +140,10 @@ export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio
   }
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
+  if (isStockRoom(key)) {
+    const style0 = ratio ? ` style="--ratio:${ratio}"` : "";
+    return `<figure class="media room-photo is-branded ${cls}"${style0}${decorative ? ' aria-hidden="true"' : ` role="img" aria-label="${esc(t.stay.photoSoon)}"`}>${icon("bed")}<span class="bp-word" aria-hidden="true">Lauhata</span><span class="bp-note" aria-hidden="true">${esc(t.stay.photoSoon)}</span></figure>`;
+  }
   const srcset = srcsetFor(im);
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
   const d = dimsFor(im) || (im.src.startsWith("unsplash:") ? { w: 1440, h: 960 } : null); // external stand-ins: a nominal 3:2 reserves the box (the CSS ratio rules the layout)

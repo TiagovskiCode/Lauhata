@@ -368,6 +368,7 @@ export default {
     roomsEyebrow: "Rooms",
     roomsTitle: "The rooms",
     cmpTitle: "The two room types side by side",
+    photoSoon: "Photographs of this room are coming soon",
     cmpCapacity: "Sleeps",
     cmpBeds: "Beds",
     cmpTv: "Television",

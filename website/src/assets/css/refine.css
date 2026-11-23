@@ -1424,3 +1424,22 @@ html:has(dialog[open]) { overflow: hidden; }
 .rs-compare tbody th { color: var(--muted); }
 .rs-compare-note { color: var(--body); }
 .rs-zoom:focus-visible { outline-color: var(--ink); }
+
+/* ---------- Room photographs: until there are real ones, a branded placeholder (never a stock room presented as Lauhata's) ---------- */
+.media.room-photo.is-branded { position: relative; display: grid; place-items: center; align-content: center; gap: 0.5rem; width: 100%; background: repeating-linear-gradient(135deg, rgba(161, 74, 24, 0.07) 0 1px, transparent 1px 12px), linear-gradient(160deg, var(--paper), var(--sand)); box-shadow: inset 0 0 0 1px rgba(23, 18, 15, 0.08); text-align: center; }
+.media.room-photo.is-branded .icon { width: 2.2rem; height: 2.2rem; color: var(--terra-dark); opacity: 0.75; }
+.media.room-photo.is-branded .bp-word { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase; color: var(--muted); }
+.media.room-photo.is-branded .bp-note { max-width: 18rem; padding-inline: 1rem; font-size: 0.82rem; line-height: 1.4; color: var(--muted); }
+.media.room-photo.is-branded::after { content: none !important; }
+.rs-slide .media.room-photo.is-branded { aspect-ratio: 3 / 2 !important; border-radius: 0 !important; }
+.rp-media .media.room-photo.is-branded, .wk-media .media.room-photo.is-branded { height: 100%; }
+
+/* Audit fixes: the six "special" tiles read as a compact 2 x 3 on phones (they took four screens in one column); the placeholder's sentence stays on the room pages, small tiles keep the icon and the name only */
+@media (max-width: 439px) {
+  main .sp .sp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+  main .sp .sp-list li, main .sp .sp-list li:first-child { padding: 0.9rem 0.85rem; }
+  main .sp .sp-list strong { font-size: 1.05rem; }
+  main .sp .sp-list span { font-size: 0.82rem; }
+  main .sp .sp-list .icon { width: 1.4rem; height: 1.4rem; margin-bottom: 0.3rem; }
+}
+.wk-media .media.room-photo.is-branded .bp-note, .rp-media .media.room-photo.is-branded .bp-note { display: none; }

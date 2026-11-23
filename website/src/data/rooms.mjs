@@ -45,8 +45,8 @@ export default [
       en: "A queen-size bed and a television, a few steps from the restaurant and the beach.",
     },
     description: {
-      pt: "O Queen Room é o quarto com uma cama Queen Size e televisão. Fica no Lauhata, perto do restaurante e da praia: o pequeno-almoço serve-se das 8:00 às 10:00, o almoço e o jantar das 11:00 às 21:00, e o fim da tarde é para ver o sol pôr-se sobre a costa de Liquiçá.",
-      en: "The Queen Room is the room with a queen-size bed and a television. It is at Lauhata, close to the restaurant and the beach: breakfast is served from 8:00 to 10:00, lunch and dinner from 11:00 to 21:00, and the late afternoon is for watching the sun set over the Liquiçá coast.",
+      pt: "O Queen Room é o quarto com uma cama Queen Size e televisão. Fica no Lauhata, perto do restaurante e da praia, e o fim da tarde é para ver o sol pôr-se sobre a costa de Liquiçá.",
+      en: "The Queen Room is the room with a queen-size bed and a television. It is at Lauhata, close to the restaurant and the beach, and the late afternoon is for watching the sun set over the Liquiçá coast.",
     },
     beds: { pt: "1 cama Queen Size", en: "1 queen-size bed" },
     bedPlan: ["queen"],
