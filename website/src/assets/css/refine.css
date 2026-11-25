@@ -77,31 +77,24 @@ section:not(.cine-hero) .wi, .heading .wi { transform: none !important; transiti
 .pv-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 2.6vw + 0.9rem, 3.4rem); line-height: 1.08; letter-spacing: -0.012em; color: var(--ink); text-wrap: balance; }
 .pv-body { margin: 1.1rem 0 0; max-width: 34rem; font-size: 1.08rem; line-height: 1.7; color: var(--body); }
 
-.pv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.6rem; margin-top: 2rem; }
-
 /* Final invitation */
 .final-cta .btn-row { align-items: center; gap: 0.8rem 1.6rem; }
 .final-cta .btn-lg { min-height: 52px; padding-inline: 1.7rem; font-size: 1rem; }
 
 /* ---------- Reviews: its own ground, a clear step away from the dark footer; title and cards share a left edge ---------- */
 .reviews-ed { background: var(--cream); color: var(--ink); padding-block: clamp(4rem, 8vw, 7rem); border-top: 0; }
-.reviews-ed .rv-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 2.4rem); align-items: start; margin-bottom: 0; }
+
 .reviews-ed .rv-title { margin: 0; max-width: 18ch; font-size: clamp(2.2rem, 3vw + 1rem, 4rem); line-height: 1.06; }
-.reviews-ed .rv-scores { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.5rem); max-width: none; border: 0; }
-.reviews-ed .rv-score { align-content: start; padding: clamp(1.25rem, 2.4vw, 2rem); background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-card); min-height: 100%; }
-.reviews-ed .rv-score + .rv-score { border-left: 1px solid var(--line); padding-left: clamp(1.25rem, 2.4vw, 2rem); }
+
 .reviews-ed .rv-own { margin-top: clamp(2rem, 4vw, 3rem); max-width: 46rem; }
-.reviews-ed .rv-scores-wrap { min-width: 0; }
-@media (max-width: 640px) { .reviews-ed .rv-scores { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- Our Story: the title is sticky only when it sits in its own column (it sat over its own paragraphs) ---------- */
 .ab-title { position: static; }
 
 /* Review boxes: one clear column inside each box (platform, score, meter, count, link), on any width */
-.reviews-ed .rv-score { grid-template-columns: minmax(0, 1fr); grid-template-areas: "plat" "num" "meter" "word" "go"; row-gap: 0.55rem; justify-items: start; }
+
 .reviews-ed .rv-score > .rv-bubbles, .reviews-ed .rv-score > .rv-bar { grid-area: meter; }
 .reviews-ed .rv-num { font-size: clamp(3.4rem, 4vw + 1.6rem, 6rem); }
-.reviews-ed .rv-score .rv-go { margin-top: 0.4rem; }
 
 /* ---------- Gate fixes (Taste): readable facts on the cream room cards, one button language, headings sized by level, nothing fades in on scroll ---------- */
 .final-line { font-size: clamp(2.4rem, 4.4vw + 0.6rem, 4.6rem); line-height: 1.08; padding-bottom: 0.1em; }
@@ -140,7 +133,6 @@ section:not(.cine-hero) .wi, .heading .wi { transform: none !important; transiti
 
 /* ---------- Reviews sit on sand, between the cream gallery and the photographic closing call ---------- */
 .reviews-ed { background: var(--paper); }
-.reviews-ed .rv-score { background: var(--cream); }
 
 /* Hero words are masked for their entrance: leave room above and below so ascenders and descenders are never cut */
 .hx-title .w, .hx-title .wi, .final-line .w, .final-line .wi { padding-top: 0.2em; margin-top: -0.2em; }
@@ -178,17 +170,11 @@ main:focus { outline: none; }
 .tt, .reviews-ed { color: var(--ink); }
 
 .tt { background: var(--paper); }
-.xs { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
 
 .reviews-ed { background: var(--cream); }
-.reviews-ed .rv-score { background: var(--paper); }
 
 /* ---------- A taste of Lauhata: text and a three-photograph mosaic ---------- */
 .tt { padding-block: clamp(5rem, 9vw, 8.5rem); }
-
-.tt-hours { display: flex; align-items: flex-start; gap: 0.6rem; margin: 1.4rem 0 0; font-size: 0.98rem; color: var(--body); }
-.tt-hours .icon { flex: none; width: 1.2rem; height: 1.2rem; margin-top: 0.15rem; color: var(--terra-dark); }
-.tt-hours b { color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
 
 /* closing call: the two actions in a panel over the photograph */
 .has-panel .fp-grid { display: grid; gap: clamp(1.6rem, 3vw, 2.4rem); align-items: end; }
@@ -227,11 +213,6 @@ main:focus { outline: none; }
 /* titles: one scale */
 .pv-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2rem, 1.5vw + 1.25rem, 2.8rem); line-height: 1.12; }
 .pv-body { margin-top: 1rem; font-size: 1.04rem; line-height: 1.65; }
-.pv-actions { margin-top: 1.5rem; }
-
-/* restaurant: a shorter mosaic */
-
-.tt-hours { margin-top: 0.9rem; }
 
 /* experiences: dark band with a lead, the occasions and three photographs */
 
@@ -264,14 +245,12 @@ main:focus { outline: none; }
 .has-panel .scene-text { padding-block: var(--sec-y); }
 
 .pv-body { margin-top: 1.4rem; }
-.pv-actions { margin-top: 2.2rem; }
 
 /* ---------- soft overlapping edges between every band ---------- */
-.tt, .mo, .reviews-ed, .final-cta { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; }
+.final-cta { position: relative; }
 .rs-hero .hx-content { padding-bottom: calc(var(--curve) + clamp(1.5rem, 4vh, 3rem)); }
 .rs-hero { min-height: clamp(620px, 92svh, 920px); }
 
-.tt { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
 
 /* ---------- the restaurant: text, and a photograph that bleeds to the right edge with a small one overlapping it ---------- */
 .tt { overflow-x: clip; }
@@ -281,9 +260,7 @@ main:focus { outline: none; }
 .mo .wrap { width: 100%; }
 
 /* ---------- surroundings, reviews, closing call ---------- */
-.reviews-ed { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
 .final-cta { overflow: hidden; }
-.final-cta.has-panel { padding-top: var(--curve); }
 
 /* =====================================================================================================================
    Design-system rules (audit of 19 Nov 2026). One rule per concern, so pages inherit instead of being fixed one by one.
@@ -327,26 +304,14 @@ main > .section.booking { padding-block: var(--sec-y); }
 .rs-hero .hx-content { padding-bottom: calc(var(--curve) + clamp(1.25rem, 5vh, 3.5rem) + env(safe-area-inset-bottom)); }
 
 /* ---------- Featured dining: one large photograph and two beside it, then one action ---------- */
-.fd { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; background: var(--cream); }
-main > .section.fd { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
-
-.fd .pv-actions { margin-top: var(--head-gap); }
-.fd .tt-hours { margin-top: 1.2rem; }
 
 /* ---------- Experiences band: lighter ---------- */
 .mo { min-height: clamp(26rem, 62svh, 38rem); }
 
 /* ---------- Reviews: three cards of one size, the third is the call to leave feedback ---------- */
-.reviews-ed .rv-scores { grid-template-columns: minmax(0, 1fr); }
-@media (min-width: 760px) { .reviews-ed .rv-scores { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.reviews-ed .rv-score { min-height: 100%; text-decoration: none; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
-.reviews-ed .rv-score:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -22px rgba(23, 18, 15, 0.45); }
+
 .reviews-ed .rv-num { font-size: clamp(3rem, 2.6vw + 1.6rem, 4.6rem); }
-.reviews-ed .rv-own-card { grid-template-areas: "plat" "num" "go"; grid-template-rows: auto 1fr auto; background: var(--night); border-color: var(--night); color: var(--on-night); }
-.reviews-ed .rv-own-card .rv-plat { color: var(--gold); }
-.reviews-ed .rv-own-card .rv-own-line { align-self: center; font-size: clamp(1.5rem, 1vw + 1.2rem, 2.1rem); line-height: 1.2; color: var(--on-night); }
-.reviews-ed .rv-own-card .rv-go { color: var(--on-night); font-weight: 600; text-decoration: underline; text-underline-offset: 0.25em; }
-.reviews-ed .rv-own-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
 .reviews-ed .rv-own { margin-top: clamp(1.5rem, 3vw, 2.25rem); }
 
 /* ---------- Gallery: a short description under every photograph ---------- */
@@ -485,10 +450,8 @@ section.menu .menu-body .menu-cat { scroll-margin-top: 7rem; }
 .rs-hero .hx-content { padding-bottom: clamp(5.5rem, 13vh, 8rem); }
 
 .hx-scroll { position: absolute; left: 50%; bottom: calc(1.4rem + env(safe-area-inset-bottom)); z-index: 3; width: 1px; height: 60px; transform: translateX(-50%); background: rgba(255, 255, 255, 0.28); overflow: hidden; pointer-events: none; transition: opacity 0.45s var(--ease); }
-.hx-scroll i { position: absolute; left: 0; top: -45%; width: 1px; height: 45%; background: #fff; animation: hxCue 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+
 .hx-scroll.is-gone { opacity: 0; }
-@keyframes hxCue { 0% { top: -45%; } 100% { top: 100%; } }
-@media (prefers-reduced-motion: reduce) { .hx-scroll i { animation: none; top: 0; height: 100%; opacity: 0.45; } }
 
 /* ---------- Welcome: a stronger headline, a place-and-hours line, three cards of a lower height, the middle one set lower ---------- */
 .wl-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.8rem, 3vw + 1.5rem, 5rem); line-height: 1.02; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
@@ -571,7 +534,7 @@ section.menu .menu-layout { display: block !important; }
 .rs-feats .icon { flex: none; width: 1.2rem; height: 1.2rem; color: var(--terra-dark); }
 .rs-room .rp-pending { margin: 0 0 1.2rem; }
 .rs-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.5rem; }
-.rooms-stay .rp-lodging { margin-top: clamp(3rem, 6vw, 5rem); }
+
 @media (min-width: 900px) {
   .rs-room { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
   .rs-room.is-flip { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
@@ -690,31 +653,10 @@ html:has(dialog[open]) { overflow: hidden; }
    Two equal cards (name + price, who it sleeps, beds, one action), then the accommodation's shared offer, set once.
    ===================================================================================================================== */
 
-.rp-price { display: flex; align-items: baseline; gap: 0.35rem; margin: 0; white-space: nowrap; }
-.rp-price strong { font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 1vw + 1.35rem, 2.2rem); line-height: 1; color: var(--terra-dark); font-variant-numeric: lining-nums; }
-.rp-price span { font-size: 0.9rem; color: var(--muted); }
-
 .rp-pending { margin: -0.2rem 0 0; font-size: 0.84rem; line-height: 1.5; color: var(--muted); }
 
-.rp-lodging { margin-top: clamp(1.5rem, 3vw, 2.5rem); padding: clamp(1.4rem, 3vw, 2.4rem); border-radius: var(--radius-panel); background: color-mix(in srgb, var(--sand, #efe4d2) 70%, var(--cream)); }
-.rp-lodging-title { margin: 0 0 1.1rem; font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 0.7vw + 1.2rem, 1.8rem); color: var(--ink); }
-.rp-amen { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: 0.35rem 1.6rem; margin: 0; padding: 0; list-style: none; }
-.rp-amen li { display: flex; align-items: center; gap: 0.7rem; min-height: 2.6rem; font-size: 0.97rem; color: var(--ink); border-bottom: 1px solid var(--line); }
-.rp-amen .icon { flex: none; width: 1.25rem; height: 1.25rem; color: var(--terra-dark); }
-.rp-note { margin: 1.1rem 0 0; font-size: 0.88rem; color: var(--muted); }
-.rp-all { margin: clamp(1.6rem, 3vw, 2.4rem) 0 0; text-align: center; }
-.rp-all .text-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1.5px solid var(--ink); border-radius: 999px; text-decoration: none; }
-.rp-all .text-link:hover { background: var(--ink); color: var(--cream); }
-@media (max-width: 760px) {
-
-  .rp-amen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.2rem 1rem; }
-  .rp-amen li { font-size: 0.9rem; min-height: 2.5rem; }
-}
-@media (max-width: 400px) { .rp-amen { grid-template-columns: minmax(0, 1fr); } }
-
 /* ---------- Feedback dialog ("Share your experience") ---------- */
-.reviews-ed button.rv-own-card { width: 100%; font: inherit; text-align: left; cursor: pointer; appearance: none; -webkit-appearance: none; }
-.reviews-ed button.rv-own-card:hover .rv-go { text-decoration-thickness: 2px; }
+
 .fb-dialog { width: min(34rem, calc(100vw - 1.5rem)); max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); margin: auto; padding: clamp(1.4rem, 3vw, 2.1rem); border: 0; border-radius: var(--radius-panel); background: var(--cream); color: var(--ink); box-shadow: 0 40px 90px -30px rgba(8, 5, 3, 0.7); overflow: auto; overscroll-behavior: contain; }
 .fb-dialog::backdrop { background: rgba(14, 10, 8, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
 .fb-dialog[open] { animation: fbIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
@@ -783,8 +725,6 @@ html:has(dialog[open]) { overflow: hidden; }
    Dish photography policy: REAL photograph, branded PLACEHOLDER (the default), ILLUSTRATIVE only behind a flag. Diet and special labels.
    ===================================================================================================================== */
 
-.cl-thumb.is-brand { display: grid; place-items: center; background: linear-gradient(160deg, var(--paper), var(--sand)); color: var(--terra-dark); }
-.cl-thumb.is-brand .icon { width: 1.5rem; height: 1.5rem; }
 .dl-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.45rem 0 0; padding: 0; list-style: none; }
 .dl-badges li { padding: 0.15rem 0.6rem; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.02em; color: var(--body); }
 .dl-badges .is-special { border-color: var(--sunset); background: var(--sunset); color: #1a120c; }

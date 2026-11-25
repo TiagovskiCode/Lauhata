@@ -100,7 +100,7 @@ em { font-style: italic; color: var(--terra); }
 .heading.is-center .lead { margin-inline: auto; margin-top: 1rem; font-size: 1.05rem; }
 .heading .lead { margin-top: 1rem; }
 /* Content still to be supplied by the client is shown in brackets, as in the design. */
-.tbc, .tbc-block { color: var(--muted); }
+.tbc-block { color: var(--muted); }
 .tbc-block { font-style: normal; }
 .pending { color: var(--terra-dark); font-weight: 600; }
 

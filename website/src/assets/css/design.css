@@ -57,7 +57,7 @@ em { font-weight: 400; color: var(--terra-dark); }
 .cart-scroll { overscroll-behavior: contain; }
 /* Keyboard focus: terracotta on light sections, light gold on the dark ones (terracotta on deep teal is too faint). */
 :focus-visible { outline-color: var(--focus, var(--terra-dark)); }
-.site-footer, .dusk, .cine-hero, .mobile-bar .btn-dark, dialog.cart, dialog.pick { --focus: var(--gold-soft); }
+.site-footer, .cine-hero, .mobile-bar .btn-dark, dialog.cart, dialog.pick { --focus: var(--gold-soft); }
 
 /* ---------- FAQ ---------- */
 .faq-section { background: var(--paper); }
@@ -74,7 +74,7 @@ em { font-weight: 400; color: var(--terra-dark); }
 
 /* ---------- Contrast (WCAG AA, 4.5:1 for small text) ---------- */
 .eyebrow { color: var(--terra-dark); }
-.dusk .eyebrow, .cine-hero .eyebrow { color: var(--gold-soft); }
+.cine-hero .eyebrow { color: var(--gold-soft); }
 .footer-base, .footer-base a { color: rgba(243, 233, 215, 0.78); }
 .footer-note { color: rgba(243, 233, 215, 0.74); }
 .pk-btn.is-empty .pk-val { opacity: 1; color: var(--muted); }
@@ -146,7 +146,6 @@ body { font-weight: 400; line-height: 1.65; }
 
 /* The opening: two black bars close the home hero like a letterbox and slide away as the picture comes up. */
 
-@keyframes letterboxOpen { from { height: 19svh; } to { height: 0; } }
 
 /* Scenes: full-width cinema frame, one real aerial photograph, one line. */
 .scene { position: relative; isolation: isolate; display: grid; align-items: end; min-height: min(88svh, 58vw); overflow: hidden; background: var(--cinema-black); color: var(--paper); }
@@ -166,59 +165,6 @@ body { font-weight: 400; line-height: 1.65; }
 ::view-transition-new(root) { animation: cineDipIn 0.55s 0.1s ease-out both; }
 @keyframes cineDipOut { to { opacity: 0; } }
 @keyframes cineDipIn { from { opacity: 0; } }
-/* ==========================================================================================================
-   "Um dia no Lauhata": a pinned full-screen stage (GSAP, see cinema.js). Five real aerial frames, one per moment, cross-fade
-   as the page scrolls; a colour grade moves from cool morning blue to golden afternoon to dark orange dusk; a thin rail
-   at the bottom counts the hours. Everything below `html.day-cine` only applies once GSAP has taken over; before that, with
-   no JavaScript or if GSAP fails, it is a plain list of five pictures with their text.
-   ========================================================================================================== */
-.day { background: var(--cinema-black); color: var(--paper); }
-.day-stage { position: relative; padding: clamp(4rem, 8vw, 6.5rem) 0 clamp(2.5rem, 5vw, 4rem); }
-.day-head { width: 100%; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); margin-bottom: clamp(2rem, 4vw, 3rem); }
-.day-title { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(2.6rem, 6.5vw, 5.4rem); line-height: 1; letter-spacing: -0.012em; color: var(--paper); }
-.day-lead { margin: 0.9rem 0 0; max-width: 34ch; font-size: clamp(1.02rem, 1.1vw + 0.7rem, 1.2rem); color: rgba(250, 247, 239, 0.82); }
-.day-steps { display: grid; gap: clamp(1.8rem, 4vw, 3rem); width: 100%; max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
-.day-frame { position: relative; overflow: hidden; aspect-ratio: 16 / 9; border-radius: var(--r-lg); background: #000; }
-.day-frame img { width: 100%; height: 100%; object-fit: cover; }
-.day-copy { padding-top: 1.1rem; }
-.day-meta { display: flex; align-items: baseline; gap: 0.9rem; margin: 0 0 0.3rem; }
-.day-time { font-family: var(--serif); font-size: clamp(2.6rem, 5vw, 3.8rem); line-height: 1; color: var(--gold-soft); }
-
-.day-copy h3 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(1.6rem, 2.6vw, 2.2rem); color: var(--paper); }
-.day-text { margin: 0.4rem 0 0; max-width: 36ch; color: rgba(250, 247, 239, 0.86); }
-.day-grade, .day-dim, .day-rail { display: none; }
-
-/* The pinned stage */
-.day-cine .day-track { --day-per: 0.95; height: calc(100svh * (1 + (var(--day-n, 5) - 1) * var(--day-per) + 0.25)); min-height: calc(560px * (1 + (var(--day-n, 5) - 1) * var(--day-per) + 0.25)); }
-.day-cine .day-stage { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; padding: 0; isolation: isolate; }
-.day-cine .day-head { position: absolute; z-index: 5; top: calc(var(--header-h) + clamp(1rem, 3vh, 2rem)); left: 0; right: 0; margin: 0 auto; pointer-events: none; }
-.day-cine .day-title { font-size: clamp(2rem, 4.2vw, 3.6rem); }
-.day-cine .day-lead { max-width: 36ch; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4); }
-.day-cine .day-steps { position: absolute; inset: 0; display: block; max-width: none; padding: 0; margin: 0; }
-.day-cine .day-step { position: absolute; inset: 0; }
-.day-cine .day-frame { position: absolute; inset: 0; aspect-ratio: auto; border-radius: 0; height: 100%; }
-.day-cine .day-frame::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--grain); background-size: 180px 180px; opacity: 0.085; }
-.day-cine .day-frame::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(0deg, rgba(5, 15, 14, 0.86) 0%, rgba(5, 15, 14, 0.38) 36%, rgba(5, 15, 14, 0.12) 62%, rgba(5, 15, 14, 0.4) 100%), radial-gradient(ellipse at 50% 45%, transparent 50%, rgba(5, 15, 14, 0.5) 100%); }
-.day-cine .day-grade, .day-cine .day-dim { display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-.day-cine .day-grade { mix-blend-mode: soft-light; }
-.day-cine .day-dim { background: #050f0e; }
-.day-cine .day-copy { position: absolute; z-index: 4; left: 0; right: 0; bottom: clamp(5.5rem, 12vh, 8rem); padding: 0 var(--gutter); max-width: calc(var(--wrap) + 2 * var(--gutter)); margin-inline: auto; }
-.day-cine .day-meta { gap: clamp(0.9rem, 2vw, 1.8rem); margin-bottom: 0.2rem; }
-.day-cine .day-time { font-size: clamp(5rem, 14vw, 13rem); line-height: 0.82; letter-spacing: -0.02em; color: var(--paper); text-shadow: 0 4px 40px rgba(0, 0, 0, 0.35); }
-
-.day-cine .day-copy h3 { font-size: clamp(1.8rem, 3.4vw, 3rem); }
-.day-cine .day-text { max-width: 42ch; font-size: clamp(1rem, 1.1vw + 0.6rem, 1.2rem); }
-.day-cine .day-rail { display: flex; justify-content: space-between; position: absolute; z-index: 5; left: var(--gutter); right: var(--gutter); bottom: clamp(1.6rem, 4vh, 2.6rem); margin: 0 auto; max-width: var(--wrap); padding-top: 0.9rem; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; color: rgba(250, 247, 239, 0.62); border-top: 1px solid rgba(250, 247, 239, 0.22); }
-.day-cine .day-rail li { position: relative; transition: color 0.4s var(--ease); }
-.day-cine .day-rail li.is-on { color: var(--gold-soft); }
-.day-cine .day-rail-fill { position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--gold); transform-origin: 0 50%; }
-
-@media (max-width: 860px) {
-  .day-cine .day-track { --day-per: 0.7; }
-  .day-cine .day-copy { bottom: clamp(9rem, 17vh, 11rem); }
-  .day-cine .day-time { font-size: clamp(4.4rem, 22vw, 7rem); }
-  .day-cine .day-rail { font-size: 0.78rem; bottom: 5.6rem; }
-}
 /* ==========================================================================================================
    Photographs: an editorial grid of real photos only (one wide frame, then a calm two-column rhythm), each opening
    in a full-screen lightbox. No stock picture ever appears here.
@@ -259,7 +205,6 @@ html:not(.cine-motion) .gr-link img { transition: none; }
 .room-sheet > div { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
 .room-sheet dt { font-size: 0.9rem; font-weight: 600; color: var(--muted); }
 .room-sheet dd { margin: 0; color: var(--ink); }
-.room-sheet .tbc { color: var(--muted); font-style: normal; }
 
 @media (max-width: 900px) {
 

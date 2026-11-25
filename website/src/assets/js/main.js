@@ -855,17 +855,25 @@
   // the page has loaded, and shown only once a frame of it has really been painted; then it cross-fades in from that very frame, at half
   // speed, and eases to full speed, so the picture seems to start moving. Nothing is shown before that, so there is no black frame and no
   // flash, and if anything fails (no autoplay, a slow or broken connection) the photograph simply stays.
-  // Laptops and desktops only (a fine pointer and 1024 px or more); never with reduced motion, data saver or a 2G/3G connection.
+  // Laptops and desktops only (1024 px or more and a mouse or trackpad). It never starts by itself with reduced motion, data saver or a
+  // 2G/3G connection: there the control shows "play" and the film is fetched only if the visitor asks for it.
   const heroVideo = $("[data-hero-video]");
   if (heroVideo) {
     const hero = heroVideo.closest(".cine-hero");
     const toggle = $("[data-hero-toggle]", hero);
     const conn = navigator.connection || {};
-    const desk = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
+    const desk = window.matchMedia("(min-width: 1024px) and (any-hover: hover) and (any-pointer: fine)");
     const drop = () => { heroVideo.remove(); toggle?.remove(); hero.classList.remove("is-film"); };
-    if (!desk.matches || reduced || conn.saveData || /(^|-)[23]g$/.test(conn.effectiveType || "")) drop();
+    if (!desk.matches) drop();
     else {
-      let onScreen = true, held = false, revealed = false; // held: the visitor paused it
+      let onScreen = true, held = false, revealed = false, asked = false; // held: the visitor paused it
+      const label = (playing) => {
+        if (!toggle) return;
+        const text = playing ? toggle.dataset.pause : toggle.dataset.play;
+        toggle.classList.toggle("is-paused", !playing);
+        toggle.setAttribute("aria-label", text);
+        toggle.title = text;
+      };
       const run = () => { if (revealed && onScreen && !held && !document.hidden && heroVideo.paused) heroVideo.play().catch(() => {}); };
       const settle = () => {
         const t0 = performance.now(), from = 0.5, ms = 2400;
@@ -881,36 +889,61 @@
         revealed = true;
         hero.classList.add("is-film");
         heroVideo.classList.add("is-on");
+        toggle?.classList.remove("is-loading");
+        label(true);
         settle();
-        if (toggle) toggle.hidden = false;
       };
       const start = () => {
+        if (asked) return;
+        asked = true;
         heroVideo.addEventListener("error", drop, { once: true });
         heroVideo.addEventListener("canplaythrough", () => {
+          if (held) return; // paused before it ever showed: it starts when the visitor says so
           heroVideo.playbackRate = 0.5;
           heroVideo.play().then(() => {
             if ("requestVideoFrameCallback" in heroVideo) heroVideo.requestVideoFrameCallback(reveal);
             else requestAnimationFrame(() => requestAnimationFrame(reveal));
-          }).catch(() => { heroVideo.pause(); }); // autoplay refused: the photograph stays
+          }).catch(() => { heroVideo.pause(); held = true; toggle?.classList.remove("is-loading"); label(false); }); // autoplay refused: the photograph stays, the control offers the film
         }, { once: true });
         heroVideo.preload = "auto";
         heroVideo.src = heroVideo.dataset.src;
         heroVideo.load();
       };
-      // After the entrance of the words, and never while the page itself is still loading.
-      const soon = () => setTimeout(start, Math.max(200, 1500 - performance.now()));
-      if (document.readyState === "complete") soon(); else window.addEventListener("load", soon, { once: true });
+      const auto = !reduced && !conn.saveData && !/(^|-)[23]g$/.test(conn.effectiveType || "");
+      if (auto) {
+        // After the entrance of the words, and never while the page itself is still loading.
+        const soon = () => setTimeout(start, Math.max(200, 1500 - performance.now()));
+        if (document.readyState === "complete") soon(); else window.addEventListener("load", soon, { once: true });
+      } else held = true;
+      if (toggle) { toggle.hidden = false; label(auto); }
       desk.addEventListener("change", () => { if (!desk.matches) drop(); });
       document.addEventListener("visibilitychange", run);
       window.addEventListener("pageshow", (e) => { if (e.persisted) run(); });
       toggle?.addEventListener("click", () => {
         held = !held;
-        if (held) heroVideo.pause(); else run();
-        toggle.classList.toggle("is-paused", held);
-        toggle.setAttribute("aria-label", held ? toggle.dataset.play : toggle.dataset.pause);
+        label(!held);
+        if (held) { heroVideo.pause(); return; }
+        if (!asked) { toggle.classList.add("is-loading"); start(); return; }
+        if (revealed) { run(); return; }
+        heroVideo.play().then(reveal).catch(() => { held = true; label(false); });
       });
       new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (!revealed) return; if (onScreen) run(); else heroVideo.pause(); }, { threshold: 0.05 }).observe(hero);
     }
+  }
+
+  // ---------- Back to top ----------
+  // Shown once the first screen is behind (an observer on a marker, no scroll listener). It takes the focus back to the start of the page.
+  const toTop = $("[data-to-top]");
+  if (toTop && "IntersectionObserver" in window) {
+    const mark = document.createElement("span");
+    mark.setAttribute("aria-hidden", "true");
+    mark.style.cssText = "position:absolute;top:0;left:0;width:1px;height:110vh;pointer-events:none;visibility:hidden";
+    document.body.prepend(mark);
+    new IntersectionObserver(([e]) => toTop.classList.toggle("is-on", !e.isIntersecting)).observe(mark);
+    toTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      $(".brand")?.focus({ preventScroll: true });
+    });
   }
 
   // Everything else is revealed once, as it enters the viewport: a heading rises line by line (data-split), a photograph opens like a tide
@@ -929,7 +962,7 @@
   };
   onEnter($$("[data-split]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-fade]").filter((el) => !el.closest(".cine-hero")));
-  onEnter($$("[data-tide]"));
+  onEnter($$("[data-tide], [data-rise]"));
 
   // Reached the end without an error: the reveal states set by ".js" can all be resolved, so keep them.
   clearTimeout(failsafe);

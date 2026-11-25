@@ -41,8 +41,6 @@
 
 .cine-hero .hours div { border-color: rgba(255, 255, 255, 0.18); }
 
-@keyframes cue { to { top: 100%; } }
-
 /* Hero entrance: split words rise, other bits fade up (JS adds .is-ready) */
 .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .wi { display: inline-block; transform: translateY(110%); transition: transform 0.8s var(--ease); transition-delay: calc(var(--wd, 0) * 1ms); }
@@ -57,11 +55,6 @@
 .media.has-parallax img { transform: scale(1.18); will-change: transform; }
 .js [data-clip] { clip-path: inset(18% 8% 18% 8% round var(--r-lg)); transition: clip-path 1.4s var(--ease); }
 .js [data-clip].is-in { clip-path: inset(0 0 0 0 round var(--r-lg)); }
-
-/* ---------- Day timeline with a drawn line ---------- */
-.day-track { position: relative; }
-
-.day .step:not(:last-child)::before { display: none; }
 
 /* ---------- Footer wordmark + note ---------- */
 

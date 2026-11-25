@@ -3,6 +3,7 @@ import { esc, fmt, href, absUrl, site, icon, waLink, hoursList, LANGS, usesPlace
 import { bookingCard } from "./pages.mjs"; // used only at render time, so the two modules may import each other
 
 const stroke = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+// Icons: Lucide (lucide.dev, ISC licence) for most, drawn into one sprite; a few of the site's own in the same stroke.
 const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" ${stroke}/></symbol>
@@ -21,33 +22,34 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" ${stroke}/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" ${stroke}/></symbol>
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="2" ${stroke}/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4" ${stroke}/></symbol>
-    <symbol id="i-cutlery" viewBox="0 0 24 24"><path d="M7 3.5v7a2 2 0 0 0 4 0v-7M9 10.5v10M17 20.5v-17c-2 1-3 3.5-3 7h3" ${stroke}/></symbol>
-    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M3.5 18.5v-11M3.5 14h17v4.5M20.5 14v-2.5a3 3 0 0 0-3-3h-6V14" ${stroke}/><circle cx="7.5" cy="11" r="1.8" ${stroke}/></symbol>
+    <symbol id="i-cutlery" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" ${stroke}/><path d="M7 2v20" ${stroke}/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" ${stroke}/></symbol>
+    <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8" ${stroke}/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" ${stroke}/><path d="M12 4v6" ${stroke}/><path d="M2 18h20" ${stroke}/></symbol>
     <symbol id="i-bed-queen" viewBox="0 0 24 24"><path d="M3 19v-8.5M21 19v-8.5M3 15.5h18M3 13h18v2.5M5.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M12.5 13v-2.2a1.3 1.3 0 0 1 1.3-1.3h3.4a1.3 1.3 0 0 1 1.3 1.3V13M3 10.5V6.5a1.5 1.5 0 0 1 1.5-1.5h15A1.5 1.5 0 0 1 21 6.5v4" ${stroke}/></symbol>
     <symbol id="i-bed-single" viewBox="0 0 24 24"><path d="M6.5 19.5v-9M17.5 19.5v-9M6.5 16h11M6.5 13.5h11V16M9 13.5v-1.8a1.2 1.2 0 0 1 1.2-1.2h3.6a1.2 1.2 0 0 1 1.2 1.2v1.8M6.5 10.5V6a1.5 1.5 0 0 1 1.5-1.5h8A1.5 1.5 0 0 1 17.5 6v4.5" ${stroke}/></symbol>
     <symbol id="i-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2" ${stroke}/><path d="M8.5 20.5h7M12 17v3.5" ${stroke}/></symbol>
-    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 9.5a12.5 12.5 0 0 1 17 0M6.5 12.8a8.2 8.2 0 0 1 11 0M9.4 16a4 4 0 0 1 5.2 0" ${stroke}/><circle cx="12" cy="19" r="1" ${stroke}/></symbol>
-    <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 20V8a4 4 0 0 1 4-4h1.5M9.5 4h3.2a2.3 2.3 0 0 1 2.3 2.3V8M7 11h10l-1 3H8zM9 17v1.5M12 17v2.5M15 17v1.5" ${stroke}/></symbol>
+    <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M12 20h.01" ${stroke}/><path d="M2 8.82a15 15 0 0 1 20 0" ${stroke}/><path d="M5 12.859a10 10 0 0 1 14 0" ${stroke}/><path d="M8.5 16.429a5 5 0 0 1 7 0" ${stroke}/></symbol>
+    <symbol id="i-shower" viewBox="0 0 24 24"><path d="M10 4 8 6" ${stroke}/><path d="M17 19v2" ${stroke}/><path d="M2 12h20" ${stroke}/><path d="M7 19v2" ${stroke}/><path d="M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5" ${stroke}/></symbol>
     <symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5M3.5 10l3.3-.9-.9-3.3M20.5 14l-3.3.9.9 3.3M3.5 14l3.3.9-.9 3.3M20.5 10l-3.3-.9.9-3.3" ${stroke}/></symbol>
-    <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19.5V5M5.5 11.5 12 5l6.5 6.5" ${stroke}/></symbol>
-    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5 4 12l-.5-2 7-.8L8 4.5 9.5 4l5.5 4.2 4.3-.6c1.1-.2 1.9.9 1.2 1.7l-.6.6-4.2 1.6 1.4 6.6-1.5.7-3.2-5.3z" ${stroke}/></symbol>
-    <symbol id="i-nosmoke" viewBox="0 0 24 24"><path d="M3.5 15.5h12v3h-12zM15.5 15.5v3M19 15.5v3M18.5 12.5c0-1.4 1.5-2 1.5-3.5M16.5 12.5c0-1.6 1.7-2.2 1.7-4" ${stroke}/><circle cx="12" cy="12" r="9" ${stroke}/><path d="M5.6 5.6l12.8 12.8" ${stroke}/></symbol>
-    <symbol id="i-glass" viewBox="0 0 24 24"><path d="M5 4.5h14l-7 8zM12 12.5V19M8 19.5h8" ${stroke}/></symbol>
-    <symbol id="i-car" viewBox="0 0 24 24"><path d="M4.5 16.5v-4l1.7-4.6A2 2 0 0 1 8.1 6.5h7.8a2 2 0 0 1 1.9 1.4l1.7 4.6v4m-15 0h15m-15 0V19m15-2.5V19M8 13.5h.01M16 13.5h.01" ${stroke}/></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.2" ${stroke}/><path d="M3.5 19.5c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M16 5.6a3.2 3.2 0 0 1 0 5.8M18.2 14.6c1.7.7 2.8 2.3 3.3 4.9" ${stroke}/></symbol>
-    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14M5 19c3-4 6-6.5 9-8.5" ${stroke}/></symbol>
-    <symbol id="i-waves" viewBox="0 0 24 24"><path d="M3 9c2-1.6 3.5-1.6 5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4 0M3 14c2-1.6 3.5-1.6 5 0s3 1.6 4.5 0 3-1.6 4.5 0 3 1.6 4 0M7 6.5c1.5-1 3-1 4.5 0" ${stroke}/></symbol>
-    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19.5s-7.5-4.4-7.5-10A4 4 0 0 1 12 7a4 4 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10Z" ${stroke}/></symbol>
-    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M5 9.5h11v4.5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5V9.5ZM16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5c-.6 1 .6 1.8 0 3M11.5 3.5c-.6 1 .6 1.8 0 3" ${stroke}/></symbol>
-    <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M4 18h16M7.5 14.5a4.5 4.5 0 0 1 9 0M12 4.5v3M5 9l1.8 1.5M19 9l-1.8 1.5M2.5 14.5h2.5M19 14.5h2.5M9.5 21h5" ${stroke}/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7" ${stroke}/><path d="M12 19V5" ${stroke}/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" ${stroke}/></symbol>
+    <symbol id="i-nosmoke" viewBox="0 0 24 24"><path d="M12 12H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h13" ${stroke}/><path d="M18 8c0-2.5-2-2.5-2-5" ${stroke}/><path d="m2 2 20 20" ${stroke}/><path d="M21 12a1 1 0 0 1 1 1v2a1 1 0 0 1-.5.866" ${stroke}/><path d="M22 8c0-2.5-2-2.5-2-5" ${stroke}/><path d="M7 12v4" ${stroke}/></symbol>
+    <symbol id="i-glass" viewBox="0 0 24 24"><path d="M8 22h8" ${stroke}/><path d="M12 11v11" ${stroke}/><path d="m19 3-7 8-7-8Z" ${stroke}/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ${stroke}/><path d="M9 17V7h4a3 3 0 0 1 0 6H9" ${stroke}/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" ${stroke}/><circle cx="9" cy="7" r="4" ${stroke}/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" ${stroke}/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" ${stroke}/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" ${stroke}/></symbol>
+    <symbol id="i-waves" viewBox="0 0 24 24"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" ${stroke}/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" ${stroke}/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" ${stroke}/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" ${stroke}/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M10 2v2" ${stroke}/><path d="M14 2v2" ${stroke}/><path d="M6 2v2" ${stroke}/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" ${stroke}/></symbol>
+    <symbol id="i-sunset" viewBox="0 0 24 24"><path d="M12 10V2" ${stroke}/><path d="m4.93 10.93 1.41 1.41" ${stroke}/><path d="M2 18h2" ${stroke}/><path d="M20 18h2" ${stroke}/><path d="m19.07 10.93-1.41 1.41" ${stroke}/><path d="M22 22H2" ${stroke}/><path d="m16 6-4 4-4-4" ${stroke}/><path d="M16 18a4 4 0 0 0-8 0" ${stroke}/></symbol>
     <symbol id="i-quote" viewBox="0 0 24 24"><path d="M10 7c-3 1-5 3.5-5 7v3h5v-5H7.5c0-2 1-3.5 3-4.2L10 7Zm9 0c-3 1-5 3.5-5 7v3h5v-5h-2.5c0-2 1-3.5 3-4.2L19 7Z" fill="currentColor"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8l-5.2 2.8 1-5.8-4.3-4.1 5.9-.8L12 3.5Z" fill="currentColor"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" ${stroke}/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" ${stroke}/><path d="m16 16 4.5 4.5" ${stroke}/></symbol>
     <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 8h14l-1 11.5a1 1 0 0 1-1 .9H7a1 1 0 0 1-1-.9L5 8Z" ${stroke}/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" ${stroke}/></symbol>
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" ${stroke}/></symbol>
-    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6.5v11M15 6.5v11" ${stroke}/></symbol>
-    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 6.2v11.6l9-5.8z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-palm" viewBox="0 0 24 24"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4" ${stroke}/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3" ${stroke}/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35" ${stroke}/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14" ${stroke}/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" ${stroke}/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" ${stroke}/></symbol>
   </defs>
@@ -405,8 +407,7 @@ ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
 ${o.menu ? menuJson(o.menu) : ""}
 <script src="/assets/js/picker.js" defer></script>
-${o.page === "home" ? `<script src="/assets/js/vendor/gsap.min.js" defer></script>
-<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>` : ""}
+${o.page === "home" ? `<script src="/assets/js/vendor/gsap.min.js" defer></script>` : ""}
 <script src="/assets/js/main.js" defer></script>
 ${o.page === "home" ? `<script src="/assets/js/cinema.js" defer></script>` : ""}
 <script src="/assets/js/order.js" defer></script>
@@ -427,6 +428,7 @@ ${cartUi(t)}
   <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
   <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 </div>
+<button class="to-top" type="button" data-to-top aria-label="${esc(t.common.backToTop)}" title="${esc(t.common.backToTop)}">${icon("up")}</button>
 <a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 ${site.gaId ? `<div class="consent" data-consent role="region" aria-label="${esc(t.consent.label)}" hidden><p>${esc(t.consent.text)} <a href="${href("privacy", L)}">${esc(t.consent.more)}</a></p><div class="consent-btns"><button type="button" class="btn btn-outline btn-sm" data-consent-no>${esc(t.consent.decline)}</button><button type="button" class="btn btn-terra btn-sm" data-consent-yes>${esc(t.consent.accept)}</button></div></div>` : ""}
 <dialog class="book-dialog" data-book-dialog aria-labelledby="bd-title-${t.lang}">

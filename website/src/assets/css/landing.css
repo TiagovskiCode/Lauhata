@@ -16,11 +16,6 @@
 .footer-base a { color: rgba(243, 233, 215, 0.75); }
 .footer-note { display: block; margin-top: 0.2rem; font-size: 0.78rem; color: rgba(243, 233, 215, 0.5); }
 
-/* ---------- The end of the day: photograph beside two actions ---------- */
-.dusk { color: var(--cream); background: var(--forest); }
-
-.dusk .eyebrow { color: var(--gold-soft); }
-
 /* ---------- Tablet and phone ---------- */
 @media (max-width: 1020px) {
   .ft { grid-template-columns: 1fr 1fr; }

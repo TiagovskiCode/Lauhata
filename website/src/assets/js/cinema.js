@@ -1,99 +1,85 @@
-/* Lauhata: the "day" scene of the home page, the one sequence that needs a timeline (GSAP + ScrollTrigger, self-hosted in ./vendor, GSAP 3.13,
-   free licence). Everything else that moves on the site is CSS or a one-off reveal in main.js. It runs after main.js, which has already set
-   the motion level: cross-fades, colour grade and rail always; the slow push-in and the rising words only with html.cine-motion (no
-   "reduced motion", or ?movimento=completo). If GSAP is missing or anything throws, the scene falls back to a plain list (cleanup()). */
+/* Lauhata: the home page choreography that needs GSAP (self-hosted in ./vendor, GSAP 3.13, free licence). It runs after main.js, which has
+   already set the motion level (html.cine-motion = full motion). Two jobs only:
+     - the day: the sun glides along the line of the day to the meal in view, and the photograph follows;
+     - groups: the six facts arrive one after another, once.
+   Nothing is pinned and nothing is scrubbed. The browser's own observers say when a section is near; GSAP only moves things, and its clock
+   stops by itself when nothing is moving. (Its scroll plugin was dropped: it kept that clock running on every frame of the whole visit.)
+   Every word is on the page without this file. */
 (() => {
   "use strict";
-  const root = document.documentElement;
-  const { gsap, ScrollTrigger } = window;
-  if (!gsap || !ScrollTrigger) return;
-  gsap.registerPlugin(ScrollTrigger);
-
-  const full = root.classList.contains("cine-motion"); // tier B
+  const { gsap } = window;
+  if (!gsap || !("IntersectionObserver" in window)) return;
+  const full = document.documentElement.classList.contains("cine-motion");
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-  const created = []; // every ScrollTrigger we make, so a failure can take them all down
+  const once = (el, margin, fn) => new IntersectionObserver(([e], io) => { if (e.isIntersecting || e.boundingClientRect.top < 0) { io.disconnect(); fn(); } }, { rootMargin: margin }).observe(el);
 
-  // Back to the plain layout: no pin, no inline styles, and the day scene as a simple list.
-  function cleanup() {
-    created.forEach((st) => st.kill());
-    ScrollTrigger.getAll().forEach((st) => st.kill());
-    root.classList.remove("day-cine", "gsap-ready");
-    gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill", { clearProps: "all" });
+  function initDay() {
+    const day = $("[data-day]");
+    if (!day) return;
+    const items = $$("[data-day-item]", day), frames = $$("[data-day-frame]", day);
+    const sun = $("[data-day-sun]", day), gone = $("[data-day-gone]", day), arc = $("[data-day-arc]", day);
+    const len = gone.getTotalLength(); // pathLength="1" is for the dashes only: points are measured on the real length
+    const pos = { p: 0 };
+    let k = 1; // the drawing is 600 units wide; the sun is an element of its own, moved by transform alone
+    const place = () => {
+      const pt = gone.getPointAtLength(len * pos.p);
+      gsap.set(sun, { x: pt.x * k, y: pt.y * k });
+      gone.setAttribute("stroke-dasharray", `${pos.p.toFixed(4)} 2`);
+    };
+    new ResizeObserver(([e]) => { k = e.contentRect.width / 600; place(); }).observe(arc);
+
+    let current = -1, held = false; // held: the visitor chose a meal, so scrolling no longer changes it until the section is left
+    const show = (i) => {
+      if (i === current || !items[i]) return;
+      current = i;
+      items.forEach((b, n) => { b.classList.toggle("is-on", n === i); b.setAttribute("aria-pressed", String(n === i)); });
+      frames.forEach((f, n) => f.classList.toggle("is-on", n === i));
+      gsap.to(pos, { p: Number(items[i].dataset.at), duration: full ? 1.1 : 0, ease: "power3.out", overwrite: true, onUpdate: place, onComplete: place });
+    };
+    items.forEach((b, i) => {
+      const choose = () => { held = true; show(i); };
+      b.addEventListener("click", choose);
+      b.addEventListener("focus", () => { if (b.matches(":focus-visible")) choose(); });
+      b.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") choose(); });
+    });
+    show(0);
+
+    // Decode the photographs shortly before the section arrives, off the main thread, so a change never waits for a picture.
+    once(day, "90% 0px", () => $$("img", day).forEach((im) => { im.loading = "eager"; im.decode?.().catch(() => {}); }));
+
+    // Which meal is in view. The section's place on the page is measured once as it comes in (and on resize); while it is on screen a
+    // passive scroll listener only compares numbers. Off screen there is no listener at all.
+    let top = 0, height = 1;
+    const measure = () => { const r = day.getBoundingClientRect(); top = r.top + window.scrollY; height = r.height; };
+    const follow = () => {
+      if (held) return;
+      const vh = window.innerHeight, start = top - vh * 0.6, end = top + height - vh * 0.52;
+      show(Math.max(0, Math.min(items.length - 1, Math.floor(((window.scrollY - start) / (end - start)) * items.length))));
+    };
+    new IntersectionObserver(([e]) => {
+      window.removeEventListener("scroll", follow);
+      if (e.isIntersecting) { measure(); follow(); window.addEventListener("scroll", follow, { passive: true }); }
+      else held = false;
+    }).observe(day);
+    window.addEventListener("resize", measure, { passive: true });
   }
 
-  /* ---------- The day: one pinned stage, five moments ---------- */
-  function initDay() {
-    const stage = $("[data-day-stage]");
-    const steps = $$("[data-day-step]");
-    if (!stage || steps.length < 2) return;
-    root.classList.add("day-cine");
-    const grade = $(".day-grade", stage), dim = $(".day-dim", stage), fill = $(".day-rail-fill", stage);
-    const ticks = $$(".day-rail li", stage);
-    const n = steps.length;
-
-    // Start state: the first moment on screen, the rest waiting.
-    steps.forEach((s, i) => gsap.set(s, { opacity: i === 0 ? 1 : 0 }));
-    const copies = steps.map((s) => $(".day-copy", s));
-    copies.forEach((c, i) => gsap.set(c, { opacity: i === 0 ? 1 : 0 })); // the words change faster than the picture, so two moments never overlap as text
-    gsap.set(grade, { backgroundColor: steps[0].dataset.grade });
-    gsap.set(dim, { opacity: Number(steps[0].dataset.dim) });
-    gsap.set(fill, { scaleX: 0, transformOrigin: "0 50%" });
-    ticks.forEach((t, i) => t.classList.toggle("is-on", i === 0));
-
-    // The stage is not pinned by script: it is `position: sticky` inside a tall track (height set in design.css from
-    // --day-n), which the browser scrolls natively. GSAP only scrubs the timeline over the length of that track.
-    const track_ = stage.parentElement;
-    track_.style.setProperty("--day-n", n);
-    created.push(ScrollTrigger.create({ trigger: track_, start: "top 160%", once: true, onEnter: preload }));
-    const tl = gsap.timeline({
-      defaults: { ease: "none" },
-      scrollTrigger: {
-        trigger: track_, start: "top top", end: "bottom bottom", scrub: 0.8, invalidateOnRefresh: true,
-        onUpdate: (self) => { // tick marks follow the moment that is showing
-          const i = Math.min(n - 1, Math.round(self.progress * self.animation.duration()));
-          ticks.forEach((t, k) => t.classList.toggle("is-on", k <= i));
-        },
-      },
+  // A list that appears as a list: its items rise in order, once. The total never passes 1.2 s.
+  function initGroups() {
+    if (!full) return;
+    $$("[data-group]").forEach((g) => {
+      const kids = [...g.children];
+      gsap.set(kids, { autoAlpha: 0, y: 22 });
+      once(g, "0px 0px -14% 0px", () => gsap.to(kids, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: { amount: 0.4 }, clearProps: "all" }));
     });
-    created.push(tl.scrollTrigger);
-    // Timeline units: moment i is "centred" at time i; the cross-fade between i-1 and i happens around i - 0.5.
-    tl.to(fill, { scaleX: 1, duration: n - 1 }, 0);
-    for (let i = 1; i < n; i++) {
-      const at = i - 0.62;
-      tl.to(steps[i - 1], { opacity: 0, duration: 0.5, ease: "power1.inOut" }, at);
-      tl.to(steps[i], { opacity: 1, duration: 0.5, ease: "power1.inOut" }, at);
-      tl.to(copies[i - 1], { opacity: 0, duration: 0.2, ease: "power1.in" }, at - 0.12);
-      tl.to(copies[i], { opacity: 1, duration: 0.25, ease: "power1.out" }, at + 0.25);
-      tl.to(grade, { backgroundColor: steps[i].dataset.grade, duration: 0.9, ease: "power1.inOut" }, at - 0.15);
-      tl.to(dim, { opacity: Number(steps[i].dataset.dim), duration: 0.9, ease: "power1.inOut" }, at - 0.15);
-    }
-    if (full) { // tier B: each frame is pushed in slowly while it is on screen, and the text rises into place
-      steps.forEach((s, i) => {
-        const img = $(".day-frame img", s), copy = $(".day-copy", s);
-        const from = Math.max(0, i - 1.0);
-        tl.fromTo(img, { scale: 1.16 }, { scale: 1.0, duration: Math.min(1.7, n - 1 + 0.25 - from) }, from); // never longer than the scene itself
-        if (i > 0) tl.fromTo(copy, { yPercent: 10 }, { yPercent: 0, duration: 0.5, ease: "power2.out" }, i - 0.62);
-      });
-    }
-    tl.to({}, { duration: 0.25 }, n - 1); // a short hold on the last moment before the page moves on
-    created.push(tl);
-
-    function preload() { // the frames below the fold are lazy images: fetch them before the first fade needs them
-      stage.classList.add("is-near"); // until then the second and third frames are not even requested (signature.css)
-      $$(".day-frame img", stage).forEach((img) => { if (img.loading === "lazy") img.loading = "eager"; });
-    }
   }
 
   try {
     initDay();
-    root.classList.add("gsap-ready");
-    window.__cinemaReady = true;
-    // Images and fonts change heights after load: re-measure the pins once everything has settled.
-    window.addEventListener("load", () => ScrollTrigger.refresh());
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+    initGroups();
   } catch (err) {
-    console.warn("cinema.js: falling back to the plain layout", err);
-    cleanup();
+    console.warn("cinema.js: the page stays as it is", err);
+    gsap.set("[data-group] > *", { clearProps: "all" });
   }
 })();

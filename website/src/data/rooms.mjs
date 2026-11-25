@@ -16,17 +16,18 @@
 //   outside       Lauhata's own photographs of the outside of the rooms (doors, veranda, garden). They are the accommodation, not one
 //                 room type, and the pages say so (stay.insideNote) until there are interior photographs.
 // What the accommodation offers as a whole (brief of 22 Nov 2026, confirmed by the client; the Booking.com listing says the same). It is
-// the offer of Lauhata, NOT a feature of one room type, so it is shown once, beside both rooms. Nothing else may be added.
+// the offer of Lauhata, NOT a feature of one room type, so it is shown once, beside both rooms. Nothing else may be added. `group` is the
+// heading it is listed under (stay.offerGroups).
 export const lodgingAmenities = [
-  { id: "airport", icon: "plane", en: "Airport transfer", pt: "Transfer do aeroporto" },
-  { id: "nosmoke", icon: "nosmoke", en: "Non-smoking rooms", pt: "Quartos para não fumadores" },
-  { id: "parking", icon: "car", en: "Free parking", pt: "Estacionamento gratuito" },
-  { id: "restaurant", icon: "cutlery", en: "On-site restaurant", pt: "Restaurante no local" },
-  { id: "beach", icon: "waves", en: "Beachfront location", pt: "Em frente à praia" },
-  { id: "bar", icon: "glass", en: "Bar", pt: "Bar" },
-  { id: "breakfast", icon: "coffee", en: "Breakfast", pt: "Pequeno-almoço" },
-  { id: "wifi", icon: "wifi", en: "Wi-Fi", pt: "Wi-Fi" },
-  { id: "bathroom", icon: "shower", en: "Private bathroom", pt: "Casa de banho privativa" },
+  { id: "airport", group: "place", icon: "plane", en: "Airport transfer", pt: "Transfer do aeroporto" },
+  { id: "nosmoke", group: "rooms", icon: "nosmoke", en: "Non-smoking rooms", pt: "Quartos para não fumadores" },
+  { id: "parking", group: "place", icon: "car", en: "Free parking", pt: "Estacionamento gratuito" },
+  { id: "restaurant", group: "table", icon: "cutlery", en: "On-site restaurant", pt: "Restaurante no local" },
+  { id: "beach", group: "place", icon: "waves", en: "Beachfront location", pt: "Em frente à praia" },
+  { id: "bar", group: "table", icon: "glass", en: "Bar", pt: "Bar" },
+  { id: "breakfast", group: "table", icon: "coffee", en: "Breakfast", pt: "Pequeno-almoço" },
+  { id: "wifi", group: "rooms", icon: "wifi", en: "Wi-Fi", pt: "Wi-Fi" },
+  { id: "bathroom", group: "rooms", icon: "shower", en: "Private bathroom", pt: "Casa de banho privativa" },
 ];
 // Still NOT confirmed, so never shown: copy an entry into `lodgingAmenities` once Carlos confirms it.
 export const pendingAmenities = [
@@ -36,6 +37,7 @@ export const pendingAmenities = [
 export default [
   {
     id: "sea",
+    card: { pt: "Para uma ou duas pessoas. A porta abre para a varanda e o jardim, a poucos passos do restaurante e da praia.", en: "For one or two people. The door opens onto the veranda and the garden, a few steps from the restaurant and the beach." },
     slug: { pt: "queen-room", en: "queen-room" },
     oldSlug: { pt: "suite-king", en: "suite-king" },
     name: { pt: "Queen Room", en: "Queen Room" },
@@ -61,6 +63,7 @@ export default [
   },
   {
     id: "family",
+    card: { pt: "Uma cama de solteiro ao lado da Queen Size, para famílias ou amigos que viajam juntos. Abre para a mesma varanda.", en: "A single bed beside the queen, for families or friends travelling together. It opens onto the same veranda." },
     slug: { pt: "queen-and-single-room", en: "queen-and-single-room" },
     oldSlug: { pt: "suite-king-e-solteiro", en: "suite-king-and-single" },
     name: { pt: "Queen & Single Room", en: "Queen & Single Room" },

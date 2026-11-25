@@ -62,7 +62,7 @@ input, textarea, select { caret-color: var(--sunset); }
 .title, .heading .title { color: var(--ink); }
 /* The italic accent: sunset orange on the dark grounds; on cream it falls to 2.6:1, so light sections use terra-dark. */
 em { font-style: italic; color: var(--terra-dark); }
-.cine-hero em, .scene em, .final-cta em, .site-footer em, .dusk em { color: var(--sunset); }
+.cine-hero em, .scene em, .final-cta em, .site-footer em { color: var(--sunset); }
 h1 em, h2 em { font-style: italic !important; color: var(--sunset-2) !important; font-weight: 400; }
 
 /* ---------- Buttons: pills ---------- */
@@ -230,20 +230,13 @@ h1 em, h2 em { font-style: italic !important; color: var(--sunset-2) !important;
 .rv-card-by a:hover { text-decoration-thickness: 2px; }
 .rv-card-by .icon { width: 0.9rem; height: 0.9rem; }
 
-/* ---------- Suite pages: the confirmed amenities, each with its icon ---------- */
-.si-amen { margin-top: 1.6rem; }
-.si-amen-title { margin: 0 0 0.7rem; font-size: 0.9rem; font-weight: 700; color: var(--ink); }
-.si-amen ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
-.si-amen li { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 48px; padding: 0.5rem 1rem 0.5rem 0.8rem; border-radius: var(--radius-field); background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-size: 0.95rem; font-weight: 600; }
-.si-amen .icon { width: 1.5rem; height: 1.5rem; flex: none; color: var(--terra-dark); }
-
 /* ---------- Inner pages: same language ---------- */
 .cine-hero.is-page .cine-shade { background:
   linear-gradient(90deg, rgba(14, 10, 8, 0.78) 0%, rgba(14, 10, 8, 0.3) 50%, rgba(14, 10, 8, 0) 75%),
   linear-gradient(180deg, rgba(14, 10, 8, 0.55) 0%, rgba(14, 10, 8, 0) 25%, rgba(14, 10, 8, 0.6) 100%); }
 .booking { background: var(--paper); }
 
-.site-footer, .dusk { background: var(--night); }
+.site-footer { background: var(--night); }
 .sr-title, .abc-title { letter-spacing: -0.01em; }
 
 section.menu .menu-nav a[aria-current="true"] { border-bottom-color: var(--sunset); }

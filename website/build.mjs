@@ -22,7 +22,7 @@ await mkdir(dist, { recursive: true });
 // Raw footage is never published: originals live in originais/videos/ (outside src/). The filter below is a safety net.
 const isRawVideo = (p) => /[\\/]assets[\\/]img[\\/]video([\\/]|$)/.test(p);
 // Illustrative dish pictures are published only while they are shown; the alternative logos and their sources never are.
-const isUnused = (p) => (!site.dishPhotos.showIllustrative && /[\\/]pratos-temp([\\/]|$)/.test(p)) || /[\\/]brand[\\/](lauhata-|sprite-|favicon\.svg)/.test(p) || /[\\/]dm-sans-/.test(p);
+const isUnused = (p) => (!site.dishPhotos.showIllustrative && /[\\/]pratos-temp([\\/]|$)/.test(p)) || /[\\/]brand[\\/](lauhata-|sprite-|favicon\.svg)/.test(p) || /[\\/]dm-sans-|[\\/]ScrollTrigger\.min\.js/.test(p);
 await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) && !isUnused(p) });
 
 let esbuild = null;

@@ -45,14 +45,14 @@ test("the room types are exactly Queen Room and Queen & Single Room: $90 a night
   assert.equal(rooms[1].capacityPending, true, "two children in the Queen & Single Room await Lauhata's confirmation of ages and occupancy");
 });
 
-test("the nine shared amenities, and nothing else, are listed once on the home page, the stay page and each room page, in both languages", async () => {
+test("the nine shared amenities, and nothing else, are listed once, in three groups of three, on the home page, the stay page and each room page, in both languages", async () => {
   const { lodgingAmenities } = await import(pathToFileURL(join(root, "src/data/rooms.mjs")));
   assert.deepEqual(lodgingAmenities.map((a) => a.en), ["Airport transfer", "Non-smoking rooms", "Free parking", "On-site restaurant", "Beachfront location", "Bar", "Breakfast", "Wi-Fi", "Private bathroom"]);
   for (const f of ["index.html", "stay/index.html", "stay/queen-room/index.html", "stay/queen-and-single-room/index.html", "pt/index.html", "pt/alojamento/index.html", "pt/alojamento/queen-room/index.html"]) {
     const h = read(f);
-    assert.equal([...h.matchAll(/<ul class="rp-amen">/g)].length, 1, f + ": the shared amenities block");
-    const ul = h.match(/<ul class="rp-amen">[\s\S]*?<\/ul>/)[0];
-    assert.equal([...ul.matchAll(/<li>/g)].length, 9, f + ": nine amenities");
+    const groups = [...h.matchAll(/<div class="of-group"><h4>([^<]+)<\/h4><ul>([\s\S]*?)<\/ul>/g)];
+    assert.equal(groups.length, 3, f + ": three groups");
+    for (const g of groups) assert.equal([...g[2].matchAll(/<li><svg class="icon"/g)].length, 3, f + ": " + g[1]);
     assert.ok(!/\bking\b/i.test(h.replace(/<script[\s\S]*?<\/script>/g, "")), f + ": a king bed is mentioned");
   }
 });
@@ -226,20 +226,29 @@ test("accessibility basics on every page: one h1, no skipped heading levels, eve
   }
 });
 
-test("the home page: three welcome doors, the day in three moments with the real kitchen hours, eight dishes, two rooms, no gallery link, each section once", async () => {
+test("the home page: three equal doors, the day with the real kitchen hours, eight dishes, two equal rooms, six facts, five questions, each section once", async () => {
   const site = (await import(pathToFileURL(join(root, "src/data/site.mjs")))).default;
-  for (const f of ["index.html", "pt/index.html"]) {
+  const [b, m] = site.restaurantHours.map((x) => x.hours.split("–"));
+  for (const [f, from, until] of [["index.html", "from ", "until "], ["pt/index.html", "desde as ", "até às "]]) {
     const h = read(f);
     assert.equal([...h.matchAll(/<a class="we-door"/g)].length, 3, f);
-    assert.equal([...h.matchAll(/data-day-step/g)].length, 3, f + ": the day");
-    assert.ok(h.includes(site.restaurantHours[0].hours) && h.includes(site.restaurantHours[1].hours.split("–")[1]), f + ": the day uses the hours of site.mjs");
+    const day = h.match(/<section class="day"[\s\S]*?<\/section>/)[0];
+    const when = [...day.matchAll(/<span class="di-when">([^<]+)</g)].map((x) => x[1]);
+    assert.deepEqual(when, [b.join("–"), from + m[0], until + m[1]], f + ": the three meals carry the hours of site.mjs");
+    assert.equal([...day.matchAll(/data-day-item/g)].length, 3);
+    assert.ok(!/day-rail|day-step/.test(h), f + ": the pinned scene is back");
     assert.equal([...h.matchAll(/<li class="kt-dish">/g)].length, 8, f + ": eight dishes");
-    assert.equal([...h.matchAll(/<article class="rm">/g)].length, 2, f + ": two rooms");
+    const cards = [...h.matchAll(/<article class="rc"[\s\S]*?<\/article>/g)].map((x) => x[0]);
+    assert.equal(cards.length, 2, f + ": two rooms");
+    for (const c of cards) for (const part of ["rc-media", "rc-name", "rc-price", "rc-desc", "rc-facts", "rc-actions", "data-book-open=\"room\""]) assert.ok(c.includes(part), f + ": a room card lacks " + part);
+    assert.equal([...h.match(/<ul class="sp-grid"[\s\S]*?<\/ul>/)[0].matchAll(/<li>/g)].length, 6, f + ": six facts");
+    assert.equal([...h.match(/<section class="section fq"[\s\S]*?<\/section>/)[0].matchAll(/<details name="faq-home">/g)].length, 5, f + ": five questions");
+    assert.ok(/#faq"/.test(h.match(/<section class="section fq"[\s\S]*?<\/section>/)[0]), f + ": the way to all the questions");
     const main = h.match(/<main[\s\S]*?<\/main>/)[0];
-    assert.ok(!/href="[^"]*(gallery|galeria)\//.test(main), f + ": the homepage links to the gallery from a section");
-    const ids = [...main.matchAll(/<section class="([^"]+)"/g)].map((m) => m[1]);
+    const ids = [...main.matchAll(/<section class="([^"]+)"/g)].map((x) => x[1]);
     assert.equal(new Set(ids).size, ids.length, f + ": a section appears twice");
   }
+  assert.ok(read("index.html").includes(">What Makes Lauhata Special?</h2>"));
 });
 
 test("Restaurant and Stay no longer carry their own request section; the central dialog opens from every reservation link", () => {
@@ -369,11 +378,12 @@ test("lightbox, bottom bar and page lock: 100dvh with a fallback, contained imag
   assert.ok(/viewport-fit=cover/.test(read("index.html")), "safe areas available");
 });
 
-test("nothing floats over content: no back-to-top button, a link in the footer instead; the room gallery code still pauses on keyboard focus", () => {
+test("floating controls: back to top sits above WhatsApp with the same size, and the film control is on the WhatsApp line", () => {
   const h = read("index.html");
-  assert.ok(!/data-to-top/.test(h) && /href="#top"/.test(h) && /<body id="top"/.test(h), "back to top");
-  const css = read("assets/css/site.css").replace(/\s+/g, "");
-  assert.ok(/\.menu-body\{container-type:inline-size\}/.test(css), "the menu follows its own width");
+  assert.ok(/<button class="to-top"[^>]*data-to-top aria-label="[^"]+"/.test(h) && /href="#i-up"/.test(h), "back to top");
+  const css = readFileSync(join(root, "src/assets/css/signature.css"), "utf8");
+  assert.ok(/\.to-top \{[^}]*bottom: calc\(var\(--fab-y\) \+ var\(--fab\) \+/.test(css) && /\.wa-float \{ right: var\(--fab-x\)/.test(css) && /\.hx-toggle \{ right: calc\(var\(--fab-x\) \+ var\(--fab\) \+ 1rem\)/.test(css), "one column in the gutter");
+  assert.ok(/\.menu-body\{container-type:inline-size\}/.test(read("assets/css/site.css").replace(/\s+/g, "")), "the menu follows its own width");
   const js = readFileSync(join(root, "src/assets/js/main.js"), "utf8");
   assert.ok(/:focus-visible/.test(js) && /target = -1/.test(js));
 });
@@ -458,4 +468,13 @@ test("motion: page transitions and reveals are off for reduced motion, and nothi
   const src = readFileSync(join(root, "src/assets/css/signature.css"), "utf8");
   for (const line of src.split("\n").filter((l) => /:not\(\.is-in\)|:not\(\.is-ready\)/.test(l))) assert.ok(/\.js\.cine-motion/.test(line), "a hidden state that is not behind .js.cine-motion: " + line.slice(0, 90));
   assert.ok(/html:not\(\.cine-motion\)::view-transition/.test(src));
+});
+
+test("performance: nothing is pinned or scrubbed, no endless animation moves layout, and section edges are straight", () => {
+  const cine = readFileSync(join(root, "src/assets/js/cinema.js"), "utf8");
+  assert.ok(!/scrub\s*:|\bpin\s*:|ScrollTrigger\.create/.test(cine) && !/ScrollTrigger\.min\.js/.test(read("index.html")), "a ScrollTrigger is back: it keeps GSAP's clock running on every frame");
+  const css = read("assets/css/site.css");
+  for (const m of css.matchAll(/@keyframes [\w-]+\{((?:[^{}]*\{[^}]*\})*)\}/g)) assert.ok(!/(^|[;{])(top|left|right|bottom|width|height|margin[\w-]*):/.test(m[1]), "a keyframe animates layout: " + m[0].slice(0, 90));
+  assert.ok(!/margin-top:calc\(var\(--curve\)\s*\*\s*-1\)/.test(css.replace(/\s+/g, "")), "curved section edges are back");
+  assert.ok(/\$\$\("\[data-tide\], \[data-rise\]"\)/.test(readFileSync(join(root, "src/assets/js/main.js"), "utf8")), "the reveal list must be an array");
 });

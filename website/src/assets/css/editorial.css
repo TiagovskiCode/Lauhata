@@ -210,20 +210,13 @@ img[src*="por-do-sol"] { filter: brightness(1.14) contrast(1.04) saturate(1.06);
 
 /* ---------- Reviews: the two platforms' scores, then our summaries ---------- */
 .reviews-ed { padding-top: clamp(5rem, 9vw, 8.5rem); }
-.rv-head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 1rem clamp(2rem, 4vw, 4rem); align-items: end; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-.rv-head .rv-title { font-size: clamp(2.6rem, 4vw + 0.6rem, 5.2rem); line-height: 1; letter-spacing: -0.03em; }
 
-.rv-scores { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); }
-.rv-score { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "plat plat" "num word" "num go"; column-gap: 1.6rem; row-gap: 0.2rem; align-items: end; padding: clamp(1.6rem, 3vw, 2.6rem) clamp(0rem, 2vw, 2rem) clamp(1.6rem, 3vw, 2.6rem) 0; color: var(--ink); text-decoration: none; }
-.rv-score + .rv-score { border-left: 1px solid var(--line-strong); padding-left: clamp(1.4rem, 3vw, 3rem); }
 .rv-plat { grid-area: plat; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.6rem; }
 .rv-num { grid-area: num; font-family: var(--serif); font-size: clamp(4rem, 6vw + 1rem, 7.5rem); line-height: 0.85; letter-spacing: -0.04em; font-variant-numeric: lining-nums; }
 .rv-num small { font-family: var(--sans); font-size: 0.95rem; letter-spacing: 0; margin-left: 0.5rem; color: var(--muted); }
 .rv-word { grid-area: word; color: var(--body); }
 .rv-go { grid-area: go; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; font-weight: 600; text-decoration: underline; text-decoration-color: var(--terra); text-underline-offset: 0.4em; }
 .rv-go .icon { width: 0.95rem; height: 0.95rem; }
-.rv-score:hover .rv-go { text-decoration-thickness: 2px; }
-.rv-checked { margin: 0.8rem 0 0; font-size: 0.8rem; color: var(--muted); }
 
 .rv-own { margin-top: clamp(2.5rem, 5vw, 4rem); max-width: 46rem; }
 .rv-own .rv-form { border: 0; border-top: 1px solid var(--line-strong); border-radius: 0; background: none; padding: 0; }
@@ -231,9 +224,6 @@ img[src*="por-do-sol"] { filter: brightness(1.14) contrast(1.04) saturate(1.06);
 .rv-own .rv-form > summary span { font-family: var(--serif); font-weight: 400; font-size: 1.35rem; }
 .rv-own .rv-form > summary .icon { margin-left: auto; }
 @media (max-width: 860px) {
-  .rv-head { grid-template-columns: 1fr; }
-  .rv-scores { grid-template-columns: 1fr; }
-  .rv-score + .rv-score { border-left: 0; border-top: 1px solid var(--line-strong); padding-left: 0; }
 
   .rv-own .rv-form > summary { flex-wrap: wrap; }
   .rv-own .rv-form > summary span { flex-basis: calc(100% - 2rem); }
