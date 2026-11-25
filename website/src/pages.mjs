@@ -1,9 +1,9 @@
 // Page bodies. Each function returns { title, description, path, alt, body, ... } for layout().
 // The homepage follows the approved design mock-up section by section; inner pages reuse its parts.
-import { isStockRoom, esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
+import { esc, fmt, href, figure, icon, waLink, hoursList, responseLine, breadcrumbs, imgUrl, money, reservationSlots, slotPeriod, site, rooms, images } from "./lib.mjs";
 import { lodgingAmenities } from "./data/rooms.mjs";
 import { existsSync, readFileSync } from "node:fs";
-import { TAIS, tripadvisorBadge } from "./layout.mjs";
+import { tripadvisorBadge } from "./layout.mjs";
 import { categories, items, menuNote } from "./data/menu.mjs";
 import siteReviews from "./data/reviews.mjs";
 import externalReviews from "./data/reviews-external.mjs";
@@ -11,6 +11,8 @@ import { sampleDrinks } from "./data/sample-drinks.mjs";
 
 const fmtPhone = (d) => (/^670\d{8}$/.test(d) ? `+670 ${d.slice(3, 7)} ${d.slice(7)}` : `+${d}`);
 const other = (L) => (L === "pt" ? "en" : "pt");
+// A 16:9 photograph that covers a full-height frame is drawn wider than the screen on a phone: the browser must pick a larger file.
+const COVER = "max(100vw, 92vh)";
 const rv = (delay = 0) => ` data-reveal${delay ? ` style="--d:${delay}ms"` : ""}`;
 
 // Section heading: the title (with an optional second line) and an optional lead. Phase 7 ("Diário da costa"): no
@@ -22,16 +24,16 @@ function heading({ eyebrow, title, accent = "", lead = "", id = "", center = fal
   </header>`;
 }
 
-// Full-screen photo hero used by inner pages (same language as the homepage hero). `eyebrow` is accepted but no longer
-// shown (final art direction): the page name is already marked in the header navigation, so the label only repeated it.
-function pageHero(t, { eyebrow, title, accent = "", lead, image, crumbs, ctas = "", decorative = false }) {
-  return `<section class="cine-hero is-page">
-  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: "100vw", credit: true, decorative })}</div></div>
+// The compact hero of the inner pages: one photograph, the title and (when the page has one) the action. `pos` sets the part of the
+// photograph that stays in view when the frame crops it. `eyebrow` and `crumbs` are accepted but not printed.
+function pageHero(t, { title, accent = "", lead, image, ctas = "", decorative = false, pos = "", cls = "" }) {
+  return `<section class="cine-hero is-page ${cls}"${pos ? ` style="--pos:${pos}"` : ""}>
+  <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: COVER, credit: true, decorative })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
     <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` ${esc(accent)}` : ""}</h1>
-    <p class="cine-lead" data-fade style="--d:300ms">${esc(lead)}</p>
-    <div data-fade style="--d:400ms">${ctas}</div>
+    <p class="cine-lead" data-fade style="--d:260ms">${esc(lead)}</p>
+    ${ctas ? `<div class="cine-ctas" data-fade style="--d:380ms">${ctas}</div>` : ""}
   </div>
 </section>`;
 }
@@ -56,15 +58,6 @@ function suiteAmenityItems(t, r) {
   const beds = (r.bedPlan || []).map((b) => (b === "queen" ? ["bed-queen", S.amenQueen] : b === "single" ? ["bed-single", S.amenSingle] : null)).filter(Boolean);
   const more = (r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]);
   return [...beds, ...more];
-}
-function suiteAmenities(t, r) {
-  const S = t.stay;
-  const items = suiteAmenityItems(t, r);
-  if (!items.length) return "";
-  return `<div class="si-amen">
-        <h3 class="si-amen-title">${esc(S.amenTitle)}</h3>
-        <ul>${items.map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
-      </div>`;
 }
 
 // The suite's beds drawn from above, each labelled. Only the beds the owner confirmed (rooms.mjs `bedPlan`); generic
@@ -92,7 +85,12 @@ function bedPlan(t, r) {
 // buttons, a position counter, and every photo opens in the site's lightbox (data-gallery). Without JavaScript it is a
 // strip that scrolls sideways.
 // The photographs of a room that may be shown: the real ones; while there are none, only the first picture (it renders as the branded placeholder).
-const roomPhotos = (r, max = 99) => { const real = r.images.filter((k) => images[k].kind === "room" && !images[k].placeholder); return (real.length ? real : [r.images[0]]).slice(0, max); };
+// While there are none, the photographs of the outside of the rooms (rooms.mjs `outside`) stand in, always with a note that says so.
+const interiors = (r) => r.images.filter((k) => images[k] && images[k].kind === "room" && !images[k].placeholder);
+const hasInterior = (r) => interiors(r).length > 0;
+const roomPhotos = (r, max = 99) => (hasInterior(r) ? interiors(r) : r.outside).slice(0, max);
+// A room's photographs as a carousel: a scroll-snap strip (swipe on touch, arrow keys when focused), previous/next buttons, a position
+// counter, and every photo opens in the lightbox (data-gallery). Without JavaScript it is a strip that scrolls sideways.
 function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" } = {}) {
   const L = t.lang;
   const C = t.carousel;
@@ -100,38 +98,31 @@ function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" 
   const n = imgs.length;
   return `<div class="carousel ${cls}" data-carousel role="group" aria-roledescription="${esc(C.role)}" aria-label="${esc(fmt(C.label, { room: r.name[L] }))}">
     <div class="cr-track" data-cr-track data-gallery tabindex="0">${imgs
-      .map((k, i) => `<div class="cr-slide" role="group" aria-roledescription="${esc(C.slide)}" aria-label="${esc(fmt(C.count, { n: i + 1, total: n }))}"><a class="cr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes })}</a></div>`)
+      .map((k, i) => `<div class="cr-slide" role="group" aria-roledescription="${esc(C.slide)}" aria-label="${esc(fmt(C.count, { n: i + 1, total: n }))}"><a class="cr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes, decorative: true, caption: images[k].alt[L] })}</a></div>`)
       .join("")}</div>
     ${n > 1 ? `<div class="cr-controls"><button class="cr-btn" type="button" data-cr-prev aria-label="${esc(C.prev)}">${icon("left")}</button><p class="cr-count" data-cr-count aria-live="polite">1 / ${n}</p><button class="cr-btn" type="button" data-cr-next aria-label="${esc(C.next)}">${icon("right")}</button></div>` : ""}
   </div>`;
 }
 
-// Two equal cards, one per room type: the same photograph ratio, the same blocks in the same order, one action each. Each card reads
-// in the order a guest decides: name and price, who it sleeps, the beds, then the action. The accommodation's shared offer sits below.
+// The two room types on the home page, as two facing pages of one spread: photograph, name and price, who it sleeps, the beds drawn from
+// above, one action. The photographs are the outside of the rooms and the note under them says so.
 function roomPair(t) {
   const L = t.lang;
-  const tv = (r) => (r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]);
-  return `<div class="rp-grid">${rooms.map((r) => `<article class="rp-card">
-      <a class="rp-media" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, r.images[0], { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "3/2" })}</a>
-      <div class="rp-body">
-        <div class="rp-head">
-          <h3 class="rp-name"><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
-          <p class="rp-price"><strong>${esc(r.price || t.common.priceTbc)}</strong>${r.price ? `<span>${esc(t.home.rooms.night)}</span>` : ""}</p>
-        </div>
-        <ul class="rp-spec">
-          <li>${icon("users")}<span>${esc(r.capacity[L])}</span></li>
-          <li>${icon("bed")}<span>${esc(r.beds[L])}</span></li>
-          ${tv(r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}
-        </ul>
-        ${r.capacityPending ? `<p class="rp-pending">${esc(t.stay.capacityPending)}</p>` : ""}
-        <div class="rp-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}${icon("arrow")}</a></div>
+  return `<div class="rm-duo">${rooms.map((r) => `<article class="rm">
+      <a class="rm-media" data-tide href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, roomPhotos(r)[0], { sizes: "(min-width: 900px) 46vw, 92vw" })}</a>
+      <div class="rm-head">
+        <h3 class="rm-name"><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a></h3>
+        <p class="rp-price"><strong>${esc(r.price || t.common.priceTbc)}</strong>${r.price ? `<span>${esc(t.home.rooms.night)}</span>` : ""}</p>
       </div>
+      <p class="rm-facts">${esc(r.capacity[L])}. ${esc(r.beds[L])}${(r.amenities || []).map((a) => `, ${esc(a[L].toLowerCase())}`).join("")}.</p>
+      ${r.capacityPending ? `<p class="rp-pending">${esc(t.stay.capacityPending)}</p>` : ""}
+      <div class="rm-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(t.stay.viewRoom)}</a></div>
     </article>`).join("")}</div>
+  <p class="rm-inside">${esc(t.stay.insideNote)}</p>
   ${lodgingBlock(t)}`;
 }
 
 const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery)}`;
-const pend = (v, fallback) => (v ? esc(v) : `<span class="tbc">${esc(fallback)}</span>`);
 
 // ---------- Booking card (hero): request straight to WhatsApp ----------
 // `prefix` keeps ids unique when two cards share a page; `hero` is the home hero panel: it starts collapsed (just the two mode buttons) and opens when the visitor picks one.
@@ -207,38 +198,7 @@ function formFooter(t, submitLabel) {
     <p class="form-note">${esc(t.form.note)}${site.payInPerson ? ` ${esc(t.form.payNote)}` : ""}</p>`;
 }
 
-function tableForm(t) {
-  const f = t.form;
-  return `<form class="booking-form" data-booking="table" novalidate>
-    <div class="form-grid">
-      ${field({ id: "tb-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"' })}
-      ${field({ id: "tb-contact", name: "contact", label: f.contact, hint: f.contactHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="80" inputmode="tel"' })}
-      ${field({ id: "tb-date", name: "date", type: "date", label: f.date, attrs: 'required data-pick="date"' })}
-      ${field({ id: "tb-time", name: "time", label: f.time, control: `<select data-pick="time" required>${timeOptions(t, { placeholder: t.pick.chooseTime })}</select>` })}
-      ${field({ id: "tb-people", name: "people", type: "number", label: f.people, attrs: `required min="1" max="50" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(t.home.quick.person)}" data-unit-many="${esc(t.home.quick.persons)}"` })}
-      ${field({ id: "tb-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: `maxlength="400" placeholder="${esc(f.notesPlaceholder)}"`, full: true })}
-    </div>
-    ${formFooter(t, f.submitTable)}
-  </form>`;
-}
 
-function roomForm(t) {
-  const f = t.form;
-  const options = [`<option value="">${esc(f.roomAny)}</option>`, ...rooms.map((r) => `<option value="${r.id}">${esc(r.name[t.lang])}</option>`)].join("");
-  return `<form class="booking-form" data-booking="room" data-review-step novalidate>
-    <div class="form-grid">
-      ${field({ id: "rm-in", name: "checkIn", type: "date", label: f.checkIn, attrs: 'required data-pick="in"' })}
-      ${field({ id: "rm-out", name: "checkOut", type: "date", label: f.checkOut, attrs: 'required data-pick="out"' })}
-      ${field({ id: "rm-adults", name: "adults", type: "number", label: f.adults, attrs: `required min="1" max="20" value="2" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.adultOne)}" data-unit-many="${esc(f.adultMany)}"` })}
-      ${field({ id: "rm-children", name: "children", type: "number", label: f.children, attrs: `min="0" max="10" value="0" inputmode="numeric" data-pick="number" data-unit-one="${esc(f.childOne)}" data-unit-many="${esc(f.childMany)}"` })}
-      ${field({ id: "rm-room", name: "room", label: f.roomType, control: `<select data-pick="select">${options}</select>`, full: true })}
-      ${field({ id: "rm-name", name: "name", label: f.name, attrs: 'autocomplete="name" required maxlength="80"', full: true })}
-      ${field({ id: "rm-phone", name: "phone", type: "tel", label: f.phone, hint: f.phoneHint, optional: f.optional, attrs: 'autocomplete="tel" maxlength="40" inputmode="tel"', full: true })}
-      ${field({ id: "rm-notes", name: "notes", type: "textarea", label: f.notes, optional: f.optional, attrs: `maxlength="400" placeholder="${esc(f.notesPlaceholder)}"`, full: true })}
-    </div>
-    ${formFooter(t, f.submitRoom)}
-  </form>`;
-}
 
 // ---------- Shared blocks ----------
 // ---------- Menu: dish cards, category bar, search ----------
@@ -272,10 +232,8 @@ function dishPhoto(t, d) {
   // PLACEHOLDER: the branded tile, which never pretends to show the dish.
   return brandedPhoto(t, d.category);
 }
-function brandedPhoto(t, category) {
-  const ic = category === "breakfast" || category === "drinks" ? "coffee" : "cutlery";
-  return `<div class="dish-photo is-branded" role="img" aria-label="${esc(t.order.photoSoon)}">${icon(ic)}<span class="bp-word" aria-hidden="true">Lauhata</span></div>`;
-}
+// No photograph of the dish yet: nothing is drawn in its place (see dcard).
+function brandedPhoto() { return ""; }
 const tempPhotoFile = (id, w = 640) => new URL(`./assets/img/pratos-temp/${id}-${w}.jpg`, import.meta.url);
 function tempPhoto(t, id, name) {
   const src = `/assets/img/pratos-temp/${id}-640.jpg`;
@@ -295,18 +253,19 @@ const cardPrice = (t, d) => {
   }
   return d.price != null ? money(d.price) : esc(t.common.priceTbc);
 };
-function dcard(t, { id, name, search, photo, priceHtml, priceFull, desc = "", tag = "", note = "", add = "", badges = [], off = false }) {
-  // The menu as it was: a small photograph, the name and the price on one line, the description under them, then the order button.
-  return `<article class="dline${off ? " is-off" : ""}" data-dish data-search="${esc(search)}">
-      <div class="dl-photo">${photo}</div>
+// One dish of the menu, set like a line of a printed menu: name, leader and price on one line, the description under them, the order
+// button. A photograph appears only when it is the restaurant's own (dishPhoto); there is no stand-in and no empty frame.
+function dcard(t, { name, search, photo, priceHtml, desc = "", tag = "", note = "", add = "", badges = [], off = false }) {
+  return `<article class="dline${off ? " is-off" : ""}${photo ? " has-photo" : ""}" data-dish data-search="${esc(search)}">
+      ${photo ? `<div class="dl-photo">${photo}</div>` : ""}
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">${esc(name)}</h3><p class="dl-price">${priceHtml}</p></div>
+        <div class="dl-head"><h3 class="dl-name">${esc(name)}</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price">${priceHtml}</p></div>
         ${badges.length ? `<ul class="dl-badges">${badges.map((b) => `<li class="${esc(b[0])}">${esc(b[1])}</li>`).join("")}</ul>` : ""}
         ${tag ? `<p class="dl-tag">${esc(tag)}</p>` : ""}
         ${desc ? `<p class="dl-desc">${esc(desc)}</p>` : ""}
         ${note ? `<p class="dl-note">${esc(note)}</p>` : ""}
-        ${add}
       </div>
+      ${add}
     </article>`;
 }
 
@@ -361,30 +320,7 @@ function sampleDrinksSection(t, cat) {
     </section>`;
 }
 
-// The dish dialog: one per menu, filled on demand. A <dialog>: focus trap, Escape and an inert page come from the browser.
-function dishDialog(t) {
-  const O = t.order;
-  return `<dialog class="dish-dialog" data-dish-dialog aria-labelledby="dd-title">
-    <button class="icon-btn dd-close" type="button" aria-label="${esc(t.common.close)}" data-dd-close>${icon("close")}</button>
-    <div class="dd-photo" data-dd-photo></div>
-    <div class="dd-body">
-      <h2 id="dd-title" class="dd-name" data-dd-name></h2>
-      <div data-dd-detail></div>
-    </div>
-  </dialog>`;
-}
 
-// A dish as one line of a printed menu: name and description, price, and a round add button.
-function dishLine(t, d) {
-  const L = t.lang;
-  const O = t.order;
-  const verb = d.options.length ? O.choose : O.add;
-  return `<li class="dish-line">
-      <div class="dl-text"><h3>${esc(d.name)}</h3>${d.description ? `<p>${esc(d.description[L])}</p>` : ""}</div>
-      <span class="dl-price">${dishPrice(t, d)}</span>
-      ${canOrder(d) ? `<button class="d-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}</span></button>` : ""}
-    </li>`;
-}
 
 // The full interactive menu: search, a category bar that sticks while scrolling, and every category
 // in the order of the printed menu. Behaviour lives in assets/js/order.js.
@@ -455,7 +391,7 @@ function infoGrid(t) {
   return `<dl class="info-grid"${rv(160)}>
     <div>${icon("pin")}<dt>${esc(h.address)}</dt><dd>${site.address.street ? `${esc(site.address.street)}<br>${esc(site.address.district[L])}<br>` : `${esc(site.address.locality)}, `}${esc(site.address.region)}, ${esc(site.address.country)}</dd></div>
     ${hours ? `<div>${icon("clock")}<dt>${esc(h.hours)}</dt><dd>${esc(h.restaurant)}: ${esc(hours)}${site.receptionHours ? `<br>${esc(h.reception)}: ${esc(site.receptionHours[L])}` : ""}</dd></div>` : ""}
-    ${site.whatsapp ? `<div>${icon("whatsapp")}<dt>${esc(t.common.whatsapp)}</dt><dd><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a></dd></div>` : ""}
+    ${site.whatsapp ? `<div>${icon("whatsapp")}<dt>${esc(t.common.whatsapp)}</dt><dd><a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${esc(fmtPhone(site.whatsapp))}</a></dd></div>` : ""}
     ${site.email ? `<div>${icon("mail")}<dt>${esc(t.common.email)}</dt><dd><a href="mailto:${esc(site.email)}">${esc(site.email)}</a></dd></div>` : ""}
   </dl>`;
 }
@@ -463,7 +399,8 @@ function infoGrid(t) {
 // FAQ: answers come only from what is confirmed on the site (hours and the phone number are read from site.mjs).
 const faqFill = (t, a) => {
   const hours = site.restaurantHours.map((h) => `${h.days[t.lang]} ${h.hours}`).join(" · ");
-  return a.replace("{hours}", hours || t.common.hoursTbc).replace("{phone}", site.whatsapp ? fmtPhone(site.whatsapp) : "");
+  const price = [...new Set(rooms.map((r) => r.price).filter(Boolean))].join(" / ") || t.common.priceTbc;
+  return a.replace("{hours}", hours || t.common.hoursTbc).replace("{price}", price).replace("{phone}", site.whatsapp ? fmtPhone(site.whatsapp) : "");
 };
 const faqAll = (t) => t.faq.cats.flatMap((c) => c.items);
 function faqBlock(t) {
@@ -480,23 +417,12 @@ const faqLd = (t) => ({
   mainEntity: faqAll(t).map((it) => ({ "@type": "Question", name: it.q, acceptedAnswer: { "@type": "Answer", text: faqFill(t, it.a) } })),
 });
 
-function galleryGrid(t, keys, cls = "") {
-  return `<div class="gallery ${cls}" data-gallery>${keys
-    .map((k, i) => `<button type="button" class="gallery-item g${i + 1}" data-lb-src="${imgUrl(k, 1920)}" aria-label="${esc(t.gallery.open)}"${rv((i % 4) * 70)}>${figure(t, k, { sizes: "(min-width: 900px) 40vw, 90vw" })}</button>`)
-    .join("")}</div>`;
-}
 
 // ================= HOME =================
 // The homepage is one day at the coast, told in sections that each have their own composition:
 // the hero, a diptych that sends people to eat or to sleep, the menu, a slow breakfast, rooms that open
 // like an accordion, a day that changes colour as you scroll, culture on terracotta, and a real map.
 
-// Breakfast times from the printed menu hours, or null while they are not filled in.
-function breakfastHours() {
-  const h = site.restaurantHours.find((x) => /pequeno|breakfast/i.test(`${x.days.pt} ${x.days.en}`));
-  const m = h && String(h.hours).match(/(\d{1,2}:\d{2})\D+(\d{1,2}:\d{2})/);
-  return m ? { from: m[1], to: m[2] } : null;
-}
 
 const mapQuery = () => (site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery);
 // Embedded maps search the place name: checked on 5 Nov 2026 that its pin falls exactly on the official coordinates,
@@ -519,246 +445,17 @@ function mapFacade(t, cls = "") {
 const mapEmbed = () => `https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&z=15&output=embed`;
 const directionsLink = () => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery())}`;
 
-// Comer / Dormir: two large panels, one a rounded frame and one an arch, side by side.
-function chooseSection(t) {
-  const L = t.lang;
-  const C = t.land.choose;
-  const panel = (cls, n, key, copy, target, sizes, extra = "") => `<a class="ch-panel ${cls}" href="${target}" data-reveal>
-      <span class="ch-img">${figure(t, key, { sizes })}</span>
-      <span class="ch-n" aria-hidden="true">${n}</span>
-      <span class="ch-body">
-        <span class="ch-title">${esc(copy.title)}</span>
-        <span class="ch-sub">${esc(extra || copy.sub)}</span>
-        <span class="ch-cta">${esc(copy.cta)}<i>${icon("arrow")}</i></span>
-      </span>
-    </a>`;
-  return `<section class="choose" id="escolher" aria-label="${esc(C.aria)}">
-  <div class="wrap">
-    <p class="statement-text choose-line" data-fade>${esc(C.statement)}</p>
-    <div class="choose-grid">
-      ${panel("ch-eat", "01", "foodSpread", C.eat, "#comer", "(min-width: 900px) 56vw, 92vw")}
-      ${panel("ch-sleep", "02", "roomFamily", C.sleep, "#quartos", "(min-width: 900px) 40vw, 92vw", fmt(C.sleep.sub, { n: rooms.length }))}
-    </div>
-  </div>
-</section>`;
-}
 
-// Breakfast: a wide morning photo, the hours set large, and the real breakfast lines from the printed menu.
-function breakfastSection(t, list) {
-  const B = t.land.bkf;
-  const hrs = breakfastHours();
-  return `<section class="bkf" id="pequeno-almoco" aria-labelledby="bkf-title">
-  <div class="bkf-grid">
-    <div class="bkf-visual" data-reveal>
-      ${figure(t, "terrace", { sizes: "(min-width: 900px) 58vw, 100vw", ratio: "5/4", parallax: 0.07 })}
-      <div class="bkf-inset">${figure(t, "palmShadow", { sizes: "(min-width: 900px) 18vw, 40vw", ratio: "3/4" })}</div>
-    </div>
-    <div class="bkf-body">
-      ${heading({ eyebrow: B.eyebrow, title: B.title1, accent: B.titleAccent, id: "bkf-title" })}
-      <p class="bkf-lead"${rv(60)}>${esc(B.lead)}</p>
-      ${hrs ? `<p class="bkf-hours"${rv(100)}><span>${esc(B.served)}</span><b>${hrs.from}</b><i aria-hidden="true"></i><b>${hrs.to}</b></p>` : ""}
-      <p class="bkf-note"${rv(110)}>${esc(B.note)}</p>
-      <h3 class="bkf-list-h"${rv(120)}>${esc(B.list)}</h3>
-      <ul class="dish-lines bkf-list"${rv(140)}>${list.map((d) => dishLine(t, d)).join("")}</ul>
-      <div class="btn-row"${rv(160)}><a class="btn btn-terra" href="${href("restaurant", t.lang, "#cat-breakfast")}">${esc(B.cta)}${icon("arrow")}</a></div>
-    </div>
-  </div>
-</section>`;
-}
 
 // A day at Lauhata, as a cinema scene: one pinned full-screen stage; as the page scrolls the picture changes from morning to
 // dusk (the five real aerial frames, the camera rising as the day goes on) while the colour grade warms and darkens.
 // Without JavaScript, with a failed script or without GSAP it is a plain list of five pictures with their text.
 // The five moments are suggestions, not opening hours or guaranteed activities, and the section says so.
-const DAY_FRAMES = [
-  { key: "heroCover", grade: "rgba(70, 120, 150, 0.30)", dim: 0.1 },
-  { key: "aerialDay2", grade: "rgba(120, 175, 165, 0.12)", dim: 0 },
-  { key: "aerialGarden", grade: "rgba(255, 246, 226, 0.10)", dim: 0 },
-  { key: "aerialDay4", grade: "rgba(217, 168, 95, 0.28)", dim: 0.12 },
-  { key: "aerialCoast", grade: "rgba(199, 101, 69, 0.36)", dim: 0.42 },
-];
-function daySection(t) {
-  const D = t.land.day;
-  const steps = D.steps;
-  return `<section class="day" id="experiencias" aria-labelledby="day-title" data-day>
-  <div class="day-track"><div class="day-stage" data-day-stage>
-    <header class="day-head">
-      <h2 id="day-title" class="day-title">${esc(D.title)}</h2>
-      <p class="day-lead">${esc(D.lead)}</p>
-    </header>
-    <ol class="day-steps">${steps
-      .map((s, i) => `<li class="day-step" data-day-step data-grade="${DAY_FRAMES[i].grade}" data-dim="${DAY_FRAMES[i].dim}">
-      ${figure(t, DAY_FRAMES[i].key, { sizes: "100vw", cls: "day-frame", decorative: true })}
-      <div class="day-copy">
-        <p class="day-meta"><time class="day-time">${esc(s.time)}</time><span class="day-period">${esc(s.period)}</span></p>
-        <h3>${esc(s.t)}</h3>
-        <p class="day-text">${esc(s.d)}</p>
-      </div>
-    </li>`)
-      .join("")}</ol>
-    <div class="day-grade" aria-hidden="true"></div>
-    <div class="day-dim" aria-hidden="true"></div>
-    <ol class="day-rail" aria-hidden="true">${steps.map((s) => `<li>${esc(s.time)}</li>`).join("")}<i class="day-rail-fill"></i></ol>
-  </div></div>
-  <p class="day-note">${esc(D.note)}</p>
-</section>`;
-}
-// The end of the day: a coastal photograph beside two clear actions.
-function duskSection(t) {
-  const L = t.lang;
-  const D = t.land.dusk;
-  return `<section class="dusk" id="entardecer" aria-labelledby="dusk-title">
-  <div class="dk-grid">
-    <div class="dk-photo">${figure(t, "heroSunset", { sizes: "(min-width: 900px) 55vw, 100vw", ratio: "4/3", parallax: 0.06 })}</div>
-    <div class="dk-body">
-      <p class="eyebrow"${rv()}>${esc(D.eyebrow)}</p>
-      <h2 id="dusk-title" class="dk-title" data-split>${esc(D.title)} <em>${esc(D.titleAccent)}</em></h2>
-      <p class="dk-text"${rv(80)}>${esc(D.body)}</p>
-      <div class="btn-row"${rv(140)}>
-        <a class="btn btn-cream btn-lg" href="${href("restaurant", L)}">${esc(D.eat)}${icon("arrow")}</a>
-        <a class="btn btn-ghost-light btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(D.stay)}</a>
-      </div>
-    </div>
-  </div>
-</section>`;
-}
 
-// Culture on terracotta: the tais in an arch, general facts kept apart from the history of the place (still to
-// be supplied by the owner), and the Tetum phrase set large.
-function cultureSection(t) {
-  const C = t.land.culture;
-  return `<section class="cult" id="historia" aria-labelledby="story-title">
-  <div class="wrap">
-    <header class="cu-head"${rv()}>
-      <p class="eyebrow">${esc(C.eyebrow)}</p>
-      <h2 id="story-title" class="cu-title" data-split>${esc(C.title1)} ${esc(C.title2)} <em>${esc(C.titleAccent)}</em>.</h2>
-    </header>
-    <div class="cu-grid">
-      <div class="cu-visual">
-        <div class="cu-frame">${figure(t, "weaving", { sizes: "(min-width: 900px) 36vw, 82vw", ratio: "4/5", attrs: "data-clip", parallax: 0.05 })}</div>
-        <p class="cu-cap">${esc(C.tais)}</p>
-      </div>
-      <div class="cu-text">
-        <p class="cu-body"${rv(60)}>${esc(C.body)}</p>
-        <h3 class="cu-group"${rv(90)}>${esc(C.themesLabel)}</h3>
-        <ul class="cu-cards"${rv(120)}>${C.themes.map(([h, p]) => `<li><h4>${esc(h)}</h4><p>${esc(p)}</p></li>`).join("")}</ul>
-        ${site.showPlaceholderNotes ? `<div class="cu-slot"${rv(160)}><h3>${esc(C.slot)}</h3><p>${esc(C.slotPending)}</p></div>` : ""}
-      </div>
-    </div>
-    <div class="cu-quote"${rv()}>
-      <p class="cu-label">${esc(C.quoteLabel)}</p>
-      <p class="cu-big">${esc(C.quote)}</p>
-      <p class="cu-gloss">${esc(C.gloss)}${site.showPlaceholderNotes ? ` <small>${esc(C.glossNote)}</small>` : ""}</p>
-    </div>
-  </div>
-  ${TAIS}
-</section>`;
-}
 
-// Visit and book: location, hours and bookings in three groups, and a real Google map.
-function reachSection(t) {
-  const L = t.lang;
-  const R = t.land.reach;
-  const q = mapQuery();
-  const hours = site.restaurantHours.length
-    ? site.restaurantHours.map((x) => `<span>${esc(x.days[L])} <b>${esc(x.hours)}</b></span>`).join("")
-    : `<span class="tbc">${esc(t.common.toConfirm)}</span>`;
-  const row = (ico, label, value) => `<div class="rc-row">${icon(ico)}<dt>${esc(label)}</dt><dd>${value}</dd></div>`;
-  const drive = site.driveFromDili ? fmt(t.home.location.drive, { t: site.driveFromDili }) : "";
-  const reception = site.receptionHours ? esc(site.receptionHours[L]) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`;
-  return `<section class="reach" id="contacto" aria-labelledby="loc-title">
-  <div class="wrap rc-grid">
-    <div class="rc-info">
-      ${heading({ eyebrow: R.eyebrow, title: R.title, accent: R.titleAccent, lead: R.body, id: "loc-title" })}
-      <div class="rc-groups">
-        <section class="rc-group" aria-labelledby="rc-loc"${rv(60)}>
-          <h3 id="rc-loc">${esc(R.location)}</h3>
-          <dl>
-            ${row("pin", R.address, `${esc(site.address.locality)}, ${esc(site.address.region)}<br>${esc(site.address.country)}`)}
-            ${row("car", R.fromDili, drive ? esc(drive) : `<span class="tbc">${esc(t.common.toConfirm)}</span>`)}
-          </dl>
-          <div class="rc-actions">
-            <a class="btn btn-outline" href="${directionsLink()}" target="_blank" rel="noopener">${icon("pin")}${esc(R.directions)}</a>
-            <a class="btn btn-outline" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a>
-          </div>
-        </section>
-        <section class="rc-group" aria-labelledby="rc-hours"${rv(100)}>
-          <h3 id="rc-hours">${esc(R.hours)}</h3>
-          <dl>
-            ${row("cutlery", t.home.location.restaurant, `<span class="rc-hours">${hours}</span>`)}
-            ${row("bed", R.reception, reception)}
-          </dl>
-        </section>
-        <section class="rc-group" aria-labelledby="rc-book"${rv(140)}>
-          <h3 id="rc-book">${esc(R.bookings)}</h3>
-          <p class="rc-text">${esc(R.bookingsText)}</p>
-          <dl>
-            ${row("whatsapp", t.common.whatsapp, site.whatsapp ? `<a href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">+${esc(site.whatsapp)}</a>` : `<span class="tbc">+670 [XXXX XXXX]</span>`)}
-            ${row("mail", t.common.email, site.email ? `<a href="mailto:${esc(site.email)}">${esc(site.email)}</a>` : `<span class="tbc">[email]</span>`)}
-          </dl>
-          <div class="rc-actions">
-            <a class="btn btn-terra" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a>
-            <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="table">${esc(R.bookTable)}</a>
-            <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="room">${esc(R.bookRoom)}</a>
-          </div>
-        </section>
-      </div>
-    </div>
-    <div class="rc-map"${rv(120)}>
-      ${mapFacade(t)}
-      ${site.geo ? "" : `<p class="rc-note">${esc(R.mapNote)}</p>`}
-    </div>
-  </div>
-</section>`;
-}
 
-// The facts a visitor looks for first, right under the hero: when the restaurant is open, where it is and how to book.
-// Everything shown here is confirmed data (hours from the printed menu); nothing is guessed.
-function glanceSection(t) {
-  const L = t.lang;
-  const G = t.land.glance;
-  const hours = site.restaurantHours.map((h) => `<span>${esc(h.days[L])} <b>${esc(h.hours)}</b></span>`).join("");
-  return `<section class="glance" aria-label="${esc(G.aria)}">
-  <div class="wrap glance-grid">
-    <div class="gl-cell"><p class="gl-label">${icon("cutlery")}${esc(G.eat)}</p><p class="gl-value gl-hours">${hours || esc(t.common.hoursTbc)}</p></div>
-    <div class="gl-cell"><p class="gl-label">${icon("pin")}${esc(G.place)}</p><p class="gl-value">${esc(G.placeValue)}</p><a class="gl-link" href="${directionsLink()}" target="_blank" rel="noopener">${esc(G.route)}</a></div>
-    <div class="gl-cell"><p class="gl-label">${icon("whatsapp")}${esc(G.book)}</p><p class="gl-value">${esc(G.bookValue)}</p><a class="gl-link" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${esc(G.bookLink)}</a></div>
-  </div>
-</section>`;
-}
 
-// A full-screen "scene": one real aerial still in a wide cinema frame, a single line over it. The photo opens like a
-// shutter as it enters, drifts slowly against the scroll and is darkened at the edges (see design.css).
-function sceneSection(t, key, copy) {
-  return `<section class="scene" aria-label="${esc(copy.line)}">
-  <div class="scene-media">${figure(t, key, { sizes: "100vw" })}</div>
-  <div class="wrap scene-text">
-    <p class="scene-note" data-fade>${esc(copy.note)}</p>
-    <h2 class="scene-line" data-split>${esc(copy.line)}</h2>
-  </div>
-</section>`;
-}
 
-// Photographs: only the pictures marked real in images.mjs (placeholder: false), so no stock or illustrative image is
-// ever shown here as Lauhata. The grid grows on its own as real photos are added. Each one opens in a lightbox
-// (the shared <dialog> in layout.mjs: Escape closes it, the arrow keys move between photos, focus returns to the thumbnail).
-// Without JavaScript each thumbnail is a plain link to the large photo.
-function gallerySection(t) {
-  const G = t.land.gallery;
-  const real = Object.keys(images).filter((k) => !images[k].placeholder && k !== "heroCover");
-  if (real.length < 3) return "";
-  return `<section class="section gallery-real" id="fotografias" aria-labelledby="gal-title">
-  <div class="wrap">
-    <div class="gr-head">
-      ${heading({ eyebrow: G.eyebrow, title: G.title, id: "gal-title" })}
-      <p class="gr-lead"${rv(80)}>${esc(G.lead)}</p>
-    </div>
-    <ul class="gr-grid" data-gallery>${real
-      .map((k, i) => `<li class="gr-item${i === 0 ? " is-wide" : ""}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(G.open, { alt: images[k].alt[t.lang] }))}">${figure(t, k, { sizes: i === 0 ? "(min-width: 900px) 62vw, 100vw" : "(min-width: 900px) 31vw, 50vw" })}</a></li>`)
-      .join("")}</ul>
-  </div>
-</section>`;
-}
 
 // The last invitation before the footer: the real aerial view of the coast, one line and the two separate actions
 // (a room request and a table request), so it is clear which one each button starts.
@@ -768,7 +465,7 @@ function finalSection(t, key = "aerialCoast", { panel = false } = {}) {
   const RS = t.land.resort;
   if (panel) {
     return `<section class="scene final-cta has-panel" id="momento" aria-labelledby="final-title">
-  <div class="scene-media">${figure(t, key, { sizes: "100vw", decorative: true })}</div>
+  <div class="scene-media">${figure(t, key, { sizes: COVER, decorative: true })}</div>
   <div class="wrap scene-text fp-grid">
     <div class="fp-copy">
       <h2 id="final-title" class="scene-line final-line">${esc(F.line)}</h2>
@@ -784,7 +481,7 @@ function finalSection(t, key = "aerialCoast", { panel = false } = {}) {
 </section>`;
   }
   return `<section class="scene final-cta" aria-labelledby="final-title">
-  <div class="scene-media">${figure(t, key, { sizes: "100vw", decorative: true })}</div>
+  <div class="scene-media">${figure(t, key, { sizes: COVER, decorative: true })}</div>
   <div class="wrap scene-text">
     <p class="scene-note" data-fade>${esc(F.note)}</p>
     <h2 id="final-title" class="scene-line final-line" data-split>${esc(F.line)}</h2>
@@ -800,91 +497,11 @@ function finalSection(t, key = "aerialCoast", { panel = false } = {}) {
 
 // ================= HOME: hero, a short introduction, Comer & Ficar, a look at who we are, the invitation =================
 
-// One statement about what Lauhata is, set large across the page, with a tall real photograph hanging from the right edge
-// and overlapping the statement's last lines (the photo carries its own caption).
-function introSection(t) {
-  return `<section class="section intro-ed" id="lauhata" aria-labelledby="intro-title">
-  <div class="wrap intro-grid">
-    <div class="intro-text">
-      <h2 id="intro-title" class="intro-statement" data-split>${esc(t.home.statement)}</h2>
-      <p class="intro-body"${rv(80)}>${esc(t.land.intro.body)}</p>
-    </div>
-    <div class="intro-photo">${figure(t, "sunsetPalmsHigh", { sizes: "(min-width: 900px) 30vw, 70vw", ratio: "4/5", credit: true, cls: "is-dusk" })}</div>
-  </div>
-</section>`;
-}
 
-// The coast at night-fall: a dark chapter with the beach line and three real photographs of different proportions
-// (a wide sea, a square canoe, a tall garden sunset), each with its caption. Replaces the single full-screen scene.
-function coastChapter(t) {
-  // The client liked the dark frame of the beach with the palms and the mountain: it is the whole screen again, with the
-  // line set low on it. Below, on the night, the words, the coordinates and two smaller real photographs that overlap
-  // the bottom edge of the big one.
-  const B = t.land.beach;
-  return `<section class="coast-ch" aria-labelledby="coast-title">
-  <div class="coast-stage">
-    <div class="coast-bg">${figure(t, "beachFront", { sizes: "100vw" })}</div>
-    <div class="coast-shade" aria-hidden="true"></div>
-    <div class="wrap coast-over">
-      <p class="coast-note">${esc(B.note)}</p>
-      <h2 id="coast-title" class="coast-line" data-split>${esc(B.line)}</h2>
-    </div>
-    <p class="coast-cap"><span>${esc(images.beachFront.alt[t.lang])}</span></p>
-  </div>
-  <div class="wrap coast-grid">
-    <div class="coast-text">
-      <p class="coast-body"${rv()}>${esc(B.body)}</p>
-      <p class="coast-coords"><span>${esc(B.place)}</span><span>${esc(t.common.coords)}</span></p>
-    </div>
-    <div class="coast-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 26vw, 60vw", ratio: "4/5", credit: true })}</div>
-    <div class="coast-c">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 34vw, 80vw", ratio: "3/2", credit: true, cls: "is-dusk" })}</div>
-  </div>
-</section>`;
-}
 
 // Comer & Ficar: the two things Lauhata offers, as two photographic panels of different weight with an ampersand
 // between them. Each whole panel is one link. The photos are keys here so the restaurant's and the rooms' own
 // photographs can replace the illustrative ones in one place (they keep their "Illustrative image" tag until then).
-const DUO_PHOTOS = { eat: "sunsetGarden", stay: "aerialCoast" };
-function duoSection(t) {
-  const D = t.land.duo;
-  const L = t.lang;
-  const panel = (key, page, copy) => `<a class="duo-panel duo-${key}" href="${href(page, L)}">
-      <div class="duo-media">${figure(t, DUO_PHOTOS[key], { sizes: key === "eat" ? "(min-width: 900px) 56vw, 100vw" : "(min-width: 900px) 40vw, 100vw" })}</div>
-      <div class="duo-copy">
-        <h2 class="duo-title">${esc(copy.title)}</h2>
-        <p class="duo-line">${esc(copy.line)}</p>
-        <span class="duo-link">${esc(copy.link)}<i class="duo-arrow" aria-hidden="true"></i></span>
-      </div>
-    </a>`;
-  // Under each photograph, a band of verified details: when the restaurant serves and what is on the menu; which
-  // suites there are and how a stay is requested. Two actions per side.
-  const shownCats = categories.filter((c) => items.some((d) => d.category === c.id)).map((c) => c.name[L]);
-  const hours = site.restaurantHours.map((h) => `<li><span>${esc(h.days[L])}</span><b>${esc(h.hours)}</b></li>`).join("");
-  return `<section class="duo" aria-label="${esc(D.aria)}">
-  <div class="duo-grid">
-    ${panel("eat", "restaurant", D.eat)}
-    <span class="duo-amp" aria-hidden="true">&amp;</span>
-    ${panel("stay", "stay", D.stay)}
-  </div>
-  <div class="duo-notes">
-    <div class="dn-col dn-eat">
-      <h3 class="dn-head">${esc(D.eatHead)}</h3>
-      ${hours ? `<p class="dn-label">${esc(D.hoursLabel)}</p><ul class="dn-hours">${hours}</ul>` : ""}
-      <p class="dn-label">${esc(D.menuLabel)}</p>
-      <p class="dn-text">${esc(shownCats.join(", "))}.</p>
-      <p class="dn-small">${esc(D.dineIn)}</p>
-      <div class="dn-actions"><a class="btn btn-cream" href="${href("contact", L)}" data-book-open="table">${esc(D.eatBook)}</a><a class="text-link" href="${href("restaurant", L, "#ementa")}">${esc(D.eat.link)}</a></div>
-    </div>
-    <div class="dn-col dn-stay">
-      <h3 class="dn-head">${esc(D.stayHead)}</h3>
-      <ul class="dn-suites">${rooms.map((r) => `<li><a href="${href("room:" + r.id, L)}">${esc(r.name[L])}</a><span>${esc(r.beds[L])}</span></li>`).join("")}</ul>
-      <p class="dn-small">${esc(D.stayHow)}</p>
-      <div class="dn-actions"><a class="btn btn-cream" href="${href("contact", L)}" data-book-open="room">${esc(D.stayBook)}</a><a class="text-link" href="${href("stay", L)}">${esc(D.stay.link)}</a></div>
-    </div>
-  </div>
-</section>`;
-}
 
 // Guest reviews: no review text is copied (that needs the reviewers' and the platform's permission). The section invites
 // visitors to read them on the real Tripadvisor listing; rating and count appear only once set in site.reviews.
@@ -973,156 +590,107 @@ function reviewsSection(t) {
 </dialog>`;
 }
 
-// Events, on the home page: an invitation, not a list of services.
-function eventsTeaser(t) {
-  const E = t.land.eventsTeaser;
-  return `<section class="section ev-teaser" aria-labelledby="et-title">
-  <div class="wrap et-grid">
-    <div class="et-photos">${figure(t, "aerialDay2", { sizes: "(min-width: 900px) 58vw, 100vw", ratio: "3/2", credit: true })}</div>
-    <div class="et-text">
-      <h2 id="et-title" class="pv-title" data-split>${esc(E.title)}</h2>
-      <p class="pv-body"${rv(80)}>${esc(E.body)}</p>
-      <a class="text-link" href="${href("events", t.lang)}">${esc(E.link)}</a>
-    </div>
-  </div>
-</section>`;
-}
 
-// Discover Liquiçá, on the home page: one photograph, one line and the way to the guide.
-function discoverPreview(t) {
-  const D = t.land.discoverPage;
-  return `<section class="section dsc-preview" aria-labelledby="dp-title">
-  <div class="wrap dp-grid">
-    <div class="dp-text">
-      <h2 id="dp-title" class="pv-title" data-split>${esc(D.title)}</h2>
-      <p class="pv-body"${rv(80)}>${esc(D.lead)}</p>
-      <div class="pv-links"${rv(120)}><a class="text-link" href="${href("discover", t.lang)}">${esc(t.nav.discover)}</a><a class="text-link" href="${href("about", t.lang)}">${esc(t.land.preview.about)}</a></div>
-    </div>
-    <div class="dp-a">${figure(t, "coastVillage", { sizes: "(min-width: 900px) 40vw, 100vw", ratio: "4/5", credit: true })}</div>
-    <div class="dp-b">${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 26vw, 60vw", ratio: "3/4", credit: true })}</div>
-  </div>
-</section>`;
-}
 
-// A short look at who Lauhata is, leading to About us and Our story.
-function previewSection(t) {
-  const C = t.land.culture;
-  const P = t.land.preview;
-  const L = t.lang;
-  return `<section class="section preview" aria-labelledby="pv-title">
-  <div class="wrap pv-grid">
-    <div class="pv-photo">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 46vw, 92vw", ratio: "5/4" })}</div>
-    <div class="pv-text">
-      <p class="eyebrow">${esc(P.note)}</p>
-      <h2 id="pv-title" class="pv-title" data-split>${esc(C.title1)} ${esc(C.title2)} <em>${esc(C.titleAccent)}</em>.</h2>
-      <p class="pv-body"${rv(80)}>${esc(C.body)}</p>
-      <div class="pv-links"${rv(120)}>
-        <a class="text-link" href="${href("about", L)}">${esc(P.about)}${icon("arrow")}</a>
-      </div>
-    </div>
-  </div>
-</section>`;
-}
 
-// ================= ABOUT US: what Lauhata is today =================
 export function about(t) {
   const L = t.lang;
   const A = t.land.aboutPage;
   const C = t.land.culture;
-  const bc = breadcrumbs(t, [{ name: t.nav.about, path: href("about", L) }]);
+  const K = kitchenHours() || {};
+  const bc = breadcrumbs(t, [{ name: t.nav.story, path: href("about", L) }]);
+  const chapters = [
+    ["eat", "restaurantBeach", href("restaurant", L), A.chapters.menu],
+    ["stay", "stayWalkway", href("stay", L), A.chapters.suites],
+    ["coast", "coastVillage", href("discover", L), A.chapters.discover],
+  ];
   const body = `
-${pageHero(t, { eyebrow: A.eyebrow, title: A.title, lead: t.home.statement, image: "aerialDay2", crumbs: bc.html })}
+${pageHero(t, { title: A.title, lead: t.home.statement, image: "beachFront", pos: "50% 62%", cls: "is-bright" })}
 
-<section class="section ab-what" aria-labelledby="ab-what-title">
-  <div class="wrap ab-what-grid">
-    <div>
+<section class="section st-what" aria-labelledby="ab-what-title">
+  <div class="wrap st-what-grid">
+    <div class="st-what-text">
       <h2 id="ab-what-title" class="ab-title">${esc(A.whatTitle)}</h2>
-      <p class="ab-body"${rv(60)}>${esc(A.what)}</p>
-      <p class="ab-who"${rv(80)}>${esc(A.who)}</p>
+      <p class="st-lead">${esc(A.what)}</p>
+      <p class="st-who">${esc(A.who)}</p>
     </div>
-    <div>
-      <h3 class="h-small">${esc(A.factsTitle)}</h3>
-      <dl class="room-sheet ab-facts"${rv(100)}>${A.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
-    </div>
-  </div>
-  <div class="wrap ab-strip">
-    <div class="ab-strip-a">${figure(t, "beachFront", { sizes: "(min-width: 900px) 62vw, 100vw", ratio: "16/9" })}</div>
-    <div class="ab-strip-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 34vw, 100vw", ratio: "4/5" })}</div>
+    <figure class="st-what-photo" data-tide>${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 40vw, 92vw", credit: true })}</figure>
   </div>
 </section>
 
-<section class="section ab-intro" aria-labelledby="ab-title">
-  <div class="wrap ab-grid">
-    <h2 id="ab-title" class="ab-title" data-split>${esc(C.title1)} ${esc(C.title2)} <em>${esc(C.titleAccent)}</em>.</h2>
+<section class="section st-people" aria-labelledby="abc-people">
+  <div class="wrap st-people-grid">
+    <h2 id="abc-people" class="st-quote" data-split>${esc(C.title1)} ${esc(C.title2)} ${esc(C.titleAccent)}.</h2>
     <div>
-      <p class="ab-body"${rv(60)}>${esc(C.body)}</p>
-      <h3 class="h-small ab-values-h"${rv(80)}>${esc(A.valuesTitle)}</h3>
-      <ul class="ab-values"${rv(100)}>${C.themes.map(([h, p]) => `<li><h4>${esc(h)}</h4><p>${esc(p)}</p></li>`).join("")}</ul>
+      <p>${esc(C.body)}</p>
+      <p>${esc(A.chapters.peopleBody)}</p>
+      <a class="text-link on-dark" href="${href("home", L, "#opinioes")}">${esc(A.chapters.reviews)}</a>
     </div>
   </div>
 </section>
 
-<section class="ab-chapters" aria-label="${esc(A.whatTitle)}">
-  ${[
-    ["eat", "sunsetGarden", href("restaurant", L), A.chapters.menu, "is-dusk"],
-    ["stay", "aerialGarden", href("stay", L), A.chapters.suites, ""],
-    ["coast", "coastVillage", href("discover", L), A.chapters.discover, ""],
-    ["people", "beachFront", href("home", L, "#opinioes"), A.chapters.reviews, ""],
-  ].map(([k, img, link, label, cls], i) => `<article class="abc abc-${k}${i % 2 ? " is-flip" : ""}" aria-labelledby="abc-${k}">
-    <div class="abc-media">${figure(t, img, { sizes: "(min-width: 900px) 55vw, 100vw", ratio: i % 2 ? "4/5" : "3/2", cls })}</div>
-    <div class="abc-text">
+<section class="st-chapters" aria-label="${esc(A.whatTitle)}">
+  ${chapters.map(([k, img, link, label], i) => `<article class="stc stc-${k}${i % 2 ? " is-flip" : ""}" aria-labelledby="abc-${k}">
+    <figure class="stc-media" data-tide>${figure(t, img, { sizes: "(min-width: 900px) 60vw, 100vw", cls: "drift" })}</figure>
+    <div class="stc-text">
       <h2 id="abc-${k}" class="abc-title">${esc(A.chapters[k + "Title"])}</h2>
-      <p${rv(60)}>${esc(A.chapters[k + "Body"])}</p>
+      <p>${esc(fmt(A.chapters[k + "Body"], K))}</p>
       <a class="text-link" href="${link}">${esc(label)}</a>
     </div>
   </article>`).join("")}
 </section>
 
-`;
-  return { page: "about", title: t.meta.about.title, description: t.meta.about.description, path: href("about", L), alt: href("about", other(L)), preload: "aerialDay2", hero: true, ld: [bc.ld], body };
+<section class="section st-facts" aria-labelledby="st-facts-title">
+  <div class="wrap st-facts-grid">
+    <div>
+      <h2 id="st-facts-title" class="ab-title">${esc(A.valuesTitle)}</h2>
+      <ul class="st-values">${C.themes.map(([h, p]) => `<li><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ul>
+    </div>
+    <div>
+      <h3 class="h-small">${esc(A.factsTitle)}</h3>
+      <dl class="room-sheet ab-facts">${A.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+    </div>
+  </div>
+</section>`;
+  return { page: "about", title: t.meta.about.title, description: t.meta.about.description, path: href("about", L), alt: href("about", other(L)), preload: "beachFront", hero: true, ld: [bc.ld], body };
 }
 
-// ================= EVENTS: an honest, enquiry-led page =================
-// No calendar, packages, capacities or prices are published: none have been confirmed. The page explains how to ask,
-// and the request goes through the same WhatsApp hand-off as the table and room forms (data-booking="event").
+// No calendar, packages, capacities or prices are published: none have been confirmed. The page shows the setting, the occasions people can
+// suggest and how an enquiry becomes an event; the request goes through the same WhatsApp hand-off as the other forms (data-booking="event").
 export function events(t) {
   const L = t.lang;
   const E = t.land.eventsPage;
-  const f = t.form;
   const bc = breadcrumbs(t, [{ name: t.nav.events, path: href("events", L) }]);
-  const kinds = E.kinds.map((k) => `<option>${esc(k)}</option>`).join("");
   const body = `
-${pageHero(t, { eyebrow: E.eyebrow, title: E.title, lead: E.lead, image: "sunsetPalms", crumbs: bc.html, ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="#pedido">${esc(t.land.resort.ctaEvent)}${icon("arrow")}</a></div>` })}
+${pageHero(t, { title: E.title, lead: E.lead, image: "sunsetPalms", pos: "50% 40%", ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="#pedido">${esc(t.land.resort.ctaEvent)}</a></div>` })}
 
-<section class="section ev-how" aria-labelledby="ev-types-title">
-  <div class="wrap ev-split">
-    <figure class="ev-photo">${figure(t, "sunsetGarden", { sizes: "(min-width: 900px) 48vw, 92vw", ratio: "4/3", decorative: true })}</figure>
-    <div class="ev-types">
+<section class="section xe-kinds" aria-labelledby="ev-types-title">
+  <div class="wrap xe-grid">
+    <div class="xe-copy">
       <h2 id="ev-types-title" class="pv-title">${esc(E.typesTitle)}</h2>
       <p class="pv-body">${esc(E.typesLead)}</p>
-      <ul class="ev-type-list">${E.kinds.slice(0, -1).map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
-      <div class="pv-actions"><a class="btn btn-terra" href="#pedido">${esc(t.land.resort.ctaEvent)}</a></div>
     </div>
+    <ul class="xe-list">${E.kinds.slice(0, -1).map((k) => `<li><a href="#pedido" data-event-kind="${esc(k)}"><span>${esc(k)}</span>${icon("arrow")}</a></li>`).join("")}</ul>
   </div>
 </section>
 
-<section class="ev-strip" aria-label="${esc(E.title)}">
-  <div class="wrap ev-strip-grid">
-    <figure class="es-a">${figure(t, "beachFront", { sizes: "(min-width: 900px) 42vw, 92vw" })}</figure>
-    <figure class="es-b">${figure(t, "sunsetPalms", { sizes: "(min-width: 900px) 24vw, 46vw" })}</figure>
-    <figure class="es-c">${figure(t, "aerialCoast", { sizes: "(min-width: 900px) 32vw, 46vw" })}</figure>
+<section class="xe-band" aria-hidden="true"><figure data-tide>${figure(t, "beachFront", { sizes: "100vw", decorative: true, cls: "drift" })}</figure></section>
+
+<section class="section xe-how" aria-labelledby="ev-how-title">
+  <div class="wrap">
+    <h2 id="ev-how-title" class="pv-title">${esc(E.howTitle)}</h2>
+    <ol class="xe-steps">${E.steps.map(([h, p]) => `<li><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ol>
   </div>
 </section>
 
 <section class="section booking ev-form" id="pedido" aria-labelledby="ev-form-title">
   <div class="wrap booking-grid">
     <div>
-      ${heading({ eyebrow: E.eyebrow, title: E.formTitle, id: "ev-form-title" })}
-      <p class="body-text"${rv(80)}>${esc(E.formLead)}</p>
-      <p class="ev-expect"${rv(90)}>${esc(E.expect)}</p>
-      ${figure(t, "beachFront", { cls: "booking-img", sizes: "(min-width: 900px) 30vw, 80vw", ratio: "4/3" })}
+      ${heading({ title: E.formTitle, id: "ev-form-title" })}
+      <p class="body-text">${esc(E.formLead)}</p>
+      <p class="ev-expect">${esc(E.expect)}</p>
     </div>
-    <div class="form-card"${rv(100)}>
+    <div class="form-card">
       ${eventForm(t)}
     </div>
   </div>
@@ -1166,41 +734,36 @@ function eventForm(t) {
   </form>`;
 }
 
-// ================= GALLERY: real photographs only, grouped by what they show =================
-// A photo appears here only when it is marked real (placeholder: false) and has a `group` in images.mjs. Each group opens
-// with one wide frame; every photo opens in the site's lightbox (keyboard: Enter, arrows, Escape).
+// Real photographs only (placeholder: false, with a `group` in images.mjs), told as four short chapters. Near-identical aerial views are
+// left out (`hide: true`). Each row of a chapter is a fixed composition, so nothing is left as an orphan; every photo opens in the lightbox.
 export function gallery(t) {
   const L = t.lang;
   const G = t.land.galleryPage;
   const bc = breadcrumbs(t, [{ name: t.nav.gallery, path: href("gallery", L) }]);
-  // One mosaic of every real photograph: tiles of different sizes in a 12-column grid that packs densely, so nothing is
-  // left as a large gap; filter buttons show one theme at a time. The tile sizes repeat in a fixed rhythm.
-  const SPANS = [[8, 5], [4, 5], [4, 3], [4, 3], [4, 3], [5, 4], [7, 4], [6, 4], [6, 4], [4, 4], [8, 4]];
-  const all = Object.entries(G.groups).flatMap(([g]) => Object.keys(images).filter((k) => !images[k].placeholder && images[k].group === g));
-  const mosaic = `<div class="gx-filters" role="group" aria-label="${esc(G.filterLabel)}"><button type="button" class="gx-filter" aria-pressed="true" data-filter="all">${esc(G.all)}</button>${Object.entries(G.groups)
-    .filter(([g]) => all.some((k) => images[k].group === g))
+  const inGroup = (g) => Object.keys(images).filter((k) => !images[k].placeholder && !images[k].hide && images[k].group === g);
+  const groups = Object.entries(G.groups).map(([g, title]) => [g, title, inGroup(g)]).filter(([, , ks]) => ks.length);
+  const filters = `<div class="gx-filters" role="group" aria-label="${esc(G.filterLabel)}"><button type="button" class="gx-filter" aria-pressed="true" data-filter="all">${esc(G.all)}</button>${groups
     .map(([g, title]) => `<button type="button" class="gx-filter" aria-pressed="false" data-filter="${g}">${esc(title)}</button>`)
-    .join("")}</div>
-    <ul class="gx-mosaic" data-gallery data-mosaic>${all
-      .map((k, i) => { const [c, r] = SPANS[i % SPANS.length]; return `<li class="gx-tile" data-group="${images[k].group}" style="--c:${c};--r:${r}"><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: c >= 7 ? "(min-width: 900px) 60vw, 100vw" : "(min-width: 900px) 34vw, 50vw" })}</a><p class="gx-cap">${esc(images[k].alt[L])}</p></li>`; })
-      .join("")}</ul>`;
-  const groups = mosaic;
+    .join("")}</div>`;
   const body = `
-${pageHero(t, { eyebrow: G.eyebrow, title: G.title, lead: G.lead, image: "aerialGarden", crumbs: bc.html })}
+${pageHero(t, { title: G.title, lead: G.lead, image: "seaCanoe", pos: "50% 50%", cls: "is-bright" })}
 
-<section class="section gallery-real gx" aria-label="${esc(G.eyebrow)}">
-  <div class="wrap">${groups}</div>
+<section class="section gallery-real gx" aria-label="${esc(G.eyebrow)}" data-gallery data-mosaic>
+  <div class="wrap">${filters}
+  ${groups.map(([g, title, ks]) => `<section class="gc gc-${g} gc-n${ks.length}" aria-labelledby="gc-${g}">
+    <header class="gc-head" data-group="${g}"><h2 id="gc-${g}" class="gc-title">${esc(title)}</h2><p>${esc(G.groupLeads[g])}</p></header>
+    <ul class="gc-grid">${ks.map((k) => `<li class="gx-tile" data-group="${g}" data-tide><a class="gr-link" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: "(min-width: 900px) 58vw, 100vw" })}</a><p class="gx-cap">${esc(images[k].alt[L])}</p></li>`).join("")}</ul>
+  </section>`).join("")}</div>
 </section>`;
-  return { page: "gallery", title: t.meta.gallery.title, description: t.meta.gallery.description, path: href("gallery", L), alt: href("gallery", other(L)), preload: "aerialGarden", hero: true, ld: [bc.ld], body };
+  return { page: "gallery", title: t.meta.gallery.title, description: t.meta.gallery.description, path: href("gallery", L), alt: href("gallery", other(L)), preload: "seaCanoe", hero: true, ld: [bc.ld], body };
 }
 
 // Discover shows three places (Nov 2026), each with a photo, in the order of discoverPage.places: Maubara Fort (Commons,
 // illustrative), Aipelo prison ruins (Lauhata's own drone photo), Liquiçá town centre (Commons, illustrative).
 const PLACE_PHOTOS = ["placeMaubaraFort", "ruinsAerial", "placeLiquicaCentre"];
 
-// ================= DISCOVER LIQUIÇÁ: a short, sourced guide to the coast around Lauhata =================
-// Every place and fact comes from the official tourism site (timorleste.tl, Liquiçá municipality page), which is credited
-// on the page. No distances, travel times, prices or tours are given: none are confirmed. Lauhata does not run these visits.
+// Every place and fact comes from the official tourism site (timorleste.tl, Liquiçá municipality page), credited on the page. The coast line
+// is drawn from official coordinates and says its distances are straight lines. Lauhata does not run these visits.
 export function discover(t) {
   const L = t.lang;
   const D = t.land.discoverPage;
@@ -1214,199 +777,159 @@ export function discover(t) {
     const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(site.geo.lat)) * Math.cos(rad(g[0])) * Math.sin(dLng / 2) ** 2;
     return Math.round(2 * R * Math.asin(Math.sqrt(a)));
   };
+  // The coast as a line, west on the left and east on the right: Lauhata and every place that has official coordinates, set by longitude.
+  const stops = [...D.places.filter((p) => p.geo).map((p) => ({ name: p.name, lng: p.geo[1], km: km(p.geo) })), { name: "Lauhata", lng: site.geo.lng, here: true }].sort((a, b) => a.lng - b.lng);
+  const lo = stops[0].lng, hi = stops[stops.length - 1].lng;
+  const coast = `<figure class="dl-coast" aria-labelledby="coast-title">
+      <h2 id="coast-title" class="dl-coast-title">${esc(D.coastTitle)}</h2>
+      <ol>${[...stops].reverse().map((s) => `<li class="${s.here ? "is-here" : ""}" style="--x:${(((s.lng - lo) / (hi - lo)) * 100).toFixed(1)}%"><b>${esc(s.name)}</b><span>${s.here ? esc(D.here) : `${s.km} km`}</span></li>`).join("")}</ol>
+      <figcaption>${esc(D.coastNote)}</figcaption>
+    </figure>`;
   const body = `
-${pageHero(t, { eyebrow: D.eyebrow, title: D.title, lead: D.lead, image: "coastMountains", crumbs: bc.html })}
+${pageHero(t, { title: D.title, lead: D.lead, image: "coastMountains", pos: "50% 60%", cls: "is-bright" })}
 
 <section class="section dsc-intro" aria-labelledby="dsc-intro-title">
-  <div class="wrap ab-grid">
-    <h2 id="dsc-intro-title" class="ab-title">${esc(D.introTitle)}</h2>
-    <p class="ab-body"${rv(60)}>${esc(D.intro)}</p>
+  <div class="wrap">
+    <div class="dsc-intro-grid">
+      <h2 id="dsc-intro-title" class="ab-title">${esc(D.introTitle)}</h2>
+      <p class="st-lead">${esc(D.intro)}</p>
+    </div>
+    ${coast}
   </div>
 </section>
 
 <section class="section dsc-places" aria-labelledby="dsc-places-title">
-  <div class="wrap">
-    <h2 id="dsc-places-title" class="gx-title">${esc(D.placesTitle)}</h2>
-  </div>
-  ${(() => {
-    // Places with a photograph get an editorial row each (alternating sides, varied proportions); the others are set as
-    // a short typographic list until someone photographs them. Photo slots: PLACE_PHOTOS below, by place order; a new
-    // photo goes in images.mjs and here.
-    const body = (p) => `<p class="dsc-kind">${esc(p.kind)}</p><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>${km(p.geo) != null ? `<p class="dsc-km">${esc(fmt(D.distance, { km: km(p.geo) }))}</p>` : ""}${p.map ? `<a class="text-link" href="${p.geo ? maps(p.geo.join(",")) : maps(p.map)}" target="_blank" rel="noopener">${esc(D.mapLink)}</a>` : ""}`;
-    const withPhoto = D.places.map((p, i) => [p, PLACE_PHOTOS[i]]).filter(([, k]) => k);
-    return `<div class="dsc-rows">${withPhoto.map(([p, k], i) => `<article class="dsc-row${i % 2 ? " is-flip" : ""}">
-      <div class="dsc-row-media">${figure(t, k, { sizes: "(min-width: 900px) 46vw, 100vw", ratio: ["3/2", "4/3", "16/10", "4/3"][i % 4], credit: true })}</div>
-      <div class="dsc-row-text"${rv(60)}>${body(p)}</div>
-    </article>`).join("")}</div>`;
-  })()}
-</section>
-
-<section class="section dsc-map" aria-label="${esc(D.mapLink)}">
-  <div class="wrap">
-    ${mapFacade(t, "dsc-map-frame")}
-    <p class="dsc-source">${esc(D.geoSource)}</p>
-  </div>
+  <div class="wrap"><h2 id="dsc-places-title" class="ab-title">${esc(D.placesTitle)}</h2></div>
+  <div class="dg">${D.places.map((p, i) => `<article class="dg-place dg-${i}" aria-labelledby="dg-${i}">
+    <figure class="dg-media" data-tide>${figure(t, PLACE_PHOTOS[i], { sizes: "(min-width: 900px) 60vw, 100vw", credit: true })}</figure>
+    <div class="dg-text">
+      <h3 id="dg-${i}">${esc(p.name)}</h3>
+      <p>${esc(p.text)}</p>
+      ${km(p.geo) != null ? `<p class="dsc-km">${esc(fmt(D.distance, { km: km(p.geo) }))}</p>` : ""}
+      <a class="text-link" href="${p.geo ? maps(p.geo.join(",")) : maps(p.map)}" target="_blank" rel="noopener" aria-label="${esc(D.mapLink)}: ${esc(p.name)}">${esc(D.mapLink)}</a>
+    </div>
+  </article>`).join("")}</div>
 </section>
 
 <section class="section dsc-advice" aria-labelledby="dsc-adv-title">
-  <div class="wrap ab-grid">
+  <div class="wrap dsc-adv-grid">
     <div>
       <h2 id="dsc-adv-title" class="ab-title">${esc(D.adviceTitle)}</h2>
-      ${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 40vw, 92vw", ratio: "4/3", cls: "dsc-photo" })}
-    </div>
-    <div>
       <ul class="dsc-advice-list">${D.advice.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
       <p class="dsc-source"><a href="https://timorleste.tl/destinations/municipalities/liquica" target="_blank" rel="noopener">${esc(D.source)}</a></p>
-      <a class="btn btn-terra btn-lg" href="${href("stay", L)}">${esc(D.cta)}${icon("arrow")}</a>
+      <a class="btn btn-terra btn-lg" href="${href("stay", L)}">${esc(D.cta)}</a>
+    </div>
+    <div>
+      ${mapFacade(t, "dsc-map-frame")}
+      <p class="dsc-source">${esc(D.geoSource)}</p>
     </div>
   </div>
 </section>`;
-  return { page: "discover", title: t.meta.discover.title, description: t.meta.discover.description, path: href("discover", L), alt: href("discover", other(L)), preload: "coastVillage", hero: true, ld: [bc.ld], body };
+  return { page: "discover", title: t.meta.discover.title, description: t.meta.discover.description, path: href("discover", L), alt: href("discover", other(L)), preload: "coastMountains", hero: true, ld: [bc.ld], body };
 }
 
 
 
 export function home(t) {
   const L = t.lang;
-  const H = t.home;
   const LD = t.land;
-  const hero = H.hero;
-  const dishes = items.filter((d) => d.featured);
-  const bkfDishes = items.filter((d) => d.category === "breakfast");
-  const realReviews = H.reviews.items.filter((r) => !r.q.startsWith("["));
-  const hours = site.restaurantHours.length
-    ? site.restaurantHours.map((h) => `<div><dt>${esc(h.days[L])}</dt><dd>${esc(h.hours)}</dd></div>`).join("")
-    : `<div><dd class="tbc">${esc(t.common.hoursTbc)}</dd></div>`;
-  // Final homepage design (LAUHATA-FINAL-HOMEPAGE-DESIGN.md): sunset hero with the two-mode enquiry panel, the Welcome
-  // introduction with four photographic cards, Our Story, the two suites, guest reviews, Discover Liquiçá.
-  // Photographs: real ones wherever they exist; the suites only have illustrative pictures, which keep their label.
   const RS = LD.resort;
-  const card = (i, key, page, ic) => `<a class="wc-card" href="${href(page, L)}">
-      <div class="wc-media">${figure(t, key, { sizes: "(min-width: 1100px) 17vw, (min-width: 700px) 45vw, 92vw", decorative: true })}</div>
-      <span class="wc-text"><strong class="wc-title">${esc(RS.cards[i].title)}</strong><span class="wc-line">${esc(RS.cards[i].line)}</span><span class="wc-link">${esc(RS.cards[i].link)}${icon("arrow")}</span></span>
-    </a>`;
-  const suite = (r, i) => `<article class="st-panel${i === 0 ? " is-main" : ""}">
-      <a class="st-media" href="${href("room:" + r.id, L)}" aria-label="${esc(r.name[L])}">${figure(t, r.images[0], { sizes: "(min-width: 900px) 34vw, 92vw", decorative: true })}<span class="st-name">${esc(r.name[L])}</span></a>
-      <ul class="st-amen">${suiteAmenityItems(t, r).map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
-      <div class="st-links"><a class="text-link" href="${href("room:" + r.id, L)}">${esc(RS.stayView)}</a><a class="text-link" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(RS.stayAsk)}</a></div>
-    </article>`;
-  // Welcome: exactly three photographic cards (restaurant and bar are one offer).
-  const wk = (page, key, i) => `<a class="wk-card" href="${href(page, L)}">
-      <span class="wk-media">${figure(t, key, { sizes: "(min-width: 1100px) 19vw, (min-width: 700px) 28vw, 40vw", ratio: "4/5", decorative: true })}</span>
-      <span class="wk-body"><strong>${esc(RS.wlCards[i][0])}</strong><span>${esc(RS.wlCards[i][1])}</span><span class="wk-go">${esc(RS.wlCards[i][2])}${icon("arrow")}</span></span>
-    </a>`;
-  // From the kitchen: eight dishes of the menu (a PROVISIONAL editorial selection for variety of look and kind, NOT best-sellers: no sales data; confirm with Carlos), each with a photograph of a similar dish (illustrative, labelled); names, texts and prices come from menu.mjs only.
+  const K = kitchenHours() || {};
+  // From the kitchen: a PROVISIONAL editorial selection for variety (NOT best-sellers: there are no sales data; confirm with Carlos).
+  // Names, texts and prices come from menu.mjs only.
   const fdIds = ["grilled-fish", "saute-prawns", "lauhata-special-fried-rice", "steak-bitoque", "satay-main", "chicken-curry", "tom-yum-prawns", "grilled-chicken"];
   const fd = fdIds.map((id) => items.find((d) => d.id === id)).filter(Boolean);
-  const fdDish = (d) => `<li class="kc-item"><article class="kc-card">
-      <div class="kc-media">${dishPhoto(t, d)}</div>
-      <div class="kc-text"><h3>${esc(d.name)}</h3><p>${d.description ? esc(d.description[L]) : ""}</p><div class="kc-foot"><span class="kc-price">${dishPrice(t, d)}</span>${canOrder(d) ? `<button class="kc-add" type="button" data-add="${d.id}" aria-label="${esc(d.options.length ? t.order.choose : RS.fdAdd)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(d.options.length ? t.order.choose : RS.fdAdd)}</span></span></button>` : ""}</div></div>
-    </article></li>`;
-  const spIcons = ["cutlery", "bed", "waves", "sunset", "heart", "users"];
-  const special = `<section class="section sp" id="especial" aria-labelledby="sp-title">
-  <div class="wrap">
-    <h2 id="sp-title" class="sp-title">${esc(RS.spTitle)}</h2>
-    <ul class="sp-list">${RS.spItems.map((x, i) => `<li>${icon(spIcons[i])}<strong>${esc(x[0])}</strong><span>${esc(x[1])}</span></li>`).join("")}</ul>
-  </div>
-</section>`;
-  const hoursLine = site.restaurantHours.length ? site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true"> · </i>') : "";
+  const fdDish = (d) => `<li class="kt-dish">
+      <div class="dl-head"><h3 class="dl-name">${esc(d.name)}</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b>${cardPrice(t, d)}</b></p></div>
+      ${d.description ? `<p class="dl-desc">${esc(d.description[L])}</p>` : ""}
+      ${canOrder(d) ? `<button class="d-add kt-add" type="button" data-add="${d.id}" aria-label="${esc(d.options.length ? t.order.choose : RS.fdAdd)}: ${esc(d.name)}"><span data-add-label>${icon("plus")}<span>${esc(d.options.length ? t.order.choose : RS.fdAdd)}</span></span></button>` : ""}
+    </li>`;
+  const door = (page, key, i) => `<a class="we-door" href="${href(page, L)}">
+      <span class="we-media" data-tide>${figure(t, key, { sizes: "(min-width: 1100px) 26vw, (min-width: 700px) 30vw, 38vw", decorative: true, cls: "drift" })}</span>
+      <span class="we-body"><strong>${esc(RS.wlCards[i][0])}</strong><span>${esc(RS.wlCards[i][1])}</span><span class="we-go">${esc(RS.wlCards[i][2])}</span></span>
+    </a>`;
+  const hoursLine = site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true">, </i>');
   const kinds = LD.eventsPage.kinds.slice(0, 4);
   const body = `
-<section class="cine-hero hx rs-hero" aria-labelledby="hero-title">
-  <div class="hx-bg">${figure(t, "heroFilmCover", { eager: true, sizes: "100vw" })}
-    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline autoplay preload="none" aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}</div>
+<section class="cine-hero hx rs-hero" aria-labelledby="hero-title" data-hero>
+  <div class="hx-bg">${figure(t, "heroFilmCover", { eager: true, sizes: "100vw", decorative: false, art: [{ key: "heroPortrait", media: "(max-width: 860px) and (orientation: portrait)" }] })}
+    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}</div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content rs-hero-grid">
     <div class="rs-hero-text">
-      <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <em class="hx-accent">${esc(RS.heroAccent)}</em></h1>
-      <p class="hx-line" data-fade style="--d:300ms">${esc(RS.heroLine)}</p>
-      <div class="hx-cta" data-fade style="--d:450ms"><a class="btn btn-terra btn-lg" href="#bem-vindo">${esc(RS.heroCta)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${href("about", L)}">${esc(RS.heroCta2)}</a></div>
+      <h1 id="hero-title" class="cine-title hx-title" data-split><span class="line">${esc(RS.heroTitle)}</span> <span class="line">${esc(RS.heroAccent)}</span></h1>
+      <p class="hx-line" data-fade style="--d:420ms">${esc(RS.heroLine)}</p>
+      <div class="hx-cta" data-fade style="--d:560ms"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}</a><a class="btn btn-ghost-light btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}</a></div>
     </div>
   </div>
   <div class="hx-scroll" aria-hidden="true" data-hx-scroll><i></i></div>
+  ${site.heroVideo ? `<button class="hx-toggle" type="button" hidden data-hero-toggle data-pause="${esc(RS.filmPause)}" data-play="${esc(RS.filmPlay)}" aria-label="${esc(RS.filmPause)}">${icon("pause")}${icon("play")}</button>` : ""}
 </section>
 
-<section class="section wl" id="bem-vindo" aria-labelledby="wl-title">
-  <div class="wrap wl-grid">
-    <div class="wl-intro">
-      <h2 id="wl-title" class="wl-title">${esc(RS.wlTitle)}</h2>
-      <p class="pv-body">${esc(RS.wlBody)}</p>
-      <div class="pv-actions"><a class="btn btn-terra" href="${href("about", L)}">${esc(RS.wlCta)}</a></div>
+<section class="section we" id="bem-vindo" aria-labelledby="wl-title">
+  <div class="wrap we-grid">
+    <div class="we-intro">
+      <h2 id="wl-title" class="we-title" data-split>${esc(RS.wlTitle)}</h2>
+      <p class="we-lead">${esc(RS.wlBody)}</p>
+      <a class="text-link" href="${href("about", L)}">${esc(RS.wlCta)}</a>
       <p class="wl-meta"><span class="wm">${icon("pin")}<span>${esc(t.land.beach.place)}</span></span>${hoursLine ? `<span class="wm">${icon("clock")}<span>${hoursLine}</span></span>` : ""}</p>
     </div>
-    <div class="wl-cards">${wk("restaurant", "aerialDay2", 0)}${wk("stay", "stayEntrance", 1)}${wk("events", "sunsetGarden", 2)}</div>
+    ${door("restaurant", "restaurantBeach", 0)}${door("stay", "stayGarden", 1)}${door("events", "sunsetGarden", 2)}
   </div>
 </section>
 
-${special}
+${daySection(t)}
 
-<section class="section fd" id="cozinha" aria-labelledby="fd-title" data-kc>
-  <div class="wrap kc-head">
-    <div class="fd-head">
+<section class="section kt" id="cozinha" aria-labelledby="fd-title">
+  <div class="wrap kt-grid">
+    <div class="kt-intro">
       <h2 id="fd-title" class="pv-title">${esc(RS.fdTitle)}</h2>
       <p class="pv-body">${esc(RS.fdLead)}</p>
+      ${hoursLine ? `<p class="tt-hours">${icon("clock")}<span>${hoursLine}</span></p>` : ""}
+      <div class="pv-actions"><a class="btn btn-terra" href="${href("restaurant", L, "#ementa")}">${esc(RS.fdCta)}</a><a class="text-link" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}</a></div>
     </div>
-    <div class="kc-nav">
-      <button class="kc-btn" type="button" data-kc-prev aria-label="${esc(t.common.previous)}">${icon("left")}</button>
-      <button class="kc-btn" type="button" data-kc-next aria-label="${esc(t.common.next)}">${icon("right")}</button>
-    </div>
-  </div>
-  <div class="wrap kc-wrap">
-    <ul class="kc-track" data-kc-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(RS.fdAria)}">${fd.map(fdDish).join("")}</ul>
-  </div>
-  <div class="wrap">
-    <div class="pv-actions"><a class="btn btn-terra" href="${href("restaurant", L, "#ementa")}">${esc(RS.fdCta)}${icon("arrow")}</a><a class="text-link" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a></div>
-    ${hoursLine ? `<p class="tt-hours">${icon("clock")}<span>${hoursLine}</span></p>` : ""}
+    <ul class="kt-list">${fd.map(fdDish).join("")}</ul>
   </div>
 </section>
 
-<section class="section rs-stay" id="quartos" aria-labelledby="stay-title">
+<section class="section rq" id="quartos" aria-labelledby="stay-title">
   <div class="wrap">
-    <div class="st-head">
-      <h2 id="stay-title" class="pv-title">${esc(RS.roomsTitle)}</h2>
+    <div class="rq-head">
+      <h2 id="stay-title" class="pv-title" data-split>${esc(RS.roomsTitle)}</h2>
       <p class="pv-body">${esc(RS.roomsLead)}</p>
     </div>
     ${roomPair(t)}
-    <p class="rp-all"><a class="text-link" href="${href("stay", L)}">${esc(RS.roomsAll)}${icon("arrow")}</a></p>
+    <p class="rp-all"><a class="text-link" href="${href("stay", L)}">${esc(RS.roomsAll)}</a></p>
   </div>
 </section>
 
-<section class="section ex" id="experiencias" aria-labelledby="ex-title">
-  <div class="wrap ex-grid">
-    <div class="ex-photos">
-      <figure class="ex-big">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 44vw, 92vw", ratio: "4/5", decorative: true })}<figcaption><span>${esc(images.sunsetSea.alt[L])}</span><b>${esc(t.common.realPhoto)}</b></figcaption></figure>
-      <figure class="ex-small">${figure(t, "aerialGarden", { sizes: "(min-width: 900px) 24vw, 52vw", ratio: "1/1", decorative: true })}</figure>
-    </div>
-    <div class="ex-copy">
-      <h2 id="ex-title" class="ex-title" data-split>${esc(RS.expTitle)}</h2>
-      <p class="ex-lead"${rv(60)}>${esc(RS.expLead)}</p>
-      <div class="ex-item ex-sun"${rv(120)}><h3>${esc(RS.xCards[0][0])}</h3><p>${esc(RS.xCards[0][1])}</p></div>
-      <div class="ex-item"${rv(180)}><h3>${esc(RS.xCards[1][0])}</h3><p>${esc(RS.xCards[1][1])}</p><ul class="mo-kinds">${kinds.map((k) => `<li>${esc(k)}</li>`).join("")}</ul></div>
-      <div class="pv-actions"${rv(240)}><a class="btn btn-terra" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}${icon("arrow")}</a></div>
-    </div>
+<section class="xs" id="experiencias" aria-labelledby="ex-title">
+  <figure class="xs-media">${figure(t, "sunsetSea", { sizes: COVER, cls: "drift" })}</figure>
+  <div class="wrap xs-copy">
+    <h2 id="ex-title" class="xs-title" data-split>${esc(RS.expTitle)}</h2>
+    <p class="xs-lead">${esc(RS.expLead)}</p>
+    <p class="xs-body">${esc(RS.xCards[1][1])}</p>
+    <ul class="xs-kinds">${kinds.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
+    <a class="btn btn-terra" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}</a>
   </div>
 </section>
 
-<section class="section sx" id="arredores" aria-labelledby="sx-title">
-  <div class="wrap">
-    <div class="sx-head">
-      <h2 id="sx-title" class="pv-title">${esc(RS.dsTitle)}</h2>
-      <div class="sx-copy"><p class="pv-body">${esc(LD.aboutPage.chapters.coastBody)}</p>
-      <div class="pv-actions"><a class="btn btn-terra" href="${href("discover", L)}">${esc(RS.discoverCta)}${icon("arrow")}</a><a class="text-link" href="${href("about", L)}">${esc(RS.storyCta)}${icon("arrow")}</a></div></div>
+<section class="section ar" id="arredores" aria-labelledby="sx-title">
+  <div class="wrap ar-grid">
+    <div class="ar-copy">
+      <h2 id="sx-title" class="pv-title" data-split>${esc(RS.dsTitle)}</h2>
+      <p class="pv-body">${esc(LD.aboutPage.chapters.coastBody)}</p>
+      <div class="pv-actions"><a class="btn btn-sea" href="${href("discover", L)}">${esc(t.nav.discover)}</a></div>
     </div>
-    <div class="sm">
-      <figure class="sm-a">${figure(t, "aerialCoast", { sizes: "(min-width: 900px) 40vw, 92vw" })}</figure>
-      <figure class="sm-b">${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 24vw, 46vw" })}</figure>
-      <figure class="sm-c">${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 32vw, 46vw" })}</figure>
-      <figure class="sm-d">${figure(t, "ruinsTop", { sizes: "(min-width: 900px) 24vw, 46vw" })}</figure>
-      <figure class="sm-e">${figure(t, "coastVillage", { sizes: "(min-width: 900px) 40vw, 92vw" })}</figure>
-    </div>
+    <figure class="ar-a" data-tide>${figure(t, "coastVillage", { sizes: "(min-width: 900px) 58vw, 100vw", credit: true, cls: "drift" })}</figure>
+    <figure class="ar-b" data-tide>${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 30vw, 60vw", credit: true })}</figure>
+    <figure class="ar-c" data-tide>${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 40vw, 92vw", credit: true })}</figure>
   </div>
 </section>
 
 ${reviewsSection(t)}
 
-${finalSection(t, "beachFront", { panel: true })}`;;
+${finalSection(t, "coastMountains", { panel: true })}`;
   return {
     page: "home",
     title: t.meta.home.title,
@@ -1414,7 +937,8 @@ ${finalSection(t, "beachFront", { panel: true })}`;;
     path: href("home", L),
     alt: href("home", other(L)),
     preload: [
-      { key: "heroFilmCover", sizes: "100vw" },
+      { key: "heroFilmCover", sizes: "100vw", media: "not all and (max-width: 860px) and (orientation: portrait)" },
+      { key: "heroPortrait", sizes: "100vw", media: "(max-width: 860px) and (orientation: portrait)" },
     ],
     hero: true,
     ld: [], // no FAQPage here: the questions are only visible on the contact page, and structured data must match what is shown
@@ -1423,32 +947,29 @@ ${finalSection(t, "beachFront", { panel: true })}`;;
   };
 }
 
-// ================= RESTAURANT =================
 export function restaurant(t) {
   const L = t.lang;
   const bc = breadcrumbs(t, [{ name: t.nav.restaurant, path: href("restaurant", L) }]);
   const body = `
 ${pageHero(t, {
-  eyebrow: t.restaurant.eyebrow,
   title: t.home.two.restTitle,
   lead: t.home.two.restBody,
-  image: "sunsetPalmsHigh",
-  crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
-  <p class="hero-hours">${icon("clock")}<span>${site.restaurantHours.length ? site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true"> · </i>') : esc(t.common.hoursTbc)}</span></p>`,
+  image: "restaurantBeach",
+  pos: "50% 42%",
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}</a><a class="btn btn-ghost-light btn-lg" href="#ementa">${esc(t.common.viewMenu)}</a></div>
+  <p class="hero-hours">${icon("clock")}<span>${site.restaurantHours.length ? site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true">, </i>') : esc(t.common.hoursTbc)}</span></p>`,
 })}
 
-${TAIS}
 ${menuSection(t)}
 
-${finalSection(t, "aerialGarden")}`;
+${finalSection(t, "beachFront")}`;
   return {
     page: "restaurant",
     title: t.meta.restaurant.title,
     description: t.meta.restaurant.description,
     path: href("restaurant", L),
     alt: href("restaurant", other(L)),
-    preload: "sunsetPalmsHigh",
+    preload: "restaurantBeach",
     hero: true,
     menu: items,
     ld: [bc.ld],
@@ -1487,67 +1008,64 @@ function roomShowcase(t) {
   return `<div class="rs-list">${rooms
     .map((r, i) => {
       const imgs = roomPhotos(r, 3);
+      const real = hasInterior(r);
       const specs = [["users", r.capacity[L]], ...suiteAmenityItems(t, r)];
+      const shot = (k, extra = "") => `<a class="rs-zoom ${extra}" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: extra ? "(min-width: 900px) 24vw, 50vw" : "(min-width: 900px) 56vw, 100vw" })}</a>`;
+      // Interior photographs (images.mjs kind: "room", placeholder: false) bring the swipeable gallery; until then, the outside of the rooms.
+      const media = real
+        ? `<div class="rs-gallery" data-rg>
+        <ul class="rs-track" data-gallery data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide">${shot(k)}</li>`).join("")}</ul>
+        ${imgs.length > 1 ? `<div class="rs-bars" role="group" aria-label="${esc(fmt(t.carousel.label, { room: r.name[L] }))}">${imgs.map((k, j) => `<button class="rs-bar" type="button" data-rg-bar aria-label="${esc(fmt(t.carousel.goTo, { n: j + 1, total: imgs.length }))}"><i></i></button>`).join("")}</div>
+        <div class="rs-ctrl"><button class="kc-btn" type="button" data-rg-prev aria-label="${esc(t.carousel.prev)}">${icon("left")}</button><button class="kc-btn" type="button" data-rg-next aria-label="${esc(t.carousel.next)}">${icon("right")}</button></div>` : ""}
+      </div>`
+        : `<div class="rs-outside" data-gallery data-tide>${imgs.slice(0, 2).map((k, j) => shot(k, j ? "is-second" : "")).join("")}</div>`;
       return `<article class="rs-room${i % 2 ? " is-flip" : ""}" id="room-${r.id}" aria-labelledby="rs-${r.id}">
-      <div class="rs-gallery" data-rg>
-        <ul class="rs-track" data-gallery data-rg-track tabindex="0" aria-roledescription="carousel" aria-label="${esc(r.name[L])}">${imgs.map((k) => `<li class="rs-slide">${isStockRoom(k) ? figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" }) : `<a class="rs-zoom" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: "(min-width: 900px) 50vw, 92vw", ratio: "3/2" })}</a>`}</li>`).join("")}</ul>
-        ${imgs.length > 1 ? `<div class="rs-bars" role="group" aria-label="${esc(fmt(t.carousel.label, { room: r.name[L] }))}">${imgs.map((k, j) => `<button class="rs-bar" type="button" data-rg-bar aria-label="${esc(fmt(t.carousel.goTo, { n: j + 1, total: imgs.length }))}"><i></i></button>`).join("")}</div>` : ""}
-        ${imgs.length > 1 ? `<div class="rs-ctrl">
-          <button class="kc-btn" type="button" data-rg-prev aria-label="${esc(t.carousel.prev)}">${icon("left")}</button>
-          <button class="kc-btn" type="button" data-rg-next aria-label="${esc(t.carousel.next)}">${icon("right")}</button>
-        </div>` : ""}
-      </div>
+      ${media}
       <div class="rs-info">
         <h3 id="rs-${r.id}" class="rs-name">${esc(r.name[L])}</h3>
         <p class="rs-price"><strong>${esc(r.price || t.common.priceTbc)}</strong>${r.price ? `<span>${esc(t.home.rooms.night)}</span>` : ""}</p>
         <p class="rs-desc">${esc(r.description[L])}</p>
         <ul class="rs-feats">${specs.map(([ic, label]) => `<li>${icon(ic)}<span>${esc(label)}</span></li>`).join("")}</ul>
         ${r.capacityPending ? `<p class="rp-pending">${esc(S.capacityPending)}</p>` : ""}
-        <div class="rs-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(S.viewRoom)}${icon("arrow")}</a></div>
+        <div class="rs-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.home.hero.ctaRoom)}</a><a class="text-link" href="${href("room:" + r.id, L)}">${esc(S.viewRoom)}</a></div>
       </div>
     </article>`;
     })
     .join("")}</div>
+  ${rooms.every(hasInterior) ? "" : `<p class="rm-inside">${esc(S.insideNote)}</p>`}
   ${lodgingBlock(t)}`;
 }
 
-// ================= STAY =================
 export function stay(t) {
   const L = t.lang;
   const bc = breadcrumbs(t, [{ name: t.nav.stay, path: href("stay", L) }]);
   const H = t.home.rooms;
-  const amenities = site.amenities.length
-    ? `<div class="amenities"${rv()}><h3>${esc(t.stay.amenitiesTitle)}</h3><ul class="chips chips-light">${site.amenities.map((a) => `<li>${esc(a[L])}</li>`).join("")}</ul></div>`
-    : "";
   const body = `
 ${pageHero(t, {
-  eyebrow: t.stay.eyebrow,
   title: t.home.two.stayTitle,
   lead: t.home.two.stayBody,
   image: "stayVeranda",
-  decorative: true, // the same photo reappears, described, further down the page
-  crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
+  pos: "62% 55%",
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}</a><a class="btn btn-ghost-light btn-lg" href="#quartos">${esc(t.home.two.stayLink)}</a></div>`,
 })}
 
 <section class="section rooms-stay" id="quartos" aria-labelledby="rooms-title">
   <div class="wrap">
     <div class="split-head">
       ${heading({ title: H.title, accent: H.titleAccent, id: "rooms-title" })}
-      <p class="body-text"${rv(100)}>${esc(H.body)}</p>
+      <p class="body-text">${esc(H.body)}</p>
     </div>
     ${roomShowcase(t)}
-    <div class="rs-place">
-      <div class="rs-place-text">
-        <h3 class="rs-place-title">${esc(t.stay.placeTitle)}</h3>
-        <p>${esc(t.stay.placeLead)}</p>
-      </div>
-      <div class="rs-place-photos" data-gallery>
-        ${["stayWalkway", "stayGarden", "gardenTable"].map((k, i) => `<a class="rs-place-${i}" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: i ? "(min-width: 900px) 24vw, 46vw" : "(min-width: 900px) 46vw, 92vw" })}</a>`).join("")}
-      </div>
-    </div>
     ${roomCompare(t)}
-    ${amenities}
+  </div>
+</section>
+
+<section class="rs-place" aria-labelledby="rs-place-title">
+  <figure class="rs-place-media">${figure(t, "aerialTop", { sizes: COVER, cls: "drift" })}</figure>
+  <div class="wrap rs-place-text">
+    <h2 id="rs-place-title" class="rs-place-title" data-split>${esc(t.stay.placeTitle)}</h2>
+    <p>${esc(t.stay.placeLead)}</p>
+    <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}</a>
   </div>
 </section>`;
   return {
@@ -1556,14 +1074,13 @@ ${pageHero(t, {
     description: t.meta.stay.description,
     path: href("stay", L),
     alt: href("stay", other(L)),
-    preload: "sunsetSea",
+    preload: "stayVeranda",
     hero: true,
     ld: [bc.ld],
     body,
   };
 }
 
-// ================= ROOM =================
 export function room(t, r) {
   const L = t.lang;
   const name = r.name[L];
@@ -1573,86 +1090,72 @@ export function room(t, r) {
   ]);
   const H = t.home.rooms;
   const S = t.stay;
-  // The room sheet shows only owner-confirmed facts (rooms.mjs: beds, amenities, suitability) and the price, "on request"
-  // until it is set. Capacity, bathroom, air conditioning and the like appear only once Carlos confirms them.
+  // The room sheet shows only confirmed facts (rooms.mjs); the pending capacity is flagged where it appears.
   const row = (label, value) => `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`;
   const facts = [
-    r.badge ? row(S.roomType, esc(r.badge[L])) : "",
     r.capacity ? row(S.roomCapacity, esc(r.capacity[L]) + (r.capacityPending ? ` <small class="rp-pending">${esc(S.capacityPending)}</small>` : "")) : "",
     r.beds ? row(S.roomBeds, esc(r.beds[L])) : "",
     r.suitability ? row(S.roomSuits, esc(r.suitability[L])) : "",
     r.amenities && r.amenities.length ? row(S.roomFeatures, r.amenities.map((f) => esc(f[L])).join(", ")) : "",
-    site.stayTimes ? row(S.roomCheck, `${esc(S.checkIn)} ${esc(site.stayTimes.checkIn)} · ${esc(S.checkOut)} ${esc(site.stayTimes.checkOut)}`) : "",
+    site.stayTimes ? row(S.roomCheck, `${esc(S.checkIn)} ${esc(site.stayTimes.checkIn)}, ${esc(S.checkOut)} ${esc(site.stayTimes.checkOut)}`) : "",
     row(S.roomPrice, r.price ? `${esc(r.price)} <small>${esc(H.night)}</small>` : esc(t.common.priceTbc)),
   ].join("");
-  const anyTbc = true; // capacity is not confirmed yet: the note invites the guest to ask
-  const i = rooms.findIndex((x) => x.id === r.id);
-  const others = [rooms[(i + 1) % rooms.length], rooms[(i + 2) % rooms.length]].filter((x) => x.id !== r.id);
+  const o = rooms[(rooms.findIndex((x) => x.id === r.id) + 1) % rooms.length];
+  const ask = `<a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(S.roomBook)}</a>`;
   const body = `
 ${pageHero(t, {
-  eyebrow: r.badge ? r.badge[L] : t.stay.eyebrow,
   title: name,
   lead: r.summary[L],
-  image: r.images[0],
+  image: roomPhotos(r)[0],
   decorative: true, // the same photo is the first slide of the carousel below, where it is described
-  crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(t.stay.roomBook)}${icon("arrow")}</a><a class="btn btn-ghost-light btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
+  pos: "50% 34%",
+  ctas: `<div class="btn-row">${ask}<a class="btn btn-ghost-light btn-lg" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a></div>`,
 })}
 
-<section class="section suite-intro" aria-labelledby="suite-intro-title">
-  <div class="wrap si-grid">
-    <h2 id="suite-intro-title" class="si-tagline" data-split>${esc(r.tagline[L])}</h2>
-    <div class="si-body">
-      <p${rv(60)}>${esc(r.description[L])}</p>
-      <p class="si-names">${esc(S.namesNote)}</p>
-      ${suiteAmenities(t, r)}
+<section class="section rv-sheet" aria-labelledby="sheet-title">
+  <div class="wrap rv-sheet-grid">
+    <div class="rv-sheet-main">
+      <h2 id="sheet-title" class="ab-title">${esc(S.sheetTitle)}</h2>
+      <p class="st-lead">${esc(r.description[L])}</p>
+      <dl class="room-sheet">${facts}${row(S.bookLabel, esc(S.bookValue))}${row(S.payLabel, esc(S.payValue))}</dl>
     </div>
+    <figure class="ss-plan">
+      ${bedPlan(t, r)}
+      <figcaption>${esc(S.bedPlan)}</figcaption>
+    </figure>
   </div>
 </section>
 
 <section class="section room-photos" aria-label="${esc(fmt(t.carousel.label, { room: name }))}">
-  <div class="wrap">${roomCarousel(t, r, { sizes: "(min-width: 900px) 78vw, 92vw", cls: "is-wide" })}</div>
+  <div class="wrap">${roomCarousel(t, r, { sizes: "(min-width: 900px) 78vw, 92vw", cls: "is-wide" })}
+  ${hasInterior(r) ? "" : `<p class="rm-inside">${esc(S.insideNote)}</p>`}</div>
 </section>
 
-<section class="section suite-spec" aria-labelledby="sheet-title">
-  <div class="wrap ss-grid">
-    <figure class="ss-plan"${rv()}>
-      ${bedPlan(t, r)}
-      <figcaption>${esc(S.bedPlan)}</figcaption>
-    </figure>
-    <div class="ss-sheet">
-      <h2 id="sheet-title" class="ss-title">${esc(S.sheetTitle)}</h2>
-      <dl class="room-sheet"${rv(80)}>${facts}${row(S.bookLabel, esc(S.bookValue))}${row(S.payLabel, esc(S.payValue))}</dl>
-      <h3 class="ss-ask-title">${esc(S.askMoreTitle)}</h3>
-      <ul class="ss-ask">${S.askMore.map((q) => `<li>${esc(q)}</li>`).join("")}</ul>
-      <p class="ss-ask-note">${esc(S.askMoreNote)}</p>
-    </div>
-  </div>
+<section class="section rv-offer" aria-label="${esc(S.lodgingTitle)}">
   <div class="wrap">${lodgingBlock(t)}</div>
 </section>
 
 <section class="section suite-request" aria-labelledby="ask-title">
   <div class="wrap sr-grid">
-    <h2 id="ask-title" class="sr-title">${esc(S.askTitle)}</h2>
-    <div class="sr-body">
+    <div>
+      <h2 id="ask-title" class="sr-title">${esc(S.askTitle)}</h2>
       <p>${esc(S.askBody)}</p>
       <p class="pay-note">${esc(t.stay.payNote)}</p>
-      <div class="sr-actions">
-        <a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}">${esc(S.roomBook)}</a>
-        <a class="text-link" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${esc(t.common.whatsapp)}</a>
-      </div>
-      ${responseLine(t)}
+      <div class="sr-actions">${ask}<a class="text-link" href="${waLink(fmt(t.land.suites.wa, { room: name }))}" target="_blank" rel="noopener">${esc(t.common.whatsapp)}</a></div>
+    </div>
+    <div class="sr-ask">
+      <h3 class="ss-ask-title">${esc(S.askMoreTitle)}</h3>
+      <ul class="ss-ask">${S.askMore.map((q) => `<li>${esc(q)}</li>`).join("")}</ul>
+      <p class="ss-ask-note">${esc(S.askMoreNote)}</p>
     </div>
   </div>
 </section>
 
-<section class="suite-next" aria-labelledby="other-title">
-  <h2 id="other-title" class="sr-only">${esc(S.otherRooms)}</h2>
-  ${others.map((o) => `<a class="sn-link" href="${href("room:" + o.id, L)}">
-    <div class="sn-media">${figure(t, o.images[0], { sizes: "100vw", decorative: true })}</div>
-    <div class="wrap sn-copy"><span class="sn-kicker">${esc(S.otherRooms)}</span><strong class="sn-name">${esc(o.name[L])}</strong><span class="sn-sum">${esc(o.summary[L])}</span></div>
-  </a>`).join("")}
-  <div class="wrap sn-back"><a class="text-link" href="${href("stay", L, "#quartos")}">${esc(S.allRooms)}</a></div>
+<section class="rv-next" aria-labelledby="other-title">
+  <a class="rv-next-link" href="${href("room:" + o.id, L)}">
+    <figure class="rv-next-media">${figure(t, roomPhotos(o)[0], { sizes: "100vw", decorative: true })}</figure>
+    <div class="wrap rv-next-copy"><h2 id="other-title">${esc(o.name[L])}</h2><p>${esc(o.summary[L])}</p><span class="rv-next-go">${esc(S.otherRooms)}</span></div>
+  </a>
 </section>`;
   return {
     page: "stay",
@@ -1660,40 +1163,38 @@ ${pageHero(t, {
     description: fmt(t.meta.room.description, { room: name }),
     path: href("room:" + r.id, L),
     alt: href("room:" + r.id, other(L)),
-    preload: r.images[0],
+    preload: roomPhotos(r)[0],
     hero: true,
     ld: [bc.ld],
     body,
   };
 }
 
-// ================= CONTACT =================
 export function contact(t) {
   const L = t.lang;
   const bc = breadcrumbs(t, [{ name: t.nav.contact, path: href("contact", L) }]);
-  const q = site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery;
+  const phone = site.phone || site.whatsapp;
   const body = `
 ${pageHero(t, {
-  eyebrow: t.contact.eyebrow,
   title: t.home.location.title,
   accent: t.home.location.titleAccent,
   lead: t.home.location.body,
   image: "coastVillage",
-  crumbs: bc.html,
-  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}${icon("arrow-up-right")}</a></div>
-  <ul class="hero-facts">${site.phone || site.whatsapp ? `<li>${icon("phone")}<a href="tel:+${esc(site.phone || site.whatsapp)}">${esc(fmtPhone(site.phone || site.whatsapp))}</a></li>` : ""}${site.restaurantHours.length ? `<li>${icon("clock")}<span>${site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true"> · </i>')}</span></li>` : ""}</ul>`,
+  pos: "60% 50%",
+  ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.home.cta.wa)}</a><a class="btn btn-ghost-light btn-lg" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.common.openMaps)}</a></div>
+  <ul class="hero-facts">${phone ? `<li>${icon("phone")}<a href="tel:+${esc(phone)}">${esc(fmtPhone(phone))}</a></li>` : ""}${site.restaurantHours.length ? `<li>${icon("clock")}<span>${site.restaurantHours.map((h) => `${esc(h.days[L])} <b>${esc(h.hours)}</b>`).join('<i aria-hidden="true">, </i>')}</span></li>` : ""}</ul>`,
 })}
 
 <section class="section booking contact-write" id="escrever" aria-labelledby="cw-title">
   <div class="wrap booking-grid">
     <div>
-      ${heading({ eyebrow: t.contact.eyebrow, title: t.land.contactForm.title, id: "cw-title" })}
+      ${heading({ title: t.land.contactForm.title, id: "cw-title" })}
       <p class="body-text">${esc(t.land.contactForm.lead)}</p>
       <p class="cw-shortcuts-lead">${esc(t.land.contactForm.shortcuts)}</p>
       <ul class="cw-shortcuts">
-        <li><a class="text-link" href="${href("contact", L)}" data-book-open="room">${esc(t.footer.bookRoom)}${icon("arrow")}</a></li>
-        <li><a class="text-link" href="${href("contact", L)}" data-book-open="table">${esc(t.footer.bookTable)}${icon("arrow")}</a></li>
-        <li><a class="text-link" href="${href("events", L, "#pedido")}">${esc(t.land.eventsPage.formTitle)}${icon("arrow")}</a></li>
+        <li><a href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}<span>${esc(t.home.hero.ctaTable)}</span>${icon("arrow")}</a></li>
+        <li><a href="${href("contact", L)}" data-book-open="room">${icon("bed")}<span>${esc(t.home.hero.ctaRoom)}</span>${icon("arrow")}</a></li>
+        <li><a href="${href("events", L, "#pedido")}">${icon("users")}<span>${esc(t.land.eventsPage.formTitle)}</span>${icon("arrow")}</a></li>
       </ul>
     </div>
     <div class="form-card">${contactForm(t)}</div>
@@ -1703,15 +1204,9 @@ ${pageHero(t, {
 <section class="section location" aria-labelledby="loc2-title">
   <div class="wrap location-grid">
     <div>
-      ${heading({ eyebrow: t.location.eyebrow, title: t.location.title, id: "loc2-title" })}
+      ${heading({ title: t.location.title, id: "loc2-title" })}
       ${infoGrid(t)}
-      <div class="get-there"${rv(180)}><h3>${esc(t.land.getThere.title)} ${esc(t.land.getThere.titleAccent)}</h3><p>${esc(t.land.getThere.body)}</p></div>
-      <div class="contact-actions"${rv(200)}>
-        <a class="btn btn-terra btn-lg" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${icon("whatsapp")}${esc(t.common.whatsapp)}</a>
-        <a class="text-link" href="${href("contact", L)}" data-book-open="table">${esc(t.home.quick.heroTable)}</a>
-        <a class="text-link" href="${href("contact", L)}" data-book-open="room">${esc(t.footer.bookRoom)}</a>
-        <a class="text-link" href="${mapsLink()}" target="_blank" rel="noopener">${esc(t.footer.directions)}</a>
-      </div>
+      <a class="text-link" href="${directionsLink()}" target="_blank" rel="noopener">${esc(t.footer.directions)}</a>
     </div>
     ${mapFacade(t)}
   </div>
@@ -1719,11 +1214,10 @@ ${pageHero(t, {
 
 <section class="section faq-section" id="faq" aria-labelledby="faq-title">
   <div class="wrap faq-grid">
-    ${heading({ eyebrow: t.faq.eyebrow, title: t.faq.title, id: "faq-title" })}
+    ${heading({ title: t.faq.title, id: "faq-title" })}
     ${faqBlock(t)}
   </div>
 </section>
-
 `;
   return {
     page: "contact",
@@ -1799,7 +1293,7 @@ function photoCredits(t) {
   if (!existsSync(file)) return "";
   const credits = JSON.parse(readFileSync(file, "utf8"));
   // Dish and drink photos (pratos-temp/<id>) until the real dish photo exists; reference photos of places (`file`, in fotos/).
-  const rows = Object.entries(credits).filter(([id, c]) => (c.file ? existsSync(new URL(`./assets/img/fotos/${c.file}-640.jpg`, import.meta.url)) : existsSync(tempPhotoFile(id)) && !existsSync(new URL(`./assets/img/pratos/${id}-640.jpg`, import.meta.url))));
+  const rows = Object.entries(credits).filter(([id, c]) => (c.file || site.dishPhotos.showIllustrative) && (c.file ? existsSync(new URL(`./assets/img/fotos/${c.file}-640.webp`, import.meta.url)) : existsSync(tempPhotoFile(id)) && !existsSync(new URL(`./assets/img/pratos/${id}-640.jpg`, import.meta.url))));
   if (!rows.length) return "";
   const C = t.privacy.credits;
   return `<h2 id="creditos">${esc(C.title)}</h2><p>${esc(C.lead)}</p><ul class="credits">${rows
@@ -1834,4 +1328,47 @@ export function notFound(t) {
     robots: "noindex",
     body,
   };
+}
+
+// A day at Lauhata, as a cinema scene: one pinned full-screen stage; as the page scrolls the picture changes from morning to night while
+// the colour grade warms and darkens (cinema.js). Without JavaScript, with a failed script or without GSAP it is a plain list of three
+// photographs with their text. The hours come from site.mjs; the Tetum greetings are lang="tet" and await a native reader.
+const DAY_FRAMES = [
+  { key: "stayWalkway", grade: "rgba(70, 120, 150, 0.12)", dim: 0 },
+  { key: "beachFront", grade: "rgba(255, 246, 226, 0.08)", dim: 0 },
+  { key: "sunsetPalmsHigh", grade: "rgba(232, 120, 42, 0.16)", dim: 0 },
+];
+// Opening and closing times of the kitchen, from site.restaurantHours ("08:00–10:00").
+function kitchenHours() {
+  const span = (h) => (h && String(h.hours).match(/(\d{1,2}:\d{2})\D+(\d{1,2}:\d{2})/)) || [];
+  const [b, m] = site.restaurantHours.map(span);
+  return b && m ? { breakfast: `${b[1]}–${b[2]}`, lunch: m[1], dinner: m[2], open: b[1], close: m[2] } : null;
+}
+function daySection(t) {
+  const D = t.land.day;
+  const K = kitchenHours();
+  if (!K) return "";
+  const steps = D.steps;
+  const when = (s) => s.hours === "breakfast" ? K.breakfast : s.hours === "lunch" ? K.lunch : s.hours === "dinner" ? fmt(D.until, { t: K.dinner }) : s.time;
+  return `<section class="day" id="dia" aria-labelledby="day-title" data-day>
+  <div class="day-track"><div class="day-stage" data-day-stage>
+    <header class="day-head">
+      <h2 id="day-title" class="day-title">${esc(D.title)}</h2>
+      <p class="day-lead">${esc(fmt(D.lead, K))}</p>
+    </header>
+    <ol class="day-steps">${steps
+      .map((s, i) => `<li class="day-step" data-day-step data-grade="${DAY_FRAMES[i].grade}" data-dim="${DAY_FRAMES[i].dim}">
+      ${figure(t, DAY_FRAMES[i].key, { sizes: COVER, cls: "day-frame", decorative: true })}
+      <div class="day-copy">
+        <p class="day-meta"><span class="day-time">${esc(when(s))}</span>${s.hello ? `<span class="day-hello" lang="tet">${esc(s.hello)}</span>` : ""}</p>
+        <h3>${esc(s.t)}</h3>
+        <p class="day-text">${esc(fmt(s.d, K))}</p>
+      </div>
+    </li>`)
+      .join("")}</ol>
+    <div class="day-grade" aria-hidden="true"></div>
+    <div class="day-dim" aria-hidden="true"></div>
+    <ol class="day-rail" aria-hidden="true">${steps.map((s) => `<li>${esc(when(s))}</li>`).join("")}<i class="day-rail-fill"></i></ol>
+  </div></div>
+</section>`;
 }

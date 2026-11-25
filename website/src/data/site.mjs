@@ -96,11 +96,10 @@ export default {
     types: [],
   },
 
-  // Home hero background video: "Hero video HD definitivo" (originais/videos/drone-hd-definitivo/, 1920×1080, 20.4 s, silent)
-  // re-encoded to 1600×900 (5.0 MB). It plays ONLY on laptop-sized screens (viewport 1280–1920 px wide, see main.js); phones,
-  // tablets and larger monitors keep the sunset photograph (images.mjs `sunsetPalmsHigh`), which is also the poster and the
-  // fallback. Leave empty to show the photograph everywhere. Earlier versions: originais/videos/web/.
-  heroVideo: "/assets/video/hero-costa-1440.mp4",
+  // Home hero film: 15 s of Lauhata's own drone footage (media-source/DJI_0827.MP4), edited, coloured and looped by tools/filme-hero.mjs
+  // (1600x900, 24 fps, 3.5 MB, silent). It plays on laptops and desktops only (main.js); everywhere else, and whenever it cannot play,
+  // the photograph stays: images.mjs `heroFilmCover` is the film's own first frame. Leave empty to show the photograph everywhere.
+  heroVideo: "/assets/video/hero-lauhata-1600.mp4",
 
   // Optional fields for search engines (Google). Each one is only written to the page once it is filled.
   // priceRange: e.g. "$$"; servesCuisine: e.g. ["Timorese", "Seafood"];
@@ -130,15 +129,10 @@ export default {
   showSamples: false,
 
   // Dish photography policy. A dish photograph is shown only when it is REAL: a file src/assets/img/pratos/<dish id>-640.jpg that
-  // the restaurant approved, or an image key in menu.mjs that is not flagged as a placeholder. Everything else shows the branded
-  // placeholder. The ILLUSTRATIVE pictures in src/assets/img/pratos-temp/ (openly licensed photographs of similar dishes) are kept
-  // for the future but are NEVER the customer-facing default: they appear only if this is set to true, with their label.
+  // the restaurant approved, or an image key in menu.mjs that is not flagged as a placeholder. A dish without one is set as a line of a
+  // printed menu, with no empty frame. The ILLUSTRATIVE pictures in src/assets/img/pratos-temp/ appear only if this is set to true.
   dishPhotos: { showIllustrative: false },
 
-  // Room photography policy, same idea: the pictures of the rooms are stock or mock-up images, not photographs of Lauhata's rooms.
-  // Until the owner supplies real ones (keep kind: "room" and set placeholder: false on the image in images.mjs; a landscape photo is not a room photo) each room shows a branded placeholder.
-  // Set to true only to preview the layout with the illustrative pictures (they carry their "Illustrative image" label).
-  illustrativeRooms: false,
 
   // Shows a small "illustrative image" tag on stock photos and the demo-menu notice.
   // Set to false only once every placeholder has been replaced with real content.

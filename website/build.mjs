@@ -10,6 +10,7 @@ import * as P from "./src/pages.mjs";
 import { rooms, absUrl, outFile, LANGS, href, OLD_ROUTES } from "./src/lib.mjs";
 import { prelaunch, printPrelaunch } from "./src/prelaunch.mjs";
 import { items, categories } from "./src/data/menu.mjs";
+import site from "./src/data/site.mjs";
 import { existsSync } from "node:fs";
 
 const root = dirname(fileURLToPath(import.meta.url));
@@ -20,14 +21,16 @@ await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 // Raw footage is never published: originals live in originais/videos/ (outside src/). The filter below is a safety net.
 const isRawVideo = (p) => /[\\/]assets[\\/]img[\\/]video([\\/]|$)/.test(p);
-await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) });
+// Illustrative dish pictures are published only while they are shown; the alternative logos and their sources never are.
+const isUnused = (p) => (!site.dishPhotos.showIllustrative && /[\\/]pratos-temp([\\/]|$)/.test(p)) || /[\\/]brand[\\/](lauhata-|sprite-|favicon\.svg)/.test(p) || /[\\/]dm-sans-/.test(p);
+await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filter: (p) => !isRawVideo(p) && !isUnused(p) });
 
 let esbuild = null;
 try { esbuild = await import("esbuild"); } catch { /* optional: the site builds without it, just less compressed */ }
 
-// One stylesheet instead of eleven: the files are joined in cascade order (the last one, refine.css, is the final layer),
+// One stylesheet instead of twelve: the files are joined in cascade order (the last one, signature.css, is the final layer),
 // stripped of comments and line breaks, and the originals are not published. Fewer render-blocking requests.
-const CSS_FILES = ["main", "cinema", "order", "home", "landing", "picker", "wide", "design", "editorial", "resort", "refine"];
+const CSS_FILES = ["main", "cinema", "order", "home", "landing", "picker", "wide", "design", "editorial", "resort", "refine", "signature"];
 {
   const parts = [];
   for (const name of CSS_FILES) parts.push(await readFile(join(root, `src/assets/css/${name}.css`), "utf8"));

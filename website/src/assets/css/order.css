@@ -74,8 +74,6 @@ html.has-modal { overflow: hidden; }
 .menu-empty { padding: 3rem 0 1rem; text-align: center; color: var(--muted); }
 .menu-empty[hidden] { display: none; }
 
-/* Dish cards (menu and homepage row). No picture until the restaurant has a photo of the dish. */
-
 /* ---------- Options dialog ---------- */
 dialog.pick {
   width: min(480px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; overflow: hidden;

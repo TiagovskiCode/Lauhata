@@ -46,6 +46,8 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" ${stroke}/><path d="m16 16 4.5 4.5" ${stroke}/></symbol>
     <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 8h14l-1 11.5a1 1 0 0 1-1 .9H7a1 1 0 0 1-1-.9L5 8Z" ${stroke}/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" ${stroke}/></symbol>
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" ${stroke}/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6.5v11M15 6.5v11" ${stroke}/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 6.2v11.6l9-5.8z" fill="currentColor"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" ${stroke}/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" ${stroke}/></symbol>
   </defs>
@@ -54,8 +56,6 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
 // "+670 7740 1111" from the stored digits (country code 670, then two groups of four).
 const fmtPhone = (d) => (/^670\d{8}$/.test(d) ? `+670 ${d.slice(3, 7)} ${d.slice(7)}` : `+${d}`);
 
-// The striped "tais" band between sections was removed (Nov 2026). Kept as an empty export so the pages that place it still build.
-export const TAIS = "";
 
 function jsonLd(obj) {
   return `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, "\\u003c")}</script>`;
@@ -65,7 +65,7 @@ function jsonLd(obj) {
 function businessLd(t) {
   const ld = {
     "@context": "https://schema.org",
-    "@type": ["Restaurant", "Hotel"],
+    "@type": ["Restaurant", "LodgingBusiness"],
     "@id": absUrl("/#business"),
     name: site.name,
     url: absUrl(href("home", t.lang)),
@@ -104,7 +104,7 @@ function businessLd(t) {
 }
 
 export const logo = (t, cls = "") => `<a class="brand ${cls}" href="${href("home", t.lang)}" aria-label="${esc(site.name)} — ${esc(t.nav.home)}">
-  <span class="brand-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""${cls ? " loading=\"lazy\"" : ""}></span>
+  <span class="brand-mark" aria-hidden="true"><img src="/assets/img/brand/logo-lauhata-beach-escape-160.webp" width="160" height="160" alt=""${cls ? " loading=\"lazy\"" : ""}></span>
   <span class="brand-text"><span class="brand-name">Lauhata</span> <span class="brand-line">${esc(t.brandLine)}</span></span>
 </a>`;
 
@@ -224,8 +224,8 @@ function header(t, page, alt) {
   const L = t.lang;
   const link = (p, label, hash = "") =>
     `<a href="${href(p, L, hash)}"${page === p && !hash ? ' aria-current="page"' : ""}>${esc(label)}</a>`;
-  // Primary navigation (owner, 19 Nov 2026): exactly Restaurant, Hotel, Experiences, Gallery, Contact, plus a Reserve button. The logo is the way home.
-  // "Hotel" is the accommodation pages (/stay/); "Experiences" is the events page. Our Story and Discover Liquiçá live on the
+  // Primary navigation: exactly Restaurant, Hotel, Experiences, Gallery, Contact, plus a Reserve button. The logo is the way home. The same
+  // names are used in the drawer and the footer. "Hotel" (client, 25 Nov 2026) leads to the accommodation pages (/stay/). "Experiences" is the events page. Our Story and Discover Liquiçá live on the
   // home page and in the footer.
   const items = [["restaurant", t.nav.restaurant], ["stay", t.nav.stay], ["events", t.nav.events], ["gallery", t.nav.gallery], ["contact", t.nav.contact]];
   const nav = [
@@ -262,8 +262,8 @@ function header(t, page, alt) {
       <li><a href="${href("contact", L, "#faq")}">${esc(t.faq.linkLabel)}</a></li>
     </ul>
     <div class="mn-cta">
-      <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}${icon("arrow")}</a>
-      <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}${icon("bed")}</a>
+      <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(t.home.hero.ctaTable)}</a>
+      <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.hero.ctaRoom)}</a>
       ${langSwitch(t, alt, "lang-center")}
     </div>
     ${Object.entries(site.social).filter(([, u]) => u).length ? `<ul class="mn-social">${Object.entries(site.social).filter(([, u]) => u).map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
@@ -312,14 +312,14 @@ function footer(t, { home = false } = {}) {
     <nav class="ft-col" aria-label="${esc(F.explore)}">
       <h2 class="footer-h">${esc(F.explore)}</h2>
       <ul class="footer-list">
-        ${link(href("restaurant", L), t.nav.menu)}
+        ${link(href("restaurant", L), t.nav.restaurant)}
         ${link(href("stay", L), t.nav.stay)}
-        ${link(href("about", L), t.nav.story)}
         ${link(href("events", L), t.nav.events)}
         ${link(href("gallery", L), t.nav.gallery)}
-        ${link(href("contact", L, "#faq"), t.faq.linkLabel)}
-        ${link(href("discover", L), t.nav.discover)}
         ${link(href("contact", L), t.nav.contact)}
+        ${link(href("about", L), t.nav.story)}
+        ${link(href("discover", L), t.nav.discover)}
+        ${link(href("contact", L, "#faq"), t.faq.linkLabel)}
       </ul>
     </nav>
     <div class="ft-col">
@@ -345,7 +345,7 @@ function footer(t, { home = false } = {}) {
   <div class="ft-mark" aria-hidden="true" data-ft-mark><span>LAUHATA</span></div>
   <div class="wrap footer-base">
     <p>© ${year} ${esc(site.name)}. ${esc(F.rights)}${usesPlaceholderImages() ? ` <span class="footer-note">${esc(t.home.placeholderNote)}</span>` : ""}</p>
-    <p><a href="${href("privacy", L)}">${esc(F.privacy)}</a> · ${esc(F.signature)} <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(F.credit)}</a></p>
+    <p><a href="#top">${esc(t.common.backToTop)}</a> · <a href="${href("privacy", L)}">${esc(F.privacy)}</a> · ${esc(F.signature)} <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">${esc(F.credit)}</a></p>
   </div>
 </footer>`;
 }
@@ -373,9 +373,7 @@ export function layout(t, o) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>/* Intro (the horizon opening): once per visit, never with reduced motion unless the site was opened once with
-   ?movimento=completo (remembered, like the rest of the motion). ?intro replays it. Set before first paint: no flash. */try{var q=new URLSearchParams(location.search),m=q.get("movimento");if(m==="completo")localStorage.setItem("lauhata-motion","full");else if(m==="reduzido")localStorage.removeItem("lauhata-motion");var full=localStorage.getItem("lauhata-motion")==="full";if((q.has("intro")||!sessionStorage.getItem("lh-intro"))&&(full||!matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("lh-intro-on");sessionStorage.setItem("lh-intro","1")}}catch(e){}</script>
-<script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
+<script>/* The cross-fade between pages is a cross-document view transition. The browser skips it when the viewport changes
    mid-way (a phone's address bar moving) and rejects its promises; that is harmless, so it is not reported as an error. */
 ["pageswap", "pagereveal"].forEach(function (n) { addEventListener(n, function (e) { var v = e.viewTransition; if (v) ["ready", "finished", "updateCallbackDone"].forEach(function (k) { if (v[k]) v[k].catch(function () {}); }); }); });</script>
 <title>${esc(o.title)}</title>
@@ -397,11 +395,11 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/img/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p, o.preloadSizes) : preloadImage(p.key, p.sizes, p.media))).join("\n")}
+${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p, "max(100vw, 92vh)") : preloadImage(p.key, p.sizes, p.media))).join("\n")}
 <link rel="stylesheet" href="/assets/css/site.css">
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 ${jsonLd(businessLd(t))}
 ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
@@ -415,12 +413,7 @@ ${o.page === "home" ? `<script src="/assets/js/cinema.js" defer></script>` : ""}
 ${site.gaId ? `<script>window.LAUHATA_GA=${JSON.stringify(site.gaId)};</script>
 <script src="/assets/js/analytics.js" defer></script>` : ""}
 </head>
-<body class="${o.hero ? "has-hero" : ""}">
-<div class="lh-intro" aria-hidden="true">
-  <div class="intro-sky"><span class="intro-sun"></span><p class="intro-word">${[..."Lauhata"].map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p></div>
-  <div class="intro-sea"><span class="intro-glint"></span>${[1, 2, 3].map((k) => `<span class="intro-ripple" style="--k:${k}"></span>`).join("")}<p class="intro-sub">${esc(t.brandLine)}</p></div>
-  <span class="intro-line"></span>
-</div>
+<body id="top" class="${o.hero ? "has-hero" : ""}">
 ${SPRITE}
 <a class="skip-link" href="#main">${esc(t.nav.skip)}</a>
 ${header(t, o.page, o.alt)}
@@ -436,7 +429,6 @@ ${cartUi(t)}
 </div>
 <a class="wa-float" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 ${site.gaId ? `<div class="consent" data-consent role="region" aria-label="${esc(t.consent.label)}" hidden><p>${esc(t.consent.text)} <a href="${href("privacy", L)}">${esc(t.consent.more)}</a></p><div class="consent-btns"><button type="button" class="btn btn-outline btn-sm" data-consent-no>${esc(t.consent.decline)}</button><button type="button" class="btn btn-terra btn-sm" data-consent-yes>${esc(t.consent.accept)}</button></div></div>` : ""}
-<button class="to-top" type="button" data-to-top aria-label="${esc(t.common.backToTop)}" title="${esc(t.common.backToTop)}" hidden>${icon("up")}</button>
 <dialog class="book-dialog" data-book-dialog aria-labelledby="bd-title-${t.lang}">
   <header class="bd-head"><h2 id="bd-title-${t.lang}">${esc(t.home.quick.title)}</h2><button class="icon-btn" type="button" aria-label="${esc(t.home.quick.close)}" data-book-close>${icon("close")}</button></header>
   <p class="bd-intro">${esc(t.home.quick.intro)}</p>

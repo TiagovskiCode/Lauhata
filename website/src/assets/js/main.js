@@ -127,34 +127,6 @@
     fb.addEventListener("close", () => opener?.focus({ preventScroll: true }));
   }
 
-  /* ---------- Dish carousel: previous and next move by one card; swipe and keyboard work on the track itself ---------- */
-  $$("[data-kc]").forEach((root) => {
-    const track = $("[data-kc-track]", root);
-    const prev = $("[data-kc-prev]", root);
-    const next = $("[data-kc-next]", root);
-    if (!track || !prev || !next) return;
-    const step = () => {
-      const item = $(".kc-item", track);
-      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      return item ? item.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
-    };
-    const go = (dir) => track.scrollBy({ left: dir * step(), behavior: reduced ? "auto" : "smooth" });
-    const update = () => {
-      prev.disabled = track.scrollLeft <= 2;
-      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-    };
-    let raf = 0;
-    prev.addEventListener("click", () => go(-1));
-    next.addEventListener("click", () => go(1));
-    track.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
-    track.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
-      else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-    });
-    window.addEventListener("resize", update);
-    update();
-  });
-
   /* ---------- Room galleries: three progress bars, story-like ----------
      One photograph at a time on a scroll-snap strip (swipe, arrow keys, previous/next). Above it, one bar per photograph: the active
      bar fills over STORY_MS (a CSS animation), and when it ends the next photograph shows. The last photograph stays: it does not loop.
@@ -372,7 +344,7 @@
       lbCap.textContent = list.length > 1 ? `${src.alt} · ${idx + 1} / ${list.length}` : src.alt;
     };
     $$("[data-gallery]").forEach((g) => {
-      const items = $$("[data-lb-src]", g);
+      const items = $$("[data-lb-src]", g).filter((el) => !el.closest("[hidden]"));
       items.forEach((item, i) =>
         item.addEventListener("click", (e) => {
           e.preventDefault(); // a thumbnail may be a link to the large photo (works without JavaScript)
@@ -403,15 +375,23 @@
     });
   }
 
-  /* ---------- Gallery filters ---------- */
-  $$("[data-mosaic]").forEach((grid) => {
-    const buttons = $$(".gx-filter", grid.parentElement);
+  /* ---------- Gallery filters: one chapter at a time, or all of them ---------- */
+  $$("[data-mosaic]").forEach((root) => {
+    const buttons = $$(".gx-filter", root);
     buttons.forEach((b) => b.addEventListener("click", () => {
       buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      $$(".gx-tile", grid).forEach((tile) => { tile.hidden = b.dataset.filter !== "all" && tile.dataset.group !== b.dataset.filter; });
-      grid.classList.toggle("is-filtered", b.dataset.filter !== "all");
+      const apply = () => $$(".gc", root).forEach((c) => { c.hidden = b.dataset.filter !== "all" && !c.classList.contains("gc-" + b.dataset.filter); });
+      if (document.startViewTransition && !reduced) document.startViewTransition(apply); else apply();
     }));
   });
+
+  /* ---------- Events: choosing an occasion fills the form's first field ---------- */
+  $$("[data-event-kind]").forEach((link) => link.addEventListener("click", () => {
+    const sel = $('[data-booking="event"] [name="kind"]');
+    if (!sel) return;
+    sel.value = link.dataset.eventKind;
+    sel.dispatchEvent(new Event("change", { bubbles: true }));
+  }));
 
   /* ---------- Room carousels ----------
      A scroll-snap strip does the swiping (touch, trackpad, Shift+wheel); the buttons and the arrow keys move one photo,
@@ -797,7 +777,7 @@
         if (!el.date.value || el.date.value < today) return fail(el.date, F.errors.date);
         const who = el.tName && el.tName.value.trim() ? fmt(F.waName, { name: el.tName.value.trim() }) : "";
         const nt = el.tNotes && el.tNotes.value.trim() ? fmt(F.waNotes, { notes: el.tNotes.value.trim() }) : "";
-        text = fmt(F.waQuickTable, { date: fmtDate(el.date.value), time: opt(el.time), people: unitText(el.people), who, notes: nt });
+        text = fmt(F.waQuickTable, { date: fmtDate(el.date.value), time: el.time.value, people: unitText(el.people), who, notes: nt });
       } else {
         if (!el.checkIn.value || el.checkIn.value < today) return fail(el.checkIn, F.errors.checkIn);
         if (!el.checkOut.value || el.checkOut.value <= el.checkIn.value) return fail(el.checkOut, F.errors.checkOut);
@@ -818,26 +798,6 @@
     // A card opens on a mode straight away only when it asks for one (data-default); the hero panel and the dialog wait for the visitor's choice.
     if (card.dataset.default) $(`[data-bc-tab="${card.dataset.default}"]`, card)?.click();
   });
-
-  /* ---------- Back to top: appears after the first screen and a half, glides up (or jumps with reduced motion) ---------- */
-  const toTop = $("[data-to-top]");
-  if (toTop) {
-    let shown = false;
-    const sync = () => {
-      const on = window.scrollY > window.innerHeight * 1.2;
-      if (on === shown) return;
-      shown = on;
-      if (on) { toTop.hidden = false; requestAnimationFrame(() => toTop.classList.add("is-on")); }
-      else { toTop.classList.remove("is-on"); setTimeout(() => { if (!shown) toTop.hidden = true; }, 250); }
-    };
-    window.addEventListener("scroll", sync, { passive: true });
-    toTop.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
-      // Keyboard users land back at the start of the page: the first focusable thing is the brand link.
-      setTimeout(() => $(".brand")?.focus({ preventScroll: true }), reduced ? 0 : 500);
-    });
-    sync();
-  }
 
   /* ---------- Thank-you page ---------- */
   const thanksBody = $("[data-thanks-body]");
@@ -887,102 +847,89 @@
     heroSection?.classList.add("is-ready");
     $$("[data-split]", heroSection || document.createElement("div")).forEach((el) => el.classList.add("is-in"));
   };
-  // With the intro (first page of a visit), the hero copy rises as the horizon opens; the intro then leaves the DOM flow.
-  const intro = document.documentElement.classList.contains("lh-intro-on");
   if (reduced) revealHero();
-  else setTimeout(revealHero, intro ? 1500 : 60);
-  if (intro) setTimeout(() => { document.documentElement.classList.remove("lh-intro-on"); $(".lh-intro")?.remove(); }, 2400);
+  else requestAnimationFrame(() => requestAnimationFrame(revealHero));
 
-  // Hero video (site.heroVideo): the background of the home hero, on laptop-sized screens only (1280–1920 px wide). The
-  // sunset photograph is on screen from the start; once the page has loaded the video is fetched and fades in over it, then
-  // plays muted in a loop. It is paused while off screen and it is not fetched with data saver, a 2G connection or
-  // "reduced motion" (the photograph stays). If it fails, the photograph stays. The hero never waits for it.
+  // ---------- The home film ----------
+  // The photograph is on screen from the first paint. The film (the same scene: its first frame IS that photograph) is fetched only after
+  // the page has loaded, and shown only once a frame of it has really been painted; then it cross-fades in from that very frame, at half
+  // speed, and eases to full speed, so the picture seems to start moving. Nothing is shown before that, so there is no black frame and no
+  // flash, and if anything fails (no autoplay, a slow or broken connection) the photograph simply stays.
+  // Laptops and desktops only (a fine pointer and 1024 px or more); never with reduced motion, data saver or a 2G/3G connection.
   const heroVideo = $("[data-hero-video]");
   if (heroVideo) {
+    const hero = heroVideo.closest(".cine-hero");
+    const toggle = $("[data-hero-toggle]", hero);
     const conn = navigator.connection || {};
-    // The film is for laptop-sized screens only (viewport 1280–1920 px wide); phones, tablets and larger monitors keep the
-    // photograph. Checked again if the window is resized out of that range.
-    const laptop = window.matchMedia("(min-width: 1280px) and (max-width: 1920px)");
-    laptop.addEventListener("change", () => { if (!laptop.matches) heroVideo.remove(); });
-    if (!laptop.matches || reduced || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) {
-      heroVideo.remove();
-    } else {
-      let onScreen = true;
-      const keepPlaying = () => {
-        if (onScreen && !document.hidden && heroVideo.classList.contains("is-on") && heroVideo.paused) heroVideo.play().catch(() => {});
+    const desk = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
+    const drop = () => { heroVideo.remove(); toggle?.remove(); hero.classList.remove("is-film"); };
+    if (!desk.matches || reduced || conn.saveData || /(^|-)[23]g$/.test(conn.effectiveType || "")) drop();
+    else {
+      let onScreen = true, held = false, revealed = false; // held: the visitor paused it
+      const run = () => { if (revealed && onScreen && !held && !document.hidden && heroVideo.paused) heroVideo.play().catch(() => {}); };
+      const settle = () => {
+        const t0 = performance.now(), from = 0.5, ms = 2400;
+        const step = (now) => {
+          const p = Math.min(1, Math.max(0, (now - t0) / ms));
+          heroVideo.playbackRate = from + (1 - from) * (p * p * (3 - 2 * p));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+      const reveal = () => {
+        if (revealed) return;
+        revealed = true;
+        hero.classList.add("is-film");
+        heroVideo.classList.add("is-on");
+        settle();
+        if (toggle) toggle.hidden = false;
       };
       const start = () => {
-        heroVideo.addEventListener("error", () => heroVideo.remove(), { once: true });
-        // The cover (the video's own first frame) is already on screen. The video loads behind it and, as soon as it is
-        // really playing, fades in over it: same frame, same framing, so the cover seems to start moving.
-        heroVideo.addEventListener("playing", () => { heroVideo.classList.add("is-on"); heroVideo.closest(".cine-hero")?.classList.add("is-film"); }, { once: true });
-        heroVideo.addEventListener("canplay", () => {
-          // The cover stays on its own for at least COVER_MS after the page started (a fast connection would otherwise
-          // swap it for the video straight away). The video waits on its first frame until then, so the fade starts
-          // from exactly the picture that is on screen.
-          const COVER_MS = 1300;
-          setTimeout(() => {
-            // If the browser refuses to autoplay, it starts with the visitor's first touch, key press or scroll.
-            heroVideo.play().catch(() => {
-              heroVideo.classList.add("is-on"); // paused on its first frame, which is the cover: nothing visibly changes
-              ["pointerdown", "touchstart", "keydown", "wheel", "scroll"].forEach((ev) => window.addEventListener(ev, keepPlaying, { once: true, passive: true }));
-            });
-          }, Math.max(0, COVER_MS - performance.now()));
+        heroVideo.addEventListener("error", drop, { once: true });
+        heroVideo.addEventListener("canplaythrough", () => {
+          heroVideo.playbackRate = 0.5;
+          heroVideo.play().then(() => {
+            if ("requestVideoFrameCallback" in heroVideo) heroVideo.requestVideoFrameCallback(reveal);
+            else requestAnimationFrame(() => requestAnimationFrame(reveal));
+          }).catch(() => { heroVideo.pause(); }); // autoplay refused: the photograph stays
         }, { once: true });
         heroVideo.preload = "auto";
         heroVideo.src = heroVideo.dataset.src;
         heroVideo.load();
       };
-      if (document.readyState === "complete") setTimeout(start, 150);
-      else window.addEventListener("load", () => setTimeout(start, 150), { once: true });
-      heroVideo.addEventListener("pause", () => setTimeout(keepPlaying, 0));
-      document.addEventListener("visibilitychange", keepPlaying);
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(([e]) => {
-          onScreen = e.isIntersecting;
-          if (!heroVideo.classList.contains("is-on")) return;
-          if (onScreen) keepPlaying(); else heroVideo.pause();
-        }, { threshold: 0.1 }).observe(heroVideo);
-      }
+      // After the entrance of the words, and never while the page itself is still loading.
+      const soon = () => setTimeout(start, Math.max(200, 1500 - performance.now()));
+      if (document.readyState === "complete") soon(); else window.addEventListener("load", soon, { once: true });
+      desk.addEventListener("change", () => { if (!desk.matches) drop(); });
+      document.addEventListener("visibilitychange", run);
+      window.addEventListener("pageshow", (e) => { if (e.persisted) run(); });
+      toggle?.addEventListener("click", () => {
+        held = !held;
+        if (held) heroVideo.pause(); else run();
+        toggle.classList.toggle("is-paused", held);
+        toggle.setAttribute("aria-label", held ? toggle.dataset.play : toggle.dataset.pause);
+      });
+      new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (!revealed) return; if (onScreen) run(); else heroVideo.pause(); }, { threshold: 0.05 }).observe(hero);
     }
   }
 
-  // Everything else reveals when it enters the viewport.
+  // Everything else is revealed once, as it enters the viewport: a heading rises line by line (data-split), a photograph opens like a tide
+  // (data-tide). The slow drift of photographs is CSS (animation-timeline), so nothing here runs while the page scrolls.
   const onEnter = (els, opts = {}) => {
     if (reduced || !("IntersectionObserver" in window)) return els.forEach((el) => el.classList.add("is-in"));
     const io2 = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io2.unobserve(e.target); } }),
-      { rootMargin: "0px 0px -12% 0px", threshold: 0.15, ...opts }
+      (entries) => entries.forEach((e) => {
+        if (!e.isIntersecting && e.boundingClientRect.top > 0) return;
+        e.target.classList.add("is-in"); // also when it was jumped over (an anchor, a restored scroll): it is above the screen
+        io2.unobserve(e.target);
+      }),
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.08, ...opts }
     );
     els.forEach((el) => io2.observe(el));
   };
   onEnter($$("[data-split]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-fade]").filter((el) => !el.closest(".cine-hero")));
-  onEnter($$("[data-clip]"), { threshold: 0.2 });
-
-  // Parallax is for a mouse and a wide screen only: on a phone the image just sits in its frame. When GSAP is on the page, cinema.js does it.
-  const parallaxImgs = !window.gsap && fine && window.matchMedia("(min-width: 861px)").matches ? $$("[data-parallax]") : []; // with GSAP (cinema.js) it does the parallax
-  const hx = $(".hx"); // the hero: its words drift up and fade as the page scrolls
-
-  function frame() {
-    const vh = window.innerHeight;
-    // Parallax: images drift against the scroll inside their frame.
-    if (!reduced) {
-      parallaxImgs.forEach((img) => {
-        const r = img.parentElement.getBoundingClientRect();
-        if (r.bottom < -100 || r.top > vh + 100) return;
-        const offset = (r.top + r.height / 2 - vh / 2) * Number(img.dataset.parallax);
-        img.style.transform = `translate3d(0, ${(-offset).toFixed(1)}px, 0) scale(1.18)`;
-      });
-    }
-    if (hx && !reduced && !window.gsap) hx.style.setProperty("--hp", Math.min(1, Math.max(0, window.scrollY / (hx.offsetHeight * 0.7))).toFixed(3));
-  }
-  let ticking = false;
-  const requestFrame = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; frame(); }); } };
-  window.addEventListener("scroll", requestFrame, { passive: true });
-  window.addEventListener("resize", requestFrame);
-  window.addEventListener("load", requestFrame);
-  frame();
+  onEnter($$("[data-tide]"));
 
   // Reached the end without an error: the reveal states set by ".js" can all be resolved, so keep them.
   clearTimeout(failsafe);

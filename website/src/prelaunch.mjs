@@ -7,6 +7,7 @@ import site from "./data/site.mjs";
 import rooms, { pendingAmenities } from "./data/rooms.mjs";
 import { sampleDrinks } from "./data/sample-drinks.mjs";
 import { items } from "./data/menu.mjs";
+import images from "./data/images.mjs";
 
 async function builtHtml(dist) {
   const out = [];
@@ -45,16 +46,16 @@ export async function prelaunch(dist) {
   if (unsure) warnings.push(`${unsure} preços das pizzas estão escritos à mão na ementa (campo confirm em menu.mjs): confirmar com o restaurante.`);
   const feat = items.filter((d) => d.featured).length;
   if (feat) warnings.push(`${feat} pratos em «Os mais escolhidos» foram escolhidos sem dados de vendas (campo featured em menu.mjs): confirmar quais são.`);
-  if (rooms.some((r) => r.placeholder)) warnings.push("Quartos: fotografias ilustrativas (faltam fotos reais de cada quarto).");
   if (pendingAmenities.length) warnings.push(`Comodidades por confirmar (\`pendingAmenities\` em rooms.mjs): ${pendingAmenities.map((a) => a.pt).join(", ")}.`);
   for (const r of rooms.filter((x) => x.capacityPending)) warnings.push(`Capacidade pendente do ${r.name.pt} (\`capacityPending\` em rooms.mjs): ${r.capacity.pt}, a confirmar idades das crianças e condições de ocupação.`);
   const provisional = sampleDrinks.filter((d) => d.provisional).length;
   if (provisional) warnings.push(`${provisional} bebidas com preço PROVISÓRIO estimado (\`provisional\` em sample-drinks.mjs): validar com o Carlos — lista em docs/PRECOS-PROVISORIOS-BEBIDAS.md.`);
 
-  const unsplash = new Set(html.match(/images\.unsplash\.com\/photo-[\w-]+/g) || []).size;
-  const local = new Set(html.match(/assets\/img\/fotos\/[\w-]+?-(?:640|1080|1600)\.jpg/g)?.map((s) => s.replace(/-(?:640|1080|1600)\.jpg$/, "")) || []).size;
-  if (unsplash) warnings.push(`${unsplash} fotos do Unsplash ainda em uso (ligadas a um site externo): trocar por fotografias do Lauhata.`);
-  if (local) warnings.push(`${local} fotos ilustrativas em uso: não mostram o Lauhata real.`);
+  const illustrative = Object.entries(images).filter(([, im]) => im.placeholder).map(([k]) => k);
+  if (illustrative.length) warnings.push(`${illustrative.length} fotografias ilustrativas em uso (${illustrative.join(", ")}): estão assinaladas, mas não são do Lauhata.`);
+  const noInterior = rooms.filter((r) => !r.images.length).length;
+  if (noInterior) warnings.push(`${noInterior} quartos sem fotografias do interior (\`images\` em rooms.mjs): mostram o exterior, com nota.`);
+  warnings.push("Saudações em tétum na secção «Um dia no Lauhata» (Bondia, Botarde, Bonoite): pedir a um falante que confirme a grafia.");
   if (site.showPlaceholderNotes) warnings.push("`showPlaceholderNotes` ainda é true: o rodapé e a ementa mostram avisos de conteúdo provisório.");
 
   return { blockers, warnings };

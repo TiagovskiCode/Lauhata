@@ -1,5 +1,5 @@
 // Shared helpers for the static build: escaping, routes, images and small markup pieces.
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import site from "./data/site.mjs";
 import images from "./data/images.mjs";
 import rooms from "./data/rooms.mjs";
@@ -13,7 +13,6 @@ export const fmt = (s, vars = {}) => String(s).replace(/\{(\w+)\}/g, (m, k) => (
 
 // ---------- Routes ----------
 // English is the default language (final refinement, Nov 2026): it lives at the site root; Portuguese under /pt/.
-export const DEFAULT_LANG = "en";
 const ROUTES = {
   home: { pt: "/pt/", en: "/" },
   restaurant: { pt: "/pt/restaurante/", en: "/restaurant/" },
@@ -56,64 +55,45 @@ export const absUrl = (path) => site.siteUrl + path;
 export const outFile = (path) => (path.endsWith(".html") ? path.slice(1) : path.slice(1) + "index.html");
 
 // ---------- Images ----------
-const WIDTHS = [480, 768, 1080, 1440, 1920];
-// Local photos ("foto:<slug>") are pre-sized by tools/otimizar-fotos.ps1 into these widths.
-const FOTO_WIDTHS = [640, 1080, 1600];
-
-function srcFor(src, w) {
-  if (src.startsWith("unsplash:")) {
-    return `https://images.unsplash.com/photo-${src.slice(9)}?auto=format&fit=crop&w=${w}&q=72`;
+// The files of a photograph: every src/assets/img/fotos/<slug>-<width>.webp, smallest first. Widths come from the file names and the size
+// from the WebP header, so the registry never repeats (or contradicts) what is on disk.
+const FOTOS = new URL("./assets/img/fotos/", import.meta.url);
+const fotoFiles = (() => {
+  const map = new Map();
+  for (const f of readdirSync(FOTOS)) {
+    const m = f.match(/^(.+)-(\d+)\.webp$/);
+    if (m) map.set(m[1], [...(map.get(m[1]) || []), Number(m[2])].sort((x, y) => x - y));
   }
-  if (src.startsWith("foto:")) {
-    const size = FOTO_WIDTHS.find((fw) => fw >= w) || FOTO_WIDTHS.at(-1);
-    return `/assets/img/fotos/${src.slice(5)}-${size}.jpg`;
-  }
-  return src;
-}
+  return map;
+})();
+const slugOf = (im) => im.src.replace(/^foto:/, "");
+const widthsOf = (im) => {
+  const w = fotoFiles.get(slugOf(im));
+  if (!w) throw new Error(`No files for the photograph ${im.src}: run tools/revelar-fotos.mjs`);
+  return w;
+};
+const srcFor = (im, w) => `/assets/img/fotos/${slugOf(im)}-${widthsOf(im).find((x) => x >= w) || widthsOf(im).at(-1)}.webp`;
+const srcsetFor = (im) => widthsOf(im).map((w) => `${srcFor(im, w)} ${w}w`).join(", ");
 
-// srcset candidates; a local photo narrower than a size is described by its real width.
-function srcsetFor(im) {
-  if (im.src.startsWith("unsplash:")) return WIDTHS.map((w) => `${srcFor(im.src, w)} ${w}w`).join(", ");
-  if (im.src.startsWith("foto:")) {
-    const seen = new Set();
-    return FOTO_WIDTHS.map((w) => [w, Math.min(w, im.width)])
-      .filter(([, real]) => !seen.has(real) && seen.add(real))
-      .map(([w, real]) => `${srcFor(im.src, w)} ${real}w`)
-      .join(", ");
-  }
-  return "";
-}
-
-// Pixel size of a local photo, read from its JPEG header, so the browser can reserve the space before it loads
-// (no layout shift). Stock photos are fetched cropped by a remote service, so they have no fixed size here.
 const dimCache = new Map();
 function dimsFor(im) {
-  if (!im.src.startsWith("foto:")) return null;
-  const slug = im.src.slice(5);
-  if (dimCache.has(slug)) return dimCache.get(slug);
-  let out = null;
-  try {
-    const b = readFileSync(new URL(`./assets/img/fotos/${slug}-${FOTO_WIDTHS.at(-1)}.jpg`, import.meta.url));
-    for (let i = 2; i < b.length - 9; ) {
-      if (b[i] !== 0xff) { i++; continue; }
-      const m = b[i + 1];
-      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) { out = { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) }; break; }
-      i += 2 + b.readUInt16BE(i + 2);
-    }
-  } catch { /* no file: no size */ }
-  dimCache.set(slug, out);
-  return out;
+  const slug = slugOf(im);
+  if (!dimCache.has(slug)) {
+    const b = readFileSync(new URL(`${slug}-${widthsOf(im).at(-1)}.webp`, FOTOS));
+    const kind = b.toString("ascii", 12, 16);
+    dimCache.set(slug, kind === "VP8X" ? { w: b.readUIntLE(24, 3) + 1, h: b.readUIntLE(27, 3) + 1 } : { w: b.readUInt16LE(26) & 0x3fff, h: b.readUInt16LE(28) & 0x3fff });
+  }
+  return dimCache.get(slug);
 }
 
 export function imgUrl(key, w = 1200) {
-  return srcFor(images[key].src, w);
+  return srcFor(images[key], w);
 }
 
 // <link rel="preload"> for a full-width hero, with the same candidates as its <img>.
 export function preloadImage(key, sizes = "100vw", media = "") {
   const im = images[key];
-  const srcset = srcsetFor(im);
-  return `<link rel="preload" as="image" href="${srcFor(im.src, 1440)}"${srcset ? ` imagesrcset="${srcset}" imagesizes="${sizes}"` : ""}${media ? ` media="${media}"` : ""} fetchpriority="high">`;
+  return `<link rel="preload" as="image" type="image/webp" href="${srcFor(im, 1080)}" imagesrcset="${srcsetFor(im)}" imagesizes="${sizes}"${media ? ` media="${media}"` : ""} fetchpriority="high">`;
 }
 
 // True while any illustrative stock photo is still in use: the footer then shows one notice
@@ -129,8 +109,6 @@ export const usesPlaceholderImages = () => Object.values(images).some((im) => im
 // crop on phones): the browser then downloads only the photo it shows.
 // `credit: true` adds the editorial caption used across the site: what the photo shows, then whether it is a real
 // photograph of Lauhata or an illustrative image. The honesty label is part of the design, not a sticker on top.
-// A room picture that is a stock or mock-up image (images.mjs kind: "room", placeholder: true) is not shown as Lauhata's room unless site.illustrativeRooms.
-export const isStockRoom = (key) => Boolean(images[key] && images[key].kind === "room" && images[key].placeholder && !site.illustrativeRooms);
 export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio = "", caption = "", attrs = "", parallax = 0, art = [], decorative = false, credit = false } = {}) {
   let capHtml = caption ? esc(caption) : "";
   if (credit && !decorative && !caption) {
@@ -140,14 +118,10 @@ export function figure(t, key, { sizes = "100vw", cls = "", eager = false, ratio
   }
   const im = images[key];
   if (!im) throw new Error(`Unknown image: ${key}`);
-  if (isStockRoom(key)) {
-    const style0 = ratio ? ` style="--ratio:${ratio}"` : "";
-    return `<figure class="media room-photo is-branded ${cls}"${style0}${decorative ? ' aria-hidden="true"' : ` role="img" aria-label="${esc(t.stay.photoSoon)}"`}>${icon("bed")}<span class="bp-word" aria-hidden="true">Lauhata</span><span class="bp-note" aria-hidden="true">${esc(t.stay.photoSoon)}</span></figure>`;
-  }
   const srcset = srcsetFor(im);
   const style = ratio ? ` style="--ratio:${ratio}"` : "";
-  const d = dimsFor(im) || (im.src.startsWith("unsplash:") ? { w: 1440, h: 960 } : null); // external stand-ins: a nominal 3:2 reserves the box (the CSS ratio rules the layout)
-  const img = `<img src="${srcFor(im.src, 1440)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${decorative ? "" : esc(im.alt[t.lang])}"${d ? ` width="${d.w}" height="${d.h}"` : ""} ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>`;
+  const d = dimsFor(im);
+  const img = `<img src="${srcFor(im, 1080)}"${srcset ? ` srcset="${srcset}" sizes="${sizes}"` : ""} alt="${decorative ? "" : esc(im.alt[t.lang])}"${d ? ` width="${d.w}" height="${d.h}"` : ""} ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"${parallax ? ` data-parallax="${parallax}"` : ""}>`;
   const sources = art.map((a) => `<source media="${a.media}" srcset="${srcsetFor(images[a.key])}" sizes="${sizes}">`).join("");
   // A stock or illustrative photo is marked in the HTML; the "Illustrative image" label only shows where the picture
   // stands for the place itself (rooms, galleries, page heroes: see design.css). It goes once the photo is marked real.

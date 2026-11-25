@@ -3,13 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>/* Intro (the horizon opening): once per visit, never with reduced motion unless the site was opened once with
-   ?movimento=completo (remembered, like the rest of the motion). ?intro replays it. Set before first paint: no flash. */try{var q=new URLSearchParams(location.search),m=q.get("movimento");if(m==="completo")localStorage.setItem("lauhata-motion","full");else if(m==="reduzido")localStorage.removeItem("lauhata-motion");var full=localStorage.getItem("lauhata-motion")==="full";if((q.has("intro")||!sessionStorage.getItem("lh-intro"))&&(full||!matchMedia("(prefers-reduced-motion: reduce)").matches)){document.documentElement.classList.add("lh-intro-on");sessionStorage.setItem("lh-intro","1")}}catch(e){}</script>
-<script>/* The dip-to-black between pages is a cross-document view transition. The browser skips it when the viewport changes
+<script>/* The cross-fade between pages is a cross-document view transition. The browser skips it when the viewport changes
    mid-way (a phone's address bar moving) and rejects its promises; that is harmless, so it is not reported as an error. */
 ["pageswap", "pagereveal"].forEach(function (n) { addEventListener(n, function (e) { var v = e.viewTransition; if (v) ["ready", "finished", "updateCallbackDone"].forEach(function (k) { if (v[k]) v[k].catch(function () {}); }); }); });</script>
-<title>Restaurant and menu — Lauhata Beach Escape, Liquiçá</title>
-<meta name="description" content="Menu of Lauhata's restaurant in Liquiçá, with category filters, house dishes and table booking requests on WhatsApp.">
+<title>Restaurant and menu: Lauhata Beach Escape, Liquiçá</title>
+<meta name="description" content="The full menu of Lauhata's beachfront restaurant in Liquiçá, with prices in US dollars. Build your order or ask for a table on WhatsApp.">
 <link rel="canonical" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/">
 <link rel="alternate" hreflang="pt-PT" href="https://tiagovskicode.github.io/Lauhata/website/dist/pt/restaurante/">
 <link rel="alternate" hreflang="en" href="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/">
@@ -18,8 +16,8 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lauhata Beach Escape">
 <meta property="og:locale" content="en_GB">
-<meta property="og:title" content="Restaurant and menu — Lauhata Beach Escape, Liquiçá">
-<meta property="og:description" content="Menu of Lauhata's restaurant in Liquiçá, with category filters, house dishes and table booking requests on WhatsApp.">
+<meta property="og:title" content="Restaurant and menu: Lauhata Beach Escape, Liquiçá">
+<meta property="og:description" content="The full menu of Lauhata's beachfront restaurant in Liquiçá, with prices in US dollars. Build your order or ask for a table on WhatsApp.">
 <meta property="og:url" content="https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/">
 <meta property="og:image" content="https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -28,14 +26,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../assets/img/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
-<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preload" href="../assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="../assets/img/fotos/por-do-sol-palmeiras-alto-1600.jpg" imagesrcset="../assets/img/fotos/por-do-sol-palmeiras-alto-640.jpg 640w, ../assets/img/fotos/por-do-sol-palmeiras-alto-1080.jpg 1080w, ../assets/img/fotos/por-do-sol-palmeiras-alto-1600.jpg 1600w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="../assets/img/fotos/restaurante-praia-1080.webp" imagesrcset="../assets/img/fotos/restaurante-praia-640.webp 640w, ../assets/img/fotos/restaurante-praia-1080.webp 1080w, ../assets/img/fotos/restaurante-praia-1600.webp 1600w, ../assets/img/fotos/restaurante-praia-1920.webp 1920w" imagesizes="max(100vw, 92vh)" fetchpriority="high">
 <link rel="stylesheet" href="../assets/css/site.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","Hotel"],"@id":"https://tiagovskicode.github.io/Lauhata/website/dist/#business","name":"Lauhata Beach Escape","url":"https://tiagovskicode.github.io/Lauhata/website/dist/","image":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/og-image.jpg","logo":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/brand/logo-lauhata-beach-escape-160.png","address":{"@type":"PostalAddress","streetAddress":"Aldeia Pissu Kraik, Suku Lauhata","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%20Beach%20Escape%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste","hasMenu":"https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/#ementa","telephone":"+67077401111","geo":{"@type":"GeoCoordinates","latitude":-8.581541,"longitude":125.349856}}</script>
+<script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["Restaurant","LodgingBusiness"],"@id":"https://tiagovskicode.github.io/Lauhata/website/dist/#business","name":"Lauhata Beach Escape","url":"https://tiagovskicode.github.io/Lauhata/website/dist/","image":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/og-image.jpg","logo":"https://tiagovskicode.github.io/Lauhata/website/dist/assets/img/brand/logo-lauhata-beach-escape-160.png","address":{"@type":"PostalAddress","streetAddress":"Aldeia Pissu Kraik, Suku Lauhata","addressLocality":"Lauhata","addressRegion":"Liquiçá","addressCountry":"TL"},"hasMap":"https://www.google.com/maps/search/?api=1&query=Lauhata%20Beach%20Escape%2C%20Liqui%C3%A7%C3%A1%2C%20Timor-Leste","hasMenu":"https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/#ementa","telephone":"+67077401111","geo":{"@type":"GeoCoordinates","latitude":-8.581541,"longitude":125.349856}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tiagovskicode.github.io/Lauhata/website/dist/"},{"@type":"ListItem","position":2,"name":"Restaurant","item":"https://tiagovskicode.github.io/Lauhata/website/dist/restaurant/"}]}</script>
-<script>window.LAUHATA={"lang":"en","whatsapp":"67077401111","thanks":"../thank-you/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"Only if you prefer to be contacted on another number or by email.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","adults":"Adults","children":"Children","adultOne":"adult","adultMany":"adults","childOne":"child","childMany":"children","email":"Email","phone":"Phone / WhatsApp","phoneHint":"If it differs from the number you send the message from.","payNote":"Payment is made in person at Lauhata. The website never asks for payment details.","reviewTitle":"Review your request","reviewLead":"This is the message that will open in WhatsApp. When you send it, the request reaches Lauhata; it is confirmed only once the team replies.","reviewSend":"Open WhatsApp","reviewEdit":"Change","guestOne":"guest","guestMany":"guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","adults":"Enter between 1 and 20 adults.","children":"Enter between 0 and 10 children.","email":"Enter a valid email.","phone":"Enter a valid number.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}{contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waEmail":"\nEmail: {email}","waPhone":"\nPhone: {phone}","waAnyRoom":"No preference","waName":"\nName: {name}","waNotes":"\nNotes: {notes}","waContact":"\nContact: {contact}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}{who}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nName: {name}{email}{phone}\nPreferred room: {room}\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{notes}\n\nCould you please confirm availability and provide any relevant information? I understand payment is made in person at Lauhata.\n\nThank you.","waQuickRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{room}{who}{notes}\n\nCould you confirm availability and the price? I understand payment is made in person at Lauhata. Thank you.","waQuickRoomType":"\nRoom: {room}","waEvent":"Hello! I would like to know if Lauhata could host an event.\n\nOccasion: {kind}\nDate: {date}\nPeople: {people}\nName: {name}{contact}{notes}\n\nCould you tell me what is possible? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"backToTop":"Back to top","placeholderImage":"Illustrative image","realPhoto":"","coords":"8°34′54″ S · 125°20′59″ E","coordsLabel":"Lauhata's coordinates","toConfirm":"To be confirmed","priceTbc":"Price on request","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Reserve a Table","requestRoom":"Request a Room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"},"order":{"photoSoon":"Photo coming soon","tempAlt":"{name} (illustrative image, not the dish served at Lauhata)","sampleTag":"Example","sampleNote":"Prices are provisional estimates, to be confirmed with the restaurant. Ask the team what is available today.","provisionalNote":"Provisional price: to be confirmed with the restaurant.","cartTitle":"Your order","open":"Open your order","close":"Close","viewOrder":"View order","itemOne":"1 item","itemMany":"{n} items","emptyTitle":"Your order is empty","emptyBody":"Pick dishes from the menu and they will appear here.","viewMenu":"See the menu","add":"Add","added":"Added","choose":"Choose","unavailable":"Not available today","remove":"Remove {name}","increase":"One more: {name}","decrease":"One less: {name}","qty":"Quantity","each":"each","total":"Total","continue":"Keep browsing","checkout":"Place order","back":"Back to your order","detailsTitle":"Your details","name":"Name","type":"Order type","table":"Table number","notes":"Order notes","optional":"optional","notesPlaceholder":"Allergies, preferences…","dineIn":"Orders are for eating at the restaurant. We do not offer delivery or takeaway.","send":"Send order to the restaurant","sending":"Opening WhatsApp…","note":"When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website.","errorsTitle":"Please check the highlighted fields.","errors":{"name":"Please enter your name.","type":"Please choose the order type.","table":"Please enter the table number.","choose":"Please choose an option.","tooBig":"The order is too big for a single message. Remove some items or send it in two parts."},"customize":"Customise","addToOrder":"Add to order","cancel":"Cancel","searchLabel":"Search the menu","searchPlaceholder":"Search for a dish…","clearSearch":"Clear search","noResults":"No dishes found for “{q}”.","resultOne":"1 dish found","results":"{n} dishes found","menuWord":"Menu","filter":"Filter","filterBy":"Filter the menu by category","filterAll":"All dishes","filterClear":"Clear filter","special":"Today's special","diet":{"vegetarian":"Vegetarian","vegan":"Vegan","spicy":"Spicy","seafood":"Seafood"},"allergens":"Contains: {list}","allergyNote":"Allergies or dietary needs? Tell the team before you order: nothing on this page can tell you what is safe for you.","categories":"Menu categories","inOrder":"{name} added to your order","menuHours":"Hours","msg":{"hello":"Hello, Lauhata!","intro":"I would like to place the following order, to eat at the restaurant:","title":"Restaurant order","total":"Total","name":"Name","type":"Order type","table":"Table","notes":"Notes","bye":"Looking forward to your confirmation. Thank you!"}},"pick":{"chooseDate":"Choose a date","chooseTime":"Choose a time","dateDialog":"Choose a date","rangeDialog":"Choose your dates","timeDialog":"Choose a time","numberDialog":"Quantity","selectDialog":"Choose","close":"Close","prev":"Previous month","next":"Next month","today":"Today","clear":"Clear","done":"Done","stepIn":"Choose check-in","stepOut":"Choose check-out","nightOne":"1 night","nightMany":"{n} nights","less":"Fewer","more":"More","max":"Maximum: {n}","morning":"Morning","afternoon":"Afternoon","evening":"Evening"}}};</script>
+<script>window.LAUHATA={"lang":"en","whatsapp":"67077401111","thanks":"../thank-you/","order":{"currency":"$","types":[]},"i18n":{"form":{"name":"Name","contact":"Phone or email","contactHint":"Only if you prefer to be contacted on another number or by email.","date":"Date","time":"Time","people":"Number of people","checkIn":"Check-in","checkOut":"Check-out","guests":"Number of guests","adults":"Adults","children":"Children","adultOne":"adult","adultMany":"adults","childOne":"child","childMany":"children","email":"Email","phone":"Phone / WhatsApp","phoneHint":"If it differs from the number you send the message from.","payNote":"Payment is made in person at Lauhata. The website never asks for payment details.","reviewTitle":"Review your request","reviewLead":"This is the message that will open in WhatsApp. When you send it, the request reaches Lauhata; it is confirmed only once the team replies.","reviewSend":"Open WhatsApp","reviewEdit":"Change","guestOne":"guest","guestMany":"guests","roomType":"Room type","roomAny":"No preference","notes":"Notes","optional":"optional","notesPlaceholder":"Special occasion, allergies, arrival time…","submitTable":"Send request on WhatsApp","submitRoom":"Send request on WhatsApp","note":"Sending opens WhatsApp with the message filled in. No payment is taken and nothing is confirmed until Lauhata replies.","sending":"Opening WhatsApp…","errorsTitle":"Please check the highlighted fields.","errors":{"required":"Please fill in this field.","name":"Please enter your name.","contact":"Please enter a valid phone number or email.","date":"Choose a date from today onwards.","time":"Choose a time.","people":"Enter a number between 1 and 50.","guests":"Enter a number between 1 and 20.","adults":"Enter between 1 and 20 adults.","children":"Enter between 0 and 10 children.","email":"Enter a valid email.","phone":"Enter a valid number.","checkIn":"Choose a check-in date from today onwards.","checkOut":"Check-out must be after check-in."},"waTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nName: {name}\nDate: {date}\nTime: {time}\nPeople: {people}{contact}{notes}\n\nLooking forward to your confirmation. Thank you!","waEmail":"\nEmail: {email}","waPhone":"\nPhone: {phone}","waAnyRoom":"No preference","waName":"\nName: {name}","waNotes":"\nNotes: {notes}","waContact":"\nContact: {contact}","waQuickTable":"Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}{who}{notes}\n\nLooking forward to your confirmation. Thank you!","waRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nName: {name}{email}{phone}\nPreferred room: {room}\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{notes}\n\nCould you please confirm availability and provide any relevant information? I understand payment is made in person at Lauhata.\n\nThank you.","waQuickRoom":"Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{room}{who}{notes}\n\nCould you confirm availability and the price? I understand payment is made in person at Lauhata. Thank you.","waQuickRoomType":"\nRoom: {room}","waEvent":"Hello! I would like to know if Lauhata could host an event.\n\nOccasion: {kind}\nDate: {date}\nPeople: {people}\nName: {name}{contact}{notes}\n\nCould you tell me what is possible? Thank you!","nightsOne":"1 night","nightsMany":"{n} nights","waHello":"Hello! I would like to know more about Lauhata."},"common":{"backToTop":"Back to top","placeholderImage":"Illustrative image","realPhoto":"","coords":"8°34′54″ S · 125°20′59″ E","coordsLabel":"Lauhata's coordinates","toConfirm":"To be confirmed","priceTbc":"Price on request","hoursTbc":"Opening hours to be confirmed","whatsapp":"WhatsApp","phone":"Phone","email":"Email","address":"Address","learnMore":"Learn more","viewMenu":"See the menu","viewStay":"See the rooms","viewRoom":"See room","bookTable":"Reserve a table","requestRoom":"Request a room","directions":"Getting here","openMaps":"Open in Google Maps","seeReviews":"See reviews","close":"Close","previous":"Previous","next":"Next","pendingWhatsapp":"WhatsApp number not configured yet"},"order":{"photoSoon":"Photo coming soon","tempAlt":"{name} (illustrative image, not the dish served at Lauhata)","sampleTag":"Example","sampleNote":"Prices are provisional estimates, to be confirmed with the restaurant. Ask the team what is available today.","provisionalNote":"Provisional price: to be confirmed with the restaurant.","cartTitle":"Your order","open":"Open your order","close":"Close","viewOrder":"View order","itemOne":"1 item","itemMany":"{n} items","emptyTitle":"Your order is empty","emptyBody":"Pick dishes from the menu and they will appear here.","viewMenu":"See the menu","add":"Add","added":"Added","choose":"Choose","unavailable":"Not available today","remove":"Remove {name}","increase":"One more: {name}","decrease":"One less: {name}","qty":"Quantity","each":"each","total":"Total","continue":"Keep browsing","checkout":"Place order","back":"Back to your order","detailsTitle":"Your details","name":"Name","type":"Order type","table":"Table number","notes":"Order notes","optional":"optional","notesPlaceholder":"Allergies, preferences…","dineIn":"Orders are for eating at the restaurant. We do not offer delivery or takeaway.","send":"Send order to the restaurant","sending":"Opening WhatsApp…","note":"When you send, WhatsApp opens with your order filled in. Nothing is confirmed until Lauhata replies. No payment is made on the website.","errorsTitle":"Please check the highlighted fields.","errors":{"name":"Please enter your name.","type":"Please choose the order type.","table":"Please enter the table number.","choose":"Please choose an option.","tooBig":"The order is too big for a single message. Remove some items or send it in two parts."},"customize":"Customise","addToOrder":"Add to order","cancel":"Cancel","searchLabel":"Search the menu","searchPlaceholder":"Search for a dish…","clearSearch":"Clear search","noResults":"No dishes found for “{q}”.","resultOne":"1 dish found","results":"{n} dishes found","menuWord":"Menu","filter":"Filter","filterBy":"Filter the menu by category","filterAll":"All dishes","filterClear":"Clear filter","special":"Today's special","diet":{"vegetarian":"Vegetarian","vegan":"Vegan","spicy":"Spicy","seafood":"Seafood"},"allergens":"Contains: {list}","allergyNote":"Allergies or dietary needs? Tell the team before you order: nothing on this page can tell you what is safe for you.","categories":"Menu categories","inOrder":"{name} added to your order","menuHours":"Hours","msg":{"hello":"Hello, Lauhata!","intro":"I would like to place the following order, to eat at the restaurant:","title":"Restaurant order","total":"Total","name":"Name","type":"Order type","table":"Table","notes":"Notes","bye":"Looking forward to your confirmation. Thank you!"}},"pick":{"chooseDate":"Choose a date","chooseTime":"Choose a time","dateDialog":"Choose a date","rangeDialog":"Choose your dates","timeDialog":"Choose a time","numberDialog":"Quantity","selectDialog":"Choose","close":"Close","prev":"Previous month","next":"Next month","today":"Today","clear":"Clear","done":"Done","stepIn":"Choose check-in","stepOut":"Choose check-out","nightOne":"1 night","nightMany":"{n} nights","less":"Fewer","more":"More","max":"Maximum: {n}","morning":"Morning","afternoon":"Afternoon","evening":"Evening"}}};</script>
 <script>window.LAUHATA_MENU={"choice-of-eggs":{"id":"choice-of-eggs","name":"Choice of Eggs","price":6,"desc":{"en":"Scrambled, fried or sunny-side up, with toast and butter","pt":"Mexidos, fritos ou estrelados, com torradas e manteiga"},"options":[{"id":"style","label":{"en":"Style","pt":"Preparação"},"choices":[{"id":"scrambled","label":{"en":"Scrambled","pt":"Mexidos"}},{"id":"fried","label":{"en":"Fried","pt":"Fritos"}},{"id":"sunny","label":{"en":"Sunny-side up","pt":"Estrelados"}}]}],"photo":null},"egg-chicken-sausage-toast":{"id":"egg-chicken-sausage-toast","name":"Egg and Chicken Sausage on Toast","price":8,"desc":{"en":"Fried or scrambled eggs, with tomato, olives and feta","pt":"Ovos fritos ou mexidos, com tomate, azeitona e feta"},"options":[{"id":"style","label":{"en":"Style","pt":"Preparação"},"choices":[{"id":"fried","label":{"en":"Fried","pt":"Fritos"}},{"id":"scrambled","label":{"en":"Scrambled","pt":"Mexidos"}}]}],"photo":null},"omelette":{"id":"omelette","name":"Omelette","price":6,"desc":{"en":"Plain, ham and cheese, or Spanish","pt":"Simples, de fiambre e queijo ou espanhola"},"options":[{"id":"type","label":{"en":"Type","pt":"Tipo"},"choices":[{"id":"plain","label":{"en":"Plain","pt":"Simples"}},{"id":"ham-cheese","label":{"en":"Ham & cheese","pt":"Fiambre e queijo"}},{"id":"spanish","label":{"en":"Spanish","pt":"Espanhola"}}]}],"photo":null},"baked-beans-toast":{"id":"baked-beans-toast","name":"Baked Beans on Toast","price":6,"desc":{"en":"Baked beans served on toasted bread","pt":"Feijão cozido (baked beans) sobre pão torrado"},"options":[],"photo":null},"french-toast":{"id":"french-toast","name":"French Toast","price":6,"desc":{"en":"Served with honey and cinnamon","pt":"Servido com mel e canela"},"options":[],"photo":null},"pancakes":{"id":"pancakes","name":"Pancakes","price":6,"desc":{"en":"Plain, or with banana and maple syrup","pt":"Simples ou com banana e xarope de ácer"},"options":[{"id":"version","label":{"en":"Version","pt":"Versão"},"choices":[{"id":"plain","label":{"en":"Plain","pt":"Simples"}},{"id":"banana-maple","label":{"en":"Banana and maple syrup","pt":"Banana e xarope de ácer"}}]}],"photo":null},"cereal-choices":{"id":"cereal-choices","name":"Cereal Choices","price":4,"desc":{"en":"Chocolate cereal or cornflakes, with hot or cold milk","pt":"Cereais de chocolate ou flocos de milho, servidos com leite quente ou frio"},"options":[{"id":"cereal","label":{"en":"Cereal","pt":"Cereal"},"choices":[{"id":"choco","label":{"en":"Choco","pt":"Chocolate"}},{"id":"corn-flakes","label":{"en":"Corn flakes","pt":"Flocos de milho"}}]},{"id":"milk","label":{"en":"Milk","pt":"Leite"},"choices":[{"id":"hot","label":{"en":"Hot","pt":"Quente"}},{"id":"cold","label":{"en":"Cold","pt":"Frio"}}]}],"photo":null},"seasonal-fruit-salad":{"id":"seasonal-fruit-salad","name":"Seasonal Fruit Salad","price":5,"desc":{"en":"Selection of fruits in season","pt":"Seleção de frutas da época"},"options":[],"photo":null},"caesar-salad":{"id":"caesar-salad","name":"Caesar Salad","price":8,"desc":{"en":"Seared herb chicken with lettuce, boiled egg, pork bacon, crouton & Caesar dressing","pt":"Frango selado com ervas, alface, ovo cozido, bacon de porco, croutons e molho Caesar"},"options":[],"photo":null},"greek-salad":{"id":"greek-salad","name":"Greek Salad","price":8,"desc":{"en":"Feta, olives, tomato and cucumber over mixed leaves, with Lauhata dressing","pt":"Feta, azeitonas, tomate e pepino sobre salada variada, com molho Lauhata"},"options":[],"photo":null},"tuna-salad":{"id":"tuna-salad","name":"Tuna Salad","price":8,"desc":{"en":"Tuna, lettuce, tomato, onion and cucumber, with Lauhata dressing","pt":"Atum, alface, tomate, cebola e pepino com molho Lauhata"},"options":[],"photo":null},"clams-garlic-bread":{"id":"clams-garlic-bread","name":"Clams & Garlic Bread","price":10,"desc":{"en":"Clams cooked in white wine and garlic, with coriander leaves","pt":"Amêijoas cozinhadas em vinho branco e alho, com folhas de coentros"},"options":[],"photo":null},"calamari-rings":{"id":"calamari-rings","name":"Calamari Rings","price":6,"desc":{"en":"Calamari rings with a chilli mayonnaise","pt":"Anéis de lula com maionese de chilli"},"options":[],"photo":null},"satay-starter":{"id":"satay-starter","name":"Satay (Starter)","price":6,"desc":{"en":"Four satay skewers with tamarind sauce","pt":"Quatro espetadas de satay com molho de tamarindo"},"options":[{"id":"meat","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}},{"id":"pork","label":{"en":"Pork","pt":"Porco"}}]}],"photo":null},"spring-rolls-samosa":{"id":"spring-rolls-samosa","name":"Spring Rolls or Samosa","price":6,"desc":{"en":"Eight pieces, with sweet chilli sauce","pt":"Oito peças, com molho de chilli doce"},"options":[{"id":"kind","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"spring-rolls","label":{"en":"Spring Rolls","pt":"Spring rolls"}},{"id":"samosa","label":{"en":"Samosa","pt":"Samosa"}}]}],"photo":null},"chips-starter":{"id":"chips-starter","name":"Chips","price":null,"desc":{"en":"Chips with sweet tomato or chilli sauce","pt":"Batatas fritas com molho doce de tomate ou de chilli"},"options":[{"id":"size","label":{"en":"Size","pt":"Tamanho"},"choices":[{"id":"small","label":{"en":"Small","pt":"Pequenas"},"price":5},{"id":"large","label":{"en":"Large","pt":"Grandes"},"price":10}]}],"photo":null},"potato-soup":{"id":"potato-soup","name":"Potato Soup","price":6,"desc":{"en":"With chorizo and plain toast","pt":"Com chouriço e pão torrado"},"options":[],"photo":null},"tom-yum-prawns":{"id":"tom-yum-prawns","name":"Tom Yum Prawns","price":8,"desc":{"en":"Clear spicy seafood broth","pt":"Caldo de marisco picante e límpido"},"options":[],"photo":null},"grilled-fish":{"id":"grilled-fish","name":"Grilled Fish","price":18,"desc":{"en":"Fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad","pt":"Filete de peixe com molho de limão e manteiga, batatas assadas com alecrim e salada verde"},"options":[],"photo":null},"steak-bitoque":{"id":"steak-bitoque","name":"Steak (Bitoque)","price":19,"desc":{"en":"Porterhouse steak with chips, salad and a fried egg","pt":"Bife porterhouse com batatas fritas, salada e ovo estrelado"},"options":[],"photo":null},"grilled-chicken":{"id":"grilled-chicken","name":"Grilled Chicken","price":15,"desc":{"en":"Served with roast potato and salad","pt":"Servido com batata assada e salada"},"options":[],"photo":null},"grilled-pork-belly":{"id":"grilled-pork-belly","name":"Grilled Pork Belly","price":15,"desc":{"en":"Served with roast potato and salad","pt":"Servida com batata assada e salada"},"options":[],"photo":null},"saute-prawns":{"id":"saute-prawns","name":"Sauté Prawns","price":18,"desc":{"en":"Prawns served with green salad and garlic bread","pt":"Gambas servidas com salada verde e pão de alho"},"options":[],"photo":null},"satay-main":{"id":"satay-main","name":"Satay (Main Course)","price":12,"desc":{"en":"6 satay sticks served with steamed rice and chilli","pt":"6 espetadas satay servidas com arroz branco e chilli"},"options":[{"id":"meat","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}},{"id":"pork","label":{"en":"Pork","pt":"Porco"}}]}],"photo":null},"chicken-curry":{"id":"chicken-curry","name":"Chicken Curry","price":15,"desc":{"en":"Served with steamed rice and salad","pt":"Servido com arroz branco e salada"},"options":[],"photo":null},"spaghetti":{"id":"spaghetti","name":"Spaghetti","price":15,"desc":{"en":"Bolognese or carbonara, with garlic bread","pt":"À bolonhesa ou à carbonara, com pão de alho"},"options":[{"id":"sauce","label":{"en":"Sauce","pt":"Molho"},"choices":[{"id":"bolognaise","label":{"en":"Bolognaise","pt":"Bolonhesa"}},{"id":"carbonara","label":{"en":"Carbonara","pt":"Carbonara"}}]}],"photo":null},"mie-goreng":{"id":"mie-goreng","name":"Mie Goreng","price":10,"desc":{"en":"Fried noodles with chicken, sausage or prawns, or mixed","pt":"Massa salteada (noodles) com frango, salsicha ou gambas, ou mista"},"options":[{"id":"with","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}},{"id":"sausage","label":{"en":"Sausage","pt":"Salsicha"}},{"id":"prawns","label":{"en":"Prawns","pt":"Gambas"}},{"id":"mix","label":{"en":"Mix","pt":"Mista"}}]}],"photo":null},"lauhata-special-fried-rice":{"id":"lauhata-special-fried-rice","name":"Lauhata Special Fried Rice","price":10,"desc":{"en":"Chicken, sausage, prawns and egg","pt":"Frango, salsicha, gambas e ovo"},"options":[],"photo":null},"grilled-burger":{"id":"grilled-burger","name":"Grilled Burger","price":12,"desc":{"en":"With lettuce, tomato, onion and cheese, and French fries","pt":"Alface, tomate, cebola e queijo, servido com batatas fritas"},"options":[{"id":"meat","label":{"en":"Choice","pt":"Escolha"},"choices":[{"id":"beef","label":{"en":"Beef","pt":"Vaca"}},{"id":"chicken","label":{"en":"Chicken","pt":"Frango"}}]}],"photo":null},"club-sandwich":{"id":"club-sandwich","name":"Club Sandwich","price":10,"desc":{"en":"Lettuce, tomato, chicken, bacon and egg, with French fries","pt":"Alface, tomate, frango, bacon e ovo, com batatas fritas"},"options":[{"id":"bread","label":{"en":"Bread","pt":"Pão"},"choices":[{"id":"toasted","label":{"en":"Toasted","pt":"Torrado"}},{"id":"plain","label":{"en":"Plain","pt":"Simples"}}]}],"photo":null},"vegetarian-fried-rice":{"id":"vegetarian-fried-rice","name":"Vegetarian Fried Rice","price":8,"desc":{"en":"Served with fried egg and green salad","pt":"Servido com ovo frito e salada verde"},"options":[],"photo":null},"spaghetti-pesto":{"id":"spaghetti-pesto","name":"Spaghetti Pesto","price":8,"desc":{"en":"Served with garlic bread","pt":"Servido com pão de alho"},"options":[],"photo":null},"vegetable-curry":{"id":"vegetable-curry","name":"Vegetable Curry","price":8,"desc":{"en":"Served with steamed rice and chapati","pt":"Servido com arroz branco e chapati"},"options":[],"photo":null},"vegetarian-dhal-fry":{"id":"vegetarian-dhal-fry","name":"Vegetarian Dhal Fry","price":8,"desc":{"en":"Served with steamed rice and chapati","pt":"Servido com arroz branco e chapati"},"options":[],"photo":null},"stir-fry-vegetables":{"id":"stir-fry-vegetables","name":"Stir-fry Vegetables","price":6,"desc":{"en":"Local vegetables","pt":"Legumes locais"},"options":[],"photo":null},"sauteed-vegetables":{"id":"sauteed-vegetables","name":"Sauteed Vegetables","price":4,"desc":null,"options":[],"photo":null},"green-salad":{"id":"green-salad","name":"Green Salad","price":4,"desc":null,"options":[],"photo":null},"chips-side":{"id":"chips-side","name":"Chips","price":null,"desc":null,"options":[{"id":"size","label":{"en":"Size","pt":"Tamanho"},"choices":[{"id":"small","label":{"en":"Small","pt":"Pequenas"},"price":5},{"id":"large","label":{"en":"Large","pt":"Grandes"},"price":10}]}],"photo":null},"spicy-potato-wedges":{"id":"spicy-potato-wedges","name":"Spicy Potato Wedges","price":5,"desc":null,"options":[],"photo":null},"garlic-bread":{"id":"garlic-bread","name":"Garlic Bread","price":4,"desc":null,"options":[],"photo":null},"steam-rice":{"id":"steam-rice","name":"Steam Rice","price":2,"desc":null,"options":[],"photo":null},"cheesecake":{"id":"cheesecake","name":"Cheesecake","price":5,"desc":null,"options":[],"photo":null},"orange-cake":{"id":"orange-cake","name":"Orange Cake","price":5,"desc":null,"options":[],"photo":null},"chocolate-mud-cake":{"id":"chocolate-mud-cake","name":"Chocolate Mud Cake","price":5,"desc":null,"options":[],"photo":null},"red-velvet-cake":{"id":"red-velvet-cake","name":"Red Velvet Cake","price":5,"desc":null,"options":[],"photo":null},"mixed-ice-cream":{"id":"mixed-ice-cream","name":"Mixed Ice Cream","price":4,"desc":null,"options":[],"photo":null},"fruit-platter":{"id":"fruit-platter","name":"Fruit Platter","price":5,"desc":null,"options":[],"photo":null},"pizza-margarita":{"id":"pizza-margarita","name":"Margarita","price":17,"desc":{"en":"Sliced tomato, feta and mozzarella","pt":"Tomate em fatias, feta e mozzarella"},"options":[],"photo":null},"pizza-pepperoni":{"id":"pizza-pepperoni","name":"Pepperoni","price":20,"desc":{"en":"Onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella","pt":"Cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella"},"options":[],"photo":null},"pizza-hawaiian":{"id":"pizza-hawaiian","name":"Hawaiian","price":20,"desc":{"en":"Ham, pineapple, feta and mozzarella","pt":"Fiambre, ananás, feta e mozzarella"},"options":[],"photo":null},"pizza-spicy-chicken":{"id":"pizza-spicy-chicken","name":"Spicy Chicken","price":20,"desc":{"en":"Chicken, bacon, chilli, feta and mozzarella","pt":"Frango, bacon, chilli, feta e mozzarella"},"options":[],"photo":null},"pizza-lauhata-seafood":{"id":"pizza-lauhata-seafood","name":"Lauhata Seafood","price":21,"desc":{"en":"Tuna, prawns, feta and mozzarella","pt":"Atum, gambas, feta e mozzarella"},"options":[],"photo":null},"pizza-meat-lover":{"id":"pizza-meat-lover","name":"Meat Lover","price":21,"desc":{"en":"Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella","pt":"Cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella"},"options":[],"photo":null}};</script>
 <script src="../assets/js/picker.js" defer></script>
 
@@ -44,12 +42,7 @@
 <script src="../assets/js/order.js" defer></script>
 
 </head>
-<body class="has-hero">
-<div class="lh-intro" aria-hidden="true">
-  <div class="intro-sky"><span class="intro-sun"></span><p class="intro-word"><span style="--i:0">L</span><span style="--i:1">a</span><span style="--i:2">u</span><span style="--i:3">h</span><span style="--i:4">a</span><span style="--i:5">t</span><span style="--i:6">a</span></p></div>
-  <div class="intro-sea"><span class="intro-glint"></span><span class="intro-ripple" style="--k:1"></span><span class="intro-ripple" style="--k:2"></span><span class="intro-ripple" style="--k:3"></span><p class="intro-sub">Beach Escape</p></div>
-  <span class="intro-line"></span>
-</div>
+<body id="top" class="has-hero">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -93,6 +86,8 @@
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-cart" viewBox="0 0 24 24"><path d="M5 8h14l-1 11.5a1 1 0 0 1-1 .9H7a1 1 0 0 1-1-.9L5 8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6.5v11M15 6.5v11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 6.2v11.6l9-5.8z" fill="currentColor"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </defs>
@@ -101,7 +96,7 @@
 <header class="site-header" data-header>
   <div class="wrap header-inner">
     <a class="brand " href="../" aria-label="Lauhata Beach Escape — Home">
-  <span class="brand-mark" aria-hidden="true"><img src="../assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt=""></span>
+  <span class="brand-mark" aria-hidden="true"><img src="../assets/img/brand/logo-lauhata-beach-escape-160.webp" width="160" height="160" alt=""></span>
   <span class="brand-text"><span class="brand-name">Lauhata</span> <span class="brand-line">Beach Escape</span></span>
 </a>
     <nav class="nav-main" aria-label="Main"><a href="../restaurant/" aria-current="page">Restaurant</a><a href="../stay/">Hotel</a><a href="../events/">Experiences</a><a href="../gallery/">Gallery</a><a href="../contact/">Contact</a></nav>
@@ -111,7 +106,7 @@
     <ul class="lang-dd-menu" id="lang-menu-en" hidden><li><span class="lang-dd-item is-on" aria-current="true" lang="en">English<svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span></li><li><a class="lang-dd-item" href="../pt/restaurante/" hreflang="pt" lang="pt-PT">Português</a></li></ul>
   </div>
       <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog" aria-label="Open your order"><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-count" data-cart-count hidden>0</span></button>
-      <a class="btn btn-terra btn-sm book-btn" href="../contact/" data-book-open aria-haspopup="dialog"><span class="bk-long">Make a Reservation</span><span class="bk-short">Reserve</span></a>
+      <a class="btn btn-terra btn-sm book-btn" href="../contact/" data-book-open aria-haspopup="dialog"><span class="bk-long">Make a reservation</span><span class="bk-short">Reserve</span></a>
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="nav-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
     </div>
   </div>
@@ -131,8 +126,8 @@
       <li><a href="../contact/#faq">FAQ</a></li>
     </ul>
     <div class="mn-cta">
-      <a class="btn btn-terra" href="../contact/" data-book-open="table">Reserve a Table<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-      <a class="btn btn-outline" href="../contact/" data-book-open="room">Request a Room<svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg></a>
+      <a class="btn btn-terra" href="../contact/" data-book-open="table"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg>Reserve a table</a>
+      <a class="btn btn-outline" href="../contact/" data-book-open="room"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>Request a room</a>
       <div class="lang lang-center" role="group" aria-label="Ler em português">
     <span class="lang-opt is-on" aria-current="true">EN</span>
     <a class="lang-opt" href="../pt/restaurante/" hreflang="pt" lang="pt-PT" title="Ler em português">PT</a>
@@ -143,20 +138,19 @@
 </dialog>
 <main id="main" tabindex="-1">
 
-<section class="cine-hero is-page">
+<section class="cine-hero is-page " style="--pos:50% 42%">
   <div class="cine-slides"><div class="slide is-active"><figure class="media  has-credit">
-  <img src="../assets/img/fotos/por-do-sol-palmeiras-alto-1600.jpg" srcset="../assets/img/fotos/por-do-sol-palmeiras-alto-640.jpg 640w, ../assets/img/fotos/por-do-sol-palmeiras-alto-1080.jpg 1080w, ../assets/img/fotos/por-do-sol-palmeiras-alto-1600.jpg 1600w" sizes="100vw" alt="Sunset over the sea, with the palm trees in silhouette" width="1600" height="900" fetchpriority="high" decoding="async">
-  <figcaption><span class="cap-what">Sunset over the sea, with the palm trees in silhouette</span></figcaption>
+  <img src="../assets/img/fotos/restaurante-praia-1080.webp" srcset="../assets/img/fotos/restaurante-praia-640.webp 640w, ../assets/img/fotos/restaurante-praia-1080.webp 1080w, ../assets/img/fotos/restaurante-praia-1600.webp 1600w, ../assets/img/fotos/restaurante-praia-1920.webp 1920w" sizes="max(100vw, 92vh)" alt="Lauhata's restaurant behind its palm trees, seen from the beach side" width="1920" height="1080" fetchpriority="high" decoding="async">
+  <figcaption><span class="cap-what">Lauhata's restaurant behind its palm trees, seen from the beach side</span></figcaption>
 </figure></div></div>
   <div class="cine-shade" aria-hidden="true"></div>
   <div class="wrap cine-content">
     <h1 class="cine-title is-page" data-split>Lauhata's table, by the beach</h1>
-    <p class="cine-lead" data-fade style="--d:300ms">From breakfast to dinner: grilled fish, satay, curries, rice and noodle dishes, pizzas and desserts. For eating in at the restaurant, with the sea in front of you.</p>
-    <div data-fade style="--d:400ms"><div class="btn-row"><a class="btn btn-terra btn-lg" href="../contact/" data-book-open="table">Reserve a Table<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a><a class="btn btn-ghost-light btn-lg" href="#ementa">See the menu</a></div>
-  <p class="hero-hours"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><span>Breakfast <b>08:00–10:00</b><i aria-hidden="true"> · </i>Lunch &amp; dinner <b>11:00–21:00</b></span></p></div>
+    <p class="cine-lead" data-fade style="--d:260ms">From breakfast to dinner: grilled fish, satay, curries, rice and noodle dishes, pizzas and desserts. For eating in at the restaurant, with the sea in front of you.</p>
+    <div class="cine-ctas" data-fade style="--d:380ms"><div class="btn-row"><a class="btn btn-terra btn-lg" href="../contact/" data-book-open="table">Reserve a table</a><a class="btn btn-ghost-light btn-lg" href="#ementa">See the menu</a></div>
+  <p class="hero-hours"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg><span>Breakfast <b>08:00–10:00</b><i aria-hidden="true">, </i>Lunch &amp; dinner <b>11:00–21:00</b></span></p></div>
   </div>
 </section>
-
 
 <section class="section menu" id="ementa" aria-labelledby="menu-title" data-menu>
   <div class="wrap menu-intro">
@@ -191,559 +185,559 @@
       <section class="menu-cat" id="cat-breakfast" data-cat="breakfast" aria-labelledby="cat-breakfast-title">
       <header class="menu-cat-head"><h3 id="cat-breakfast-title">Breakfast</h3><p>Served with chilled juice. Breakfast is served from 8:00 am to 10:00 am.</p></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="choice of eggs scrambled, fried or sunny-side up, with toast and butter mexidos, fritos ou estrelados, com torradas e manteiga breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Choice of Eggs</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Choice of Eggs</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Scrambled, fried or sunny-side up, with toast and butter</p>
         
-        <button class="d-add" type="button" data-add="choice-of-eggs" aria-label="Choose: Choice of Eggs"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="choice-of-eggs" aria-label="Choose: Choice of Eggs"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="egg and chicken sausage on toast fried or scrambled eggs, with tomato, olives and feta ovos fritos ou mexidos, com tomate, azeitona e feta breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Egg and Chicken Sausage on Toast</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Egg and Chicken Sausage on Toast</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         
         
         <p class="dl-desc">Fried or scrambled eggs, with tomato, olives and feta</p>
         
-        <button class="d-add" type="button" data-add="egg-chicken-sausage-toast" aria-label="Choose: Egg and Chicken Sausage on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="egg-chicken-sausage-toast" aria-label="Choose: Egg and Chicken Sausage on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="omelette plain, ham and cheese, or spanish simples, de fiambre e queijo ou espanhola breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Omelette</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Omelette</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Plain, ham and cheese, or Spanish</p>
         
-        <button class="d-add" type="button" data-add="omelette" aria-label="Choose: Omelette"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="omelette" aria-label="Choose: Omelette"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="baked beans on toast baked beans served on toasted bread feijao cozido (baked beans) sobre pao torrado breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Baked Beans on Toast</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Baked Beans on Toast</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Baked beans served on toasted bread</p>
         
-        <button class="d-add" type="button" data-add="baked-beans-toast" aria-label="Add: Baked Beans on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="baked-beans-toast" aria-label="Add: Baked Beans on Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="french toast served with honey and cinnamon servido com mel e canela breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">French Toast</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">French Toast</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Served with honey and cinnamon</p>
         
-        <button class="d-add" type="button" data-add="french-toast" aria-label="Add: French Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="french-toast" aria-label="Add: French Toast"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="pancakes plain, or with banana and maple syrup simples ou com banana e xarope de acer breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Pancakes</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Pancakes</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Plain, or with banana and maple syrup</p>
         
-        <button class="d-add" type="button" data-add="pancakes" aria-label="Choose: Pancakes"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pancakes" aria-label="Choose: Pancakes"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="cereal choices chocolate cereal or cornflakes, with hot or cold milk cereais de chocolate ou flocos de milho, servidos com leite quente ou frio breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Cereal Choices</h3><p class="dl-price"><b class="">$4</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Cereal Choices</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$4</b></p></div>
         
         
         <p class="dl-desc">Chocolate cereal or cornflakes, with hot or cold milk</p>
         
-        <button class="d-add" type="button" data-add="cereal-choices" aria-label="Choose: Cereal Choices"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="cereal-choices" aria-label="Choose: Cereal Choices"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="seasonal fruit salad selection of fruits in season selecao de frutas da epoca breakfast pequeno-almoco">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Seasonal Fruit Salad</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Seasonal Fruit Salad</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         <p class="dl-desc">Selection of fruits in season</p>
         
-        <button class="d-add" type="button" data-add="seasonal-fruit-salad" aria-label="Add: Seasonal Fruit Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="seasonal-fruit-salad" aria-label="Add: Seasonal Fruit Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-salad" data-cat="salad" aria-labelledby="cat-salad-title">
       <header class="menu-cat-head"><h3 id="cat-salad-title">Salad</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="caesar salad seared herb chicken with lettuce, boiled egg, pork bacon, crouton &amp; caesar dressing frango selado com ervas, alface, ovo cozido, bacon de porco, croutons e molho caesar salad saladas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Caesar Salad</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Caesar Salad</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         
         
         <p class="dl-desc">Seared herb chicken with lettuce, boiled egg, pork bacon, crouton &amp; Caesar dressing</p>
         
-        <button class="d-add" type="button" data-add="caesar-salad" aria-label="Add: Caesar Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="caesar-salad" aria-label="Add: Caesar Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="greek salad feta, olives, tomato and cucumber over mixed leaves, with lauhata dressing feta, azeitonas, tomate e pepino sobre salada variada, com molho lauhata salad saladas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Greek Salad</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Greek Salad</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         
         
         <p class="dl-desc">Feta, olives, tomato and cucumber over mixed leaves, with Lauhata dressing</p>
         
-        <button class="d-add" type="button" data-add="greek-salad" aria-label="Add: Greek Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="greek-salad" aria-label="Add: Greek Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="tuna salad tuna, lettuce, tomato, onion and cucumber, with lauhata dressing atum, alface, tomate, cebola e pepino com molho lauhata salad saladas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Tuna Salad</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Tuna Salad</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         
         
         <p class="dl-desc">Tuna, lettuce, tomato, onion and cucumber, with Lauhata dressing</p>
         
-        <button class="d-add" type="button" data-add="tuna-salad" aria-label="Add: Tuna Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="tuna-salad" aria-label="Add: Tuna Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-starters" data-cat="starters" aria-labelledby="cat-starters-title">
       <header class="menu-cat-head"><h3 id="cat-starters-title">Starters</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="clams &amp; garlic bread clams cooked in white wine and garlic, with coriander leaves ameijoas cozinhadas em vinho branco e alho, com folhas de coentros starters entradas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Clams &amp; Garlic Bread</h3><p class="dl-price"><b class="">$10</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Clams &amp; Garlic Bread</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$10</b></p></div>
         
         
         <p class="dl-desc">Clams cooked in white wine and garlic, with coriander leaves</p>
         
-        <button class="d-add" type="button" data-add="clams-garlic-bread" aria-label="Add: Clams &amp; Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="clams-garlic-bread" aria-label="Add: Clams &amp; Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="calamari rings calamari rings with a chilli mayonnaise aneis de lula com maionese de chilli starters entradas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Calamari Rings</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Calamari Rings</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Calamari rings with a chilli mayonnaise</p>
         
-        <button class="d-add" type="button" data-add="calamari-rings" aria-label="Add: Calamari Rings"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="calamari-rings" aria-label="Add: Calamari Rings"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="satay (starter) four satay skewers with tamarind sauce quatro espetadas de satay com molho de tamarindo starters entradas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Satay (Starter)</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Satay (Starter)</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Four satay skewers with tamarind sauce</p>
         
-        <button class="d-add" type="button" data-add="satay-starter" aria-label="Choose: Satay (Starter)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="satay-starter" aria-label="Choose: Satay (Starter)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="spring rolls or samosa eight pieces, with sweet chilli sauce oito pecas, com molho de chilli doce starters entradas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Spring Rolls or Samosa</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Spring Rolls or Samosa</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">Eight pieces, with sweet chilli sauce</p>
         
-        <button class="d-add" type="button" data-add="spring-rolls-samosa" aria-label="Choose: Spring Rolls or Samosa"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="spring-rolls-samosa" aria-label="Choose: Spring Rolls or Samosa"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="chips chips with sweet tomato or chilli sauce batatas fritas com molho doce de tomate ou de chilli starters entradas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Chips</h3><p class="dl-price"><b class="">$5–$10</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Chips</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5–$10</b></p></div>
         
         
         <p class="dl-desc">Chips with sweet tomato or chilli sauce</p>
         
-        <button class="d-add" type="button" data-add="chips-starter" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="chips-starter" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-soup" data-cat="soup" aria-labelledby="cat-soup-title">
       <header class="menu-cat-head"><h3 id="cat-soup-title">Soup</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="potato soup with chorizo and plain toast com chourico e pao torrado soup sopas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Potato Soup</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Potato Soup</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         
         
         <p class="dl-desc">With chorizo and plain toast</p>
         
-        <button class="d-add" type="button" data-add="potato-soup" aria-label="Add: Potato Soup"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="potato-soup" aria-label="Add: Potato Soup"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="tom yum prawns clear spicy seafood broth caldo de marisco picante e limpido soup sopas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Tom Yum Prawns</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Tom Yum Prawns</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         
         
         <p class="dl-desc">Clear spicy seafood broth</p>
         
-        <button class="d-add" type="button" data-add="tom-yum-prawns" aria-label="Add: Tom Yum Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="tom-yum-prawns" aria-label="Add: Tom Yum Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-main" data-cat="main" aria-labelledby="cat-main-title">
       <header class="menu-cat-head"><h3 id="cat-main-title">Main Course</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="grilled fish fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad filete de peixe com molho de limao e manteiga, batatas assadas com alecrim e salada verde main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Grilled Fish</h3><p class="dl-price"><b class="">$18</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Grilled Fish</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$18</b></p></div>
         
         
         <p class="dl-desc">Fish fillet with a lemon and butter sauce, rosemary roast potatoes and green salad</p>
         
-        <button class="d-add" type="button" data-add="grilled-fish" aria-label="Add: Grilled Fish"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="grilled-fish" aria-label="Add: Grilled Fish"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="steak (bitoque) porterhouse steak with chips, salad and a fried egg bife porterhouse com batatas fritas, salada e ovo estrelado main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Steak (Bitoque)</h3><p class="dl-price"><b class="">$19</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Steak (Bitoque)</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$19</b></p></div>
         
         
         <p class="dl-desc">Porterhouse steak with chips, salad and a fried egg</p>
         
-        <button class="d-add" type="button" data-add="steak-bitoque" aria-label="Add: Steak (Bitoque)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="steak-bitoque" aria-label="Add: Steak (Bitoque)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="grilled chicken served with roast potato and salad servido com batata assada e salada main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Grilled Chicken</h3><p class="dl-price"><b class="">$15</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Grilled Chicken</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$15</b></p></div>
         
         
         <p class="dl-desc">Served with roast potato and salad</p>
         
-        <button class="d-add" type="button" data-add="grilled-chicken" aria-label="Add: Grilled Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="grilled-chicken" aria-label="Add: Grilled Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="grilled pork belly served with roast potato and salad servida com batata assada e salada main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Grilled Pork Belly</h3><p class="dl-price"><b class="">$15</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Grilled Pork Belly</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$15</b></p></div>
         
         
         <p class="dl-desc">Served with roast potato and salad</p>
         
-        <button class="d-add" type="button" data-add="grilled-pork-belly" aria-label="Add: Grilled Pork Belly"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="grilled-pork-belly" aria-label="Add: Grilled Pork Belly"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="saute prawns prawns served with green salad and garlic bread gambas servidas com salada verde e pao de alho main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Sauté Prawns</h3><p class="dl-price"><b class="">$18</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Sauté Prawns</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$18</b></p></div>
         
         
         <p class="dl-desc">Prawns served with green salad and garlic bread</p>
         
-        <button class="d-add" type="button" data-add="saute-prawns" aria-label="Add: Sauté Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="saute-prawns" aria-label="Add: Sauté Prawns"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="satay (main course) 6 satay sticks served with steamed rice and chilli 6 espetadas satay servidas com arroz branco e chilli main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Satay (Main Course)</h3><p class="dl-price"><b class="">$12</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Satay (Main Course)</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$12</b></p></div>
         
         
         <p class="dl-desc">6 satay sticks served with steamed rice and chilli</p>
         
-        <button class="d-add" type="button" data-add="satay-main" aria-label="Choose: Satay (Main Course)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="satay-main" aria-label="Choose: Satay (Main Course)"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="chicken curry served with steamed rice and salad servido com arroz branco e salada main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Chicken Curry</h3><p class="dl-price"><b class="">$15</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Chicken Curry</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$15</b></p></div>
         
         
         <p class="dl-desc">Served with steamed rice and salad</p>
         
-        <button class="d-add" type="button" data-add="chicken-curry" aria-label="Add: Chicken Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="chicken-curry" aria-label="Add: Chicken Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="spaghetti bolognese or carbonara, with garlic bread a bolonhesa ou a carbonara, com pao de alho main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Spaghetti</h3><p class="dl-price"><b class="">$15</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Spaghetti</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$15</b></p></div>
         
         
         <p class="dl-desc">Bolognese or carbonara, with garlic bread</p>
         
-        <button class="d-add" type="button" data-add="spaghetti" aria-label="Choose: Spaghetti"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="spaghetti" aria-label="Choose: Spaghetti"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="mie goreng fried noodles with chicken, sausage or prawns, or mixed massa salteada (noodles) com frango, salsicha ou gambas, ou mista main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Mie Goreng</h3><p class="dl-price"><b class="">$10</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Mie Goreng</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$10</b></p></div>
         
         
         <p class="dl-desc">Fried noodles with chicken, sausage or prawns, or mixed</p>
         
-        <button class="d-add" type="button" data-add="mie-goreng" aria-label="Choose: Mie Goreng"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="mie-goreng" aria-label="Choose: Mie Goreng"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="lauhata special fried rice chicken, sausage, prawns and egg frango, salsicha, gambas e ovo main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Lauhata Special Fried Rice</h3><p class="dl-price"><b class="">$10</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Lauhata Special Fried Rice</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$10</b></p></div>
         
         
         <p class="dl-desc">Chicken, sausage, prawns and egg</p>
         
-        <button class="d-add" type="button" data-add="lauhata-special-fried-rice" aria-label="Add: Lauhata Special Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="lauhata-special-fried-rice" aria-label="Add: Lauhata Special Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="grilled burger with lettuce, tomato, onion and cheese, and french fries alface, tomate, cebola e queijo, servido com batatas fritas main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Grilled Burger</h3><p class="dl-price"><b class="">$12</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Grilled Burger</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$12</b></p></div>
         
         
         <p class="dl-desc">With lettuce, tomato, onion and cheese, and French fries</p>
         
-        <button class="d-add" type="button" data-add="grilled-burger" aria-label="Choose: Grilled Burger"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="grilled-burger" aria-label="Choose: Grilled Burger"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="club sandwich lettuce, tomato, chicken, bacon and egg, with french fries alface, tomate, frango, bacon e ovo, com batatas fritas main course pratos principais">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Club Sandwich</h3><p class="dl-price"><b class="">$10</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Club Sandwich</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$10</b></p></div>
         
         
         <p class="dl-desc">Lettuce, tomato, chicken, bacon and egg, with French fries</p>
         
-        <button class="d-add" type="button" data-add="club-sandwich" aria-label="Choose: Club Sandwich"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="club-sandwich" aria-label="Choose: Club Sandwich"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-vegetarian" data-cat="vegetarian" aria-labelledby="cat-vegetarian-title">
       <header class="menu-cat-head"><h3 id="cat-vegetarian-title">Vegetarian</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="vegetarian fried rice served with fried egg and green salad servido com ovo frito e salada verde vegetarian vegetariano">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Vegetarian Fried Rice</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Vegetarian Fried Rice</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         <ul class="dl-badges"><li class="is-diet">Vegetarian</li></ul>
         
         <p class="dl-desc">Served with fried egg and green salad</p>
         
-        <button class="d-add" type="button" data-add="vegetarian-fried-rice" aria-label="Add: Vegetarian Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="vegetarian-fried-rice" aria-label="Add: Vegetarian Fried Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="spaghetti pesto served with garlic bread servido com pao de alho vegetarian vegetariano">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Spaghetti Pesto</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Spaghetti Pesto</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         <ul class="dl-badges"><li class="is-diet">Vegetarian</li></ul>
         
         <p class="dl-desc">Served with garlic bread</p>
         
-        <button class="d-add" type="button" data-add="spaghetti-pesto" aria-label="Add: Spaghetti Pesto"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="spaghetti-pesto" aria-label="Add: Spaghetti Pesto"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="vegetable curry served with steamed rice and chapati servido com arroz branco e chapati vegetarian vegetariano">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Vegetable Curry</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Vegetable Curry</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         <ul class="dl-badges"><li class="is-diet">Vegetarian</li></ul>
         
         <p class="dl-desc">Served with steamed rice and chapati</p>
         
-        <button class="d-add" type="button" data-add="vegetable-curry" aria-label="Add: Vegetable Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="vegetable-curry" aria-label="Add: Vegetable Curry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="vegetarian dhal fry served with steamed rice and chapati servido com arroz branco e chapati vegetarian vegetariano">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Vegetarian Dhal Fry</h3><p class="dl-price"><b class="">$8</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Vegetarian Dhal Fry</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$8</b></p></div>
         <ul class="dl-badges"><li class="is-diet">Vegetarian</li></ul>
         
         <p class="dl-desc">Served with steamed rice and chapati</p>
         
-        <button class="d-add" type="button" data-add="vegetarian-dhal-fry" aria-label="Add: Vegetarian Dhal Fry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="vegetarian-dhal-fry" aria-label="Add: Vegetarian Dhal Fry"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="stir-fry vegetables local vegetables legumes locais vegetarian vegetariano">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Stir-fry Vegetables</h3><p class="dl-price"><b class="">$6</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Stir-fry Vegetables</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$6</b></p></div>
         <ul class="dl-badges"><li class="is-diet">Vegetarian</li></ul>
         
         <p class="dl-desc">Local vegetables</p>
         
-        <button class="d-add" type="button" data-add="stir-fry-vegetables" aria-label="Add: Stir-fry Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="stir-fry-vegetables" aria-label="Add: Stir-fry Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-sides" data-cat="sides" aria-labelledby="cat-sides-title">
       <header class="menu-cat-head"><h3 id="cat-sides-title">Side Order</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="sauteed vegetables side order acompanhamentos">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Sauteed Vegetables</h3><p class="dl-price"><b class="">$4</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Sauteed Vegetables</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$4</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="sauteed-vegetables" aria-label="Add: Sauteed Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="sauteed-vegetables" aria-label="Add: Sauteed Vegetables"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="green salad side order acompanhamentos">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Green Salad</h3><p class="dl-price"><b class="">$4</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Green Salad</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$4</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="green-salad" aria-label="Add: Green Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="green-salad" aria-label="Add: Green Salad"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="chips side order acompanhamentos">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Chips</h3><p class="dl-price"><b class="">$5–$10</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Chips</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5–$10</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="chips-side" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="chips-side" aria-label="Choose: Chips"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Choose</span></span></button>
     </article><article class="dline" data-dish data-search="spicy potato wedges side order acompanhamentos">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Spicy Potato Wedges</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Spicy Potato Wedges</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="spicy-potato-wedges" aria-label="Add: Spicy Potato Wedges"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="spicy-potato-wedges" aria-label="Add: Spicy Potato Wedges"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="garlic bread side order acompanhamentos">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Garlic Bread</h3><p class="dl-price"><b class="">$4</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Garlic Bread</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$4</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="garlic-bread" aria-label="Add: Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="garlic-bread" aria-label="Add: Garlic Bread"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="steam rice side order acompanhamentos">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Steam Rice</h3><p class="dl-price"><b class="">$2</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Steam Rice</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$2</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="steam-rice" aria-label="Add: Steam Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="steam-rice" aria-label="Add: Steam Rice"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-dessert" data-cat="dessert" aria-labelledby="cat-dessert-title">
       <header class="menu-cat-head"><h3 id="cat-dessert-title">Dessert</h3><p>Based on availability.</p></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="cheesecake dessert sobremesas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Cheesecake</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Cheesecake</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="cheesecake" aria-label="Add: Cheesecake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="cheesecake" aria-label="Add: Cheesecake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="orange cake dessert sobremesas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Orange Cake</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Orange Cake</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="orange-cake" aria-label="Add: Orange Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="orange-cake" aria-label="Add: Orange Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="chocolate mud cake dessert sobremesas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Chocolate Mud Cake</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Chocolate Mud Cake</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="chocolate-mud-cake" aria-label="Add: Chocolate Mud Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="chocolate-mud-cake" aria-label="Add: Chocolate Mud Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="red velvet cake dessert sobremesas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Red Velvet Cake</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Red Velvet Cake</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="red-velvet-cake" aria-label="Add: Red Velvet Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="red-velvet-cake" aria-label="Add: Red Velvet Cake"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="mixed ice cream dessert sobremesas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Mixed Ice Cream</h3><p class="dl-price"><b class="">$4</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Mixed Ice Cream</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$4</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="mixed-ice-cream" aria-label="Add: Mixed Ice Cream"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="mixed-ice-cream" aria-label="Add: Mixed Ice Cream"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="fruit platter dessert sobremesas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Fruit Platter</h3><p class="dl-price"><b class="">$5</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Fruit Platter</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$5</b></p></div>
         
         
         
         
-        <button class="d-add" type="button" data-add="fruit-platter" aria-label="Add: Fruit Platter"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="fruit-platter" aria-label="Add: Fruit Platter"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section><section class="menu-cat" id="cat-pizza" data-cat="pizza" aria-labelledby="cat-pizza-title">
       <header class="menu-cat-head"><h3 id="cat-pizza-title">Pizza</h3></header>
       <div class="menu-grid"><article class="dline" data-dish data-search="margarita sliced tomato, feta and mozzarella tomate em fatias, feta e mozzarella pizza pizzas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Margarita</h3><p class="dl-price"><b class="">$17</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Margarita</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$17</b></p></div>
         
         
         <p class="dl-desc">Sliced tomato, feta and mozzarella</p>
         
-        <button class="d-add" type="button" data-add="pizza-margarita" aria-label="Add: Margarita"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pizza-margarita" aria-label="Add: Margarita"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="pepperoni onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella cebola, cogumelos, pimento, azeitonas, feta, pepperoni e mozzarella pizza pizzas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Pepperoni</h3><p class="dl-price"><b class="">$20</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Pepperoni</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$20</b></p></div>
         
         
         <p class="dl-desc">Onion, mushrooms, capsicum, olives, feta, pepperoni and mozzarella</p>
         
-        <button class="d-add" type="button" data-add="pizza-pepperoni" aria-label="Add: Pepperoni"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pizza-pepperoni" aria-label="Add: Pepperoni"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="hawaiian ham, pineapple, feta and mozzarella fiambre, ananas, feta e mozzarella pizza pizzas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Hawaiian</h3><p class="dl-price"><b class="">$20</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Hawaiian</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$20</b></p></div>
         
         
         <p class="dl-desc">Ham, pineapple, feta and mozzarella</p>
         
-        <button class="d-add" type="button" data-add="pizza-hawaiian" aria-label="Add: Hawaiian"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pizza-hawaiian" aria-label="Add: Hawaiian"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="spicy chicken chicken, bacon, chilli, feta and mozzarella frango, bacon, chilli, feta e mozzarella pizza pizzas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Spicy Chicken</h3><p class="dl-price"><b class="">$20</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Spicy Chicken</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$20</b></p></div>
         
         
         <p class="dl-desc">Chicken, bacon, chilli, feta and mozzarella</p>
         
-        <button class="d-add" type="button" data-add="pizza-spicy-chicken" aria-label="Add: Spicy Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pizza-spicy-chicken" aria-label="Add: Spicy Chicken"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="lauhata seafood tuna, prawns, feta and mozzarella atum, gambas, feta e mozzarella pizza pizzas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Lauhata Seafood</h3><p class="dl-price"><b class="">$21</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Lauhata Seafood</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$21</b></p></div>
         
         
         <p class="dl-desc">Tuna, prawns, feta and mozzarella</p>
         
-        <button class="d-add" type="button" data-add="pizza-lauhata-seafood" aria-label="Add: Lauhata Seafood"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pizza-lauhata-seafood" aria-label="Add: Lauhata Seafood"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article><article class="dline" data-dish data-search="meat lover onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella cebola, azeitonas, frango, salsichas, fiambre, pepperoni, bacon, feta e mozzarella pizza pizzas">
-      <div class="dl-photo"><div class="dish-photo is-branded" role="img" aria-label="Photo coming soon"><svg class="icon" aria-hidden="true"><use href="#i-cutlery"></use></svg><span class="bp-word" aria-hidden="true">Lauhata</span></div></div>
+      
       <div class="dl-body">
-        <div class="dl-head"><h3 class="dl-name">Meat Lover</h3><p class="dl-price"><b class="">$21</b></p></div>
+        <div class="dl-head"><h3 class="dl-name">Meat Lover</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b class="">$21</b></p></div>
         
         
         <p class="dl-desc">Onions, olives, chicken, sausages, ham, pepperoni, bacon, feta and mozzarella</p>
         
-        <button class="d-add" type="button" data-add="pizza-meat-lover" aria-label="Add: Meat Lover"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
       </div>
+      <button class="d-add" type="button" data-add="pizza-meat-lover" aria-label="Add: Meat Lover"><span data-add-label><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>Add</span></span></button>
     </article></div>
     </section>
       <p class="menu-empty" hidden data-menu-empty></p>
@@ -753,16 +747,16 @@
 
 <section class="scene final-cta" aria-labelledby="final-title">
   <div class="scene-media"><figure class="media ">
-  <img src="../assets/img/fotos/aerea-lugar-1600.jpg" srcset="../assets/img/fotos/aerea-lugar-640.jpg 640w, ../assets/img/fotos/aerea-lugar-1080.jpg 1080w, ../assets/img/fotos/aerea-lugar-1600.jpg 1600w" sizes="100vw" alt="" width="1600" height="900" loading="lazy" decoding="async">
+  <img src="../assets/img/fotos/lauhata-praia-do-mar-1080.webp" srcset="../assets/img/fotos/lauhata-praia-do-mar-640.webp 640w, ../assets/img/fotos/lauhata-praia-do-mar-1080.webp 1080w, ../assets/img/fotos/lauhata-praia-do-mar-1600.webp 1600w, ../assets/img/fotos/lauhata-praia-do-mar-2000.webp 2000w" sizes="max(100vw, 92vh)" alt="" width="2000" height="1125" loading="lazy" decoding="async">
 </figure></div>
   <div class="wrap scene-text">
     <p class="scene-note" data-fade>Liquiçá, Timor-Leste</p>
-    <h2 id="final-title" class="scene-line final-line" data-split>Your Next Moment Starts Here.</h2>
-    <p class="final-lead" data-fade>Enjoy good food, comfortable accommodation and memorable moments at Lauhata.</p>
+    <h2 id="final-title" class="scene-line final-line" data-split>A table, or a room?</h2>
+    <p class="final-lead" data-fade>Send the request on WhatsApp. The team replies to confirm, and you pay when you are here.</p>
     <div class="btn-row" data-fade>
-      <a class="btn btn-terra btn-lg" href="../contact/" data-book-open="room">Request a Room<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
-      <a class="btn btn-ghost-light btn-lg" href="../contact/" data-book-open="table">Reserve a Table</a>
-      <a class="text-link on-dark" href="../contact/">Get in Touch<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      <a class="btn btn-terra btn-lg" href="../contact/" data-book-open="room">Request a room<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      <a class="btn btn-ghost-light btn-lg" href="../contact/" data-book-open="table">Reserve a table</a>
+      <a class="text-link on-dark" href="../contact/">Get in touch<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
     </div>
   </div>
 </section>
@@ -771,7 +765,7 @@
   <div class="wrap ft-top">
     <div class="ft-brand">
       <a class="brand brand-light" href="../" aria-label="Lauhata Beach Escape — Home">
-  <span class="brand-mark" aria-hidden="true"><img src="../assets/img/brand/logo-lauhata-beach-escape-160.png" width="160" height="160" alt="" loading="lazy"></span>
+  <span class="brand-mark" aria-hidden="true"><img src="../assets/img/brand/logo-lauhata-beach-escape-160.webp" width="160" height="160" alt="" loading="lazy"></span>
   <span class="brand-text"><span class="brand-name">Lauhata</span> <span class="brand-line">Beach Escape</span></span>
 </a>
       
@@ -782,14 +776,14 @@
     <nav class="ft-col" aria-label="Explore">
       <h2 class="footer-h">Explore</h2>
       <ul class="footer-list">
-        <li><a href="../restaurant/">Menu</a></li>
+        <li><a href="../restaurant/">Restaurant</a></li>
         <li><a href="../stay/">Hotel</a></li>
-        <li><a href="../about/">Our Story</a></li>
         <li><a href="../events/">Experiences</a></li>
         <li><a href="../gallery/">Gallery</a></li>
-        <li><a href="../contact/#faq">FAQ</a></li>
-        <li><a href="../discover-liquica/">Discover Liquiçá</a></li>
         <li><a href="../contact/">Contact</a></li>
+        <li><a href="../about/">Our Story</a></li>
+        <li><a href="../discover-liquica/">Discover Liquiçá</a></li>
+        <li><a href="../contact/#faq">FAQ</a></li>
       </ul>
     </nav>
     <div class="ft-col">
@@ -815,7 +809,7 @@
   <div class="ft-mark" aria-hidden="true" data-ft-mark><span>LAUHATA</span></div>
   <div class="wrap footer-base">
     <p>© 2026 Lauhata Beach Escape. All rights reserved. <span class="footer-note">Some photos are illustrative and are marked as such.</span></p>
-    <p><a href="../privacy/">Privacy policy</a> · Website by <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Elevate Web Studios</a></p>
+    <p><a href="#top">Back to top</a> · <a href="../privacy/">Privacy policy</a> · Website by <a href="https://theelevatewebstudios.com" target="_blank" rel="noopener">Elevate Web Studios</a></p>
   </div>
 </footer>
 <button class="cart-fab" type="button" data-cart-open data-cart-fab hidden><svg class="icon" aria-hidden="true"><use href="#i-cart"></use></svg><span class="cart-fab-label">View order</span><span class="cart-fab-n" data-fab-count></span><strong data-fab-total></strong></button>
@@ -890,7 +884,6 @@
 </div>
 <a class="wa-float" href="https://wa.me/67077401111?text=Hello!%20I%20would%20like%20to%20know%20more%20about%20Lauhata." target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg></a>
 
-<button class="to-top" type="button" data-to-top aria-label="Back to top" title="Back to top" hidden><svg class="icon" aria-hidden="true"><use href="#i-up"></use></svg></button>
 <dialog class="book-dialog" data-book-dialog aria-labelledby="bd-title-en">
   <header class="bd-head"><h2 id="bd-title-en">Book at Lauhata</h2><button class="icon-btn" type="button" aria-label="Close" data-book-close><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></header>
   <p class="bd-intro">Choose a table or a room. The request goes to Lauhata's WhatsApp, and they confirm availability with you.</p>
@@ -915,7 +908,7 @@
       <label class="bc-field"><span>Room</span><select name="room" data-pick="select"><option value="">No preference</option><option value="sea">Queen Room</option><option value="family">Queen &amp; Single Room</option></select></label>
       <label class="bc-field"><span>Name (optional)</span><input type="text" name="rName" autocomplete="name" maxlength="80"></label>
       <label class="bc-field bc-wide"><span>Notes (optional)</span><input type="text" name="rNotes" maxlength="200" placeholder="Special occasion, allergies, arrival time…"></label>
-      <button class="btn btn-terra btn-lg bc-submit" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Request a Room on WhatsApp</button>
+      <button class="btn btn-terra btn-lg bc-submit" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-whatsapp"></use></svg>Request a room on WhatsApp</button>
     </div>
     <p class="bc-error" role="alert" hidden data-bc-error></p>
     <p class="bc-note">Lauhata replies on WhatsApp to confirm availability. Payment is made in person at Lauhata. The website never asks for payment details.</p>

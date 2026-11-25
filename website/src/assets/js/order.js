@@ -153,7 +153,7 @@
     const opts = l.opts.map((o) => o[LANG]).join(" · ");
     // A small photo of the dish when the restaurant has one (menu.mjs / docs/FOTOS-PRATOS.md), otherwise its initial.
     const photo = MENU[l.id] && MENU[l.id].photo;
-    const thumb = photo ? `<img class="cl-thumb" src="${esc(photo)}" alt="" width="64" height="64" loading="lazy">` : `<span class="cl-thumb is-brand" aria-hidden="true">${icon("cutlery")}</span>`;
+    const thumb = photo ? `<img class="cl-thumb" src="${esc(photo)}" alt="" width="64" height="64" loading="lazy">` : "";
     return `<li class="cart-line" data-key="${esc(l.key)}">
       ${thumb}
       <div class="cl-main">

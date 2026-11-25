@@ -12,8 +12,9 @@
 //
 //   beds          owner-confirmed beds, as text, and `bedPlan` for the drawing (queen / single)
 //   amenities     owner-confirmed amenities only (shown as a list)
-//   images        image keys (images.mjs); the first is the lead photo. While Lauhata's own photos are missing these are
-//                 illustrative pictures, labelled as such on the page.
+//   images        photographs of the inside of this room type (none yet: never a stock picture)
+//   outside       Lauhata's own photographs of the outside of the rooms (doors, veranda, garden). They are the accommodation, not one
+//                 room type, and the pages say so (stay.insideNote) until there are interior photographs.
 // What the accommodation offers as a whole (brief of 22 Nov 2026, confirmed by the client; the Booking.com listing says the same). It is
 // the offer of Lauhata, NOT a feature of one room type, so it is shown once, beside both rooms. Nothing else may be added.
 export const lodgingAmenities = [
@@ -54,9 +55,9 @@ export default [
     suitability: null,
     price: "$90", // per night, per room (not per guest); client brief of 22 Nov 2026
     capacity: { pt: "Até 2 adultos", en: "Up to 2 adults" },
-    images: ["roomWarm", "roomBright", "verandaBamboo", "sunsetSea"],
+    images: [], // photographs of the INSIDE of this room: image keys with kind: "room" and placeholder: false
+    outside: ["stayEntrance", "stayGarden"],
     featured: true,
-    placeholder: true,
   },
   {
     id: "family",
@@ -82,7 +83,7 @@ export default [
     // PENDING: two children are the intended maximum, subject to the children's ages and the occupancy conditions, which Lauhata
     // must confirm. It is shown with a line saying so (stay.capacityPending); do not turn it into a firm policy before then.
     capacityPending: true,
-    images: ["roomFamily", "roomForest", "verandaWicker", "palmShadow"],
-    placeholder: true,
+    images: [],
+    outside: ["stayVeranda", "stayWalkway"],
   },
 ];

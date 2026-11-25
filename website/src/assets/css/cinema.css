@@ -1,14 +1,7 @@
-/* Lauhata — cinematic layer: full-screen heroes, scroll-driven motion, pinned horizontal dishes,
-   large room rows, custom cursor. Loaded after main.css. Every effect has a static fallback and
-   is switched off with prefers-reduced-motion. */
-
 /* ---------- Header over a full-screen photo ---------- */
 .has-hero .site-header { position: fixed; left: 0; right: 0; }
 .has-hero .site-header:not(.is-solid) { background: transparent; border-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.has-hero .site-header:not(.is-solid) .brand,
-.has-hero .site-header:not(.is-solid) .brand-mark,
-.has-hero .site-header:not(.is-solid) .nav-main a,
-.has-hero .site-header:not(.is-solid) .nav-toggle { color: #fff; }
+.has-hero .site-header:not(.is-solid) .brand, .has-hero .site-header:not(.is-solid) .brand-mark, .has-hero .site-header:not(.is-solid) .nav-main a, .has-hero .site-header:not(.is-solid) .nav-toggle { color: #fff; }
 .has-hero .site-header:not(.is-solid) .brand-line { color: rgba(255, 255, 255, 0.7); }
 .has-hero .site-header:not(.is-solid) .lang { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); }
 .has-hero .site-header:not(.is-solid) .lang-opt { color: rgba(255, 255, 255, 0.75); }
@@ -31,7 +24,7 @@
     linear-gradient(180deg, rgba(8, 24, 20, 0.55) 0%, rgba(8, 24, 20, 0) 26%, rgba(8, 24, 20, 0.05) 50%, rgba(8, 24, 20, 0.86) 100%),
     linear-gradient(90deg, rgba(8, 24, 20, 0.45) 0%, rgba(8, 24, 20, 0) 60%);
 }
-.eyebrow-light { color: var(--gold-soft); }
+
 .cine-content { position: absolute; left: 0; right: 0; bottom: clamp(13rem, 27vh, 16rem); z-index: 2; }
 .cine-hero.is-page .cine-content { bottom: clamp(3rem, 9vh, 5.5rem); }
 .cine-title { margin: 0; font-family: var(--serif); font-weight: 400; color: #fff; font-size: clamp(3.4rem, 8.6vw, 9.4rem); line-height: 0.98; letter-spacing: -0.04em; max-width: 14ch; }
@@ -45,32 +38,9 @@
 .cine-hero .crumbs ol { color: rgba(255, 255, 255, 0.7); }
 .cine-hero .crumbs a:hover { color: #fff; }
 .cine-hero .btn-row { margin-top: 2rem; }
-.cine-hero .hours-inline { border-color: rgba(255, 255, 255, 0.25); }
-.cine-hero .hours-inline strong { color: #fff; }
-.cine-hero .hours-inline .muted, .cine-hero .hours-inline .hours { color: rgba(255, 255, 255, 0.75); }
+
 .cine-hero .hours div { border-color: rgba(255, 255, 255, 0.18); }
-.cine-bar { position: absolute; left: 0; right: 0; bottom: clamp(1.4rem, 4vh, 2.4rem); z-index: 3; }
-.cine-bar .booking-card {
-  max-width: none; margin: 0; padding: 0.7rem; color: #fff;
-  background: rgba(10, 30, 25, 0.38); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4);
-  border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.5);
-  display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; align-items: stretch;
-}
-.cine-bar .bc-tabs { flex-direction: column; margin: 0; justify-content: center; }
-.cine-bar .bc-tabs button { color: rgba(255, 255, 255, 0.8); justify-content: flex-start; }
-.cine-bar .bc-tabs button[aria-selected="true"] { background: #fff; color: var(--forest); }
-.cine-bar .bc-tabs button:not([aria-selected="true"]):hover { background: rgba(255, 255, 255, 0.1); }
-.cine-bar .bc-field { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.12); }
-.cine-bar .bc-field > span { color: rgba(255, 255, 255, 0.65); }
-.cine-bar .bc-field input, .cine-bar .bc-field select { color: #fff; color-scheme: dark; }
-.cine-bar .bc-field select option { color: var(--ink); }
-.cine-bar .bc-select .icon { color: rgba(255, 255, 255, 0.7); }
-.cine-bar .bc-note { grid-column: 1 / -1; margin: 0 0.3rem; color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; }
-.cine-bar .bc-error { grid-column: 1 / -1; color: #ffb4a2; margin: 0 0.3rem; }
-.cine-bar .pending { color: var(--gold-soft); }
-.scroll-cue { position: absolute; right: var(--gutter); bottom: clamp(13rem, 27vh, 16rem); z-index: 2; display: grid; justify-items: center; gap: 0.8rem; color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; writing-mode: vertical-rl; }
-.scroll-cue i { position: relative; width: 1px; height: 64px; background: rgba(255, 255, 255, 0.3); overflow: hidden; }
-.scroll-cue i::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: #fff; animation: cue 2s ease-in-out infinite; }
+
 @keyframes cue { to { top: 100%; } }
 
 /* Hero entrance: split words rise, other bits fade up (JS adds .is-ready) */
@@ -82,72 +52,32 @@
 
 /* ---------- Statement (words light up while scrolling) ---------- */
 .statement { padding: clamp(6rem, 14vw, 11rem) 0 clamp(4rem, 8vw, 6rem); }
-.statement-text { margin: 0; font-family: var(--serif); font-size: clamp(2rem, 4.2vw, 4.4rem); line-height: 1.12; letter-spacing: -0.025em; color: var(--ink); max-width: 22ch; max-width: 1100px; }
 
 /* ---------- Media helpers: parallax + clip reveal ---------- */
 .media.has-parallax img { transform: scale(1.18); will-change: transform; }
 .js [data-clip] { clip-path: inset(18% 8% 18% 8% round var(--r-lg)); transition: clip-path 1.4s var(--ease); }
 .js [data-clip].is-in { clip-path: inset(0 0 0 0 round var(--r-lg)); }
 
-/* ---------- Most chosen dishes and rooms (homepage) ---------- */
-
-/* ---------- Rooms (large rows) ---------- */
-.room-num { display: block; font-family: var(--serif); font-size: clamp(3.4rem, 6vw, 5.6rem); line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(220, 180, 105, 0.7); }
-.room-num small { font-size: 0.32em; -webkit-text-stroke: 0; color: rgba(243, 233, 215, 0.5); margin-left: 0.4rem; vertical-align: top; }
-
-/* ---------- Story (sticky visual) ---------- */
-.story-grid { align-items: start; }
-.story-sticky { position: sticky; top: 14vh; }
-.story-lead { font-size: 1.12rem; }
-.pull-quote { margin: 2.4rem 0 0; font-family: var(--serif); font-style: italic; font-size: clamp(2.4rem, 4vw, 3.8rem); line-height: 1.05; color: var(--terra); }
-.pull-quote span { display: block; margin-top: 0.6rem; font-family: var(--sans); font-style: normal; font-size: 0.9rem; color: var(--muted); }
-@media (min-width: 861px) { .story-text { padding-block: 6vh 2vh; } }
-
 /* ---------- Day timeline with a drawn line ---------- */
 .day-track { position: relative; }
-.day-line { position: absolute; left: 26px; right: 26px; top: 26px; height: 2px; background: rgba(217, 168, 95, 0.22); }
-.day-line span { display: block; height: 100%; background: var(--gold); transform-origin: left; transform: scaleX(var(--p, 0)); }
+
 .day .step:not(:last-child)::before { display: none; }
 
-/* ---------- Full-screen CTA ---------- */
-.cine-cta { position: relative; min-height: 92svh; display: grid; place-items: center; overflow: hidden; color: #fff; text-align: center; isolation: isolate; background: #0c2827; }
-.cine-cta-bg, .cine-cta-bg .media { position: absolute; inset: 0; z-index: -2; }
-.cine-cta-shade { position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at center, rgba(8, 24, 20, 0.35), rgba(8, 24, 20, 0.82)); }
-.cine-cta-content { display: grid; justify-items: center; padding-block: 6rem; }
-.cta-mark { width: 56px; height: 56px; color: #fff; margin-bottom: 1.6rem; }
-.cine-cta-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.8rem, 7vw, 7.4rem); line-height: 0.98; letter-spacing: -0.035em; max-width: 13ch; color: #fff; }
-.cine-cta-title em { color: var(--gold-soft); }
-.cine-cta-content > p { margin: 1.6rem 0 0; max-width: 32em; color: rgba(255, 255, 255, 0.85); font-size: 1.08rem; }
-
 /* ---------- Footer wordmark + note ---------- */
-.footer-mega { margin: 2rem 0 0; text-align: center; font-family: var(--serif); font-size: 23vw; line-height: 0.8; letter-spacing: -0.04em; color: rgba(243, 233, 215, 0.07); white-space: nowrap; overflow: hidden; user-select: none; }
+
 .footer-note { margin-top: 1rem; font-size: 0.8rem; color: rgba(243, 233, 215, 0.5); }
 
-
 /* ---------- Mobile ---------- */
-@media (max-width: 1020px) {
-  .cine-bar .booking-card { grid-template-columns: 1fr; }
-  .cine-bar .bc-tabs { flex-direction: row; }
-}
+
 @media (max-width: 860px) {
   .cine-hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--header-h) + 2rem); }
   .cine-hero.is-page { min-height: 82svh; }
   .cine-content, .cine-hero.is-page .cine-content { position: relative; bottom: auto; padding-bottom: 1.8rem; }
   .cine-title { font-size: clamp(3.2rem, 15vw, 5.4rem); }
   .cine-title.is-page { font-size: clamp(2.5rem, 11vw, 4rem); }
-  .cine-bar { position: relative; bottom: auto; padding-bottom: 1.4rem; }
-  .cine-bar .bc-row { grid-template-columns: 1fr 1fr; }
-  .cine-bar .bc-row .bc-field:first-child, .cine-bar .bc-submit { grid-column: 1 / -1; }
-  .scroll-cue { display: none; }
-  .statement-text { font-size: clamp(1.7rem, 7vw, 2.6rem); }
+
     /* Dishes: native swipe with snap instead of the pinned scroll */
-  .story-sticky { position: relative; top: auto; }
-  .day-line { display: none; }
-  .footer-mega { font-size: 26vw; }
-}
-@media (max-width: 640px) {
-  .cine-bar .bc-row { grid-template-columns: 1fr; }
-  .cine-bar .bc-tabs button .icon { display: none; }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -155,8 +85,8 @@
   html.js:not(.cine-motion) [data-fade] { opacity: 1; transform: none; }
   html.js:not(.cine-motion) [data-clip] { clip-path: none; }
   html:not(.cine-motion) .cine-slides .slide.is-active img, html:not(.cine-motion) .media.has-parallax img { animation: none; transform: none; }
-  html:not(.cine-motion) .day-line span { transform: none; }
+
 }
 
 /* ---------- Scrolling feel (cinema.js, tier B) ---------- */
-.gs-anim { transition: none !important; will-change: transform, opacity; }
+

@@ -18,24 +18,11 @@
   .wa-float .icon { width: 1.7rem; height: 1.7rem; }
   .field input, .field textarea, .field select, .field .pk-btn { min-height: 3.3rem; }
   .cine-hero { min-height: 640px; }
-  .dk-title { font-size: clamp(2.3rem, 3.2vw, 3.6rem); }
-
-  .ch-eat { aspect-ratio: 10 / 9; }
-  .ch-sleep { aspect-ratio: 4 / 5; margin-top: 5rem; }
 
   /* display type: the large clamps stop earlier */
   .hx-title { font-size: clamp(3.2rem, 5.7vw, 6.8rem); }
   .cine-title { font-size: clamp(3.4rem, 6.4vw, 7.6rem); }
   .cine-title.is-page { font-size: clamp(2.6rem, 4.4vw, 4.8rem); }
   .title { font-size: clamp(2.2rem, 2.2vw + 0.6rem, 3.3rem); }
-  .choose-line { font-size: clamp(2.5rem, 4.2vw, 4.6rem); }
-  .ch-title { font-size: clamp(3.6rem, 6.2vw, 6.8rem); }
-  .ch-sleep .ch-title { font-size: clamp(3.2rem, 5vw, 5.4rem); }
-  .bkf-hours b { font-size: clamp(2.6rem, 3.4vw, 3.6rem); }
 
-  .cu-title { font-size: clamp(2.8rem, 5.2vw, 6rem); }
-  .cu-big { font-size: clamp(3.2rem, 9vw, 10rem); }
-  .cine-cta-title { font-size: clamp(2.8rem, 5.6vw, 6.2rem); }
-  .statement-text { font-size: clamp(2rem, 3.6vw, 4rem); }
-  .pull-quote { font-size: clamp(2.4rem, 3.2vw, 3.4rem); }
 }

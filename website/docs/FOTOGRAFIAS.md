@@ -28,7 +28,7 @@ Atualizado a 5 de novembro de 2026. Cada fotografia do site tem uma legenda: **�
   ilustrativa sai sozinha. Lista de ids em `FOTOS-PRATOS.md`.
 - **Outras fotos:**
   1. Pôr o original em `fotos-originais/`.
-  2. Gerar os tamanhos com `tools/otimizar-fotos.ps1` (slug → `<slug>-640/1080/1600.jpg`).
+  2. Acrescentar a fotografia a `tools/revelar-fotos.mjs` e correr `npm run fotos -- <slug>` (gera `<slug>-640/1080/1600/2200.webp`).
   3. Apontar a chave em `images.mjs` para `foto:<slug>` e pôr `placeholder: false`.
 - **Lugares em Descobrir Liquiçá:** a lista `PLACE_PHOTOS` em `src/pages.mjs` diz que foto acompanha cada lugar.
   Descobrir Liquiçá mostra só três lugares (forte de Maubara, ruínas da prisão de Aipelo e centro de Liquiçá); a tecelagem, as praias e o lago salgado foram retirados em nov. 2026.

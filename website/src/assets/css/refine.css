@@ -1,13 +1,3 @@
-/* =====================================================================================================================
-   refine.css — the final layer of the cascade (Nov 2026 redesign, built on the 8 November version).
-   Rules followed from the installed skills:
-     Taste (place): no caption under a picture, nothing fades in on scroll, no parallax on text, one action per screen.
-     Impeccable craft floor: no eyebrow above a heading, no 01/02/03 section numbers, no one-sided bars, no gradient text.
-     Apple HIG: sidebars.md (two levels at most, current section marked), pop-up-buttons.md (a flat list of exclusive choices
-     = the language list), accessibility.md (44px targets, contrast, focus), entering-data.md (short forms).
-   Persuade = the editorial pages (home, story, gallery). Operate = the menu, cart and forms: clarity before expression.
-   ===================================================================================================================== */
-
 /* ---------- Header ---------- */
 .site-header .brand-mark { width: 60px; height: 60px; }
 .site-header .brand-name { font-size: 1.45rem; }
@@ -18,40 +8,20 @@
 .cart-fab { bottom: calc(1.4rem + 3.2rem + 0.75rem + 48px + 0.75rem); }
 @media (min-width: 1600px) { .cart-fab { bottom: calc(1.4rem + 3.6rem + 0.75rem + 48px + 0.75rem); } }
 
-/* ---------- No labels above headings (Impeccable) ---------- */
-.eyebrow-rule, .hx-eyebrow, .rs-hero .hx-eyebrow { display: none !important; }
-
-/* ---------- Home · welcome: an introduction with two photographs ---------- */
-.ws { background: var(--cream); padding-block: clamp(4.5rem, 9vw, 8rem); }
-.ws-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4rem); align-items: center; }
-.ws-title { margin: 0; max-width: 15ch; font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 3.4vw + 1rem, 4.4rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--ink); text-wrap: balance; }
-.ws-body { margin: 1.4rem 0 1.8rem; max-width: 30rem; font-size: 1.12rem; line-height: 1.7; color: var(--body); }
-.ws-link { font-weight: 600; }
-.ws-photos { position: relative; min-width: 0; padding-bottom: clamp(3rem, 8vw, 6rem); }
-.ws-a { margin: 0 0 0 clamp(0rem, 8vw, 6rem); aspect-ratio: 4 / 5; overflow: hidden; border-radius: var(--radius-card); }
-.ws-b { position: absolute; left: 0; bottom: 0; width: 46%; margin: 0; aspect-ratio: 5 / 4; overflow: hidden; border-radius: var(--radius-card); border: 6px solid var(--cream); }
-.ws-a .media, .ws-b .media { height: 100%; border-radius: 0 !important; }
-.ws-a img, .ws-b img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
-@media (min-width: 900px) { .ws-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(3rem, 7vw, 7rem); } }
-
 /* ---------- Home · story ---------- */
-.rs-story-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.6rem; }
-.text-link.on-dark { color: var(--on-night); }
-.rs-story-cap { display: none; }
 
-/* ---------- Reviews: exactly two platform boxes ---------- */
-.rv-cards, .rv-note { display: none; }
+.text-link.on-dark { color: var(--on-night); }
 
 /* ---------- Menu: categories in a left column on wide screens, scroll-aware ---------- */
 .menu-side { display: contents; }
-.menu-nav-title { display: none; }
+
 .menu-nav a small { margin-left: 0.5rem; font-size: 0.78rem; font-variant-numeric: lining-nums tabular-nums; opacity: 0.7; }
 @media (min-width: 1000px) {
   section.menu .menu-layout { display: grid; grid-template-columns: 16rem minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
   section.menu .menu-side { display: block; position: sticky; top: 7rem; align-self: start; padding-top: clamp(2rem, 4vw, 3.2rem); }
   section.menu .menu-side .menu-search { width: 100%; max-width: none; margin: 0 0 1.8rem; }
   section.menu .menu-side .menu-nav { position: static; top: auto; background: none; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
-  section.menu .menu-nav-title { display: block; margin: 0 0 0.9rem; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--terra-dark); }
+
   section.menu .menu-side .menu-nav ul { display: grid; gap: 0; padding: 0; overflow: visible; }
   section.menu .menu-side .menu-nav li { display: block; }
   section.menu .menu-side .menu-nav a { display: flex; align-items: center; justify-content: space-between; margin: 0; min-height: 44px; padding: 0.55rem 0 0.55rem 1.1rem; border: 0; border-left: 1px solid var(--line-strong); border-radius: 0; background: none !important; color: var(--muted); font-size: 1rem; font-weight: 500; white-space: normal; transition: color 0.25s var(--ease), border-color 0.25s, padding-left 0.3s var(--ease); }
@@ -77,17 +47,12 @@
 .site-footer .ft-statement { font-size: clamp(1.9rem, 2.4vw + 0.8rem, 3rem); max-width: 16ch; }
 
 /* ---------- Type: the hero's accent word stays roman (an italic serif display line is the stock look) ---------- */
-h1 em, h2 em, .hx-accent { font-style: normal !important; }
+h1 em, h2 em { font-style: normal !important; }
 
 /* ---------- Nothing waits hidden for the scroll (Taste: no fade-in on scroll) ---------- */
 .js [data-reveal], html.js [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
-section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none !important; transition: none !important; }
+section:not(.cine-hero) .wi, .heading .wi { transform: none !important; transition: none !important; }
 .pk-btn:focus-visible { outline: 2px solid var(--sunset); outline-offset: 2px; }
-
-/* =====================================================================================================================
-   Round 2 (19 Nov 2026): six-item header, hero with two plain actions, a homepage that reads as a sequence, equal room cards,
-   Our Story without the overlap, reviews on their own ground.
-   ===================================================================================================================== */
 
 /* ---------- Header: one flex row (logo · six links · language and cart); the links get room and a larger size ---------- */
 .site-header .header-inner { display: flex !important; align-items: center; gap: 1.5rem !important; }
@@ -106,48 +71,13 @@ section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none
 .rs-hero .hx-cta { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
 .rs-hero .hx-cta .btn { min-height: 52px; padding-inline: 1.7rem; font-size: 1rem; }
 @media (max-width: 520px) { .rs-hero .hx-cta .btn { flex: 1 1 100%; justify-content: center; } }
-.rs-booking { display: none; }
-
-/* ---------- Homepage rhythm: one ground per section, alternating, each with its own padding ---------- */
-.ws, .pv-rest, .pv-events { background: var(--cream); }
-.ds, .rs-stay { background: var(--paper); }
-.ds, .pv, .rs-stay { padding-block: clamp(4rem, 8vw, 7rem); }
-
-/* Dine & Stay: two equal doors */
-.ds-doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem); }
-.ds-door { display: grid; gap: 1.1rem; text-decoration: none; color: inherit; }
-.ds-door-media { overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 16 / 10; }
-.ds-door-media .media, .ds-door-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
-.ds-door-media img { transition: transform 0.6s var(--ease); }
-.ds-door:hover .ds-door-media img { transform: scale(1.03); }
-.ds-door-text { display: grid; gap: 0.35rem; }
-.ds-door-text strong { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 1.4vw + 1rem, 2.2rem); color: var(--ink); }
-.ds-door-text > span:not(.wc-link) { color: var(--body); }
-.ds-door .wc-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.3rem; font-weight: 600; color: var(--terra-dark); }
-@media (max-width: 640px) { .ds-doors { grid-template-columns: minmax(0, 1fr); } }
 
 /* Preview sections (restaurant, events): photograph and text side by side, text vertically centred */
-.pv-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-.pv-media { overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 4 / 3; }
-.pv-media .media, .pv-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
+
 .pv-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 2.6vw + 0.9rem, 3.4rem); line-height: 1.08; letter-spacing: -0.012em; color: var(--ink); text-wrap: balance; }
 .pv-body { margin: 1.1rem 0 0; max-width: 34rem; font-size: 1.08rem; line-height: 1.7; color: var(--body); }
-.pv-hours { display: grid; gap: 0.35rem; margin: 1.6rem 0 0; max-width: 26rem; font-size: 0.98rem; }
-.pv-hours > div { display: flex; justify-content: space-between; gap: 1.5rem; padding-block: 0.45rem; border-bottom: 1px solid var(--line); }
-.pv-hours dt { color: var(--muted); }
-.pv-hours dd { margin: 0; font-weight: 600; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
-.pv-dishes { list-style: none; margin: 1.4rem 0 0; padding: 0; max-width: 26rem; }
-.pv-dishes li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.5rem; border-bottom: 1px solid var(--line); color: var(--ink); }
-.pv-price { font-variant-numeric: lining-nums tabular-nums; color: var(--body); }
+
 .pv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.6rem; margin-top: 2rem; }
-@media (min-width: 900px) { .pv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pv-grid.is-flip .pv-media { order: 2; } }
-
-/* Stay: the heading, then two equal room cards */
-.st-head { max-width: 40rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
-
-/* Story preview: the photograph and the shade stay inside the section */
-.rs-story { position: relative; isolation: isolate; overflow: hidden; }
-.rs-story-shade { position: absolute; inset: 0; }
 
 /* Final invitation */
 .final-cta .btn-row { align-items: center; gap: 0.8rem 1.6rem; }
@@ -166,7 +96,6 @@ section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none
 
 /* ---------- Our Story: the title is sticky only when it sits in its own column (it sat over its own paragraphs) ---------- */
 .ab-title { position: static; }
-@media (min-width: 861px) { .ab-grid > .ab-title { position: sticky; top: calc(var(--header-h) + 2.5rem); align-self: start; } }
 
 /* Review boxes: one clear column inside each box (platform, score, meter, count, link), on any width */
 .reviews-ed .rv-score { grid-template-columns: minmax(0, 1fr); grid-template-areas: "plat" "num" "meter" "word" "go"; row-gap: 0.55rem; justify-items: start; }
@@ -188,11 +117,6 @@ section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none
   .site-header .header-inner { gap: 0.5rem !important; }
 }
 
-/* =====================================================================================================================
-   Round 3 (brief of 19 Nov 2026): "Luxury coastal hospitality". Dark cinematic sections (hero, the two experiences, moments,
-   footer) alternate with warm, open ones (story, rooms, menu, facilities, gallery, reviews). One radius, one set of colours.
-   ===================================================================================================================== */
-
 /* ---------- Header: six links, the Reserve button, language, cart ---------- */
 @media (min-width: 1280px) { .site-header .header-inner .nav-main { display: flex !important; } .site-header .nav-toggle { display: none !important; } .site-header .book-btn { display: inline-flex !important; } }
 @media (max-width: 1279px) { .site-header .header-inner .nav-main { display: none !important; } .site-header .nav-toggle { display: inline-grid !important; } .site-header .header-actions { margin-left: auto; } .site-header .book-btn { display: none !important; } }
@@ -203,82 +127,26 @@ section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none
 /* ---------- Hero: "Dine. Stay. Unwind." with an italic, orange last word ---------- */
 .rs-hero .hx-title { max-width: 11ch; font-size: clamp(3.4rem, 6.4vw + 0.6rem, 7.2rem); line-height: 1.02; letter-spacing: -0.02em; }
 .hx-title .line { display: inline; }
-.hx-accent { display: block; font-style: italic !important; color: var(--sunset); }
+
 .rs-hero .hx-line { max-width: 30rem; font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.3rem); }
-
-/* ---------- Our Story: an open, editorial split on cream ---------- */
-.st2 { background: var(--cream); padding-block: clamp(5rem, 10vw, 9rem); }
-.st2-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
-.st2-media { margin: 0; overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 5 / 4; }
-.st2-media .media, .st2-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
-.st2-facts { list-style: none; margin: 1.8rem 0 0; padding: 0; max-width: 26rem; }
-.st2-facts li { padding-block: 0.7rem; border-bottom: 1px solid var(--line-strong); color: var(--ink); font-weight: 500; }
-.st2-facts li:first-child { border-top: 1px solid var(--line-strong); }
-@media (min-width: 900px) { .st2-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
-
-/* ---------- The two experiences: equal, dark ---------- */
-.xp { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
-.xp .ds-title { color: var(--on-night); }
-.xp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 2.4vw, 2rem); }
-.xp-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-card); background: rgba(248, 241, 231, 0.05); border: 1px solid rgba(236, 189, 133, 0.2); }
-.xp-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
-.xp-media .media, .xp-media img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; transition: transform 0.6s var(--ease); }
-.xp-card:hover .xp-media img { transform: scale(1.03); }
-.xp-text { display: flex; flex-direction: column; align-items: flex-start; gap: 0.8rem; padding: clamp(1.4rem, 2.6vw, 2.2rem); }
-.xp-text h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 1.4vw + 1.2rem, 2.5rem); line-height: 1.1; color: var(--on-night); }
-.xp-text p { margin: 0 0 0.6rem; max-width: 30rem; line-height: 1.65; color: var(--on-night-2, rgba(248, 241, 231, 0.78)); }
-@media (max-width: 760px) { .xp-grid { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- Rooms ---------- */
-.rs-stay { background: var(--paper); }
 
 /* ---------- Facilities: only what Lauhata really has ---------- */
 .am { background: var(--paper); padding-block: clamp(3.5rem, 7vw, 5.5rem); }
-.am-list { list-style: none; margin: clamp(1.6rem, 3vw, 2.4rem) 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.am-list li { display: grid; justify-items: center; gap: 0.7rem; padding: 0.4rem 0.8rem; text-align: center; font-weight: 500; color: var(--ink); }
-.am-list li + li { border-left: 1px solid var(--line-strong); }
-.am-list .icon { width: 2rem; height: 2rem; color: var(--terra-dark); }
-@media (max-width: 860px) { .am-list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 1.6rem; } .am-list li { border-left: 0 !important; } }
 
 /* ---------- Moments That Last: dark, photographs lead ---------- */
 .mo { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
 .mo .pv-title { color: var(--on-night); }
 .mo .pv-body { color: var(--on-night-2, rgba(248, 241, 231, 0.78)); }
-.mo-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4rem); align-items: center; }
-.mo-photos { display: grid; grid-template-columns: 1.25fr 1fr; grid-template-rows: auto auto; gap: clamp(0.75rem, 1.6vw, 1.25rem); }
-.mo-photos figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
-.mo-photos .media, .mo-photos img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
-.mo-a { grid-row: 1 / span 2; aspect-ratio: 4 / 5; }
-.mo-b, .mo-c { aspect-ratio: 1 / 1; }
-@media (min-width: 900px) { .mo-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
-
-/* ---------- Gallery preview ---------- */
-.gp { background: var(--cream); padding-block: clamp(4rem, 8vw, 7rem); }
-.gp-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.8rem 2rem; margin-bottom: clamp(1.6rem, 3vw, 2.4rem); }
-.gp-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(0.6rem, 1.4vw, 1.1rem); }
-.gp-grid li { overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 16 / 10; }
-.gp-grid a, .gp-grid .media, .gp-grid img { display: block; width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
-.gp-0, .gp-3 { grid-column: span 7; } .gp-1, .gp-2 { grid-column: span 5; }
-.gp-grid img { transition: transform 0.6s var(--ease); } .gp-grid li:hover img { transform: scale(1.03); }
-@media (max-width: 640px) { .gp-0, .gp-1, .gp-2, .gp-3 { grid-column: span 12; } }
 
 /* ---------- Reviews sit on sand, between the cream gallery and the photographic closing call ---------- */
 .reviews-ed { background: var(--paper); }
 .reviews-ed .rv-score { background: var(--cream); }
 
-@media (prefers-reduced-motion: reduce) { .xp-media img, .gp-grid img { transition: none; } }
-
-/* =====================================================================================================================
-   QA pass (19 Nov 2026): fixes for what the Taste gate and the screenshots found in the redesign
-   ===================================================================================================================== */
 /* Hero words are masked for their entrance: leave room above and below so ascenders and descenders are never cut */
 .hx-title .w, .hx-title .wi, .final-line .w, .final-line .wi { padding-top: 0.2em; margin-top: -0.2em; }
 
-/* Contrast: dish tag and description on the sand cards */
-
 /* Headings sized by level: every section h2 shares one scale, card h3 sit below it */
-.pv-title, .ds-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2.1rem, 2.2vw + 1.1rem, 3.2rem); line-height: 1.1; }
-.xp-text h3 { font-size: clamp(1.45rem, 0.8vw + 1.15rem, 1.8rem); }
+.pv-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2.1rem, 2.2vw + 1.1rem, 3.2rem); line-height: 1.1; }
 
 /* Closing call: a calm, darker ground behind the text on any width */
 .final-cta .scene-media { position: absolute; inset: 0; }
@@ -286,19 +154,12 @@ section:not(.cine-hero) .wi, .heading .wi, .rs-story-title .wi { transform: none
 .final-cta .scene-text { position: relative; z-index: 1; }
 .final-cta .final-lead { color: var(--on-night); }
 
-/* Facilities: five items; on phones the last one centres under the pair above it */
-@media (max-width: 860px) { .am-list li:last-child:nth-child(odd) { grid-column: 1 / -1; } }
-
-
 /* Focus is always visible: one ring, light on dark grounds */
 main:focus { outline: none; }
 .btn:focus-visible, .text-link:focus-visible, .lang-dd-btn:focus-visible, .nav-main a:focus-visible, .cart-btn:focus-visible, .icon-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-.rs-hero .btn:focus-visible, .xp .btn:focus-visible, .mo .btn:focus-visible, .final-cta .btn:focus-visible, .final-cta .text-link:focus-visible, .site-header .nav-main a:focus-visible, .site-header .lang-dd-btn:focus-visible, .site-header .cart-btn:focus-visible, .site-header .icon-btn:focus-visible, .site-footer a:focus-visible { outline-color: var(--on-night); }
+.rs-hero .btn:focus-visible, .mo .btn:focus-visible, .final-cta .btn:focus-visible, .final-cta .text-link:focus-visible, .site-header .nav-main a:focus-visible, .site-header .lang-dd-btn:focus-visible, .site-header .cart-btn:focus-visible, .site-header .icon-btn:focus-visible, .site-footer a:focus-visible { outline-color: var(--on-night); }
 .bc-field .pk-btn:focus-visible { outline: 2px solid var(--sunset) !important; outline-offset: 2px; }
 
-/* Section titles that were left without their serif voice and spacing */
-.ds-title { margin: 0 0 clamp(1.6rem, 3vw, 2.4rem); font-family: var(--serif); font-weight: 400; color: var(--ink); text-wrap: balance; }
-.xp .ds-title { color: var(--on-night); }
 /* Hero: the photograph shows through; the shade only protects the header and the copy */
 .rs-hero .hx-shade { background: linear-gradient(180deg, rgba(23, 18, 15, 0.5) 0%, rgba(23, 18, 15, 0.08) 28%, rgba(23, 18, 15, 0.12) 52%, rgba(23, 18, 15, 0.8) 100%); }
 @media (max-width: 860px) { .rs-hero .hx-shade { background: linear-gradient(180deg, rgba(23, 18, 15, 0.5) 0%, rgba(23, 18, 15, 0.24) 30%, rgba(23, 18, 15, 0.56) 55%, rgba(23, 18, 15, 0.86) 100%); } }
@@ -314,137 +175,20 @@ main:focus { outline: none; }
    experiences) give it contrast. Order: hero · welcome with four photo cards · facilities strip · rooms · a taste of Lauhata ·
    what makes it special (dark) · our story (asymmetric) · gallery · reviews · the closing call.
    ===================================================================================================================== */
-.wl, .hs, .rs-stay, .tt, .sx, .gp, .reviews-ed { color: var(--ink); }
-.wl { background: var(--cream); padding-block: clamp(5rem, 9vw, 8.5rem); }
-.hs { background: var(--paper); padding-block: clamp(1.6rem, 3vw, 2.4rem); border-block: 1px solid var(--line); }
-.rs-stay { background: var(--cream); }
+.tt, .reviews-ed { color: var(--ink); }
+
 .tt { background: var(--paper); }
 .xs { background: var(--night); color: var(--on-night); padding-block: clamp(4.5rem, 9vw, 8rem); }
-.sx { background: var(--cream); padding-block: clamp(5rem, 10vw, 9rem); }
-.gp { background: var(--paper); }
+
 .reviews-ed { background: var(--cream); }
 .reviews-ed .rv-score { background: var(--paper); }
-.xs .ds-title { color: var(--on-night); }
-
-/* ---------- Welcome: text on the left, four photographs on the right in an asymmetric grid ---------- */
-.wl-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
-.wl-head { margin: 0.9rem 0 0; font-family: var(--serif); font-size: clamp(1.3rem, 0.9vw + 1.05rem, 1.7rem); line-height: 1.3; color: var(--terra-dark); }
-.wl-intro .pv-body { margin-top: 1.1rem; }
-.wl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: clamp(10rem, 15vw, 14rem); gap: clamp(0.7rem, 1.4vw, 1.1rem); }
-.wl-card { position: relative; display: block; overflow: hidden; border-radius: var(--radius-card); color: #fff; text-decoration: none; isolation: isolate; }
-.wl-card .media, .wl-card img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; transition: transform 0.7s var(--ease); }
-.wl-card:hover .media img, .wl-card:hover > img { transform: scale(1.04); }
-.wl-card::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(23, 18, 15, 0) 45%, rgba(23, 18, 15, 0.78) 100%); }
-.wl-text { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 1rem; z-index: 2; display: grid; gap: 0.2rem; }
-.wl-text strong { font-family: var(--serif); font-weight: 500; font-size: clamp(1.25rem, 0.6vw + 1.05rem, 1.55rem); line-height: 1.15; }
-.wl-text span { font-size: 0.92rem; line-height: 1.4; color: rgba(255, 255, 255, 0.9); }
-.wl-a { grid-row: span 2; }
-.wl-d { grid-column: 1 / -1; }
-@media (min-width: 900px) { .wl-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
-@media (max-width: 560px) { .wl-cards { grid-template-columns: minmax(0, 1fr); grid-auto-rows: 13rem; } .wl-a { grid-row: span 1; } .wl-a, .wl-d { grid-column: auto; } }
-
-/* ---------- Facilities strip: compact, neutral, dividers between items ---------- */
-.hs-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: nowrap; justify-content: space-between; gap: 0.5rem; }
-.hs-list li { flex: 1 1 0; display: flex; align-items: center; justify-content: center; gap: 0.7rem; padding: 0.5rem 0.6rem; font-weight: 500; font-size: 0.98rem; color: var(--ink); text-align: left; }
-.hs-list li + li { border-left: 1px solid var(--line-strong); }
-.hs-list .icon { flex: none; width: 1.55rem; height: 1.55rem; color: var(--terra-dark); }
-@media (max-width: 860px) {
-  .hs-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 0.4rem; }
-  .hs-list li { justify-content: flex-start; border-left: 0 !important; }
-  .hs-list li:last-child:nth-child(odd) { grid-column: 1 / -1; }
-}
-
-/* ---------- Rooms: a quiet lift on hover ---------- */
 
 /* ---------- A taste of Lauhata: text and a three-photograph mosaic ---------- */
 .tt { padding-block: clamp(5rem, 9vw, 8.5rem); }
-.tt-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+
 .tt-hours { display: flex; align-items: flex-start; gap: 0.6rem; margin: 1.4rem 0 0; font-size: 0.98rem; color: var(--body); }
 .tt-hours .icon { flex: none; width: 1.2rem; height: 1.2rem; margin-top: 0.15rem; color: var(--terra-dark); }
 .tt-hours b { color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
-.tt-photos { display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: auto auto; gap: clamp(0.7rem, 1.4vw, 1.1rem); }
-.tt-photos figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
-.tt-photos .media, .tt-photos img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
-.tt-photos img { transition: transform 0.7s var(--ease); } .tt-photos figure:hover img { transform: scale(1.03); }
-.tt-a { grid-row: 1 / span 2; aspect-ratio: 3 / 4; }
-.tt-b, .tt-c { aspect-ratio: 1 / 1; }
-@media (min-width: 900px) { .tt-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
-
-/* ---------- What makes Lauhata special: three dark panels ---------- */
-.xs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem); }
-.xs .xp-text h3 { font-size: clamp(1.45rem, 0.8vw + 1.15rem, 1.8rem); }
-@media (max-width: 900px) { .xs-grid { grid-template-columns: minmax(0, 1fr); max-width: 40rem; } }
-
-/* ---------- Our story: one dominant photograph, two smaller ones overlapping it ---------- */
-.sx-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
-.sx-photos { position: relative; padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
-.sx-photos figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
-.sx-photos .media, .sx-photos img { width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; }
-.sx-a { width: 84%; margin-left: auto; aspect-ratio: 5 / 4; }
-.sx-b { position: absolute; left: 0; bottom: 0; width: 40%; aspect-ratio: 4 / 5; border: 6px solid var(--cream); }
-.sx-c { position: absolute; right: 0; top: clamp(-1.5rem, -2vw, -0.5rem); width: 24%; aspect-ratio: 1 / 1; border: 6px solid var(--cream); }
-.btn-ghost-dark { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
-.btn-ghost-dark:hover { background: var(--ink); color: var(--cream); }
-@media (min-width: 900px) { .sx-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
-@media (max-width: 560px) { .sx-c { display: none; } .sx-a { width: 88%; } .sx-b { width: 44%; } }
-
-/* ---------- Gallery preview: the first photograph is the featured one ---------- */
-.gp-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-.gp-0 { grid-column: span 7; aspect-ratio: 16 / 11; }
-.gp-1 { grid-column: span 5; aspect-ratio: 16 / 11; }
-.gp-2 { grid-column: span 5; aspect-ratio: 16 / 11; }
-.gp-3 { grid-column: span 7; aspect-ratio: 16 / 11; }
-@media (max-width: 640px) { .gp-0, .gp-1, .gp-2, .gp-3 { grid-column: span 12; } }
-
-/* ---------- Focus on the new interactive cards ---------- */
-.wl-card:focus-visible { outline: 3px solid var(--sunset); outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { .wl-card .media img, .tt-photos img { transition: none; } }
-.tt-a { aspect-ratio: auto; min-height: 100%; }
-.tt-a .media { height: 100%; }
-@media (max-width: 560px) { .tt-a { min-height: 0; aspect-ratio: 3 / 4; } }
-
-/* =====================================================================================================================
-   Round 6: details taken from the five references (seen at last): round icon badges and a fact under each facility
-   (Skyview, Ocean Haven, the homestay), centred room heading with a fine gold rule and an outlined "all rooms" button
-   (Ocean Haven), icon meta rows on the room cards, round badges on the experience photographs, a soft curved edge where the
-   hero meets the page (homestay), an interlocking diamond collage for Our Story (Northview) and a panel with the two actions
-   over the closing photograph (Northview / Skyview).
-   ===================================================================================================================== */
-
-/* the hero hands over to the page with a soft curve */
-.wl { position: relative; z-index: 2; margin-top: -2.5rem; border-radius: 2.5rem 2.5rem 0 0; }
-
-/* facilities: badge, label, one confirmed fact */
-.hs { padding-block: clamp(2rem, 4vw, 3rem); }
-.hs-list li { flex-direction: column; align-items: center; gap: 0.35rem; text-align: center; }
-.hs-badge { display: grid; place-items: center; width: 3.4rem; height: 3.4rem; margin-bottom: 0.35rem; border-radius: 50%; background: var(--cream); border: 1px solid var(--line); box-shadow: 0 8px 20px -10px rgba(23, 18, 15, 0.3); }
-.hs-badge .icon { width: 1.5rem; height: 1.5rem; color: var(--terra-dark); }
-.hs-list strong { font-weight: 600; font-size: 0.98rem; color: var(--ink); }
-.hs-list small { font-size: 0.86rem; line-height: 1.35; color: var(--body); }
-@media (max-width: 860px) { .hs-list { row-gap: 1.4rem; } .hs-list li { justify-content: flex-start; } }
-
-/* rooms: centred heading with a gold rule, icon meta row, outlined "all rooms" button */
-.rs-stay .st-head { margin-inline: auto; text-align: center; }
-.rs-stay .st-head .pv-body { margin-inline: auto; }
-.rs-stay .st-head .pv-title::after, .xs .ds-title::after { content: ""; display: block; width: 3rem; height: 2px; margin: 1.1rem auto 0; background: var(--gold); }
-
-/* experiences: centred title, round badge on the photograph's lower edge */
-.xs .ds-title { text-align: center; }
-.xs .xp-card { position: relative; }
-.xs .xp-badge { grid-row: 2; grid-column: 1; align-self: start; justify-self: start; z-index: 2; display: grid; place-items: center; width: 3.2rem; height: 3.2rem; margin-left: clamp(1.4rem, 2.6vw, 2.2rem); transform: translateY(-50%); border-radius: 50%; background: var(--cream); border: 1.5px solid var(--gold); color: var(--terra-dark); box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5); }
-.xs .xp-badge .icon { width: 1.4rem; height: 1.4rem; }
-.xs .xp-text { grid-row: 2; grid-column: 1; padding-top: calc(clamp(1.4rem, 2.6vw, 2.2rem) + 1.4rem); }
-
-/* our story: interlocking diamonds on wide screens, rectangles on small ones */
-@media (min-width: 900px) {
-  .sx-photos { padding-bottom: 0; aspect-ratio: 1 / 0.92; }
-  .sx-photos figure { border: 0; border-radius: 0; }
-  .sx-a, .sx-b, .sx-c { position: absolute; margin: 0; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); aspect-ratio: 1 / 1; }
-  .sx-a { right: 0; top: 0; left: auto; width: 64%; }
-  .sx-b { left: 0; bottom: 4%; top: auto; width: 38%; }
-  .sx-c { display: block; right: 3%; bottom: 0; top: auto; width: 28%; }
-  .sx-photos .media, .sx-photos img { height: 100%; }
-}
 
 /* closing call: the two actions in a panel over the photograph */
 .has-panel .fp-grid { display: grid; gap: clamp(1.6rem, 3vw, 2.4rem); align-items: end; }
@@ -464,12 +208,6 @@ main:focus { outline: none; }
 .has-panel .scene-text { padding-block: clamp(3rem, 7vw, 6rem); }
 @media (max-width: 860px) { .has-panel .scene-text { background: transparent; } .has-panel .fp-copy { padding: 1.2rem; background: rgba(23, 18, 15, 0.66); border-radius: var(--radius-card); } }
 .fp-row:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-@media (min-width: 900px) {
-  .sx-photos { aspect-ratio: 1 / 0.98; }
-  .sx-a { width: 74%; }
-  .sx-b { width: 48%; bottom: 0; }
-  .sx-c { width: 34%; right: 4%; bottom: 0; }
-}
 
 /* =====================================================================================================================
    Round 7: a compact, balanced homepage on 16:10 screens. One spacing system for every section, a hero that no longer takes
@@ -479,9 +217,7 @@ main:focus { outline: none; }
 :root { --sec-y: clamp(3rem, 4.4vw, 4.75rem); --sec-gap: clamp(1.75rem, 3.2vw, 3rem); }
 
 /* spacing: one vertical rhythm */
-.wl, .tt, .rs-stay, .mo, .sx, .reviews-ed { padding-block: var(--sec-y); }
-.tt-grid, .mo-grid, .sx-grid, .wl-grid { gap: var(--sec-gap) clamp(2rem, 4vw, 4rem); }
-.st-head { margin-bottom: clamp(1.4rem, 2.4vw, 2.2rem); }
+.tt, .mo, .reviews-ed { padding-block: var(--sec-y); }
 
 /* hero: never taller than the screen, a calmer headline */
 .rs-hero { min-height: clamp(560px, 88svh, 860px); }
@@ -489,54 +225,17 @@ main:focus { outline: none; }
 .rs-hero .hx-content { padding-bottom: clamp(2.5rem, 7vh, 4.5rem); }
 
 /* titles: one scale */
-.pv-title, .ds-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2rem, 1.5vw + 1.25rem, 2.8rem); line-height: 1.12; }
+.pv-title, .reviews-ed .rv-title, .final-line { font-size: clamp(2rem, 1.5vw + 1.25rem, 2.8rem); line-height: 1.12; }
 .pv-body { margin-top: 1rem; font-size: 1.04rem; line-height: 1.65; }
 .pv-actions { margin-top: 1.5rem; }
 
-/* welcome: introduction on the left, four horizontal cards in one row on the right */
-.wl { padding-top: calc(var(--sec-y) + 0.5rem); }
-.wl-grid { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; }
-.wl-intro { max-width: 34rem; }
-.wl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; gap: 1rem; }
-.wl-card { position: relative; display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-card); background: var(--paper); border: 1px solid var(--line); color: var(--ink); text-decoration: none; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
-.wl-card::after { content: none; }
-.wl-card:hover { transform: translateY(-4px); box-shadow: 0 18px 36px -22px rgba(23, 18, 15, 0.4); }
-.wl-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; }
-.wl-media .media, .wl-media img { position: static; display: block; width: 100%; height: 100%; border-radius: 0 !important; object-fit: cover; transition: transform 0.7s var(--ease); }
-.wl-card:hover .wl-media img { transform: scale(1.04); }
-.wl-text { position: relative; inset: auto; display: grid; align-content: start; gap: 0.3rem; padding: 0.9rem 1rem 2.6rem; }
-.wl-text strong { font-family: var(--serif); font-weight: 500; font-size: 1.3rem; line-height: 1.15; color: var(--ink); }
-.wl-text > span:not(.wl-go) { font-size: 0.9rem; line-height: 1.4; color: var(--body); }
-.wl-go { position: absolute; right: 0.9rem; bottom: 0.8rem; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--sunset); color: #1a120c; transition: transform 0.3s var(--ease); }
-.wl-go .icon { width: 0.95rem; height: 0.95rem; }
-.wl-card:hover .wl-go { transform: translateX(3px); }
-@media (min-width: 1100px) { .wl-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } .wl-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.9rem; } .wl-text { padding-inline: 0.85rem; } .wl-text strong { font-size: 1.2rem; } }
-@media (min-width: 700px) and (max-width: 1099px) { .wl-grid { grid-template-columns: minmax(0, 1fr); } .wl-cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; } }
-@media (max-width: 699px) { .wl-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 479px) { .wl-cards { grid-template-columns: minmax(0, 1fr); } .wl-card { grid-template-columns: 38% minmax(0, 1fr); grid-template-rows: auto; } .wl-media { aspect-ratio: auto; height: 100%; min-height: 7.5rem; } .wl-text { padding-bottom: 1rem; padding-right: 3rem; } }
-.wl-card:focus-visible { outline: 3px solid var(--sunset); outline-offset: 3px; }
-
 /* restaurant: a shorter mosaic */
-.tt-photos { max-width: 38rem; margin-inline: auto; width: 100%; }
-.tt-a { aspect-ratio: auto; min-height: 100%; }
-.tt-b, .tt-c { aspect-ratio: 4 / 3; }
-.tt-note { margin: 1rem 0 0; font-size: 0.98rem; line-height: 1.55; color: var(--body); }
-.tt-hours { margin-top: 0.9rem; }
-@media (max-width: 560px) { .tt-a { min-height: 0; aspect-ratio: 3 / 4; } }
 
-/* rooms: shorter photographs */
+.tt-hours { margin-top: 0.9rem; }
 
 /* experiences: dark band with a lead, the occasions and three photographs */
-.mo-kinds { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.3rem 0 0; padding: 0; max-width: 34rem; }
-.mo-kinds li { padding: 0.4rem 0.9rem; border: 1px solid rgba(236, 189, 133, 0.4); border-radius: 999px; font-size: 0.92rem; color: var(--on-night); }
-.mo-photos { max-width: 38rem; margin-inline: auto; width: 100%; }
-.mo-a { aspect-ratio: auto; min-height: 100%; }
-.mo-b, .mo-c { aspect-ratio: 4 / 3; }
-@media (max-width: 560px) { .mo-a { min-height: 0; aspect-ratio: 4 / 5; } }
-.mo .btn-terra:focus-visible { outline-color: var(--on-night); }
 
-/* surroundings: the diamond composition, lighter */
-@media (min-width: 900px) { .sx-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); } .sx-photos { max-width: 34rem; margin-inline: auto; width: 100%; aspect-ratio: 1 / 0.9; } }
+.mo .btn-terra:focus-visible { outline-color: var(--on-night); }
 
 /* reviews, closing call: same rhythm */
 .reviews-ed .rv-title { max-width: 20ch; }
@@ -560,60 +259,31 @@ main:focus { outline: none; }
 }
 
 /* ---------- vertical rhythm ---------- */
-.wl, .tt, .rs-stay, .sx, .reviews-ed { padding-block: var(--sec-y); }
+.tt, .reviews-ed { padding-block: var(--sec-y); }
 .mo { padding-block: var(--sec-y-lg); }
 .has-panel .scene-text { padding-block: var(--sec-y); }
-.st-head { margin-bottom: var(--head-gap); }
+
 .pv-body { margin-top: 1.4rem; }
 .pv-actions { margin-top: 2.2rem; }
-.wl-grid, .tt-grid, .sx-grid { gap: var(--head-gap) clamp(3rem, 6vw, 6rem); }
 
 /* ---------- soft overlapping edges between every band ---------- */
-.wl, .tt, .rs-stay, .mo, .sx, .reviews-ed, .final-cta { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; }
+.tt, .mo, .reviews-ed, .final-cta { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; }
 .rs-hero .hx-content { padding-bottom: calc(var(--curve) + clamp(1.5rem, 4vh, 3rem)); }
 .rs-hero { min-height: clamp(620px, 92svh, 920px); }
-.wl { padding-top: calc(var(--sec-y) + 0.5rem); }
+
 .tt { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
-
-/* ---------- welcome: more air around the cards ---------- */
-.wl-grid { gap: clamp(2.5rem, 4.5vw, 4.5rem); }
-.wl-cards { gap: clamp(0.9rem, 1.5vw, 1.4rem); }
-@media (min-width: 1100px) { .wl-grid { grid-template-columns: minmax(0, 3.6fr) minmax(0, 8.4fr); } .wl-cards { gap: 1.1rem; } }
-
-/* ---------- the panorama: one photograph across the whole screen, nothing on it ---------- */
-.pano { position: relative; z-index: 0; }
-.pano-frame { width: 100%; margin: 0; overflow: hidden; aspect-ratio: 21 / 8; min-height: 16rem; max-height: 62svh; }
-.pano-frame .media, .pano-frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
-.pano .media { height: 100%; }
 
 /* ---------- the restaurant: text, and a photograph that bleeds to the right edge with a small one overlapping it ---------- */
 .tt { overflow-x: clip; }
-.tt-photos { display: block; position: relative; max-width: 36rem; width: 100%; margin: 0 auto; padding-bottom: 2.75rem; }
-.tt-a { margin: 0; min-height: 0; aspect-ratio: 4 / 3; border-radius: var(--radius-card); }
-.tt-b { position: absolute; right: 6%; bottom: 0; left: auto; width: 36%; margin: 0; aspect-ratio: 1 / 1; border: 6px solid var(--paper); border-radius: var(--radius-card); }
-.tt-photos figure { overflow: hidden; }
-@media (min-width: 1000px) {
-  .tt-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; }
-  .tt-photos { max-width: none; width: auto; margin: 0 calc(-1 * max(var(--gutter, 1.5rem), (100vw - var(--wrap, 1240px)) / 2)) 0 0; padding-bottom: 3.25rem; }
-  .tt-a { border-radius: var(--radius-card) 0 0 var(--radius-card); aspect-ratio: 16 / 11; }
-  .tt-b { left: -7%; right: auto; width: 30%; }
-}
 
 /* ---------- experiences: a dark band over a full-bleed photograph, one voice, left aligned ---------- */
 .mo { isolation: isolate; overflow: hidden; display: flex; align-items: center; min-height: clamp(30rem, 72svh, 44rem); color: var(--on-night); background: var(--night); }
 .mo .wrap { width: 100%; }
-.mo-bg { position: absolute; inset: 0; z-index: -1; }
-.mo-bg .media, .mo-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
-.mo-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(23, 18, 15, 0.94) 0%, rgba(23, 18, 15, 0.78) 44%, rgba(23, 18, 15, 0.22) 100%); }
-.mo-inner > * { max-width: 36rem; }
-.mo-inner .mo-kinds { margin-top: 1.8rem; }
-@media (max-width: 700px) { .mo-bg::after { background: linear-gradient(180deg, rgba(23, 18, 15, 0.86), rgba(23, 18, 15, 0.92)); } }
 
 /* ---------- surroundings, reviews, closing call ---------- */
 .reviews-ed { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
 .final-cta { overflow: hidden; }
 .final-cta.has-panel { padding-top: var(--curve); }
-@media (prefers-reduced-motion: reduce) { .pano-frame img { transform: none !important; } }
 
 /* =====================================================================================================================
    Design-system rules (audit of 19 Nov 2026). One rule per concern, so pages inherit instead of being fixed one by one.
@@ -628,22 +298,16 @@ main > .section.booking { padding-block: var(--sec-y); }
 .btn-outline:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 .text-link { text-decoration-thickness: 1px; text-underline-offset: 0.25em; transition: text-decoration-thickness 0.2s var(--ease), color 0.2s; }
 .text-link:hover { text-decoration-thickness: 2px; }
-.form-card, .wl-card { border-radius: var(--radius-card); }
+.form-card { border-radius: var(--radius-card); }
 /* Events: the occasions block no longer leaves a band of empty space */
-.ev-how { padding-block: var(--sec-y); }
-.ev-types { margin-bottom: 0; }
+
 @media (prefers-reduced-motion: reduce) { .btn, .text-link { transition: none; } .btn:not(:disabled):active { transform: none; } }
 
 /* Form fields: the focus ring is the same 2px ink line as everywhere else (the old orange border was about 2.6:1 on cream, under the 3:1 non-text minimum) */
 .field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible, .pk-btn:focus-visible, .menu-search input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.is-dark .field input:focus-visible, .is-dark .pk-btn:focus-visible { outline-color: var(--on-night); }
-.pk-btn:focus-visible { outline: 2px solid var(--ink) !important; outline-offset: 2px !important; }
-.is-dark .pk-btn:focus-visible, .booking-card.is-hero .pk-btn:focus-visible { outline-color: var(--on-night) !important; }
 
-/* =====================================================================================================================
-   Master Refinement 03 (19 Nov 2026): editorial composition. Fewer boxes: photographs, hairlines and type carry the page; cards
-   stay only where they hold a choice (rooms, reviews, the booking dialog). One compact header, a hero of exactly one screen.
-   ===================================================================================================================== */
+.pk-btn:focus-visible { outline: 2px solid var(--ink) !important; outline-offset: 2px !important; }
+.booking-card.is-hero .pk-btn:focus-visible { outline-color: var(--on-night) !important; }
 
 /* ---------- Header: more compact, nothing removed ---------- */
 :root { --header-h: 72px; }
@@ -662,62 +326,12 @@ main > .section.booking { padding-block: var(--sec-y); }
 .rs-hero { height: 100vh; height: 100svh; min-height: 34rem; max-height: none; }
 .rs-hero .hx-content { padding-bottom: calc(var(--curve) + clamp(1.25rem, 5vh, 3.5rem) + env(safe-area-inset-bottom)); }
 
-/* ---------- Welcome: the introduction on the left; on the right one photograph and two doors (restaurant and bar are one offer) ---------- */
-.wl-visual { display: grid; gap: clamp(1rem, 1.8vw, 1.6rem); min-width: 0; }
-.wl-photo { margin: 0; overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 16 / 9; max-height: 54svh; }
-.wl-photo .media, .wl-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
-.wl-doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(1.5rem, 3vw, 3rem); }
-.wl-door { position: relative; display: grid; gap: 0.2rem; padding: 1rem 3rem 1.1rem 0; border-top: 1px solid var(--line-strong); color: var(--ink); text-decoration: none; }
-.wl-door strong { font-family: var(--serif); font-weight: 500; font-size: clamp(1.35rem, 0.8vw + 1.1rem, 1.7rem); line-height: 1.15; }
-.wl-door > span:not(.wl-go) { font-size: 0.95rem; line-height: 1.45; color: var(--body); }
-.wl-door .wl-go { position: absolute; right: 0; top: 50%; display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--sunset); color: #1a120c; transform: translateY(-50%); transition: transform 0.3s var(--ease); }
-.wl-door:hover .wl-go { transform: translate(4px, -50%); }
-.wl-door:hover strong { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
-.wl-door:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
-@media (max-width: 560px) { .wl-doors { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- What makes Lauhata special: one quiet strip, icons and short lines divided by hairlines ---------- */
-main > .section.sp { padding-block: clamp(3rem, 5vw, 4.5rem); background: var(--paper); margin-top: 0; }
-.sp-title { margin: 0 0 clamp(1.5rem, 2.6vw, 2.25rem); font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 1vw + 1.25rem, 2.2rem); line-height: 1.15; color: var(--ink); }
-.sp-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem clamp(1rem, 2vw, 2rem); }
-.sp-list li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 0.8rem; align-content: start; }
-.sp-list .icon { grid-row: 1 / span 2; width: 1.6rem; height: 1.6rem; margin-top: 0.1rem; color: var(--terra-dark); }
-.sp-list strong { font-family: var(--serif); font-weight: 500; font-size: 1.2rem; line-height: 1.2; color: var(--ink); }
-.sp-list span { font-size: 0.92rem; line-height: 1.45; color: var(--body); }
-@media (min-width: 700px) { .sp-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (min-width: 1100px) {
-  .sp-list { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; }
-  .sp-list li { grid-template-columns: minmax(0, 1fr); row-gap: 0.35rem; padding-inline: clamp(1rem, 1.6vw, 1.75rem); border-left: 1px solid var(--line-strong); }
-  .sp-list li:first-child { padding-left: 0; border-left: 0; }
-  .sp-list .icon { grid-row: auto; margin: 0 0 0.35rem; }
-}
-@media (max-width: 439px) { .sp-list { grid-template-columns: minmax(0, 1fr); } }
-
 /* ---------- Featured dining: one large photograph and two beside it, then one action ---------- */
 .fd { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; background: var(--cream); }
 main > .section.fd { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
-.fd-head { max-width: 40rem; margin-bottom: var(--head-gap); }
-.fd-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); }
-.fd-media { overflow: hidden; border-radius: var(--radius-card); }
-.fd-media .dish-photo, .fd-media .media { margin: 0; width: 100%; height: 100%; aspect-ratio: 4 / 3; border-radius: 0; }
-.fd-media img { width: 100%; height: 100%; object-fit: cover; }
-.fd-text h3 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(1.35rem, 0.9vw + 1.1rem, 1.8rem); line-height: 1.15; color: var(--ink); }
-.fd-text p { margin: 0.45rem 0 0.7rem; color: var(--body); line-height: 1.55; }
-.fd-price { font-variant-numeric: lining-nums tabular-nums; color: var(--ink); }
-.fd-dish { display: grid; gap: 1rem; align-content: start; }
-.fd-dish:not(.is-lead) { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; gap: clamp(1rem, 2vw, 1.5rem); }
-.fd-dish.is-lead .fd-media .media, .fd-dish.is-lead .fd-media .dish-photo { aspect-ratio: 3 / 2; }
+
 .fd .pv-actions { margin-top: var(--head-gap); }
 .fd .tt-hours { margin-top: 1.2rem; }
-@media (min-width: 900px) {
-  .fd-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: 1fr 1fr; }
-  .fd-dish.is-lead { grid-row: 1 / span 2; }
-  .fd-dish:not(.is-lead) { grid-template-columns: minmax(0, 1fr); align-content: center; }
-}
-@media (min-width: 900px) and (max-width: 1199px) { .fd-dish:not(.is-lead) .fd-media .media, .fd-dish:not(.is-lead) .fd-media .dish-photo { aspect-ratio: 16 / 10; } }
-@media (min-width: 1200px) { .fd-dish:not(.is-lead) { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
-
-/* ---------- Stay: shorter photographs, so the pair fits a 16:10 screen ---------- */
 
 /* ---------- Experiences band: lighter ---------- */
 .mo { min-height: clamp(26rem, 62svh, 38rem); }
@@ -739,11 +353,10 @@ main > .section.fd { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
 .gx-tile { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 0.5rem; grid-row: span calc(var(--r, 4) + 1); }
 .gx-tile .gr-link { min-height: 0; }
 .gx-cap { margin: 0; max-width: 46ch; font-size: 0.86rem; line-height: 1.35; color: var(--muted); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
-.gx-mosaic.is-filtered .gx-tile { grid-row: span 6; }
-.gx-mosaic.is-filtered .gx-tile:first-child { grid-row: span 8; }
+
 @media (max-width: 760px) {
-  .gx-mosaic { grid-auto-rows: auto; }
-  .gx-tile, .gx-mosaic.is-filtered .gx-tile, .gx-mosaic.is-filtered .gx-tile:first-child { grid-row: auto; }
+
+  .gx-tile { grid-row: auto; }
   .gx-tile .gr-link { aspect-ratio: 4 / 3; height: auto; }
   .gx-tile:nth-child(3n + 1) .gr-link { aspect-ratio: 16 / 10; }
   .gx-tile .gr-link .media { height: 100%; }
@@ -754,15 +367,6 @@ main > .section.fd { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
 .book-dialog .bc-field input[type="text"] { min-height: 46px; padding: 0.6rem 0.8rem; border: 1px solid var(--line-strong); border-radius: var(--r-sm); background: var(--cream); color: var(--ink); font: inherit; }
 .book-dialog .bc-field input[type="text"]:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
-/* ---------- Master 03 fixes after the first look ---------- */
-.wl-door { align-content: start; }
-.fd-dish.is-lead .fd-media .media, .fd-dish.is-lead .fd-media .dish-photo { aspect-ratio: 4 / 3; }
-@media (min-width: 900px) {
-  .fd-dish:not(.is-lead) { grid-template-columns: minmax(0, 1fr) !important; gap: 0.9rem; }
-  .fd-dish:not(.is-lead) .fd-media .media, .fd-dish:not(.is-lead) .fd-media .dish-photo { aspect-ratio: 2 / 1; }
-  .fd-grid { align-items: start; grid-template-rows: auto auto; }
-}
-
 /* ---------- Menu on phones: one sticky, sideways-scrolling category bar (ten categories, one tap each), a fade that shows there is more, and thumbnails that carry their own label ---------- */
 @media (max-width: 999px) {
   section.menu .menu-nav ul { scroll-snap-type: x proximity; padding-right: 2.5rem; }
@@ -771,19 +375,6 @@ main > .section.fd { padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
   section.menu .menu-nav { position: sticky; }
   section.menu .menu-nav::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 2.5rem; pointer-events: none; background: linear-gradient(90deg, rgba(250, 247, 239, 0), rgba(250, 247, 239, 0.96)); }
 }
-
-/* ---------- Experiences page: a photograph and the occasions as a clean list, then the request form ---------- */
-.ev-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--head-gap) clamp(2rem, 5vw, 5rem); align-items: center; }
-.ev-photo { margin: 0; overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 4 / 3; }
-.ev-photo .media, .ev-photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; }
-.ev-split .ev-type-list { display: grid; gap: 0; margin-top: 1.5rem; max-width: 30rem; }
-.ev-split .ev-type-list li { padding: 0.65rem 0; border-top: 1px solid var(--line-strong); font-size: clamp(1.2rem, 0.8vw + 1rem, 1.5rem); }
-.ev-split .ev-type-list li:last-child { border-bottom: 1px solid var(--line-strong); }
-@media (min-width: 900px) { .ev-split { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); } }
-
-/* =====================================================================================================================
-   Master Refinement 04 (19 Nov 2026), part 1: header proportions, the floating bar, Back to Top, the cart drawer.
-   ===================================================================================================================== */
 
 /* ---------- Header: the bar is clearly larger than what sits in it (logo 54 in 88, button 40 in 88) ---------- */
 :root { --header-h: 88px; }
@@ -830,86 +421,16 @@ dialog.cart.is-closing::backdrop { animation: cartVeilOut 0.34s ease both; }
   dialog.cart[open], dialog.cart.is-closing, dialog.cart[open]::backdrop, dialog.cart.is-closing::backdrop { animation: none; }
 }
 
-/* =====================================================================================================================
-   Master Refinement 04, part 2: composition. Three photographic cards in the welcome, a ten-dish carousel, compact rooms, editorial
-   experiences on the dark ground, a five-photograph surroundings composition, the LAUHATA signature in the footer, the menu
-   filter and the FAQ. Surfaces: cards only where they hold a choice (welcome, dishes, rooms, reviews).
-   ===================================================================================================================== */
-
-/* ---------- Welcome: the text on the left, exactly three cards of one size on the right ---------- */
-.wl-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.8rem, 1.4vw, 1.25rem); }
-.wk-card { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-card); background: var(--paper); color: var(--ink); text-decoration: none; transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease); }
-.wk-card:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -22px rgba(23, 18, 15, 0.45); }
-.wk-card:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-.wk-media { display: block; aspect-ratio: 1 / 1; overflow: hidden; }
-.wk-media .media, .wk-media img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
-.wk-media img { transition: transform 0.7s var(--ease); }
-.wk-card:hover .wk-media img { transform: scale(1.04); }
-.wk-body { display: grid; align-content: start; gap: 0.35rem; padding: 1rem 1.1rem 1.2rem; }
-.wk-body strong { font-family: var(--serif); font-weight: 500; font-size: clamp(1.35rem, 0.7vw + 1.1rem, 1.65rem); line-height: 1.15; }
-.wk-body > span:not(.wk-go) { font-size: 0.92rem; line-height: 1.45; color: var(--body); }
-.wk-go { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--terra-dark); }
-.wk-go .icon { width: 1rem; height: 1rem; transition: transform 0.3s var(--ease); }
-.wk-card:hover .wk-go .icon { transform: translateX(3px); }
-@media (max-width: 640px) {
-  .wl-cards { grid-template-columns: minmax(0, 1fr); }
-  .wk-card { grid-template-columns: 38% minmax(0, 1fr); grid-template-rows: auto; }
-  .wk-media { aspect-ratio: auto; height: 100%; min-height: 9rem; }
-  .wk-body { padding: 0.9rem 1rem; align-content: center; }
-}
-
 /* ---------- From the kitchen: ten identical cards; four and a half are in view, the rest slide in ---------- */
 .fd { overflow-x: clip; }
-.kc-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; margin-bottom: var(--head-gap); }
-.kc-head .fd-head { margin-bottom: 0; }
-.kc-nav { display: flex; gap: 0.6rem; flex: none; }
+
 .kc-btn { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid var(--line-strong); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease), opacity 0.25s; }
 .kc-btn .icon { width: 20px; height: 20px; }
 .kc-btn:hover:not(:disabled) { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 .kc-btn:disabled { opacity: 0.35; cursor: default; }
-.kc-btn:focus-visible, .kc-track:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-.kc-wrap { max-width: none; padding-right: 0; padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2)); }
-.kc-track { --g: clamp(0.9rem, 1.4vw, 1.25rem); --n: 4.5; display: flex; gap: var(--g); margin: 0; padding: 0 0 0.5rem; list-style: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
-.kc-track::-webkit-scrollbar { display: none; }
-.kc-item { flex: 0 0 calc((100% - (var(--n) - 0.5) * var(--g)) / var(--n)); scroll-snap-align: start; display: flex; }
-.kc-item:last-child { margin-right: var(--gutter); }
-.kc-card { display: grid; grid-template-rows: auto 1fr; width: 100%; overflow: hidden; border-radius: var(--radius-card); background: var(--paper); }
-.kc-media .dish-photo, .kc-media .media { margin: 0; width: 100%; aspect-ratio: 4 / 3; border-radius: 0; }
-.kc-media img { width: 100%; height: 100%; object-fit: cover; }
-.kc-text { display: grid; grid-template-rows: auto 1fr auto; gap: 0.4rem; padding: 0.95rem 1.05rem 1.1rem; }
-.kc-text h3 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: 1.3rem; line-height: 1.2; color: var(--ink); }
-.kc-text p { margin: 0; font-size: 0.9rem; line-height: 1.45; color: var(--body); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; min-height: 3 * 1.45em; }
-.kc-price { font-variant-numeric: lining-nums tabular-nums; font-weight: 600; color: var(--ink); }
-@media (max-width: 1099px) { .kc-track { --n: 2.5; } }
-@media (max-width: 640px) { .kc-track { --n: 1.25; } .kc-btn { width: 52px; height: 52px; } }
-@media (max-width: 760px) { .kc-head { align-items: flex-start; flex-direction: column; } }
-@media (prefers-reduced-motion: reduce) { .kc-track { scroll-behavior: auto; } }
+.kc-btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-/* ---------- Stay: compact, so both rooms are in view together on a 16:10 laptop ---------- */
-
-/* ---------- Experiences: two editorial rows on the dark ground, one photograph each, alternating ---------- */
-.ex { position: relative; margin-top: calc(var(--curve) * -1); border-radius: var(--curve) var(--curve) 0 0; background: var(--night); color: var(--on-night); }
-main > .section.ex { padding-block: var(--sec-y-lg); padding-top: calc(var(--sec-y) + var(--curve) * 0.5); }
-
-/* ---------- Surroundings: five photographs as one composition ---------- */
-.sx-head { display: grid; gap: 1.25rem clamp(2rem, 5vw, 5rem); margin-bottom: var(--head-gap); }
-@media (min-width: 900px) { .sx-head { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: end; } }
-.sm { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.5rem, 1vw, 0.9rem); }
-.sm figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
-.sm .media, .sm img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; aspect-ratio: auto !important; }
-.sm-a { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
-.sm-e { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-.sm-b, .sm-c, .sm-d { aspect-ratio: 4 / 5; }
-.sm-d { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-@media (min-width: 900px) {
-  .sm { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: clamp(52px, 6.2vw, 96px); }
-  .sm figure { aspect-ratio: auto !important; }
-  .sm-a { grid-column: 1 / 6; grid-row: 1 / 5; }
-  .sm-b { grid-column: 6 / 9; grid-row: 1 / 4; }
-  .sm-c { grid-column: 9 / 13; grid-row: 1 / 7; }
-  .sm-d { grid-column: 6 / 9; grid-row: 4 / 7; }
-  .sm-e { grid-column: 1 / 6; grid-row: 5 / 7; }
-}
+@media (max-width: 640px) {  .kc-btn { width: 52px; height: 52px; } }
 
 /* ---------- Footer: the LAUHATA signature, large, above the legal line ---------- */
 .ft-mark { margin-top: clamp(2.5rem, 5vw, 4.5rem); overflow: hidden; text-align: center; line-height: 0.8; user-select: none; }
@@ -919,8 +440,7 @@ main > .section.ex { padding-block: var(--sec-y-lg); padding-top: calc(var(--sec
 /* ---------- Menu: "Menu" on the left, "Filter" on the right; the categories open in a small popover ---------- */
 section.menu .menu-layout { display: block !important; }
 section.menu .menu-side { display: block !important; position: static !important; padding-top: 0 !important; }
-.menu-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; border-bottom: 1px solid var(--line-strong); }
-.menu-bar-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 1.2vw + 1.3rem, 2.4rem); line-height: 1; color: var(--ink); }
+
 .menu-filter { position: relative; display: flex; align-items: center; gap: 0.6rem; }
 .mf-btn { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 1.1rem; border: 1px solid var(--ink); border-radius: 999px; background: transparent; color: var(--ink); font: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background-color 0.25s var(--ease), color 0.25s var(--ease); }
 .mf-btn .icon { width: 1rem; height: 1rem; transition: transform 0.25s var(--ease); }
@@ -939,7 +459,7 @@ section.menu .menu-side { display: block !important; position: static !important
 .mf-opt[aria-pressed="true"] { background: var(--ink); color: var(--cream); font-weight: 600; }
 .mf-opt[aria-pressed="true"] small { color: rgba(250, 247, 239, 0.75); }
 @keyframes mfIn { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
-@media (max-width: 520px) { .menu-filter { position: static; } .menu-bar { position: relative; } .mf-panel { right: 0; left: 0; width: auto; } .mf-clear span { max-width: 7.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+@media (max-width: 520px) { .menu-filter { position: static; }  .mf-panel { right: 0; left: 0; width: auto; } .mf-clear span { max-width: 7.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
 @media (prefers-reduced-motion: reduce) { .mf-panel { animation: none; } }
 section.menu .menu-search { margin: 1.25rem 0 0; }
 section.menu .menu-body .menu-cat { scroll-margin-top: 7rem; }
@@ -960,16 +480,10 @@ section.menu .menu-body .menu-cat { scroll-margin-top: 7rem; }
 /* Two room cards side by side down to 620px (split windows): the pair stays short */
 @media (min-width: 1600px) { .cart-fab { bottom: calc(1.4rem + 3.6rem + 0.5rem + 48px + 0.5rem); } }
 
-/* =====================================================================================================================
-   Master Refinement 05 (19 Nov 2026). Selective: hero cue, welcome, special grid, quick add, experiences, surroundings alignment,
-   footer signature, restaurant introduction and responsive categories (bar at 1000px and up, Filter below), room showcases,
-   contact hero facts, cart lines. Header, booking dialog, reviews, closing call and gallery are not touched.
-   ===================================================================================================================== */
-
 /* ---------- Hero: exactly one screen; the next section no longer rides over its lower edge; a quiet scroll cue ---------- */
 .rs-hero { position: relative; height: 100vh; height: 100svh; min-height: 34rem; }
 .rs-hero .hx-content { padding-bottom: clamp(5.5rem, 13vh, 8rem); }
-.rs-hero + .wl { margin-top: 0; border-radius: 0; }
+
 .hx-scroll { position: absolute; left: 50%; bottom: calc(1.4rem + env(safe-area-inset-bottom)); z-index: 3; width: 1px; height: 60px; transform: translateX(-50%); background: rgba(255, 255, 255, 0.28); overflow: hidden; pointer-events: none; transition: opacity 0.45s var(--ease); }
 .hx-scroll i { position: absolute; left: 0; top: -45%; width: 1px; height: 45%; background: #fff; animation: hxCue 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
 .hx-scroll.is-gone { opacity: 0; }
@@ -978,55 +492,15 @@ section.menu .menu-body .menu-cat { scroll-margin-top: 7rem; }
 
 /* ---------- Welcome: a stronger headline, a place-and-hours line, three cards of a lower height, the middle one set lower ---------- */
 .wl-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.8rem, 3vw + 1.5rem, 5rem); line-height: 1.02; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
-.wl-intro .pv-body { margin-top: 1.4rem; max-width: 28rem; }
+
 .wl-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.7rem; margin: 2.2rem 0 0; padding-top: 1.1rem; border-top: 1px solid var(--line-strong); font-size: 0.9rem; line-height: 1.4; color: var(--body); }
 .wl-meta .icon { flex: none; width: 1rem; height: 1rem; color: var(--terra-dark); }
 .wl-meta i { width: 1px; height: 1.1em; background: var(--line-strong); }
 .wl-meta b { font-weight: 600; color: var(--ink); }
-@media (min-width: 641px) and (max-width: 1099px) { .wl-grid { grid-template-columns: minmax(0, 1fr); } }
-
-/* ---------- What makes Lauhata special: a centred title over six small cards, three and three ---------- */
-main > .section.sp { padding-block: var(--sec-y); }
-.sp .wrap { text-align: center; }
-.sp-title { margin: 0 auto clamp(2rem, 3.6vw, 3.25rem); text-align: center; font-size: clamp(2.1rem, 1.7vw + 1.5rem, 3.2rem); }
-main .sp .sp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.7rem, 1.4vw, 1.1rem); text-align: left; }
-@media (min-width: 700px) { main .sp .sp-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-main .sp .sp-list li { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; row-gap: 0.3rem; padding: clamp(1.1rem, 1.8vw, 1.5rem); border: 1px solid transparent; border-radius: var(--radius-card); background: var(--cream); transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
-main .sp .sp-list li:first-child { padding: clamp(1.1rem, 1.8vw, 1.5rem); }
-main .sp .sp-list li:hover { transform: translateY(-2px); border-color: var(--line-strong); box-shadow: 0 14px 28px -22px rgba(23, 18, 15, 0.4); }
-main .sp .sp-list .icon { grid-row: auto; width: 1.7rem; height: 1.7rem; margin: 0 0 0.45rem; }
-@media (max-width: 439px) { main .sp .sp-list { grid-template-columns: minmax(0, 1fr); } }
-@media (prefers-reduced-motion: reduce) { main .sp .sp-list li { transition: none; } main .sp .sp-list li:hover { transform: none; } }
-
-/* ---------- Kitchen carousel: the price on the left, Add to Cart on the right (the one cart does the work) ---------- */
-.kc-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 0.35rem; }
-.kc-add { display: inline-flex; align-items: center; min-height: 40px; padding: 0 0.9rem; border: 1px solid var(--ink); border-radius: 999px; background: transparent; color: var(--ink); font: inherit; font-size: 0.84rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color 0.25s var(--ease), color 0.25s var(--ease); }
-.kc-add [data-add-label] { display: inline-flex; align-items: center; gap: 0.35rem; }
-.kc-add .icon { width: 0.9rem; height: 0.9rem; }
-.kc-add:hover, .kc-add.is-added { background: var(--ink); color: var(--cream); }
-.kc-add:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-/* ---------- Home stay: a little more presence in the type and the dividing lines ---------- */
 
 /* ---------- Experiences: a tall photograph with a small one laid over it, the words beside them ---------- */
-.ex-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-.ex-photos { position: relative; padding-bottom: clamp(2rem, 5vw, 3.5rem); }
-.ex-big { position: relative; width: 78%; margin: 0; overflow: hidden; border-radius: var(--radius-card); aspect-ratio: 4 / 5; }
-.ex-small { position: absolute; right: 0; bottom: 0; width: 44%; margin: 0; overflow: hidden; border: 8px solid var(--night); border-radius: var(--radius-card); aspect-ratio: 1 / 1; }
-.ex-big .media, .ex-big img, .ex-small .media, .ex-small img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
-.ex-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.6rem, 3vw + 1.4rem, 4.8rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--on-night); text-wrap: balance; }
-.ex-lead { margin: 1.2rem 0 2rem; max-width: 34rem; line-height: 1.65; color: rgba(250, 247, 239, 0.8); }
-.ex-item { padding-block: 1.3rem; border-top: 1px solid rgba(250, 247, 239, 0.16); }
-.ex-item h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 0.8vw + 1.2rem, 1.9rem); line-height: 1.15; color: var(--on-night); }
-.ex-item p { margin: 0.55rem 0 0; max-width: 32rem; line-height: 1.6; color: rgba(250, 247, 239, 0.78); }
-.ex-item .mo-kinds { margin: 1rem 0 0; }
-.ex-copy .pv-actions { margin-top: 1.6rem; }
-@media (min-width: 900px) { .ex-grid { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); } }
 
-/* ---------- Surroundings: the title and the first line of the text start at the same height ---------- */
-.sx-head { align-items: start !important; }
-.sx-head .pv-title { margin: 0; line-height: 1.1; }
-.sx-copy .pv-body { margin-top: 0.55rem; }
+.ex-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(2.6rem, 3vw + 1.4rem, 4.8rem); line-height: 1.04; letter-spacing: -0.015em; color: var(--on-night); text-wrap: balance; }
 
 /* ---------- Footer signature: burnt orange, nearly the full width, it rises into place once ---------- */
 .ft-mark span { font-size: clamp(2.6rem, 16.8vw, 21rem); letter-spacing: 0.02em; text-indent: 0.02em; color: #a14a18; }
@@ -1117,7 +591,7 @@ section.menu .menu-layout { display: block !important; }
 /* ---------- Cart: a photograph, the name, the options, the unit price, the quantity and the line total in clear places ---------- */
 .cart-line { grid-template-columns: 72px minmax(0, 1fr) auto; grid-template-areas: "thumb main sub" "thumb step rm"; align-items: start; column-gap: 1rem; row-gap: 0.55rem; }
 .cl-thumb { grid-area: thumb; width: 72px; height: 72px; border-radius: 12px; object-fit: cover; background: var(--sand, #efe5d3); }
-.cl-thumb.is-initial { display: grid; place-items: center; font-family: var(--serif); font-size: 1.8rem; color: var(--terra-dark); }
+
 .cl-name { font-family: var(--serif); font-weight: 500; font-size: 1.2rem; }
 .cl-unit { font-variant-numeric: lining-nums tabular-nums; }
 .cl-sub { font-variant-numeric: lining-nums tabular-nums; }
@@ -1128,32 +602,11 @@ section.menu .menu-layout { display: block !important; }
 .wl-meta .wm { display: flex; align-items: flex-start; gap: 0.6rem; }
 .wl-meta .wm .icon { margin-top: 0.15em; }
 .wl-meta .wm i { width: auto; height: auto; background: none; font-style: normal; }
-.sx-copy .pv-body { margin-top: 0.1rem; }
 
 /* The stay page rooms sit on the dark band: type and lines follow it */
 .menu-tools { position: relative; flex-wrap: wrap; }
 .menu-tools .menu-search { flex: 1 1 15rem; min-width: 0; }
 @media (max-width: 520px) { .menu-filter { flex: 1 1 100%; justify-content: flex-end; } .mf-panel { left: 0; right: 0; width: auto; } }
-
-/* ---------- Experiences page: three real photographs of the place between the occasions and the request form ---------- */
-.ev-strip { padding-block: 0 var(--sec-y); }
-.ev-strip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.5rem, 1vw, 0.9rem); align-items: end; }
-.ev-strip figure { margin: 0; overflow: hidden; border-radius: var(--radius-card); }
-.ev-strip .media, .ev-strip img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; aspect-ratio: auto !important; }
-.es-a { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-.es-b { aspect-ratio: 3 / 4; }
-.es-c { aspect-ratio: 3 / 4; }
-@media (min-width: 900px) {
-  .ev-strip-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-  .es-a { grid-column: 1 / 8; aspect-ratio: 4 / 3; }
-  .es-b { grid-column: 8 / 10; aspect-ratio: 3 / 5; }
-  .es-c { grid-column: 10 / 13; aspect-ratio: 3 / 4; }
-}
-
-/* =====================================================================================================================
-   Navigation: the plain mobile drawer, and the restaurant categories as a left column (the "line sidebar", 1000px and up only).
-   Colours are the brand's: night #17120f, deep terracotta layers, sunset orange accent, warm cream type.
-   ===================================================================================================================== */
 
 /* ---------- Menu button (below 1280px): a perfect circle, same size on every phone ---------- */
 .site-header .nav-toggle { place-items: center; flex: none; width: 44px; height: 44px; min-width: 44px; padding: 0; aspect-ratio: 1; border: 1px solid color-mix(in srgb, currentColor 38%, transparent); border-radius: 50%; background: transparent; color: inherit; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease; }
@@ -1215,7 +668,6 @@ html.nav-open { overflow: hidden; }
   section.menu .menu-side .menu-nav li { counter-increment: cat; }
   section.menu .menu-side .menu-nav a { --p: 0; justify-content: flex-start; gap: 0.7rem; min-height: 42px; padding: 0.2rem 0.4rem 0.2rem 0; border: 0; color: color-mix(in srgb, var(--terra-dark) calc(var(--p) * 100%), var(--muted)); transform: translateX(calc(var(--p) * 5px)); transition: color 0.25s var(--ease); }
   section.menu .menu-side .menu-nav a:hover { padding-left: 0; color: var(--terra-dark); }
-  section.menu .menu-side .menu-nav a::before { content: counter(cat, decimal-leading-zero); min-width: 1.5rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; font-variant-numeric: lining-nums tabular-nums; }
   section.menu .menu-side .menu-nav a::after { content: ""; order: 1; flex: none; width: calc(12px + var(--p) * 10px); height: 1px; background: currentColor; transition: width 0.3s var(--ease); }
   section.menu .menu-side .menu-nav a > span { order: 2; }
   section.menu .menu-side .menu-nav a > small { order: 3; margin-left: auto; }
@@ -1224,7 +676,6 @@ html.nav-open { overflow: hidden; }
   section.menu .menu-side .menu-nav a[aria-current="true"] > span { color: var(--ink); }
 }
 @media (prefers-reduced-motion: reduce) { section.menu .menu-side .menu-nav a { transform: none !important; transition: none; } section.menu .menu-side .menu-nav a::after { transition: none; } }
-
 
 /* ---------- Overlays: no sideways jump, no second scrollbar ----------
    Cause of the jump when the cart opened: the page was locked with `overflow: hidden` on <html>, which removes the vertical
@@ -1238,25 +689,13 @@ html:has(dialog[open]) { overflow: hidden; }
    Rooms on the home page ("Find your perfect stay"): ONE definition (the scattered .rp-* rules of earlier passes were removed).
    Two equal cards (name + price, who it sleeps, beds, one action), then the accommodation's shared offer, set once.
    ===================================================================================================================== */
-.rp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 2.4vw, 2.25rem); align-items: stretch; }
-.rp-card { container-type: inline-size; display: grid; grid-template-rows: auto 1fr; overflow: hidden; border-radius: var(--radius-panel); background: var(--paper); border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(23, 18, 15, 0.04), 0 22px 44px -34px rgba(23, 18, 15, 0.45); }
-.rp-media { display: block; aspect-ratio: 3 / 2; overflow: hidden; }
-.rp-media .media, .rp-media img { width: 100%; height: 100%; object-fit: cover; }
-.rp-media img { transition: transform 0.7s var(--ease); }
-@media (hover: hover) { .rp-card:hover .rp-media img { transform: scale(1.035); } }
-.rp-body { display: flex; flex-direction: column; gap: 1rem; padding: clamp(1.3rem, 2.4vw, 2.2rem); }
-.rp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.35rem 1.2rem; }
-@container (max-width: 34rem) { .rp-head { flex-direction: column; align-items: flex-start; } }
-.rp-name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 1vw + 1.4rem, 2.35rem); line-height: 1.08; letter-spacing: -0.01em; }
-.rp-name a { color: var(--ink); text-decoration: none; }
+
 .rp-price { display: flex; align-items: baseline; gap: 0.35rem; margin: 0; white-space: nowrap; }
 .rp-price strong { font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 1vw + 1.35rem, 2.2rem); line-height: 1; color: var(--terra-dark); font-variant-numeric: lining-nums; }
 .rp-price span { font-size: 0.9rem; color: var(--muted); }
-.rp-spec { display: grid; gap: 0.55rem; margin: 0; padding: 1rem 0 0; list-style: none; border-top: 1px solid var(--line); font-size: 0.98rem; color: var(--body); }
-.rp-spec li { display: flex; align-items: center; gap: 0.7rem; }
-.rp-spec .icon { flex: none; width: 1.2rem; height: 1.2rem; color: var(--terra-dark); }
+
 .rp-pending { margin: -0.2rem 0 0; font-size: 0.84rem; line-height: 1.5; color: var(--muted); }
-.rp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.4rem; margin-top: auto; padding-top: 0.6rem; }
+
 .rp-lodging { margin-top: clamp(1.5rem, 3vw, 2.5rem); padding: clamp(1.4rem, 3vw, 2.4rem); border-radius: var(--radius-panel); background: color-mix(in srgb, var(--sand, #efe4d2) 70%, var(--cream)); }
 .rp-lodging-title { margin: 0 0 1.1rem; font-family: var(--serif); font-weight: 400; font-size: clamp(1.4rem, 0.7vw + 1.2rem, 1.8rem); color: var(--ink); }
 .rp-amen { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: 0.35rem 1.6rem; margin: 0; padding: 0; list-style: none; }
@@ -1267,34 +706,11 @@ html:has(dialog[open]) { overflow: hidden; }
 .rp-all .text-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 1.5px solid var(--ink); border-radius: 999px; text-decoration: none; }
 .rp-all .text-link:hover { background: var(--ink); color: var(--cream); }
 @media (max-width: 760px) {
-  .rp-grid { grid-template-columns: minmax(0, 1fr); }
-  .rp-media { aspect-ratio: 16 / 10; }
-  .rp-body { gap: 0.85rem; padding: 1.25rem; }
-  .rp-name { font-size: 1.55rem; }
+
   .rp-amen { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.2rem 1rem; }
   .rp-amen li { font-size: 0.9rem; min-height: 2.5rem; }
 }
 @media (max-width: 400px) { .rp-amen { grid-template-columns: minmax(0, 1fr); } }
-@media (prefers-reduced-motion: reduce) { .rp-media img { transition: none; } .rp-card:hover .rp-media img { transform: none; } }
-
-/* ---------- Welcome cards: one grid line, one height, the link on one baseline ----------
-   The middle card used to be pushed down (a staggered composition) and the row aligned to the top, so the cards began on different
-   lines and ended at different heights. Now every card starts on the same line and the row stretches them to the tallest; inside a
-   card the text block takes the free space, so the "Explore" links sit on the same baseline whatever the text length. */
-.wl-cards { align-items: stretch; }
-.wk-card { height: 100%; }
-.wk-body { align-content: stretch; grid-template-rows: auto 1fr auto; }
-.wk-go { align-self: end; }
-@media (max-width: 640px) { .wl-cards { grid-auto-rows: 1fr; } .wk-card { min-height: 9.5rem; } }
-
-/* ---------- Home "Experiences & Special Moments": a tall photograph with a small one set into its corner, one typographic column ----------
-   The sunset reads as a statement (large serif); the celebrations follow with the
-   occasions as quiet pills and a single action. The photograph carries its own caption like the other real photographs. */
-.ex-big figcaption { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 0.15rem; padding: 3rem 30% 0.9rem 1.1rem; font-size: 0.8rem; color: rgba(248, 241, 231, 0.9); background: linear-gradient(0deg, rgba(14, 10, 8, 0.7), rgba(14, 10, 8, 0)); }
-.ex-big figcaption b {  color: var(--gold-soft); font-weight: 600; }
-.ex-sun { border-top: 0; padding-top: 0; }
-.ex-sun h3 { font-style: italic; font-size: clamp(1.9rem, 1.4vw + 1.4rem, 2.7rem); color: var(--gold-soft, #ecbd85); }
-.ex-sun p { max-width: 30rem; }
 
 /* ---------- Feedback dialog ("Share your experience") ---------- */
 .reviews-ed button.rv-own-card { width: 100%; font: inherit; text-align: left; cursor: pointer; appearance: none; -webkit-appearance: none; }
@@ -1325,35 +741,10 @@ html:has(dialog[open]) { overflow: hidden; }
 .dc-photo .dish-photo { margin: 0; aspect-ratio: 4 / 3; border-radius: 0; }
 .dc-photo .dish-photo img { transition: transform 0.9s var(--ease); }
 .dcard:hover .dc-photo img { transform: scale(1.04); }
-.dc-line { display: flex; align-items: baseline; justify-content: space-between; gap: 0.3rem 0.9rem; min-width: 0; }
-.dc-name { flex: 1 1 0; min-width: 0; margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.1rem, 0.6vw + 0.95rem, 1.35rem); line-height: 1.2; }
-.dc-open { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; padding: 0; border: 0; background: none; font: inherit; color: var(--ink); text-align: left; cursor: pointer; }
-.dc-open::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-sm); } /* the whole card is the button */
-.dc-open:focus-visible { outline: none; }
-.dcard:has(.dc-open:focus-visible) { outline: 2px solid var(--terra); outline-offset: 4px; border-radius: var(--r-sm); }
-.dc-price { flex: none; margin: 0; font-family: var(--serif); font-size: clamp(1.05rem, 0.5vw + 0.95rem, 1.25rem); color: var(--ink); white-space: nowrap; }
-.dc-price b { font-weight: 400; }
-.dc-price b.is-tbc { font-family: var(--sans); font-size: 0.8rem; color: var(--muted); }
-@container (max-width: 14rem) { .dc-line { flex-direction: column; gap: 0.15rem; } }
 
-.dish-dialog { width: min(34rem, calc(100vw - 1.5rem)); max-height: calc(100vh - 2rem); max-height: calc(100dvh - 2rem); margin: auto; padding: 0; border: 0; border-radius: var(--radius-panel); background: var(--cream); color: var(--ink); box-shadow: 0 40px 90px -30px rgba(8, 5, 3, 0.7); overflow: auto; overscroll-behavior: contain; }
-.dish-dialog::backdrop { background: rgba(14, 10, 8, 0.55); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
-.dish-dialog[open] { animation: fbIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
-.dish-dialog[open]::backdrop { animation: fbVeil 0.4s ease both; }
-.dd-photo .dish-photo { margin: 0; aspect-ratio: 3 / 2; border-radius: 0; }
-.dd-photo img { width: 100%; height: 100%; object-fit: cover; }
-.dd-close { position: absolute; top: 0.7rem; right: 0.7rem; z-index: 1; width: 44px; height: 44px; border-radius: 50%; background: rgba(250, 246, 239, 0.92); color: var(--ink); }
-.dd-body { padding: clamp(1.3rem, 3vw, 1.9rem); }
-.dd-name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 1.3vw + 1.3rem, 2.2rem); line-height: 1.12; }
-.dd-price { margin: 0.5rem 0 0; font-family: var(--serif); font-size: 1.5rem; color: var(--ink); }
-.dd-price small, .dd-price span { font-family: var(--sans); font-size: 0.85rem; color: var(--muted); }
-.dd-tag { margin: 0.4rem 0 0; font-size: 0.85rem; font-weight: 600; color: var(--terra-dark); }
-.dd-desc { margin: 0.9rem 0 0; line-height: 1.6; color: var(--body); }
-.dd-note { margin: 0.9rem 0 0; font-size: 0.88rem; color: var(--muted); }
-.dd-add { margin-top: 1.3rem; width: 100%; justify-content: center; }
-.dd-add [data-add-label] { display: inline-flex; align-items: center; gap: 0.45rem; }
-.dd-add.is-added { --bg: var(--wa); }
-@media (prefers-reduced-motion: reduce) { .dish-dialog[open], .dish-dialog[open]::backdrop { animation: none; } .dc-photo .dish-photo img { transition: none; } }
+ /* the whole card is the button */
+
+@media (prefers-reduced-motion: reduce) {  .dc-photo .dish-photo img { transition: none; } }
 
 /* Fields inside the cream feedback dialog sit on a sand surface, so they stay visible (they were cream on cream) */
 .fb-dialog .field input, .fb-dialog .field textarea, .fb-dialog .pk-btn { background: var(--paper); border: 1px solid var(--line-strong); }
@@ -1391,12 +782,7 @@ html:has(dialog[open]) { overflow: hidden; }
 /* =====================================================================================================================
    Dish photography policy: REAL photograph, branded PLACEHOLDER (the default), ILLUSTRATIVE only behind a flag. Diet and special labels.
    ===================================================================================================================== */
-.dish-photo.is-branded { position: relative; display: grid; place-items: center; align-content: center; gap: 0.45rem; background: repeating-linear-gradient(135deg, rgba(161, 74, 24, 0.07) 0 1px, transparent 1px 10px), linear-gradient(160deg, var(--paper), var(--sand)); box-shadow: inset 0 0 0 1px rgba(23, 18, 15, 0.08); }
-.dish-photo.is-branded .icon { width: 1.7rem; height: 1.7rem; color: var(--terra-dark); opacity: 0.75; }
-.dish-photo.is-branded .bp-word { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.32em; text-indent: 0.32em; text-transform: uppercase; color: var(--muted); }
-.kc-media .dish-photo.is-branded, .dl-photo .dish-photo.is-branded { margin: 0; width: 100%; border-radius: 0; }
-.kc-media .dish-photo.is-branded { aspect-ratio: 4 / 3; }
-.dl-photo .dish-photo.is-branded { aspect-ratio: 1 / 1; }
+
 .cl-thumb.is-brand { display: grid; place-items: center; background: linear-gradient(160deg, var(--paper), var(--sand)); color: var(--terra-dark); }
 .cl-thumb.is-brand .icon { width: 1.5rem; height: 1.5rem; }
 .dl-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.45rem 0 0; padding: 0; list-style: none; }
@@ -1405,7 +791,6 @@ html:has(dialog[open]) { overflow: hidden; }
 .dl-badges .is-off { border-color: var(--error, #b3261e); color: var(--error, #b3261e); }
 .dline.is-off { opacity: 0.62; }
 .mi-notes .menu-note.is-allergy { max-width: 28rem; }
-.kc-media .dish-photo.is-branded { aspect-ratio: 16 / 10; }
 
 /* ---------- Stay: photographs open the lightbox; a compact comparison of what is confirmed ---------- */
 .rs-zoom { display: block; cursor: zoom-in; }
@@ -1424,25 +809,6 @@ html:has(dialog[open]) { overflow: hidden; }
 .rs-compare tbody th { color: var(--muted); }
 .rs-compare-note { color: var(--body); }
 .rs-zoom:focus-visible { outline-color: var(--ink); }
-
-/* ---------- Room photographs: until there are real ones, a branded placeholder (never a stock room presented as Lauhata's) ---------- */
-.media.room-photo.is-branded { position: relative; display: grid; place-items: center; align-content: center; gap: 0.5rem; width: 100%; background: repeating-linear-gradient(135deg, rgba(161, 74, 24, 0.07) 0 1px, transparent 1px 12px), linear-gradient(160deg, var(--paper), var(--sand)); box-shadow: inset 0 0 0 1px rgba(23, 18, 15, 0.08); text-align: center; }
-.media.room-photo.is-branded .icon { width: 2.2rem; height: 2.2rem; color: var(--terra-dark); opacity: 0.75; }
-.media.room-photo.is-branded .bp-word { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase; color: var(--muted); }
-.media.room-photo.is-branded .bp-note { max-width: 18rem; padding-inline: 1rem; font-size: 0.82rem; line-height: 1.4; color: var(--muted); }
-.media.room-photo.is-branded::after { content: none !important; }
-.rs-slide .media.room-photo.is-branded { aspect-ratio: 3 / 2 !important; border-radius: 0 !important; }
-.rp-media .media.room-photo.is-branded, .wk-media .media.room-photo.is-branded { height: 100%; }
-
-/* Audit fixes: the six "special" tiles read as a compact 2 x 3 on phones (they took four screens in one column); the placeholder's sentence stays on the room pages, small tiles keep the icon and the name only */
-@media (max-width: 439px) {
-  main .sp .sp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
-  main .sp .sp-list li, main .sp .sp-list li:first-child { padding: 0.9rem 0.85rem; }
-  main .sp .sp-list strong { font-size: 1.05rem; }
-  main .sp .sp-list span { font-size: 0.82rem; }
-  main .sp .sp-list .icon { width: 1.4rem; height: 1.4rem; margin-bottom: 0.3rem; }
-}
-.wk-media .media.room-photo.is-branded .bp-note, .rp-media .media.room-photo.is-branded .bp-note { display: none; }
 
 /* ---------- Map facade: a real aerial photograph of Lauhata, the place, and the choice to load the Google map ---------- */
 .map-facade { position: relative; isolation: isolate; display: grid; place-items: center; min-height: 20rem; overflow: hidden; background: var(--night); color: var(--on-night); }
@@ -1469,13 +835,6 @@ html:has(dialog[open]) { overflow: hidden; }
 .rs-place { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem clamp(2rem, 4vw, 4rem); align-items: center; margin-top: clamp(3rem, 6vw, 5.5rem); }
 .rs-place-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 1.4vw + 1.3rem, 2.6rem); line-height: 1.1; color: var(--ink); }
 .rs-place-text p { margin: 0.9rem 0 0; max-width: 30rem; line-height: 1.65; color: var(--body); }
-.rs-place-photos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.5rem, 1vw, 0.9rem); }
-.rs-place-photos a { display: block; overflow: hidden; border-radius: var(--radius-card); cursor: zoom-in; }
-.rs-place-photos .media, .rs-place-photos img { width: 100%; height: 100%; object-fit: cover; border-radius: 0 !important; aspect-ratio: auto !important; }
-.rs-place-0 { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
-.rs-place-1, .rs-place-2 { aspect-ratio: 4 / 3; }
-.rs-place-photos a img { transition: transform 0.7s var(--ease); }
-.rs-place-photos a:hover img { transform: scale(1.03); }
-.rs-place-photos a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
 @media (min-width: 900px) { .rs-place { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
-@media (prefers-reduced-motion: reduce) { .rs-place-photos a img { transition: none; } .rs-place-photos a:hover img { transform: none; } }
+

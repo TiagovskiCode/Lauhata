@@ -1,10 +1,7 @@
-/* Lauhata — the cinema layer, built on GSAP + ScrollTrigger (self-hosted in ./vendor, GSAP 3.13, free licence).
-   It adds: the pinned "a day at Lauhata" scene, the shutter and drift of the full-screen scenes, parallax, and the slow
-   push-in of the home hero. It runs after main.js, which has already decided the motion level:
-     - tier A (always): the pinned day scene with its cross-fades, colour grade and progress rail (fades only);
-     - tier B (html.cine-motion, i.e. no "reduced motion" or ?movimento=completo): zoom, parallax, shutter, hero push-in,
-       inertia scrolling with the mouse wheel, a scroll progress line and staggered entrances of card groups.
-   If GSAP is missing or anything here throws, the site falls back to the plain layout (see cleanup()). */
+/* Lauhata: the "day" scene of the home page, the one sequence that needs a timeline (GSAP + ScrollTrigger, self-hosted in ./vendor, GSAP 3.13,
+   free licence). Everything else that moves on the site is CSS or a one-off reveal in main.js. It runs after main.js, which has already set
+   the motion level: cross-fades, colour grade and rail always; the slow push-in and the rising words only with html.cine-motion (no
+   "reduced motion", or ?movimento=completo). If GSAP is missing or anything throws, the scene falls back to a plain list (cleanup()). */
 (() => {
   "use strict";
   const root = document.documentElement;
@@ -13,7 +10,6 @@
   gsap.registerPlugin(ScrollTrigger);
 
   const full = root.classList.contains("cine-motion"); // tier B
-  const wide = window.matchMedia("(min-width: 861px)").matches;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const created = []; // every ScrollTrigger we make, so a failure can take them all down
@@ -23,11 +19,8 @@
     created.forEach((st) => st.kill());
     ScrollTrigger.getAll().forEach((st) => st.kill());
     root.classList.remove("day-cine", "gsap-ready");
-    gsap.set(".wl-door, .rp-media, .mo-title, .tt-b, .wc-card, .rv-card, .st-panel", { clearProps: "opacity,transform,clipPath" });
-    gsap.set(".dsc-row-media img, .abc-media img, .ab-strip-a img, .ab-strip-b img, .pv-photo img, .ex-big img, .ex-small img", { clearProps: "clipPath,transform" });
-    gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill, .scene-media, .scene-media img, .hx-bg, .hx-content, .hx-title .line, .cine-hero.is-page .slide img, .cine-hero.is-page .cine-content", { clearProps: "all" });
+    gsap.set("[data-day-step], .day-frame, .day-frame img, .day-copy, .day-grade, .day-dim, .day-rail-fill", { clearProps: "all" });
   }
-  const track = (anim) => { if (anim && anim.scrollTrigger) created.push(anim.scrollTrigger); return anim; };
 
   /* ---------- The day: one pinned stage, five moments ---------- */
   function initDay() {
@@ -87,73 +80,13 @@
     created.push(tl);
 
     function preload() { // the frames below the fold are lazy images: fetch them before the first fade needs them
+      stage.classList.add("is-near"); // until then the second and third frames are not even requested (signature.css)
       $$(".day-frame img", stage).forEach((img) => { if (img.loading === "lazy") img.loading = "eager"; });
     }
   }
 
-  /* ---------- Scenes: a slow drift of the photograph (tier B). Only transforms are scrubbed: scrubbing a clip-path on a
-     full-screen image repainted it on every scroll frame, which made the pages stutter right where the booking sections sit. ---------- */
-  function initScenes() {
-    if (!full) return;
-    $$(".scene").forEach((scene) => {
-      const img = $(".scene-media img", scene);
-      if (!img) return;
-      track(gsap.fromTo(img, { scale: 1.14, yPercent: -3 }, {
-        scale: 1.04, yPercent: 3, ease: "none",
-        scrollTrigger: { trigger: scene, start: "top bottom", end: "bottom top", scrub: true },
-      }));
-    });
-  }
-
-  /* ---------- Parallax for any picture that asks for it (tier B, computer only) ---------- */
-  function initParallax() {
-    if (!full || !wide) return;
-    $$("[data-parallax]").forEach((img) => {
-      const speed = Number(img.dataset.parallax) || 0.1;
-      const frame = img.parentElement;
-      track(gsap.fromTo(img, { yPercent: -speed * 70 }, {
-        yPercent: speed * 70, ease: "none",
-        scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true },
-      }));
-    });
-  }
-
-  /* ---------- The home hero slowly pushes in as you leave it (tier B) ---------- */
-  function initPageHeroes() { // inner pages: same push-in and lift-away, on the single hero photo
-    if (!full) return;
-    $$(".cine-hero.is-page").forEach((hero) => {
-      const img = $(".slide img", hero);
-      const st = { trigger: hero, start: "top top", end: "bottom top", scrub: true };
-      if (img) track(gsap.to(img, { scale: 1.12, yPercent: 4, ease: "none", scrollTrigger: st }));
-    });
-  }
-
-  /* ---------- The home hero: the film is the opening, nothing scrubs or zooms it (no artificial zoom) ---------- */
-  function initHero() {}
-
-  /* ---------- Home: each movement has one job (tier B only; content is in place without it) ----------
-     welcome cards rise one after another once; the room photographs "develop" with a wipe once; the dark band's heading lifts once;
-     the panorama drifts very slightly (parallax, see initParallax). */
-  function initHome() {
-    if (!full || !wide) return; // phones and small tablets: everything is simply there (no hidden states, less work)
-    const ease = "power3.out"; // settles, never overshoots
-    const once = (trigger, vars, start = "top 86%") => gsap.from(trigger, { ...vars, ease, scrollTrigger: { trigger: Array.isArray(trigger) ? trigger[0] : trigger, start, once: true } });
-    const cards = $$(".wl-door");
-    if (cards.length) created.push(once(cards, { y: 28, opacity: 0, duration: 0.9, stagger: 0.12 }, "top 88%").scrollTrigger);
-    $$(".rp-media").forEach((el) => created.push(once(el, { clipPath: "inset(0 0 100% 0)", duration: 1.3, ease: "power2.inOut" }, "top 85%").scrollTrigger));
-    const mo = null;
-    if (mo) created.push(once(mo, { y: 36, opacity: 0, duration: 1 }, "top 82%").scrollTrigger);
-    const tt = $(".tt-b");
-    if (tt) created.push(once(tt, { y: 40, opacity: 0, duration: 1.1 }, "top 90%").scrollTrigger);
-  }
-
   try {
     initDay();
-    initScenes();
-    initParallax();
-    initHero();
-    initHome();
-    initPageHeroes();
     root.classList.add("gsap-ready");
     window.__cinemaReady = true;
     // Images and fonts change heights after load: re-measure the pins once everything has settled.

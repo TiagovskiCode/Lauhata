@@ -12,7 +12,8 @@ um script em Node gera as páginas a partir de `src/` para `dist/`.
 npm run preview                     # gera o site e abre http://localhost:8080
 npm run build                       # só gera dist/
 npm run prelaunch                   # gera em modo estrito (falha se faltar alguma coisa crítica)
-npm run fotos                       # tamanhos web das fotos em originais/fotos/maqueta/
+npm run fotos                       # revela as fotografias (cor e tamanhos web, WebP) a partir dos originais
+npm run filme                       # monta o filme do hero e o seu poster a partir do vídeo de drone original
 npm run fotos:temporarias           # procura fotos temporárias de pratos (Wikimedia Commons)
 npm run fotos:temporarias:otimizar  # tamanhos web dessas fotos
 ```
@@ -34,8 +35,8 @@ website/
 │   ├── i18n/            pt.mjs e en.mjs: todos os textos do site
 │   ├── data/            os dados do negócio (ver a tabela abaixo)
 │   └── assets/
-│       ├── css/         main → cinema → order → home → landing → picker → wide → design → editorial → resort
-│       │                (carregados por esta ordem; resort.css é o design final e é o último)
+│       ├── css/         main → cinema → order → home → landing → picker → wide → design → editorial → resort → refine → signature
+│       │                (juntos por esta ordem num só site.css; signature.css é o design final e é o último)
 │       ├── js/          main.js (formulários e WhatsApp), picker.js (datas e horas), order.js (carrinho),
 │       │                cinema.js (animações GSAP), vendor/ (GSAP)
 │       ├── fonts/       Cormorant Garamond e Manrope (self-hosted)
@@ -64,15 +65,17 @@ website/
 | Opiniões deixadas no site e aprovadas | `src/data/reviews.mjs` |
 | Bebidas de exemplo (desligar com `showSamples: false` em `site.mjs`) | `src/data/sample-drinks.mjs` |
 | Créditos das fotos temporárias | `src/data/temp-photos.json` |
-| Aspeto (cores, tipos de letra, botões) | `src/assets/css/resort.css` |
+| Aspeto (cores, tipos de letra, botões, movimento) | `src/assets/css/signature.css` |
 
 **Fotos reais:**
 - **Prato:** `src/assets/img/pratos/<id>-640.jpg` substitui a foto temporária. A lista de ids está em
   `docs/FOTOS-PRATOS.md`.
 - **Outras fotos:**
   1. Pôr o original em `originais/fotos/`.
-  2. Gerar os tamanhos web.
+  2. Acrescentar uma linha em `tools/revelar-fotos.mjs` (ficheiro e acerto de cor) e correr `npm run fotos -- <slug>`.
   3. Apontar a chave em `images.mjs` e marcar `placeholder: false`.
+- **Interior de um quarto:** pôr a chave da fotografia (com `kind: "room"`) em `images` do quarto, em `rooms.mjs`: a galeria desse
+  quarto passa a mostrá-la e a nota «exterior dos quartos» desaparece.
 
 ## Regras do negócio (não mudar sem o Carlos)
 
