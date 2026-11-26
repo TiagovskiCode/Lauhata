@@ -37,6 +37,7 @@ export const pendingAmenities = [
 export default [
   {
     id: "sea",
+    diff: { pt: "Uma cama Queen Size", en: "One queen-size bed" },
     card: { pt: "Para uma ou duas pessoas. A porta abre para a varanda e o jardim, a poucos passos do restaurante e da praia.", en: "For one or two people. The door opens onto the veranda and the garden, a few steps from the restaurant and the beach." },
     slug: { pt: "queen-room", en: "queen-room" },
     oldSlug: { pt: "suite-king", en: "suite-king" },
@@ -63,6 +64,7 @@ export default [
   },
   {
     id: "family",
+    diff: { pt: "Mais uma cama de solteiro", en: "Adds a single bed" },
     card: { pt: "Uma cama de solteiro ao lado da Queen Size, para famílias ou amigos que viajam juntos. Abre para a mesma varanda.", en: "A single bed beside the queen, for families or friends travelling together. It opens onto the same veranda." },
     slug: { pt: "queen-and-single-room", en: "queen-and-single-room" },
     oldSlug: { pt: "suite-king-e-solteiro", en: "suite-king-and-single" },

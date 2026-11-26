@@ -63,8 +63,8 @@ test("stay page: a light ground, the price and capacity per room, and progress b
     assert.ok(/<section class="section rooms-stay"/.test(h) && !/rooms-cine/.test(h), f + ": light section");
     assert.equal([...h.matchAll(/data-rg-bar/g)].length, 0, f + ": the swipeable gallery is only for photographs of the inside of a room, and there are none yet");
     assert.ok(!/data-rg-count/.test(h) && !/\d \/ \d<\/span>/.test(h), f + ": the numeric counter is back");
-    assert.equal([...h.matchAll(/class="rs-price"/g)].length, 2, f + ": price on both rooms");
-    assert.equal([...h.matchAll(/class="rp-pending"/g)].length, 1, f + ": the pending capacity is flagged once");
+    assert.equal([...h.matchAll(/class="ch-price"/g)].length, 2, f + ": price on both rooms");
+    assert.equal([...h.matchAll(/class="ch-pending"/g)].length, 1, f + ": the pending capacity is flagged once");
   }
 });
 
@@ -119,17 +119,17 @@ test("the hero has two plain actions and no expanding booking widget", () => {
   assert.ok(!/class="booking-card is-hero"/.test(h), "the hero still carries the expanding booking card");
   const hero = h.match(/<section class="cine-hero[\s\S]*?<\/section>/)[0];
   assert.equal([...hero.matchAll(/<a class="btn/g)].length, 2);
-  for (const label of ["Reserve a table", "Request a room", "Plan your event", "Get in touch"]) assert.ok(h.includes(label), `missing CTA: ${label}`);
+  for (const label of ["Book a table", "Request a room", "Enquire about an experience", "Get in touch"]) assert.ok(h.includes(label), `missing CTA: ${label}`);
 });
 
 
 
-test("the stay page shows two large mirrored rooms with Lauhata's own photographs of the outside, says so, and publishes no unconfirmed amenity", () => {
+test("the stay page shows two room presentations with Lauhata's own photographs of the outside, says so, and publishes no unconfirmed amenity", () => {
   for (const f of ["stay/index.html", "pt/alojamento/index.html"]) {
     const stay = read(f);
-    assert.equal([...stay.matchAll(/<article class="rs-room( is-flip)?"/g)].length, 2, f);
-    assert.equal([...stay.matchAll(/class="rs-room is-flip"/g)].length, 1, f + ": second room is mirrored");
-    assert.equal([...stay.matchAll(/class="rs-outside"/g)].length, 2, f + ": each room shows the outside of the rooms");
+    assert.equal([...stay.matchAll(/<article class="ch" /g)].length, 2, f + ": two room presentations");
+    assert.equal([...stay.matchAll(/class="ch-media" data-gallery/g)].length, 2, f + ": each room shows its photographs");
+    assert.equal([...stay.matchAll(/class="ch-diff"/g)].length, 2, f + ": each room says what sets it apart");
     assert.ok(/class="rm-inside"/.test(stay), f + ": the note about the outside photographs is missing");
     assert.ok(!/unsplash|is-branded|quarto-jardim|suite-familia/.test(stay), f + ": a stock picture or an empty placeholder stands in for a room");
     assert.ok(!/Air conditioning|Ar condicionado|Breakfast included|Pequeno-almoço incluído/i.test(stay.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<symbol[\s\S]*?<\/symbol>/g, "")), f + ": an unconfirmed amenity is published");
@@ -265,7 +265,7 @@ test("Restaurant and Stay no longer carry their own request section; the central
 
 test("gallery: every photograph has a visible description", () => {
   const g = read("gallery/index.html");
-  const tiles = [...g.matchAll(/<li class="gx-tile"/g)].length;
+  const tiles = [...g.matchAll(/<li class="gx-item/g)].length;
   const caps = [...g.matchAll(/<p class="gx-cap">[^<]+<\/p>/g)].length;
   assert.ok(tiles > 0 && tiles === caps, "tiles " + tiles + " captions " + caps);
 });
@@ -413,12 +413,12 @@ test("dish photography policy: no illustrative dish photograph is shown or even 
   assert.ok(!/pratos-temp/.test(read("assets/js/order.js")) && !/LAUHATA_MENU[^;]*pratos-temp/.test(read("index.html")), "cart data points at illustrative photos");
 });
 
-test("maps: no Google frame loads on page view; a facade with a real photograph offers to load it and links to Google Maps", () => {
-  for (const f of ["discover-liquica/index.html", "contact/index.html", "pt/descobrir-liquica/index.html"]) {
+test("maps: the map is in the page straight away (no button to reveal it), lazy so it never holds up the page, with a direct link to Google Maps", () => {
+  for (const f of ["discover-liquica/index.html", "contact/index.html", "pt/contactos/index.html", "pt/descobrir-liquica/index.html"]) {
     const h = read(f).replace(/<script[\s\S]*?<\/script>/g, "");
-    assert.ok(!/<iframe[^>]*google\.com\/maps/.test(h), f + ": a Google map loads with the page");
-    assert.ok(/data-map-facade[^>]*data-src="https:\/\/www\.google\.com\/maps/.test(h) && /data-map-load/.test(h), f + ": facade");
-    assert.ok(/class="mf-actions"[\s\S]*?href="https:\/\/www\.google\.com\/maps\/search/.test(h), f + ": direct link to Google Maps");
+    assert.ok(/<iframe src="https:\/\/www\.google\.com\/maps[^"]*"[^>]*loading="lazy"/.test(h), f + ": the map is not in the page, or not lazy");
+    assert.ok(!/data-map-load|data-map-facade/.test(h), f + ": the map still hides behind a button");
+    assert.ok(/class="map-bar"[\s\S]*?href="https:\/\/www\.google\.com\/maps\/search/.test(h), f + ": direct link to Google Maps");
   }
 });
 
@@ -430,7 +430,7 @@ test("original media never reaches the build; Lauhata's own photographs of the r
   assert.ok(/quartos-varanda-/.test(stay) && /vista-de-cima-/.test(stay), "stay hero and the place seen from above");
   assert.ok(/quarto-entrada-/.test(read("index.html")), "welcome stay card uses the real entrance photograph");
   const g = read("gallery/index.html");
-  assert.ok(/data-filter="stay"/.test(g) && [...g.matchAll(/<li class="gx-tile" data-group="stay"/g)].length === 4, "gallery group for the rooms and garden");
+  for (const p of ["quartos-varanda-", "quarto-entrada-", "quartos-corredor-", "quartos-jardim-"]) assert.ok(g.includes(p), "the gallery leaves out a photograph of the rooms: " + p);
 });
 
 test("one vocabulary: the same names in the header, the drawer and the footer, and no claim the business has not confirmed", () => {
@@ -456,12 +456,15 @@ test("the FAQ agrees with the published price and amenities, and reads the price
   }
 });
 
-test("photographs: WebP with width candidates and reserved space, no third-party image host, each gallery chapter labelled", () => {
+test("photographs: WebP with width candidates and reserved space, no third-party image host; the gallery is one collection", () => {
   for (const { f, html } of pages()) {
     for (const m of html.matchAll(/<img src="([^"]*\/fotos\/[^"]+)"[^>]*>/g)) assert.ok(/\.webp$/.test(m[1]) && /srcset=/.test(m[0]) && /width="\d+" height="\d+"/.test(m[0]), f + ": " + m[0].slice(0, 120));
     assert.ok(!/images\.unsplash\.com/.test(html), f + ": a picture comes from another host");
   }
-  assert.equal([...read("gallery/index.html").matchAll(/<section class="gc /g)].length, 4);
+  const g = read("gallery/index.html");
+  assert.equal([...g.matchAll(/<ul class="gx-list"/g)].length, 1, "one continuous collection");
+  assert.ok(!/gx-filter|data-filter|class="gc /.test(g), "category filters or chapters are back");
+  assert.ok([...g.matchAll(/data-lb-src=/g)].length >= 18, "every photograph opens in the lightbox");
 });
 
 test("motion: page transitions and reveals are off for reduced motion, and nothing is hidden without JavaScript", () => {
@@ -477,4 +480,66 @@ test("performance: nothing is pinned or scrubbed, no endless animation moves lay
   for (const m of css.matchAll(/@keyframes [\w-]+\{((?:[^{}]*\{[^}]*\})*)\}/g)) assert.ok(!/(^|[;{])(top|left|right|bottom|width|height|margin[\w-]*):/.test(m[1]), "a keyframe animates layout: " + m[0].slice(0, 90));
   assert.ok(!/margin-top:calc\(var\(--curve\)\s*\*\s*-1\)/.test(css.replace(/\s+/g, "")), "curved section edges are back");
   assert.ok(/\$\$\("\[data-tide\], \[data-rise\]"\)/.test(readFileSync(join(root, "src/assets/js/main.js"), "utf8")), "the reveal list must be an array");
+});
+
+test("Phase 2: page-specific booking calls (a table on the restaurant, a room on the hotel)", () => {
+  // only the booking dialog itself may offer both (its two tabs); the menu drawer, the cart and every page call follow the page
+  const vis = (h) => h.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<dialog class="book-dialog"[\s\S]*?<\/dialog>/g, "");
+  for (const f of ["restaurant/index.html", "pt/restaurante/index.html"]) {
+    const h = vis(read(f));
+    assert.ok(!/data-book-open="room"/.test(h), f + ": a room call on the restaurant page");
+    assert.ok(/Book a table|Reservar mesa/.test(h), f + ": no Book a table");
+    assert.ok(!/Book a room|Request a room|Pedir quarto|Reservar quarto/i.test(h.replace(/<nav[\s\S]*?<\/nav>/g, "")), f + ": room wording on the restaurant page");
+  }
+  for (const f of ["stay/index.html", "pt/alojamento/index.html", "stay/queen-room/index.html", "pt/alojamento/queen-room/index.html"]) {
+    const h = vis(read(f));
+    assert.ok(!/data-book-open="table"/.test(h), f + ": a table call on the hotel page");
+    assert.ok(!/Book a table|Reserve a table|Reservar mesa/i.test(h), f + ": table wording on the hotel page");
+  }
+});
+
+test("Phase 2: the comparison is a real table with a column per room and a named cell for the phone layout", () => {
+  for (const f of ["stay/index.html", "pt/alojamento/index.html"]) {
+    const h = read(f);
+    const t = h.match(/<table class="cmp">([\s\S]*?)<\/table>/);
+    assert.ok(t, f + ": no comparison table");
+    assert.equal([...t[1].matchAll(/<th scope="col">/g)].length, 2, f + ": two room columns");
+    assert.ok([...t[1].matchAll(/<th scope="row">/g)].length >= 7, f + ": rows missing");
+    assert.ok(!/<td>(?!<\/td>)/.test(t[1].replace(/<thead>[\s\S]*?<\/thead>/, "")), f + ": a cell without its room name");
+  }
+});
+
+test("Phase 2: one ADD on every dish, sizes shown with their own price, and the sheet shows a total", () => {
+  for (const f of ["restaurant/index.html", "pt/restaurante/index.html"]) {
+    const h = read(f);
+    const labels = [...h.matchAll(/<button class="d-add"[\s\S]*?<span>([^<]+)<\/span><\/span><\/button>/g)].map((m) => m[1]);
+    assert.ok(labels.length > 20, f + ": dishes missing");
+    assert.equal(new Set(labels).size, 1, f + ": more than one button label: " + [...new Set(labels)].join(", "));
+    assert.ok(!/\$5–\$10/.test(h), f + ": a bare price range");
+    assert.ok(/class="dl-size"><small>[^<]+<\/small> \$5/.test(h), f + ": the small size price is not labelled");
+    assert.ok(/data-opt-total/.test(h) && /data-opt-submit-price/.test(h), f + ": the sheet has no total");
+  }
+});
+
+test("Phase 3: Experiences asks for an enquiry (never a table or a room), shows the six occasions, and marks where confirmation happens", () => {
+  for (const [f, cta] of [["events/index.html", "Enquire about an experience"], ["pt/eventos/index.html", "Consultar uma experiência"]]) {
+    const h = read(f).replace(/<script[\s\S]*?<\/script>/g, "").replace(/<dialog class="book-dialog"[\s\S]*?<\/dialog>/g, "");
+    assert.ok(h.includes(cta), f + ": the enquiry call is missing");
+    assert.ok(!/data-book-open="(table|room)"/.test(h.replace(/<header[\s\S]*?<\/header>/, "").replace(/<dialog class="mobile-nav"[\s\S]*?<\/dialog>/, "")), f + ": a table or room call on the Experiences page");
+    assert.equal([...h.matchAll(/data-event-kind=/g)].length, 6, f + ": six occasions");
+    assert.equal([...h.matchAll(/<li class="xp-step/g)].length, 4, f + ": four steps");
+    assert.equal([...h.matchAll(/class="xp-step is-confirm"/g)].length, 1, f + ": the confirmation step is marked");
+    assert.ok(/name="notes"/.test(h) && /\{notes\}/.test(h), f + ": the optional note is not part of the message");
+    assert.ok(!/xe-band/.test(h), f + ": the unrelated photo band is back");
+  }
+});
+
+test("Phase 3: the full FAQ has a topic index whose links all land on a topic, and no question is asked twice", () => {
+  for (const f of ["contact/index.html", "pt/contactos/index.html"]) {
+    const h = read(f);
+    const links = [...h.matchAll(/<nav class="faq-index"[\s\S]*?<\/nav>/g)][0][0].match(/href="#(faq-\d+)"/g).map((x) => x.slice(7, -1));
+    for (const id of links) assert.ok(h.includes(`id="${id}"`), f + ": " + id);
+    const qs = [...h.matchAll(/<summary><span>([^<]+)<\/span>/g)].map((m) => m[1]);
+    assert.equal(new Set(qs).size, qs.length, f + ": a question appears twice");
+  }
 });

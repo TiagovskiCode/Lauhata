@@ -173,9 +173,9 @@ function cartUi(t) {
           <a class="btn btn-dark" href="${href("restaurant", L, "#ementa")}" data-cart-close>${esc(O.viewMenu)}${icon("arrow")}</a>
         </div>
       </div>
-      <p class="dine-in is-cart">${icon("cutlery")}<span>${esc(O.dineIn)}</span></p>
       <footer class="cart-foot" data-cart-foot>
         <p class="cart-total"><span>${esc(O.total)}</span><strong data-cart-sum></strong></p>
+        <p class="cart-request">${esc(O.requestNote)}</p>
         <button class="btn btn-terra btn-lg" type="button" data-cart-checkout>${esc(O.checkout)}${icon("arrow")}</button>
         <button class="btn btn-outline" type="button" data-cart-close>${esc(O.continue)}</button>
       </footer>
@@ -200,8 +200,9 @@ function cartUi(t) {
 </dialog>
 <dialog class="pick" data-opt aria-labelledby="opt-title">
   <form class="pick-panel" data-opt-form novalidate>
+    <div class="pick-photo" data-opt-photo hidden></div>
     <header class="pick-head">
-      <div><h2 id="opt-title" data-opt-title></h2><p data-opt-desc></p></div>
+      <div><h2 id="opt-title" data-opt-title></h2><p class="pick-base" data-opt-base></p><p class="pick-desc" data-opt-desc></p></div>
       <button class="icon-btn" type="button" data-opt-close aria-label="${esc(O.close)}">${icon("close")}</button>
     </header>
     <div class="pick-groups" data-opt-groups></div>
@@ -215,8 +216,8 @@ function cartUi(t) {
     </div>
     <p class="error" data-opt-error aria-live="polite"></p>
     <footer class="pick-foot">
-      <button class="btn btn-outline" type="button" data-opt-close>${esc(O.cancel)}</button>
-      <button class="btn btn-terra" type="submit" data-opt-submit>${esc(O.addToOrder)}</button>
+      <p class="pick-total" aria-live="polite"><span>${esc(O.total)}</span><strong data-opt-total></strong><small data-opt-each></small></p>
+      <button class="btn btn-terra btn-lg pick-add" type="submit" data-opt-submit><span data-opt-submit-label>${esc(O.add)}</span><b data-opt-submit-price></b></button>
     </footer>
   </form>
 </dialog>`;
@@ -244,7 +245,7 @@ function header(t, page, alt) {
     <div class="header-actions">
       ${langMenu(t, alt)}
       ${cartButton(t)}
-      <a class="btn btn-terra btn-sm book-btn" href="${href("contact", L)}" data-book-open aria-haspopup="dialog"><span class="bk-long">${esc(t.land.resort.reserveLong)}</span><span class="bk-short">${esc(t.land.resort.reserve)}</span></a>
+      <a class="btn btn-terra btn-sm book-btn" href="${href("contact", L)}" data-book-open${page === "restaurant" ? '="table"' : page === "stay" ? '="room"' : ""} aria-haspopup="dialog"><span class="bk-long">${esc(t.land.resort.reserveLong)}</span><span class="bk-short">${esc(t.land.resort.reserve)}</span></a>
       <button class="nav-toggle" type="button" aria-label="${esc(t.nav.openMenu)}" aria-expanded="false" aria-controls="mobile-nav" data-nav-open><span class="nav-bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
     </div>
   </div>
@@ -264,8 +265,8 @@ function header(t, page, alt) {
       <li><a href="${href("contact", L, "#faq")}">${esc(t.faq.linkLabel)}</a></li>
     </ul>
     <div class="mn-cta">
-      <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(t.home.hero.ctaTable)}</a>
-      <a class="btn btn-outline" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.hero.ctaRoom)}</a>
+      ${page === "stay" ? "" : `<a class="btn btn-terra" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(page === "restaurant" ? t.land.final.bookTable : t.home.hero.ctaTable)}</a>`}
+      ${page === "restaurant" ? "" : `<a class="btn ${page === "stay" ? "btn-terra" : "btn-outline"}" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.hero.ctaRoom)}</a>`}
       ${langSwitch(t, alt, "lang-center")}
     </div>
     ${Object.entries(site.social).filter(([, u]) => u).length ? `<ul class="mn-social">${Object.entries(site.social).filter(([, u]) => u).map(([k, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(k[0].toUpperCase() + k.slice(1))}</a></li>`).join("")}</ul>` : ""}
@@ -288,7 +289,7 @@ export function tripadvisorBadge(t, cls = "") {
 
 // The footer: an invitation with the two booking actions, then where to go, how to find Lauhata, how to reach it and
 // what guests say. Only confirmed details are listed; a missing phone, email or social profile is simply left out.
-function footer(t, { home = false } = {}) {
+function footer(t, { home = false, page = "" } = {}) {
   const L = t.lang;
   const year = new Date().getFullYear();
   const F = t.footer;
@@ -303,10 +304,10 @@ function footer(t, { home = false } = {}) {
       ${home ? "" : `<p class="ft-statement">${esc(F.statement)}</p>`}
     </div>
     ${home ? "" : `    <div class="ft-cta">
-      <p>${esc(F.cta)}</p>
-      <div class="ft-cta-btns">
-        <a class="btn btn-cream" href="${href("contact", L)}" data-book-open="table">${esc(F.bookTable)}</a>
-        <a class="btn btn-ghost-light" href="${href("contact", L)}" data-book-open="room">${esc(F.bookRoom)}</a>
+      <p>${esc(page === "stay" ? F.ctaRoom : page === "events" ? F.ctaEvent : F.cta)}</p>
+      <div class="ft-cta-btns">${page === "events" ? `<a class="btn btn-cream" href="${href("events", L, "#pedido")}">${esc(t.land.resort.ctaEvent)}</a>` : `
+        ${page === "stay" ? "" : `<a class="btn btn-cream" href="${href("contact", L)}" data-book-open="table">${esc(F.bookTable)}</a>`}
+        ${page === "restaurant" ? "" : `<a class="btn ${page === "stay" ? "btn-cream" : "btn-ghost-light"}" href="${href("contact", L)}" data-book-open="room">${esc(F.bookRoom)}</a>`}`}
       </div>
     </div>`}
   </div>
@@ -421,11 +422,14 @@ ${header(t, o.page, o.alt)}
 <main id="main" tabindex="-1">
 ${o.body}
 </main>
-${footer(t, { home: o.page === "home" || o.body.includes("scene final-cta") })}
+${footer(t, { home: o.page === "home" || o.body.includes("scene final-cta"), page: o.page })}
 ${cartUi(t)}
 <div class="mobile-bar" data-mobile-bar>
-  <a class="btn btn-dark" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
-  <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>
+  ${o.page === "events" ? `<a class="btn btn-terra mb-one" href="#pedido">${icon("users")}${esc(t.land.resort.ctaEvent)}</a>`
+    : o.page === "restaurant" ? `<a class="btn btn-terra mb-one" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(t.land.final.bookTable)}</a>`
+    : o.page === "stay" ? `<a class="btn btn-terra mb-one" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.hero.ctaRoom)}</a>`
+    : `<a class="btn btn-dark" href="${href("contact", L)}" data-book-open="table">${icon("cutlery")}${esc(t.home.quick.tabTable.split(" ")[0])}</a>
+  <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room">${icon("bed")}${esc(t.home.quick.tabRoom)}</a>`}
   <a class="icon-btn wa" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener" aria-label="${esc(t.common.whatsapp)}">${icon("whatsapp")}</a>
 </div>
 <button class="to-top" type="button" data-to-top aria-label="${esc(t.common.backToTop)}" title="${esc(t.common.backToTop)}">${icon("up")}</button>
@@ -439,7 +443,7 @@ ${site.gaId ? `<div class="consent" data-consent role="region" aria-label="${esc
 <dialog class="lightbox" data-lightbox aria-label="${esc(t.gallery.label)}">
   <button class="icon-btn lb-close" type="button" aria-label="${esc(t.common.close)}" data-lb-close>${icon("close")}</button>
   <button class="icon-btn lb-prev" type="button" aria-label="${esc(t.common.previous)}" data-lb-prev>${icon("left")}</button>
-  <figure class="lb-figure"><img alt="" data-lb-img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><figcaption data-lb-cap></figcaption></figure>
+  <figure class="lb-figure"><img alt="" data-lb-img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><figcaption><span data-lb-cap aria-live="polite"></span><span class="lb-count" data-lb-count></span></figcaption></figure>
   <button class="icon-btn lb-next" type="button" aria-label="${esc(t.common.next)}" data-lb-next>${icon("right")}</button>
 </dialog>
 </body>

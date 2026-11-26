@@ -32,7 +32,7 @@
 
   const valid = (l) =>
     l && typeof l.key === "string" && typeof l.name === "string" && Number.isInteger(l.cents) && l.cents >= 0 &&
-    Number.isInteger(l.qty) && l.qty >= 1 && l.qty <= MAX_QTY && Array.isArray(l.opts);
+    Number.isInteger(l.qty) && l.qty >= 1 && l.qty <= MAX_QTY && Array.isArray(l.opts) && (l.sel == null || typeof l.sel === "object");
 
   function load() {
     try {
@@ -49,34 +49,43 @@
   const count = () => lines.reduce((n, l) => n + l.qty, 0);
   const total = () => lines.reduce((n, l) => n + l.cents * l.qty, 0);
 
-  // Unit price in cents for a dish and the chosen options, or null if it has no valid price yet
-  // (a required option is missing, or the dish has no price): then it cannot be added.
+  // Unit price in cents for a dish and the chosen options, or null if it has no valid price yet (a required choice is missing, or the
+  // dish has no price): then it cannot be added. In menu.mjs a choice's `price` IS the dish's price with that choice (a size), and an
+  // `extra` is added on top (an optional add-on). A group is required unless it says `required: false`.
+  const isRequired = (g) => g.required !== false;
   function priceFor(item, sel) {
-    let base = item.price;
+    let base = item.price, extra = 0;
     for (const g of item.options) {
       const c = g.choices.find((x) => x.id === sel[g.id]);
-      if (!c) return null;
+      if (!c) { if (isRequired(g)) return null; continue; }
       if (c.price != null) base = c.price;
+      if (c.extra != null) extra += c.extra;
     }
-    return base == null ? null : Math.round(base * 100);
+    return base == null ? null : Math.round((base + extra) * 100);
   }
+  // Each choice as "Size: Large", for the cart and the message.
+  const optLabels = (item, sel) => item.options.map((g) => { const c = g.choices.find((x) => x.id === sel[g.id]); return c ? { g: g.label, c: c.label } : null; }).filter(Boolean);
 
   // The same dish with the same options is one line with a bigger quantity.
-  function add(item, sel, qty = 1) {
+  function add(item, sel, qty = 1, replace = null) {
     const cents = priceFor(item, sel);
     if (cents == null) return false;
-    const key = [item.id, ...item.options.map((g) => `${g.id}:${sel[g.id]}`)].join("|");
-    const opts = item.options.map((g) => g.choices.find((c) => c.id === sel[g.id]).label);
+    const key = [item.id, ...item.options.map((g) => `${g.id}:${sel[g.id] || "-"}`)].join("|");
+    const opts = optLabels(item, sel);
+    let at = lines.length;
+    if (replace) { at = lines.findIndex((l) => l.key === replace); lines = lines.filter((l) => l.key !== replace); if (at < 0) at = lines.length; }
     const line = lines.find((l) => l.key === key);
     if (line) {
-      line.qty = Math.min(MAX_QTY, line.qty + qty);
+      line.qty = Math.min(MAX_QTY, replace ? qty : line.qty + qty);
       line.cents = cents;
     } else {
-      lines.push({ key, id: item.id, name: item.name, cents, qty: Math.min(MAX_QTY, qty), opts });
+      lines.splice(Math.min(at, lines.length), 0, { key, id: item.id, name: item.name, cents, qty: Math.min(MAX_QTY, qty), opts, sel: { ...sel } });
     }
     save();
     return true;
   }
+  // "Size: Large · Sauce: Carbonara" (older carts kept only the choice names).
+  const optText = (l, sep = " · ") => l.opts.map((o) => (o.g ? `${o.g[LANG]}: ${o.c[LANG]}` : o[LANG])).join(sep);
   function setQty(key, q) {
     const line = lines.find((l) => l.key === key);
     if (!line) return;
@@ -150,16 +159,17 @@
   let step = "list";
 
   function lineHtml(l) {
-    const opts = l.opts.map((o) => o[LANG]).join(" · ");
-    // A small photo of the dish when the restaurant has one (menu.mjs / docs/FOTOS-PRATOS.md), otherwise its initial.
+    const opts = optText(l);
+    // A small photo of the dish when the restaurant has one (menu.mjs / docs/FOTOS-PRATOS.md); none otherwise.
     const photo = MENU[l.id] && MENU[l.id].photo;
     const thumb = photo ? `<img class="cl-thumb" src="${esc(photo)}" alt="" width="64" height="64" loading="lazy">` : "";
+    const editable = MENU[l.id] && MENU[l.id].options.length;
     return `<li class="cart-line" data-key="${esc(l.key)}">
       ${thumb}
       <div class="cl-main">
         <p class="cl-name">${esc(l.name)}</p>
         ${opts ? `<p class="cl-opts">${esc(opts)}</p>` : ""}
-        <p class="cl-unit">${money(l.cents)} ${esc(O.each)}</p>
+        <p class="cl-unit">${l.qty > 1 ? `${l.qty} × ${money(l.cents)}` : `${money(l.cents)} ${esc(O.each)}`}${editable ? ` <button class="cl-edit" type="button" data-act="edit" aria-label="${esc(fmt(O.edit, { name: l.name }))}">${esc(O.editShort)}</button>` : ""}</p>
       </div>
       <p class="cl-sub">${money(l.cents * l.qty)}</p>
       <div class="stepper" role="group" aria-label="${esc(O.qty)}: ${esc(l.name)}">
@@ -224,6 +234,7 @@
     const line = lines.find((l) => l.key === key);
     if (!line) return;
     const act = btn.dataset.act;
+    if (act === "edit") { const item = MENU[line.id]; if (item) openOptions(item, null, line); return; }
     if (act === "inc") setQty(key, line.qty + 1);
     else if (act === "dec") setQty(key, line.qty - 1);
     else remove(key);
@@ -262,6 +273,7 @@
   let optItem = null;
   let optBtn = null;
   let optQty = 1;
+  let optEdit = null; // the cart line being changed, if any
 
   const optSelection = () => {
     const sel = {};
@@ -272,29 +284,50 @@
     return sel;
   };
 
+  // The sheet always says what the dish costs now: the total for the chosen size and quantity, or which choice is still missing.
   function optRefresh() {
     optQtyEl.textContent = String(optQty);
-    const cents = priceFor(optItem, optSelection());
-    $("[data-opt-submit]", optForm).textContent = cents == null ? O.addToOrder : `${O.addToOrder} · ${money(cents * optQty)}`;
+    const sel = optSelection();
+    const cents = priceFor(optItem, sel);
+    const missing = optItem.options.filter((g) => isRequired(g) && !sel[g.id]);
+    $("[data-opt-total]", optForm).textContent = cents == null ? "" : money(cents * optQty);
+    $("[data-opt-each]", optForm).textContent = cents == null ? fmt(O.chooseFirst, { what: missing.map((g) => g.label[LANG].toLowerCase()).join(", ") }) : optQty > 1 ? `${optQty} × ${money(cents)}` : "";
+    $("[data-opt-submit-label]", optForm).textContent = optEdit ? O.update : O.add;
+    $("[data-opt-submit-price]", optForm).textContent = cents == null ? "" : money(cents * optQty);
+    $("[data-opt-submit]", optForm).setAttribute("aria-disabled", String(cents == null));
     $("[data-opt-dec]", optForm).disabled = optQty <= 1;
     $("[data-opt-inc]", optForm).disabled = optQty >= MAX_QTY;
   }
 
-  function openOptions(item, btn) {
+  function openOptions(item, btn, edit = null) {
     optItem = item;
     optBtn = btn;
-    optQty = 1;
+    optEdit = edit;
+    optQty = edit ? edit.qty : 1;
+    const sel0 = (edit && edit.sel) || {};
     $("[data-opt-title]").textContent = item.name;
     $("[data-opt-desc]").textContent = item.desc ? item.desc[LANG] : "";
+    const photo = $("[data-opt-photo]");
+    if (photo) { photo.hidden = !item.photo; photo.innerHTML = item.photo ? `<img src="${esc(item.photo)}" alt="" width="640" height="480">` : ""; }
+    // A sized dish starts from its smallest price; any other dish has one price, whatever is chosen.
+    const sized = item.options.some((g) => g.choices.some((c) => c.price != null));
+    const prices = item.options.flatMap((g) => g.choices.map((c) => c.price)).filter((p) => p != null);
+    $("[data-opt-base]").textContent = sized ? fmt(O.fromPrice, { price: money(Math.round(Math.min(...prices) * 100)) }) : item.price != null ? money(Math.round(item.price * 100)) : "";
     optGroups.innerHTML = item.options
-      .map((g) => `<fieldset class="pick-group" data-group="${esc(g.id)}"><legend>${esc(g.label[LANG])}</legend><div class="pick-choices">${g.choices
-        .map((c) => `<label class="choice"><input type="radio" name="g-${esc(g.id)}" value="${esc(c.id)}"><span class="oc-label">${esc(c.label[LANG])}</span>${c.price != null ? `<span class="oc-price">${money(Math.round(c.price * 100))}</span>` : ""}</label>`)
-        .join("")}</div></fieldset>`)
+      .map((g) => {
+        const req = isRequired(g);
+        const priced = g.choices.some((c) => c.price != null);
+        const note = req ? (priced ? O.reqPriced : O.reqSame) : O.optionalNote;
+        return `<fieldset class="pick-group${req ? " is-required" : " is-optional"}" data-group="${esc(g.id)}"><legend><span>${esc(g.label[LANG])}</span><em>${esc(req ? O.required : O.optionalTag)}</em></legend><p class="pick-note">${esc(note)}</p><div class="pick-choices">${g.choices
+          .map((c) => `<label class="choice"><input type="radio" name="g-${esc(g.id)}" value="${esc(c.id)}"${sel0[g.id] === c.id ? " checked" : ""}${req ? " required" : ""}><span class="oc-label">${esc(c.label[LANG])}</span>${c.price != null ? `<span class="oc-price">${money(Math.round(c.price * 100))}</span>` : c.extra != null ? `<span class="oc-price">+ ${money(Math.round(c.extra * 100))}</span>` : ""}</label>`)
+          .join("")}</div></fieldset>`;
+      })
       .join("");
     $("[data-opt-dec]", optForm).setAttribute("aria-label", fmt(O.decrease, { name: item.name }));
     $("[data-opt-inc]", optForm).setAttribute("aria-label", fmt(O.increase, { name: item.name }));
     optError.textContent = "";
     optRefresh();
+    if (edit && drawer?.open) { drawer.close(); afterClose(); }
     openDialog(optDlg);
   }
 
@@ -310,16 +343,18 @@
   optForm?.addEventListener("submit", (e) => {
     e.preventDefault();
     const sel = optSelection();
-    const missing = optItem.options.filter((g) => !sel[g.id]);
+    const missing = optItem.options.filter((g) => isRequired(g) && !sel[g.id]);
     $$(".pick-group", optForm).forEach((f) => f.classList.toggle("has-error", missing.some((g) => g.id === f.dataset.group)));
     if (missing.length) {
       optError.textContent = O.errors.choose;
       $(`input[name="g-${missing[0].id}"]`, optForm)?.focus();
       return;
     }
-    if (add(optItem, sel, optQty)) {
+    const editing = optEdit;
+    if (add(optItem, sel, optQty, editing ? editing.key : null)) {
       closeDialog(optDlg);
-      flash(optBtn, optItem);
+      if (editing) { announce(fmt(O.updated, { name: optItem.name })); setTimeout(() => { showStep("list"); openDialog(drawer); }, reduced ? 0 : 240); }
+      else flash(optBtn, optItem);
     }
   });
 
@@ -362,7 +397,7 @@
     const type = chosenType();
     const out = [M.hello, M.intro, "", `*${M.title}*`, ""];
     lines.forEach((l) => {
-      const opts = l.opts.map((o) => o[LANG]).join(", ");
+      const opts = optText(l, ", ");
       // more than one: show the unit price and the line total, so the message adds up at a glance
       out.push(l.qty > 1 ? `• ${l.qty}x ${l.name}${opts ? ` (${opts})` : ""} — ${money(l.cents)} ${O.each} = ${money(l.cents * l.qty)}` : `• ${l.qty}x ${l.name}${opts ? ` (${opts})` : ""} — ${money(l.cents)}`);
     });

@@ -312,36 +312,27 @@
     });
   }
 
-  /* ---------- Map facades: the Google map replaces the photograph only when the visitor asks for it ---------- */
-  $$("[data-map-facade]").forEach((box) => {
-    const btn = $("[data-map-load]", box);
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const frame = document.createElement("iframe");
-      frame.title = box.dataset.title || "Map";
-      frame.src = box.dataset.src;
-      frame.loading = "eager";
-      frame.referrerPolicy = "no-referrer-when-downgrade";
-      box.classList.add("is-live");
-      box.replaceChildren(frame);
-      frame.focus({ preventScroll: true });
-    });
-  });
-
   /* ---------- Gallery lightbox ---------- */
   const lb = $("[data-lightbox]");
   if (lb) {
     const lbImg = $("[data-lb-img]", lb);
     const lbCap = $("[data-lb-cap]", lb);
+    const lbCount = $("[data-lb-count]", lb);
     let list = [];
     let idx = 0;
+    const warm = (i) => { const it = list[(i + list.length) % list.length]; if (it) { const im = new Image(); im.src = it.dataset.lbSrc; } };
     const show = (i) => {
       idx = (i + list.length) % list.length;
       const item = list[idx];
       const src = $("img", item);
+      lbImg.classList.add("is-loading");
+      lbImg.onload = () => lbImg.classList.remove("is-loading");
       lbImg.src = item.dataset.lbSrc;
+      if (lbImg.complete) lbImg.classList.remove("is-loading");
       lbImg.alt = src.alt;
-      lbCap.textContent = list.length > 1 ? `${src.alt} · ${idx + 1} / ${list.length}` : src.alt;
+      lbCap.textContent = src.alt;
+      if (lbCount) lbCount.textContent = list.length > 1 ? `${idx + 1} / ${list.length}` : "";
+      warm(idx + 1); warm(idx - 1);
     };
     $$("[data-gallery]").forEach((g) => {
       const items = $$("[data-lb-src]", g).filter((el) => !el.closest("[hidden]"));
@@ -364,6 +355,8 @@
     lb.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") show(idx - 1);
       if (e.key === "ArrowRight") show(idx + 1);
+      if (e.key === "Home") { e.preventDefault(); show(0); }
+      if (e.key === "End") { e.preventDefault(); show(list.length - 1); }
     });
     let x0 = null;
     lb.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; }, { passive: true });
@@ -375,14 +368,25 @@
     });
   }
 
-  /* ---------- Gallery filters: one chapter at a time, or all of them ---------- */
-  $$("[data-mosaic]").forEach((root) => {
-    const buttons = $$(".gx-filter", root);
-    buttons.forEach((b) => b.addEventListener("click", () => {
-      buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-      const apply = () => $$(".gc", root).forEach((c) => { c.hidden = b.dataset.filter !== "all" && !c.classList.contains("gc-" + b.dataset.filter); });
-      if (document.startViewTransition && !reduced) document.startViewTransition(apply); else apply();
-    }));
+  /* ---------- Gallery film: fetched only when it comes into view; plays there by itself unless motion is reduced; one button pauses it ---------- */
+  $$("[data-gx-film]").forEach((v) => {
+    const btn = v.parentElement.querySelector("[data-gx-film-btn]");
+    let wanted = !reduced;
+    const sync = () => {
+      const on = !v.paused;
+      btn.setAttribute("aria-pressed", String(on));
+      btn.classList.toggle("is-on", on);
+      btn.querySelector("span").textContent = on ? btn.dataset.pause : btn.dataset.play;
+    };
+    v.addEventListener("play", sync); v.addEventListener("pause", sync);
+    btn.addEventListener("click", () => { wanted = v.paused; if (v.paused) v.play().catch(() => {}); else v.pause(); });
+    // the poster frame is fetched only as the film nears the screen (it is not part of the first view)
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { v.poster = v.dataset.poster; o.disconnect(); } }, { rootMargin: "600px 0px" }).observe(v);
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { if (wanted) v.play().catch(() => {}); }
+      else if (!v.paused) v.pause();
+    }, { threshold: 0.35 }).observe(v);
+    sync();
   });
 
   /* ---------- Events: choosing an occasion fills the form's first field ---------- */
@@ -558,7 +562,8 @@
     if (form.dataset.booking === "event" && form.hasAttribute("data-short")) {
       const alt = v("altDate") ? `\n${form.dataset.altLabel}: ${fmtDate(v("altDate"))}` : "";
       const kindSel = el.kind;
-      return fmt(form.dataset.wa, { kind: kindSel.options[kindSel.selectedIndex].text, date: fmtDate(v("date")), altDate: alt, time: v("time"), guests: v("people") });
+      const notes = v("notes") ? `\n${form.dataset.notesLabel}: ${v("notes")}` : "";
+      return fmt(form.dataset.wa, { kind: kindSel.options[kindSel.selectedIndex].text, date: fmtDate(v("date")), altDate: alt, time: v("time"), guests: v("people"), notes });
     }
     if (form.dataset.booking === "event" && form.dataset.wa) {
       const line = (label, val) => (val ? `\n${label}: ${val}` : "");
