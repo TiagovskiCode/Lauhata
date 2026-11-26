@@ -46,18 +46,20 @@
   // moves (so no content ever scrolls under a see-through header, and white text never meets the cream sections). The
   // switch is driven by an IntersectionObserver on a 1px marker 40px down the hero, not by scroll events, which arrive
   // late or not at all with fast scrolling, restored scroll positions, anchor jumps and smooth scrolling.
+  // Every page starts with a clear header (over the hero photograph, or over the page's own cream); it turns into the cream material
+  // as soon as the page moves.
   const heroEl = document.body.classList.contains("has-hero") ? $(".cine-hero") : null;
-  let atTop = !!heroEl && window.scrollY < 40;
-  if (heroEl && "IntersectionObserver" in window) {
+  let atTop = window.scrollY < 40;
+  if ("IntersectionObserver" in window) {
     const mark = document.createElement("span");
     mark.setAttribute("aria-hidden", "true");
     mark.style.cssText = "position:absolute;top:40px;left:0;width:1px;height:1px;pointer-events:none;visibility:hidden";
-    heroEl.prepend(mark);
+    (heroEl || document.body).prepend(mark);
     new IntersectionObserver(([e]) => { atTop = e.isIntersecting; paintHeader(); }).observe(mark);
   }
   function paintHeader() {
-    if (!("IntersectionObserver" in window)) atTop = !!heroEl && window.scrollY < 40;
-    header?.classList.toggle("is-solid", !heroEl || !atTop);
+    if (!("IntersectionObserver" in window)) atTop = window.scrollY < 40;
+    header?.classList.toggle("is-solid", !atTop);
   }
   let lastShown = null, lastBar = null;
   function onScroll() {
@@ -379,6 +381,8 @@
       btn.querySelector("span").textContent = on ? btn.dataset.pause : btn.dataset.play;
     };
     v.addEventListener("play", sync); v.addEventListener("pause", sync);
+    // the file ends in a dissolve back to its first shot (a double exposure): the tile loops on a clean cut before it
+    v.addEventListener("timeupdate", () => { if (v.currentTime >= 13.25) v.currentTime = 0; });
     btn.addEventListener("click", () => { wanted = v.paused; if (v.paused) v.play().catch(() => {}); else v.pause(); });
     // the poster frame is fetched only as the film nears the screen (it is not part of the first view)
     new IntersectionObserver(([e], o) => { if (e.isIntersecting) { v.poster = v.dataset.poster; o.disconnect(); } }, { rootMargin: "600px 0px" }).observe(v);
@@ -622,40 +626,6 @@
     }, 400);
   }
 
-  /* ---------- Forms in steps (the event enquiry) ----------
-     One fieldset at a time; Continue checks the required fields of the step it leaves; the progress line marks the
-     current step; an error found on submit jumps back to its step. */
-  $$("[data-steps]").forEach((form) => {
-    const steps = $$("[data-step]", form);
-    const back = $("[data-step-back]", form), next = $("[data-step-next]", form);
-    const actions = $(".form-actions", form);
-    const dots = $$("[data-progress]", form);
-    let at = 0;
-    form.classList.add("is-stepped");
-    const show = (i, focus = true) => {
-      at = Math.max(0, Math.min(steps.length - 1, i));
-      steps.forEach((s, k) => { s.hidden = k !== at; });
-      dots.forEach((d, k) => { d.classList.toggle("is-on", k === at); d.classList.toggle("is-done", k < at); });
-      back.hidden = at === 0;
-      next.hidden = at === steps.length - 1;
-      actions.hidden = at !== steps.length - 1;
-      if (focus) $("legend", steps[at]).scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" }), (steps[at].querySelector("input, select, textarea, .pk-btn") || next).focus({ preventScroll: true });
-    };
-    const stepErrors = (i) => {
-      const all = validate(form);
-      const names = $$("input, select, textarea", steps[i]).map((x) => x.name);
-      return Object.fromEntries(Object.entries(all).filter(([k]) => names.includes(k)));
-    };
-    next.addEventListener("click", () => { if (showErrors(form, stepErrors(at))) show(at + 1); });
-    back.addEventListener("click", () => show(at - 1));
-    form._goToError = () => {
-      const bad = $(".field.has-error", form);
-      const k = steps.findIndex((s) => s.contains(bad));
-      if (k >= 0 && k !== at) { show(k, false); bad.querySelector("input, select, textarea, .pk-btn")?.focus(); }
-    };
-    show(0, false);
-  });
-
   // The review step: the exact WhatsApp message, with "Open WhatsApp" and "Change". The panel is built once per form,
   // takes focus when it opens, and hides again if the guest edits a field.
   function showReview(form) {
@@ -791,7 +761,7 @@
           checkOut: fmtDate(el.checkOut.value),
           nights: nightsLabel(el.checkIn.value, el.checkOut.value),
           adults: el.adults ? unitText(el.adults) : "",
-          children: el.children ? unitText(el.children) : "",
+          children: el.children && +el.children.value > 0 ? fmt(F.waChildren, { children: unitText(el.children) }) : "", // only when there are children
           room: el.room && el.room.value ? fmt(F.waQuickRoomType, { room: opt(el.room) }) : "",
           who: el.rName && el.rName.value.trim() ? fmt(F.waName, { name: el.rName.value.trim() }) : "",
           notes: el.rNotes && el.rNotes.value.trim() ? fmt(F.waNotes, { notes: el.rNotes.value.trim() }) : "",
@@ -852,16 +822,22 @@
     heroSection?.classList.add("is-ready");
     $$("[data-split]", heroSection || document.createElement("div")).forEach((el) => el.classList.add("is-in"));
   };
-  if (reduced) revealHero();
-  else requestAnimationFrame(() => requestAnimationFrame(revealHero));
+  // On the home page an opening may still be on screen: the hero entrance starts as it lifts (window.LAUHATA_INTRO, set inline).
+  Promise.resolve(window.LAUHATA_INTRO).then(() => {
+    if (reduced) revealHero();
+    else requestAnimationFrame(() => requestAnimationFrame(revealHero));
+  });
 
   // ---------- The home film ----------
   // The photograph is on screen from the first paint. The film (the same scene: its first frame IS that photograph) is fetched only after
-  // the page has loaded, and shown only once a frame of it has really been painted; then it cross-fades in from that very frame, at half
-  // speed, and eases to full speed, so the picture seems to start moving. Nothing is shown before that, so there is no black frame and no
-  // flash, and if anything fails (no autoplay, a slow or broken connection) the photograph simply stays.
+  // the page has loaded and the loading screen has lifted, and shown only once a frame of it has really been painted; then it cross-fades
+  // in from that very frame at its natural speed, so the picture seems to start moving. It plays once and rests on the wide view of the
+  // coast: the last second and a half of the file is a dissolve back to the opening shot, which looked like a double exposure followed by
+  // a jump, so it stops at FILM_END, before that. The control then offers to play it again. If anything fails (no autoplay, a slow or
+  // broken connection) the photograph simply stays.
   // Laptops and desktops only (1024 px or more and a mouse or trackpad). It never starts by itself with reduced motion, data saver or a
-  // 2G/3G connection: there the control shows "play" and the film is fetched only if the visitor asks for it.
+  // 2G connection: there the control shows "play" and the film is fetched only if the visitor asks for it.
+  const FILM_END = 13.25;
   const heroVideo = $("[data-hero-video]");
   if (heroVideo) {
     const hero = heroVideo.closest(".cine-hero");
@@ -871,7 +847,8 @@
     const drop = () => { heroVideo.remove(); toggle?.remove(); hero.classList.remove("is-film"); };
     if (!desk.matches) drop();
     else {
-      let onScreen = true, held = false, revealed = false, asked = false; // held: the visitor paused it
+      heroVideo.loop = false;
+      let onScreen = true, held = false, revealed = false, asked = false, done = false; // held: paused by the visitor; done: rested on the last frame
       const label = (playing) => {
         if (!toggle) return;
         const text = playing ? toggle.dataset.pause : toggle.dataset.play;
@@ -879,15 +856,16 @@
         toggle.setAttribute("aria-label", text);
         toggle.title = text;
       };
-      const run = () => { if (revealed && onScreen && !held && !document.hidden && heroVideo.paused) heroVideo.play().catch(() => {}); };
-      const settle = () => {
-        const t0 = performance.now(), from = 0.5, ms = 2400;
-        const step = (now) => {
-          const p = Math.min(1, Math.max(0, (now - t0) / ms));
-          heroVideo.playbackRate = from + (1 - from) * (p * p * (3 - 2 * p));
-          if (p < 1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
+      const run = () => { if (revealed && onScreen && !held && !done && !document.hidden && heroVideo.paused) heroVideo.play().catch(() => {}); };
+      // Stop on the last clean frame, before the dissolve in the file. Checked on every painted frame where the browser can say so.
+      const rest = () => { if (done) return; done = true; heroVideo.pause(); label(false); };
+      const watchEnd = () => {
+        if ("requestVideoFrameCallback" in heroVideo) {
+          const tick = (now, meta) => { if (meta.mediaTime >= FILM_END) rest(); else heroVideo.requestVideoFrameCallback(tick); };
+          heroVideo.requestVideoFrameCallback(tick);
+        }
+        heroVideo.addEventListener("timeupdate", () => { if (heroVideo.currentTime >= FILM_END - 0.05) rest(); });
+        heroVideo.addEventListener("ended", rest);
       };
       const reveal = () => {
         if (revealed) return;
@@ -896,7 +874,7 @@
         heroVideo.classList.add("is-on");
         toggle?.classList.remove("is-loading");
         label(true);
-        settle();
+        watchEnd();
       };
       const start = () => {
         if (asked) return;
@@ -904,7 +882,6 @@
         heroVideo.addEventListener("error", drop, { once: true });
         heroVideo.addEventListener("canplaythrough", () => {
           if (held) return; // paused before it ever showed: it starts when the visitor says so
-          heroVideo.playbackRate = 0.5;
           heroVideo.play().then(() => {
             if ("requestVideoFrameCallback" in heroVideo) heroVideo.requestVideoFrameCallback(reveal);
             else requestAnimationFrame(() => requestAnimationFrame(reveal));
@@ -914,17 +891,31 @@
         heroVideo.src = heroVideo.dataset.src;
         heroVideo.load();
       };
-      const auto = !reduced && !conn.saveData && !/(^|-)[23]g$/.test(conn.effectiveType || "");
+      // Play it again: the film fades back to the photograph (its first frame), returns to the start unseen, and comes back moving.
+      const replay = () => {
+        done = false;
+        heroVideo.classList.remove("is-on");
+        setTimeout(() => {
+          heroVideo.currentTime = 0;
+          heroVideo.play().then(() => {
+            const show = () => heroVideo.classList.add("is-on");
+            if ("requestVideoFrameCallback" in heroVideo) heroVideo.requestVideoFrameCallback(show); else show();
+            watchEnd();
+          }).catch(() => { held = true; label(false); });
+        }, 1900); // the fade back to the photograph takes 1.8 s
+      };
+      const auto = !reduced && !conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || "");
       if (auto) {
-        // After the entrance of the words, and never while the page itself is still loading.
-        const soon = () => setTimeout(start, Math.max(200, 1500 - performance.now()));
-        if (document.readyState === "complete") soon(); else window.addEventListener("load", soon, { once: true });
+        // After the loading screen has lifted and the words have entered, and never while the page itself is still loading.
+        const loaded = new Promise((r) => (document.readyState === "complete" ? r() : window.addEventListener("load", r, { once: true })));
+        Promise.all([loaded, Promise.resolve(window.LAUHATA_INTRO)]).then(() => setTimeout(start, 900));
       } else held = true;
       if (toggle) { toggle.hidden = false; label(auto); }
       desk.addEventListener("change", () => { if (!desk.matches) drop(); });
       document.addEventListener("visibilitychange", run);
       window.addEventListener("pageshow", (e) => { if (e.persisted) run(); });
       toggle?.addEventListener("click", () => {
+        if (done) { held = false; label(true); replay(); return; }
         held = !held;
         label(!held);
         if (held) { heroVideo.pause(); return; }
@@ -934,6 +925,65 @@
       });
       new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (!revealed) return; if (onScreen) run(); else heroVideo.pause(); }, { threshold: 0.05 }).observe(hero);
     }
+  }
+
+  // ---------- Liquiçá, now: the local time and today's sunset ----------
+  // The sunset comes from the standard sunrise equation (NOAA) at the map pin, so it changes with the season like the real one. Timor-Leste
+  // keeps UTC+9 all year (Asia/Dili). The minute is refreshed on the minute, only while the page is visible.
+  const now = $("[data-now]");
+  if (now && window.Intl) {
+    const lat = +now.dataset.lat, lng = +now.dataset.lng, tz = now.dataset.tz;
+    const hm = new Intl.DateTimeFormat(document.documentElement.lang, { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: tz });
+    const sunset = (date) => {
+      const r = Math.PI / 180, jd = date.getTime() / 864e5 + 2440587.5, n = Math.round(jd - 2451545.0 + 0.0008);
+      const J = n - lng / 360, M = (357.5291 + 0.98560028 * J) % 360;
+      const C = 1.9148 * Math.sin(M * r) + 0.02 * Math.sin(2 * M * r) + 0.0003 * Math.sin(3 * M * r);
+      const L = (M + C + 180 + 102.9372) % 360, transit = 2451545.0 + J + 0.0053 * Math.sin(M * r) - 0.0069 * Math.sin(2 * L * r);
+      const dec = Math.asin(Math.sin(L * r) * Math.sin(23.4397 * r));
+      const w = Math.acos((Math.sin(-0.833 * r) - Math.sin(lat * r) * Math.sin(dec)) / (Math.cos(lat * r) * Math.cos(dec))) / r;
+      return new Date((transit + w / 360 - 2440587.5) * 864e5);
+    };
+    const paint = () => {
+      const d = new Date(), set = hm.format(sunset(d));
+      $("[data-now-time]", now).textContent = now.dataset.nowLabel.replace("{time}", hm.format(d));
+      $("[data-now-sun]", now).textContent = now.dataset.sunLabel.replace("{time}", set);
+      now.hidden = false;
+      $$("[data-sunset]").forEach((el) => { el.textContent = now.dataset.sunLabel.replace("{time}", set); el.hidden = false; });
+    };
+    let timer = 0;
+    const tick = () => { paint(); clearTimeout(timer); if (!document.hidden) timer = setTimeout(tick, 60000 - (Date.now() % 60000) + 50); };
+    // Time-zone formatting loads its data on first use: wait until a line that needs it is near the screen, and the browser is idle.
+    let started = false;
+    const begin = () => { if (started) return; started = true; document.addEventListener("visibilitychange", () => { if (!document.hidden) tick(); else clearTimeout(timer); }); tick(); };
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200));
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); idle(begin); } }, { rootMargin: "600px 0px" });
+      [now, ...$$("[data-sunset]")].forEach((el) => io.observe(el.closest("li, footer, p") || el));
+    } else idle(begin);
+  }
+
+  // ---------- Gallery: a small "View" label follows a real pointer over the photographs ----------
+  // Decorative, so only with a mouse or trackpad and without reduced motion. It eases towards the pointer (a short lerp, then it stops:
+  // no loop runs while nothing moves) and is moved by transform on the element itself.
+  const gxList = $(".gx-list");
+  if (gxList && !reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const tag = document.createElement("div");
+    tag.className = "gx-view"; tag.setAttribute("aria-hidden", "true"); tag.textContent = gxList.dataset.viewLabel || "View";
+    document.body.append(tag);
+    let x = 0, y = 0, tx = 0, ty = 0, raf = 0;
+    const step = () => {
+      x += (tx - x) * 0.22; y += (ty - y) * 0.22;
+      tag.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0)`;
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.3 ? requestAnimationFrame(step) : 0;
+    };
+    gxList.addEventListener("pointermove", (e) => {
+      const over = e.target.closest("a.gx-frame");
+      tag.classList.toggle("is-on", !!over);
+      tx = e.clientX; ty = e.clientY;
+      if (!tag.dataset.placed) { x = tx; y = ty; tag.dataset.placed = "1"; tag.style.transform = `translate3d(${x}px, ${y}px, 0)`; }
+      if (!raf) raf = requestAnimationFrame(step);
+    });
+    gxList.addEventListener("pointerleave", () => tag.classList.remove("is-on"));
   }
 
   // ---------- Back to top ----------
@@ -968,6 +1018,45 @@
   onEnter($$("[data-split]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-fade]").filter((el) => !el.closest(".cine-hero")));
   onEnter($$("[data-tide], [data-rise]"));
+  onEnter($$("[data-stagger]"), { rootMargin: "0px 0px -12% 0px" });
+
+  // ---------- A day at Lauhata ----------
+  // Pinned (CSS: --pin is 1 only on a large enough screen with motion): while the section is on screen, a passive scroll listener reads how
+  // far the page has travelled through it and shows the meal for that stretch; the hairline follows the same number. Off screen there is no
+  // listener at all. The three labels take the page to a meal. Unpinned, everything is already on the page and nothing runs.
+  const day = $("[data-day]");
+  if (day && "IntersectionObserver" in window) {
+    const steps = $$("[data-day-step]", day), frames = $$("[data-day-frame]", day), go = $$("[data-day-go]", day), fill = $("[data-day-fill]", day);
+    const pinned = () => getComputedStyle(day).getPropertyValue("--pin").trim() === "1";
+    let cur = 0, top = 0, span = 1, raf = 0, live = false;
+    const show = (i) => {
+      if (i === cur) return;
+      cur = i;
+      steps.forEach((s, n) => s.classList.toggle("is-on", n === i));
+      frames.forEach((f, n) => f.classList.toggle("is-on", n === i));
+      go.forEach((b, n) => (n === i ? b.setAttribute("aria-current", "step") : b.removeAttribute("aria-current")));
+    };
+    const measure = () => { top = day.getBoundingClientRect().top + window.scrollY; span = Math.max(1, day.offsetHeight - window.innerHeight); };
+    const tick = () => {
+      raf = 0;
+      const p = Math.min(1, Math.max(0, (window.scrollY - top) / span));
+      if (fill) fill.style.transform = `scaleX(${p.toFixed(4)})`;
+      show(Math.min(steps.length - 1, Math.floor(p * steps.length * 0.9999)));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && pinned()) {
+        measure(); tick();
+        if (!live) { window.addEventListener("scroll", onScroll, { passive: true }); live = true; }
+        $$("img", day).forEach((im) => { im.loading = "eager"; });
+      } else if (live) { window.removeEventListener("scroll", onScroll); live = false; }
+    }).observe(day);
+    window.addEventListener("resize", () => { if (live) { measure(); tick(); } }, { passive: true });
+    go.forEach((b, i) => b.addEventListener("click", () => {
+      measure();
+      window.scrollTo({ top: top + span * ((i + 0.5) / steps.length), behavior: reduced ? "auto" : "smooth" });
+    }));
+  }
 
   // Reached the end without an error: the reveal states set by ".js" can all be resolved, so keep them.
   clearTimeout(failsafe);

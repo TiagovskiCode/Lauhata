@@ -55,7 +55,6 @@ export async function prelaunch(dist) {
   if (illustrative.length) warnings.push(`${illustrative.length} fotografias ilustrativas em uso (${illustrative.join(", ")}): estão assinaladas, mas não são do Lauhata.`);
   const noInterior = rooms.filter((r) => !r.images.length).length;
   if (noInterior) warnings.push(`${noInterior} quartos sem fotografias do interior (\`images\` em rooms.mjs): mostram o exterior, com nota.`);
-  warnings.push("Saudações em tétum na secção «Um dia no Lauhata» (Bondia, Botarde, Bonoite): pedir a um falante que confirme a grafia.");
   if (site.showPlaceholderNotes) warnings.push("`showPlaceholderNotes` ainda é true: o rodapé e a ementa mostram avisos de conteúdo provisório.");
 
   return { blockers, warnings };

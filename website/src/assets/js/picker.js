@@ -310,8 +310,9 @@
 
   /* ---------- Quantity: minus / plus ---------- */
   function openNumber(trigger, native) {
-    const min = Number(native.min) || 1, max = Number(native.max) || 99;
-    let n = Math.min(max, Math.max(min, Number(native.value) || min));
+    const num = (x, d) => (x === "" || x == null || isNaN(Number(x)) ? d : Number(x)); // 0 is a real value (no children)
+    const min = num(native.min, 1), max = num(native.max, 99);
+    let n = Math.min(max, Math.max(min, num(native.value, min)));
     const unit = (v) => (v === 1 ? native.dataset.unitOne : native.dataset.unitMany) || "";
     show(trigger, P.numberDialog, () => {
       pop.className = "pk-pop is-num";
@@ -401,7 +402,7 @@
         empty = !native.value;
         t = empty ? P.chooseTime : o.dataset.label || o.text;
       } else if (kind === "number") {
-        const n = Number(native.value) || Number(native.min) || 1;
+        const n = native.value !== "" && !isNaN(Number(native.value)) ? Number(native.value) : native.min !== "" ? Number(native.min) : 1;
         t = `${n} ${n === 1 ? native.dataset.unitOne : native.dataset.unitMany}`;
       } else {
         const o = native.options[native.selectedIndex];

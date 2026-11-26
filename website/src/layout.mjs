@@ -50,6 +50,7 @@ const SPRITE = `<svg width="0" height="0" style="position:absolute" aria-hidden=
     <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor"/><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 3l14 9-14 9z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
     <symbol id="i-palm" viewBox="0 0 24 24"><path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4" ${stroke}/><path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3" ${stroke}/><path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35" ${stroke}/><path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14" ${stroke}/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" ${stroke}/><path d="M12 16v-4.5M12 8h.01" ${stroke}/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" ${stroke}/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5" ${stroke}/></symbol>
   </defs>
@@ -166,6 +167,7 @@ function cartUi(t) {
     <div class="cart-step" data-step="list">
       <div class="cart-scroll">
         <ul class="cart-lines" data-cart-lines></ul>
+        <section class="cart-more" data-cart-more hidden aria-labelledby="cart-more-title"><h3 id="cart-more-title">${esc(O.moreTitle)}</h3><ul data-cart-more-list></ul></section>
         <div class="cart-empty" data-cart-empty hidden>
           <svg class="cart-empty-mark" aria-hidden="true"><use href="#i-cart"></use></svg>
           <h3>${esc(O.emptyTitle)}</h3>
@@ -174,10 +176,10 @@ function cartUi(t) {
         </div>
       </div>
       <footer class="cart-foot" data-cart-foot>
-        <p class="cart-total"><span>${esc(O.total)}</span><strong data-cart-sum></strong></p>
+        <dl class="cart-sums"><div><dt data-cart-items></dt><dd data-cart-sub></dd></div><div class="is-total"><dt>${esc(O.total)}</dt><dd><strong data-cart-sum></strong></dd></div></dl>
         <p class="cart-request">${esc(O.requestNote)}</p>
-        <button class="btn btn-terra btn-lg" type="button" data-cart-checkout>${esc(O.checkout)}${icon("arrow")}</button>
-        <button class="btn btn-outline" type="button" data-cart-close>${esc(O.continue)}</button>
+        <button class="cart-go" type="button" data-cart-checkout><span>${esc(O.checkout)}</span><strong data-cart-go-sum></strong></button>
+        <button class="cart-keep" type="button" data-cart-close>${esc(O.continue)}</button>
       </footer>
     </div>
     <form class="cart-step" data-step="checkout" data-order-form novalidate hidden>
@@ -329,6 +331,7 @@ function footer(t, { home = false, page = "" } = {}) {
       <h2 class="footer-h">${esc(F.visit)}</h2>
       <p class="ft-place">${site.address.street ? `${esc(site.address.street)}<br>` : ""}${esc(site.address.region)}, ${esc(site.address.country)}</p>
       ${hours ? `<p class="ft-sub">${esc(F.hours)}</p><ul class="ft-hours">${hours}</ul>` : ""}
+      ${site.geo ? `<p class="ft-now" hidden data-now data-lat="${site.geo.lat}" data-lng="${site.geo.lng}" data-tz="Asia/Dili" data-now-label="${esc(F.nowIn)}" data-sun-label="${esc(F.sunsetToday)}"><span data-now-time></span><span data-now-sun></span></p>` : ""}
       <ul class="footer-list">${link(maps, F.directions, true)}</ul>
     </div>
     <div class="ft-col">
@@ -359,6 +362,47 @@ function footer(t, { home = false, page = "" } = {}) {
  *   page     route key (for aria-current), alt: same page in the other language
  *   title, description, path, robots, ld (extra JSON-LD objects), preload (hero image key), body (main HTML)
  */
+
+// The loading screen: shown once per visit, on whichever page the visitor lands first (later pages open straight away).
+// The bar follows what the page really needs before it can be shown (the first photograph, the fonts, the page itself), a minimum
+// of 1.9 s so it reads as an opening and not a flash, never more than 4.5 s. Then it lifts like a curtain and the hero enters.
+// Without JavaScript it is never shown. window.LAUHATA_INTRO resolves as it lifts.
+const LOADER_JS = `(function () {
+  var d = document, l = d.getElementById("ldr"), h = d.documentElement;
+  try { if (sessionStorage.getItem("lh-intro")) { l.remove(); return; } sessionStorage.setItem("lh-intro", "1"); } catch (e) {}
+  var rm = matchMedia("(prefers-reduced-motion: reduce)").matches, t0 = Date.now(), MIN = rm ? 500 : 1900;
+  var fill = l.querySelector(".ldr-fill"), shown = 0;
+  var set = function (p) { if (p > shown) { shown = Math.min(1, p); fill.style.transform = "scaleX(" + shown + ")"; } };
+  h.classList.add("is-intro");
+  set(0.06);
+  requestAnimationFrame(function () { t0 = Date.now(); }); // the minimum counts from when the screen is first painted
+  var creep = setInterval(function () { set(shown + (0.86 - shown) * 0.07); }, 240);
+  window.LAUHATA_INTRO = new Promise(function (done) {
+    var gone = false;
+    var go = function () {
+      if (gone) return; gone = true; clearInterval(creep); set(1);
+      setTimeout(function () {
+        l.classList.add("is-out"); h.classList.remove("is-intro"); done();
+        setTimeout(function () { l.remove(); }, rm ? 400 : 1200);
+      }, rm ? 0 : 420);
+    };
+    setTimeout(go, 4500);
+    var ready = function () {
+      var img = d.querySelector(".cine-hero img, main img"), wait = [];
+      if (img) wait.push(img.decode ? img.decode().catch(function () {}) : new Promise(function (r) { if (img.complete) r(); else img.onload = img.onerror = r; }));
+      if (d.fonts && d.fonts.ready) wait.push(Promise.race([d.fonts.ready, new Promise(function (r) { setTimeout(r, 1200); })]));
+      wait.push(new Promise(function (r) { if (d.readyState === "complete") r(); else addEventListener("load", r, { once: true }); }));
+      var k = 0;
+      wait.forEach(function (p) { p.then(function () { k++; set(0.1 + 0.75 * k / wait.length); }); });
+      Promise.all(wait).then(function () { setTimeout(go, Math.max(0, MIN - (Date.now() - t0))); }, go);
+    };
+    if (d.readyState !== "loading") ready(); else d.addEventListener("DOMContentLoaded", ready);
+  });
+})();`;
+const loaderHtml = (t) => `<div class="ldr" id="ldr" aria-hidden="true"><div class="ldr-in"><img class="ldr-mark" src="/assets/img/brand/logo-lauhata-beach-escape-160.webp" width="160" height="160" alt="" fetchpriority="high"><p class="ldr-name">Lauhata</p><p class="ldr-line">${esc(t.brandLine)}</p><span class="ldr-bar"><i class="ldr-fill"></i></span><p class="ldr-place">Liquiçá, Timor-Leste</p></div></div>
+<noscript><style>.ldr{display:none!important}</style></noscript>
+<script>${LOADER_JS}</script>`;
+
 export function layout(t, o) {
   const L = t.lang;
   const other = L === "pt" ? "en" : "pt";
@@ -398,8 +442,8 @@ ${o.robots ? "" : `<link rel="alternate" hreflang="x-default" href="${absUrl(alt
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/img/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-<link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${[].concat(o.preload || []).map((p) => (typeof p === "string" ? preloadImage(p, "max(100vw, 92vh)") : preloadImage(p.key, p.sizes, p.media))).join("\n")}
 <link rel="stylesheet" href="/assets/css/site.css">
 <script type="speculationrules">{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
@@ -408,14 +452,13 @@ ${(o.ld || []).map(jsonLd).join("\n")}
 <script>window.LAUHATA=${JSON.stringify(runtime).replace(/</g, "\\u003c")};</script>
 ${o.menu ? menuJson(o.menu) : ""}
 <script src="/assets/js/picker.js" defer></script>
-${o.page === "home" ? `<script src="/assets/js/vendor/gsap.min.js" defer></script>` : ""}
 <script src="/assets/js/main.js" defer></script>
-${o.page === "home" ? `<script src="/assets/js/cinema.js" defer></script>` : ""}
 <script src="/assets/js/order.js" defer></script>
 ${site.gaId ? `<script>window.LAUHATA_GA=${JSON.stringify(site.gaId)};</script>
 <script src="/assets/js/analytics.js" defer></script>` : ""}
 </head>
 <body id="top" class="${o.hero ? "has-hero" : ""}">
+${o.noLoader ? "" : loaderHtml(t)}
 ${SPRITE}
 <a class="skip-link" href="#main">${esc(t.nav.skip)}</a>
 ${header(t, o.page, o.alt)}

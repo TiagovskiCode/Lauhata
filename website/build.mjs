@@ -28,9 +28,9 @@ await cp(join(root, "src/assets"), join(dist, "assets"), { recursive: true, filt
 let esbuild = null;
 try { esbuild = await import("esbuild"); } catch { /* optional: the site builds without it, just less compressed */ }
 
-// One stylesheet instead of twelve: the files are joined in cascade order (the last one, signature.css, is the final layer),
-// stripped of comments and line breaks, and the originals are not published. Fewer render-blocking requests.
-const CSS_FILES = ["main", "cinema", "order", "home", "landing", "picker", "wide", "design", "editorial", "resort", "refine", "signature"];
+// One stylesheet (src/assets/css/lauhata.css, consolidated from twelve layers in Phase A), stripped of comments and line breaks
+// and published as assets/css/site.css. One render-blocking request.
+const CSS_FILES = ["lauhata"];
 {
   const parts = [];
   for (const name of CSS_FILES) parts.push(await readFile(join(root, `src/assets/css/${name}.css`), "utf8"));

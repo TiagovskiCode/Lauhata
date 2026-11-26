@@ -155,7 +155,7 @@ export const money = (n) => site.order.currency + (Number.isInteger(n) ? n : n.t
 // The dishes a page can add to the order, for the cart script (window.LAUHATA_MENU, by dish id).
 export function menuJson(list) {
   const data = Object.fromEntries(
-    list.map((d) => [d.id, { id: d.id, name: d.name, price: d.price, desc: d.description ?? null, options: d.options, photo: existsSync(new URL(`./assets/img/pratos/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos/${d.id}-640.jpg` : site.dishPhotos.showIllustrative && existsSync(new URL(`./assets/img/pratos-temp/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos-temp/${d.id}-640.jpg` : null }])
+    list.map((d) => [d.id, { id: d.id, cat: d.category, name: d.name, price: d.price, desc: d.description ?? null, options: d.options, photo: existsSync(new URL(`./assets/img/pratos/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos/${d.id}-640.jpg` : site.dishPhotos.showIllustrative && existsSync(new URL(`./assets/img/pratos-temp/${d.id}-640.jpg`, import.meta.url)) ? `/assets/img/pratos-temp/${d.id}-640.jpg` : null }])
   );
   return `<script>window.LAUHATA_MENU=${JSON.stringify(data).replace(/</g, "\\u003c")};</script>`;
 }

@@ -164,20 +164,19 @@
     const photo = MENU[l.id] && MENU[l.id].photo;
     const thumb = photo ? `<img class="cl-thumb" src="${esc(photo)}" alt="" width="64" height="64" loading="lazy">` : "";
     const editable = MENU[l.id] && MENU[l.id].options.length;
-    return `<li class="cart-line" data-key="${esc(l.key)}">
+    return `<li class="cart-line${thumb ? " has-thumb" : ""}" data-key="${esc(l.key)}">
       ${thumb}
-      <div class="cl-main">
-        <p class="cl-name">${esc(l.name)}</p>
-        ${opts ? `<p class="cl-opts">${esc(opts)}</p>` : ""}
-        <p class="cl-unit">${l.qty > 1 ? `${l.qty} × ${money(l.cents)}` : `${money(l.cents)} ${esc(O.each)}`}${editable ? ` <button class="cl-edit" type="button" data-act="edit" aria-label="${esc(fmt(O.edit, { name: l.name }))}">${esc(O.editShort)}</button>` : ""}</p>
+      <div class="cl-top"><p class="cl-name">${esc(l.name)}</p><p class="cl-sub">${money(l.cents * l.qty)}</p></div>
+      ${opts || editable ? `<p class="cl-opts">${opts ? esc(opts) : ""}${editable ? ` <button class="cl-edit" type="button" data-act="edit" aria-label="${esc(fmt(O.edit, { name: l.name }))}">${esc(O.editShort)}</button>` : ""}</p>` : ""}
+      <div class="cl-bottom">
+        <div class="stepper" role="group" aria-label="${esc(O.qty)}: ${esc(l.name)}">
+          <button type="button" data-act="dec" aria-label="${esc(fmt(O.decrease, { name: l.name }))}">${icon("minus")}</button>
+          <output>${l.qty}</output>
+          <button type="button" data-act="inc" aria-label="${esc(fmt(O.increase, { name: l.name }))}"${l.qty >= MAX_QTY ? " disabled" : ""}>${icon("plus")}</button>
+        </div>
+        <p class="cl-unit">${money(l.cents)} ${esc(O.each)}</p>
+        <button class="cl-remove" type="button" data-act="rm" aria-label="${esc(fmt(O.remove, { name: l.name }))}">${icon("trash")}</button>
       </div>
-      <p class="cl-sub">${money(l.cents * l.qty)}</p>
-      <div class="stepper" role="group" aria-label="${esc(O.qty)}: ${esc(l.name)}">
-        <button type="button" data-act="dec" aria-label="${esc(fmt(O.decrease, { name: l.name }))}">${icon("minus")}</button>
-        <output>${l.qty}</output>
-        <button type="button" data-act="inc" aria-label="${esc(fmt(O.increase, { name: l.name }))}"${l.qty >= MAX_QTY ? " disabled" : ""}>${icon("plus")}</button>
-      </div>
-      <button class="cl-remove" type="button" data-act="rm" aria-label="${esc(fmt(O.remove, { name: l.name }))}">${icon("trash")}</button>
     </li>`;
   }
 
@@ -198,8 +197,26 @@
     emptyEl.hidden = n > 0;
     footEl.hidden = n === 0;
     sumEl.textContent = money(sum);
+    const goSum = $("[data-cart-go-sum]"), sub = $("[data-cart-sub]"), itemsEl = $("[data-cart-items]");
+    if (goSum) goSum.textContent = money(sum);
+    if (sub) sub.textContent = money(sum);
+    if (itemsEl) itemsEl.textContent = countLabel(n);
+    more(n);
     if (miniEl) miniEl.textContent = `${countLabel(n)} · ${O.total} ${money(sum)}`;
     if (!n && step === "checkout") showStep("list");
+  }
+
+  // Something sweet to finish: when the order has no dessert yet, up to three desserts from the menu, at their menu price, one tap each.
+  // No discount, no urgency, nothing pre-selected; it disappears as soon as a dessert is in the order.
+  const moreEl = $("[data-cart-more]"), moreList = $("[data-cart-more-list]");
+  function more(n) {
+    if (!moreEl) return;
+    const inCart = new Set(lines.map((l) => l.id));
+    const hasDessert = lines.some((l) => MENU[l.id] && MENU[l.id].cat === "dessert");
+    const pick = Object.values(MENU).filter((d) => d.cat === "dessert" && !inCart.has(d.id) && d.price != null && !d.options.length).slice(0, 3);
+    moreEl.hidden = !n || hasDessert || !pick.length;
+    if (moreEl.hidden) return;
+    moreList.innerHTML = pick.map((d) => `<li><span class="cm-name">${esc(d.name)}</span><span class="cm-price">${money(Math.round(d.price * 100))}</span><button class="cm-add" type="button" data-add="${esc(d.id)}" aria-label="${esc(O.add)}: ${esc(d.name)}">${icon("plus")}</button></li>`).join("");
   }
 
   function bump() {
@@ -455,9 +472,9 @@
     }
   }
 
-  /* ---------- Menu: search and the category filter ----------
-     "Menu" on the left, "Filter" on the right. The filter is a small popover (a list of buttons, one pressed): it closes on Escape,
-     on a click outside and after a choice, and the active category is shown beside the button with a way to clear it. */
+  /* ---------- Menu: one sticky bar with the categories and the search ----------
+     The categories are links to their sections; the one being read is marked, its tab scrolls into view on a narrow screen, and a thin
+     line slides under it (transform only). The search filters the dishes as you type; Escape or the cross clears it. */
   const menu = $("[data-menu]");
   if (menu) {
     const input = $("[data-menu-search]", menu);
@@ -466,130 +483,114 @@
     const empty = $("[data-menu-empty]", menu);
     const cats = $$("[data-cat]", menu);
     const dishes = $$("[data-dish]", menu);
-    const fBtn = $("[data-mf-btn]", menu);
-    const fPanel = $("[data-mf-panel]", menu);
-    const fClear = $("[data-mf-clear]", menu);
-    const fCur = $("[data-mf-current]", menu);
-    const opts = $$("[data-cat-filter]", menu);
+    const bar = $("[data-menu-bar]", menu);
+    const nav = $("[data-menu-nav]", menu);
+    const list = $("ul", nav);
+    const links = $$("[data-cat-link]", nav);
+    const ink = $("[data-mt-ink]", nav);
+    const header = $("[data-header]");
     const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
-    let cat = "all";
 
     function apply() {
       const raw = input.value.trim();
       const tokens = norm(raw).split(/\s+/).filter(Boolean);
       let n = 0;
       dishes.forEach((d) => {
-        const inCat = cat === "all" || d.closest("[data-cat]").dataset.cat === cat;
-        const hit = inCat && tokens.every((t) => d.dataset.search.includes(t));
+        const hit = tokens.every((t) => d.dataset.search.includes(t));
         d.hidden = !hit;
         if (hit) n++;
       });
       cats.forEach((c) => { c.hidden = !$("[data-dish]:not([hidden])", c); });
+      links.forEach((a) => { a.closest("li").hidden = !!$("#cat-" + a.dataset.catLink)?.hidden; });
       menu.classList.toggle("is-searching", tokens.length > 0);
       clearSearch.hidden = !raw;
       empty.hidden = n > 0;
       empty.textContent = n ? "" : fmt(O.noResults, { q: raw });
-      status.textContent = (tokens.length || cat !== "all") && n ? (n === 1 ? O.resultOne : fmt(O.results, { n })) : "";
+      status.textContent = tokens.length && n ? (n === 1 ? O.resultOne : fmt(O.results, { n })) : "";
+      spy(true);
     }
     input.addEventListener("input", apply);
     input.addEventListener("keydown", (e) => { if (e.key === "Escape" && input.value) { input.value = ""; apply(); } });
     clearSearch.addEventListener("click", () => { input.value = ""; apply(); input.focus(); });
 
-    function setOpen(open, returnFocus) {
-      fPanel.hidden = !open;
-      fBtn.setAttribute("aria-expanded", String(open));
-      if (open) ($('[aria-pressed="true"]', fPanel) || $("button", fPanel))?.focus();
-      else if (returnFocus) fBtn.focus();
-    }
-    function setCat(id) {
-      cat = id;
-      opts.forEach((o) => o.setAttribute("aria-pressed", String(o.dataset.catFilter === id)));
-      const label = id === "all" ? "" : $(`[data-cat-filter="${id}"] span`, fPanel).textContent;
-      fCur.textContent = label;
-      fClear.hidden = id === "all";
-      fBtn.classList.toggle("is-active", id !== "all");
-      apply();
-    }
-    fBtn.addEventListener("click", () => setOpen(fPanel.hidden));
-    opts.forEach((o) => o.addEventListener("click", () => {
-      setCat(o.dataset.catFilter);
-      setOpen(false, true);
-      const bar = $(".menu-tools", menu);
-      const top = bar.getBoundingClientRect().top;
-      const header = $("[data-header]");
-      const limit = (header ? header.offsetHeight : 0) + 12;
-      if (top < limit) window.scrollTo({ top: Math.max(0, window.scrollY + top - limit), behavior: reduced ? "auto" : "smooth" });
-    }));
-    fClear.addEventListener("click", () => { setCat("all"); fBtn.focus(); });
-    document.addEventListener("pointerdown", (e) => { if (!fPanel.hidden && !e.target.closest("[data-mf]")) setOpen(false); });
-    menu.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !fPanel.hidden) { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
-      if (!fPanel.hidden && (e.key === "ArrowDown" || e.key === "ArrowUp") && e.target.closest("[data-mf-panel]")) {
-        e.preventDefault();
-        const i = opts.indexOf(document.activeElement);
-        opts[(i + (e.key === "ArrowDown" ? 1 : -1) + opts.length) % opts.length].focus();
-      }
-    });
-
-    /* Wide screens (min-width 1000px, the same breakpoint the CSS uses): the categories are a sticky bar of links that scroll to
-       each section and follow the reading position. Narrower screens use the Filter popover above; the two never show together. */
-    const nav = $("[data-menu-nav]", menu);
-    const links = $$("[data-cat-link]", nav);
-    const wide = window.matchMedia("(min-width: 1000px)");
+    const side = window.matchMedia("(min-width: 1000px)");
+    const offset = () => (header ? header.getBoundingClientRect().bottom : 0) + (side.matches ? 0 : bar.offsetHeight) + 16;
     function goTo(section) {
-      // The category list is a column on the left (sticky), so only the header's room is kept above the section.
-      const top = section.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: Math.max(0, top - 112), behavior: reduced ? "auto" : "smooth" });
+      const top = section.getBoundingClientRect().top + window.scrollY - offset();
+      window.scrollTo({ top: Math.max(0, top), behavior: reduced ? "auto" : "smooth" });
     }
     links.forEach((a) => a.addEventListener("click", (e) => {
       e.preventDefault();
-      e.stopImmediatePropagation(); // main.js also hooks in-page anchors; this one needs the bar offset
-      if (input.value) { input.value = ""; apply(); }
+      e.stopImmediatePropagation(); // main.js also hooks in-page anchors; this one needs the bar's offset
       goTo($("#cat-" + a.dataset.catLink));
       history.replaceState(null, "", a.getAttribute("href"));
     }));
     let current = null;
-    function spy() {
-      if (!wide.matches) return;
-      const line = 150;
-      const box = menu.getBoundingClientRect();
+    function place(a) {
+      if (!ink) return;
+      if (!a) { ink.style.opacity = "0"; return; }
+      ink.style.opacity = "1";
+      ink.style.transform = `translateX(${a.offsetLeft - list.scrollLeft}px) scaleX(${a.offsetWidth / 100})`;
+    }
+    function spy(force) {
+      const line = offset() + 8;
       let cur = null;
-      if (box.top < line && box.bottom > line) cats.forEach((c) => { if (!c.hidden && c.getBoundingClientRect().top <= line) cur = c.dataset.cat; });
-      links.forEach((a) => { if (a.dataset.catLink === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
-      if (cur && cur !== current) {
-        const chip = links.find((a) => a.dataset.catLink === cur);
-        const bar = chip && chip.closest("ul");
-        if (bar && bar.scrollWidth > bar.clientWidth + 2) bar.scrollTo({ left: chip.offsetLeft - (bar.clientWidth - chip.offsetWidth) / 2, behavior: reduced ? "auto" : "smooth" });
-      }
+      cats.forEach((c) => { if (!c.hidden && c.getBoundingClientRect().top <= line) cur = c.dataset.cat; });
+      if (!cur) cur = (cats.find((c) => !c.hidden) || {}).dataset?.cat || null;
+      if (cur === current && !force) return;
       current = cur;
+      let chip = null;
+      kick();
+      links.forEach((a) => { if (a.dataset.catLink === cur) { a.setAttribute("aria-current", "true"); chip = a; } else a.removeAttribute("aria-current"); });
+      if (chip && list.scrollWidth > list.clientWidth + 2) list.scrollTo({ left: chip.offsetLeft - (list.clientWidth - chip.offsetWidth) / 2, behavior: reduced ? "auto" : "smooth" });
+      place(chip);
     }
     let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => { ticking = false; spy(); });
-    }, { passive: true });
-    let prox = 0;
-    let py = null;
-    const proxTick = () => {
-      prox = 0;
+    const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; spy(); }); };
+    // Only while the menu is on screen is there a scroll listener.
+    new IntersectionObserver(([e]) => {
+      window.removeEventListener("scroll", onScroll);
+      if (e.isIntersecting) { window.addEventListener("scroll", onScroll, { passive: true }); spy(true); }
+    }).observe(menu);
+    list.addEventListener("scroll", () => place(links.find((a) => a.dataset.catLink === current)), { passive: true });
+    window.addEventListener("resize", () => spy(true), { passive: true });
+    // The bar is "stuck" when it meets the header: it gets its own ground then.
+    const sentinel = document.createElement("i");
+    sentinel.setAttribute("aria-hidden", "true");
+    sentinel.className = "menu-bar-mark";
+    bar.before(sentinel);
+    new IntersectionObserver(([e]) => bar.classList.toggle("is-stuck", !e.isIntersecting && e.boundingClientRect.top < 200), { rootMargin: "-90px 0px 0px 0px" }).observe(sentinel);
+    // ---------- LineSidebar (React Bits, ported): the categories lean toward the pointer ----------
+    function kick() { if (lsOn()) requestAnimationFrame(() => startLs()); }
+    var lsItems, lsTarget, lsCur, lsRaf = 0, lsLast = 0;
+    function lsOn() { return side.matches && !reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches; }
+    function lsInit() { lsItems = [...nav.querySelectorAll(".ls-item")]; lsTarget = lsItems.map(() => 0); lsCur = lsItems.map(() => 0); }
+    function lsFrame(now) {
+      const dt = Math.min((now - lsLast) / 1000, 0.05); lsLast = now;
+      const k = 1 - Math.exp(-dt / 0.1); // 100 ms smoothing
       let moving = false;
-      links.forEach((a) => {
-        const r = a.getBoundingClientRect();
-        const target = py == null ? 0 : Math.max(0, 1 - Math.abs(py - (r.top + r.height / 2)) / 90);
-        const p = (a._p || 0) + (target - (a._p || 0)) * 0.18;
-        a._p = Math.abs(target - p) < 0.01 ? target : p;
-        if (a._p !== target) moving = true;
-        a.style.setProperty("--p", a._p.toFixed(3));
+      lsItems.forEach((li, i) => {
+        const active = li.querySelector('[aria-current="true"]') ? 1 : 0;
+        const target = Math.max(lsTarget[i] || 0, active);
+        const next = lsCur[i] + (target - lsCur[i]) * k;
+        const settled = Math.abs(target - next) < 0.0015;
+        lsCur[i] = settled ? target : next;
+        li.style.setProperty("--effect", lsCur[i].toFixed(4));
+        if (!settled) moving = true;
       });
-      if (moving) prox = requestAnimationFrame(proxTick);
-    };
-    nav.addEventListener("pointermove", (e) => { if (reduced || !wide.matches || e.pointerType === "touch") return; py = e.clientY; if (!prox) prox = requestAnimationFrame(proxTick); });
-    nav.addEventListener("pointerleave", () => { py = null; if (!prox && !reduced) prox = requestAnimationFrame(proxTick); });
-    window.addEventListener("pagehide", () => { cancelAnimationFrame(prox); prox = 0; });
-    wide.addEventListener("change", (e) => { if (e.matches && cat !== "all") setCat("all"); if (e.matches) setOpen(false); spy(); });
+      lsRaf = moving ? requestAnimationFrame(lsFrame) : 0;
+    }
+    function startLs() { if (!lsItems) lsInit(); if (lsRaf) cancelAnimationFrame(lsRaf); lsLast = performance.now(); lsRaf = requestAnimationFrame(lsFrame); }
+    const list2 = $("ul", nav);
+    list2.addEventListener("pointermove", (e) => {
+      if (!lsOn() || e.pointerType !== "mouse") return;
+      if (!lsItems) lsInit();
+      const top = list2.getBoundingClientRect().top, y = e.clientY - top;
+      lsItems.forEach((li, i) => { const c = li.offsetTop + li.offsetHeight / 2; const p = Math.max(0, 1 - Math.abs(y - c) / 100); lsTarget[i] = p * p * (3 - 2 * p); });
+      startLs();
+    });
+    list2.addEventListener("pointerleave", () => { if (!lsItems) return; lsTarget = lsTarget.map(() => 0); startLs(); });
     apply();
-    spy();
   }
 
   /* ---------- The floating order button steps aside while the hero is on screen (the header button stays) ---------- */

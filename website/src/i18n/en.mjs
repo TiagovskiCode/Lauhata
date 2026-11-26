@@ -172,6 +172,8 @@ export default {
     cta: "Book a table or ask for a room: the team replies on WhatsApp.",
     ctaRoom: "Ask for a room: the team replies on WhatsApp.",
     ctaEvent: "Tell the team the occasion: they reply on WhatsApp.",
+    nowIn: "{time} now in Liquiçá",
+    sunsetToday: "Sunset today at {time}",
   },
   reviews: {
     title: "What guests say",
@@ -321,7 +323,8 @@ export default {
     waContact: "\nContact: {contact}",
     waQuickTable: "Hello! I would like to request a table at Lauhata's restaurant.\n\nDate: {date}\nTime: {time}\nPeople: {people}{who}{notes}\n\nLooking forward to your confirmation. Thank you!",
     waRoom: "Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nName: {name}{email}{phone}\nPreferred room: {room}\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{notes}\n\nCould you please confirm availability and provide any relevant information? I understand payment is made in person at Lauhata.\n\nThank you.",
-    waQuickRoom: "Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}\nChildren: {children}{room}{who}{notes}\n\nCould you confirm availability and the price? I understand payment is made in person at Lauhata. Thank you.",
+    waChildren: "\nChildren: {children}",
+    waQuickRoom: "Hello Lauhata team,\n\nI would like to enquire about accommodation.\n\nCheck-in: {checkIn}\nCheck-out: {checkOut} ({nights})\nAdults: {adults}{children}{room}{who}{notes}\n\nCould you confirm availability and the price? I understand payment is made in person at Lauhata. Thank you.",
     waQuickRoomType: "\nRoom: {room}",
     waEvent: "Hello! I would like to know if Lauhata could host an event.\n\nOccasion: {kind}\nDate: {date}\nPeople: {people}\nName: {name}{contact}{notes}\n\nCould you tell me what is possible? Thank you!",
     nightsOne: "1 night",
@@ -353,8 +356,8 @@ export default {
     qty: "Quantity",
     each: "each",
     total: "Total",
-    continue: "Keep browsing",
-    checkout: "Continue to send the request",
+    continue: "Keep adding dishes",
+    checkout: "Continue",
     back: "Back to your order",
     detailsTitle: "Your details",
     name: "Name",
@@ -423,12 +426,13 @@ export default {
     cartEmptyHint: "Add dishes from the menu and they will appear here, with the total.",
     requestNote: "This is a request to eat at the restaurant. It is confirmed only when the team replies on WhatsApp, and you pay at Lauhata.",
     subtotal: "Subtotal",
+    moreTitle: "Something sweet to finish?",
   },
   land: {
     resort: {
-      heroTitle: "Eat by the sea.",
-      heroAccent: "Stay for the sunset.",
-      heroLine: "A beachfront restaurant, bar and rooms in Lauhata, on the Liquiçá coast west of Dili.",
+      heroTitle: "Long lunches by the sea.",
+      heroAccent: "Sunsets from the table.",
+      heroLine: "A beach restaurant and two room types in Lauhata, on the Liquiçá coast west of Dili.",
       ctaEvent: "Enquire about an experience",
       ctaContact: "Get in touch",
       reserveLong: "Make a reservation",
@@ -535,7 +539,7 @@ export default {
       lead: "A family lunch, a birthday, friends getting together: tell us what you have in mind.",
       howTitle: "From your message to the day itself",
       steps: [
-        ["Choose the occasion", "One of the ideas above, or your own."],
+        ["Choose the occasion", "One of the ideas below, or your own."],
         [
           "Send the details on WhatsApp",
           "Date, time and number of guests: the form below writes the message for you.",
@@ -655,6 +659,7 @@ export default {
       filmCap: "The drone film: the coast, the garden and the beach from the air.",
       filmPlay: "Play the film",
       filmPause: "Pause the film",
+      view: "View",
     },
     gallery: { open: "Enlarge photograph: {alt}" },
     final: {
@@ -672,21 +677,10 @@ export default {
       title: "A day at Lauhata",
       lead: "Three meals facing the same sea.",
       steps: [
-        {
-          hours: "breakfast",
-          hello: "Bondia",
-          t: "Breakfast",
-          d: "Eggs, pancakes or fruit, served with chilled juice.",
-        },
-        {
-          hours: "lunch",
-          hello: "Botarde",
-          t: "Lunch",
-          d: "Grilled fish, satay, curries and pizza, a few steps from the sand.",
-        },
+        { hours: "breakfast", t: "Breakfast", d: "Eggs, pancakes or fruit, served with chilled juice." },
+        { hours: "lunch", t: "Lunch", d: "Grilled fish, satay, curries and pizza, a few steps from the sand." },
         {
           hours: "dinner",
-          hello: "Bonoite",
           t: "Dinner",
           d: "The sun goes into the sea in front of the tables, and the kitchen keeps serving.",
         },
@@ -694,6 +688,7 @@ export default {
       until: "until {t}",
       from: "from {t}",
       line: "The kitchen serves {a} and {b}",
+      progress: "The meals of the day",
     },
     culture: {
       title1: "Between the mountain and the sea,",

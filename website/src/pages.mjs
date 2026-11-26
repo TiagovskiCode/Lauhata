@@ -26,14 +26,22 @@ function heading({ eyebrow, title, accent = "", lead = "", id = "", center = fal
 
 // The compact hero of the inner pages: one photograph, the title and (when the page has one) the action. `pos` sets the part of the
 // photograph that stays in view when the frame crops it. `eyebrow` and `crumbs` are accepted but not printed.
+// Where Lauhata is, in degrees and minutes, from the map pin in site.mjs: the small line under every cover.
+const DMS = (v, pos, neg) => { const a = Math.abs(v), d = Math.floor(a), m = Math.floor((a - d) * 60), s = Math.round(((a - d) * 60 - m) * 60); return `${d}°${String(m).padStart(2, "0")}′${String(s).padStart(2, "0")}″${v < 0 ? neg : pos}`; };
+const COORDS = site.geo ? `${DMS(site.geo.lat, "N", "S")} ${DMS(site.geo.lng, "E", "W")}` : "";
+// The cover of an inner page: the photograph the full height of the first screen, a very large title at the bottom left, the
+// introduction and the actions in a narrower column on the right, and the place under it all.
 function pageHero(t, { title, accent = "", lead, image, ctas = "", decorative = false, pos = "", cls = "" }) {
-  return `<section class="cine-hero is-page ${cls}"${pos ? ` style="--pos:${pos}"` : ""}>
+  return `<section class="cine-hero is-page is-cover ${cls}"${pos ? ` style="--pos:${pos}"` : ""}>
   <div class="cine-slides"><div class="slide is-active">${figure(t, image, { eager: true, sizes: COVER, credit: true, decorative })}</div></div>
   <div class="cine-shade" aria-hidden="true"></div>
-  <div class="wrap cine-content">
+  <div class="wrap cine-content cover-grid">
     <h1 class="cine-title is-page" data-split>${esc(title)}${accent ? ` ${esc(accent)}` : ""}</h1>
-    <p class="cine-lead" data-fade style="--d:260ms">${esc(lead)}</p>
-    ${ctas ? `<div class="cine-ctas" data-fade style="--d:380ms">${ctas}</div>` : ""}
+    <div class="cover-side">
+      <p class="cine-lead" data-fade style="--d:260ms">${esc(lead)}</p>
+      ${ctas ? `<div class="cine-ctas" data-fade style="--d:380ms">${ctas}</div>` : ""}
+    </div>
+    ${COORDS ? `<p class="cover-place" aria-hidden="true"><span>Lauhata · ${esc(site.address.region)}, ${esc(site.address.country)}</span><span>${COORDS}</span></p>` : ""}
   </div>
 </section>`;
 }
@@ -108,13 +116,13 @@ function roomCarousel(t, r, { sizes = "(min-width: 900px) 56vw, 92vw", cls = "" 
   </div>`;
 }
 
-// The two room types on the home page: two identical cards. The rows of both cards share one grid (subgrid), so the photograph, the name,
-// the description, the facts and the actions sit on the same lines whatever the text. The photographs are the outside of the rooms and the
-// note under the cards says so.
+// The two rooms on the home page: the same card, the same lines. Every fact comes from rooms.mjs (per room) or from the confirmed shared
+// amenities of the rooms (`lodgingAmenities`, group "rooms"); the request line says how a stay is asked for and paid.
 function roomPair(t) {
   const L = t.lang;
+  const shared = lodgingAmenities.filter((a) => a.group === "rooms");
   return `<div class="rc-grid">${rooms.map((r) => {
-    const facts = [["users", r.capacity[L]], ["bed", r.beds[L]], ...(r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]])];
+    const facts = [["users", r.capacity[L]], ["bed", r.beds[L]], ...(r.amenities || []).map((a) => [a.icon || AMEN_ICON[a.en] || "check", a[L]]), ...shared.map((a) => [a.icon, a[L]])];
     return `<article class="rc" aria-labelledby="rc-${r.id}">
       <a class="rc-media" href="${href("room:" + r.id, L)}" tabindex="-1" aria-hidden="true">${figure(t, roomPhotos(r)[0], { sizes: "(min-width: 720px) 46vw, 92vw" })}</a>
       <div class="rc-head">
@@ -126,7 +134,7 @@ function roomPair(t) {
       <div class="rc-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room" data-room-link="${r.id}" aria-label="${esc(t.home.hero.ctaRoom)}: ${esc(r.name[L])}">${esc(t.home.hero.ctaRoom)}</a><a class="btn btn-outline" href="${href("room:" + r.id, L)}" aria-label="${esc(t.stay.viewRoom)}: ${esc(r.name[L])}">${esc(t.stay.viewRoom)}</a></div>
     </article>`;
   }).join("")}</div>
-  <div class="rc-foot"><p>${esc(t.stay.insideNote)}</p><a class="btn btn-outline" href="${href("stay", L, "#comparar")}">${esc(t.land.resort.roomsAll)}</a></div>`;
+  <div class="rc-foot"><p>${esc(t.stay.requestNote)} ${esc(t.stay.insideNote)}</p><a class="btn btn-outline" href="${href("stay", L, "#comparar")}">${esc(t.land.resort.roomsAll)}</a></div>`;
 }
 
 const mapsLink = () => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.geo ? `${site.geo.lat},${site.geo.lng}` : site.mapQuery)}`;
@@ -325,21 +333,20 @@ function sampleDrinksSection(t, cat) {
 
 
 
-// The full interactive menu: search, a category bar that sticks while scrolling, and every category
-// in the order of the printed menu. Behaviour lives in assets/js/order.js.
+// The menu, set like a printed menu card: one sticky bar with the categories and the search, then each category under a centred title and
+// two columns of dishes (name, dotted leader, price, description, ADD). No dish is hidden; a category with no dishes yet (the drinks,
+// until the restaurant supplies them) is left out of the page and the bar.
 function menuSection(t) {
   const L = t.lang;
   const O = t.order;
-  // A category with no dishes yet (the drinks, until the restaurant supplies them) is left out of the page and the bar.
   const drinksCat = categories.find((c) => c.id === "drinks");
   const sampleDrinksOn = site.showSamples && drinksCat && !items.some((d) => d.category === "drinks");
   const shown = categories.filter((c) => items.some((d) => d.category === c.id) || (sampleDrinksOn && c === drinksCat));
   const count = (c) => items.filter((d) => d.category === c.id).length;
-  const nav = `<li><button type="button" class="mf-opt" data-cat-filter="all" aria-pressed="true"><span>${esc(O.filterAll)}</span></button></li>` + shown.map((c) => `<li><button type="button" class="mf-opt" data-cat-filter="${c.id}" aria-pressed="false"><span>${esc(c.name[L])}</span>${count(c) ? `<small>${count(c)}</small>` : ""}</button></li>`).join("");
-  const bar = shown.map((c) => `<li><a href="#cat-${c.id}" data-cat-link="${c.id}"><span>${esc(c.name[L])}</span>${count(c) ? `<small>${count(c)}</small>` : ""}</a></li>`).join("");
+  const bar = shown.map((c, i) => `<li class="ls-item"><span class="ls-marker" aria-hidden="true"></span><a href="#cat-${c.id}" data-cat-link="${c.id}"><span class="ls-index" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span><span class="ls-text">${esc(c.name[L])}</span>${count(c) ? `<small>${count(c)}</small>` : ""}</a></li>`).join("");
   const sections = shown
     .map((c) => (sampleDrinksOn && c === drinksCat ? sampleDrinksSection(t, c) : `<section class="menu-cat" id="cat-${c.id}" data-cat="${c.id}" aria-labelledby="cat-${c.id}-title">
-      <header class="menu-cat-head"><h3 id="cat-${c.id}-title">${esc(c.name[L])}</h3>${c.note ? `<p>${esc(c.note[L])}</p>` : ""}</header>
+      <header class="menu-cat-head"><h3 id="cat-${c.id}-title">${esc(c.name[L])}</h3><span class="mc-orn" aria-hidden="true"></span>${c.note ? `<p>${esc(c.note[L])}</p>` : ""}</header>
       ${c.groups
         ? Object.entries(c.groups)
             .map(([g, label]) => {
@@ -352,37 +359,30 @@ function menuSection(t) {
     .join("");
   return `<section class="section menu" id="ementa" aria-labelledby="menu-title" data-menu>
   <div class="wrap menu-intro">
-    <div class="mi-head">
-      <h2 id="menu-title" class="mi-title">${esc(t.restaurant.menuTitle)}</h2>
-      <p class="mi-lead">${esc(t.restaurant.menuLead)}</p>
-    </div>
-    <div class="mi-notes">
-      <p class="menu-note">${esc(menuNote[L])}</p>
-      <p class="dine-in">${icon("cutlery")}<span>${esc(O.dineIn)}</span></p>
-      <p class="menu-note is-allergy">${esc(O.allergyNote)}</p>
-    </div>
+    <h2 id="menu-title" class="mi-title">${esc(t.restaurant.menuTitle)}</h2>
+    <p class="mi-lead">${esc(t.restaurant.menuLead)}</p>
+    <ul class="mi-notes">
+      <li>${icon("cutlery")}<span>${esc(O.dineIn)}</span></li>
+      <li>${icon("clock")}<span>${esc(menuNote[L])}</span></li>
+      <li>${icon("info")}<span>${esc(O.allergyNote)}</span></li>
+    </ul>
   </div>
   <div class="wrap menu-layout">
-    <aside class="menu-side">
-      <div class="menu-tools">
-        <div class="menu-search">
-          <label for="menu-search"><span class="sr-only">${esc(O.searchLabel)}</span>${icon("search")}</label>
-          <input id="menu-search" type="search" placeholder="${esc(O.searchPlaceholder)}" autocomplete="off" enterkeyhint="search" data-menu-search>
-          <button class="icon-btn" type="button" hidden data-menu-clear aria-label="${esc(O.clearSearch)}">${icon("close")}</button>
-        </div>
-        <div class="menu-filter" data-mf>
-          <button class="mf-clear" type="button" hidden data-mf-clear aria-label="${esc(O.filterClear)}"><span data-mf-current></span>${icon("close")}</button>
-          <button class="mf-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="mf-panel" data-mf-btn>${esc(O.filter)}${icon("down")}</button>
-          <div class="mf-panel" id="mf-panel" role="group" aria-label="${esc(O.filterBy)}" data-mf-panel hidden><ul>${nav}</ul></div>
-        </div>
+  <div class="menu-bar" data-menu-bar>
+    <div class="menu-bar-in">
+      <nav class="menu-tabs" aria-label="${esc(O.categories)}" data-menu-nav><ul>${bar}</ul><i class="mt-ink" aria-hidden="true" data-mt-ink></i></nav>
+      <div class="menu-search">
+        <label for="menu-search"><span class="sr-only">${esc(O.searchLabel)}</span>${icon("search")}</label>
+        <input id="menu-search" type="search" placeholder="${esc(O.searchPlaceholder)}" autocomplete="off" enterkeyhint="search" data-menu-search>
+        <button class="icon-btn" type="button" hidden data-menu-clear aria-label="${esc(O.clearSearch)}">${icon("close")}</button>
       </div>
-      <nav class="menu-nav" aria-label="${esc(O.categories)}" data-menu-nav><ul>${bar}</ul></nav>
-    </aside>
-    <div class="menu-body">
-      <p class="sr-only" role="status" aria-live="polite" data-menu-status></p>
-      ${sections}
-      <p class="menu-empty" hidden data-menu-empty></p>
     </div>
+  </div>
+  <div class="menu-body">
+    <p class="sr-only" role="status" aria-live="polite" data-menu-status></p>
+    ${sections}
+    <p class="menu-empty" hidden data-menu-empty></p>
+  </div>
   </div>
 </section>`;
 }
@@ -476,7 +476,7 @@ function finalSection(t, key = "aerialCoast", { panel = false } = {}) {
   <div class="scene-media">${figure(t, key, { sizes: COVER, decorative: true })}</div>
   <div class="wrap scene-text">
     <p class="scene-note" data-fade>${esc(F.note)}</p>
-    <h2 id="final-title" class="scene-line final-line" data-split>${esc(F.line)}</h2>
+    <h2 id="final-title" class="scene-line final-line">${esc(F.line)}</h2>
     <p class="final-lead" data-fade>${esc(F.lead)}</p>
     <div class="btn-row" data-fade>
       <a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="room">${esc(F.stay)}${icon("arrow")}</a>
@@ -555,7 +555,7 @@ function reviewsSection(t) {
   return `<section class="section reviews-ed" id="opinioes" aria-labelledby="rv-title">
   <div class="wrap">
     <header class="rv-head">
-      <h2 id="rv-title" class="display" data-split>${esc(R.title)}</h2>
+      <h2 id="rv-title" class="display">${esc(R.title)}</h2>
       ${scores ? `<div class="rv-scores-wrap"><div class="rv-scores">${scores}</div>${checkedDates.length ? `<p class="rv-checked">${esc(fmt(R.checked, { date: checkedDates.map(longDate).join(", ") }))}</p>` : ""}</div>` : `<div class="rv-badge">${tripadvisorBadge(t, "is-large")}</div>`}
     </header>
   </div>
@@ -610,7 +610,7 @@ ${pageHero(t, { title: A.title, lead: t.home.statement, image: "beachFront", pos
 
 <section class="section st-people" aria-labelledby="abc-people">
   <div class="wrap st-people-grid">
-    <h2 id="abc-people" class="st-quote" data-split>${esc(C.title1)} ${esc(C.title2)} ${esc(C.titleAccent)}.</h2>
+    <h2 id="abc-people" class="st-quote">${esc(C.title1)} ${esc(C.title2)} ${esc(C.titleAccent)}.</h2>
     <div>
       <p>${esc(C.body)}</p>
       <p>${esc(A.chapters.peopleBody)}</p>
@@ -656,6 +656,20 @@ export function events(t) {
   const body = `
 ${pageHero(t, { title: E.title, lead: E.lead, image: "sunsetPalms", pos: "50% 40%", ctas: `<div class="btn-row"><a class="btn btn-terra btn-lg" href="#pedido">${esc(E.cta)}</a><a class="btn btn-ghost-light btn-lg" href="#como">${esc(E.howLink)}</a></div>` })}
 
+<section class="section xp" id="como" aria-labelledby="ev-how-title">
+  <div class="wrap">
+    <div class="xp-head">
+      <h2 id="ev-how-title" class="display">${esc(E.howTitle)}</h2>
+      <p>${esc(E.howLead)}</p>
+    </div>
+    <ol class="xp-steps">${E.steps.map(([h, p], i) => `<li class="xp-step${i === 2 ? " is-confirm" : ""}${i === 3 ? " is-day" : ""}"><span class="xp-node" aria-hidden="true"></span><span class="xp-num" aria-hidden="true">${i + 1}</span><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ol>
+    <ul class="xp-key">
+      <li class="is-ask"><span aria-hidden="true"></span>${esc(E.keyAsk)}</li>
+      <li class="is-ok"><span aria-hidden="true"></span>${esc(E.keyOk)}</li>
+    </ul>
+  </div>
+</section>
+
 <section class="section xo" aria-labelledby="ev-types-title">
   <div class="wrap xo-grid">
     <figure class="xo-media">
@@ -669,20 +683,6 @@ ${pageHero(t, { title: E.title, lead: E.lead, image: "sunsetPalms", pos: "50% 40
       <ul class="xo-list">${occ.map(([k, line]) => `<li><a href="#pedido" data-event-kind="${esc(k)}"><span class="xo-name">${esc(k)}</span><span class="xo-line">${esc(line)}</span><span class="xo-go">${esc(E.suggest)}${icon("arrow")}</span></a></li>`).join("")}</ul>
       <p class="xo-other">${esc(E.other)}</p>
     </div>
-  </div>
-</section>
-
-<section class="section xp" id="como" aria-labelledby="ev-how-title">
-  <div class="wrap">
-    <div class="xp-head">
-      <h2 id="ev-how-title" class="display">${esc(E.howTitle)}</h2>
-      <p>${esc(E.howLead)}</p>
-    </div>
-    <ol class="xp-steps">${E.steps.map(([h, p], i) => `<li class="xp-step${i === 2 ? " is-confirm" : ""}${i === 3 ? " is-day" : ""}"><span class="xp-node" aria-hidden="true"></span><span class="xp-num" aria-hidden="true">${i + 1}</span><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ol>
-    <ul class="xp-key">
-      <li class="is-ask"><span aria-hidden="true"></span>${esc(E.keyAsk)}</li>
-      <li class="is-ok"><span aria-hidden="true"></span>${esc(E.keyOk)}</li>
-    </ul>
   </div>
 </section>
 
@@ -740,48 +740,48 @@ function eventForm(t) {
   </form>`;
 }
 
-// One continuous collection, set like a magazine's picture pages: every real photograph (placeholder: false, with a `group`) in an
-// order that walks from the sea to the beach, the restaurant, the rooms, the evening and the coast around, plus the drone film.
-// Each tile names its column span, its crop (chosen per photograph, never cutting the subject) and how far it sits below the row's
-// top. On a phone the same order becomes pairs and full-width plates. The lightbox always shows the whole, uncropped photograph.
+// One continuous collection on a tight grid (four columns on a laptop, two on a phone), the tiles in four shapes: a square, a tall one
+// (two rows), a wide one (two columns) and a large one (two by two). The order and the shapes are chosen so the grid closes with no holes,
+// The tall frames crop each photograph around its subject (the focal point below); every photograph opens whole in the lightbox, and its
+// caption shows on a real pointer.
 const GALLERY = [
-  // [key, desktop columns, crop, focal point, offset (rem), phone: f = full width, h = half]
-  ["beachFront", "1 / span 8", "16 / 10", "50% 55%", 0, "f"],
-  ["heroPortrait", "9 / span 4", "3 / 5", "50% 50%", 7, "h"],
-  ["restaurantBeach", "2 / span 5", "4 / 5", "46% 50%", 0, "h"],
-  ["aerialGarden", "7 / span 6", "1 / 1", "50% 50%", 9, "f"],
-  ["coastMountains", "1 / span 12", "21 / 9", "50% 58%", 0, "f"],
-  ["stayVeranda", "1 / span 4", "4 / 5", "40% 50%", 0, "h"],
-  ["stayEntrance", "5 / span 4", "4 / 5", "50% 50%", 6, "h"],
-  ["stayWalkway", "9 / span 4", "4 / 5", "45% 50%", 3, "f"],
-  ["stayGarden", "1 / span 7", "3 / 2", "50% 50%", 0, "h"],
-  ["aerialTop", "9 / span 4", "1 / 1", "50% 50%", 7, "h"],
-  ["@film", "1 / span 8", "16 / 9", "50% 50%", 0, "f"],
-  ["sunsetPalmsHigh", "9 / span 4", "4 / 5", "50% 50%", 5, "h"],
-  ["sunsetSea", "1 / span 12", "21 / 9", "50% 50%", 0, "h"],
-  ["sunsetPalms", "2 / span 5", "4 / 5", "55% 50%", 0, "h"],
-  ["sunsetGarden", "7 / span 6", "3 / 2", "50% 50%", 8, "h"],
-  ["coastVillage", "1 / span 7", "16 / 10", "50% 50%", 0, "f"],
-  ["seaCanoe", "8 / span 5", "1 / 1", "50% 50%", 6, "h"],
-  ["ruinsAerial", "1 / span 6", "4 / 3", "50% 50%", 0, "h"],
-  ["ruinsTop", "7 / span 6", "4 / 3", "50% 50%", 7, "f"],
+  // [key, shape, focal point]
+  ["beachFront", "big", "50% 55%"],
+  ["heroPortrait", "tall", "50% 50%"],
+  ["restaurantBeach", "tall", "46% 50%"],
+  ["aerialGarden", "sq", "50% 50%"],
+  ["coastMountains", "wide", "50% 58%"],
+  ["stayVeranda", "sq", "40% 50%"],
+  ["stayEntrance", "tall", "50% 50%"],
+  ["stayWalkway", "sq", "45% 50%"],
+  ["stayGarden", "wide", "50% 50%"],
+  ["aerialTop", "sq", "50% 50%"],
+  ["@film", "wide", "50% 50%"],
+  ["sunsetPalmsHigh", "tall", "50% 50%"],
+  ["sunsetSea", "big", "50% 50%"],
+  ["sunsetPalms", "sq", "55% 50%"],
+  ["sunsetGarden", "sq", "50% 50%"],
+  ["coastVillage", "big", "50% 50%"],
+  ["seaCanoe", "tall", "50% 50%"],
+  ["ruinsAerial", "sq", "50% 50%"],
+  ["ruinsTop", "sq", "50% 50%"],
 ];
 export function gallery(t) {
   const L = t.lang;
   const G = t.land.galleryPage;
   const bc = breadcrumbs(t, [{ name: t.nav.gallery, path: href("gallery", L) }]);
   const photos = GALLERY.filter(([k]) => k[0] !== "@").length;
-  const tile = ([k, col, ratio, pos, y, m]) => {
-    const style = `--c:${col};--r:${ratio};--p:${pos};--y:${y}rem`;
+  const SIZES = { sq: "(min-width: 700px) 24vw, 48vw", tall: "(min-width: 700px) 24vw, 48vw", wide: "(min-width: 700px) 48vw, 96vw", big: "(min-width: 700px) 48vw, 96vw" };
+  const tile = ([k, shape, pos]) => {
     if (k === "@film") {
-      return `<li class="gx-item gx-film" data-m="${m}" style="${style}">
+      return `<li class="gx-item gx-film is-${shape}" style="--p:${pos}">
       <div class="gx-frame"><video muted loop playsinline preload="none" data-poster="${imgUrl("heroFilmCover", 1080)}" aria-label="${esc(G.filmLabel)}" data-gx-film><source src="${site.heroVideo}" type="video/mp4"></video>
       <button class="gx-film-btn" type="button" data-gx-film-btn aria-pressed="false" data-play="${esc(G.filmPlay)}" data-pause="${esc(G.filmPause)}">${icon("play")}${icon("pause")}<span>${esc(G.filmPlay)}</span></button></div>
       <p class="gx-cap">${esc(G.filmCap)}</p>
     </li>`;
     }
-    return `<li class="gx-item" data-m="${m}" style="${style}">
-      <a class="gx-frame" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: `(min-width: 900px) ${Math.round((+col.split("span ")[1] / 12) * 92)}vw, ${m === "f" ? 92 : 46}vw` })}</a>
+    return `<li class="gx-item is-${shape}" style="--p:${pos}">
+      <a class="gx-frame" href="${imgUrl(k, 1600)}" data-lb-src="${imgUrl(k, 1600)}" aria-label="${esc(fmt(t.land.gallery.open, { alt: images[k].alt[L] }))}">${figure(t, k, { sizes: SIZES[shape] })}</a>
       <p class="gx-cap">${esc(images[k].alt[L])}</p>
     </li>`;
   };
@@ -789,13 +789,11 @@ export function gallery(t) {
 ${pageHero(t, { title: G.title, lead: G.lead, image: "seaCanoe", pos: "50% 50%", cls: "is-bright" })}
 
 <section class="section gx" aria-labelledby="gx-title" data-gallery>
-  <div class="wrap">
-    <div class="gx-head">
-      <h2 id="gx-title" class="display">${esc(G.collection)}</h2>
-      <p>${esc(fmt(G.count, { n: photos }))}</p>
-    </div>
-    <ul class="gx-list">${GALLERY.map(tile).join("")}</ul>
+  <div class="wrap gx-head">
+    <h2 id="gx-title" class="display">${esc(G.collection)}</h2>
+    <p>${esc(fmt(G.count, { n: photos }))}</p>
   </div>
+  <ul class="gx-list" data-view-label="${esc(G.view)}">${GALLERY.map(tile).join("")}</ul>
 </section>`;
   return { page: "gallery", title: t.meta.gallery.title, description: t.meta.gallery.description, path: href("gallery", L), alt: href("gallery", other(L)), preload: "seaCanoe", hero: true, ld: [bc.ld], body };
 }
@@ -874,12 +872,13 @@ ${pageHero(t, { title: D.title, lead: D.lead, image: "coastMountains", pos: "50%
 
 // What makes Lauhata special: six facts that are confirmed or can be seen in the photographs (PRODUCT.md), three by two.
 const SPECIAL_ICONS = ["palm", "cutlery", "sunset", "leaf", "users", "heart"];
+// What makes Lauhata special: six facts, each in its own card (three by two on a laptop), one icon each from the site's set.
 function specialSection(t) {
   const R = t.land.resort;
   return `<section class="section sp" id="especial" aria-labelledby="sp-title">
   <div class="wrap">
-    <h2 id="sp-title" class="display" data-split>${esc(R.spTitle)}</h2>
-    <ul class="sp-grid" data-group>${R.spItems.map(([h, p], i) => `<li>${icon(SPECIAL_ICONS[i])}<h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ul>
+    <h2 id="sp-title" class="sr-only">${esc(R.spTitle)}</h2>
+    <ul class="sp-grid" data-stagger>${R.spItems.map(([h, p], i) => `<li class="sp-item" style="--i:${i}"><span class="sp-ic">${icon(SPECIAL_ICONS[i])}</span><h3>${esc(h)}</h3><p>${esc(p)}</p></li>`).join("")}</ul>
   </div>
 </section>`;
 }
@@ -889,12 +888,10 @@ const FAQ_HOME = [[0, 0], [1, 2], [0, 1], [2, 0], [2, 1]]; // [category, questio
 function faqTeaser(t) {
   const list = FAQ_HOME.map(([c, i]) => t.faq.cats[c].items[i]);
   return `<section class="section fq" id="perguntas" aria-labelledby="fq-title">
-  <div class="wrap fq-grid">
-    <div class="fq-head">
-      <h2 id="fq-title" class="display" data-split>${esc(t.faq.title)}</h2>
-      <a class="btn btn-outline" href="${href("contact", t.lang, "#faq")}">${esc(t.land.resort.faqAll)}</a>
-    </div>
+  <div class="wrap fq-wrap">
+    <h2 id="fq-title" class="display">${esc(t.faq.title)}</h2>
     <div class="faq">${list.map((it) => `<details name="faq-home"><summary><span>${esc(it.q)}</span>${icon("plus")}</summary><div class="faq-a"><p>${esc(faqFill(t, it.a))}</p></div></details>`).join("")}</div>
+    <a class="btn btn-outline" href="${href("contact", t.lang, "#faq")}">${esc(t.land.resort.faqAll)}</a>
   </div>
 </section>`;
 }
@@ -911,7 +908,7 @@ export function home(t) {
   const fdDish = (d) => {
     const verb = t.order.add;
     return `<li class="kt-dish">
-      <div class="dl-head"><h3 class="dl-name">${esc(d.name)}</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b>${cardPrice(t, d)}</b></p></div>
+      <div class="kt-dish-text"><div class="dl-head"><h3 class="dl-name">${esc(d.name)}</h3><i class="dl-leader" aria-hidden="true"></i><p class="dl-price"><b>${cardPrice(t, d)}</b></p></div>${d.description ? `<p class="kt-desc">${esc(d.description[L])}</p>` : ""}</div>
       ${canOrder(d) ? `<button class="d-add kt-add" type="button" data-add="${d.id}" aria-label="${esc(verb)}: ${esc(d.name)}" title="${esc(verb)}"><span data-add-label>${icon("plus")}</span></button>` : ""}
     </li>`;
   };
@@ -926,7 +923,7 @@ export function home(t) {
   const body = `
 <section class="cine-hero hx rs-hero" aria-labelledby="hero-title" data-hero>
   <div class="hx-bg">${figure(t, "heroFilmCover", { eager: true, sizes: "100vw", decorative: false, art: [{ key: "heroPortrait", media: "(max-width: 860px) and (orientation: portrait)" }] })}
-    ${site.heroVideo ? `<video class="hx-video" muted loop playsinline preload="none" disablepictureinpicture aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}</div>
+    ${site.heroVideo ? `<video class="hx-video" muted playsinline preload="none" disablepictureinpicture aria-hidden="true" tabindex="-1" data-hero-video data-src="${esc(site.heroVideo)}"></video>` : ""}</div>
   <div class="hx-shade" aria-hidden="true"></div>
   <div class="wrap cine-content hx-content rs-hero-grid">
     <div class="rs-hero-text">
@@ -939,10 +936,12 @@ export function home(t) {
   ${site.heroVideo ? `<button class="hx-toggle" type="button" hidden data-hero-toggle data-pause="${esc(RS.filmPause)}" data-play="${esc(RS.filmPlay)}" aria-label="${esc(RS.filmPause)}" title="${esc(RS.filmPause)}">${icon("pause")}${icon("play")}</button>` : ""}
 </section>
 
+${specialSection(t)}
+
 <section class="section we" id="bem-vindo" aria-labelledby="wl-title">
   <div class="wrap we-grid">
     <div class="we-intro">
-      <h2 id="wl-title" class="display" data-split>${esc(RS.wlTitle)}</h2>
+      <h2 id="wl-title" class="display">${esc(RS.wlTitle)}</h2>
       <p class="we-lead">${esc(RS.wlBody)}</p>
       <a class="text-link" href="${href("about", L)}">${esc(RS.wlCta)}</a>
       <p class="wl-meta"><span class="wm">${icon("pin")}<span>${esc(t.land.beach.place)}</span></span>${hoursLine ? `<span class="wm">${icon("clock")}<span>${hoursLine}</span></span>` : ""}</p>
@@ -951,36 +950,35 @@ export function home(t) {
   </div>
 </section>
 
+
 ${daySection(t)}
 
 <section class="section kt" id="cozinha" aria-labelledby="fd-title">
-  <div class="wrap">
-    <div class="kt-top">
-      <div class="kt-intro">
-        <h2 id="fd-title" class="display" data-split>${esc(RS.fdTitle)}</h2>
-        <p class="kt-lead">${esc(RS.fdLead)}</p>
-        <div class="kt-actions"><a class="btn btn-terra" href="${href("restaurant", L, "#ementa")}">${esc(RS.fdCta)}</a><a class="text-link" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}</a></div>
-      </div>
+  <div class="wrap kt-grid">
+    <div class="kt-intro">
+      <h2 id="fd-title" class="display">${esc(RS.fdTitle)}</h2>
+      <p class="kt-lead">${esc(RS.fdLead)}</p>
+      <div class="kt-actions"><a class="btn btn-terra" href="${href("contact", L)}" data-book-open="table">${esc(t.home.hero.ctaTable)}</a><a class="text-link" href="${href("restaurant", L, "#ementa")}">${esc(RS.fdCta)}</a></div>
       <dl class="kt-meals">
         <div><dt>${esc(RS.meals[0][0])}</dt><dd><b>${esc(K.breakfast)}</b>${esc(RS.meals[0][1])}</dd></div>
         <div><dt>${esc(RS.meals[1][0])}</dt><dd><b>${esc(K.lunch)}–${esc(K.dinner)}</b>${esc(RS.meals[1][1])}</dd></div>
       </dl>
     </div>
-    <ul class="kt-list">${fd.map(fdDish).join("")}</ul>
+    <div class="kt-col">
+      <ul class="kt-list">${fd.map(fdDish).join("")}</ul>
+    </div>
   </div>
 </section>
 
 <section class="section rq" id="quartos" aria-labelledby="stay-title">
   <div class="wrap">
     <div class="rq-head">
-      <h2 id="stay-title" class="display" data-split>${esc(RS.roomsTitle)}</h2>
+      <h2 id="stay-title" class="display">${esc(RS.roomsTitle)}</h2>
       <p>${esc(RS.roomsLead)}</p>
     </div>
     ${roomPair(t)}
   </div>
 </section>
-
-${specialSection(t)}
 
 <section class="section ofs" aria-labelledby="ofs-title">
   <div class="wrap">
@@ -990,13 +988,14 @@ ${specialSection(t)}
 </section>
 
 <section class="cl" id="experiencias" aria-labelledby="ex-title">
-  <figure class="cl-photo">${figure(t, "sunsetSea", { sizes: "(min-width: 900px) 100vw, 100vw", cls: "drift" })}</figure>
+  <figure class="cl-photo">${figure(t, "sunsetSea", { sizes: "100vw", cls: "drift" })}</figure>
   <div class="wrap">
     <div class="cl-card" data-rise>
+      <svg class="cl-mark" viewBox="0 0 64 28" aria-hidden="true"><path d="M8 22h48" /><path d="M18 22a14 14 0 0 1 28 0" /><path d="M32 3v4M15 9l2.8 2.8M49 9l-2.8 2.8" /></svg>
       <h2 id="ex-title" class="cl-title">${esc(RS.expTitle)}</h2>
       <p class="cl-lead">${esc(RS.expLead)}</p>
       <ul class="cl-kinds">${kinds.map((k) => `<li>${esc(k)}</li>`).join("")}</ul>
-      <a class="btn btn-terra" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}</a>
+      <a class="btn btn-terra btn-lg" href="${href("events", L, "#pedido")}">${esc(RS.ctaEvent)}</a>
       <p class="cl-note">${esc(RS.expNote)}</p>
     </div>
   </div>
@@ -1005,13 +1004,15 @@ ${specialSection(t)}
 <section class="section ar" id="arredores" aria-labelledby="sx-title">
   <div class="wrap ar-grid">
     <div class="ar-copy">
-      <h2 id="sx-title" class="display" data-split>${esc(RS.dsTitle)}</h2>
+      <h2 id="sx-title" class="display">${esc(RS.dsTitle)}</h2>
       <p>${esc(LD.aboutPage.chapters.coastBody)}</p>
       <a class="btn btn-sea" href="${href("discover", L)}">${esc(RS.dsCta)}</a>
     </div>
-    <figure class="ar-b" data-tide>${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 32vw, 60vw", credit: true })}</figure>
-    <figure class="ar-a" data-tide>${figure(t, "coastVillage", { sizes: "(min-width: 900px) 58vw, 100vw", credit: true })}</figure>
-    <figure class="ar-c" data-tide>${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 34vw, 72vw", credit: true })}</figure>
+    <div class="ar-mosaic">
+      <figure class="ar-a" data-tide>${figure(t, "coastVillage", { sizes: "(min-width: 900px) 38vw, 80vw" })}</figure>
+      <figure class="ar-b" data-tide>${figure(t, "seaCanoe", { sizes: "(min-width: 900px) 22vw, 48vw" })}</figure>
+      <figure class="ar-c" data-tide>${figure(t, "ruinsAerial", { sizes: "(min-width: 900px) 22vw, 48vw" })}</figure>
+    </div>
   </div>
 </section>
 
@@ -1056,7 +1057,7 @@ ${menuSection(t)}
 <section class="scene final-cta is-table" aria-labelledby="final-title">
   <div class="scene-media">${figure(t, "beachFront", { sizes: COVER, decorative: true })}</div>
   <div class="wrap scene-text">
-    <h2 id="final-title" class="scene-line final-line" data-split>${esc(F.tableLine)}</h2>
+    <h2 id="final-title" class="scene-line final-line">${esc(F.tableLine)}</h2>
     <p class="final-lead">${esc(F.tableLead)}</p>
     <div class="btn-row"><a class="btn btn-terra btn-lg" href="${href("contact", L)}" data-book-open="table">${esc(F.bookTable)}</a><a class="text-link on-dark" href="${waLink(t.form.waHello)}" target="_blank" rel="noopener">${esc(t.common.whatsapp)}</a></div>
   </div>
@@ -1164,7 +1165,7 @@ ${pageHero(t, {
 <section class="rs-place" aria-labelledby="rs-place-title">
   <figure class="rs-place-media">${figure(t, "aerialTop", { sizes: COVER, cls: "drift" })}</figure>
   <div class="wrap rs-place-text">
-    <h2 id="rs-place-title" class="rs-place-title" data-split>${esc(t.stay.placeTitle)}</h2>
+    <h2 id="rs-place-title" class="rs-place-title">${esc(t.stay.placeTitle)}</h2>
     <p>${esc(t.stay.placeLead)}</p>
     <a class="btn btn-terra" href="${href("contact", L)}" data-book-open="room">${esc(t.home.hero.ctaRoom)}</a>
     <p class="rs-place-note">${esc(t.stay.requestNote)}</p>
@@ -1441,40 +1442,34 @@ function kitchenHours() {
   const [b, m] = site.restaurantHours.map(span);
   return b && m ? { breakfast: `${b[1]}–${b[2]}`, lunch: m[1], dinner: m[2], open: b[1], close: m[2] } : null;
 }
-// A day at Lauhata: one photograph and, beside it, the three meals as one list under the line of the day. The line is drawn to scale from the
-// kitchen's hours (08:00 to 21:00, with the hour it is closed left open); a small sun travels along it to the meal in view. Choosing a meal
-// (pointer, keyboard or touch), or simply scrolling past, changes the photograph. Nothing is pinned and nothing is scrubbed: cinema.js moves
-// the sun and swaps a class, and every word is on the page with or without it. The Tetum greetings are lang="tet" and await a native reader.
+// A day at Lauhata. On a laptop or larger screen with motion allowed, the section is a fixed full-screen picture (CSS position: sticky in a
+// taller box) while scrolling carries the visitor through breakfast, lunch and dinner; a hairline at the bottom shows how far the day has
+// gone, and its three labels jump to a meal. Normal scrolling resumes as soon as the box ends: nothing is captured or slowed down.
+// On a phone, on a short screen or with reduced motion, the same content is one picture and the three meals as a list.
+// The hours come from site.mjs.
 function daySection(t) {
   const D = t.land.day;
   const K = kitchenHours();
   if (!K) return "";
   const when = (s) => (s.hours === "breakfast" ? K.breakfast : s.hours === "lunch" ? fmt(D.from, { t: K.lunch }) : fmt(D.until, { t: K.dinner }));
-  const mins = (h) => { const [a, b] = h.split(":"); return +a * 60 + +b; };
-  const open = mins(K.open), close = mins(K.close);
-  const at = (h) => (mins(h) - open) / (close - open); // position on the line, 0 to 1
-  const bEnd = K.breakfast.split("–")[1];
-  const spots = { breakfast: at(bEnd) / 2, lunch: at(K.lunch), dinner: at(K.dinner) };
-  const seg = (a, b) => `stroke-dasharray="${(b - a).toFixed(4)} 1" stroke-dashoffset="${(-a).toFixed(4)}"`;
-  const PATH = "M 14 92 Q 300 -48 586 92"; // the arc of the day, in a 600 x 110 box
   return `<section class="day" id="dia" aria-labelledby="day-title" data-day>
-  <div class="wrap day-grid">
-    <div class="day-stage" data-day-stage>${D.steps.map((s, i) => `<div class="day-frame${i ? "" : " is-on"}" data-day-frame>${figure(t, DAY_FRAMES[i], { sizes: "(min-width: 960px) 56vw, 100vw" })}</div>`).join("")}</div>
-    <div class="day-panel">
-      <h2 id="day-title" class="day-title" data-split>${esc(D.title)}</h2>
-      <p class="day-lead">${esc(fmt(D.lead, K))}</p>
-      <div class="day-line"><svg class="day-arc" viewBox="0 0 600 124" role="img" aria-label="${esc(fmt(D.line, { a: K.breakfast, b: `${K.lunch}–${K.dinner}` }))}" data-day-arc>
-        <path class="da-base" d="${PATH}" pathLength="1" ${seg(0, at(bEnd))}/>
-        <path class="da-base" d="${PATH}" pathLength="1" ${seg(at(K.lunch), 1)}/>
-        <path class="da-closed" d="${PATH}" pathLength="1" ${seg(at(bEnd), at(K.lunch))}/>
-        <path class="da-gone" d="${PATH}" pathLength="1" stroke-dasharray="0 2" data-day-gone/>
-        <text x="4" y="120">${esc(K.open)}</text><text x="596" y="120" text-anchor="end">${esc(K.close)}</text>
-      </svg><i class="day-sun" aria-hidden="true" data-day-sun></i></div>
-      <ol class="day-list">${D.steps.map((s, i) => `<li><button class="day-item${i ? "" : " is-on"}" type="button" aria-pressed="${i ? "false" : "true"}" data-day-item data-at="${spots[s.hours].toFixed(4)}">
-        <span class="di-when">${esc(when(s))}</span>
-        <span class="di-what"><strong>${esc(s.t)}</strong><em lang="tet">${esc(s.hello)}</em></span>
-        <span class="di-text">${esc(s.d)}</span>
-      </button></li>`).join("")}</ol>
+  <div class="day-pin">
+    <div class="day-bg">${D.steps.map((s, i) => `<div class="day-frame${i ? "" : " is-on"}" data-day-frame>${figure(t, DAY_FRAMES[i], { sizes: "100vw", decorative: i > 0 })}</div>`).join("")}</div>
+    <div class="day-shade" aria-hidden="true"></div>
+    <div class="wrap day-inner">
+      <header class="day-head">
+        <h2 id="day-title" class="day-title">${esc(D.title)}</h2>
+        <p class="day-lead">${esc(fmt(D.lead, K))}</p>
+      </header>
+      <ol class="day-steps">${D.steps.map((s, i) => `<li class="day-step${i ? "" : " is-on"}" data-day-step>
+        <h3 class="ds-name">${esc(s.t)}</h3>
+        <p class="ds-when"><span class="di-when">${esc(when(s))}</span>${s.hours === "dinner" ? `<span class="ds-sun" data-sunset hidden></span>` : ""}</p>
+        <p class="ds-text">${esc(s.d)}</p>
+      </li>`).join("")}</ol>
+      <nav class="day-progress" aria-label="${esc(D.progress)}">
+        <ol>${D.steps.map((s, i) => `<li><button type="button" data-day-item data-day-go="${i}"${i ? "" : ' aria-current="step"'}><span class="dp-name">${esc(s.t)}</span><span class="dp-when">${esc(when(s))}</span></button></li>`).join("")}</ol>
+        <span class="dp-track" aria-hidden="true"><i class="dp-fill" data-day-fill></i></span>
+      </nav>
     </div>
   </div>
 </section>`;
